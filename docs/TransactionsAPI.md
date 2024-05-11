@@ -106,7 +106,7 @@ import (
 )
 
 func main() {
-	smartContractCall := *openapiclient.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@66713605)) // SmartContractCall | The request body to create a smart contract transaction (optional)
+	smartContractCall := *openapiclient.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@47058864)) // SmartContractCall | The request body to create a smart contract transaction (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -310,7 +310,7 @@ import (
 )
 
 func main() {
-	estimateFee := openapiclient.EstimateFee{SmartContractCall: openapiclient.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@66713605))} // EstimateFee | The request body to estimate fee of transfer or call transaction (optional)
+	estimateFee := openapiclient.EstimateFee{SmartContractCall: openapiclient.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@47058864))} // EstimateFee | The request body to estimate fee of transfer or call transaction (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
