@@ -14,19 +14,24 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
 
 	t.Run("Test TransactionsAPIService CreateSignMessageTransaction", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.CreateSignMessageTransaction(context.Background()).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.CreateSignMessageTransaction(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -38,7 +43,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.CreateSmartContractCallTransaction(context.Background()).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.CreateSmartContractCallTransaction(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -50,7 +55,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.CreateTransferTransaction(context.Background()).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.CreateTransferTransaction(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -64,7 +69,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		var transactionId string
 
-		resp, httpRes, err := apiClient.TransactionsAPI.DropTransactionById(context.Background(), transactionId).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.DropTransactionById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -76,7 +81,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.EstimateFee(context.Background()).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.EstimateFee(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -88,7 +93,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.GetChainFeePrice(context.Background()).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.GetChainFeePrice(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -102,7 +107,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		var transactionId string
 
-		resp, httpRes, err := apiClient.TransactionsAPI.GetTransactionById(context.Background(), transactionId).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.GetTransactionById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -114,7 +119,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.ListTransactions(context.Background()).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.ListTransactions(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -128,7 +133,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		var transactionId string
 
-		resp, httpRes, err := apiClient.TransactionsAPI.ResendTransactionById(context.Background(), transactionId).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.ResendTransactionById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -142,7 +147,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		var transactionId string
 
-		resp, httpRes, err := apiClient.TransactionsAPI.RetryTransactionDoubleCheckById(context.Background(), transactionId).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.RetryTransactionDoubleCheckById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -156,7 +161,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		var transactionId string
 
-		resp, httpRes, err := apiClient.TransactionsAPI.SpeedupTransactionById(context.Background(), transactionId).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.SpeedupTransactionById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -170,7 +175,7 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 		var transactionId string
 
-		resp, httpRes, err := apiClient.TransactionsAPI.UpdateTransacitonById(context.Background(), transactionId).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.UpdateTransacitonById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

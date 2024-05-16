@@ -42,16 +42,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
-	addWalletAddressRequest := *openapiclient.NewAddWalletAddressRequest("ETH_USDT", int32(1)) // AddWalletAddressRequest | The request body to add address for a wallet (optional)
+	addWalletAddressRequest := *CoboWaas2.NewAddWalletAddressRequest("ETH_USDT", int32(1)) // AddWalletAddressRequest | The request body to add address for a wallet (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.AddWalletAddress(context.Background(), walletId).AddWalletAddressRequest(addWalletAddressRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.AddWalletAddress(ctx, walletId).AddWalletAddressRequest(addWalletAddressRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.AddWalletAddress``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -114,15 +121,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	createdWallet := openapiclient.CreatedWallet{CreateCustodialWallet: openapiclient.NewCreateCustodialWallet("My WaaS 2.0 Wallet", "WalletType_example", "WalletSubtype_example")} // CreatedWallet | The request body to create a wallet (optional)
+	createdWallet := CoboWaas2.CreatedWallet{CreateCustodialWallet: CoboWaas2.NewCreateCustodialWallet("My WaaS 2.0 Wallet", "WalletType_example", "WalletSubtype_example")} // CreatedWallet | The request body to create a wallet (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.CreateWallet(context.Background()).CreatedWallet(createdWallet).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.CreateWallet(ctx).CreatedWallet(createdWallet).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.CreateWallet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -180,15 +194,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.WalletsAPI.DeleteWalletById(context.Background(), walletId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	r, err := apiClient.WalletsAPI.DeleteWalletById(ctx, walletId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.DeleteWalletById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -248,16 +269,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	tokenId := "ETH_USDT" // string | Unique id of the token
 	addressStr := "0x0000000000000000000000000000000000000000" // string | The address string
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetAddressValidity(context.Background()).TokenId(tokenId).AddressStr(addressStr).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetAddressValidity(ctx).TokenId(tokenId).AddressStr(addressStr).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetAddressValidity``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -316,7 +344,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -325,9 +354,15 @@ func main() {
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetAssets(context.Background()).AssetId(assetId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetAssets(ctx).AssetId(assetId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetAssets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -388,7 +423,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -397,9 +433,15 @@ func main() {
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetChains(context.Background()).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetChains(ctx).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetChains``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -460,7 +502,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -468,9 +511,15 @@ func main() {
 	toAddress := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | address
 	fromAddress := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | address (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetMaxSendValue(context.Background(), walletId).ToAddress(toAddress).FromAddress(fromAddress).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetMaxSendValue(ctx, walletId).ToAddress(toAddress).FromAddress(fromAddress).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetMaxSendValue``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -534,7 +583,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -542,9 +592,15 @@ func main() {
 	tokenId := "ETH_USDT" // string | Unique id of the token
 	addressStr := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | address (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetSpendableList(context.Background(), walletId).TokenId(tokenId).AddressStr(addressStr).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetSpendableList(ctx, walletId).TokenId(tokenId).AddressStr(addressStr).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetSpendableList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -608,18 +664,25 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	walletSubtype := openapiclient.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query
+	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query
 	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetSupportedChains(context.Background()).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetSupportedChains(ctx).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetSupportedChains``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -680,19 +743,26 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	walletSubtype := openapiclient.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query
+	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query
 	chainId := "ETH" // string | Unique id of the chain (optional)
 	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetSupportedTokens(context.Background()).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetSupportedTokens(ctx).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetSupportedTokens``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -754,7 +824,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -763,9 +834,15 @@ func main() {
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetTokens(context.Background()).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetTokens(ctx).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetTokens``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -826,16 +903,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
 	addressId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the address
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetWalletAddressById(context.Background(), walletId, addressId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetWalletAddressById(ctx, walletId, addressId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetWalletAddressById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -899,7 +983,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -910,9 +995,15 @@ func main() {
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetWalletAddressTokenBalances(context.Background(), walletId, addressId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetWalletAddressTokenBalances(ctx, walletId, addressId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetWalletAddressTokenBalances``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -980,15 +1071,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetWalletById(context.Background(), walletId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetWalletById(ctx, walletId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetWalletById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1050,7 +1148,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -1060,9 +1159,15 @@ func main() {
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.GetWalletTokenBalances(context.Background(), walletId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetWalletTokenBalances(ctx, walletId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetWalletTokenBalances``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1128,7 +1233,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -1138,9 +1244,15 @@ func main() {
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.ListAddresses(context.Background(), walletId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.ListAddresses(ctx, walletId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListAddresses``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1206,20 +1318,27 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	walletType := openapiclient.WalletType("Custodial") // WalletType | Wallet type to query (optional)
-	walletSubtype := openapiclient.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query (optional)
+	walletType := CoboWaas2.WalletType("Custodial") // WalletType | Wallet type to query (optional)
+	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query (optional)
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault (optional)
 	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.ListWallets(context.Background()).WalletType(walletType).WalletSubtype(walletSubtype).VaultId(vaultId).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.ListWallets(ctx).WalletType(walletType).WalletSubtype(walletSubtype).VaultId(vaultId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListWallets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1282,16 +1401,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
-	updateWalletByIdRequest := *openapiclient.NewUpdateWalletByIdRequest() // UpdateWalletByIdRequest | The request body to update a wallet (optional)
+	updateWalletByIdRequest := *CoboWaas2.NewUpdateWalletByIdRequest() // UpdateWalletByIdRequest | The request body to update a wallet (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsAPI.UpdateWalletById(context.Background(), walletId).UpdateWalletByIdRequest(updateWalletByIdRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.UpdateWalletById(ctx, walletId).UpdateWalletByIdRequest(updateWalletByIdRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.UpdateWalletById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)

@@ -42,7 +42,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -50,9 +51,15 @@ func main() {
 	tssRequestId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the tss request
 	tssRequestAction := "cancel" // string | The action of tss request.
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.CancelTssRequest(context.Background(), vaultId, tssRequestId).TssRequestAction(tssRequestAction).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.CancelTssRequest(ctx, vaultId, tssRequestId).TssRequestAction(tssRequestAction).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.CancelTssRequest``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -117,16 +124,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
-	createKeyGroupRequest := *openapiclient.NewCreateKeyGroupRequest(openapiclient.KeyGroupType("MainKeyGroup"), int32(123), int32(123), []openapiclient.CreateKeyGroupRequestKeyHoldersInner{*openapiclient.NewCreateKeyGroupRequestKeyHoldersInner()}) // CreateKeyGroupRequest | The request body to create a mpc key group (optional)
+	createKeyGroupRequest := *CoboWaas2.NewCreateKeyGroupRequest(CoboWaas2.KeyGroupType("MainKeyGroup"), int32(123), int32(123), []CoboWaas2.CreateKeyGroupRequestKeyHoldersInner{*CoboWaas2.NewCreateKeyGroupRequestKeyHoldersInner()}) // CreateKeyGroupRequest | The request body to create a mpc key group (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateKeyGroup(context.Background(), vaultId).CreateKeyGroupRequest(createKeyGroupRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateKeyGroup(ctx, vaultId).CreateKeyGroupRequest(createKeyGroupRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.CreateKeyGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -189,15 +203,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	createMpcProjectRequest := *openapiclient.NewCreateMpcProjectRequest(int32(123), int32(123)) // CreateMpcProjectRequest | The request body to create a mpc project (optional)
+	createMpcProjectRequest := *CoboWaas2.NewCreateMpcProjectRequest(int32(123), int32(123)) // CreateMpcProjectRequest | The request body to create a mpc project (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateMpcProject(context.Background()).CreateMpcProjectRequest(createMpcProjectRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateMpcProject(ctx).CreateMpcProjectRequest(createMpcProjectRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.CreateMpcProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -255,15 +276,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	createMpcVaultRequest := *openapiclient.NewCreateMpcVaultRequest("My mpc vault", openapiclient.MPCVaultType("OrgControlled")) // CreateMpcVaultRequest | The request body to create a mpc vault (optional)
+	createMpcVaultRequest := *CoboWaas2.NewCreateMpcVaultRequest("My mpc vault", CoboWaas2.MPCVaultType("OrgControlled")) // CreateMpcVaultRequest | The request body to create a mpc vault (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateMpcVault(context.Background()).CreateMpcVaultRequest(createMpcVaultRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateMpcVault(ctx).CreateMpcVaultRequest(createMpcVaultRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.CreateMpcVault``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -321,16 +349,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
-	createTssRequestRequest := *openapiclient.NewCreateTssRequestRequest(openapiclient.TSSRequestType("KeyGen"), "TargetKeyGroupId_example") // CreateTssRequestRequest | The request body to create a tss request (optional)
+	createTssRequestRequest := *CoboWaas2.NewCreateTssRequestRequest(CoboWaas2.TSSRequestType("KeyGen"), "TargetKeyGroupId_example") // CreateTssRequestRequest | The request body to create a tss request (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateTssRequest(context.Background(), vaultId).CreateTssRequestRequest(createTssRequestRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.CreateTssRequest(ctx, vaultId).CreateTssRequestRequest(createTssRequestRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.CreateTssRequest``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -393,16 +428,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
 	keyGroupId := "880311524363903326" // string | Unique id of the tss group
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.DeleteKeyGroup(context.Background(), vaultId, keyGroupId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.DeleteKeyGroup(ctx, vaultId, keyGroupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.DeleteKeyGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -466,16 +508,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
 	keyGroupId := "880311524363903326" // string | Unique id of the tss group
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.GetKeyGroup(context.Background(), vaultId, keyGroupId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.GetKeyGroup(ctx, vaultId, keyGroupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.GetKeyGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -539,15 +588,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc project
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.GetMpcProject(context.Background(), projectId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.GetMpcProject(ctx, projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.GetMpcProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -609,15 +665,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.GetMpcVault(context.Background(), vaultId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.GetMpcVault(ctx, vaultId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.GetMpcVault``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -679,16 +742,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
 	tssRequestId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the tss request
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.GetTssRequest(context.Background(), vaultId, tssRequestId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.GetTssRequest(ctx, vaultId, tssRequestId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.GetTssRequest``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -752,14 +822,21 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.ListCoboKeyHolder(context.Background()).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.ListCoboKeyHolder(ctx).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.ListCoboKeyHolder``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -813,16 +890,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
-	keyGroupType := openapiclient.KeyGroupType("MainKeyGroup") // KeyGroupType | The type of key group. (optional)
+	keyGroupType := CoboWaas2.KeyGroupType("MainKeyGroup") // KeyGroupType | The type of key group. (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.ListKeyGroup(context.Background(), vaultId).KeyGroupType(keyGroupType).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.ListKeyGroup(ctx, vaultId).KeyGroupType(keyGroupType).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.ListKeyGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -885,14 +969,21 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.ListMpcProject(context.Background()).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.ListMpcProject(ctx).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.ListMpcProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -946,15 +1037,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc project (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.ListMpcVault(context.Background()).ProjectId(projectId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.ListMpcVault(ctx).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.ListMpcVault``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1012,16 +1110,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
 	targetKeyGroupId := "880311524363903326" // string | The target key group id of tss request. (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.ListTssRequest(context.Background(), vaultId).TargetKeyGroupId(targetKeyGroupId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.ListTssRequest(ctx, vaultId).TargetKeyGroupId(targetKeyGroupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.ListTssRequest``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1084,16 +1189,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault
-	modifyMpcVaultRequest := *openapiclient.NewModifyMpcVaultRequest("my mpc vault name") // ModifyMpcVaultRequest | The request body to update a mpc vault (optional)
+	modifyMpcVaultRequest := *CoboWaas2.NewModifyMpcVaultRequest("my mpc vault name") // ModifyMpcVaultRequest | The request body to update a mpc vault (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.ModifyMpcVault(context.Background(), vaultId).ModifyMpcVaultRequest(modifyMpcVaultRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.ModifyMpcVault(ctx, vaultId).ModifyMpcVaultRequest(modifyMpcVaultRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.ModifyMpcVault``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1156,7 +1268,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -1164,9 +1277,15 @@ func main() {
 	keyGroupId := "880311524363903326" // string | Unique id of the tss group
 	updateKeyGroupAction := "UpgradeToMainKeyGroup" // string | The action of update key group
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.UpdateKeyGroup(context.Background(), vaultId, keyGroupId).UpdateKeyGroupAction(updateKeyGroupAction).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.UpdateKeyGroup(ctx, vaultId, keyGroupId).UpdateKeyGroupAction(updateKeyGroupAction).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.UpdateKeyGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1231,16 +1350,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc project
-	updateMpcProjectRequest := *openapiclient.NewUpdateMpcProjectRequest("My mpc new project name") // UpdateMpcProjectRequest | The request body to update a mpc project (optional)
+	updateMpcProjectRequest := *CoboWaas2.NewUpdateMpcProjectRequest("My mpc new project name") // UpdateMpcProjectRequest | The request body to update a mpc project (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WalletsMPCWalletAPI.UpdateMpcProject(context.Background(), projectId).UpdateMpcProjectRequest(updateMpcProjectRequest).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletAPI.UpdateMpcProject(ctx, projectId).UpdateMpcProjectRequest(updateMpcProjectRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.UpdateMpcProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)

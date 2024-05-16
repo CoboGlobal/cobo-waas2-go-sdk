@@ -1,8 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-Cobo WaaS 2.0 enables you to programmatically access Cobo's full suite of crypto wallet technologies with powerful and flexible access controls.  # Wallet technologies - Custodial Wallet - MPC Wallet - Smart Contract Wallet (Based on Safe{Wallet}) - Exchange Wallet  # Risk Control technologies - Workflow - Access Control List (ACL)  # Risk Control targets - Wallet Management   - User/team and their permission management   - Risk control configurations, e.g. whitelist, blacklist, rate-limiting etc. - Blockchain Interaction   - Crypto transfer   - Smart Contract Invocation  # Important HTTPS only. RESTful, resource oriented  # Get Started Set up your APIs or get authorization  # Authentication and Authorization CoboAuth  # Request and Response application/json  # Error Handling  ### Common error codes | Error Code | Description | | -- | -- |  ### API-specific error codes For error codes that are dedicated to a specific API, see the Error codes section in each API specification, for example, /v3/wallets.  # Rate and Usage Limiting  # Idempotent Request  # Pagination # Support [Developer Hub](https://cobo.com/developers) 
-
 API version: 1.0.0
 Contact: support@cobo.com
 */
@@ -28,39 +26,14 @@ func (c contextKey) String() string {
 	return "auth " + string(c)
 }
 
+const ProdEnv = 0
+const DevEnv = 1
+
 var (
-	// ContextAPIKeys takes a string apikey as authentication for the request
-	ContextAPIKeys = contextKey("apiKeys")
-
-	// ContextServerIndex uses a server configuration from the index.
-	ContextServerIndex = contextKey("serverIndex")
-
-	// ContextOperationServerIndices uses a server configuration from the index mapping.
-	ContextOperationServerIndices = contextKey("serverOperationIndices")
-
-	// ContextServerVariables overrides a server configuration variables.
-	ContextServerVariables = contextKey("serverVariables")
-
-	// ContextOperationServerVariables overrides a server configuration variables using operation specific values.
-	ContextOperationServerVariables = contextKey("serverOperationVariables")
+	ContextServerHost =contextKey("serverHost")
+	ContextEnv = contextKey("env")
+	ContextPortalSigner = contextKey("apiSigner")
 )
-
-// PortalApiKey provides API key based authentication to a request passed via context using ContextPortalSigner
-type PortalApiKey struct {
-	Key string
-}
-
-// BasicAuth provides basic http authentication to a request passed via context using ContextBasicAuth
-type BasicAuth struct {
-	UserName string `json:"userName,omitempty"`
-	Password string `json:"password,omitempty"`
-}
-
-// APIKey provides API key based authentication to a request passed via context using ContextAPIKey
-type APIKey struct {
-	Key    string
-	Prefix string
-}
 
 // ServerVariable stores the information about a server variable
 type ServerVariable struct {
@@ -95,7 +68,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "OpenAPI-Generator/0.1.0/go",
+		UserAgent:        "cobo-waas2-go-api/0.1.0",
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
@@ -152,7 +125,7 @@ func (c *Configuration) ServerURL(index int, variables map[string]string) (strin
 }
 
 func getServerIndex(ctx context.Context) (int, error) {
-	si := ctx.Value(ContextServerIndex)
+	si := ctx.Value(ContextEnv)
 	if si != nil {
 		if index, ok := si.(int); ok {
 			return index, nil
@@ -160,47 +133,6 @@ func getServerIndex(ctx context.Context) (int, error) {
 		return 0, reportError("Invalid type %T should be int", si)
 	}
 	return 0, nil
-}
-
-func getServerOperationIndex(ctx context.Context, endpoint string) (int, error) {
-	osi := ctx.Value(ContextOperationServerIndices)
-	if osi != nil {
-		if operationIndices, ok := osi.(map[string]int); !ok {
-			return 0, reportError("Invalid type %T should be map[string]int", osi)
-		} else {
-			index, ok := operationIndices[endpoint]
-			if ok {
-				return index, nil
-			}
-		}
-	}
-	return getServerIndex(ctx)
-}
-
-func getServerVariables(ctx context.Context) (map[string]string, error) {
-	sv := ctx.Value(ContextServerVariables)
-	if sv != nil {
-		if variables, ok := sv.(map[string]string); ok {
-			return variables, nil
-		}
-		return nil, reportError("ctx value of ContextServerVariables has invalid type %T should be map[string]string", sv)
-	}
-	return nil, nil
-}
-
-func getServerOperationVariables(ctx context.Context, endpoint string) (map[string]string, error) {
-	osv := ctx.Value(ContextOperationServerVariables)
-	if osv != nil {
-		if operationVariables, ok := osv.(map[string]map[string]string); !ok {
-			return nil, reportError("ctx value of ContextOperationServerVariables has invalid type %T should be map[string]map[string]string", osv)
-		} else {
-			variables, ok := operationVariables[endpoint]
-			if ok {
-				return variables, nil
-			}
-		}
-	}
-	return getServerVariables(ctx)
 }
 
 // ServerURLWithContext returns a new server URL given an endpoint
@@ -213,16 +145,15 @@ func (c *Configuration) ServerURLWithContext(ctx context.Context, endpoint strin
 	if ctx == nil {
 		return sc.URL(0, nil)
 	}
+    host := ctx.Value(ContextServerHost)
+	if host != nil {
+		return host.(string), nil
+	}
 
-	index, err := getServerOperationIndex(ctx, endpoint)
+	index, err := getServerIndex(ctx)
 	if err != nil {
 		return "", err
 	}
 
-	variables, err := getServerOperationVariables(ctx, endpoint)
-	if err != nil {
-		return "", err
-	}
-
-	return sc.URL(index, variables)
+	return sc.URL(index, nil)
 }

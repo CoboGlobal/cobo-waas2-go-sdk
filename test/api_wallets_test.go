@@ -14,13 +14,18 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
 
 	t.Run("Test WalletsAPIService AddWalletAddress", func(t *testing.T) {
 
@@ -28,7 +33,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.AddWalletAddress(context.Background(), walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.AddWalletAddress(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -40,7 +45,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.CreateWallet(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.CreateWallet(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -54,7 +59,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		httpRes, err := apiClient.WalletsAPI.DeleteWalletById(context.Background(), walletId).Execute()
+		httpRes, err := apiClient.WalletsAPI.DeleteWalletById(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -65,7 +70,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetAddressValidity(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetAddressValidity(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -77,7 +82,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetAssets(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetAssets(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -89,7 +94,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetChains(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetChains(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -103,7 +108,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetMaxSendValue(context.Background(), walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetMaxSendValue(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -117,7 +122,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetSpendableList(context.Background(), walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetSpendableList(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -129,7 +134,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetSupportedChains(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetSupportedChains(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -141,7 +146,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetSupportedTokens(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetSupportedTokens(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -153,7 +158,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetTokens(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetTokens(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -168,7 +173,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 		var walletId string
 		var addressId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetWalletAddressById(context.Background(), walletId, addressId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetWalletAddressById(ctx, walletId, addressId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -183,7 +188,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 		var walletId string
 		var addressId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetWalletAddressTokenBalances(context.Background(), walletId, addressId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetWalletAddressTokenBalances(ctx, walletId, addressId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -197,7 +202,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetWalletById(context.Background(), walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetWalletById(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -211,7 +216,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetWalletTokenBalances(context.Background(), walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetWalletTokenBalances(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -225,7 +230,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.ListAddresses(context.Background(), walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.ListAddresses(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -237,7 +242,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.ListWallets(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.ListWallets(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -251,7 +256,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 		var walletId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.UpdateWalletById(context.Background(), walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.UpdateWalletById(ctx, walletId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

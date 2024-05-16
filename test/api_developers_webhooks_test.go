@@ -14,13 +14,18 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
 
 	t.Run("Test DevelopersWebhooksAPIService GetWebhookEvent", func(t *testing.T) {
 
@@ -28,7 +33,7 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 		var eventId string
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEvent(context.Background(), eventId).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEvent(ctx, eventId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -42,7 +47,7 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 		var eventId string
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEventLogs(context.Background(), eventId).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEventLogs(ctx, eventId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -54,7 +59,7 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListEvents(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListEvents(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -66,7 +71,7 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListWebhookEventDefinitions(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListWebhookEventDefinitions(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -80,7 +85,7 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 		var eventId string
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.RetryWebhookEvent(context.Background(), eventId).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.RetryWebhookEvent(ctx, eventId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

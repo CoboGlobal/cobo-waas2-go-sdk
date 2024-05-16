@@ -36,15 +36,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	signMessage := *openapiclient.NewSignMessage("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "ETH") // SignMessage | The request body to create a message sign transaction (optional)
+	signMessage := *CoboWaas2.NewSignMessage("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "ETH") // SignMessage | The request body to create a message sign transaction (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.CreateSignMessageTransaction(context.Background()).SignMessage(signMessage).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.CreateSignMessageTransaction(ctx).SignMessage(signMessage).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.CreateSignMessageTransaction``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -102,15 +109,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	smartContractCall := *openapiclient.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@47058864)) // SmartContractCall | The request body to create a smart contract transaction (optional)
+	smartContractCall := *CoboWaas2.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@47058864)) // SmartContractCall | The request body to create a smart contract transaction (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.CreateSmartContractCallTransaction(context.Background()).SmartContractCall(smartContractCall).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.CreateSmartContractCallTransaction(ctx).SmartContractCall(smartContractCall).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.CreateSmartContractCallTransaction``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -168,15 +182,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	transfer := *openapiclient.NewTransfer("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", openapiclient.TransferSource{BaseTransferSource: openapiclient.NewBaseTransferSource(openapiclient.WalletSubtype("Asset"), "f47ac10b-58cc-4372-a567-0e02b2c3d479")}, "ETH_USDT", "1.5", openapiclient.TransferDestination{AddressTransferDestination: openapiclient.NewAddressTransferDestination(openapiclient.TransferDestinationType("Address"), "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}) // Transfer | The request body to create a transfer transaction (optional)
+	transfer := *CoboWaas2.NewTransfer("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", CoboWaas2.TransferSource{BaseTransferSource: CoboWaas2.NewBaseTransferSource(CoboWaas2.WalletSubtype("Asset"), "f47ac10b-58cc-4372-a567-0e02b2c3d479")}, "ETH_USDT", "1.5", CoboWaas2.TransferDestination{AddressTransferDestination: CoboWaas2.NewAddressTransferDestination(CoboWaas2.TransferDestinationType("Address"), "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}) // Transfer | The request body to create a transfer transaction (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.CreateTransferTransaction(context.Background()).Transfer(transfer).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.CreateTransferTransaction(ctx).Transfer(transfer).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.CreateTransferTransaction``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -234,16 +255,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
-	transactionFee := openapiclient.TransactionFee{EvmEip1559TransactionFee: openapiclient.NewEvmEip1559TransactionFee("1", int32(123), int32(123), openapiclient.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
+	transactionFee := CoboWaas2.TransactionFee{EvmEip1559TransactionFee: CoboWaas2.NewEvmEip1559TransactionFee("1", int32(123), int32(123), CoboWaas2.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.DropTransactionById(context.Background(), transactionId).TransactionFee(transactionFee).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.DropTransactionById(ctx, transactionId).TransactionFee(transactionFee).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.DropTransactionById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -306,15 +334,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
-	estimateFee := openapiclient.EstimateFee{SmartContractCall: openapiclient.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@47058864))} // EstimateFee | The request body to estimate fee of transfer or call transaction (optional)
+	estimateFee := CoboWaas2.EstimateFee{SmartContractCall: CoboWaas2.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@47058864))} // EstimateFee | The request body to estimate fee of transfer or call transaction (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.EstimateFee(context.Background()).EstimateFee(estimateFee).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.EstimateFee(ctx).EstimateFee(estimateFee).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.EstimateFee``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -372,16 +407,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	chainId := "ETH" // string | Unique id of the chain (optional)
 	tokenId := "ETH_USDT" // string | Unique id of the token (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.GetChainFeePrice(context.Background()).ChainId(chainId).TokenId(tokenId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.GetChainFeePrice(ctx).ChainId(chainId).TokenId(tokenId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.GetChainFeePrice``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -440,15 +482,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.GetTransactionById(context.Background(), transactionId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.GetTransactionById(ctx, transactionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.GetTransactionById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -510,7 +559,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
@@ -521,9 +571,15 @@ func main() {
 	before := "123" // string | Cursor string received from previous request (optional) (default to "")
 	after := "123" // string | Cursor string received from previous request (optional) (default to "")
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.ListTransactions(context.Background()).RequestId(requestId).SortBy(sortBy).Direction(direction).Limit(limit).Before(before).After(after).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.ListTransactions(ctx).RequestId(requestId).SortBy(sortBy).Direction(direction).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.ListTransactions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -586,15 +642,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.ResendTransactionById(context.Background(), transactionId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.ResendTransactionById(ctx, transactionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.ResendTransactionById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -656,15 +719,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.RetryTransactionDoubleCheckById(context.Background(), transactionId).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.RetryTransactionDoubleCheckById(ctx, transactionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.RetryTransactionDoubleCheckById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -726,16 +796,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
-	transactionFee := openapiclient.TransactionFee{EvmEip1559TransactionFee: openapiclient.NewEvmEip1559TransactionFee("1", int32(123), int32(123), openapiclient.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
+	transactionFee := CoboWaas2.TransactionFee{EvmEip1559TransactionFee: CoboWaas2.NewEvmEip1559TransactionFee("1", int32(123), int32(123), CoboWaas2.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.SpeedupTransactionById(context.Background(), transactionId).TransactionFee(transactionFee).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.SpeedupTransactionById(ctx, transactionId).TransactionFee(transactionFee).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.SpeedupTransactionById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -798,16 +875,23 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
-	transactionDetails := *openapiclient.NewTransactionDetails() // TransactionDetails | The request body to update a address (optional)
+	transactionDetails := *CoboWaas2.NewTransactionDetails() // TransactionDetails | The request body to update a address (optional)
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TransactionsAPI.UpdateTransacitonById(context.Background(), transactionId).TransactionDetails(transactionDetails).Execute()
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.UpdateTransacitonById(ctx, transactionId).TransactionDetails(transactionDetails).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.UpdateTransacitonById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)

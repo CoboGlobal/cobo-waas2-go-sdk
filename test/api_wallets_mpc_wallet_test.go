@@ -14,13 +14,18 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/CoboGlobal/cobo-waas2-go-api"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
 
 	t.Run("Test WalletsMPCWalletAPIService CancelTssRequest", func(t *testing.T) {
 
@@ -29,7 +34,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 		var vaultId string
 		var tssRequestId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CancelTssRequest(context.Background(), vaultId, tssRequestId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CancelTssRequest(ctx, vaultId, tssRequestId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -43,7 +48,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var vaultId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateKeyGroup(context.Background(), vaultId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateKeyGroup(ctx, vaultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -55,7 +60,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateMpcProject(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateMpcProject(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -67,7 +72,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateMpcVault(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateMpcVault(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -81,7 +86,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var vaultId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateTssRequest(context.Background(), vaultId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.CreateTssRequest(ctx, vaultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -96,7 +101,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 		var vaultId string
 		var keyGroupId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.DeleteKeyGroup(context.Background(), vaultId, keyGroupId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.DeleteKeyGroup(ctx, vaultId, keyGroupId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -111,7 +116,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 		var vaultId string
 		var keyGroupId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetKeyGroup(context.Background(), vaultId, keyGroupId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetKeyGroup(ctx, vaultId, keyGroupId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -125,7 +130,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var projectId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetMpcProject(context.Background(), projectId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetMpcProject(ctx, projectId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -139,7 +144,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var vaultId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetMpcVault(context.Background(), vaultId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetMpcVault(ctx, vaultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -154,7 +159,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 		var vaultId string
 		var tssRequestId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetTssRequest(context.Background(), vaultId, tssRequestId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.GetTssRequest(ctx, vaultId, tssRequestId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -166,7 +171,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListCoboKeyHolder(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListCoboKeyHolder(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -180,7 +185,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var vaultId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListKeyGroup(context.Background(), vaultId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListKeyGroup(ctx, vaultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -192,7 +197,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListMpcProject(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListMpcProject(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -204,7 +209,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListMpcVault(context.Background()).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListMpcVault(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -218,7 +223,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var vaultId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListTssRequest(context.Background(), vaultId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ListTssRequest(ctx, vaultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -232,7 +237,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var vaultId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ModifyMpcVault(context.Background(), vaultId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.ModifyMpcVault(ctx, vaultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -247,7 +252,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 		var vaultId string
 		var keyGroupId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.UpdateKeyGroup(context.Background(), vaultId, keyGroupId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.UpdateKeyGroup(ctx, vaultId, keyGroupId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -261,7 +266,7 @@ func Test_CoboWaas2_WalletsMPCWalletAPIService(t *testing.T) {
 
 		var projectId string
 
-		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.UpdateMpcProject(context.Background(), projectId).Execute()
+		resp, httpRes, err := apiClient.WalletsMPCWalletAPI.UpdateMpcProject(ctx, projectId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
