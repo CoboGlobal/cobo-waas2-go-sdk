@@ -18,24 +18,14 @@ import (
 // checks if the TransactionToken type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionToken{}
 
-// TransactionToken struct for TransactionToken
+// TransactionToken The data for transaction asset information.
 type TransactionToken struct {
 	// ID of the token. Unique in all chains scope.
-	TokenId string `json:"token_id"`
-	// The blockchain on which the token operates.
-	ChainId string `json:"chain_id"`
-	// Symbol for the token.
-	Symbol *string `json:"symbol,omitempty"`
-	// The description of the token.
-	Description *string `json:"description,omitempty"`
-	// URL of the icon image.
-	IconUrl *string `json:"icon_url,omitempty"`
-	// Address for token, if applicable.
-	TokenAddress *string `json:"token_address,omitempty"`
+	TokenId *string `json:"token_id,omitempty"`
 	// ID of the asset. Used to group token balance when needed.
-	AssetId *string `json:"asset_id,omitempty"`
+	AssetId string `json:"asset_id"`
 	// Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5) 
-	Amount *float32 `json:"amount,omitempty"`
+	Amount float32 `json:"amount"`
 }
 
 type _TransactionToken TransactionToken
@@ -44,10 +34,10 @@ type _TransactionToken TransactionToken
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransactionToken(tokenId string, chainId string) *TransactionToken {
+func NewTransactionToken(assetId string, amount float32) *TransactionToken {
 	this := TransactionToken{}
-	this.TokenId = tokenId
-	this.ChainId = chainId
+	this.AssetId = assetId
+	this.Amount = amount
 	return &this
 }
 
@@ -59,244 +49,84 @@ func NewTransactionTokenWithDefaults() *TransactionToken {
 	return &this
 }
 
-// GetTokenId returns the TokenId field value
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
 func (o *TransactionToken) GetTokenId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		var ret string
 		return ret
 	}
-
-	return o.TokenId
+	return *o.TokenId
 }
 
-// GetTokenIdOk returns a tuple with the TokenId field value
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TransactionToken) GetTokenIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		return nil, false
 	}
-	return &o.TokenId, true
+	return o.TokenId, true
 }
 
-// SetTokenId sets field value
+// HasTokenId returns a boolean if a field has been set.
+func (o *TransactionToken) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
 func (o *TransactionToken) SetTokenId(v string) {
-	o.TokenId = v
+	o.TokenId = &v
 }
 
-// GetChainId returns the ChainId field value
-func (o *TransactionToken) GetChainId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ChainId
-}
-
-// GetChainIdOk returns a tuple with the ChainId field value
-// and a boolean to check if the value has been set.
-func (o *TransactionToken) GetChainIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ChainId, true
-}
-
-// SetChainId sets field value
-func (o *TransactionToken) SetChainId(v string) {
-	o.ChainId = v
-}
-
-// GetSymbol returns the Symbol field value if set, zero value otherwise.
-func (o *TransactionToken) GetSymbol() string {
-	if o == nil || IsNil(o.Symbol) {
-		var ret string
-		return ret
-	}
-	return *o.Symbol
-}
-
-// GetSymbolOk returns a tuple with the Symbol field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TransactionToken) GetSymbolOk() (*string, bool) {
-	if o == nil || IsNil(o.Symbol) {
-		return nil, false
-	}
-	return o.Symbol, true
-}
-
-// HasSymbol returns a boolean if a field has been set.
-func (o *TransactionToken) HasSymbol() bool {
-	if o != nil && !IsNil(o.Symbol) {
-		return true
-	}
-
-	return false
-}
-
-// SetSymbol gets a reference to the given string and assigns it to the Symbol field.
-func (o *TransactionToken) SetSymbol(v string) {
-	o.Symbol = &v
-}
-
-// GetDescription returns the Description field value if set, zero value otherwise.
-func (o *TransactionToken) GetDescription() string {
-	if o == nil || IsNil(o.Description) {
-		var ret string
-		return ret
-	}
-	return *o.Description
-}
-
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TransactionToken) GetDescriptionOk() (*string, bool) {
-	if o == nil || IsNil(o.Description) {
-		return nil, false
-	}
-	return o.Description, true
-}
-
-// HasDescription returns a boolean if a field has been set.
-func (o *TransactionToken) HasDescription() bool {
-	if o != nil && !IsNil(o.Description) {
-		return true
-	}
-
-	return false
-}
-
-// SetDescription gets a reference to the given string and assigns it to the Description field.
-func (o *TransactionToken) SetDescription(v string) {
-	o.Description = &v
-}
-
-// GetIconUrl returns the IconUrl field value if set, zero value otherwise.
-func (o *TransactionToken) GetIconUrl() string {
-	if o == nil || IsNil(o.IconUrl) {
-		var ret string
-		return ret
-	}
-	return *o.IconUrl
-}
-
-// GetIconUrlOk returns a tuple with the IconUrl field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TransactionToken) GetIconUrlOk() (*string, bool) {
-	if o == nil || IsNil(o.IconUrl) {
-		return nil, false
-	}
-	return o.IconUrl, true
-}
-
-// HasIconUrl returns a boolean if a field has been set.
-func (o *TransactionToken) HasIconUrl() bool {
-	if o != nil && !IsNil(o.IconUrl) {
-		return true
-	}
-
-	return false
-}
-
-// SetIconUrl gets a reference to the given string and assigns it to the IconUrl field.
-func (o *TransactionToken) SetIconUrl(v string) {
-	o.IconUrl = &v
-}
-
-// GetTokenAddress returns the TokenAddress field value if set, zero value otherwise.
-func (o *TransactionToken) GetTokenAddress() string {
-	if o == nil || IsNil(o.TokenAddress) {
-		var ret string
-		return ret
-	}
-	return *o.TokenAddress
-}
-
-// GetTokenAddressOk returns a tuple with the TokenAddress field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TransactionToken) GetTokenAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.TokenAddress) {
-		return nil, false
-	}
-	return o.TokenAddress, true
-}
-
-// HasTokenAddress returns a boolean if a field has been set.
-func (o *TransactionToken) HasTokenAddress() bool {
-	if o != nil && !IsNil(o.TokenAddress) {
-		return true
-	}
-
-	return false
-}
-
-// SetTokenAddress gets a reference to the given string and assigns it to the TokenAddress field.
-func (o *TransactionToken) SetTokenAddress(v string) {
-	o.TokenAddress = &v
-}
-
-// GetAssetId returns the AssetId field value if set, zero value otherwise.
+// GetAssetId returns the AssetId field value
 func (o *TransactionToken) GetAssetId() string {
-	if o == nil || IsNil(o.AssetId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.AssetId
+
+	return o.AssetId
 }
 
-// GetAssetIdOk returns a tuple with the AssetId field value if set, nil otherwise
+// GetAssetIdOk returns a tuple with the AssetId field value
 // and a boolean to check if the value has been set.
 func (o *TransactionToken) GetAssetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.AssetId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AssetId, true
+	return &o.AssetId, true
 }
 
-// HasAssetId returns a boolean if a field has been set.
-func (o *TransactionToken) HasAssetId() bool {
-	if o != nil && !IsNil(o.AssetId) {
-		return true
-	}
-
-	return false
-}
-
-// SetAssetId gets a reference to the given string and assigns it to the AssetId field.
+// SetAssetId sets field value
 func (o *TransactionToken) SetAssetId(v string) {
-	o.AssetId = &v
+	o.AssetId = v
 }
 
-// GetAmount returns the Amount field value if set, zero value otherwise.
+// GetAmount returns the Amount field value
 func (o *TransactionToken) GetAmount() float32 {
-	if o == nil || IsNil(o.Amount) {
+	if o == nil {
 		var ret float32
 		return ret
 	}
-	return *o.Amount
+
+	return o.Amount
 }
 
-// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
+// GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
 func (o *TransactionToken) GetAmountOk() (*float32, bool) {
-	if o == nil || IsNil(o.Amount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Amount, true
+	return &o.Amount, true
 }
 
-// HasAmount returns a boolean if a field has been set.
-func (o *TransactionToken) HasAmount() bool {
-	if o != nil && !IsNil(o.Amount) {
-		return true
-	}
-
-	return false
-}
-
-// SetAmount gets a reference to the given float32 and assigns it to the Amount field.
+// SetAmount sets field value
 func (o *TransactionToken) SetAmount(v float32) {
-	o.Amount = &v
+	o.Amount = v
 }
 
 func (o TransactionToken) MarshalJSON() ([]byte, error) {
@@ -309,26 +139,11 @@ func (o TransactionToken) MarshalJSON() ([]byte, error) {
 
 func (o TransactionToken) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["token_id"] = o.TokenId
-	toSerialize["chain_id"] = o.ChainId
-	if !IsNil(o.Symbol) {
-		toSerialize["symbol"] = o.Symbol
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
 	}
-	if !IsNil(o.Description) {
-		toSerialize["description"] = o.Description
-	}
-	if !IsNil(o.IconUrl) {
-		toSerialize["icon_url"] = o.IconUrl
-	}
-	if !IsNil(o.TokenAddress) {
-		toSerialize["token_address"] = o.TokenAddress
-	}
-	if !IsNil(o.AssetId) {
-		toSerialize["asset_id"] = o.AssetId
-	}
-	if !IsNil(o.Amount) {
-		toSerialize["amount"] = o.Amount
-	}
+	toSerialize["asset_id"] = o.AssetId
+	toSerialize["amount"] = o.Amount
 	return toSerialize, nil
 }
 
@@ -337,8 +152,8 @@ func (o *TransactionToken) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"token_id",
-		"chain_id",
+		"asset_id",
+		"amount",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -6,8 +6,8 @@ crypto wallet technologies with powerful and flexible access controls.
 # Wallet technologies
 - Custodial Wallet
 - MPC Wallet
-- Smart Contract Wallet (Based on Safe{Wallet})
-- Exchange Wallet
+- Smart Contract Wallet (Based on Safe{Wallet}, to be supported later)
+- Exchange Wallet(To be supported later)
 
 # Risk Control technologies
 - Workflow
@@ -38,13 +38,27 @@ application/json
 ### Common error codes
 | Error Code | Description |
 | -- | -- |
+| `2000` | Internal error |
+| `2002` | Unsupported HTTP method |
+| `2003` | Missing required parameters |
+| `2006` | Illegal parameter format or value |
+| `2010` | Exceeded frequency limit |
+| `2020` | Missing action |
+| `2021` | Missing handler |
+| `2022` | Missing required request header |
+| `2023` | Verification failed |
+| `2024` | Authentication failed |
+| `2025` | Forbidden |
+| `2026` | Too many requests |
+| `2027` | Exceed quota limit |
+| `2028` | Not found |
+| `2029` | Invalid status |
+| `2040` | Duplicated key |
 
 ### API-specific error codes
-For error codes that are dedicated to a specific API, see the Error codes section in each API specification, for example, /v3/wallets.
+For error codes that are dedicated to a specific API, see the Error codes section in each API specification, for example, /v2/wallets.
 
 # Rate and Usage Limiting
-
-# Idempotent Request
 
 # Pagination
 # Support
@@ -113,17 +127,15 @@ ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.cobo.com/v3*
+All URIs are relative to *https://api.cobo.com/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DevelopersWebhooksAPI* | [**GetWebhookEvent**](docs/DevelopersWebhooksAPI.md#getwebhookevent) | **Get** /webhooks/events/{event_id} | Retrieve webhook event information by event ID.
-*DevelopersWebhooksAPI* | [**GetWebhookEventLogs**](docs/DevelopersWebhooksAPI.md#getwebhookeventlogs) | **Get** /webhooks/events/{event_id}/logs | List webhook event logs by event ID.
-*DevelopersWebhooksAPI* | [**ListEvents**](docs/DevelopersWebhooksAPI.md#listevents) | **Get** /webhooks/events | List triggered events.
-*DevelopersWebhooksAPI* | [**ListWebhookEventDefinitions**](docs/DevelopersWebhooksAPI.md#listwebhookeventdefinitions) | **Get** /webhooks/events/definitions | List all supported event definitions.
-*DevelopersWebhooksAPI* | [**RetryWebhookEvent**](docs/DevelopersWebhooksAPI.md#retrywebhookevent) | **Post** /webhooks/events/{event_id}/retry | Retry webhook event by event ID.
-*TransactionsAPI* | [**CreateSignMessageTransaction**](docs/TransactionsAPI.md#createsignmessagetransaction) | **Post** /transactions/sign | Create a sign message transaction
-*TransactionsAPI* | [**CreateSmartContractCallTransaction**](docs/TransactionsAPI.md#createsmartcontractcalltransaction) | **Post** /transactions/call | Create a smart contract call transaction
+*DevelopersWebhooksAPI* | [**GetWebhookEvent**](docs/DevelopersWebhooksAPI.md#getwebhookevent) | **Get** /webhooks/events/{event_id} | Retrieve event by ID
+*DevelopersWebhooksAPI* | [**GetWebhookEventLogs**](docs/DevelopersWebhooksAPI.md#getwebhookeventlogs) | **Get** /webhooks/events/{event_id}/logs | List event logs by ID
+*DevelopersWebhooksAPI* | [**ListEvents**](docs/DevelopersWebhooksAPI.md#listevents) | **Get** /webhooks/events | List all events
+*DevelopersWebhooksAPI* | [**RetryWebhookEvent**](docs/DevelopersWebhooksAPI.md#retrywebhookevent) | **Post** /webhooks/events/{event_id}/retry | Retry event by ID
+*TransactionsAPI* | [**CreateSmartContractCallTransaction**](docs/TransactionsAPI.md#createsmartcontractcalltransaction) | **Post** /transactions/contract_call | Create a smart contract call transaction
 *TransactionsAPI* | [**CreateTransferTransaction**](docs/TransactionsAPI.md#createtransfertransaction) | **Post** /transactions/transfer | Create a transfer transaction
 *TransactionsAPI* | [**DropTransactionById**](docs/TransactionsAPI.md#droptransactionbyid) | **Post** /transactions/{transaction_id}/drop | Drop a transaction by ID
 *TransactionsAPI* | [**EstimateFee**](docs/TransactionsAPI.md#estimatefee) | **Post** /transactions/estimate_fee | Estimate the fee for transaction
@@ -131,34 +143,26 @@ Class | Method | HTTP request | Description
 *TransactionsAPI* | [**GetTransactionById**](docs/TransactionsAPI.md#gettransactionbyid) | **Get** /transactions/{transaction_id} | Get transaction information by ID
 *TransactionsAPI* | [**ListTransactions**](docs/TransactionsAPI.md#listtransactions) | **Get** /transactions | List all transactions
 *TransactionsAPI* | [**ResendTransactionById**](docs/TransactionsAPI.md#resendtransactionbyid) | **Post** /transactions/{transaction_id}/resend | Resend a transaction by ID
-*TransactionsAPI* | [**RetryTransactionDoubleCheckById**](docs/TransactionsAPI.md#retrytransactiondoublecheckbyid) | **Post** /transactions/{transaction_id}/double_check/retry | Retry up a transaction double-check by ID
+*TransactionsAPI* | [**RetryTransactionDoubleCheckById**](docs/TransactionsAPI.md#retrytransactiondoublecheckbyid) | **Post** /transactions/{transaction_id}/callback_confirmation/retry | Retry up a transaction double-check by ID
 *TransactionsAPI* | [**SpeedupTransactionById**](docs/TransactionsAPI.md#speeduptransactionbyid) | **Post** /transactions/{transaction_id}/speedup | Speed up a transaction by ID
-*TransactionsAPI* | [**UpdateTransacitonById**](docs/TransactionsAPI.md#updatetransacitonbyid) | **Put** /transactions/{transaction_id} | Update transaction by ID
-*WalletsAPI* | [**AddWalletAddress**](docs/WalletsAPI.md#addwalletaddress) | **Post** /wallets/{wallet_id}/addresses | Add address to a wallet
+*WalletsAPI* | [**AddWalletAddress**](docs/WalletsAPI.md#addwalletaddress) | **Post** /wallets/{wallet_id}/addresses | Add address to wallet
 *WalletsAPI* | [**CreateWallet**](docs/WalletsAPI.md#createwallet) | **Post** /wallets | Create new wallet
-*WalletsAPI* | [**DeleteWalletById**](docs/WalletsAPI.md#deletewalletbyid) | **Delete** /wallets/{wallet_id} | Delete a wallet by ID
-*WalletsAPI* | [**GetAddressValidity**](docs/WalletsAPI.md#getaddressvalidity) | **Get** /wallets/address/validity | Get the given address validity for token
-*WalletsAPI* | [**GetAssets**](docs/WalletsAPI.md#getassets) | **Get** /wallets/assets | List the metadata of assets
-*WalletsAPI* | [**GetChains**](docs/WalletsAPI.md#getchains) | **Get** /wallets/chains | List the metadata of chain
-*WalletsAPI* | [**GetMaxSendValue**](docs/WalletsAPI.md#getmaxsendvalue) | **Get** /wallets/{wallet_id}/max_sendable_value | Get max sendable Vaule
-*WalletsAPI* | [**GetSpendableList**](docs/WalletsAPI.md#getspendablelist) | **Get** /wallets/{wallet_id}/spendables | List the spendable utxo
-*WalletsAPI* | [**GetSupportedChains**](docs/WalletsAPI.md#getsupportedchains) | **Get** /wallets/supported_chains | List the supported chains by wallet subtype
-*WalletsAPI* | [**GetSupportedTokens**](docs/WalletsAPI.md#getsupportedtokens) | **Get** /wallets/supported_tokens | List the supported tokens by wallet subtype and chain id if specified
-*WalletsAPI* | [**GetTokens**](docs/WalletsAPI.md#gettokens) | **Get** /wallets/tokens | List the metadata of tokens
-*WalletsAPI* | [**GetWalletAddressById**](docs/WalletsAPI.md#getwalletaddressbyid) | **Get** /wallets/{wallet_id}/addresses/{address_id} | Get address information by ID
-*WalletsAPI* | [**GetWalletAddressTokenBalances**](docs/WalletsAPI.md#getwalletaddresstokenbalances) | **Get** /wallets/{wallet_id}/addresses/{address_id}/tokens | List the token balance by address in the wallets(to be specific)
-*WalletsAPI* | [**GetWalletById**](docs/WalletsAPI.md#getwalletbyid) | **Get** /wallets/{wallet_id} | Get wallet information by ID
-*WalletsAPI* | [**GetWalletTokenBalances**](docs/WalletsAPI.md#getwallettokenbalances) | **Get** /wallets/{wallet_id}/tokens | List the token balance in the wallets(to be specific)
+*WalletsAPI* | [**DeleteWalletById**](docs/WalletsAPI.md#deletewalletbyid) | **Delete** /wallets/{wallet_id} | Delete wallet by ID
+*WalletsAPI* | [**GetAddressValidity**](docs/WalletsAPI.md#getaddressvalidity) | **Get** /wallets/address/validity | Check address validity
+*WalletsAPI* | [**GetChains**](docs/WalletsAPI.md#getchains) | **Get** /wallets/chains | List chain metadata
+*WalletsAPI* | [**GetEnabledChains**](docs/WalletsAPI.md#getenabledchains) | **Get** /wallets/enabled_chains | List enabled chains
+*WalletsAPI* | [**GetEnabledTokens**](docs/WalletsAPI.md#getenabledtokens) | **Get** /wallets/enabled_tokens | List enabled tokens
+*WalletsAPI* | [**GetMaxTransferableValue**](docs/WalletsAPI.md#getmaxtransferablevalue) | **Get** /wallets/{wallet_id}/max_transferable_value | Get max transferable value
+*WalletsAPI* | [**GetSpendableList**](docs/WalletsAPI.md#getspendablelist) | **Get** /wallets/{wallet_id}/spendables | List spendable UTXOs
+*WalletsAPI* | [**GetSupportedChains**](docs/WalletsAPI.md#getsupportedchains) | **Get** /wallets/supported_chains | List supported chains
+*WalletsAPI* | [**GetSupportedTokens**](docs/WalletsAPI.md#getsupportedtokens) | **Get** /wallets/supported_tokens | List supported tokens
+*WalletsAPI* | [**GetTokens**](docs/WalletsAPI.md#gettokens) | **Get** /wallets/tokens | List token metadata
+*WalletsAPI* | [**GetWalletAddressTokenBalances**](docs/WalletsAPI.md#getwalletaddresstokenbalances) | **Get** /wallets/{wallet_id}/addresses/{address_id}/tokens | List Token Balances by Address in Wallet
+*WalletsAPI* | [**GetWalletById**](docs/WalletsAPI.md#getwalletbyid) | **Get** /wallets/{wallet_id} | Retrieve wallet information by ID
+*WalletsAPI* | [**GetWalletTokenBalances**](docs/WalletsAPI.md#getwallettokenbalances) | **Get** /wallets/{wallet_id}/tokens | List Token Balances in Wallet
 *WalletsAPI* | [**ListAddresses**](docs/WalletsAPI.md#listaddresses) | **Get** /wallets/{wallet_id}/addresses | List wallet addresses by wallet ID
 *WalletsAPI* | [**ListWallets**](docs/WalletsAPI.md#listwallets) | **Get** /wallets | List all wallets
 *WalletsAPI* | [**UpdateWalletById**](docs/WalletsAPI.md#updatewalletbyid) | **Put** /wallets/{wallet_id} | Update wallet by ID
-*WalletsExchangeWalletAPI* | [**GetExchangeSupportedAssets**](docs/WalletsExchangeWalletAPI.md#getexchangesupportedassets) | **Get** /wallets/exchanges/{exchange_id}/supported_assets | List the supported assets by exchange id
-*WalletsExchangeWalletAPI* | [**GetExchangeSupportedChains**](docs/WalletsExchangeWalletAPI.md#getexchangesupportedchains) | **Get** /wallets/exchanges/{exchange_id}/assets/supported_chains | List the supported chains by exchange id and asset id
-*WalletsExchangeWalletAPI* | [**GetExchangeWalletAssetBalances**](docs/WalletsExchangeWalletAPI.md#getexchangewalletassetbalances) | **Get** /wallets/exchanges/{wallet_id}/assets | List the asset balance in exchange wallet
-*WalletsExchangeWalletAPI* | [**LinkSubAccountsByWalletId**](docs/WalletsExchangeWalletAPI.md#linksubaccountsbywalletid) | **Post** /wallets/{wallet_id}/exchanges/subaccounts | Link exchange sub accounts by wallet id
-*WalletsExchangeWalletAPI* | [**ListExchanges**](docs/WalletsExchangeWalletAPI.md#listexchanges) | **Get** /wallets/exchanges/settings | List of exchanges
-*WalletsExchangeWalletAPI* | [**ListSubAccountsByApikey**](docs/WalletsExchangeWalletAPI.md#listsubaccountsbyapikey) | **Get** /wallets/exchanges/{exchange_id}/subaccounts | List exchange sub accounts by apikey
-*WalletsExchangeWalletAPI* | [**ListSubAccountsByWalletId**](docs/WalletsExchangeWalletAPI.md#listsubaccountsbywalletid) | **Get** /wallets/{wallet_id}/exchanges/subaccounts | List exchange sub accounts by wallet id
 *WalletsMPCWalletAPI* | [**CancelTssRequest**](docs/WalletsMPCWalletAPI.md#canceltssrequest) | **Put** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | cancel tss request
 *WalletsMPCWalletAPI* | [**CreateKeyGroup**](docs/WalletsMPCWalletAPI.md#createkeygroup) | **Post** /wallets/mpc/vaults/{vault_id}/key_groups | create a mpc key group
 *WalletsMPCWalletAPI* | [**CreateMpcProject**](docs/WalletsMPCWalletAPI.md#creatempcproject) | **Post** /wallets/mpc/projects | Create a mpc project
@@ -189,7 +193,9 @@ Class | Method | HTTP request | Description
  - [AssetBalance](docs/AssetBalance.md)
  - [AssetInfo](docs/AssetInfo.md)
  - [BaseCreateWallet](docs/BaseCreateWallet.md)
+ - [BaseTransactionAddress](docs/BaseTransactionAddress.md)
  - [BaseTransferSource](docs/BaseTransferSource.md)
+ - [BaseWalletTransactionAddress](docs/BaseWalletTransactionAddress.md)
  - [ChainFeePrice](docs/ChainFeePrice.md)
  - [ChainInfo](docs/ChainInfo.md)
  - [CreateCustodialWallet](docs/CreateCustodialWallet.md)
@@ -225,15 +231,15 @@ Class | Method | HTTP request | Description
  - [ExchangeTransferSource](docs/ExchangeTransferSource.md)
  - [ExchangeWalletInfo](docs/ExchangeWalletInfo.md)
  - [ExchangeWalletInfoAllOfSubAccounts](docs/ExchangeWalletInfoAllOfSubAccounts.md)
+ - [ExchangeWalletTransactionAddress](docs/ExchangeWalletTransactionAddress.md)
  - [FeeAmount](docs/FeeAmount.md)
  - [FeeData](docs/FeeData.md)
  - [FeeType](docs/FeeType.md)
  - [FixedFee](docs/FixedFee.md)
  - [GetAddressValidity200Response](docs/GetAddressValidity200Response.md)
- - [GetAssets200Response](docs/GetAssets200Response.md)
  - [GetChains200Response](docs/GetChains200Response.md)
- - [GetExchangeWalletAssetBalances200Response](docs/GetExchangeWalletAssetBalances200Response.md)
  - [GetTokens200Response](docs/GetTokens200Response.md)
+ - [GetTokens200ResponseDataInner](docs/GetTokens200ResponseDataInner.md)
  - [GetWalletTokenBalances200Response](docs/GetWalletTokenBalances200Response.md)
  - [KeyGroup](docs/KeyGroup.md)
  - [KeyGroupStatus](docs/KeyGroupStatus.md)
@@ -241,25 +247,24 @@ Class | Method | HTTP request | Description
  - [KeyHolder](docs/KeyHolder.md)
  - [KeyHolderStatus](docs/KeyHolderStatus.md)
  - [KeyHolderType](docs/KeyHolderType.md)
- - [LinkSubAccountsByWalletIdRequest](docs/LinkSubAccountsByWalletIdRequest.md)
  - [ListAddresses200Response](docs/ListAddresses200Response.md)
  - [ListEvents200Response](docs/ListEvents200Response.md)
- - [ListExchanges200ResponseInner](docs/ListExchanges200ResponseInner.md)
  - [ListTransactions200Response](docs/ListTransactions200Response.md)
  - [ListWallets200Response](docs/ListWallets200Response.md)
- - [ListWebhookEventDefinitions200ResponseInner](docs/ListWebhookEventDefinitions200ResponseInner.md)
  - [MPCProject](docs/MPCProject.md)
  - [MPCVault](docs/MPCVault.md)
  - [MPCVaultType](docs/MPCVaultType.md)
  - [MPCWalletInfo](docs/MPCWalletInfo.md)
- - [MaxSendValue](docs/MaxSendValue.md)
+ - [MPCWalletTransactionAddress](docs/MPCWalletTransactionAddress.md)
+ - [MaxTransferableValue](docs/MaxTransferableValue.md)
  - [ModifyMpcVaultRequest](docs/ModifyMpcVaultRequest.md)
  - [MpcSigningGroup](docs/MpcSigningGroup.md)
  - [MpcTransferSource](docs/MpcTransferSource.md)
- - [Network](docs/Network.md)
  - [Pagination](docs/Pagination.md)
  - [RetryWebhookEvent201Response](docs/RetryWebhookEvent201Response.md)
  - [RootPubkey](docs/RootPubkey.md)
+ - [SafeTransactionAddress](docs/SafeTransactionAddress.md)
+ - [SafeTransactionAddressAllOfDelegate](docs/SafeTransactionAddressAllOfDelegate.md)
  - [SafeTransferSource](docs/SafeTransferSource.md)
  - [SafeTransferSourceAllOfDelegate](docs/SafeTransferSourceAllOfDelegate.md)
  - [SafeWallet](docs/SafeWallet.md)
@@ -277,13 +282,14 @@ Class | Method | HTTP request | Description
  - [TokenBalanceBalance](docs/TokenBalanceBalance.md)
  - [TokenInfo](docs/TokenInfo.md)
  - [Transaction](docs/Transaction.md)
- - [TransactionAddress](docs/TransactionAddress.md)
  - [TransactionAddressType](docs/TransactionAddressType.md)
  - [TransactionApprover](docs/TransactionApprover.md)
+ - [TransactionDestination](docs/TransactionDestination.md)
  - [TransactionDetails](docs/TransactionDetails.md)
  - [TransactionFee](docs/TransactionFee.md)
  - [TransactionInitiatorType](docs/TransactionInitiatorType.md)
  - [TransactionSigner](docs/TransactionSigner.md)
+ - [TransactionSource](docs/TransactionSource.md)
  - [TransactionStatus](docs/TransactionStatus.md)
  - [TransactionSubStatus](docs/TransactionSubStatus.md)
  - [TransactionTimeline](docs/TransactionTimeline.md)

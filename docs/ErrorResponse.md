@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Success** | **bool** | Indicates if the API operation was successful. Always false for errors. | [default to false]
-**ErrorCode** | **int32** | A machine-readable error code.&#x60; | 
-**ErrorDescription** | **string** | A human-readable error description for users. | 
-**ErrorId** | **string** | A unique ID for the error log, mainly used for debugging. | 
+**Success** | **bool** | Whether the API operation was successful. This is always &#x60;false&#x60; for a failed request. | [default to false]
+**ErrorCode** | **int32** | The error code. | 
+**ErrorDescription** | **string** | The error description. | 
+**ErrorId** | **string** | A error log ID. You can use it for debugging purposes. | 
 
 ## Methods
 

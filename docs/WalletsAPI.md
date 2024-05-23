@@ -1,24 +1,24 @@
 # \WalletsAPI
 
-All URIs are relative to *https://api.cobo.com/v3*
+All URIs are relative to *https://api.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddWalletAddress**](WalletsAPI.md#AddWalletAddress) | **Post** /wallets/{wallet_id}/addresses | Add address to a wallet
+[**AddWalletAddress**](WalletsAPI.md#AddWalletAddress) | **Post** /wallets/{wallet_id}/addresses | Add address to wallet
 [**CreateWallet**](WalletsAPI.md#CreateWallet) | **Post** /wallets | Create new wallet
-[**DeleteWalletById**](WalletsAPI.md#DeleteWalletById) | **Delete** /wallets/{wallet_id} | Delete a wallet by ID
-[**GetAddressValidity**](WalletsAPI.md#GetAddressValidity) | **Get** /wallets/address/validity | Get the given address validity for token
-[**GetAssets**](WalletsAPI.md#GetAssets) | **Get** /wallets/assets | List the metadata of assets
-[**GetChains**](WalletsAPI.md#GetChains) | **Get** /wallets/chains | List the metadata of chain
-[**GetMaxSendValue**](WalletsAPI.md#GetMaxSendValue) | **Get** /wallets/{wallet_id}/max_sendable_value | Get max sendable Vaule
-[**GetSpendableList**](WalletsAPI.md#GetSpendableList) | **Get** /wallets/{wallet_id}/spendables | List the spendable utxo
-[**GetSupportedChains**](WalletsAPI.md#GetSupportedChains) | **Get** /wallets/supported_chains | List the supported chains by wallet subtype
-[**GetSupportedTokens**](WalletsAPI.md#GetSupportedTokens) | **Get** /wallets/supported_tokens | List the supported tokens by wallet subtype and chain id if specified
-[**GetTokens**](WalletsAPI.md#GetTokens) | **Get** /wallets/tokens | List the metadata of tokens
-[**GetWalletAddressById**](WalletsAPI.md#GetWalletAddressById) | **Get** /wallets/{wallet_id}/addresses/{address_id} | Get address information by ID
-[**GetWalletAddressTokenBalances**](WalletsAPI.md#GetWalletAddressTokenBalances) | **Get** /wallets/{wallet_id}/addresses/{address_id}/tokens | List the token balance by address in the wallets(to be specific)
-[**GetWalletById**](WalletsAPI.md#GetWalletById) | **Get** /wallets/{wallet_id} | Get wallet information by ID
-[**GetWalletTokenBalances**](WalletsAPI.md#GetWalletTokenBalances) | **Get** /wallets/{wallet_id}/tokens | List the token balance in the wallets(to be specific)
+[**DeleteWalletById**](WalletsAPI.md#DeleteWalletById) | **Delete** /wallets/{wallet_id} | Delete wallet by ID
+[**GetAddressValidity**](WalletsAPI.md#GetAddressValidity) | **Get** /wallets/address/validity | Check address validity
+[**GetChains**](WalletsAPI.md#GetChains) | **Get** /wallets/chains | List chain metadata
+[**GetEnabledChains**](WalletsAPI.md#GetEnabledChains) | **Get** /wallets/enabled_chains | List enabled chains
+[**GetEnabledTokens**](WalletsAPI.md#GetEnabledTokens) | **Get** /wallets/enabled_tokens | List enabled tokens
+[**GetMaxTransferableValue**](WalletsAPI.md#GetMaxTransferableValue) | **Get** /wallets/{wallet_id}/max_transferable_value | Get max transferable value
+[**GetSpendableList**](WalletsAPI.md#GetSpendableList) | **Get** /wallets/{wallet_id}/spendables | List spendable UTXOs
+[**GetSupportedChains**](WalletsAPI.md#GetSupportedChains) | **Get** /wallets/supported_chains | List supported chains
+[**GetSupportedTokens**](WalletsAPI.md#GetSupportedTokens) | **Get** /wallets/supported_tokens | List supported tokens
+[**GetTokens**](WalletsAPI.md#GetTokens) | **Get** /wallets/tokens | List token metadata
+[**GetWalletAddressTokenBalances**](WalletsAPI.md#GetWalletAddressTokenBalances) | **Get** /wallets/{wallet_id}/addresses/{address_id}/tokens | List Token Balances by Address in Wallet
+[**GetWalletById**](WalletsAPI.md#GetWalletById) | **Get** /wallets/{wallet_id} | Retrieve wallet information by ID
+[**GetWalletTokenBalances**](WalletsAPI.md#GetWalletTokenBalances) | **Get** /wallets/{wallet_id}/tokens | List Token Balances in Wallet
 [**ListAddresses**](WalletsAPI.md#ListAddresses) | **Get** /wallets/{wallet_id}/addresses | List wallet addresses by wallet ID
 [**ListWallets**](WalletsAPI.md#ListWallets) | **Get** /wallets | List all wallets
 [**UpdateWalletById**](WalletsAPI.md#UpdateWalletById) | **Put** /wallets/{wallet_id} | Update wallet by ID
@@ -29,7 +29,7 @@ Method | HTTP request | Description
 
 > []AddressInfo AddWalletAddress(ctx, walletId).AddWalletAddressRequest(addWalletAddressRequest).Execute()
 
-Add address to a wallet
+Add address to wallet
 
 
 
@@ -73,7 +73,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -181,7 +181,7 @@ Name | Type | Description  | Notes
 
 > DeleteWalletById(ctx, walletId).Execute()
 
-Delete a wallet by ID
+Delete wallet by ID
 
 
 
@@ -222,7 +222,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -256,7 +256,7 @@ Name | Type | Description  | Notes
 
 > GetAddressValidity200Response GetAddressValidity(ctx).TokenId(tokenId).AddressStr(addressStr).Execute()
 
-Get the given address validity for token
+Check address validity
 
 
 
@@ -327,90 +327,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetAssets
-
-> GetAssets200Response GetAssets(ctx).AssetId(assetId).Limit(limit).Before(before).After(after).Execute()
-
-List the metadata of assets
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
-)
-
-func main() {
-	assetId := "USDT" // string | Unique id of the asset (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
-
-	configuration := CoboWaas2.NewConfiguration()
-	apiClient := CoboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
-	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
-	})
-	resp, r, err := apiClient.WalletsAPI.GetAssets(ctx).AssetId(assetId).Limit(limit).Before(before).After(after).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetAssets``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetAssets`: GetAssets200Response
-	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetAssets`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetAssetsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **assetId** | **string** | Unique id of the asset | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
-
-### Return type
-
-[**GetAssets200Response**](GetAssets200Response.md)
-
-### Authorization
-
-[CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetChains
 
 > GetChains200Response GetChains(ctx).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
 
-List the metadata of chain
+List chain metadata
 
 
 
@@ -429,9 +350,9 @@ import (
 
 func main() {
 	chainId := "ETH" // string | Unique id of the chain (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -463,9 +384,9 @@ Other parameters are passed through a pointer to a apiGetChainsRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **chainId** | **string** | Unique id of the chain | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -485,11 +406,175 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetMaxSendValue
+## GetEnabledChains
 
-> MaxSendValue GetMaxSendValue(ctx, walletId).ToAddress(toAddress).FromAddress(fromAddress).Execute()
+> GetChains200Response GetEnabledChains(ctx).WalletType(walletType).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
 
-Get max sendable Vaule
+List enabled chains
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+)
+
+func main() {
+	walletType := CoboWaas2.WalletType("Custodial") // WalletType | Wallet type to query (optional)
+	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query (optional)
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetEnabledChains(ctx).WalletType(walletType).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetEnabledChains``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetEnabledChains`: GetChains200Response
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetEnabledChains`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEnabledChainsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **walletType** | [**WalletType**](WalletType.md) | Wallet type to query | 
+ **walletSubtype** | [**WalletSubtype**](WalletSubtype.md) | Wallet subtype to query | 
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+
+### Return type
+
+[**GetChains200Response**](GetChains200Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetEnabledTokens
+
+> GetTokens200Response GetEnabledTokens(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
+
+List enabled tokens
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+)
+
+func main() {
+	walletType := CoboWaas2.WalletType("Custodial") // WalletType | Wallet type to query (optional)
+	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query (optional)
+	chainId := "ETH" // string | Unique id of the chain (optional)
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetEnabledTokens(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetEnabledTokens``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetEnabledTokens`: GetTokens200Response
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetEnabledTokens`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEnabledTokensRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **walletType** | [**WalletType**](WalletType.md) | Wallet type to query | 
+ **walletSubtype** | [**WalletSubtype**](WalletSubtype.md) | Wallet subtype to query | 
+ **chainId** | **string** | Unique id of the chain | 
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+
+### Return type
+
+[**GetTokens200Response**](GetTokens200Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetMaxTransferableValue
+
+> MaxTransferableValue GetMaxTransferableValue(ctx, walletId).ToAddress(toAddress).FromAddress(fromAddress).Execute()
+
+Get max transferable value
 
 
 
@@ -519,13 +604,13 @@ func main() {
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
-	resp, r, err := apiClient.WalletsAPI.GetMaxSendValue(ctx, walletId).ToAddress(toAddress).FromAddress(fromAddress).Execute()
+	resp, r, err := apiClient.WalletsAPI.GetMaxTransferableValue(ctx, walletId).ToAddress(toAddress).FromAddress(fromAddress).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetMaxSendValue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetMaxTransferableValue``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetMaxSendValue`: MaxSendValue
-	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetMaxSendValue`: %v\n", resp)
+	// response from `GetMaxTransferableValue`: MaxTransferableValue
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetMaxTransferableValue`: %v\n", resp)
 }
 ```
 
@@ -534,12 +619,12 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetMaxSendValueRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetMaxTransferableValueRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -550,7 +635,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MaxSendValue**](MaxSendValue.md)
+[**MaxTransferableValue**](MaxTransferableValue.md)
 
 ### Authorization
 
@@ -570,7 +655,7 @@ Name | Type | Description  | Notes
 
 > []UTXO GetSpendableList(ctx, walletId).TokenId(tokenId).AddressStr(addressStr).Execute()
 
-List the spendable utxo
+List spendable UTXOs
 
 
 
@@ -615,7 +700,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -649,9 +734,9 @@ Name | Type | Description  | Notes
 
 ## GetSupportedChains
 
-> GetChains200Response GetSupportedChains(ctx).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
+> GetChains200Response GetSupportedChains(ctx).WalletType(walletType).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
 
-List the supported chains by wallet subtype
+List supported chains
 
 
 
@@ -669,10 +754,11 @@ import (
 )
 
 func main() {
-	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	walletType := CoboWaas2.WalletType("Custodial") // WalletType | Wallet type to query (optional)
+	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query (optional)
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -682,7 +768,7 @@ func main() {
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
-	resp, r, err := apiClient.WalletsAPI.GetSupportedChains(ctx).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
+	resp, r, err := apiClient.WalletsAPI.GetSupportedChains(ctx).WalletType(walletType).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetSupportedChains``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -703,10 +789,11 @@ Other parameters are passed through a pointer to a apiGetSupportedChainsRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **walletType** | [**WalletType**](WalletType.md) | Wallet type to query | 
  **walletSubtype** | [**WalletSubtype**](WalletSubtype.md) | Wallet subtype to query | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -728,9 +815,9 @@ Name | Type | Description  | Notes
 
 ## GetSupportedTokens
 
-> GetTokens200Response GetSupportedTokens(ctx).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
+> GetTokens200Response GetSupportedTokens(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
 
-List the supported tokens by wallet subtype and chain id if specified
+List supported tokens
 
 
 
@@ -748,11 +835,12 @@ import (
 )
 
 func main() {
-	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query
+	walletType := CoboWaas2.WalletType("Custodial") // WalletType | Wallet type to query (optional)
+	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query (optional)
 	chainId := "ETH" // string | Unique id of the chain (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -762,7 +850,7 @@ func main() {
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
-	resp, r, err := apiClient.WalletsAPI.GetSupportedTokens(ctx).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
+	resp, r, err := apiClient.WalletsAPI.GetSupportedTokens(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ChainId(chainId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetSupportedTokens``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -783,11 +871,12 @@ Other parameters are passed through a pointer to a apiGetSupportedTokensRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **walletType** | [**WalletType**](WalletType.md) | Wallet type to query | 
  **walletSubtype** | [**WalletSubtype**](WalletSubtype.md) | Wallet subtype to query | 
  **chainId** | **string** | Unique id of the chain | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -811,7 +900,7 @@ Name | Type | Description  | Notes
 
 > GetTokens200Response GetTokens(ctx).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
 
-List the metadata of tokens
+List token metadata
 
 
 
@@ -830,9 +919,9 @@ import (
 
 func main() {
 	tokenId := "ETH_USDT" // string | Unique id of the token (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -864,9 +953,9 @@ Other parameters are passed through a pointer to a apiGetTokensRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tokenId** | **string** | Unique id of the token | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -886,91 +975,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetWalletAddressById
-
-> AddressInfo GetWalletAddressById(ctx, walletId, addressId).Execute()
-
-Get address information by ID
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
-)
-
-func main() {
-	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
-	addressId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the address
-
-	configuration := CoboWaas2.NewConfiguration()
-	apiClient := CoboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
-	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
-	})
-	resp, r, err := apiClient.WalletsAPI.GetWalletAddressById(ctx, walletId, addressId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetWalletAddressById``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetWalletAddressById`: AddressInfo
-	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetWalletAddressById`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**walletId** | **string** | Unique id of the wallet | 
-**addressId** | **string** | Unique id of the address | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetWalletAddressByIdRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-
-### Return type
-
-[**AddressInfo**](AddressInfo.md)
-
-### Authorization
-
-[CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetWalletAddressTokenBalances
 
 > GetWalletTokenBalances200Response GetWalletAddressTokenBalances(ctx, walletId, addressId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
 
-List the token balance by address in the wallets(to be specific)
+List Token Balances by Address in Wallet
 
 
 
@@ -991,9 +1000,9 @@ func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
 	addressId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the address
 	tokenId := "ETH_USDT" // string | Unique id of the token (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -1018,7 +1027,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 **addressId** | **string** | Unique id of the address | 
 
@@ -1032,9 +1041,9 @@ Name | Type | Description  | Notes
 
 
  **tokenId** | **string** | Unique id of the token | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -1058,7 +1067,7 @@ Name | Type | Description  | Notes
 
 > WalletInfo GetWalletById(ctx, walletId).Execute()
 
-Get wallet information by ID
+Retrieve wallet information by ID
 
 
 
@@ -1101,7 +1110,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -1135,7 +1144,7 @@ Name | Type | Description  | Notes
 
 > GetWalletTokenBalances200Response GetWalletTokenBalances(ctx, walletId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
 
-List the token balance in the wallets(to be specific)
+List Token Balances in Wallet
 
 
 
@@ -1155,9 +1164,9 @@ import (
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
 	tokenId := "ETH_USDT" // string | Unique id of the token (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -1182,7 +1191,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -1194,9 +1203,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **tokenId** | **string** | Unique id of the token | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -1218,7 +1227,7 @@ Name | Type | Description  | Notes
 
 ## ListAddresses
 
-> ListAddresses200Response ListAddresses(ctx, walletId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
+> ListAddresses200Response ListAddresses(ctx, walletId).TokenId(tokenId).AddressStr(addressStr).Limit(limit).Before(before).After(after).Execute()
 
 List wallet addresses by wallet ID
 
@@ -1240,9 +1249,10 @@ import (
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet
 	tokenId := "ETH_USDT" // string | Unique id of the token (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	addressStr := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | address (optional)
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -1252,7 +1262,7 @@ func main() {
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
-	resp, r, err := apiClient.WalletsAPI.ListAddresses(ctx, walletId).TokenId(tokenId).Limit(limit).Before(before).After(after).Execute()
+	resp, r, err := apiClient.WalletsAPI.ListAddresses(ctx, walletId).TokenId(tokenId).AddressStr(addressStr).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListAddresses``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1267,7 +1277,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -1279,9 +1289,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **tokenId** | **string** | Unique id of the token | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **addressStr** | **string** | address | 
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -1326,9 +1337,9 @@ func main() {
 	walletType := CoboWaas2.WalletType("Custodial") // WalletType | Wallet type to query (optional)
 	walletSubtype := CoboWaas2.WalletSubtype("Asset") // WalletSubtype | Wallet subtype to query (optional)
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -1362,9 +1373,9 @@ Name | Type | Description  | Notes
  **walletType** | [**WalletType**](WalletType.md) | Wallet type to query | 
  **walletSubtype** | [**WalletSubtype**](WalletSubtype.md) | Wallet subtype to query | 
  **vaultId** | **string** | Unique id of the mpc vault | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -1432,7 +1443,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters

@@ -23,7 +23,6 @@ const (
 	TRANSACTIONTYPE_WITHDRAWAL TransactionType = "Withdrawal"
 	TRANSACTIONTYPE_TOKEN_APPROVAL TransactionType = "TokenApproval"
 	TRANSACTIONTYPE_CONTRACT_CALL TransactionType = "ContractCall"
-	TRANSACTIONTYPE_EXCHANGE_TRANSFER TransactionType = "ExchangeTransfer"
 	TRANSACTIONTYPE_AUTO_FUELING TransactionType = "AutoFueling"
 	TRANSACTIONTYPE_RAW_MESSAGE TransactionType = "RawMessage"
 )
@@ -34,7 +33,6 @@ var AllowedTransactionTypeEnumValues = []TransactionType{
 	"Withdrawal",
 	"TokenApproval",
 	"ContractCall",
-	"ExchangeTransfer",
 	"AutoFueling",
 	"RawMessage",
 }

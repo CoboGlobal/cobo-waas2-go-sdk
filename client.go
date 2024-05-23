@@ -56,8 +56,6 @@ type APIClient struct {
 
 	WalletsAPI *WalletsAPIService
 
-	WalletsExchangeWalletAPI *WalletsExchangeWalletAPIService
-
 	WalletsMPCWalletAPI *WalletsMPCWalletAPIService
 }
 
@@ -80,7 +78,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
 	c.TransactionsAPI = (*TransactionsAPIService)(&c.common)
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)
-	c.WalletsExchangeWalletAPI = (*WalletsExchangeWalletAPIService)(&c.common)
 	c.WalletsMPCWalletAPI = (*WalletsMPCWalletAPIService)(&c.common)
 
 	return c

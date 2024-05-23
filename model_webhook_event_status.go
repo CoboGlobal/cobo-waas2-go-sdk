@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// WebhookEventStatus Possible values for the webhook event status: - `Success`: The event has been delivered, meaning that the webhook endpoint has received the event and responded successfully. - `Retrying`: The event has been delivered, but the webhook endpoint has not responded successfully. The event will be retried. - `Failed`: The event has been delivered, but the webhook endpoint has responded with an error. The event will not be retried.
+// WebhookEventStatus The event status. Possible values include: - `Success`: The event has been delivered, and the webhook endpoint has responded to the event. - `Retrying`: The event has been delivered, but the webhook endpoint has not responded. In this case, Cobo will retry delivering the event. - `Failed`: The event cannot be delivered and Cobo will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error.
 type WebhookEventStatus string
 
 // List of WebhookEventStatus

@@ -25,9 +25,9 @@ type EvmEip1559FeePrice struct {
 	// The highest Gas price paid for the transfer, unit GWei.
 	MaxFee string `json:"max_fee"`
 	// The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei.
-	MaxPriorityFee int32 `json:"max_priority_fee"`
+	MaxPriorityFee string `json:"max_priority_fee"`
 	// The Base Fee of chain.
-	BaseFee int32 `json:"base_fee"`
+	BaseFee string `json:"base_fee"`
 	FeeType FeeType `json:"fee_type"`
 }
 
@@ -37,7 +37,7 @@ type _EvmEip1559FeePrice EvmEip1559FeePrice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmEip1559FeePrice(maxFee string, maxPriorityFee int32, baseFee int32, feeType FeeType) *EvmEip1559FeePrice {
+func NewEvmEip1559FeePrice(maxFee string, maxPriorityFee string, baseFee string, feeType FeeType) *EvmEip1559FeePrice {
 	this := EvmEip1559FeePrice{}
 	this.MaxFee = maxFee
 	this.MaxPriorityFee = maxPriorityFee
@@ -113,9 +113,9 @@ func (o *EvmEip1559FeePrice) SetMaxFee(v string) {
 }
 
 // GetMaxPriorityFee returns the MaxPriorityFee field value
-func (o *EvmEip1559FeePrice) GetMaxPriorityFee() int32 {
+func (o *EvmEip1559FeePrice) GetMaxPriorityFee() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -124,7 +124,7 @@ func (o *EvmEip1559FeePrice) GetMaxPriorityFee() int32 {
 
 // GetMaxPriorityFeeOk returns a tuple with the MaxPriorityFee field value
 // and a boolean to check if the value has been set.
-func (o *EvmEip1559FeePrice) GetMaxPriorityFeeOk() (*int32, bool) {
+func (o *EvmEip1559FeePrice) GetMaxPriorityFeeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -132,14 +132,14 @@ func (o *EvmEip1559FeePrice) GetMaxPriorityFeeOk() (*int32, bool) {
 }
 
 // SetMaxPriorityFee sets field value
-func (o *EvmEip1559FeePrice) SetMaxPriorityFee(v int32) {
+func (o *EvmEip1559FeePrice) SetMaxPriorityFee(v string) {
 	o.MaxPriorityFee = v
 }
 
 // GetBaseFee returns the BaseFee field value
-func (o *EvmEip1559FeePrice) GetBaseFee() int32 {
+func (o *EvmEip1559FeePrice) GetBaseFee() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -148,7 +148,7 @@ func (o *EvmEip1559FeePrice) GetBaseFee() int32 {
 
 // GetBaseFeeOk returns a tuple with the BaseFee field value
 // and a boolean to check if the value has been set.
-func (o *EvmEip1559FeePrice) GetBaseFeeOk() (*int32, bool) {
+func (o *EvmEip1559FeePrice) GetBaseFeeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -156,7 +156,7 @@ func (o *EvmEip1559FeePrice) GetBaseFeeOk() (*int32, bool) {
 }
 
 // SetBaseFee sets field value
-func (o *EvmEip1559FeePrice) SetBaseFee(v int32) {
+func (o *EvmEip1559FeePrice) SetBaseFee(v string) {
 	o.BaseFee = v
 }
 

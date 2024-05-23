@@ -7,8 +7,6 @@ Name | Type | Description | Notes
 **Total** | **string** | The total balance, sum of the following fields. | 
 **Available** | **string** | The balance free to use. | 
 **Pending** | Pointer to **string** | The pending balance not confirmed. | [optional] [default to "0"]
-**Staked** | Pointer to **string** | The staked balance. | [optional] [default to "0"]
-**Frozen** | Pointer to **string** | The frozen balance. | [optional] [default to "0"]
 **Locked** | Pointer to **string** | The locked balance. | [optional] [default to "0"]
 
 ## Methods
@@ -94,56 +92,6 @@ SetPending sets Pending field to given value.
 `func (o *TokenBalanceBalance) HasPending() bool`
 
 HasPending returns a boolean if a field has been set.
-
-### GetStaked
-
-`func (o *TokenBalanceBalance) GetStaked() string`
-
-GetStaked returns the Staked field if non-nil, zero value otherwise.
-
-### GetStakedOk
-
-`func (o *TokenBalanceBalance) GetStakedOk() (*string, bool)`
-
-GetStakedOk returns a tuple with the Staked field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetStaked
-
-`func (o *TokenBalanceBalance) SetStaked(v string)`
-
-SetStaked sets Staked field to given value.
-
-### HasStaked
-
-`func (o *TokenBalanceBalance) HasStaked() bool`
-
-HasStaked returns a boolean if a field has been set.
-
-### GetFrozen
-
-`func (o *TokenBalanceBalance) GetFrozen() string`
-
-GetFrozen returns the Frozen field if non-nil, zero value otherwise.
-
-### GetFrozenOk
-
-`func (o *TokenBalanceBalance) GetFrozenOk() (*string, bool)`
-
-GetFrozenOk returns a tuple with the Frozen field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFrozen
-
-`func (o *TokenBalanceBalance) SetFrozen(v string)`
-
-SetFrozen sets Frozen field to given value.
-
-### HasFrozen
-
-`func (o *TokenBalanceBalance) HasFrozen() bool`
-
-HasFrozen returns a boolean if a field has been set.
 
 ### GetLocked
 

@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// WebhookEventType The list of supported events.
+// WebhookEventType The event type.
 type WebhookEventType string
 
 // List of WebhookEventType

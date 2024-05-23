@@ -1,14 +1,13 @@
 # \DevelopersWebhooksAPI
 
-All URIs are relative to *https://api.cobo.com/v3*
+All URIs are relative to *https://api.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetWebhookEvent**](DevelopersWebhooksAPI.md#GetWebhookEvent) | **Get** /webhooks/events/{event_id} | Retrieve webhook event information by event ID.
-[**GetWebhookEventLogs**](DevelopersWebhooksAPI.md#GetWebhookEventLogs) | **Get** /webhooks/events/{event_id}/logs | List webhook event logs by event ID.
-[**ListEvents**](DevelopersWebhooksAPI.md#ListEvents) | **Get** /webhooks/events | List triggered events.
-[**ListWebhookEventDefinitions**](DevelopersWebhooksAPI.md#ListWebhookEventDefinitions) | **Get** /webhooks/events/definitions | List all supported event definitions.
-[**RetryWebhookEvent**](DevelopersWebhooksAPI.md#RetryWebhookEvent) | **Post** /webhooks/events/{event_id}/retry | Retry webhook event by event ID.
+[**GetWebhookEvent**](DevelopersWebhooksAPI.md#GetWebhookEvent) | **Get** /webhooks/events/{event_id} | Retrieve event by ID
+[**GetWebhookEventLogs**](DevelopersWebhooksAPI.md#GetWebhookEventLogs) | **Get** /webhooks/events/{event_id}/logs | List event logs by ID
+[**ListEvents**](DevelopersWebhooksAPI.md#ListEvents) | **Get** /webhooks/events | List all events
+[**RetryWebhookEvent**](DevelopersWebhooksAPI.md#RetryWebhookEvent) | **Post** /webhooks/events/{event_id}/retry | Retry event by ID
 
 
 
@@ -16,7 +15,7 @@ Method | HTTP request | Description
 
 > WebhookEvent GetWebhookEvent(ctx, eventId).Execute()
 
-Retrieve webhook event information by event ID.
+Retrieve event by ID
 
 
 
@@ -34,7 +33,7 @@ import (
 )
 
 func main() {
-	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the webhook event, get event IDs by calling `List triggered events`.
+	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events).
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -59,8 +58,8 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**eventId** | **string** | Unique id of the webhook event, get event IDs by calling &#x60;List triggered events&#x60;. | 
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**eventId** | **string** | The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events). | 
 
 ### Other Parameters
 
@@ -93,7 +92,7 @@ Name | Type | Description  | Notes
 
 > []WebhookEventLog GetWebhookEventLogs(ctx, eventId).Execute()
 
-List webhook event logs by event ID.
+List event logs by ID
 
 
 
@@ -111,7 +110,7 @@ import (
 )
 
 func main() {
-	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the webhook event, get event IDs by calling `List triggered events`.
+	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events).
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -136,8 +135,8 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**eventId** | **string** | Unique id of the webhook event, get event IDs by calling &#x60;List triggered events&#x60;. | 
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**eventId** | **string** | The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events). | 
 
 ### Other Parameters
 
@@ -170,7 +169,7 @@ Name | Type | Description  | Notes
 
 > ListEvents200Response ListEvents(ctx).Status(status).Type_(type_).Limit(limit).Before(before).After(after).Execute()
 
-List triggered events.
+List all events
 
 
 
@@ -188,11 +187,11 @@ import (
 )
 
 func main() {
-	status := CoboWaas2.WebhookEventStatus("Success") // WebhookEventStatus | The status of event. (optional)
-	type_ := CoboWaas2.WebhookEventType("asset_wallet.outbound.created") // WebhookEventType | The type of event. Get event types by calling `List all supported event definitions`.  (optional)
-	limit := int32(10) // int32 | size of page to return (pagination) (optional) (default to 10)
-	before := "123" // string | Cursor string received from previous request (optional) (default to "")
-	after := "123" // string | Cursor string received from previous request (optional) (default to "")
+	status := CoboWaas2.WebhookEventStatus("Success") // WebhookEventStatus | The event status. Possible values include: - `Success`: The event has been delivered, and the webhook endpoint has responded to the event. - `Retrying`: The event has been delivered, but the webhook endpoint has not responded. In this case, Cobo will retry delivering the event. - `Failed`: The event cannot be delivered and Cobo will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error.  (optional)
+	type_ := CoboWaas2.WebhookEventType("asset_wallet.outbound.created") // WebhookEventType | The event type.  (optional)
+	limit := int32(10) // int32 | The maximum number of objects to return. The value range is [1, 50]. (optional) (default to 10)
+	before := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
+	after := "8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f" // string | An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request. If you set both `after` or `before`, only the setting of `before` will take effect. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -223,11 +222,11 @@ Other parameters are passed through a pointer to a apiListEventsRequest struct v
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **status** | [**WebhookEventStatus**](WebhookEventStatus.md) | The status of event. | 
- **type_** | [**WebhookEventType**](WebhookEventType.md) | The type of event. Get event types by calling &#x60;List all supported event definitions&#x60;.  | 
- **limit** | **int32** | size of page to return (pagination) | [default to 10]
- **before** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
- **after** | **string** | Cursor string received from previous request | [default to &quot;&quot;]
+ **status** | [**WebhookEventStatus**](WebhookEventStatus.md) | The event status. Possible values include: - &#x60;Success&#x60;: The event has been delivered, and the webhook endpoint has responded to the event. - &#x60;Retrying&#x60;: The event has been delivered, but the webhook endpoint has not responded. In this case, Cobo will retry delivering the event. - &#x60;Failed&#x60;: The event cannot be delivered and Cobo will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error.  | 
+ **type_** | [**WebhookEventType**](WebhookEventType.md) | The event type.  | 
+ **limit** | **int32** | The maximum number of objects to return. The value range is [1, 50]. | [default to 10]
+ **before** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
+ **after** | **string** | An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect. | 
 
 ### Return type
 
@@ -247,79 +246,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListWebhookEventDefinitions
-
-> []ListWebhookEventDefinitions200ResponseInner ListWebhookEventDefinitions(ctx).Execute()
-
-List all supported event definitions.
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
-)
-
-func main() {
-
-	configuration := CoboWaas2.NewConfiguration()
-	apiClient := CoboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
-	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
-	})
-	resp, r, err := apiClient.DevelopersWebhooksAPI.ListWebhookEventDefinitions(ctx).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DevelopersWebhooksAPI.ListWebhookEventDefinitions``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ListWebhookEventDefinitions`: []ListWebhookEventDefinitions200ResponseInner
-	fmt.Fprintf(os.Stdout, "Response from `DevelopersWebhooksAPI.ListWebhookEventDefinitions`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-This endpoint does not need any parameter.
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiListWebhookEventDefinitionsRequest struct via the builder pattern
-
-
-### Return type
-
-[**[]ListWebhookEventDefinitions200ResponseInner**](ListWebhookEventDefinitions200ResponseInner.md)
-
-### Authorization
-
-[CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## RetryWebhookEvent
 
 > RetryWebhookEvent201Response RetryWebhookEvent(ctx, eventId).Execute()
 
-Retry webhook event by event ID.
+Retry event by ID
 
 
 
@@ -337,7 +268,7 @@ import (
 )
 
 func main() {
-	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the webhook event, get event IDs by calling `List triggered events`.
+	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events).
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -362,8 +293,8 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**eventId** | **string** | Unique id of the webhook event, get event IDs by calling &#x60;List triggered events&#x60;. | 
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**eventId** | **string** | The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events). | 
 
 ### Other Parameters
 

@@ -64,7 +64,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost, Env, Signer, etc.
 **exchangeId** | [**ExchangeId**](.md) | Exchange ID to query | 
 
 ### Other Parameters
@@ -148,7 +148,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost, Env, Signer, etc.
 **exchangeId** | [**ExchangeId**](.md) | Exchange ID to query | 
 
 ### Other Parameters
@@ -234,7 +234,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost, Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -317,7 +317,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost, Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters
@@ -466,7 +466,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost, Env, Signer, etc.
 **exchangeId** | [**ExchangeId**](.md) | Exchange ID to query | 
 
 ### Other Parameters
@@ -546,7 +546,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost, Env, Signer, etc.
 **walletId** | **string** | Unique id of the wallet | 
 
 ### Other Parameters

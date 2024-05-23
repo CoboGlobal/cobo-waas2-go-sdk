@@ -25,11 +25,11 @@ type EvmEip1559FeeSlow struct {
 	// The highest Gas price paid for the transfer, unit GWei.
 	MaxFee string `json:"max_fee"`
 	// The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei.
-	MaxPriorityFee int32 `json:"max_priority_fee"`
+	MaxPriorityFee string `json:"max_priority_fee"`
 	// The Base Fee of chain.
-	BaseFee int32 `json:"base_fee"`
+	BaseFee string `json:"base_fee"`
 	// The Limit of gas.
-	GasLimit *int32 `json:"gas_limit,omitempty"`
+	GasLimit *string `json:"gas_limit,omitempty"`
 	// The estimated fee amount in fee_coin.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 }
@@ -40,12 +40,12 @@ type _EvmEip1559FeeSlow EvmEip1559FeeSlow
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmEip1559FeeSlow(maxFee string, maxPriorityFee int32, baseFee int32) *EvmEip1559FeeSlow {
+func NewEvmEip1559FeeSlow(maxFee string, maxPriorityFee string, baseFee string) *EvmEip1559FeeSlow {
 	this := EvmEip1559FeeSlow{}
 	this.MaxFee = maxFee
 	this.MaxPriorityFee = maxPriorityFee
 	this.BaseFee = baseFee
-	var gasLimit int32 = 21000
+	var gasLimit string = "21000"
 	this.GasLimit = &gasLimit
 	return &this
 }
@@ -55,7 +55,7 @@ func NewEvmEip1559FeeSlow(maxFee string, maxPriorityFee int32, baseFee int32) *E
 // but it doesn't guarantee that properties required by API are set
 func NewEvmEip1559FeeSlowWithDefaults() *EvmEip1559FeeSlow {
 	this := EvmEip1559FeeSlow{}
-	var gasLimit int32 = 21000
+	var gasLimit string = "21000"
 	this.GasLimit = &gasLimit
 	return &this
 }
@@ -117,9 +117,9 @@ func (o *EvmEip1559FeeSlow) SetMaxFee(v string) {
 }
 
 // GetMaxPriorityFee returns the MaxPriorityFee field value
-func (o *EvmEip1559FeeSlow) GetMaxPriorityFee() int32 {
+func (o *EvmEip1559FeeSlow) GetMaxPriorityFee() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -128,7 +128,7 @@ func (o *EvmEip1559FeeSlow) GetMaxPriorityFee() int32 {
 
 // GetMaxPriorityFeeOk returns a tuple with the MaxPriorityFee field value
 // and a boolean to check if the value has been set.
-func (o *EvmEip1559FeeSlow) GetMaxPriorityFeeOk() (*int32, bool) {
+func (o *EvmEip1559FeeSlow) GetMaxPriorityFeeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -136,14 +136,14 @@ func (o *EvmEip1559FeeSlow) GetMaxPriorityFeeOk() (*int32, bool) {
 }
 
 // SetMaxPriorityFee sets field value
-func (o *EvmEip1559FeeSlow) SetMaxPriorityFee(v int32) {
+func (o *EvmEip1559FeeSlow) SetMaxPriorityFee(v string) {
 	o.MaxPriorityFee = v
 }
 
 // GetBaseFee returns the BaseFee field value
-func (o *EvmEip1559FeeSlow) GetBaseFee() int32 {
+func (o *EvmEip1559FeeSlow) GetBaseFee() string {
 	if o == nil {
-		var ret int32
+		var ret string
 		return ret
 	}
 
@@ -152,7 +152,7 @@ func (o *EvmEip1559FeeSlow) GetBaseFee() int32 {
 
 // GetBaseFeeOk returns a tuple with the BaseFee field value
 // and a boolean to check if the value has been set.
-func (o *EvmEip1559FeeSlow) GetBaseFeeOk() (*int32, bool) {
+func (o *EvmEip1559FeeSlow) GetBaseFeeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -160,14 +160,14 @@ func (o *EvmEip1559FeeSlow) GetBaseFeeOk() (*int32, bool) {
 }
 
 // SetBaseFee sets field value
-func (o *EvmEip1559FeeSlow) SetBaseFee(v int32) {
+func (o *EvmEip1559FeeSlow) SetBaseFee(v string) {
 	o.BaseFee = v
 }
 
 // GetGasLimit returns the GasLimit field value if set, zero value otherwise.
-func (o *EvmEip1559FeeSlow) GetGasLimit() int32 {
+func (o *EvmEip1559FeeSlow) GetGasLimit() string {
 	if o == nil || IsNil(o.GasLimit) {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.GasLimit
@@ -175,7 +175,7 @@ func (o *EvmEip1559FeeSlow) GetGasLimit() int32 {
 
 // GetGasLimitOk returns a tuple with the GasLimit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EvmEip1559FeeSlow) GetGasLimitOk() (*int32, bool) {
+func (o *EvmEip1559FeeSlow) GetGasLimitOk() (*string, bool) {
 	if o == nil || IsNil(o.GasLimit) {
 		return nil, false
 	}
@@ -191,8 +191,8 @@ func (o *EvmEip1559FeeSlow) HasGasLimit() bool {
 	return false
 }
 
-// SetGasLimit gets a reference to the given int32 and assigns it to the GasLimit field.
-func (o *EvmEip1559FeeSlow) SetGasLimit(v int32) {
+// SetGasLimit gets a reference to the given string and assigns it to the GasLimit field.
+func (o *EvmEip1559FeeSlow) SetGasLimit(v string) {
 	o.GasLimit = &v
 }
 

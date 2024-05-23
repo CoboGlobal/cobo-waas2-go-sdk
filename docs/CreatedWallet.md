@@ -7,19 +7,19 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **WalletType** | **string** |  | 
 **WalletSubtype** | **string** |  | 
+**VaultId** | **string** | The owning mpc vault id of the mpc wallet. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **Apikey** | **string** | The API Key for the exchange. | 
 **Secret** | **string** | The API Secret for the exchange. | 
 **Passphrase** | Pointer to **string** | The passphrase for the exchange. | [optional] 
 **GaCode** | Pointer to **string** | The ga_code for the exchange. | [optional] 
 **SubAccountIds** | Pointer to **[]string** | The unique identifier associated with the exchange sub-account. It can be an email address, username, or a custom account ID. | [optional] 
-**VaultId** | **string** | The owning mpc vault id of the mpc wallet. | 
 
 ## Methods
 
 ### NewCreatedWallet
 
-`func NewCreatedWallet(name string, walletType string, walletSubtype string, exchangeId ExchangeId, apikey string, secret string, vaultId string, ) *CreatedWallet`
+`func NewCreatedWallet(name string, walletType string, walletSubtype string, vaultId string, exchangeId ExchangeId, apikey string, secret string, ) *CreatedWallet`
 
 NewCreatedWallet instantiates a new CreatedWallet object
 This constructor will assign default values to properties that have it defined,
@@ -92,6 +92,26 @@ and a boolean to check if the value has been set.
 `func (o *CreatedWallet) SetWalletSubtype(v string)`
 
 SetWalletSubtype sets WalletSubtype field to given value.
+
+
+### GetVaultId
+
+`func (o *CreatedWallet) GetVaultId() string`
+
+GetVaultId returns the VaultId field if non-nil, zero value otherwise.
+
+### GetVaultIdOk
+
+`func (o *CreatedWallet) GetVaultIdOk() (*string, bool)`
+
+GetVaultIdOk returns a tuple with the VaultId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVaultId
+
+`func (o *CreatedWallet) SetVaultId(v string)`
+
+SetVaultId sets VaultId field to given value.
 
 
 ### GetExchangeId
@@ -228,26 +248,6 @@ SetSubAccountIds sets SubAccountIds field to given value.
 `func (o *CreatedWallet) HasSubAccountIds() bool`
 
 HasSubAccountIds returns a boolean if a field has been set.
-
-### GetVaultId
-
-`func (o *CreatedWallet) GetVaultId() string`
-
-GetVaultId returns the VaultId field if non-nil, zero value otherwise.
-
-### GetVaultIdOk
-
-`func (o *CreatedWallet) GetVaultIdOk() (*string, bool)`
-
-GetVaultIdOk returns a tuple with the VaultId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVaultId
-
-`func (o *CreatedWallet) SetVaultId(v string)`
-
-SetVaultId sets VaultId field to given value.
-
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

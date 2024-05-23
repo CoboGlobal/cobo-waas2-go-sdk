@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** | The unique identifier of the event. | 
+**Id** | **string** | The event ID. | 
 **Url** | **string** | The URL of the webhook endpoint. | 
-**CreatedTimestamp** | **int32** | The timestamp at which the object was created, represented as an integer value, typically in milliseconds since the epoch. | 
+**CreatedTimestamp** | **int32** | The time when the event occurred, in Unix timestamp format, measured in milliseconds. | 
 **Type** | [**WebhookEventType**](WebhookEventType.md) |  | 
-**Data** | **map[string]interface{}** | The data of the webhook event in json format. | 
+**Data** | **map[string]interface{}** | The data of the webhook event, in JSON format. | 
 **Status** | [**WebhookEventStatus**](WebhookEventStatus.md) |  | 
-**NextRetryTimestamp** | Pointer to **int32** | The timestamp indicating the next scheduled retry for this event. This field is only present when the event status is set to &#x60;Retrying&#x60;. The timestamp is represented as an integer value, typically in milliseconds since the epoch.  | [optional] 
-**RetriesLeft** | Pointer to **int32** | The number of retries left. This field is only present when the event status is &#x60;Retrying&#x60;. | [optional] 
+**NextRetryTimestamp** | Pointer to **int32** | The timestamp indicating the next scheduled retry to deliver this event, in Unix timestamp format, measured in milliseconds. This field is only present if the event status is &#x60;Retrying&#x60;.  | [optional] 
+**RetriesLeft** | Pointer to **int32** | The number of retries left. This field is only present if the event status is &#x60;Retrying&#x60;. | [optional] 
 
 ## Methods
 

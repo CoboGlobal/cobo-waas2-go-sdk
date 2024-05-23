@@ -4,36 +4,32 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TransactionId** | Pointer to **string** | Unique transaction ID | [optional] 
-**WalletId** | Pointer to **string** | Wallet ID | [optional] 
+**TransactionId** | **string** | Unique transaction ID | 
+**WalletId** | **string** | Wallet ID | 
 **RequestId** | Pointer to **string** | Request ID | [optional] 
-**CoboId** | Pointer to **string** | Cobo ID | [optional] 
-**Status** | Pointer to [**TransactionStatus**](TransactionStatus.md) |  | [optional] 
+**CoboId** | **string** | Cobo ID | 
+**Initiator** | Pointer to **string** | Transaction initiator | [optional] 
+**TransactionHash** | Pointer to **string** | Transaction hash. | [optional] 
+**Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
 **SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
-**Type** | Pointer to [**TransactionType**](TransactionType.md) |  | [optional] 
-**FromType** | Pointer to [**TransactionAddressType**](TransactionAddressType.md) |  | [optional] 
-**FromAddress** | Pointer to [**[]TransactionAddress**](TransactionAddress.md) |  | [optional] 
-**FromInfo** | Pointer to **string** | From wallet info | [optional] 
-**ToType** | Pointer to [**TransactionAddressType**](TransactionAddressType.md) |  | [optional] 
-**ToAddress** | Pointer to [**[]TransactionAddress**](TransactionAddress.md) |  | [optional] 
-**ToInfo** | Pointer to **string** | To wallet info | [optional] 
-**Network** | Pointer to [**Network**](Network.md) |  | [optional] 
-**Txid** | Pointer to **string** |  | [optional] 
+**Type** | [**TransactionType**](TransactionType.md) |  | 
+**Source** | [**TransactionSource**](TransactionSource.md) |  | 
+**Destination** | [**TransactionDestination**](TransactionDestination.md) |  | 
+**ChainId** | Pointer to **string** | The blockchain on which the token operates. | [optional] 
+**ExchangeId** | Pointer to [**ExchangeId**](ExchangeId.md) |  | [optional] 
 **Tokens** | Pointer to [**[]TransactionToken**](TransactionToken.md) |  | [optional] 
+**Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
 **Category** | Pointer to **[]string** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
-**CreatedTime** | Pointer to **float32** | Transaction creation time | [optional] 
-**UpdatedTime** | Pointer to **float32** | Transaction update time | [optional] 
-**Delegate** | Pointer to **string** | Transaction delegate address | [optional] 
-**Initiator** | Pointer to **string** | Transaction initiator | [optional] 
+**ConfirmedNum** | Pointer to **float32** | Transaction confirmed number | [optional] 
+**ConfirmingThreshold** | Pointer to **int32** | Number of confirmations required for a transaction, such as 15 for ETH chain. | [optional] 
+**CreatedTime** | **float32** | Transaction creation time | 
+**UpdatedTime** | **float32** | Transaction update time | 
 **Approvers** | Pointer to [**[]TransactionApprover**](TransactionApprover.md) |  | [optional] 
 **Signers** | Pointer to [**[]TransactionSigner**](TransactionSigner.md) |  | [optional] 
 **Nonce** | Pointer to **int32** | Transaction nonce | [optional] 
 **ReplacedBy** | Pointer to **string** | Replace by transaction hash | [optional] 
-**Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
 **FueledBy** | Pointer to **string** | Fueled by address | [optional] 
-**ConfirmedNum** | Pointer to **float32** | Transaction confirmed number | [optional] 
-**ConfirmingThreshold** | Pointer to **int32** | Number of confirmations required for a transaction, such as 15 for ETH chain. | [optional] 
 **TokenApproval** | Pointer to [**TransactionTokeApproval**](TransactionTokeApproval.md) |  | [optional] 
 **Message** | Pointer to **string** | Transaction raw message | [optional] 
 **Algorithm** | Pointer to **string** | Transaction message signing algorithm | [optional] 
@@ -43,7 +39,7 @@ Name | Type | Description | Notes
 
 ### NewTransactionDetails
 
-`func NewTransactionDetails() *TransactionDetails`
+`func NewTransactionDetails(transactionId string, walletId string, coboId string, status TransactionStatus, type_ TransactionType, source TransactionSource, destination TransactionDestination, createdTime float32, updatedTime float32, ) *TransactionDetails`
 
 NewTransactionDetails instantiates a new TransactionDetails object
 This constructor will assign default values to properties that have it defined,
@@ -77,11 +73,6 @@ and a boolean to check if the value has been set.
 
 SetTransactionId sets TransactionId field to given value.
 
-### HasTransactionId
-
-`func (o *TransactionDetails) HasTransactionId() bool`
-
-HasTransactionId returns a boolean if a field has been set.
 
 ### GetWalletId
 
@@ -102,11 +93,6 @@ and a boolean to check if the value has been set.
 
 SetWalletId sets WalletId field to given value.
 
-### HasWalletId
-
-`func (o *TransactionDetails) HasWalletId() bool`
-
-HasWalletId returns a boolean if a field has been set.
 
 ### GetRequestId
 
@@ -152,11 +138,56 @@ and a boolean to check if the value has been set.
 
 SetCoboId sets CoboId field to given value.
 
-### HasCoboId
 
-`func (o *TransactionDetails) HasCoboId() bool`
+### GetInitiator
 
-HasCoboId returns a boolean if a field has been set.
+`func (o *TransactionDetails) GetInitiator() string`
+
+GetInitiator returns the Initiator field if non-nil, zero value otherwise.
+
+### GetInitiatorOk
+
+`func (o *TransactionDetails) GetInitiatorOk() (*string, bool)`
+
+GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitiator
+
+`func (o *TransactionDetails) SetInitiator(v string)`
+
+SetInitiator sets Initiator field to given value.
+
+### HasInitiator
+
+`func (o *TransactionDetails) HasInitiator() bool`
+
+HasInitiator returns a boolean if a field has been set.
+
+### GetTransactionHash
+
+`func (o *TransactionDetails) GetTransactionHash() string`
+
+GetTransactionHash returns the TransactionHash field if non-nil, zero value otherwise.
+
+### GetTransactionHashOk
+
+`func (o *TransactionDetails) GetTransactionHashOk() (*string, bool)`
+
+GetTransactionHashOk returns a tuple with the TransactionHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransactionHash
+
+`func (o *TransactionDetails) SetTransactionHash(v string)`
+
+SetTransactionHash sets TransactionHash field to given value.
+
+### HasTransactionHash
+
+`func (o *TransactionDetails) HasTransactionHash() bool`
+
+HasTransactionHash returns a boolean if a field has been set.
 
 ### GetStatus
 
@@ -177,11 +208,6 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
-### HasStatus
-
-`func (o *TransactionDetails) HasStatus() bool`
-
-HasStatus returns a boolean if a field has been set.
 
 ### GetSubStatus
 
@@ -227,211 +253,96 @@ and a boolean to check if the value has been set.
 
 SetType sets Type field to given value.
 
-### HasType
 
-`func (o *TransactionDetails) HasType() bool`
+### GetSource
 
-HasType returns a boolean if a field has been set.
+`func (o *TransactionDetails) GetSource() TransactionSource`
 
-### GetFromType
+GetSource returns the Source field if non-nil, zero value otherwise.
 
-`func (o *TransactionDetails) GetFromType() TransactionAddressType`
+### GetSourceOk
 
-GetFromType returns the FromType field if non-nil, zero value otherwise.
+`func (o *TransactionDetails) GetSourceOk() (*TransactionSource, bool)`
 
-### GetFromTypeOk
-
-`func (o *TransactionDetails) GetFromTypeOk() (*TransactionAddressType, bool)`
-
-GetFromTypeOk returns a tuple with the FromType field if it's non-nil, zero value otherwise
+GetSourceOk returns a tuple with the Source field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromType
+### SetSource
 
-`func (o *TransactionDetails) SetFromType(v TransactionAddressType)`
+`func (o *TransactionDetails) SetSource(v TransactionSource)`
 
-SetFromType sets FromType field to given value.
+SetSource sets Source field to given value.
 
-### HasFromType
 
-`func (o *TransactionDetails) HasFromType() bool`
+### GetDestination
 
-HasFromType returns a boolean if a field has been set.
+`func (o *TransactionDetails) GetDestination() TransactionDestination`
 
-### GetFromAddress
+GetDestination returns the Destination field if non-nil, zero value otherwise.
 
-`func (o *TransactionDetails) GetFromAddress() []TransactionAddress`
+### GetDestinationOk
 
-GetFromAddress returns the FromAddress field if non-nil, zero value otherwise.
+`func (o *TransactionDetails) GetDestinationOk() (*TransactionDestination, bool)`
 
-### GetFromAddressOk
-
-`func (o *TransactionDetails) GetFromAddressOk() (*[]TransactionAddress, bool)`
-
-GetFromAddressOk returns a tuple with the FromAddress field if it's non-nil, zero value otherwise
+GetDestinationOk returns a tuple with the Destination field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromAddress
+### SetDestination
 
-`func (o *TransactionDetails) SetFromAddress(v []TransactionAddress)`
+`func (o *TransactionDetails) SetDestination(v TransactionDestination)`
 
-SetFromAddress sets FromAddress field to given value.
+SetDestination sets Destination field to given value.
 
-### HasFromAddress
 
-`func (o *TransactionDetails) HasFromAddress() bool`
+### GetChainId
 
-HasFromAddress returns a boolean if a field has been set.
+`func (o *TransactionDetails) GetChainId() string`
 
-### GetFromInfo
+GetChainId returns the ChainId field if non-nil, zero value otherwise.
 
-`func (o *TransactionDetails) GetFromInfo() string`
+### GetChainIdOk
 
-GetFromInfo returns the FromInfo field if non-nil, zero value otherwise.
+`func (o *TransactionDetails) GetChainIdOk() (*string, bool)`
 
-### GetFromInfoOk
-
-`func (o *TransactionDetails) GetFromInfoOk() (*string, bool)`
-
-GetFromInfoOk returns a tuple with the FromInfo field if it's non-nil, zero value otherwise
+GetChainIdOk returns a tuple with the ChainId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromInfo
+### SetChainId
 
-`func (o *TransactionDetails) SetFromInfo(v string)`
+`func (o *TransactionDetails) SetChainId(v string)`
 
-SetFromInfo sets FromInfo field to given value.
+SetChainId sets ChainId field to given value.
 
-### HasFromInfo
+### HasChainId
 
-`func (o *TransactionDetails) HasFromInfo() bool`
+`func (o *TransactionDetails) HasChainId() bool`
 
-HasFromInfo returns a boolean if a field has been set.
+HasChainId returns a boolean if a field has been set.
 
-### GetToType
+### GetExchangeId
 
-`func (o *TransactionDetails) GetToType() TransactionAddressType`
+`func (o *TransactionDetails) GetExchangeId() ExchangeId`
 
-GetToType returns the ToType field if non-nil, zero value otherwise.
+GetExchangeId returns the ExchangeId field if non-nil, zero value otherwise.
 
-### GetToTypeOk
+### GetExchangeIdOk
 
-`func (o *TransactionDetails) GetToTypeOk() (*TransactionAddressType, bool)`
+`func (o *TransactionDetails) GetExchangeIdOk() (*ExchangeId, bool)`
 
-GetToTypeOk returns a tuple with the ToType field if it's non-nil, zero value otherwise
+GetExchangeIdOk returns a tuple with the ExchangeId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetToType
+### SetExchangeId
 
-`func (o *TransactionDetails) SetToType(v TransactionAddressType)`
+`func (o *TransactionDetails) SetExchangeId(v ExchangeId)`
 
-SetToType sets ToType field to given value.
+SetExchangeId sets ExchangeId field to given value.
 
-### HasToType
+### HasExchangeId
 
-`func (o *TransactionDetails) HasToType() bool`
+`func (o *TransactionDetails) HasExchangeId() bool`
 
-HasToType returns a boolean if a field has been set.
-
-### GetToAddress
-
-`func (o *TransactionDetails) GetToAddress() []TransactionAddress`
-
-GetToAddress returns the ToAddress field if non-nil, zero value otherwise.
-
-### GetToAddressOk
-
-`func (o *TransactionDetails) GetToAddressOk() (*[]TransactionAddress, bool)`
-
-GetToAddressOk returns a tuple with the ToAddress field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetToAddress
-
-`func (o *TransactionDetails) SetToAddress(v []TransactionAddress)`
-
-SetToAddress sets ToAddress field to given value.
-
-### HasToAddress
-
-`func (o *TransactionDetails) HasToAddress() bool`
-
-HasToAddress returns a boolean if a field has been set.
-
-### GetToInfo
-
-`func (o *TransactionDetails) GetToInfo() string`
-
-GetToInfo returns the ToInfo field if non-nil, zero value otherwise.
-
-### GetToInfoOk
-
-`func (o *TransactionDetails) GetToInfoOk() (*string, bool)`
-
-GetToInfoOk returns a tuple with the ToInfo field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetToInfo
-
-`func (o *TransactionDetails) SetToInfo(v string)`
-
-SetToInfo sets ToInfo field to given value.
-
-### HasToInfo
-
-`func (o *TransactionDetails) HasToInfo() bool`
-
-HasToInfo returns a boolean if a field has been set.
-
-### GetNetwork
-
-`func (o *TransactionDetails) GetNetwork() Network`
-
-GetNetwork returns the Network field if non-nil, zero value otherwise.
-
-### GetNetworkOk
-
-`func (o *TransactionDetails) GetNetworkOk() (*Network, bool)`
-
-GetNetworkOk returns a tuple with the Network field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNetwork
-
-`func (o *TransactionDetails) SetNetwork(v Network)`
-
-SetNetwork sets Network field to given value.
-
-### HasNetwork
-
-`func (o *TransactionDetails) HasNetwork() bool`
-
-HasNetwork returns a boolean if a field has been set.
-
-### GetTxid
-
-`func (o *TransactionDetails) GetTxid() string`
-
-GetTxid returns the Txid field if non-nil, zero value otherwise.
-
-### GetTxidOk
-
-`func (o *TransactionDetails) GetTxidOk() (*string, bool)`
-
-GetTxidOk returns a tuple with the Txid field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTxid
-
-`func (o *TransactionDetails) SetTxid(v string)`
-
-SetTxid sets Txid field to given value.
-
-### HasTxid
-
-`func (o *TransactionDetails) HasTxid() bool`
-
-HasTxid returns a boolean if a field has been set.
+HasExchangeId returns a boolean if a field has been set.
 
 ### GetTokens
 
@@ -457,6 +368,31 @@ SetTokens sets Tokens field to given value.
 `func (o *TransactionDetails) HasTokens() bool`
 
 HasTokens returns a boolean if a field has been set.
+
+### GetFee
+
+`func (o *TransactionDetails) GetFee() TransactionFee`
+
+GetFee returns the Fee field if non-nil, zero value otherwise.
+
+### GetFeeOk
+
+`func (o *TransactionDetails) GetFeeOk() (*TransactionFee, bool)`
+
+GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFee
+
+`func (o *TransactionDetails) SetFee(v TransactionFee)`
+
+SetFee sets Fee field to given value.
+
+### HasFee
+
+`func (o *TransactionDetails) HasFee() bool`
+
+HasFee returns a boolean if a field has been set.
 
 ### GetCategory
 
@@ -508,6 +444,56 @@ SetDescription sets Description field to given value.
 
 HasDescription returns a boolean if a field has been set.
 
+### GetConfirmedNum
+
+`func (o *TransactionDetails) GetConfirmedNum() float32`
+
+GetConfirmedNum returns the ConfirmedNum field if non-nil, zero value otherwise.
+
+### GetConfirmedNumOk
+
+`func (o *TransactionDetails) GetConfirmedNumOk() (*float32, bool)`
+
+GetConfirmedNumOk returns a tuple with the ConfirmedNum field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfirmedNum
+
+`func (o *TransactionDetails) SetConfirmedNum(v float32)`
+
+SetConfirmedNum sets ConfirmedNum field to given value.
+
+### HasConfirmedNum
+
+`func (o *TransactionDetails) HasConfirmedNum() bool`
+
+HasConfirmedNum returns a boolean if a field has been set.
+
+### GetConfirmingThreshold
+
+`func (o *TransactionDetails) GetConfirmingThreshold() int32`
+
+GetConfirmingThreshold returns the ConfirmingThreshold field if non-nil, zero value otherwise.
+
+### GetConfirmingThresholdOk
+
+`func (o *TransactionDetails) GetConfirmingThresholdOk() (*int32, bool)`
+
+GetConfirmingThresholdOk returns a tuple with the ConfirmingThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfirmingThreshold
+
+`func (o *TransactionDetails) SetConfirmingThreshold(v int32)`
+
+SetConfirmingThreshold sets ConfirmingThreshold field to given value.
+
+### HasConfirmingThreshold
+
+`func (o *TransactionDetails) HasConfirmingThreshold() bool`
+
+HasConfirmingThreshold returns a boolean if a field has been set.
+
 ### GetCreatedTime
 
 `func (o *TransactionDetails) GetCreatedTime() float32`
@@ -527,11 +513,6 @@ and a boolean to check if the value has been set.
 
 SetCreatedTime sets CreatedTime field to given value.
 
-### HasCreatedTime
-
-`func (o *TransactionDetails) HasCreatedTime() bool`
-
-HasCreatedTime returns a boolean if a field has been set.
 
 ### GetUpdatedTime
 
@@ -552,61 +533,6 @@ and a boolean to check if the value has been set.
 
 SetUpdatedTime sets UpdatedTime field to given value.
 
-### HasUpdatedTime
-
-`func (o *TransactionDetails) HasUpdatedTime() bool`
-
-HasUpdatedTime returns a boolean if a field has been set.
-
-### GetDelegate
-
-`func (o *TransactionDetails) GetDelegate() string`
-
-GetDelegate returns the Delegate field if non-nil, zero value otherwise.
-
-### GetDelegateOk
-
-`func (o *TransactionDetails) GetDelegateOk() (*string, bool)`
-
-GetDelegateOk returns a tuple with the Delegate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDelegate
-
-`func (o *TransactionDetails) SetDelegate(v string)`
-
-SetDelegate sets Delegate field to given value.
-
-### HasDelegate
-
-`func (o *TransactionDetails) HasDelegate() bool`
-
-HasDelegate returns a boolean if a field has been set.
-
-### GetInitiator
-
-`func (o *TransactionDetails) GetInitiator() string`
-
-GetInitiator returns the Initiator field if non-nil, zero value otherwise.
-
-### GetInitiatorOk
-
-`func (o *TransactionDetails) GetInitiatorOk() (*string, bool)`
-
-GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInitiator
-
-`func (o *TransactionDetails) SetInitiator(v string)`
-
-SetInitiator sets Initiator field to given value.
-
-### HasInitiator
-
-`func (o *TransactionDetails) HasInitiator() bool`
-
-HasInitiator returns a boolean if a field has been set.
 
 ### GetApprovers
 
@@ -708,31 +634,6 @@ SetReplacedBy sets ReplacedBy field to given value.
 
 HasReplacedBy returns a boolean if a field has been set.
 
-### GetFee
-
-`func (o *TransactionDetails) GetFee() TransactionFee`
-
-GetFee returns the Fee field if non-nil, zero value otherwise.
-
-### GetFeeOk
-
-`func (o *TransactionDetails) GetFeeOk() (*TransactionFee, bool)`
-
-GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFee
-
-`func (o *TransactionDetails) SetFee(v TransactionFee)`
-
-SetFee sets Fee field to given value.
-
-### HasFee
-
-`func (o *TransactionDetails) HasFee() bool`
-
-HasFee returns a boolean if a field has been set.
-
 ### GetFueledBy
 
 `func (o *TransactionDetails) GetFueledBy() string`
@@ -757,56 +658,6 @@ SetFueledBy sets FueledBy field to given value.
 `func (o *TransactionDetails) HasFueledBy() bool`
 
 HasFueledBy returns a boolean if a field has been set.
-
-### GetConfirmedNum
-
-`func (o *TransactionDetails) GetConfirmedNum() float32`
-
-GetConfirmedNum returns the ConfirmedNum field if non-nil, zero value otherwise.
-
-### GetConfirmedNumOk
-
-`func (o *TransactionDetails) GetConfirmedNumOk() (*float32, bool)`
-
-GetConfirmedNumOk returns a tuple with the ConfirmedNum field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetConfirmedNum
-
-`func (o *TransactionDetails) SetConfirmedNum(v float32)`
-
-SetConfirmedNum sets ConfirmedNum field to given value.
-
-### HasConfirmedNum
-
-`func (o *TransactionDetails) HasConfirmedNum() bool`
-
-HasConfirmedNum returns a boolean if a field has been set.
-
-### GetConfirmingThreshold
-
-`func (o *TransactionDetails) GetConfirmingThreshold() int32`
-
-GetConfirmingThreshold returns the ConfirmingThreshold field if non-nil, zero value otherwise.
-
-### GetConfirmingThresholdOk
-
-`func (o *TransactionDetails) GetConfirmingThresholdOk() (*int32, bool)`
-
-GetConfirmingThresholdOk returns a tuple with the ConfirmingThreshold field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetConfirmingThreshold
-
-`func (o *TransactionDetails) SetConfirmingThreshold(v int32)`
-
-SetConfirmingThreshold sets ConfirmingThreshold field to given value.
-
-### HasConfirmingThreshold
-
-`func (o *TransactionDetails) HasConfirmingThreshold() bool`
-
-HasConfirmingThreshold returns a boolean if a field has been set.
 
 ### GetTokenApproval
 

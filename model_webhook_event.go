@@ -18,21 +18,21 @@ import (
 // checks if the WebhookEvent type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &WebhookEvent{}
 
-// WebhookEvent The data for webhook event.
+// WebhookEvent The webhook event payload.
 type WebhookEvent struct {
-	// The unique identifier of the event.
+	// The event ID.
 	Id string `json:"id"`
 	// The URL of the webhook endpoint.
 	Url string `json:"url"`
-	// The timestamp at which the object was created, represented as an integer value, typically in milliseconds since the epoch.
+	// The time when the event occurred, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	Type WebhookEventType `json:"type"`
-	// The data of the webhook event in json format.
+	// The data of the webhook event, in JSON format.
 	Data map[string]interface{} `json:"data"`
 	Status WebhookEventStatus `json:"status"`
-	// The timestamp indicating the next scheduled retry for this event. This field is only present when the event status is set to `Retrying`. The timestamp is represented as an integer value, typically in milliseconds since the epoch. 
+	// The timestamp indicating the next scheduled retry to deliver this event, in Unix timestamp format, measured in milliseconds. This field is only present if the event status is `Retrying`. 
 	NextRetryTimestamp *int32 `json:"next_retry_timestamp,omitempty"`
-	// The number of retries left. This field is only present when the event status is `Retrying`.
+	// The number of retries left. This field is only present if the event status is `Retrying`.
 	RetriesLeft *int32 `json:"retries_left,omitempty"`
 }
 

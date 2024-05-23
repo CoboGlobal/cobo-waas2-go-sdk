@@ -27,8 +27,11 @@ type AddressInfo struct {
 	TokenId string `json:"token_id"`
 	// From address memo
 	Memo *string `json:"memo,omitempty"`
-	// Ture if the address is in same fund pool, False otherwise
-	IsInternal *bool `json:"is_internal,omitempty"`
+	// Derivation path of address pubkey，required for MPC wallet
+	Path *string `json:"path,omitempty"`
+	Encoding *AddressEncoding `json:"encoding,omitempty"`
+	// Address pubkey，required for MPC wallet
+	Pubkey *string `json:"pubkey,omitempty"`
 }
 
 type _AddressInfo AddressInfo
@@ -42,8 +45,6 @@ func NewAddressInfo(addressId string, addressStr string, tokenId string) *Addres
 	this.AddressId = addressId
 	this.AddressStr = addressStr
 	this.TokenId = tokenId
-	var isInternal bool = false
-	this.IsInternal = &isInternal
 	return &this
 }
 
@@ -52,8 +53,6 @@ func NewAddressInfo(addressId string, addressStr string, tokenId string) *Addres
 // but it doesn't guarantee that properties required by API are set
 func NewAddressInfoWithDefaults() *AddressInfo {
 	this := AddressInfo{}
-	var isInternal bool = false
-	this.IsInternal = &isInternal
 	return &this
 }
 
@@ -161,36 +160,100 @@ func (o *AddressInfo) SetMemo(v string) {
 	o.Memo = &v
 }
 
-// GetIsInternal returns the IsInternal field value if set, zero value otherwise.
-func (o *AddressInfo) GetIsInternal() bool {
-	if o == nil || IsNil(o.IsInternal) {
-		var ret bool
+// GetPath returns the Path field value if set, zero value otherwise.
+func (o *AddressInfo) GetPath() string {
+	if o == nil || IsNil(o.Path) {
+		var ret string
 		return ret
 	}
-	return *o.IsInternal
+	return *o.Path
 }
 
-// GetIsInternalOk returns a tuple with the IsInternal field value if set, nil otherwise
+// GetPathOk returns a tuple with the Path field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddressInfo) GetIsInternalOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsInternal) {
+func (o *AddressInfo) GetPathOk() (*string, bool) {
+	if o == nil || IsNil(o.Path) {
 		return nil, false
 	}
-	return o.IsInternal, true
+	return o.Path, true
 }
 
-// HasIsInternal returns a boolean if a field has been set.
-func (o *AddressInfo) HasIsInternal() bool {
-	if o != nil && !IsNil(o.IsInternal) {
+// HasPath returns a boolean if a field has been set.
+func (o *AddressInfo) HasPath() bool {
+	if o != nil && !IsNil(o.Path) {
 		return true
 	}
 
 	return false
 }
 
-// SetIsInternal gets a reference to the given bool and assigns it to the IsInternal field.
-func (o *AddressInfo) SetIsInternal(v bool) {
-	o.IsInternal = &v
+// SetPath gets a reference to the given string and assigns it to the Path field.
+func (o *AddressInfo) SetPath(v string) {
+	o.Path = &v
+}
+
+// GetEncoding returns the Encoding field value if set, zero value otherwise.
+func (o *AddressInfo) GetEncoding() AddressEncoding {
+	if o == nil || IsNil(o.Encoding) {
+		var ret AddressEncoding
+		return ret
+	}
+	return *o.Encoding
+}
+
+// GetEncodingOk returns a tuple with the Encoding field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressInfo) GetEncodingOk() (*AddressEncoding, bool) {
+	if o == nil || IsNil(o.Encoding) {
+		return nil, false
+	}
+	return o.Encoding, true
+}
+
+// HasEncoding returns a boolean if a field has been set.
+func (o *AddressInfo) HasEncoding() bool {
+	if o != nil && !IsNil(o.Encoding) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncoding gets a reference to the given AddressEncoding and assigns it to the Encoding field.
+func (o *AddressInfo) SetEncoding(v AddressEncoding) {
+	o.Encoding = &v
+}
+
+// GetPubkey returns the Pubkey field value if set, zero value otherwise.
+func (o *AddressInfo) GetPubkey() string {
+	if o == nil || IsNil(o.Pubkey) {
+		var ret string
+		return ret
+	}
+	return *o.Pubkey
+}
+
+// GetPubkeyOk returns a tuple with the Pubkey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressInfo) GetPubkeyOk() (*string, bool) {
+	if o == nil || IsNil(o.Pubkey) {
+		return nil, false
+	}
+	return o.Pubkey, true
+}
+
+// HasPubkey returns a boolean if a field has been set.
+func (o *AddressInfo) HasPubkey() bool {
+	if o != nil && !IsNil(o.Pubkey) {
+		return true
+	}
+
+	return false
+}
+
+// SetPubkey gets a reference to the given string and assigns it to the Pubkey field.
+func (o *AddressInfo) SetPubkey(v string) {
+	o.Pubkey = &v
 }
 
 func (o AddressInfo) MarshalJSON() ([]byte, error) {
@@ -209,8 +272,14 @@ func (o AddressInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Memo) {
 		toSerialize["memo"] = o.Memo
 	}
-	if !IsNil(o.IsInternal) {
-		toSerialize["is_internal"] = o.IsInternal
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
+	if !IsNil(o.Encoding) {
+		toSerialize["encoding"] = o.Encoding
+	}
+	if !IsNil(o.Pubkey) {
+		toSerialize["pubkey"] = o.Pubkey
 	}
 	return toSerialize, nil
 }

@@ -26,10 +26,6 @@ type TokenBalanceBalance struct {
 	Available string `json:"available"`
 	// The pending balance not confirmed.
 	Pending *string `json:"pending,omitempty"`
-	// The staked balance.
-	Staked *string `json:"staked,omitempty"`
-	// The frozen balance.
-	Frozen *string `json:"frozen,omitempty"`
 	// The locked balance.
 	Locked *string `json:"locked,omitempty"`
 }
@@ -46,10 +42,6 @@ func NewTokenBalanceBalance(total string, available string) *TokenBalanceBalance
 	this.Available = available
 	var pending string = "0"
 	this.Pending = &pending
-	var staked string = "0"
-	this.Staked = &staked
-	var frozen string = "0"
-	this.Frozen = &frozen
 	var locked string = "0"
 	this.Locked = &locked
 	return &this
@@ -62,10 +54,6 @@ func NewTokenBalanceBalanceWithDefaults() *TokenBalanceBalance {
 	this := TokenBalanceBalance{}
 	var pending string = "0"
 	this.Pending = &pending
-	var staked string = "0"
-	this.Staked = &staked
-	var frozen string = "0"
-	this.Frozen = &frozen
 	var locked string = "0"
 	this.Locked = &locked
 	return &this
@@ -151,70 +139,6 @@ func (o *TokenBalanceBalance) SetPending(v string) {
 	o.Pending = &v
 }
 
-// GetStaked returns the Staked field value if set, zero value otherwise.
-func (o *TokenBalanceBalance) GetStaked() string {
-	if o == nil || IsNil(o.Staked) {
-		var ret string
-		return ret
-	}
-	return *o.Staked
-}
-
-// GetStakedOk returns a tuple with the Staked field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TokenBalanceBalance) GetStakedOk() (*string, bool) {
-	if o == nil || IsNil(o.Staked) {
-		return nil, false
-	}
-	return o.Staked, true
-}
-
-// HasStaked returns a boolean if a field has been set.
-func (o *TokenBalanceBalance) HasStaked() bool {
-	if o != nil && !IsNil(o.Staked) {
-		return true
-	}
-
-	return false
-}
-
-// SetStaked gets a reference to the given string and assigns it to the Staked field.
-func (o *TokenBalanceBalance) SetStaked(v string) {
-	o.Staked = &v
-}
-
-// GetFrozen returns the Frozen field value if set, zero value otherwise.
-func (o *TokenBalanceBalance) GetFrozen() string {
-	if o == nil || IsNil(o.Frozen) {
-		var ret string
-		return ret
-	}
-	return *o.Frozen
-}
-
-// GetFrozenOk returns a tuple with the Frozen field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TokenBalanceBalance) GetFrozenOk() (*string, bool) {
-	if o == nil || IsNil(o.Frozen) {
-		return nil, false
-	}
-	return o.Frozen, true
-}
-
-// HasFrozen returns a boolean if a field has been set.
-func (o *TokenBalanceBalance) HasFrozen() bool {
-	if o != nil && !IsNil(o.Frozen) {
-		return true
-	}
-
-	return false
-}
-
-// SetFrozen gets a reference to the given string and assigns it to the Frozen field.
-func (o *TokenBalanceBalance) SetFrozen(v string) {
-	o.Frozen = &v
-}
-
 // GetLocked returns the Locked field value if set, zero value otherwise.
 func (o *TokenBalanceBalance) GetLocked() string {
 	if o == nil || IsNil(o.Locked) {
@@ -261,12 +185,6 @@ func (o TokenBalanceBalance) ToMap() (map[string]interface{}, error) {
 	toSerialize["available"] = o.Available
 	if !IsNil(o.Pending) {
 		toSerialize["pending"] = o.Pending
-	}
-	if !IsNil(o.Staked) {
-		toSerialize["staked"] = o.Staked
-	}
-	if !IsNil(o.Frozen) {
-		toSerialize["frozen"] = o.Frozen
 	}
 	if !IsNil(o.Locked) {
 		toSerialize["locked"] = o.Locked

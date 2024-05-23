@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 **FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
 **MaxFee** | **string** | The highest Gas price paid for the transfer, unit GWei. | 
-**MaxPriorityFee** | **int32** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
-**BaseFee** | **int32** | The Base Fee of chain. | 
+**MaxPriorityFee** | **string** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
+**BaseFee** | **string** | The Base Fee of chain. | 
 **GasPrice** | **string** | The Price of Gas, unit GWei. | 
 **FeeRate** | **string** | The fee rate, unit sat/vB. | 
 **FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewChainFeePrice
 
-`func NewChainFeePrice(feeType FeeType, maxFee string, maxPriorityFee int32, baseFee int32, gasPrice string, feeRate string, ) *ChainFeePrice`
+`func NewChainFeePrice(feeType FeeType, maxFee string, maxPriorityFee string, baseFee string, gasPrice string, feeRate string, ) *ChainFeePrice`
 
 NewChainFeePrice instantiates a new ChainFeePrice object
 This constructor will assign default values to properties that have it defined,
@@ -99,40 +99,40 @@ SetMaxFee sets MaxFee field to given value.
 
 ### GetMaxPriorityFee
 
-`func (o *ChainFeePrice) GetMaxPriorityFee() int32`
+`func (o *ChainFeePrice) GetMaxPriorityFee() string`
 
 GetMaxPriorityFee returns the MaxPriorityFee field if non-nil, zero value otherwise.
 
 ### GetMaxPriorityFeeOk
 
-`func (o *ChainFeePrice) GetMaxPriorityFeeOk() (*int32, bool)`
+`func (o *ChainFeePrice) GetMaxPriorityFeeOk() (*string, bool)`
 
 GetMaxPriorityFeeOk returns a tuple with the MaxPriorityFee field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMaxPriorityFee
 
-`func (o *ChainFeePrice) SetMaxPriorityFee(v int32)`
+`func (o *ChainFeePrice) SetMaxPriorityFee(v string)`
 
 SetMaxPriorityFee sets MaxPriorityFee field to given value.
 
 
 ### GetBaseFee
 
-`func (o *ChainFeePrice) GetBaseFee() int32`
+`func (o *ChainFeePrice) GetBaseFee() string`
 
 GetBaseFee returns the BaseFee field if non-nil, zero value otherwise.
 
 ### GetBaseFeeOk
 
-`func (o *ChainFeePrice) GetBaseFeeOk() (*int32, bool)`
+`func (o *ChainFeePrice) GetBaseFeeOk() (*string, bool)`
 
 GetBaseFeeOk returns a tuple with the BaseFee field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBaseFee
 
-`func (o *ChainFeePrice) SetBaseFee(v int32)`
+`func (o *ChainFeePrice) SetBaseFee(v string)`
 
 SetBaseFee sets BaseFee field to given value.
 

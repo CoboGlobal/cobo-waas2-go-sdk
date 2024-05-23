@@ -11,8 +11,6 @@
 
 * `CONTRACT_CALL` (value: `"ContractCall"`)
 
-* `EXCHANGE_TRANSFER` (value: `"ExchangeTransfer"`)
-
 * `AUTO_FUELING` (value: `"AutoFueling"`)
 
 * `RAW_MESSAGE` (value: `"RawMessage"`)

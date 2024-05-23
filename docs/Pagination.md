@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Before** | Pointer to **string** |  | [optional] 
-**After** | Pointer to **string** |  | [optional] 
+**Before** | Pointer to **string** | An object ID which serves as a cursor for pagination. For example, if the value of &#x60;before&#x60; is &#x60;foo&#x60;, the returned data ends before the object with the object ID &#x60;foo&#x60;. | [optional] 
+**After** | Pointer to **string** | An object ID which serves as a cursor for pagination. For example, if the value of &#x60;after&#x60; is &#x60;bar&#x60;, the returned data starts after the object with the object ID &#x60;bar&#x60;. | [optional] 
 
 ## Methods
 

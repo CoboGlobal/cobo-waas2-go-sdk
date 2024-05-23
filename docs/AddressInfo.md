@@ -8,7 +8,9 @@ Name | Type | Description | Notes
 **AddressStr** | **string** | Then blockchain address | 
 **TokenId** | **string** | ID of the token. Unique in all chains scope. | 
 **Memo** | Pointer to **string** | From address memo | [optional] 
-**IsInternal** | Pointer to **bool** | Ture if the address is in same fund pool, False otherwise | [optional] [default to false]
+**Path** | Pointer to **string** | Derivation path of address pubkey，required for MPC wallet | [optional] 
+**Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
+**Pubkey** | Pointer to **string** | Address pubkey，required for MPC wallet | [optional] 
 
 ## Methods
 
@@ -114,30 +116,80 @@ SetMemo sets Memo field to given value.
 
 HasMemo returns a boolean if a field has been set.
 
-### GetIsInternal
+### GetPath
 
-`func (o *AddressInfo) GetIsInternal() bool`
+`func (o *AddressInfo) GetPath() string`
 
-GetIsInternal returns the IsInternal field if non-nil, zero value otherwise.
+GetPath returns the Path field if non-nil, zero value otherwise.
 
-### GetIsInternalOk
+### GetPathOk
 
-`func (o *AddressInfo) GetIsInternalOk() (*bool, bool)`
+`func (o *AddressInfo) GetPathOk() (*string, bool)`
 
-GetIsInternalOk returns a tuple with the IsInternal field if it's non-nil, zero value otherwise
+GetPathOk returns a tuple with the Path field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIsInternal
+### SetPath
 
-`func (o *AddressInfo) SetIsInternal(v bool)`
+`func (o *AddressInfo) SetPath(v string)`
 
-SetIsInternal sets IsInternal field to given value.
+SetPath sets Path field to given value.
 
-### HasIsInternal
+### HasPath
 
-`func (o *AddressInfo) HasIsInternal() bool`
+`func (o *AddressInfo) HasPath() bool`
 
-HasIsInternal returns a boolean if a field has been set.
+HasPath returns a boolean if a field has been set.
+
+### GetEncoding
+
+`func (o *AddressInfo) GetEncoding() AddressEncoding`
+
+GetEncoding returns the Encoding field if non-nil, zero value otherwise.
+
+### GetEncodingOk
+
+`func (o *AddressInfo) GetEncodingOk() (*AddressEncoding, bool)`
+
+GetEncodingOk returns a tuple with the Encoding field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEncoding
+
+`func (o *AddressInfo) SetEncoding(v AddressEncoding)`
+
+SetEncoding sets Encoding field to given value.
+
+### HasEncoding
+
+`func (o *AddressInfo) HasEncoding() bool`
+
+HasEncoding returns a boolean if a field has been set.
+
+### GetPubkey
+
+`func (o *AddressInfo) GetPubkey() string`
+
+GetPubkey returns the Pubkey field if non-nil, zero value otherwise.
+
+### GetPubkeyOk
+
+`func (o *AddressInfo) GetPubkeyOk() (*string, bool)`
+
+GetPubkeyOk returns a tuple with the Pubkey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPubkey
+
+`func (o *AddressInfo) SetPubkey(v string)`
+
+SetPubkey sets Pubkey field to given value.
+
+### HasPubkey
+
+`func (o *AddressInfo) HasPubkey() bool`
+
+HasPubkey returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

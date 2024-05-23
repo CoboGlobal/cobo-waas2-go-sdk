@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TxHash** | Pointer to **string** | Transaction hash of the UTXO. | [optional] 
 **VoutN** | Pointer to **int32** | Output index of the UTXO. | [optional] 
-**Address** | Pointer to **string** | Address of the UTXO. | [optional] 
+**AddressStr** | Pointer to **string** | Address of the UTXO. | [optional] 
 **Amount** | Pointer to **string** | UTXO amount in decimal places (e.g. one bitcoin is divisible to eight decimal places, and 100000000 represents 1 BTC). | [optional] 
 **IsCoinbase** | Pointer to **bool** | Whether the UTXO is a coinbase transaction. | [optional] 
 **ConfirmedNumber** | Pointer to **int32** | Number of confirmations for the UTXO. | [optional] 
@@ -80,30 +80,30 @@ SetVoutN sets VoutN field to given value.
 
 HasVoutN returns a boolean if a field has been set.
 
-### GetAddress
+### GetAddressStr
 
-`func (o *UTXO) GetAddress() string`
+`func (o *UTXO) GetAddressStr() string`
 
-GetAddress returns the Address field if non-nil, zero value otherwise.
+GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
 
-### GetAddressOk
+### GetAddressStrOk
 
-`func (o *UTXO) GetAddressOk() (*string, bool)`
+`func (o *UTXO) GetAddressStrOk() (*string, bool)`
 
-GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
+GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddress
+### SetAddressStr
 
-`func (o *UTXO) SetAddress(v string)`
+`func (o *UTXO) SetAddressStr(v string)`
 
-SetAddress sets Address field to given value.
+SetAddressStr sets AddressStr field to given value.
 
-### HasAddress
+### HasAddressStr
 
-`func (o *UTXO) HasAddress() bool`
+`func (o *UTXO) HasAddressStr() bool`
 
-HasAddress returns a boolean if a field has been set.
+HasAddressStr returns a boolean if a field has been set.
 
 ### GetAmount
 

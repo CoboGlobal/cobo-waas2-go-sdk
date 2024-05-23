@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**[]TokenInfo**](TokenInfo.md) |  | [optional] 
+**Data** | Pointer to [**[]GetTokens200ResponseDataInner**](GetTokens200ResponseDataInner.md) |  | [optional] 
 **Pagination** | Pointer to [**Pagination**](Pagination.md) |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *GetTokens200Response) GetData() []TokenInfo`
+`func (o *GetTokens200Response) GetData() []GetTokens200ResponseDataInner`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *GetTokens200Response) GetDataOk() (*[]TokenInfo, bool)`
+`func (o *GetTokens200Response) GetDataOk() (*[]GetTokens200ResponseDataInner, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *GetTokens200Response) SetData(v []TokenInfo)`
+`func (o *GetTokens200Response) SetData(v []GetTokens200ResponseDataInner)`
 
 SetData sets Data field to given value.
 

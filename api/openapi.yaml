@@ -11,8 +11,8 @@ info:
     # Wallet technologies
     - Custodial Wallet
     - MPC Wallet
-    - Smart Contract Wallet (Based on Safe{Wallet})
-    - Exchange Wallet
+    - Smart Contract Wallet (Based on Safe{Wallet}, to be supported later)
+    - Exchange Wallet(To be supported later)
 
     # Risk Control technologies
     - Workflow
@@ -43,13 +43,27 @@ info:
     ### Common error codes
     | Error Code | Description |
     | -- | -- |
+    | `2000` | Internal error |
+    | `2002` | Unsupported HTTP method |
+    | `2003` | Missing required parameters |
+    | `2006` | Illegal parameter format or value |
+    | `2010` | Exceeded frequency limit |
+    | `2020` | Missing action |
+    | `2021` | Missing handler |
+    | `2022` | Missing required request header |
+    | `2023` | Verification failed |
+    | `2024` | Authentication failed |
+    | `2025` | Forbidden |
+    | `2026` | Too many requests |
+    | `2027` | Exceed quota limit |
+    | `2028` | Not found |
+    | `2029` | Invalid status |
+    | `2040` | Duplicated key |
 
     ### API-specific error codes
-    For error codes that are dedicated to a specific API, see the Error codes section in each API specification, for example, /v3/wallets.
+    For error codes that are dedicated to a specific API, see the Error codes section in each API specification, for example, /v2/wallets.
 
     # Rate and Usage Limiting
-
-    # Idempotent Request
 
     # Pagination
     # Support
@@ -62,9 +76,9 @@ info:
   version: 1.0.0
 servers:
 - description: Production environment
-  url: https://api.cobo.com/v3
+  url: https://api.cobo.com/v2
 - description: Development environment
-  url: https://api.dev.cobo.com/v3
+  url: https://api.dev.cobo.com/v2
 security:
 - CoboAuth: []
 tags:
@@ -72,8 +86,6 @@ tags:
   name: Wallets
 - description: Operations related to mpc wallet.
   name: Wallets - MPC Wallet
-- description: Operations related to exchange wallet.
-  name: Wallets - Exchange Wallet
 - description: Operations related to all transactions.
   name: Transactions
 - description: Operations related to webhooks.
@@ -81,7 +93,16 @@ tags:
 paths:
   /wallets/chains:
     get:
-      description: Retrieve a list of chain metadata.
+      description: |
+        This endpoint retrieves metadata for available blockchain chains.
+        It provides details such as chain_id, name, and other relevant information.
+        Pagination parameters can be used to manage the size of the response.
+        The chain list is publicly accessible without any permission restrictions.
+
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
       operationId: get_chains
       parameters:
       - description: Unique id of the chain
@@ -93,7 +114,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -102,26 +124,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -131,83 +157,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/get_chains_200_response'
           description: Successfully listed chains
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: List the metadata of chain
-      tags:
-      - Wallets
-  /wallets/assets:
-    get:
-      description: Retrieve a list of asset metadata.
-      operationId: get_assets
-      parameters:
-      - description: Unique id of the asset
-        example: USDT
-        explode: true
-        in: query
-        name: asset_id
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: size of page to return (pagination)
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/get_assets_200_response'
-          description: Successfully listed assets
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      security:
-      - CoboAuth: []
-      summary: List the metadata of assets
+      summary: List chain metadata
       tags:
       - Wallets
   /wallets/tokens:
     get:
-      description: Retrieve a list of token metadata.
+      description: |
+        This endpoint retrieves metadata for tokens stored in the wallet system.
+        It provides details such as token_id, symbol, and other relevant information.
+        Pagination parameters can be used to manage the size of the response.
+        The token list is publicly accessible without any permission restrictions.
+
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
       operationId: get_tokens
       parameters:
       - description: Unique id of the token
@@ -219,7 +192,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -228,26 +202,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -257,31 +235,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/get_tokens_200_response'
           description: Successfully listed tokens
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: List the metadata of tokens
+      summary: List token metadata
       tags:
       - Wallets
   /wallets/supported_chains:
     get:
-      description: Retrieve a list of supported chain.
+      description: "This endpoint allows users to query supported chains based on\
+        \ wallet type and subtype. \nPagination parameters can be used to manage the\
+        \ response size.\nWallet type/subtype are enumerations as described in parameters.\n\
+        \nError codes this API may return:\n  | Error Code | Description |\n  | --\
+        \ | -- |\n  | `2006` | 参数格式或者值非法 |\n"
       operationId: get_supported_chains
       parameters:
+      - description: Wallet type to query
+        explode: true
+        in: query
+        name: wallet_type
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletType'
+        style: form
       - description: Wallet subtype to query
         explode: true
         in: query
         name: wallet_subtype
-        required: true
+        required: false
         schema:
           $ref: '#/components/schemas/WalletSubtype'
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -290,26 +282,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -319,27 +315,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/get_chains_200_response'
           description: Successfully listed chains
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: List the supported chains by wallet subtype
+      summary: List supported chains
       tags:
       - Wallets
   /wallets/supported_tokens:
     get:
-      description: Retrieve a list of supported token.
+      description: |
+        This endpoint allows users to query supported tokens based on wallet type, subtype, and chain ID if specified.
+        Pagination parameters can be used to manage the response size.
+        Wallet type/subtype are enumerations as described in parameters.
+        Chain_id can be get via List supported chains.
+
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
       operationId: get_supported_tokens
       parameters:
+      - description: Wallet type to query
+        explode: true
+        in: query
+        name: wallet_type
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletType'
+        style: form
       - description: Wallet subtype to query
         explode: true
         in: query
         name: wallet_subtype
-        required: true
+        required: false
         schema:
           $ref: '#/components/schemas/WalletSubtype'
         style: form
@@ -352,7 +366,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -361,26 +376,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -390,42 +409,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/get_tokens_200_response'
           description: Successfully listed tokens
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: List the supported tokens by wallet subtype and chain id if specified
+      summary: List supported tokens
       tags:
       - Wallets
-  /wallets/{wallet_id}/tokens:
+  /wallets/enabled_chains:
     get:
-      description: Retrieve a list of token balance in wallet.
-      operationId: get_wallet_token_balances
+      description: "This endpoint allows users to query enabled chains based on wallet\
+        \ type and subtype \nfor the organization associated with the API key.\nPagination\
+        \ parameters can be used to manage the response size.\nWallet type/subtype\
+        \ are enumerations as described in parameters.\n\nError codes this API may\
+        \ return:\n  | Error Code | Description |\n  | -- | -- |\n  | `2006` | 参数格\
+        式或者值非法 |\n"
+      operationId: get_enabled_chains
       parameters:
-      - description: Unique id of the wallet
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      - description: Unique id of the token
-        example: ETH_USDT
+      - description: Wallet type to query
         explode: true
         in: query
-        name: token_id
+        name: wallet_type
         required: false
         schema:
-          type: string
+          $ref: '#/components/schemas/WalletType'
         style: form
-      - description: size of page to return (pagination)
+      - description: Wallet subtype to query
+        explode: true
+        in: query
+        name: wallet_subtype
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletSubtype'
+        style: form
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -434,26 +457,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -461,54 +488,57 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/get_wallet_token_balances_200_response'
-          description: Successfully listed tokens
-        "404":
+                $ref: '#/components/schemas/get_chains_200_response'
+          description: Successfully listed chains
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: List the token balance in the wallets(to be specific)
+      summary: List enabled chains
       tags:
       - Wallets
-  /wallets/{wallet_id}/addresses/{address_id}/tokens:
+  /wallets/enabled_tokens:
     get:
-      description: Retrieve a list of token balance by address in wallet.
-      operationId: get_wallet_address_token_balances
+      description: "This endpoint allows users to query enabled tokens based on wallet\
+        \ type, subtype, \nand chain ID if specified for the organization associated\
+        \ with the API key.\nPagination parameters can be used to manage the response\
+        \ size.\nWallet type/subtype are enumerations as described in parameters.\n\
+        Chain_id can be get via List enabled chains.\n\nError codes this API may return:\n\
+        \  | Error Code | Description |\n  | -- | -- |\n  | `2006` | 参数格式或者值非法 |\n"
+      operationId: get_enabled_tokens
       parameters:
-      - description: Unique id of the wallet
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      - description: Unique id of the address
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: address_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      - description: Unique id of the token
-        example: ETH_USDT
+      - description: Wallet type to query
         explode: true
         in: query
-        name: token_id
+        name: wallet_type
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletType'
+        style: form
+      - description: Wallet subtype to query
+        explode: true
+        in: query
+        name: wallet_subtype
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletSubtype'
+        style: form
+      - description: Unique id of the chain
+        example: ETH
+        explode: true
+        in: query
+        name: chain_id
         required: false
         schema:
           type: string
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -517,26 +547,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -544,22 +578,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/get_wallet_token_balances_200_response'
+                $ref: '#/components/schemas/get_tokens_200_response'
           description: Successfully listed tokens
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: List the token balance by address in the wallets(to be specific)
+      summary: List enabled tokens
       tags:
       - Wallets
   /wallets:
     get:
-      description: Retrieve a list of wallets.
+      description: |
+        Retrieves a list of all wallets.
+
+        This endpoint allows filtering by wallet type, subtype, and MPC vault ID (if applicable).
+
+        Error codes this API may return:
+              | Error Code | Description |
+              | -- | -- |
+              | `2006` | 参数格式或者值非法 |
       operationId: list_wallets
       parameters:
       - description: Wallet type to query
@@ -588,7 +631,8 @@ paths:
           format: uuid
           type: string
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -597,26 +641,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -631,19 +679,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: List all wallets
@@ -651,7 +700,7 @@ paths:
       - Wallets
     post:
       description: |
-        ..More detailed explanation on creating a new wallet..
+        Creates a new wallet with the provided information.
 
         Error codes this API may return:
         | Error Code | Description |
@@ -673,25 +722,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "401":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: Create new wallet
@@ -699,7 +750,14 @@ paths:
       - Wallets
   /wallets/{wallet_id}:
     delete:
-      description: Delete a specific wallet by ID
+      description: |
+        Deletes a specific wallet identified by its ID.
+        This endpoint is supported by Exchange wallets only.
+
+        Error codes this API may return:
+        | Error Code | Description |
+        | -- | -- |
+        | `2006` | 参数格式或者值非法 |
       operationId: delete_wallet_by_id
       parameters:
       - description: Unique id of the wallet
@@ -720,20 +778,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
-      summary: Delete a wallet by ID
+      summary: Delete wallet by ID
       tags:
       - Wallets
     get:
-      description: Retrieve wallet information by ID
+      description: |
+        Retrieves detailed information about a wallet identified by its unique ID.
+
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
       operationId: get_wallet_by_id
       parameters:
       - description: Unique id of the wallet
@@ -753,19 +818,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/WalletInfo'
           description: Successful get a wallet info
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
-      summary: Get wallet information by ID
+      summary: Retrieve wallet information by ID
       tags:
       - Wallets
     put:
-      description: Update wallet info by ID
+      description: |
+        Updates information for a specific wallet identified by its ID.
+        This endpoint is supported by Exchange wallets only.
+
+        Error codes this API may return:
+        | Error Code | Description |
+        | -- | -- |
+        | `2006` | 参数格式或者值非法 |
       operationId: update_wallet_by_id
       parameters:
       - description: Unique id of the wallet
@@ -779,7 +858,7 @@ paths:
           type: string
         style: simple
       requestBody:
-        $ref: '#/components/requestBodies/UpdateWalletBody'
+        $ref: '#/components/requestBodies/updateWalletBody'
       responses:
         "200":
           content:
@@ -792,13 +871,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
       summary: Update wallet by ID
@@ -806,7 +886,14 @@ paths:
       - Wallets
   /wallets/{wallet_id}/spendables:
     get:
-      description: Retrieve a list of spendable utxo.
+      description: |
+        Retrieves a list of spendable unspent transaction outputs (UTXOs) for a given wallet and token.
+        This endpoint allows users to query UTXOs that can be spent in transactions.
+
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
       operationId: get_spendable_list
       parameters:
       - description: Unique id of the wallet
@@ -846,22 +933,30 @@ paths:
                   $ref: '#/components/schemas/UTXO'
                 type: array
           description: Successfully listed utxo
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: List the spendable utxo
+      summary: List spendable UTXOs
       tags:
       - Wallets
-  /wallets/{wallet_id}/max_sendable_value:
+  /wallets/{wallet_id}/max_transferable_value:
     get:
-      description: Retrieve the maximum sendable vaule and the corresponding transaction
-        fee for a given address.
-      operationId: get_max_send_value
+      description: |
+        Retrieves the maximum transferable value and the corresponding transaction fee for a given address.
+        This endpoint allows users to determine the maximum amount that can be transferred from a wallet address,
+        along with the associated transaction fee.
+
+        Error codes this API may return:
+            | Error Code | Description |
+            | -- | -- |
+            | `2006` | 参数格式或者值非法 |
+      operationId: get_max_transferable_value
       parameters:
       - description: Unique id of the wallet
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -896,22 +991,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MaxSendValue'
+                $ref: '#/components/schemas/MaxTransferableValue'
           description: Successful operation
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: Get max sendable Vaule
+      summary: Get max transferable value
       tags:
       - Wallets
   /wallets/{wallet_id}/addresses:
     get:
-      description: Retrieve a list of addresses.
+      description: |
+        Retrieve a list of addresses associated with a wallet.
+
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
       operationId: list_addresses
       parameters:
       - description: Unique id of the wallet
@@ -933,7 +1035,17 @@ paths:
         schema:
           type: string
         style: form
-      - description: size of page to return (pagination)
+      - description: address
+        example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+        explode: true
+        in: query
+        name: address_str
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -942,26 +1054,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -971,19 +1087,26 @@ paths:
               schema:
                 $ref: '#/components/schemas/list_addresses_200_response'
           description: Successfully listed addresses
-        "404":
+        "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
       summary: List wallet addresses by wallet ID
       tags:
       - Wallets
     post:
-      description: Add address to a wallet.
+      description: |
+        Add an address to a wallet.
+
+        Error codes this API may return:
+        | Error Code | Description |
+        | -- | -- |
+        | `2006` | 参数格式或者值非法 |
       operationId: add_wallet_address
       parameters:
       - description: Unique id of the wallet
@@ -1012,58 +1135,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
-      summary: Add address to a wallet
-      tags:
-      - Wallets
-  /wallets/{wallet_id}/addresses/{address_id}:
-    get:
-      description: Retrieve wallet information by ID
-      operationId: get_wallet_address_by_id
-      parameters:
-      - description: Unique id of the wallet
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      - description: Unique id of the address
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: address_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AddressInfo'
-          description: Successfully listed addresses
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      security:
-      - CoboAuth: []
-      summary: Get address information by ID
+      summary: Add address to wallet
       tags:
       - Wallets
   /wallets/address/validity:
     get:
-      description: Check if the given address valid.
+      description: |
+        Verifies if the given address is valid for the specified token.
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
       operationId: get_address_validity
       parameters:
       - description: Unique id of the token
@@ -1092,15 +1178,208 @@ paths:
               schema:
                 $ref: '#/components/schemas/get_address_validity_200_response'
           description: Successfully get address validity
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+      security:
+      - CoboAuth: []
+      summary: Check address validity
+      tags:
+      - Wallets
+  /wallets/{wallet_id}/tokens:
+    get:
+      description: |
+        Retrieves a list of token balances within a wallet.
+        This endpoint allows users to query token balances based on the wallet ID and optionally token ID.
+        Pagination parameters can be used to manage the response size.
+        This endpoint is supported by Custodial/MPC wallets.
+
+        Error codes this API may return:
+          | Error Code | Description |
+          | -- | -- |
+          | `2006` | 参数格式或者值非法 |
+      operationId: get_wallet_token_balances
+      parameters:
+      - description: Unique id of the wallet
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Unique id of the token
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_wallet_token_balances_200_response'
+          description: Successfully listed tokens
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
-      summary: Get the given address validity for token
+      summary: List Token Balances in Wallet
+      tags:
+      - Wallets
+  /wallets/{wallet_id}/addresses/{address_id}/tokens:
+    get:
+      description: |
+        Retrieves a list of token balances for a specific address within a wallet.
+        This endpoint allows users to query token balances based on the wallet ID, address ID, and optionally token ID.
+        Pagination parameters can be used to manage the response size.
+        This endpoint is supported by MPC wallets.
+
+        Error codes this API may return:
+            | Error Code | Description |
+            | -- | -- |
+            | `2006` | 参数格式或者值非法 |
+      operationId: get_wallet_address_token_balances
+      parameters:
+      - description: Unique id of the wallet
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Unique id of the address
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: address_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Unique id of the token
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_wallet_token_balances_200_response'
+          description: Successfully listed tokens
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+      security:
+      - CoboAuth: []
+      summary: List Token Balances by Address in Wallet
       tags:
       - Wallets
   /wallets/mpc/cobo_key_holders:
@@ -1121,19 +1400,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
         "503":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unknown Internal Error
+          description: Unknown internal error.
       security:
       - CoboAuth: []
       summary: List all cobo key holders
@@ -1157,19 +1437,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: List all mpc projects
@@ -1192,7 +1473,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
       summary: Create a mpc project
@@ -1225,19 +1507,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
         "503":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unknown Internal Error
+          description: Unknown internal error.
       security:
       - CoboAuth: []
       summary: get a mpc project
@@ -1271,19 +1554,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
         "503":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unknown Internal Error
+          description: Unknown internal error.
       security:
       - CoboAuth: []
       summary: update a mpc project
@@ -1318,19 +1602,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: List all mpc vaults
@@ -1353,7 +1638,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
       summary: Create a mpc vault
@@ -1386,19 +1672,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
         "503":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unknown Internal Error
+          description: Unknown internal error.
       security:
       - CoboAuth: []
       summary: get a mpc vault
@@ -1432,19 +1719,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: Modify a mpc vault
@@ -1487,19 +1775,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: List all mpc key groups
@@ -1533,19 +1822,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: create a mpc key group
@@ -1587,19 +1877,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: delete a mpc key group
@@ -1640,19 +1931,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
         "503":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unknown Internal Error
+          description: Unknown internal error.
       security:
       - CoboAuth: []
       summary: get a mpc key group
@@ -1705,19 +1997,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: update a mpc key group
@@ -1759,19 +2052,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
         "503":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unknown Internal Error
+          description: Unknown internal error.
       security:
       - CoboAuth: []
       summary: List tss request information of a vault
@@ -1805,19 +2099,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: Create a tss request to generate key secrets for a tss group
@@ -1860,19 +2155,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
         "503":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unknown Internal Error
+          description: Unknown internal error.
       security:
       - CoboAuth: []
       summary: get a tss request
@@ -1926,445 +2222,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: cancel tss request
       tags:
       - Wallets - MPC Wallet
-  /wallets/exchanges/{exchange_id}/supported_assets:
-    get:
-      description: Retrieve a list of supported asset.
-      operationId: get_exchange_supported_assets
-      parameters:
-      - description: Exchange ID to query
-        explode: false
-        in: path
-        name: exchange_id
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExchangeId'
-        style: simple
-      - description: size of page to return (pagination)
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/get_assets_200_response'
-          description: Successfully listed assets
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      security:
-      - CoboAuth: []
-      summary: List the supported assets by exchange id
-      tags:
-      - Wallets - Exchange Wallet
-  /wallets/exchanges/{exchange_id}/assets/supported_chains:
-    get:
-      description: Retrieve a list of supported chains.
-      operationId: get_exchange_supported_chains
-      parameters:
-      - description: Exchange ID to query
-        explode: false
-        in: path
-        name: exchange_id
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExchangeId'
-        style: simple
-      - description: Unique id of the asset
-        example: USDT
-        explode: true
-        in: query
-        name: asset_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: size of page to return (pagination)
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/ChainInfo'
-                type: array
-          description: Successfully listed chains
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      security:
-      - CoboAuth: []
-      summary: List the supported chains by exchange id and asset id
-      tags:
-      - Wallets - Exchange Wallet
-  /wallets/exchanges/{wallet_id}/assets:
-    get:
-      description: Retrieve a list of asset balance in exchange wallet.
-      operationId: get_exchange_wallet_asset_balances
-      parameters:
-      - description: Unique id of the wallet
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      - description: Unique id of the wallet
-        example: SPOT
-        explode: true
-        in: query
-        name: sub_wallet_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: Unique id of the asset
-        example: USDT
-        explode: true
-        in: query
-        name: asset_id
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: size of page to return (pagination)
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      - description: Cursor string received from previous request
-        example: "123"
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/get_exchange_wallet_asset_balances_200_response'
-          description: Successfully listed tokens
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      security:
-      - CoboAuth: []
-      summary: List the asset balance in exchange wallet
-      tags:
-      - Wallets - Exchange Wallet
-  /wallets/exchanges/settings:
-    get:
-      description: Retrieve a list of exchanges.
-      operationId: list_exchanges
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/list_exchanges_200_response_inner'
-                type: array
-          description: Successfully list of exchange sub account ids
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
-        "429":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
-      security:
-      - CoboAuth: []
-      summary: List of exchanges
-      tags:
-      - Wallets - Exchange Wallet
-  /wallets/{wallet_id}/exchanges/subaccounts:
-    get:
-      description: Retrieve a list of exchange sub accounts.
-      operationId: list_sub_accounts_by_wallet_id
-      parameters:
-      - description: Unique id of the wallet
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                description: Sub account id list
-                example:
-                - f47ac10b-58cc-4372-a567-0e02b2c3d479
-                items:
-                  type: string
-                type: array
-          description: Successfully list of exchange sub account ids
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      security:
-      - CoboAuth: []
-      summary: List exchange sub accounts by wallet id
-      tags:
-      - Wallets - Exchange Wallet
-    post:
-      description: Link exchange sub accounts.
-      operationId: link_sub_accounts_by_wallet_id
-      parameters:
-      - description: Unique id of the wallet
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/link_sub_accounts_by_wallet_id_request'
-        description: Request body for linking subaccounts
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                description: Sub account id list
-                example:
-                - f47ac10b-58cc-4372-a567-0e02b2c3d479
-                items:
-                  type: string
-                type: array
-          description: Successfully list of exchange sub account ids
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-      security:
-      - CoboAuth: []
-      summary: Link exchange sub accounts by wallet id
-      tags:
-      - Wallets - Exchange Wallet
-  /wallets/exchanges/{exchange_id}/subaccounts:
-    get:
-      description: Retrieve a list of exchange sub accounts.
-      operationId: list_sub_accounts_by_apikey
-      parameters:
-      - description: Exchange ID to query
-        explode: false
-        in: path
-        name: exchange_id
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExchangeId'
-        style: simple
-      - description: The API Key for the exchange
-        example: d8f062da-39f4-4a11-8b9d-12595854237f
-        explode: true
-        in: query
-        name: apikey
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The API Secret for the exchange.
-        example: 75B4F636193162488A3728B4A5797708
-        explode: true
-        in: query
-        name: secret
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The API passphrase for the exchange wallet.
-        example: A3DBHJV
-        explode: true
-        in: query
-        name: passphrase
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                description: Sub account id list
-                example:
-                - f47ac10b-58cc-4372-a567-0e02b2c3d479
-                items:
-                  type: string
-                type: array
-          description: Successfully list of exchange sub account ids
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-      security:
-      - CoboAuth: []
-      summary: List exchange sub accounts by apikey
-      tags:
-      - Wallets - Exchange Wallet
   /transactions/fee_price:
     get:
       description: Retrieve the fee price data.
@@ -2400,13 +2276,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
       summary: "Get the fee price data for chain and/or token(Hold, TBD after normalize\
@@ -2431,13 +2308,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
       summary: Estimate the fee for transaction
@@ -2461,13 +2339,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
       summary: Create a transfer transaction
       tags:
       - Transactions
-  /transactions/call:
+  /transactions/contract_call:
     post:
       description: Create a transaction to call a smart contract.
       operationId: create_smart_contract_call_transaction
@@ -2485,34 +2364,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
       security:
       - CoboAuth: []
       summary: Create a smart contract call transaction
-      tags:
-      - Transactions
-  /transactions/sign:
-    post:
-      description: Create a transaction to sign message.
-      operationId: create_sign_message_transaction
-      requestBody:
-        $ref: '#/components/requestBodies/createMessageSignBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/create_transfer_transaction_201_response'
-          description: Successful create a smart contract call request
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-      security:
-      - CoboAuth: []
-      summary: Create a sign message transaction
       tags:
       - Transactions
   /transactions:
@@ -2528,6 +2384,105 @@ paths:
         required: false
         schema:
           type: string
+        style: form
+      - description: Cobo ID
+        example: "20231213122855000000000000000000"
+        explode: true
+        in: query
+        name: cobo_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Unique id of the transaction
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: transaction_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: Transaction hash
+        example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        explode: true
+        in: query
+        name: transaction_hash
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The type of a transaction
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionType'
+        style: form
+      - description: The status of a transaction
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionStatus'
+        style: form
+      - description: Unique id of the wallet
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: wallet_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: Unique id of the chain
+        example: ETH
+        explode: true
+        in: query
+        name: chain_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Unique id of the token
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Unique id of the asset
+        example: USDT
+        explode: true
+        in: query
+        name: asset_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The minimum transaction creation timestamp in Unix epoch seconds
+        example: 1635744000
+        explode: true
+        in: query
+        name: min_created_timestamp
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: The maximum transaction creation timestamp in Unix epoch seconds
+        example: 1635744000
+        explode: true
+        in: query
+        name: max_created_timestamp
+        required: false
+        schema:
+          type: integer
         style: form
       - description: Field of sort by
         example: timestamp
@@ -2552,7 +2507,8 @@ paths:
           - DESC
           type: string
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -2561,26 +2517,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -2595,19 +2555,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "429":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Too Many Request
+          description: Too many requests.
       security:
       - CoboAuth: []
       summary: List all transactions
@@ -2633,22 +2594,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransactionDetails'
+                $ref: '#/components/schemas/Transaction'
           description: Successful get a transaction detail
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
       summary: Get transaction information by ID
       tags:
       - Transactions
-    put:
-      description: Update information of a transaction.
-      operationId: update_transaciton_by_id
+  /transactions/{transaction_id}/resend:
+    post:
+      description: Resend a transaction.
+      operationId: resend_transaction_by_id
       parameters:
       - description: Unique id of the transaction
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -2660,34 +2622,22 @@ paths:
           format: uuid
           type: string
         style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionDetails'
-        description: The request body to update a address
       responses:
-        "200":
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransactionDetails'
-          description: Successful get a transaction detail
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+                $ref: '#/components/schemas/create_transfer_transaction_201_response'
+          description: Successful create a smart contract call request
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
-      summary: Update transaction by ID
+      summary: Resend a transaction by ID
       tags:
       - Transactions
   /transactions/{transaction_id}/drop:
@@ -2719,43 +2669,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
       summary: Drop a transaction by ID
-      tags:
-      - Transactions
-  /transactions/{transaction_id}/resend:
-    post:
-      description: Resend a transaction.
-      operationId: resend_transaction_by_id
-      parameters:
-      - description: Unique id of the transaction
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: transaction_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/create_transfer_transaction_201_response'
-          description: Successful create a smart contract call request
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      security:
-      - CoboAuth: []
-      summary: Resend a transaction by ID
       tags:
       - Transactions
   /transactions/{transaction_id}/speedup:
@@ -2787,13 +2704,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
       summary: Speed up a transaction by ID
       tags:
       - Transactions
-  /transactions/{transaction_id}/double_check/retry:
+  /transactions/{transaction_id}/callback_confirmation/retry:
     post:
       description: Retry a transaction double-check.
       operationId: retry_transaction_double_check_by_id
@@ -2820,52 +2737,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
+          description: Resource not found.
       security:
       - CoboAuth: []
       summary: Retry up a transaction double-check by ID
       tags:
       - Transactions
-  /webhooks/events/definitions:
-    get:
-      description: |
-        This operation is used to retrieve a list of all supported event definitions in the current system.
-
-        These event definitions include different event types that trigger webhooks, enabling custom notifications and integration features within the system. A successful call to this endpoint will return a detailed list of event definitions.
-      operationId: list_webhook_event_definitions
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/list_webhook_event_definitions_200_response_inner'
-                type: array
-          description: Get webhook event definitions successfully.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
-      summary: List all supported event definitions.
-      tags:
-      - Developers - Webhooks
   /webhooks/events:
     get:
-      description: "This operation retrieves a list of events that have been triggered\
-        \ within the system. \nThe retrieved list of events can be useful for monitoring\
-        \ system activities, setting up event-driven workflows, and integrating with\
-        \ external systems to respond to specific events.\n"
+      description: |
+        This operation retrieves a list of webhook events that have occurred within the last 30 days.
+
+        Note: The request will only return webhook events that have occurred to the wallets associated with your current API key. For example, if the current API key is only associated with Asset Wallets, any webhook events that have occurred to an MPC Wallet will not be retrieved with the current API key.
       operationId: list_events
       parameters:
-      - description: The status of event.
+      - description: |
+          The event status. Possible values include:
+          - `Success`: The event has been delivered, and the webhook endpoint has responded to the event.
+          - `Retrying`: The event has been delivered, but the webhook endpoint has not responded. In this case, Cobo will retry delivering the event.
+          - `Failed`: The event cannot be delivered and Cobo will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error.
         example: Success
         explode: true
         in: query
@@ -2875,8 +2765,7 @@ paths:
           $ref: '#/components/schemas/WebhookEventStatus'
         style: form
       - description: |
-          The type of event.
-          Get event types by calling `List all supported event definitions`.
+          The event type.
         example: asset_wallet.outbound.created
         explode: true
         in: query
@@ -2885,7 +2774,8 @@ paths:
         schema:
           $ref: '#/components/schemas/WebhookEventType'
         style: form
-      - description: size of page to return (pagination)
+      - description: "The maximum number of objects to return. The value range is\
+          \ [1, 50]."
         example: 10
         explode: true
         in: query
@@ -2894,26 +2784,30 @@ paths:
         schema:
           default: 10
           format: int32
+          maximum: 50
+          minimum: 1
           type: integer
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: before
         required: false
         schema:
-          default: ""
           type: string
         style: form
-      - description: Cursor string received from previous request
-        example: "123"
+      - description: |-
+          An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+          If you set both `after` or `before`, only the setting of `before` will take effect.
+        example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         explode: true
         in: query
         name: after
         required: false
         schema:
-          default: ""
           type: string
         style: form
       responses:
@@ -2922,37 +2816,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/list_events_200_response'
-          description: Successfully listed of webhook events.
+          description: A list of webhook events has been successfully retrieved.
         "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "401":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
-      summary: List triggered events.
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
+      summary: List all events
       tags:
       - Developers - Webhooks
   /webhooks/events/{event_id}:
     get:
       description: |
-        This operation is used to retrieve a webhook event information by its ID.
-        Get event IDs by calling `List triggered events`.
+        This operation retrieves the information of a webhook event by the event ID.
       operationId: get_webhook_event
       parameters:
-      - description: "Unique id of the webhook event, get event IDs by calling `List\
-          \ triggered events`."
+      - description: "The event ID. You can obtain a list of event IDs by calling\
+          \ [List all events](/api-references/v2/developers--webhooks/list-all-events)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2968,43 +2863,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WebhookEvent'
-          description: Get webhook event info successfully.
+          description: The webhook event information is successfully retrieved.
         "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "401":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      summary: Retrieve webhook event information by event ID.
+          description: Resource not found.
+      summary: Retrieve event by ID
       tags:
       - Developers - Webhooks
   /webhooks/events/{event_id}/logs:
     get:
       description: |
-        This operation is used to retrieve a list of webhook event logs by event ID.
-        Get event IDs by calling `List triggered events`.
+        This operation retrieves a list of webhook event logs by event ID. Each retry will generate a separate event log.
       operationId: get_webhook_event_logs
       parameters:
-      - description: "Unique id of the webhook event, get event IDs by calling `List\
-          \ triggered events`."
+      - description: "The event ID. You can obtain a list of event IDs by calling\
+          \ [List all events](/api-references/v2/developers--webhooks/list-all-events)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -3022,44 +2918,44 @@ paths:
                 items:
                   $ref: '#/components/schemas/WebhookEventLog'
                 type: array
-          description: Get webhook event logs successfully.
+          description: The request was successful.
         "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "401":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      summary: List webhook event logs by event ID.
+          description: Resource not found.
+      summary: List event logs by ID
       tags:
       - Developers - Webhooks
   /webhooks/events/{event_id}/retry:
     post:
       description: |
-        This operation is used to retry a webhook event by its ID.
-        Events in `Retrying` or `Failed` status can be retried.
-        Get event IDs by calling `List triggered events`.
+        This operation retries delivering a webhook event with the specified event ID. You can only retry delivering a webhook event in the `Retrying` or `Failed` status.
       operationId: retry_webhook_event
       parameters:
-      - description: "Unique id of the webhook event, get event IDs by calling `List\
-          \ triggered events`."
+      - description: "The event ID. You can obtain a list of event IDs by calling\
+          \ [List all events](/api-references/v2/developers--webhooks/list-all-events)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -3075,32 +2971,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/retry_webhook_event_201_response'
-          description: Retry a failed event successfully.
+          description: The request was successful.
         "400":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Bad Request
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
         "401":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized Error
+          description: Unauthorized. Please provide valid credentials.
         "403":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden
+          description: Forbidden. You do not have permission to access to the requested
+            resource.
         "404":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          description: Resource Not Found
-      summary: Retry webhook event by event ID.
+          description: Resource not found.
+      summary: Retry event by ID
       tags:
       - Developers - Webhooks
 components:
@@ -3131,7 +3029,8 @@ components:
         type: string
       style: form
     limitParam:
-      description: size of page to return (pagination)
+      description: "The maximum number of objects to return. The value range is [1,\
+        \ 50]."
       example: 10
       explode: true
       in: query
@@ -3140,28 +3039,32 @@ components:
       schema:
         default: 10
         format: int32
+        maximum: 50
+        minimum: 1
         type: integer
       style: form
     beforeParam:
-      description: Cursor string received from previous request
-      example: "123"
+      description: |-
+        An object ID which serves as a cursor for pagination. For example, if you specify `before` as `foo`, the request will retrieve a list of data objects that end before the object with the object ID `foo`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+        If you set both `after` or `before`, only the setting of `before` will take effect.
+      example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
       explode: true
       in: query
       name: before
       required: false
       schema:
-        default: ""
         type: string
       style: form
     afterParam:
-      description: Cursor string received from previous request
-      example: "123"
+      description: |-
+        An object ID which serves as a cursor for pagination. For example, if you specify `after` as `bar`, the request will retrieve a list of data objects that start after the object with the object ID `bar`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+        If you set both `after` or `before`, only the setting of `before` will take effect.
+      example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
       explode: true
       in: query
       name: after
       required: false
       schema:
-        default: ""
         type: string
       style: form
     optionalAssetIdParam:
@@ -3344,7 +3247,7 @@ components:
         format: uuid
         type: string
       style: simple
-    optionalTargetKeyGroupIDParam:
+    optionalTargetKeyGroupIdParam:
       description: The target key group id of tss request.
       example: "880311524363903326"
       explode: true
@@ -3490,6 +3393,54 @@ components:
       schema:
         type: string
       style: form
+    optionalCoboIdParam:
+      description: Cobo ID
+      example: "20231213122855000000000000000000"
+      explode: true
+      in: query
+      name: cobo_id
+      required: false
+      schema:
+        type: string
+      style: form
+    optionalTransactionTypeParam:
+      description: The type of a transaction
+      explode: true
+      in: query
+      name: type
+      required: false
+      schema:
+        $ref: '#/components/schemas/TransactionType'
+      style: form
+    optionalTransactionStatusParam:
+      description: The status of a transaction
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        $ref: '#/components/schemas/TransactionStatus'
+      style: form
+    optionalMinCreatedTimestampParam:
+      description: The minimum transaction creation timestamp in Unix epoch seconds
+      example: 1635744000
+      explode: true
+      in: query
+      name: min_created_timestamp
+      required: false
+      schema:
+        type: integer
+      style: form
+    optionalMaxCreatedTimestampParam:
+      description: The maximum transaction creation timestamp in Unix epoch seconds
+      example: 1635744000
+      explode: true
+      in: query
+      name: max_created_timestamp
+      required: false
+      schema:
+        type: integer
+      style: form
     transactionIdParam:
       description: Unique id of the transaction
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -3502,8 +3453,8 @@ components:
         type: string
       style: simple
     webhookEventIdParam:
-      description: "Unique id of the webhook event, get event IDs by calling `List\
-        \ triggered events`."
+      description: "The event ID. You can obtain a list of event IDs by calling [List\
+        \ all events](/api-references/v2/developers--webhooks/list-all-events)."
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -3520,7 +3471,7 @@ components:
           schema:
             $ref: '#/components/schemas/CreatedWallet'
       description: The request body to create a wallet
-    UpdateWalletBody:
+    updateWalletBody:
       content:
         application/json:
           schema:
@@ -3604,37 +3555,39 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-      description: Bad Request
+      description: Bad request. Your request contains malformed syntax or invalid
+        parameters.
     unauthorizedError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-      description: Unauthorized Error
+      description: Unauthorized. Please provide valid credentials.
     forbiddenError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-      description: Forbidden
+      description: Forbidden. You do not have permission to access to the requested
+        resource.
     notFoundError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-      description: Resource Not Found
+      description: Resource not found.
     tooManyRequestError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-      description: Too Many Request
+      description: Too many requests.
     serviceUnavailableError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-      description: Unknown Internal Error
+      description: Unknown internal error.
     getChainsResponse:
       content:
         application/json:
@@ -3645,7 +3598,14 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/get_assets_200_response'
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/AssetInfo'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
       description: Successfully listed assets
     getTokensResponse:
       content:
@@ -3663,7 +3623,14 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/get_exchange_wallet_asset_balances_200_response'
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/AssetBalance'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
       description: Successfully listed tokens
     getWalletsResponse:
       content:
@@ -3697,23 +3664,17 @@ components:
               $ref: '#/components/schemas/UTXO'
             type: array
       description: Successfully listed utxo
-    maxSendValueResponse:
+    maxTransferableValueResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MaxSendValue'
+            $ref: '#/components/schemas/MaxTransferableValue'
       description: Successful operation
     getAddressesResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/list_addresses_200_response'
-      description: Successfully listed addresses
-    getAddressByIdResponse:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AddressInfo'
       description: Successfully listed addresses
     createAddressResponse:
       content:
@@ -3723,12 +3684,6 @@ components:
               $ref: '#/components/schemas/AddressInfo'
             type: array
       description: Successfully created address for a wallet
-    updateAddressResponse:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AddressInfo'
-      description: Successfully updated address
     getAddressValidityResponse:
       content:
         application/json:
@@ -3862,7 +3817,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/TransactionDetails'
+            $ref: '#/components/schemas/Transaction'
       description: Successful get a transaction detail
     estimateFeeResponse:
       content:
@@ -3878,41 +3833,45 @@ components:
       description: Successful create a smart contract call request
   schemas:
     Pagination:
-      description: The meta data for pagination.
+      description: The pagination information of the returned data.
       example:
-        before: as19
-        after: 20sa
+        before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+        after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
       properties:
         before:
-          example: as19
+          description: "An object ID which serves as a cursor for pagination. For\
+            \ example, if the value of `before` is `foo`, the returned data ends before\
+            \ the object with the object ID `foo`."
+          example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
           type: string
         after:
-          example: 20sa
+          description: "An object ID which serves as a cursor for pagination. For\
+            \ example, if the value of `after` is `bar`, the returned data starts\
+            \ after the object with the object ID `bar`."
+          example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
           type: string
       type: object
     ErrorResponse:
-      description: The data for error response.
+      description: The response of a failed request.
       example:
         error_id: 0b6ddf19083c4bd1a9ca01bec44b24dd
         success: false
-        error_description: API params is missing or null
-        error_code: 1000
+        error_description: error_description
+        error_code: 0
       properties:
         success:
           default: false
-          description: Indicates if the API operation was successful. Always false
-            for errors.
+          description: Whether the API operation was successful. This is always `false`
+            for a failed request.
           type: boolean
         error_code:
-          description: A machine-readable error code.`
-          example: 1000
+          description: The error code.
           type: integer
         error_description:
-          description: A human-readable error description for users.
-          example: API params is missing or null
+          description: The error description.
           type: string
         error_id:
-          description: "A unique ID for the error log, mainly used for debugging."
+          description: A error log ID. You can use it for debugging purposes.
           example: 0b6ddf19083c4bd1a9ca01bec44b24dd
           type: string
       required:
@@ -3923,11 +3882,6 @@ components:
       type: object
     AssetInfo:
       description: The data for asset information.
-      example:
-        icon_url: https://d.cobo.com/public/logos/USDT.png
-        display_code: USDT
-        description: Tether USDT
-        asset_id: USDT
       properties:
         asset_id:
           description: ID of the asset. Unique in all assets scope.
@@ -3952,29 +3906,18 @@ components:
       type: object
     TokenInfo:
       description: The data for token information.
-      example:
-        icon_url: https://static.waas.co/images/coins/ETH.png
-        symbol: USDT
-        token_id: ETH_USDT
-        chain_id: ETH
-        description: Tether USDT
-        token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
-        asset_id: USDT
       properties:
         token_id:
           description: ID of the token. Unique in all chains scope.
           example: ETH_USDT
-          pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
         chain_id:
           description: The blockchain on which the token operates.
           example: ETH
-          pattern: "^[A-Z]+$"
           type: string
         symbol:
           description: Symbol for the token.
           example: USDT
-          pattern: "^[A-Za-z0-9]+$"
           type: string
         description:
           description: The description of the token.
@@ -3991,7 +3934,6 @@ components:
         asset_id:
           description: ID of the asset. Used to group token balance when needed.
           example: USDT
-          pattern: "^[A-Z0-9]+$"
           type: string
       required:
       - chain_id
@@ -4009,12 +3951,10 @@ components:
         chain_id:
           description: The blockchain on which the token operates.
           example: ETH
-          pattern: "^[A-Z]+$"
           type: string
         symbol:
           description: Symbol for the chain.
           example: USDT
-          pattern: "^[A-Za-z0-9]+$"
           type: string
         icon_url:
           description: URL of the icon image.
@@ -4081,9 +4021,7 @@ components:
         balance:
           total: "100.0"
           pending: "10.5"
-          staked: "3.5"
           available: "80.5"
-          frozen: "2.5"
           locked: "3.0"
       properties:
         token_id:
@@ -4099,9 +4037,6 @@ components:
       type: object
     AssetBalance:
       description: The data for token balance information.
-      example:
-        balance: "{}"
-        asset_id: USDT
       properties:
         asset_id:
           description: ID of the asset. Unique in all assets scope.
@@ -4265,17 +4200,17 @@ components:
         propertyName: type
       oneOf:
       - $ref: '#/components/schemas/CreateCustodialWallet'
-      - $ref: '#/components/schemas/CreateExchangeWallet'
       - $ref: '#/components/schemas/CreateMpcWallet'
       - $ref: '#/components/schemas/CreateSmartContractWallet'
+      - $ref: '#/components/schemas/CreateExchangeWallet'
     UTXO:
       description: utxo information.
       example:
         amount: "100000"
-        address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         is_coinbase: false
         vout_n: 0
         tx_hash: dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83
+        address_str: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         confirmed_number: 66716
       properties:
         tx_hash:
@@ -4286,7 +4221,7 @@ components:
           description: Output index of the UTXO.
           example: 0
           type: integer
-        address:
+        address_str:
           description: Address of the UTXO.
           example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
           type: string
@@ -4304,65 +4239,42 @@ components:
           example: 66716
           type: integer
       type: object
-    MaxSendValue:
+    MaxTransferableValue:
       description: max send value and fee.
       example:
-        gas_price: "43638776316"
-        token_decimal: 18
-        fee_value: "0"
-        fee_token: ETH
-        gas_limit: 21000
-        fee_per_byte: "0"
+        token_id: ETH
+        fee:
+          base_fee: "0.9"
+          fee_amount: "0.1"
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
+          fee_type: EVM_EIP_1559
+          fee_token_id: ETH
+          max_fee: "1"
         max_send_value: "841165119243622"
-        fee_decimal: 18
-        token: ETH
       properties:
-        token:
+        token_id:
           description: token name.
           example: ETH
           type: string
-        token_decimal:
-          description: coin decimal precision.
-          example: 18
-          type: integer
-        fee_token:
-          description: fee token name.
-          example: ETH
-          type: string
-        fee_decimal:
-          description: fee coin decimal precision.
-          example: 18
-          type: integer
         max_send_value:
           description: the maximum sendable value for the given address or current
             wallet.
           example: "841165119243622"
           type: string
-        fee_per_byte:
-          description: transaction fees per byte for UTXO model.
-          example: "0"
-          type: string
-        fee_value:
-          description: transaction fee for UTXO model
-          example: "0"
-          type: string
-        gas_price:
-          description: gas price for account model
-          example: "43638776316"
-          type: string
-        gas_limit:
-          description: gas limit for account model
-          example: 21000
-          type: integer
+        fee:
+          $ref: '#/components/schemas/TransactionFee'
       type: object
     AddressInfo:
       description: The data for address information.
       example:
-        is_internal: false
+        path: m/44'/60'/0'/0
         token_id: ETH_USDT
         address_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         memo: "82840924"
         address_str: 0x0000000000000000000000000000000000000000
+        encoding: ENCODING_P2PKH
+        pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
       properties:
         address_id:
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -4381,11 +4293,16 @@ components:
           description: From address memo
           example: "82840924"
           type: string
-        is_internal:
-          default: false
-          description: "Ture if the address is in same fund pool, False otherwise"
-          example: false
-          type: boolean
+        path:
+          description: Derivation path of address pubkey，required for MPC wallet
+          example: m/44'/60'/0'/0
+          type: string
+        encoding:
+          $ref: '#/components/schemas/AddressEncoding'
+        pubkey:
+          description: Address pubkey，required for MPC wallet
+          example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          type: string
       required:
       - address_id
       - address_str
@@ -4816,9 +4733,9 @@ components:
       description: The estimated fee amount in fee_coin.
       properties:
         gas_limit:
-          default: 21000
+          default: "21000"
           description: The Limit of gas.
-          type: integer
+          type: string
         fee_amount:
           description: The estimated fee amount in fee_coin.
           example: "0.1"
@@ -4830,7 +4747,6 @@ components:
         fee_token_id:
           description: ID of the fee token. Unique in all chains scope.
           example: ETH
-          pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
         max_fee:
           description: "The highest Gas price paid for the transfer, unit GWei."
@@ -4839,10 +4755,12 @@ components:
         max_priority_fee:
           description: "The maximum Gas price paid to miners, the higher it is, the\
             \ faster it is likely to be packaged into the block, unit GWei."
-          type: integer
+          example: "0.1"
+          type: string
         base_fee:
           description: The Base Fee of chain.
-          type: integer
+          example: "0.9"
+          type: string
       required:
       - base_fee
       - max_fee
@@ -4854,7 +4772,6 @@ components:
         fee_token_id:
           description: ID of the fee token. Unique in all chains scope.
           example: ETH_USDT
-          pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
         gas_price:
           description: "The Price of Gas, unit GWei."
@@ -4869,7 +4786,6 @@ components:
         fee_token_id:
           description: ID of the fee token. Unique in all chains scope.
           example: ETH
-          pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
         fee_rate:
           description: "The fee rate, unit sat/vB."
@@ -4887,8 +4803,8 @@ components:
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
       description: The base eip1559 fee data for estimate fees or transfer.
       example:
-        base_fee: 6
-        max_priority_fee: 0
+        base_fee: "0.9"
+        max_priority_fee: "0.1"
         fee_type: EVM_EIP_1559
         fee_token_id: ETH
         max_fee: "1"
@@ -4924,7 +4840,6 @@ components:
           fee_token_id:
             description: ID of the fee token. Unique in all chains scope.
             example: ETH_USDT
-            pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
             type: string
         type: object
       - $ref: '#/components/schemas/FeeAmount'
@@ -5013,10 +4928,10 @@ components:
       - $ref: '#/components/schemas/FeeData'
       description: The fee data for transaction.
       example:
-        base_fee: 6
+        base_fee: "0.9"
         fee_amount: "0.1"
-        gas_limit: 1
-        max_priority_fee: 0
+        gas_limit: "21000"
+        max_priority_fee: "0.1"
         fee_type: EVM_EIP_1559
         fee_token_id: ETH
         max_fee: "1"
@@ -5060,78 +4975,50 @@ components:
       - $ref: '#/components/schemas/EvmLegacyTransactionFee'
       - $ref: '#/components/schemas/UtxoTransactionFee'
       - $ref: '#/components/schemas/FixedFee'
-    Network:
-      description: The data for network information.
-      example:
-        icon_url: https://static.waas.co/images/coins/ETH.png
-        name: ETH
-      properties:
-        name:
-          description: The network name.
-          example: ETH
-          type: string
-        icon_url:
-          description: URL of the icon image.
-          example: https://static.waas.co/images/coins/ETH.png
-          type: string
-      required:
-      - name
-      type: object
     Transaction:
       description: The data for transaction information.
       example:
         transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
-        from_type: CustodialAssetWallet
         created_time: 1610445878970
         updated_time: 1610445878970
         sub_status: PendingDoubleCheck
-        from_info: "MPC Wallet #1"
-        txid: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        chain_id: ETH
+        confirmed_num: 12
+        initiator: "API Prod Key #1"
+        fee:
+          base_fee: "0.9"
+          fee_amount: "0.1"
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
+          fee_type: EVM_EIP_1559
+          fee_token_id: ETH
+          max_fee: "1"
+        destination:
+          address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          memo: "82840924"
+          type: CustodialAssetWallet
         description: withdrawal to exchange trading account
         cobo_id: "20231213122855000000000000000000"
-        to_address:
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+        source:
+          address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           memo: "82840924"
-          label: "Address #1"
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          memo: "82840924"
-          label: "Address #1"
+          type: CustodialAssetWallet
+        confirming_threshold: 15
         type: Deposit
-        network:
-          icon_url: https://static.waas.co/images/coins/ETH.png
-          name: ETH
-        to_type: CustodialAssetWallet
-        delegate: 0xdAC17F958D2ee523a2206206994597C13D831ec7
         wallet_id: 624ce4e5-e985-4394-a196-fd7752aff96e
-        to_info: "DeFi Wallet #1"
+        exchange_id: binance
         tokens:
-        - icon_url: https://static.waas.co/images/coins/ETH.png
-          symbol: USDT
-          amount: "1.5"
+        - amount: "1.5"
           token_id: ETH_USDT
-          chain_id: ETH
-          description: Tether USDT
-          token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           asset_id: USDT
-        - icon_url: https://static.waas.co/images/coins/ETH.png
-          symbol: USDT
-          amount: "1.5"
+        - amount: "1.5"
           token_id: ETH_USDT
-          chain_id: ETH
-          description: Tether USDT
-          token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           asset_id: USDT
         category:
         - Payment
         - Payment
         request_id: web_send_by_user_327_1610444045047
-        from_address:
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          memo: "82840924"
-          label: "Address #1"
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          memo: "82840924"
-          label: "Address #1"
+        transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
         status: Submitted
       properties:
         transaction_id:
@@ -5151,41 +5038,37 @@ components:
           description: Cobo ID
           example: "20231213122855000000000000000000"
           type: string
+        initiator:
+          description: Transaction initiator
+          example: "API Prod Key #1"
+          type: string
+        transaction_hash:
+          description: Transaction hash.
+          example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          type: string
         status:
           $ref: '#/components/schemas/TransactionStatus'
         sub_status:
           $ref: '#/components/schemas/TransactionSubStatus'
         type:
           $ref: '#/components/schemas/TransactionType'
-        from_type:
-          $ref: '#/components/schemas/TransactionAddressType'
-        from_address:
-          items:
-            $ref: '#/components/schemas/TransactionAddress'
-          type: array
-        from_info:
-          description: From wallet info
-          example: "MPC Wallet #1"
+        source:
+          $ref: '#/components/schemas/Transaction_source'
+        destination:
+          $ref: '#/components/schemas/Transaction_destination'
+        chain_id:
+          description: The blockchain on which the token operates.
+          example: ETH
+          pattern: "^[A-Z]+$"
           type: string
-        to_type:
-          $ref: '#/components/schemas/TransactionAddressType'
-        to_address:
-          items:
-            $ref: '#/components/schemas/TransactionAddress'
-          type: array
-        to_info:
-          description: To wallet info
-          example: "DeFi Wallet #1"
-          type: string
-        network:
-          $ref: '#/components/schemas/Network'
-        txid:
-          example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
-          type: string
+        exchange_id:
+          $ref: '#/components/schemas/ExchangeId'
         tokens:
           items:
             $ref: '#/components/schemas/TransactionToken'
           type: array
+        fee:
+          $ref: '#/components/schemas/TransactionFee'
         category:
           items:
             $ref: '#/components/schemas/TransactionCategory'
@@ -5193,6 +5076,16 @@ components:
         description:
           example: withdrawal to exchange trading account
           type: string
+        confirmed_num:
+          description: Transaction confirmed number
+          example: 12
+          type: number
+        confirming_threshold:
+          description: "Number of confirmations required for a transaction, such as\
+            \ 15 for ETH chain."
+          example: 15
+          format: int32
+          type: integer
         created_time:
           description: Transaction creation time
           example: 1610445878970
@@ -5201,50 +5094,19 @@ components:
           description: Transaction update time
           example: 1610445878970
           type: number
-        delegate:
-          description: Transaction delegate address
-          example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
-          type: string
+      required:
+      - cobo_id
+      - created_time
+      - destination
+      - source
+      - status
+      - transaction_id
+      - type
+      - updated_time
+      - wallet_id
       type: object
-    TransactionAddress:
-      description: The data for transaction address information.
-      example:
-        address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-        memo: "82840924"
-        label: "Address #1"
-      properties:
-        address:
-          description: Address
-          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          type: string
-        memo:
-          description: Address memo
-          example: "82840924"
-          type: string
-        label:
-          description: Address label
-          example: "Address #1"
-          type: string
-      type: object
-    TransactionAddressType:
-      description: Enumeration representing the address type of a transaction.
-      enum:
-      - CustodialAssetWallet
-      - CustodialWeb3Wallet
-      - MPCClientControlledWallet
-      - MPCUserControlledWallet
-      - SmartContractWallet
-      - ExchangeAccount
-      - GasStation
-      - CoboPortal
-      - ExternalAddress
-      example: CustodialAssetWallet
-      type: string
     TransactionApprover:
       description: The approver data for transaction.
-      example:
-        name: "Approver #1"
-        status: Pending
       properties:
         name:
           description: The approver name of the transaction.
@@ -5260,26 +5122,32 @@ components:
           type: string
       type: object
     TransactionToken:
-      allOf:
-      - $ref: '#/components/schemas/TokenInfo'
-      - description: The data for transaction asset information.
-        properties:
-          amount:
-            description: |
-              Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5)
-            example: "1.5"
-            format: float
-            type: string
-        type: object
+      description: The data for transaction asset information.
       example:
-        icon_url: https://static.waas.co/images/coins/ETH.png
-        symbol: USDT
         amount: "1.5"
         token_id: ETH_USDT
-        chain_id: ETH
-        description: Tether USDT
-        token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
         asset_id: USDT
+      properties:
+        token_id:
+          description: ID of the token. Unique in all chains scope.
+          example: ETH_USDT
+          pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
+          type: string
+        asset_id:
+          description: ID of the asset. Used to group token balance when needed.
+          example: USDT
+          pattern: "^[A-Z0-9]+$"
+          type: string
+        amount:
+          description: |
+            Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5)
+          example: "1.5"
+          format: float
+          type: string
+      required:
+      - amount
+      - asset_id
+      type: object
     TransactionCategory:
       description: Transaction category
       example: Payment
@@ -5338,105 +5206,6 @@ components:
               $ref: '#/components/schemas/TransactionTimeline'
             type: array
         type: object
-      example:
-        updated_time: 1610445878970
-        confirmed_num: 12
-        initiator: "API Prod Key #1"
-        fee:
-          base_fee: 6
-          fee_amount: "0.1"
-          gas_limit: 1
-          max_priority_fee: 0
-          fee_type: EVM_EIP_1559
-          fee_token_id: ETH
-          max_fee: "1"
-        description: withdrawal to exchange trading account
-        approvers:
-        - name: "Approver #1"
-          status: Pending
-        - name: "Approver #1"
-          status: Pending
-        confirming_threshold: 15
-        type: Deposit
-        fueled_by: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-        network:
-          icon_url: https://static.waas.co/images/coins/ETH.png
-          name: ETH
-        to_type: CustodialAssetWallet
-        delegate: 0xdAC17F958D2ee523a2206206994597C13D831ec7
-        to_info: "DeFi Wallet #1"
-        tokens:
-        - icon_url: https://static.waas.co/images/coins/ETH.png
-          symbol: USDT
-          amount: "1.5"
-          token_id: ETH_USDT
-          chain_id: ETH
-          description: Tether USDT
-          token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
-          asset_id: USDT
-        - icon_url: https://static.waas.co/images/coins/ETH.png
-          symbol: USDT
-          amount: "1.5"
-          token_id: ETH_USDT
-          chain_id: ETH
-          description: Tether USDT
-          token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
-          asset_id: USDT
-        from_address:
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          memo: "82840924"
-          label: "Address #1"
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          memo: "82840924"
-          label: "Address #1"
-        algorithm: algorithm
-        transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
-        from_type: CustodialAssetWallet
-        created_time: 1610445878970
-        sub_status: PendingDoubleCheck
-        from_info: "MPC Wallet #1"
-        txid: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
-        cobo_id: "20231213122855000000000000000000"
-        to_address:
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          memo: "82840924"
-          label: "Address #1"
-        - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          memo: "82840924"
-          label: "Address #1"
-        token_approval:
-          icon_url: https://static.waas.co/images/coins/ETH.png
-          symbol: USDT
-          amount: 1.5
-          token_id: ETH_USDT
-          chain_id: ETH
-          spender: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          description: Tether USDT
-          token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
-          asset_id: USDT
-        message: this to certify that am owner this wallet address
-        nonce: 9
-        replaced_by: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
-        signers:
-        - failed_reason: Rejected by signer Cobo TSS
-          signer: Cobo TSS
-          status: Signed
-        - failed_reason: Rejected by signer Cobo TSS
-          signer: Cobo TSS
-          status: Signed
-        wallet_id: 624ce4e5-e985-4394-a196-fd7752aff96e
-        timeline:
-        - finished_time: 1610445878970
-          finished: true
-          status: Submitted
-        - finished_time: 1610445878970
-          finished: true
-          status: Submitted
-        category:
-        - Payment
-        - Payment
-        request_id: web_send_by_user_327_1610444045047
-        status: Submitted
     TransactionInitiatorType:
       description: Enumeration representing the initiator type of a transaction.
       enum:
@@ -5447,10 +5216,6 @@ components:
       type: string
     TransactionSigner:
       description: The signer data for transaction.
-      example:
-        failed_reason: Rejected by signer Cobo TSS
-        signer: Cobo TSS
-        status: Signed
       properties:
         signer:
           description: The signer name of the transaction.
@@ -5507,10 +5272,6 @@ components:
       type: string
     TransactionTimeline:
       description: The data for transaction timeline information.
-      example:
-        finished_time: 1610445878970
-        finished: true
-        status: Submitted
       properties:
         status:
           $ref: '#/components/schemas/TransactionStatus'
@@ -5539,16 +5300,6 @@ components:
             example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
             type: string
         type: object
-      example:
-        icon_url: https://static.waas.co/images/coins/ETH.png
-        symbol: USDT
-        amount: 1.5
-        token_id: ETH_USDT
-        chain_id: ETH
-        spender: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-        description: Tether USDT
-        token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
-        asset_id: USDT
     TransactionType:
       description: Enumeration representing the type of a transaction.
       enum:
@@ -5556,7 +5307,6 @@ components:
       - Withdrawal
       - TokenApproval
       - ContractCall
-      - ExchangeTransfer
       - AutoFueling
       - RawMessage
       example: Deposit
@@ -5582,6 +5332,79 @@ components:
             type: string
           type: array
       type: object
+    TransactionAddressType:
+      description: Enumeration representing the address type of a transaction.
+      enum:
+      - CustodialAssetWallet
+      - CustodialWeb3Wallet
+      - MPCClientControlledWallet
+      - MPCUserControlledWallet
+      - SafeContractWallet
+      - ExchangeAccount
+      - GasStation
+      - ExternalAddress
+      example: CustodialAssetWallet
+      type: string
+    BaseTransactionAddress:
+      description: The data for transaction source information.
+      example:
+        address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+        memo: "82840924"
+        type: CustodialAssetWallet
+      properties:
+        type:
+          $ref: '#/components/schemas/TransactionAddressType'
+        address:
+          description: Address
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        memo:
+          description: Address memo
+          example: "82840924"
+          type: string
+      required:
+      - type
+      type: object
+    SafeTransactionAddress:
+      allOf:
+      - properties:
+          delegate:
+            $ref: '#/components/schemas/SafeTransactionAddress_allOf_delegate'
+        required:
+        - delegate
+        type: object
+      - $ref: '#/components/schemas/BaseTransactionAddress'
+    BaseWalletTransactionAddress:
+      allOf:
+      - $ref: '#/components/schemas/BaseTransactionAddress'
+      - properties:
+          wallet_id:
+            description: Unique id of the wallet.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
+        required:
+        - wallet_id
+        type: object
+    MPCWalletTransactionAddress:
+      allOf:
+      - properties:
+          mpc_used_key_group:
+            $ref: '#/components/schemas/MpcSigningGroup'
+        type: object
+      - $ref: '#/components/schemas/BaseWalletTransactionAddress'
+    ExchangeWalletTransactionAddress:
+      allOf:
+      - $ref: '#/components/schemas/BaseWalletTransactionAddress'
+      - properties:
+          exchange_id:
+            $ref: '#/components/schemas/ExchangeId'
+          sub_wallet_id:
+            description: Exchange trading account or any sub wallet info for transfer.
+            example: Asset
+            type: string
+        required:
+        - exchange_id
+        type: object
     BaseTransferSource:
       description: The base data for transfer source.
       example:
@@ -5714,10 +5537,10 @@ components:
         request_type: Transfer
         token_id: ETH_USDT
         fee:
-          base_fee: 6
+          base_fee: "0.9"
           fee_amount: "0.1"
-          gas_limit: 1
-          max_priority_fee: 0
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
           fee_type: EVM_EIP_1559
           fee_token_id: ETH
           max_fee: "1"
@@ -5793,10 +5616,10 @@ components:
           - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
           used_key_group_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         fee:
-          base_fee: 6
+          base_fee: "0.9"
           fee_amount: "0.1"
-          gas_limit: 1
-          max_priority_fee: 0
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
           fee_type: EVM_EIP_1559
           fee_token_id: ETH
           max_fee: "1"
@@ -5856,20 +5679,6 @@ components:
       type: object
     SignMessage:
       description: The data for create a message-signing transaction.
-      example:
-        from_address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-        request_type: "{}"
-        chain_id: ETH
-        mpc_used_key_group:
-          used_node_ids:
-          - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
-          - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
-          used_key_group_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        structured_data: |
-          {\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}]}}
-        message: YWFhYQ==
-        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        from_wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
       properties:
         request_id:
           description: Unique id of the request.
@@ -5919,7 +5728,7 @@ components:
       - $ref: '#/components/schemas/Transfer'
       - $ref: '#/components/schemas/SmartContractCall'
     WebhookEvent:
-      description: The data for webhook event.
+      description: The webhook event payload.
       example:
         next_retry_timestamp: 1701396866000
         retries_left: 3
@@ -5934,7 +5743,7 @@ components:
         status: Success
       properties:
         id:
-          description: The unique identifier of the event.
+          description: The event ID.
           example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
           format: uuid
           type: string
@@ -5945,14 +5754,14 @@ components:
           maxLength: 500
           type: string
         created_timestamp:
-          description: "The timestamp at which the object was created, represented\
-            \ as an integer value, typically in milliseconds since the epoch."
+          description: "The time when the event occurred, in Unix timestamp format,\
+            \ measured in milliseconds."
           example: 1701396866000
           type: integer
         type:
           $ref: '#/components/schemas/WebhookEventType'
         data:
-          description: The data of the webhook event in json format.
+          description: "The data of the webhook event, in JSON format."
           example:
             wallet_id: 624ce4e5-e985-4394-a196-fd7752aff96e
             address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
@@ -5962,14 +5771,12 @@ components:
           $ref: '#/components/schemas/WebhookEventStatus'
         next_retry_timestamp:
           description: |
-            The timestamp indicating the next scheduled retry for this event. This field
-            is only present when the event status is set to `Retrying`. The timestamp is
-            represented as an integer value, typically in milliseconds since the epoch.
+            The timestamp indicating the next scheduled retry to deliver this event, in Unix timestamp format, measured in milliseconds. This field is only present if the event status is `Retrying`.
           example: 1701396866000
           type: integer
         retries_left:
-          description: The number of retries left. This field is only present when
-            the event status is `Retrying`.
+          description: The number of retries left. This field is only present if the
+            event status is `Retrying`.
           example: 3
           type: integer
       required:
@@ -5981,7 +5788,7 @@ components:
       - url
       type: object
     WebhookEventType:
-      description: The list of supported events.
+      description: The event type.
       enum:
       - asset_wallet.outbound.created
       - asset_wallet.outbound.pending_authorization
@@ -6059,8 +5866,10 @@ components:
       type: string
     WebhookEventStatus:
       description: |-
-        Possible values for the webhook event status:
-        - `Success`: The event has been delivered, meaning that the webhook endpoint has received the event and responded successfully. - `Retrying`: The event has been delivered, but the webhook endpoint has not responded successfully. The event will be retried. - `Failed`: The event has been delivered, but the webhook endpoint has responded with an error. The event will not be retried.
+        The event status. Possible values include:
+        - `Success`: The event has been delivered, and the webhook endpoint has responded to the event.
+        - `Retrying`: The event has been delivered, but the webhook endpoint has not responded. In this case, Cobo will retry delivering the event.
+        - `Failed`: The event cannot be delivered and Cobo will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error.
       enum:
       - Success
       - Retrying
@@ -6068,7 +5877,7 @@ components:
       example: Success
       type: string
     WebhookEventLog:
-      description: The data for webhook event log.
+      description: The webhook event log.
       example:
         request_body:
           next_retry_timestamp: 1701396866000
@@ -6088,17 +5897,17 @@ components:
         created_timestamp: 1701396866000
         response_time: 100
         id: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
-        failure_reason: The webhook endpoint is not reachable.
+        failure_reason: Connect Timeout
         response_status_code: 200
       properties:
         id:
-          description: The unique identifier of the log.
+          description: The event log ID.
           example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
           format: uuid
           type: string
         created_timestamp:
-          description: "The timestamp at which the object was created, represented\
-            \ as an integer value, typically in milliseconds since the epoch."
+          description: "The time when the log was created, in Unix timestamp format,\
+            \ measured in milliseconds."
           example: 1701396866000
           type: integer
         request_headers:
@@ -6115,16 +5924,16 @@ components:
           example: 200
           type: integer
         response_time:
-          description: The response time of the webhook event in milliseconds.
+          description: "The response time of the webhook event, in milliseconds."
           example: 100
           type: integer
         success:
-          description: The success status of the webhook event.
+          description: Whether the webhook event has been successfully delivered.
           example: true
           type: boolean
         failure_reason:
-          description: The reason of the webhook event failure.
-          example: The webhook endpoint is not reachable.
+          description: The reason why the webhook event fails to be delivered.
+          example: Connect Timeout
           type: string
       required:
       - created_timestamp
@@ -6137,8 +5946,8 @@ components:
     get_chains_200_response:
       example:
         pagination:
-          before: as19
-          after: 20sa
+          before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
         - icon_url: https://static.waas.co/images/coins/ETH.png
           symbol: USDT
@@ -6158,82 +5967,60 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
-    get_assets_200_response:
+    get_tokens_200_response_data_inner:
+      allOf:
+      - properties:
+          can_deposit:
+            default: false
+            description: "Ture if the token can be deposited, False otherwise"
+            example: false
+            type: boolean
+          can_withdraw:
+            default: false
+            description: "Ture if the token can be withdrawn, False otherwise"
+            example: false
+            type: boolean
+        type: object
+      - $ref: '#/components/schemas/TokenInfo'
       example:
-        pagination:
-          before: as19
-          after: 20sa
-        data:
-        - icon_url: https://d.cobo.com/public/logos/USDT.png
-          display_code: USDT
-          description: Tether USDT
-          asset_id: USDT
-        - icon_url: https://d.cobo.com/public/logos/USDT.png
-          display_code: USDT
-          description: Tether USDT
-          asset_id: USDT
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/AssetInfo'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
+        icon_url: https://static.waas.co/images/coins/ETH.png
+        symbol: USDT
+        token_id: ETH_USDT
+        chain_id: ETH
+        description: Tether USDT
+        can_withdraw: false
+        token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
+        asset_id: USDT
+        can_deposit: false
       type: object
     get_tokens_200_response:
       example:
         pagination:
-          before: as19
-          after: 20sa
+          before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
         - icon_url: https://static.waas.co/images/coins/ETH.png
           symbol: USDT
           token_id: ETH_USDT
           chain_id: ETH
           description: Tether USDT
+          can_withdraw: false
           token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           asset_id: USDT
+          can_deposit: false
         - icon_url: https://static.waas.co/images/coins/ETH.png
           symbol: USDT
           token_id: ETH_USDT
           chain_id: ETH
           description: Tether USDT
+          can_withdraw: false
           token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           asset_id: USDT
+          can_deposit: false
       properties:
         data:
           items:
-            $ref: '#/components/schemas/TokenInfo'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    get_wallet_token_balances_200_response:
-      example:
-        pagination:
-          before: as19
-          after: 20sa
-        data:
-        - token_id: ETH_USDT
-          balance:
-            total: "100.0"
-            pending: "10.5"
-            staked: "3.5"
-            available: "80.5"
-            frozen: "2.5"
-            locked: "3.0"
-        - token_id: ETH_USDT
-          balance:
-            total: "100.0"
-            pending: "10.5"
-            staked: "3.5"
-            available: "80.5"
-            frozen: "2.5"
-            locked: "3.0"
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TokenBalance'
+            $ref: '#/components/schemas/get_tokens_200_response_data_inner'
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
@@ -6241,8 +6028,8 @@ components:
     list_wallets_200_response:
       example:
         pagination:
-          before: as19
-          after: 20sa
+          before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
         - wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           wallet_subtype: Asset
@@ -6296,19 +6083,23 @@ components:
     list_addresses_200_response:
       example:
         pagination:
-          before: as19
-          after: 20sa
+          before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
-        - is_internal: false
+        - path: m/44'/60'/0'/0
           token_id: ETH_USDT
           address_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           memo: "82840924"
           address_str: 0x0000000000000000000000000000000000000000
-        - is_internal: false
+          encoding: ENCODING_P2PKH
+          pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+        - path: m/44'/60'/0'/0
           token_id: ETH_USDT
           address_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           memo: "82840924"
           address_str: 0x0000000000000000000000000000000000000000
+          encoding: ENCODING_P2PKH
+          pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
       properties:
         data:
           items:
@@ -6345,6 +6136,32 @@ components:
           description: The validity of the address.
           example: true
           type: boolean
+      type: object
+    get_wallet_token_balances_200_response:
+      example:
+        pagination:
+          before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+        data:
+        - token_id: ETH_USDT
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
+        - token_id: ETH_USDT
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TokenBalance'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
       type: object
     create_mpc_project_request:
       properties:
@@ -6456,65 +6273,6 @@ components:
       - target_key_group_id
       - type
       type: object
-    get_exchange_wallet_asset_balances_200_response:
-      example:
-        pagination:
-          before: as19
-          after: 20sa
-        data:
-        - balance: "{}"
-          asset_id: USDT
-        - balance: "{}"
-          asset_id: USDT
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/AssetBalance'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    list_exchanges_200_response_inner:
-      description: Settings details for the exchange
-      example:
-        exchange_id: binance
-        subtitle: Sub Account & Trading Account
-        supported_sub_wallet_ids:
-        - SPOT
-        - FUTURE
-      properties:
-        exchange_id:
-          $ref: '#/components/schemas/ExchangeId'
-        subtitle:
-          description: Introduction of the supported features of this exchange.
-          example: Sub Account & Trading Account
-          type: string
-        supported_sub_wallet_ids:
-          description: The trading accounts(sub_wallet_ids) supported for this exchange.
-          example:
-          - SPOT
-          - FUTURE
-          items:
-            type: string
-          type: array
-      required:
-      - exchange_id
-      - supported_sub_wallet_ids
-      type: object
-    link_sub_accounts_by_wallet_id_request:
-      properties:
-        wallet_id:
-          description: The ID of main account wallet.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          type: string
-        sub_account_ids:
-          description: The ID list of sub accounts.
-          example:
-          - f47ac10b-58cc-4372-a567-0e02b2c3d479
-          items:
-            type: string
-          type: array
-      type: object
     create_transfer_transaction_201_response:
       example:
         transaction_id: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
@@ -6535,114 +6293,92 @@ components:
     list_transactions_200_response:
       example:
         pagination:
-          before: as19
-          after: 20sa
+          before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
         - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
-          from_type: CustodialAssetWallet
           created_time: 1610445878970
           updated_time: 1610445878970
           sub_status: PendingDoubleCheck
-          from_info: "MPC Wallet #1"
-          txid: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          chain_id: ETH
+          confirmed_num: 12
+          initiator: "API Prod Key #1"
+          fee:
+            base_fee: "0.9"
+            fee_amount: "0.1"
+            gas_limit: "21000"
+            max_priority_fee: "0.1"
+            fee_type: EVM_EIP_1559
+            fee_token_id: ETH
+            max_fee: "1"
+          destination:
+            address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+            memo: "82840924"
+            type: CustodialAssetWallet
           description: withdrawal to exchange trading account
           cobo_id: "20231213122855000000000000000000"
-          to_address:
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          source:
+            address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
             memo: "82840924"
-            label: "Address #1"
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-            memo: "82840924"
-            label: "Address #1"
+            type: CustodialAssetWallet
+          confirming_threshold: 15
           type: Deposit
-          network:
-            icon_url: https://static.waas.co/images/coins/ETH.png
-            name: ETH
-          to_type: CustodialAssetWallet
-          delegate: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           wallet_id: 624ce4e5-e985-4394-a196-fd7752aff96e
-          to_info: "DeFi Wallet #1"
+          exchange_id: binance
           tokens:
-          - icon_url: https://static.waas.co/images/coins/ETH.png
-            symbol: USDT
-            amount: "1.5"
+          - amount: "1.5"
             token_id: ETH_USDT
-            chain_id: ETH
-            description: Tether USDT
-            token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
             asset_id: USDT
-          - icon_url: https://static.waas.co/images/coins/ETH.png
-            symbol: USDT
-            amount: "1.5"
+          - amount: "1.5"
             token_id: ETH_USDT
-            chain_id: ETH
-            description: Tether USDT
-            token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
             asset_id: USDT
           category:
           - Payment
           - Payment
           request_id: web_send_by_user_327_1610444045047
-          from_address:
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-            memo: "82840924"
-            label: "Address #1"
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-            memo: "82840924"
-            label: "Address #1"
+          transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           status: Submitted
         - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
-          from_type: CustodialAssetWallet
           created_time: 1610445878970
           updated_time: 1610445878970
           sub_status: PendingDoubleCheck
-          from_info: "MPC Wallet #1"
-          txid: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          chain_id: ETH
+          confirmed_num: 12
+          initiator: "API Prod Key #1"
+          fee:
+            base_fee: "0.9"
+            fee_amount: "0.1"
+            gas_limit: "21000"
+            max_priority_fee: "0.1"
+            fee_type: EVM_EIP_1559
+            fee_token_id: ETH
+            max_fee: "1"
+          destination:
+            address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+            memo: "82840924"
+            type: CustodialAssetWallet
           description: withdrawal to exchange trading account
           cobo_id: "20231213122855000000000000000000"
-          to_address:
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          source:
+            address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
             memo: "82840924"
-            label: "Address #1"
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-            memo: "82840924"
-            label: "Address #1"
+            type: CustodialAssetWallet
+          confirming_threshold: 15
           type: Deposit
-          network:
-            icon_url: https://static.waas.co/images/coins/ETH.png
-            name: ETH
-          to_type: CustodialAssetWallet
-          delegate: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           wallet_id: 624ce4e5-e985-4394-a196-fd7752aff96e
-          to_info: "DeFi Wallet #1"
+          exchange_id: binance
           tokens:
-          - icon_url: https://static.waas.co/images/coins/ETH.png
-            symbol: USDT
-            amount: "1.5"
+          - amount: "1.5"
             token_id: ETH_USDT
-            chain_id: ETH
-            description: Tether USDT
-            token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
             asset_id: USDT
-          - icon_url: https://static.waas.co/images/coins/ETH.png
-            symbol: USDT
-            amount: "1.5"
+          - amount: "1.5"
             token_id: ETH_USDT
-            chain_id: ETH
-            description: Tether USDT
-            token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
             asset_id: USDT
           category:
           - Payment
           - Payment
           request_id: web_send_by_user_327_1610444045047
-          from_address:
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-            memo: "82840924"
-            label: "Address #1"
-          - address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-            memo: "82840924"
-            label: "Address #1"
+          transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           status: Submitted
       properties:
         data:
@@ -6652,23 +6388,11 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
-    list_webhook_event_definitions_200_response_inner:
-      example:
-        event_type: wallet.created
-        description: Occurred when a wallet is created
-      properties:
-        event_type:
-          example: wallet.created
-          type: string
-        description:
-          example: Occurred when a wallet is created
-          type: string
-      type: object
     list_events_200_response:
       example:
         pagination:
-          before: as19
-          after: 20sa
+          before: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
         - next_retry_timestamp: 1701396866000
           retries_left: 3
@@ -6705,6 +6429,7 @@ components:
         retried: true
       properties:
         retried:
+          description: Whether the retry request has been successfully sent.
           example: true
           type: boolean
       type: object
@@ -6713,9 +6438,7 @@ components:
       example:
         total: "100.0"
         pending: "10.5"
-        staked: "3.5"
         available: "80.5"
-        frozen: "2.5"
         locked: "3.0"
       properties:
         total:
@@ -6730,16 +6453,6 @@ components:
           default: "0"
           description: The pending balance not confirmed.
           example: "10.5"
-          type: string
-        staked:
-          default: "0"
-          description: The staked balance.
-          example: "3.5"
-          type: string
-        frozen:
-          default: "0"
-          description: The frozen balance.
-          example: "2.5"
           type: string
         locked:
           default: "0"
@@ -6796,6 +6509,58 @@ components:
       allOf:
       - $ref: '#/components/schemas/UtxoFeeBasePrice'
       - $ref: '#/components/schemas/FeeAmount'
+    Transaction_source:
+      discriminator:
+        mapping:
+          ExternalAddress: '#/components/schemas/BaseTransactionAddress'
+          GasStation: '#/components/schemas/BaseWalletTransactionAddress'
+          CustodialAssetWallet: '#/components/schemas/BaseWalletTransactionAddress'
+          CustodialWeb3Wallet: '#/components/schemas/BaseWalletTransactionAddress'
+          MPCClientControlledWallet: '#/components/schemas/MPCWalletTransactionAddress'
+          MPCUserControlledWallet: '#/components/schemas/MPCWalletTransactionAddress'
+          SafeContractWallet: '#/components/schemas/SafeWalletTransactionAddress'
+          ExchangeAccount: '#/components/schemas/ExchangeWalletTransactionAddress'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/BaseTransactionAddress'
+      - $ref: '#/components/schemas/BaseWalletTransactionAddress'
+      - $ref: '#/components/schemas/MPCWalletTransactionAddress'
+      - $ref: '#/components/schemas/SafeTransactionAddress'
+      - $ref: '#/components/schemas/ExchangeWalletTransactionAddress'
+    Transaction_destination:
+      discriminator:
+        mapping:
+          ExternalAddress: '#/components/schemas/BaseTransactionAddress'
+          GasStation: '#/components/schemas/BaseWalletTransactionAddress'
+          CustodialAssetWallet: '#/components/schemas/BaseWalletTransactionAddress'
+          CustodialWeb3Wallet: '#/components/schemas/BaseWalletTransactionAddress'
+          MPCClientControlledWallet: '#/components/schemas/BaseWalletTransactionAddress'
+          MPCUserControlledWallet: '#/components/schemas/BaseWalletTransactionAddress'
+          SafeContractWallet: '#/components/schemas/BaseWalletTransactionAddress'
+          ExchangeAccount: '#/components/schemas/ExchangeWalletTransactionAddress'
+        propertyName: source_type
+      oneOf:
+      - $ref: '#/components/schemas/BaseTransactionAddress'
+      - $ref: '#/components/schemas/BaseWalletTransactionAddress'
+      - $ref: '#/components/schemas/ExchangeWalletTransactionAddress'
+    SafeTransactionAddress_allOf_delegate:
+      properties:
+        wallet_id:
+          description: The wallet id of the delegate.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+        wallet_type:
+          description: The wallet type of the delegate. This is required when user
+            initiate a transfer.
+          example: MPC
+          type: string
+        wallet_address:
+          description: The wallet address of the delegate. This is required when user
+            initiate a transfer.
+          example: 0x1234567890123456789012345678901234567890
+          type: string
+      type: object
     SafeTransferSource_allOf_delegate:
       properties:
         wallet_id:
@@ -6817,7 +6582,7 @@ components:
       type: object
   securitySchemes:
     CoboAuth:
-      description: This field contains the API key.
+      description: The API key.
       in: header
       name: BIZ-API-KEY
       type: apiKey

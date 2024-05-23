@@ -18,6 +18,7 @@ var _ MappedNullable = &RetryWebhookEvent201Response{}
 
 // RetryWebhookEvent201Response struct for RetryWebhookEvent201Response
 type RetryWebhookEvent201Response struct {
+	// Whether the retry request has been successfully sent.
 	Retried *bool `json:"retried,omitempty"`
 }
 

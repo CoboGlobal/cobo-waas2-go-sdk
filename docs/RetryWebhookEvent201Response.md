@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Retried** | Pointer to **bool** |  | [optional] 
+**Retried** | Pointer to **bool** | Whether the retry request has been successfully sent. | [optional] 
 
 ## Methods
 

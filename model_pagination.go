@@ -16,9 +16,11 @@ import (
 // checks if the Pagination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Pagination{}
 
-// Pagination The meta data for pagination.
+// Pagination The pagination information of the returned data.
 type Pagination struct {
+	// An object ID which serves as a cursor for pagination. For example, if the value of `before` is `foo`, the returned data ends before the object with the object ID `foo`.
 	Before *string `json:"before,omitempty"`
+	// An object ID which serves as a cursor for pagination. For example, if the value of `after` is `bar`, the returned data starts after the object with the object ID `bar`.
 	After *string `json:"after,omitempty"`
 }
 

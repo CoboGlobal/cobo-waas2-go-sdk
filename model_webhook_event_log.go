@@ -18,11 +18,11 @@ import (
 // checks if the WebhookEventLog type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &WebhookEventLog{}
 
-// WebhookEventLog The data for webhook event log.
+// WebhookEventLog The webhook event log.
 type WebhookEventLog struct {
-	// The unique identifier of the log.
+	// The event log ID.
 	Id string `json:"id"`
-	// The timestamp at which the object was created, represented as an integer value, typically in milliseconds since the epoch.
+	// The time when the log was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The request headers of the webhook event.
 	RequestHeaders map[string]interface{} `json:"request_headers"`
@@ -31,11 +31,11 @@ type WebhookEventLog struct {
 	ResponseBody map[string]interface{} `json:"response_body,omitempty"`
 	// The response status code of the webhook event.
 	ResponseStatusCode *int32 `json:"response_status_code,omitempty"`
-	// The response time of the webhook event in milliseconds.
+	// The response time of the webhook event, in milliseconds.
 	ResponseTime *int32 `json:"response_time,omitempty"`
-	// The success status of the webhook event.
+	// Whether the webhook event has been successfully delivered.
 	Success bool `json:"success"`
-	// The reason of the webhook event failure.
+	// The reason why the webhook event fails to be delivered.
 	FailureReason *string `json:"failure_reason,omitempty"`
 }
 

@@ -7,9 +7,9 @@ Name | Type | Description | Notes
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 **FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
 **MaxFee** | **string** | The highest Gas price paid for the transfer, unit GWei. | 
-**MaxPriorityFee** | **int32** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
-**BaseFee** | **int32** | The Base Fee of chain. | 
-**GasLimit** | Pointer to **int32** | The Limit of gas. | [optional] [default to 21000]
+**MaxPriorityFee** | **string** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
+**BaseFee** | **string** | The Base Fee of chain. | 
+**GasLimit** | Pointer to **string** | The Limit of gas. | [optional] [default to "21000"]
 **FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
 **GasPrice** | **string** | The Price of Gas, unit GWei. | 
 **FeeRate** | **string** | The fee rate, unit sat/vB. | 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewTransactionFee
 
-`func NewTransactionFee(feeType FeeType, maxFee string, maxPriorityFee int32, baseFee int32, gasPrice string, feeRate string, ) *TransactionFee`
+`func NewTransactionFee(feeType FeeType, maxFee string, maxPriorityFee string, baseFee string, gasPrice string, feeRate string, ) *TransactionFee`
 
 NewTransactionFee instantiates a new TransactionFee object
 This constructor will assign default values to properties that have it defined,
@@ -100,60 +100,60 @@ SetMaxFee sets MaxFee field to given value.
 
 ### GetMaxPriorityFee
 
-`func (o *TransactionFee) GetMaxPriorityFee() int32`
+`func (o *TransactionFee) GetMaxPriorityFee() string`
 
 GetMaxPriorityFee returns the MaxPriorityFee field if non-nil, zero value otherwise.
 
 ### GetMaxPriorityFeeOk
 
-`func (o *TransactionFee) GetMaxPriorityFeeOk() (*int32, bool)`
+`func (o *TransactionFee) GetMaxPriorityFeeOk() (*string, bool)`
 
 GetMaxPriorityFeeOk returns a tuple with the MaxPriorityFee field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMaxPriorityFee
 
-`func (o *TransactionFee) SetMaxPriorityFee(v int32)`
+`func (o *TransactionFee) SetMaxPriorityFee(v string)`
 
 SetMaxPriorityFee sets MaxPriorityFee field to given value.
 
 
 ### GetBaseFee
 
-`func (o *TransactionFee) GetBaseFee() int32`
+`func (o *TransactionFee) GetBaseFee() string`
 
 GetBaseFee returns the BaseFee field if non-nil, zero value otherwise.
 
 ### GetBaseFeeOk
 
-`func (o *TransactionFee) GetBaseFeeOk() (*int32, bool)`
+`func (o *TransactionFee) GetBaseFeeOk() (*string, bool)`
 
 GetBaseFeeOk returns a tuple with the BaseFee field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBaseFee
 
-`func (o *TransactionFee) SetBaseFee(v int32)`
+`func (o *TransactionFee) SetBaseFee(v string)`
 
 SetBaseFee sets BaseFee field to given value.
 
 
 ### GetGasLimit
 
-`func (o *TransactionFee) GetGasLimit() int32`
+`func (o *TransactionFee) GetGasLimit() string`
 
 GetGasLimit returns the GasLimit field if non-nil, zero value otherwise.
 
 ### GetGasLimitOk
 
-`func (o *TransactionFee) GetGasLimitOk() (*int32, bool)`
+`func (o *TransactionFee) GetGasLimitOk() (*string, bool)`
 
 GetGasLimitOk returns a tuple with the GasLimit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGasLimit
 
-`func (o *TransactionFee) SetGasLimit(v int32)`
+`func (o *TransactionFee) SetGasLimit(v string)`
 
 SetGasLimit sets GasLimit field to given value.
 

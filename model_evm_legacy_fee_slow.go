@@ -25,7 +25,7 @@ type EvmLegacyFeeSlow struct {
 	// The Price of Gas, unit GWei.
 	GasPrice string `json:"gas_price"`
 	// The Limit of gas.
-	GasLimit *int32 `json:"gas_limit,omitempty"`
+	GasLimit *string `json:"gas_limit,omitempty"`
 	// The estimated fee amount in fee_coin.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 }
@@ -39,7 +39,7 @@ type _EvmLegacyFeeSlow EvmLegacyFeeSlow
 func NewEvmLegacyFeeSlow(gasPrice string) *EvmLegacyFeeSlow {
 	this := EvmLegacyFeeSlow{}
 	this.GasPrice = gasPrice
-	var gasLimit int32 = 21000
+	var gasLimit string = "21000"
 	this.GasLimit = &gasLimit
 	return &this
 }
@@ -49,7 +49,7 @@ func NewEvmLegacyFeeSlow(gasPrice string) *EvmLegacyFeeSlow {
 // but it doesn't guarantee that properties required by API are set
 func NewEvmLegacyFeeSlowWithDefaults() *EvmLegacyFeeSlow {
 	this := EvmLegacyFeeSlow{}
-	var gasLimit int32 = 21000
+	var gasLimit string = "21000"
 	this.GasLimit = &gasLimit
 	return &this
 }
@@ -111,9 +111,9 @@ func (o *EvmLegacyFeeSlow) SetGasPrice(v string) {
 }
 
 // GetGasLimit returns the GasLimit field value if set, zero value otherwise.
-func (o *EvmLegacyFeeSlow) GetGasLimit() int32 {
+func (o *EvmLegacyFeeSlow) GetGasLimit() string {
 	if o == nil || IsNil(o.GasLimit) {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.GasLimit
@@ -121,7 +121,7 @@ func (o *EvmLegacyFeeSlow) GetGasLimit() int32 {
 
 // GetGasLimitOk returns a tuple with the GasLimit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EvmLegacyFeeSlow) GetGasLimitOk() (*int32, bool) {
+func (o *EvmLegacyFeeSlow) GetGasLimitOk() (*string, bool) {
 	if o == nil || IsNil(o.GasLimit) {
 		return nil, false
 	}
@@ -137,8 +137,8 @@ func (o *EvmLegacyFeeSlow) HasGasLimit() bool {
 	return false
 }
 
-// SetGasLimit gets a reference to the given int32 and assigns it to the GasLimit field.
-func (o *EvmLegacyFeeSlow) SetGasLimit(v int32) {
+// SetGasLimit gets a reference to the given string and assigns it to the GasLimit field.
+func (o *EvmLegacyFeeSlow) SetGasLimit(v string) {
 	o.GasLimit = &v
 }
 

@@ -18,15 +18,15 @@ import (
 // checks if the ErrorResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ErrorResponse{}
 
-// ErrorResponse The data for error response.
+// ErrorResponse The response of a failed request.
 type ErrorResponse struct {
-	// Indicates if the API operation was successful. Always false for errors.
+	// Whether the API operation was successful. This is always `false` for a failed request.
 	Success bool `json:"success"`
-	// A machine-readable error code.`
+	// The error code.
 	ErrorCode int32 `json:"error_code"`
-	// A human-readable error description for users.
+	// The error description.
 	ErrorDescription string `json:"error_description"`
-	// A unique ID for the error log, mainly used for debugging.
+	// A error log ID. You can use it for debugging purposes.
 	ErrorId string `json:"error_id"`
 }
 

@@ -11,13 +11,11 @@
 
 * `MPC_USER_CONTROLLED_WALLET` (value: `"MPCUserControlledWallet"`)
 
-* `SMART_CONTRACT_WALLET` (value: `"SmartContractWallet"`)
+* `SAFE_CONTRACT_WALLET` (value: `"SafeContractWallet"`)
 
 * `EXCHANGE_ACCOUNT` (value: `"ExchangeAccount"`)
 
 * `GAS_STATION` (value: `"GasStation"`)
-
-* `COBO_PORTAL` (value: `"CoboPortal"`)
 
 * `EXTERNAL_ADDRESS` (value: `"ExternalAddress"`)
 

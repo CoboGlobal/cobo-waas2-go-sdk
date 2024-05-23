@@ -1,6 +1,6 @@
 # \WalletsMPCWalletAPI
 
-All URIs are relative to *https://api.cobo.com/v3*
+All URIs are relative to *https://api.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -74,7 +74,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 **tssRequestId** | **string** | Unique id of the tss request | 
 
@@ -155,7 +155,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 
 ### Other Parameters
@@ -380,7 +380,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 
 ### Other Parameters
@@ -459,7 +459,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 **keyGroupId** | **string** | Unique id of the tss group | 
 
@@ -539,7 +539,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 **keyGroupId** | **string** | Unique id of the tss group | 
 
@@ -618,7 +618,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **projectId** | **string** | Unique id of the mpc project | 
 
 ### Other Parameters
@@ -695,7 +695,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 
 ### Other Parameters
@@ -773,7 +773,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 **tssRequestId** | **string** | Unique id of the tss request | 
 
@@ -921,7 +921,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 
 ### Other Parameters
@@ -1141,7 +1141,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 
 ### Other Parameters
@@ -1220,7 +1220,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 
 ### Other Parameters
@@ -1300,7 +1300,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **vaultId** | **string** | Unique id of the mpc vault | 
 **keyGroupId** | **string** | Unique id of the tss group | 
 
@@ -1381,7 +1381,7 @@ func main() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
 **projectId** | **string** | Unique id of the mpc project | 
 
 ### Other Parameters

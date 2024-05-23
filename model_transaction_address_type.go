@@ -23,10 +23,9 @@ const (
 	TRANSACTIONADDRESSTYPE_CUSTODIAL_WEB3_WALLET TransactionAddressType = "CustodialWeb3Wallet"
 	TRANSACTIONADDRESSTYPE_MPC_CLIENT_CONTROLLED_WALLET TransactionAddressType = "MPCClientControlledWallet"
 	TRANSACTIONADDRESSTYPE_MPC_USER_CONTROLLED_WALLET TransactionAddressType = "MPCUserControlledWallet"
-	TRANSACTIONADDRESSTYPE_SMART_CONTRACT_WALLET TransactionAddressType = "SmartContractWallet"
+	TRANSACTIONADDRESSTYPE_SAFE_CONTRACT_WALLET TransactionAddressType = "SafeContractWallet"
 	TRANSACTIONADDRESSTYPE_EXCHANGE_ACCOUNT TransactionAddressType = "ExchangeAccount"
 	TRANSACTIONADDRESSTYPE_GAS_STATION TransactionAddressType = "GasStation"
-	TRANSACTIONADDRESSTYPE_COBO_PORTAL TransactionAddressType = "CoboPortal"
 	TRANSACTIONADDRESSTYPE_EXTERNAL_ADDRESS TransactionAddressType = "ExternalAddress"
 )
 
@@ -36,10 +35,9 @@ var AllowedTransactionAddressTypeEnumValues = []TransactionAddressType{
 	"CustodialWeb3Wallet",
 	"MPCClientControlledWallet",
 	"MPCUserControlledWallet",
-	"SmartContractWallet",
+	"SafeContractWallet",
 	"ExchangeAccount",
 	"GasStation",
-	"CoboPortal",
 	"ExternalAddress",
 }
 

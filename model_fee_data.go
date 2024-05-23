@@ -19,7 +19,7 @@ var _ MappedNullable = &FeeData{}
 // FeeData The estimated fee amount in fee_coin.
 type FeeData struct {
 	// The Limit of gas.
-	GasLimit *int32 `json:"gas_limit,omitempty"`
+	GasLimit *string `json:"gas_limit,omitempty"`
 	// The estimated fee amount in fee_coin.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 }
@@ -30,7 +30,7 @@ type FeeData struct {
 // will change when the set of required properties is changed
 func NewFeeData() *FeeData {
 	this := FeeData{}
-	var gasLimit int32 = 21000
+	var gasLimit string = "21000"
 	this.GasLimit = &gasLimit
 	return &this
 }
@@ -40,15 +40,15 @@ func NewFeeData() *FeeData {
 // but it doesn't guarantee that properties required by API are set
 func NewFeeDataWithDefaults() *FeeData {
 	this := FeeData{}
-	var gasLimit int32 = 21000
+	var gasLimit string = "21000"
 	this.GasLimit = &gasLimit
 	return &this
 }
 
 // GetGasLimit returns the GasLimit field value if set, zero value otherwise.
-func (o *FeeData) GetGasLimit() int32 {
+func (o *FeeData) GetGasLimit() string {
 	if o == nil || IsNil(o.GasLimit) {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.GasLimit
@@ -56,7 +56,7 @@ func (o *FeeData) GetGasLimit() int32 {
 
 // GetGasLimitOk returns a tuple with the GasLimit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FeeData) GetGasLimitOk() (*int32, bool) {
+func (o *FeeData) GetGasLimitOk() (*string, bool) {
 	if o == nil || IsNil(o.GasLimit) {
 		return nil, false
 	}
@@ -72,8 +72,8 @@ func (o *FeeData) HasGasLimit() bool {
 	return false
 }
 
-// SetGasLimit gets a reference to the given int32 and assigns it to the GasLimit field.
-func (o *FeeData) SetGasLimit(v int32) {
+// SetGasLimit gets a reference to the given string and assigns it to the GasLimit field.
+func (o *FeeData) SetGasLimit(v string) {
 	o.GasLimit = &v
 }
 

@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** | The unique identifier of the log. | 
-**CreatedTimestamp** | **int32** | The timestamp at which the object was created, represented as an integer value, typically in milliseconds since the epoch. | 
+**Id** | **string** | The event log ID. | 
+**CreatedTimestamp** | **int32** | The time when the log was created, in Unix timestamp format, measured in milliseconds. | 
 **RequestHeaders** | **map[string]interface{}** | The request headers of the webhook event. | 
 **RequestBody** | [**WebhookEvent**](WebhookEvent.md) |  | 
 **ResponseBody** | Pointer to **map[string]interface{}** | The response body of the webhook event. | [optional] 
 **ResponseStatusCode** | Pointer to **int32** | The response status code of the webhook event. | [optional] 
-**ResponseTime** | Pointer to **int32** | The response time of the webhook event in milliseconds. | [optional] 
-**Success** | **bool** | The success status of the webhook event. | 
-**FailureReason** | Pointer to **string** | The reason of the webhook event failure. | [optional] 
+**ResponseTime** | Pointer to **int32** | The response time of the webhook event, in milliseconds. | [optional] 
+**Success** | **bool** | Whether the webhook event has been successfully delivered. | 
+**FailureReason** | Pointer to **string** | The reason why the webhook event fails to be delivered. | [optional] 
 
 ## Methods
 

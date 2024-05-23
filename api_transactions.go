@@ -22,124 +22,6 @@ import (
 // TransactionsAPIService TransactionsAPI service
 type TransactionsAPIService service
 
-type ApiCreateSignMessageTransactionRequest struct {
-	ctx context.Context
-	ApiService *TransactionsAPIService
-	signMessage *SignMessage
-}
-
-// The request body to create a message sign transaction
-func (r ApiCreateSignMessageTransactionRequest) SignMessage(signMessage SignMessage) ApiCreateSignMessageTransactionRequest {
-	r.signMessage = &signMessage
-	return r
-}
-
-func (r ApiCreateSignMessageTransactionRequest) Execute() (*CreateTransferTransaction201Response, *http.Response, error) {
-	return r.ApiService.CreateSignMessageTransactionExecute(r)
-}
-
-/*
-CreateSignMessageTransaction Create a sign message transaction
-
-Create a transaction to sign message.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateSignMessageTransactionRequest
-*/
-func (a *TransactionsAPIService) CreateSignMessageTransaction(ctx context.Context) ApiCreateSignMessageTransactionRequest {
-	return ApiCreateSignMessageTransactionRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return CreateTransferTransaction201Response
-func (a *TransactionsAPIService) CreateSignMessageTransactionExecute(r ApiCreateSignMessageTransactionRequest) (*CreateTransferTransaction201Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CreateTransferTransaction201Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.CreateSignMessageTransaction")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/transactions/sign"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.signMessage
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiCreateSmartContractCallTransactionRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
@@ -186,7 +68,7 @@ func (a *TransactionsAPIService) CreateSmartContractCallTransactionExecute(r Api
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/transactions/call"
+	localVarPath := localBasePath + "/transactions/contract_call"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -773,7 +655,7 @@ type ApiGetTransactionByIdRequest struct {
 	transactionId string
 }
 
-func (r ApiGetTransactionByIdRequest) Execute() (*TransactionDetails, *http.Response, error) {
+func (r ApiGetTransactionByIdRequest) Execute() (*Transaction, *http.Response, error) {
 	return r.ApiService.GetTransactionByIdExecute(r)
 }
 
@@ -795,13 +677,13 @@ func (a *TransactionsAPIService) GetTransactionById(ctx context.Context, transac
 }
 
 // Execute executes the request
-//  @return TransactionDetails
-func (a *TransactionsAPIService) GetTransactionByIdExecute(r ApiGetTransactionByIdRequest) (*TransactionDetails, *http.Response, error) {
+//  @return Transaction
+func (a *TransactionsAPIService) GetTransactionByIdExecute(r ApiGetTransactionByIdRequest) (*Transaction, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *TransactionDetails
+		localVarReturnValue  *Transaction
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.GetTransactionById")
@@ -884,6 +766,17 @@ type ApiListTransactionsRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
 	requestId *string
+	coboId *string
+	transactionId *string
+	transactionHash *string
+	type_ *TransactionType
+	status *TransactionStatus
+	walletId *string
+	chainId *string
+	tokenId *string
+	assetId *string
+	minCreatedTimestamp *int32
+	maxCreatedTimestamp *int32
 	sortBy *string
 	direction *string
 	limit *int32
@@ -894,6 +787,72 @@ type ApiListTransactionsRequest struct {
 // Request ID
 func (r ApiListTransactionsRequest) RequestId(requestId string) ApiListTransactionsRequest {
 	r.requestId = &requestId
+	return r
+}
+
+// Cobo ID
+func (r ApiListTransactionsRequest) CoboId(coboId string) ApiListTransactionsRequest {
+	r.coboId = &coboId
+	return r
+}
+
+// Unique id of the transaction
+func (r ApiListTransactionsRequest) TransactionId(transactionId string) ApiListTransactionsRequest {
+	r.transactionId = &transactionId
+	return r
+}
+
+// Transaction hash
+func (r ApiListTransactionsRequest) TransactionHash(transactionHash string) ApiListTransactionsRequest {
+	r.transactionHash = &transactionHash
+	return r
+}
+
+// The type of a transaction
+func (r ApiListTransactionsRequest) Type_(type_ TransactionType) ApiListTransactionsRequest {
+	r.type_ = &type_
+	return r
+}
+
+// The status of a transaction
+func (r ApiListTransactionsRequest) Status(status TransactionStatus) ApiListTransactionsRequest {
+	r.status = &status
+	return r
+}
+
+// Unique id of the wallet
+func (r ApiListTransactionsRequest) WalletId(walletId string) ApiListTransactionsRequest {
+	r.walletId = &walletId
+	return r
+}
+
+// Unique id of the chain
+func (r ApiListTransactionsRequest) ChainId(chainId string) ApiListTransactionsRequest {
+	r.chainId = &chainId
+	return r
+}
+
+// Unique id of the token
+func (r ApiListTransactionsRequest) TokenId(tokenId string) ApiListTransactionsRequest {
+	r.tokenId = &tokenId
+	return r
+}
+
+// Unique id of the asset
+func (r ApiListTransactionsRequest) AssetId(assetId string) ApiListTransactionsRequest {
+	r.assetId = &assetId
+	return r
+}
+
+// The minimum transaction creation timestamp in Unix epoch seconds
+func (r ApiListTransactionsRequest) MinCreatedTimestamp(minCreatedTimestamp int32) ApiListTransactionsRequest {
+	r.minCreatedTimestamp = &minCreatedTimestamp
+	return r
+}
+
+// The maximum transaction creation timestamp in Unix epoch seconds
+func (r ApiListTransactionsRequest) MaxCreatedTimestamp(maxCreatedTimestamp int32) ApiListTransactionsRequest {
+	r.maxCreatedTimestamp = &maxCreatedTimestamp
 	return r
 }
 
@@ -909,19 +868,19 @@ func (r ApiListTransactionsRequest) Direction(direction string) ApiListTransacti
 	return r
 }
 
-// size of page to return (pagination)
+// The maximum number of objects to return. The value range is [1, 50].
 func (r ApiListTransactionsRequest) Limit(limit int32) ApiListTransactionsRequest {
 	r.limit = &limit
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
 func (r ApiListTransactionsRequest) Before(before string) ApiListTransactionsRequest {
 	r.before = &before
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
 func (r ApiListTransactionsRequest) After(after string) ApiListTransactionsRequest {
 	r.after = &after
 	return r
@@ -970,6 +929,39 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 	if r.requestId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
 	}
+	if r.coboId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cobo_id", r.coboId, "")
+	}
+	if r.transactionId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "transaction_id", r.transactionId, "")
+	}
+	if r.transactionHash != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "transaction_hash", r.transactionHash, "")
+	}
+	if r.type_ != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "")
+	}
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "")
+	}
+	if r.walletId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_id", r.walletId, "")
+	}
+	if r.chainId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "chain_id", r.chainId, "")
+	}
+	if r.tokenId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	}
+	if r.assetId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "asset_id", r.assetId, "")
+	}
+	if r.minCreatedTimestamp != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "min_created_timestamp", r.minCreatedTimestamp, "")
+	}
+	if r.maxCreatedTimestamp != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_created_timestamp", r.maxCreatedTimestamp, "")
+	}
 	if r.sortBy != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort_by", r.sortBy, "")
 	} else {
@@ -990,15 +982,9 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 	}
 	if r.before != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
-	} else {
-		var defaultValue string = ""
-		r.before = &defaultValue
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
-	} else {
-		var defaultValue string = ""
-		r.after = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1241,7 +1227,7 @@ func (a *TransactionsAPIService) RetryTransactionDoubleCheckByIdExecute(r ApiRet
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/transactions/{transaction_id}/double_check/retry"
+	localVarPath := localBasePath + "/transactions/{transaction_id}/callback_confirmation/retry"
 	localVarPath = strings.Replace(localVarPath, "{"+"transaction_id"+"}", url.PathEscape(parameterValueToString(r.transactionId, "transactionId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -1408,139 +1394,6 @@ func (a *TransactionsAPIService) SpeedupTransactionByIdExecute(r ApiSpeedupTrans
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiUpdateTransacitonByIdRequest struct {
-	ctx context.Context
-	ApiService *TransactionsAPIService
-	transactionId string
-	transactionDetails *TransactionDetails
-}
-
-// The request body to update a address
-func (r ApiUpdateTransacitonByIdRequest) TransactionDetails(transactionDetails TransactionDetails) ApiUpdateTransacitonByIdRequest {
-	r.transactionDetails = &transactionDetails
-	return r
-}
-
-func (r ApiUpdateTransacitonByIdRequest) Execute() (*TransactionDetails, *http.Response, error) {
-	return r.ApiService.UpdateTransacitonByIdExecute(r)
-}
-
-/*
-UpdateTransacitonById Update transaction by ID
-
-Update information of a transaction.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param transactionId Unique id of the transaction
- @return ApiUpdateTransacitonByIdRequest
-*/
-func (a *TransactionsAPIService) UpdateTransacitonById(ctx context.Context, transactionId string) ApiUpdateTransacitonByIdRequest {
-	return ApiUpdateTransacitonByIdRequest{
-		ApiService: a,
-		ctx: ctx,
-		transactionId: transactionId,
-	}
-}
-
-// Execute executes the request
-//  @return TransactionDetails
-func (a *TransactionsAPIService) UpdateTransacitonByIdExecute(r ApiUpdateTransacitonByIdRequest) (*TransactionDetails, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *TransactionDetails
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.UpdateTransacitonById")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/transactions/{transaction_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"transaction_id"+"}", url.PathEscape(parameterValueToString(r.transactionId, "transactionId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.transactionDetails
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse

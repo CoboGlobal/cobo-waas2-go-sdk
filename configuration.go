@@ -72,11 +72,11 @@ func NewConfiguration() *Configuration {
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://api.cobo.com/v3",
+				URL: "https://api.cobo.com/v2",
 				Description: "Production environment",
 			},
 			{
-				URL: "https://api.dev.cobo.com/v3",
+				URL: "https://api.dev.cobo.com/v2",
 				Description: "Development environment",
 			},
 		},

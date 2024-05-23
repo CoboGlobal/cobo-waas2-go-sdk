@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**GasLimit** | Pointer to **int32** | The Limit of gas. | [optional] [default to 21000]
+**GasLimit** | Pointer to **string** | The Limit of gas. | [optional] [default to "21000"]
 **FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetGasLimit
 
-`func (o *FeeData) GetGasLimit() int32`
+`func (o *FeeData) GetGasLimit() string`
 
 GetGasLimit returns the GasLimit field if non-nil, zero value otherwise.
 
 ### GetGasLimitOk
 
-`func (o *FeeData) GetGasLimitOk() (*int32, bool)`
+`func (o *FeeData) GetGasLimitOk() (*string, bool)`
 
 GetGasLimitOk returns a tuple with the GasLimit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGasLimit
 
-`func (o *FeeData) SetGasLimit(v int32)`
+`func (o *FeeData) SetGasLimit(v string)`
 
 SetGasLimit sets GasLimit field to given value.
 

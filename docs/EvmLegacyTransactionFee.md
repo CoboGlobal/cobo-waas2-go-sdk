@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
 **GasPrice** | **string** | The Price of Gas, unit GWei. | 
-**GasLimit** | Pointer to **int32** | The Limit of gas. | [optional] [default to 21000]
+**GasLimit** | Pointer to **string** | The Limit of gas. | [optional] [default to "21000"]
 **FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 
@@ -76,20 +76,20 @@ SetGasPrice sets GasPrice field to given value.
 
 ### GetGasLimit
 
-`func (o *EvmLegacyTransactionFee) GetGasLimit() int32`
+`func (o *EvmLegacyTransactionFee) GetGasLimit() string`
 
 GetGasLimit returns the GasLimit field if non-nil, zero value otherwise.
 
 ### GetGasLimitOk
 
-`func (o *EvmLegacyTransactionFee) GetGasLimitOk() (*int32, bool)`
+`func (o *EvmLegacyTransactionFee) GetGasLimitOk() (*string, bool)`
 
 GetGasLimitOk returns a tuple with the GasLimit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGasLimit
 
-`func (o *EvmLegacyTransactionFee) SetGasLimit(v int32)`
+`func (o *EvmLegacyTransactionFee) SetGasLimit(v string)`
 
 SetGasLimit sets GasLimit field to given value.
 
