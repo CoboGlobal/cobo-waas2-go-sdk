@@ -27,11 +27,13 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
-	t.Run("Test TransactionsAPIService CreateSignMessageTransaction", func(t *testing.T) {
+	t.Run("Test TransactionsAPIService CancelTransactionById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.CreateSignMessageTransaction(ctx).Execute()
+		var transactionId string
+
+		resp, httpRes, err := apiClient.TransactionsAPI.CancelTransactionById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -141,20 +143,6 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TransactionsAPIService RetryTransactionDoubleCheckById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var transactionId string
-
-		resp, httpRes, err := apiClient.TransactionsAPI.RetryTransactionDoubleCheckById(ctx, transactionId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test TransactionsAPIService SpeedupTransactionById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -162,20 +150,6 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 		var transactionId string
 
 		resp, httpRes, err := apiClient.TransactionsAPI.SpeedupTransactionById(ctx, transactionId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test TransactionsAPIService UpdateTransacitonById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var transactionId string
-
-		resp, httpRes, err := apiClient.TransactionsAPI.UpdateTransacitonById(ctx, transactionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -314,4 +314,8 @@ model_webhook_event_log.go
 model_webhook_event_status.go
 model_webhook_event_type.go
 response.go
+test/api_developers_webhooks_test.go
+test/api_transactions_test.go
+test/api_wallets_mpc_wallet_test.go
+test/api_wallets_test.go
 utils.go

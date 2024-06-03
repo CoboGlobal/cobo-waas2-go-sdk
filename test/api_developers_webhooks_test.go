@@ -67,18 +67,6 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DevelopersWebhooksAPIService ListWebhookEventDefinitions", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListWebhookEventDefinitions(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DevelopersWebhooksAPIService RetryWebhookEvent", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
