@@ -18,18 +18,16 @@ import (
 // checks if the ChainInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ChainInfo{}
 
-// ChainInfo The data for chain information.
+// ChainInfo The chain information.
 type ChainInfo struct {
-	// The blockchain on which the token operates.
+	// The chain on which the token operates.
 	ChainId string `json:"chain_id"`
-	// Symbol for the chain.
+	// The chain symbol.
 	Symbol *string `json:"symbol,omitempty"`
-	// URL of the icon image.
+	// The URL of the chain icon.
 	IconUrl *string `json:"icon_url,omitempty"`
-	// URL of the explorer transaction.
+	// The transaction URL on the blockchain explorer.
 	ExplorerTxUrl *string `json:"explorer_tx_url,omitempty"`
-	// URL of the explorer address.
-	ExplorerAddressUrl *string `json:"explorer_address_url,omitempty"`
 }
 
 type _ChainInfo ChainInfo
@@ -172,38 +170,6 @@ func (o *ChainInfo) SetExplorerTxUrl(v string) {
 	o.ExplorerTxUrl = &v
 }
 
-// GetExplorerAddressUrl returns the ExplorerAddressUrl field value if set, zero value otherwise.
-func (o *ChainInfo) GetExplorerAddressUrl() string {
-	if o == nil || IsNil(o.ExplorerAddressUrl) {
-		var ret string
-		return ret
-	}
-	return *o.ExplorerAddressUrl
-}
-
-// GetExplorerAddressUrlOk returns a tuple with the ExplorerAddressUrl field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ChainInfo) GetExplorerAddressUrlOk() (*string, bool) {
-	if o == nil || IsNil(o.ExplorerAddressUrl) {
-		return nil, false
-	}
-	return o.ExplorerAddressUrl, true
-}
-
-// HasExplorerAddressUrl returns a boolean if a field has been set.
-func (o *ChainInfo) HasExplorerAddressUrl() bool {
-	if o != nil && !IsNil(o.ExplorerAddressUrl) {
-		return true
-	}
-
-	return false
-}
-
-// SetExplorerAddressUrl gets a reference to the given string and assigns it to the ExplorerAddressUrl field.
-func (o *ChainInfo) SetExplorerAddressUrl(v string) {
-	o.ExplorerAddressUrl = &v
-}
-
 func (o ChainInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -223,9 +189,6 @@ func (o ChainInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExplorerTxUrl) {
 		toSerialize["explorer_tx_url"] = o.ExplorerTxUrl
-	}
-	if !IsNil(o.ExplorerAddressUrl) {
-		toSerialize["explorer_address_url"] = o.ExplorerAddressUrl
 	}
 	return toSerialize, nil
 }

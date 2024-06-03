@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**FeeRate** | **string** | The fee rate, unit sat/vB. | 
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 
 ## Methods
@@ -73,30 +73,30 @@ and a boolean to check if the value has been set.
 SetFeeRate sets FeeRate field to given value.
 
 
-### GetFeeAmount
+### GetMaxFeeAmount
 
-`func (o *UtxoTransactionFee) GetFeeAmount() string`
+`func (o *UtxoTransactionFee) GetMaxFeeAmount() string`
 
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
+GetMaxFeeAmount returns the MaxFeeAmount field if non-nil, zero value otherwise.
 
-### GetFeeAmountOk
+### GetMaxFeeAmountOk
 
-`func (o *UtxoTransactionFee) GetFeeAmountOk() (*string, bool)`
+`func (o *UtxoTransactionFee) GetMaxFeeAmountOk() (*string, bool)`
 
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
+GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeeAmount
+### SetMaxFeeAmount
 
-`func (o *UtxoTransactionFee) SetFeeAmount(v string)`
+`func (o *UtxoTransactionFee) SetMaxFeeAmount(v string)`
 
-SetFeeAmount sets FeeAmount field to given value.
+SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasFeeAmount
+### HasMaxFeeAmount
 
-`func (o *UtxoTransactionFee) HasFeeAmount() bool`
+`func (o *UtxoTransactionFee) HasMaxFeeAmount() bool`
 
-HasFeeAmount returns a boolean if a field has been set.
+HasMaxFeeAmount returns a boolean if a field has been set.
 
 ### GetFeeType
 

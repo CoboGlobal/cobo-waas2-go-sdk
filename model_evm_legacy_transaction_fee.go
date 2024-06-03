@@ -18,16 +18,14 @@ import (
 // checks if the EvmLegacyTransactionFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmLegacyTransactionFee{}
 
-// EvmLegacyTransactionFee The fee data for transaction.
+// EvmLegacyTransactionFee The transaction fee when using the legacy method. The estimated fee is calculated by multiplying the gas price by the gas limit: (gas price * gas limit). 
 type EvmLegacyTransactionFee struct {
-	// ID of the fee token. Unique in all chains scope.
+	// The token ID of the transaction fee. Unique in all chains scope.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The Price of Gas, unit GWei.
+	// The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions.
 	GasPrice string `json:"gas_price"`
-	// The Limit of gas.
+	// The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units.
 	GasLimit *string `json:"gas_limit,omitempty"`
-	// The estimated fee amount in fee_coin.
-	FeeAmount *string `json:"fee_amount,omitempty"`
 	FeeType FeeType `json:"fee_type"`
 }
 
@@ -146,38 +144,6 @@ func (o *EvmLegacyTransactionFee) SetGasLimit(v string) {
 	o.GasLimit = &v
 }
 
-// GetFeeAmount returns the FeeAmount field value if set, zero value otherwise.
-func (o *EvmLegacyTransactionFee) GetFeeAmount() string {
-	if o == nil || IsNil(o.FeeAmount) {
-		var ret string
-		return ret
-	}
-	return *o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmLegacyTransactionFee) GetFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeAmount) {
-		return nil, false
-	}
-	return o.FeeAmount, true
-}
-
-// HasFeeAmount returns a boolean if a field has been set.
-func (o *EvmLegacyTransactionFee) HasFeeAmount() bool {
-	if o != nil && !IsNil(o.FeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeAmount gets a reference to the given string and assigns it to the FeeAmount field.
-func (o *EvmLegacyTransactionFee) SetFeeAmount(v string) {
-	o.FeeAmount = &v
-}
-
 // GetFeeType returns the FeeType field value
 func (o *EvmLegacyTransactionFee) GetFeeType() FeeType {
 	if o == nil {
@@ -218,9 +184,6 @@ func (o EvmLegacyTransactionFee) ToMap() (map[string]interface{}, error) {
 	toSerialize["gas_price"] = o.GasPrice
 	if !IsNil(o.GasLimit) {
 		toSerialize["gas_limit"] = o.GasLimit
-	}
-	if !IsNil(o.FeeAmount) {
-		toSerialize["fee_amount"] = o.FeeAmount
 	}
 	toSerialize["fee_type"] = o.FeeType
 	return toSerialize, nil

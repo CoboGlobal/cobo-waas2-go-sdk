@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | ID of the token. Unique in all chains scope. | 
+**TokenId** | **string** | The token ID. Unique in all chains scope. | 
 **ChainId** | **string** | The blockchain on which the token operates. | 
-**Symbol** | Pointer to **string** | Symbol for the token. | [optional] 
-**Description** | Pointer to **string** | The description of the token. | [optional] 
-**IconUrl** | Pointer to **string** | URL of the icon image. | [optional] 
-**TokenAddress** | Pointer to **string** | Address for token, if applicable. | [optional] 
-**AssetId** | Pointer to **string** | ID of the asset. Used to group token balance when needed. | [optional] 
+**Symbol** | Pointer to **string** | The token symbol. | [optional] 
+**Description** | Pointer to **string** | The token description. | [optional] 
+**IconUrl** | Pointer to **string** | The URL of the token icon. | [optional] 
+**TokenAddress** | Pointer to **string** | The token address, if applicable. | [optional] 
+**AssetId** | Pointer to **string** | The asset ID, which is used to group the balances of the correponding tokens. For example, if you have $1,000 worth of ETH_USDT and $2,000 worth of TRON_USDT, the balance of your USDT assets will be $3,000. | [optional] 
 
 ## Methods
 

@@ -16,12 +16,10 @@ import (
 // checks if the FeeData type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FeeData{}
 
-// FeeData The estimated fee amount in fee_coin.
+// FeeData The estimated fee in fee_coin.
 type FeeData struct {
-	// The Limit of gas.
+	// The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units.
 	GasLimit *string `json:"gas_limit,omitempty"`
-	// The estimated fee amount in fee_coin.
-	FeeAmount *string `json:"fee_amount,omitempty"`
 }
 
 // NewFeeData instantiates a new FeeData object
@@ -77,38 +75,6 @@ func (o *FeeData) SetGasLimit(v string) {
 	o.GasLimit = &v
 }
 
-// GetFeeAmount returns the FeeAmount field value if set, zero value otherwise.
-func (o *FeeData) GetFeeAmount() string {
-	if o == nil || IsNil(o.FeeAmount) {
-		var ret string
-		return ret
-	}
-	return *o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FeeData) GetFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeAmount) {
-		return nil, false
-	}
-	return o.FeeAmount, true
-}
-
-// HasFeeAmount returns a boolean if a field has been set.
-func (o *FeeData) HasFeeAmount() bool {
-	if o != nil && !IsNil(o.FeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeAmount gets a reference to the given string and assigns it to the FeeAmount field.
-func (o *FeeData) SetFeeAmount(v string) {
-	o.FeeAmount = &v
-}
-
 func (o FeeData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -121,9 +87,6 @@ func (o FeeData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.GasLimit) {
 		toSerialize["gas_limit"] = o.GasLimit
-	}
-	if !IsNil(o.FeeAmount) {
-		toSerialize["fee_amount"] = o.FeeAmount
 	}
 	return toSerialize, nil
 }

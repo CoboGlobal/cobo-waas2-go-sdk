@@ -41,9 +41,10 @@ func (r ApiCancelTssRequestRequest) Execute() (*TSSRequest, *http.Response, erro
 }
 
 /*
-CancelTssRequest cancel tss request
+CancelTssRequest Cancel a tss request
 
-cancel tss request.
+Cancel a mpc tss request by its ID.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -190,9 +191,10 @@ func (r ApiCreateKeyGroupRequest) Execute() (*KeyGroup, *http.Response, error) {
 }
 
 /*
-CreateKeyGroup create a mpc key group
+CreateKeyGroup Create a mpc key group
 
-create a mpc key group.
+Create a mpc key group for vault ID with the provided information.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -335,7 +337,8 @@ func (r ApiCreateMpcProjectRequest) Execute() (*MPCProject, *http.Response, erro
 /*
 CreateMpcProject Create a mpc project
 
-create a mpc project
+Create a mpc project with the provided information.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateMpcProjectRequest
@@ -453,7 +456,8 @@ func (r ApiCreateMpcVaultRequest) Execute() (*MPCVault, *http.Response, error) {
 /*
 CreateMpcVault Create a mpc vault
 
-create a mpc vault
+Create a mpc vault with the provided information.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateMpcVaultRequest
@@ -572,7 +576,8 @@ func (r ApiCreateTssRequestRequest) Execute() (*TSSRequest, *http.Response, erro
 /*
 CreateTssRequest Create a tss request to generate key secrets for a tss group
 
-Create a tss request to generate key secrets for a tss group
+Create a tss request to generate key secrets for a tss group.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -708,9 +713,10 @@ func (r ApiDeleteKeyGroupRequest) Execute() (*KeyGroup, *http.Response, error) {
 }
 
 /*
-DeleteKeyGroup delete a mpc key group
+DeleteKeyGroup Delete a mpc key group
 
-delete a mpc key group.
+Delete a key group by its unique ID.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -847,9 +853,10 @@ func (r ApiGetKeyGroupRequest) Execute() (*KeyGroup, *http.Response, error) {
 }
 
 /*
-GetKeyGroup get a mpc key group
+GetKeyGroup Get a mpc key group information by group id
 
-get a mpc key group.
+Get detailed information about a key group identified by its unique ID.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -985,9 +992,12 @@ func (r ApiGetMpcProjectRequest) Execute() (*MPCProject, *http.Response, error) 
 }
 
 /*
-GetMpcProject get a mpc project
+GetMpcProject Get a mpc project information
 
-get a mpc vault
+Get detailed information about a mpc project identified by its unique ID. 
+
+Get project ids by calling list_mpc_project.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param projectId Unique id of the mpc project
@@ -1120,9 +1130,11 @@ func (r ApiGetMpcVaultRequest) Execute() (*MPCVault, *http.Response, error) {
 }
 
 /*
-GetMpcVault get a mpc vault
+GetMpcVault Get a mpc vault information
 
-get a mpc vault
+Get detailed information about a mpc vault identified by its unique ID. 
+Get vault ids by calling list_mpc_vault.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -1256,9 +1268,11 @@ func (r ApiGetTssRequestRequest) Execute() (*TSSRequest, *http.Response, error) 
 }
 
 /*
-GetTssRequest get a tss request
+GetTssRequest Get a tss request information
 
-get a tss request.
+Get detailed information about a tss request identified by its unique ID. 
+Get project ids by calling list_tss_request.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -1395,7 +1409,7 @@ func (r ApiListCoboKeyHolderRequest) Execute() ([]KeyHolder, *http.Response, err
 /*
 ListCoboKeyHolder List all cobo key holders
 
-Retrieve a list of key holders.
+This endpoint allows users to query cobo key holders information.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListCoboKeyHolderRequest
@@ -1534,7 +1548,9 @@ func (r ApiListKeyGroupRequest) Execute() ([]KeyGroup, *http.Response, error) {
 /*
 ListKeyGroup List all mpc key groups
 
-Retrieve a list of mpc key groups.
+Retrieves a list of all key groups. 
+This endpoint allows filtering by vault ID and key group type.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -1671,7 +1687,8 @@ func (r ApiListMpcProjectRequest) Execute() ([]MPCProject, *http.Response, error
 /*
 ListMpcProject List all mpc projects
 
-Retrieve a list of mpc project.
+Retrieves a list of mpc projects.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListMpcProjectRequest
@@ -1809,7 +1826,9 @@ func (r ApiListMpcVaultRequest) Execute() ([]MPCVault, *http.Response, error) {
 /*
 ListMpcVault List all mpc vaults
 
-Retrieve a list of mpc vault.
+Retrieves a list of mpc vaults. 
+This endpoint allows filtering by project ID.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListMpcVaultRequest
@@ -1949,9 +1968,11 @@ func (r ApiListTssRequestRequest) Execute() (*TSSRequest, *http.Response, error)
 }
 
 /*
-ListTssRequest List tss request information of a vault
+ListTssRequest List tss request information by vault ID
 
-Detailed description on retrieving list of tss request information
+Retrieving list of tss request information by vault ID.
+This endpoint allows filtering by key group ID.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -2094,9 +2115,10 @@ func (r ApiModifyMpcVaultRequest) Execute() (*MPCVault, *http.Response, error) {
 }
 
 /*
-ModifyMpcVault Modify a mpc vault
+ModifyMpcVault Update a mpc vault information
 
-modify a mpc vault
+Update a mpc vault name information by its ID.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -2239,9 +2261,13 @@ func (r ApiUpdateKeyGroupRequest) Execute() (*KeyGroup, *http.Response, error) {
 }
 
 /*
-UpdateKeyGroup update a mpc key group
+UpdateKeyGroup Update a mpc key group information
 
-update a mpc key group.
+Update a mpc key group type information by its ID. 
+
+Action:
+- UpgradeToMainKeyGroup: change group type to main key group
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param vaultId Unique id of the mpc vault
@@ -2388,9 +2414,10 @@ func (r ApiUpdateMpcProjectRequest) Execute() (*MPCProject, *http.Response, erro
 }
 
 /*
-UpdateMpcProject update a mpc project
+UpdateMpcProject Update a mpc project
 
-update a mpc vault
+Update a mpc project name information by its ID.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param projectId Unique id of the mpc project

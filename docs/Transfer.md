@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **RequestType** | **string** |  | 
 **Source** | [**TransferSource**](TransferSource.md) |  | 
 **TokenId** | **string** | ID of the token. Unique in all chains scope. | 
-**Amount** | **string** | Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)  | 
 **Destination** | [**TransferDestination**](TransferDestination.md) |  | 
 **CategoryNames** | Pointer to **[]string** | The category names for transfer. | [optional] 
 **Description** | Pointer to **string** | The description for transfer. | [optional] 
@@ -18,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewTransfer
 
-`func NewTransfer(requestId string, requestType string, source TransferSource, tokenId string, amount string, destination TransferDestination, ) *Transfer`
+`func NewTransfer(requestId string, requestType string, source TransferSource, tokenId string, destination TransferDestination, ) *Transfer`
 
 NewTransfer instantiates a new Transfer object
 This constructor will assign default values to properties that have it defined,
@@ -111,26 +110,6 @@ and a boolean to check if the value has been set.
 `func (o *Transfer) SetTokenId(v string)`
 
 SetTokenId sets TokenId field to given value.
-
-
-### GetAmount
-
-`func (o *Transfer) GetAmount() string`
-
-GetAmount returns the Amount field if non-nil, zero value otherwise.
-
-### GetAmountOk
-
-`func (o *Transfer) GetAmountOk() (*string, bool)`
-
-GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAmount
-
-`func (o *Transfer) SetAmount(v string)`
-
-SetAmount sets Amount field to given value.
 
 
 ### GetDestination

@@ -18,14 +18,14 @@ import (
 // checks if the UtxoTransactionFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UtxoTransactionFee{}
 
-// UtxoTransactionFee The fee data for transaction.
+// UtxoTransactionFee The transaction fee for UTXO-based chains. The estimated fee is calculated by multiplying the fee rate by the transaction size: (fee rate * transaction size). 
 type UtxoTransactionFee struct {
-	// ID of the fee token. Unique in all chains scope.
+	// The token ID of the transaction fee. Unique in all chains scope.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The fee rate, unit sat/vB.
+	// The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
-	// The estimated fee amount in fee_coin.
-	FeeAmount *string `json:"fee_amount,omitempty"`
+	// The max fee amount in fee_coin.
+	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
 	FeeType FeeType `json:"fee_type"`
 }
 
@@ -108,36 +108,36 @@ func (o *UtxoTransactionFee) SetFeeRate(v string) {
 	o.FeeRate = v
 }
 
-// GetFeeAmount returns the FeeAmount field value if set, zero value otherwise.
-func (o *UtxoTransactionFee) GetFeeAmount() string {
-	if o == nil || IsNil(o.FeeAmount) {
+// GetMaxFeeAmount returns the MaxFeeAmount field value if set, zero value otherwise.
+func (o *UtxoTransactionFee) GetMaxFeeAmount() string {
+	if o == nil || IsNil(o.MaxFeeAmount) {
 		var ret string
 		return ret
 	}
-	return *o.FeeAmount
+	return *o.MaxFeeAmount
 }
 
-// GetFeeAmountOk returns a tuple with the FeeAmount field value if set, nil otherwise
+// GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UtxoTransactionFee) GetFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeAmount) {
+func (o *UtxoTransactionFee) GetMaxFeeAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.MaxFeeAmount) {
 		return nil, false
 	}
-	return o.FeeAmount, true
+	return o.MaxFeeAmount, true
 }
 
-// HasFeeAmount returns a boolean if a field has been set.
-func (o *UtxoTransactionFee) HasFeeAmount() bool {
-	if o != nil && !IsNil(o.FeeAmount) {
+// HasMaxFeeAmount returns a boolean if a field has been set.
+func (o *UtxoTransactionFee) HasMaxFeeAmount() bool {
+	if o != nil && !IsNil(o.MaxFeeAmount) {
 		return true
 	}
 
 	return false
 }
 
-// SetFeeAmount gets a reference to the given string and assigns it to the FeeAmount field.
-func (o *UtxoTransactionFee) SetFeeAmount(v string) {
-	o.FeeAmount = &v
+// SetMaxFeeAmount gets a reference to the given string and assigns it to the MaxFeeAmount field.
+func (o *UtxoTransactionFee) SetMaxFeeAmount(v string) {
+	o.MaxFeeAmount = &v
 }
 
 // GetFeeType returns the FeeType field value
@@ -178,8 +178,8 @@ func (o UtxoTransactionFee) ToMap() (map[string]interface{}, error) {
 		toSerialize["fee_token_id"] = o.FeeTokenId
 	}
 	toSerialize["fee_rate"] = o.FeeRate
-	if !IsNil(o.FeeAmount) {
-		toSerialize["fee_amount"] = o.FeeAmount
+	if !IsNil(o.MaxFeeAmount) {
+		toSerialize["max_fee_amount"] = o.MaxFeeAmount
 	}
 	toSerialize["fee_type"] = o.FeeType
 	return toSerialize, nil

@@ -20,7 +20,9 @@ var _ MappedNullable = &CreateCustodialWallet{}
 
 // CreateCustodialWallet struct for CreateCustodialWallet
 type CreateCustodialWallet struct {
+	// The wallet name.
 	Name string `json:"name"`
+	// The wallet type.
 	WalletType string `json:"wallet_type"`
 	WalletSubtype string `json:"wallet_subtype"`
 }

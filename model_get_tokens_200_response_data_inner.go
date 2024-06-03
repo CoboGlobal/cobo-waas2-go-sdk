@@ -20,23 +20,23 @@ var _ MappedNullable = &GetTokens200ResponseDataInner{}
 
 // GetTokens200ResponseDataInner struct for GetTokens200ResponseDataInner
 type GetTokens200ResponseDataInner struct {
-	// ID of the token. Unique in all chains scope.
+	// The token ID. Unique in all chains scope.
 	TokenId string `json:"token_id"`
 	// The blockchain on which the token operates.
 	ChainId string `json:"chain_id"`
-	// Symbol for the token.
+	// The token symbol.
 	Symbol *string `json:"symbol,omitempty"`
-	// The description of the token.
+	// The token description.
 	Description *string `json:"description,omitempty"`
-	// URL of the icon image.
+	// The URL of the token icon.
 	IconUrl *string `json:"icon_url,omitempty"`
-	// Address for token, if applicable.
+	// The token address, if applicable.
 	TokenAddress *string `json:"token_address,omitempty"`
-	// ID of the asset. Used to group token balance when needed.
+	// The asset ID, which is used to group the balances of the correponding tokens. For example, if you have $1,000 worth of ETH_USDT and $2,000 worth of TRON_USDT, the balance of your USDT assets will be $3,000.
 	AssetId *string `json:"asset_id,omitempty"`
-	// Ture if the token can be deposited, False otherwise
+	// Whether the token can be deposited.  - `true`: The token can be deposited.  - `false`: The token cannot be deposited. 
 	CanDeposit *bool `json:"can_deposit,omitempty"`
-	// Ture if the token can be withdrawn, False otherwise
+	// Whether the token can be withdrawn.  - `true`: The token can be withdrawn.  - `false`: The token cannot be withdrawn. 
 	CanWithdraw *bool `json:"can_withdraw,omitempty"`
 }
 

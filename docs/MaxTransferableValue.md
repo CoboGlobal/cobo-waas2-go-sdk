@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | Pointer to **string** | token name. | [optional] 
-**MaxSendValue** | Pointer to **string** | the maximum sendable value for the given address or current wallet. | [optional] 
+**TokenId** | Pointer to **string** | The token name. | [optional] 
+**MaxTransferableValue** | Pointer to **string** | the maximum transferable value for the given address or current wallet. | [optional] 
 **Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
 
 ## Methods
@@ -52,30 +52,30 @@ SetTokenId sets TokenId field to given value.
 
 HasTokenId returns a boolean if a field has been set.
 
-### GetMaxSendValue
+### GetMaxTransferableValue
 
-`func (o *MaxTransferableValue) GetMaxSendValue() string`
+`func (o *MaxTransferableValue) GetMaxTransferableValue() string`
 
-GetMaxSendValue returns the MaxSendValue field if non-nil, zero value otherwise.
+GetMaxTransferableValue returns the MaxTransferableValue field if non-nil, zero value otherwise.
 
-### GetMaxSendValueOk
+### GetMaxTransferableValueOk
 
-`func (o *MaxTransferableValue) GetMaxSendValueOk() (*string, bool)`
+`func (o *MaxTransferableValue) GetMaxTransferableValueOk() (*string, bool)`
 
-GetMaxSendValueOk returns a tuple with the MaxSendValue field if it's non-nil, zero value otherwise
+GetMaxTransferableValueOk returns a tuple with the MaxTransferableValue field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMaxSendValue
+### SetMaxTransferableValue
 
-`func (o *MaxTransferableValue) SetMaxSendValue(v string)`
+`func (o *MaxTransferableValue) SetMaxTransferableValue(v string)`
 
-SetMaxSendValue sets MaxSendValue field to given value.
+SetMaxTransferableValue sets MaxTransferableValue field to given value.
 
-### HasMaxSendValue
+### HasMaxTransferableValue
 
-`func (o *MaxTransferableValue) HasMaxSendValue() bool`
+`func (o *MaxTransferableValue) HasMaxTransferableValue() bool`
 
-HasMaxSendValue returns a boolean if a field has been set.
+HasMaxTransferableValue returns a boolean if a field has been set.
 
 ### GetFee
 

@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// ExchangeId The exchange identifier.
+// ExchangeId The ID of the exchange.
 type ExchangeId string
 
 // List of ExchangeId

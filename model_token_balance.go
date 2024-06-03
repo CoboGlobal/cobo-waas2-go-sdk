@@ -18,9 +18,9 @@ import (
 // checks if the TokenBalance type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TokenBalance{}
 
-// TokenBalance The data for token balance information.
+// TokenBalance The balance information.
 type TokenBalance struct {
-	// ID of the token. Unique in all chains scope.
+	// The token ID.
 	TokenId string `json:"token_id"`
 	Balance TokenBalanceBalance `json:"balance"`
 }

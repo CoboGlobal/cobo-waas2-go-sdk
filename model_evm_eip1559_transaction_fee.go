@@ -18,20 +18,16 @@ import (
 // checks if the EvmEip1559TransactionFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEip1559TransactionFee{}
 
-// EvmEip1559TransactionFee The fee data for transaction.
+// EvmEip1559TransactionFee The transaction fee when using the EIP 1559 method. The estimated fee is calculated by multiplying the max fee by the gas limit: (max fee * gas limit). 
 type EvmEip1559TransactionFee struct {
-	// ID of the fee token. Unique in all chains scope.
+	// The token ID of the transaction fee. Unique in all chains scope.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The highest Gas price paid for the transfer, unit GWei.
-	MaxFee string `json:"max_fee"`
-	// The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei.
+	// The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction.
 	MaxPriorityFee string `json:"max_priority_fee"`
-	// The Base Fee of chain.
+	// The base fee of chain.
 	BaseFee string `json:"base_fee"`
-	// The Limit of gas.
+	// The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units.
 	GasLimit *string `json:"gas_limit,omitempty"`
-	// The estimated fee amount in fee_coin.
-	FeeAmount *string `json:"fee_amount,omitempty"`
 	FeeType FeeType `json:"fee_type"`
 }
 
@@ -41,9 +37,8 @@ type _EvmEip1559TransactionFee EvmEip1559TransactionFee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmEip1559TransactionFee(maxFee string, maxPriorityFee string, baseFee string, feeType FeeType) *EvmEip1559TransactionFee {
+func NewEvmEip1559TransactionFee(maxPriorityFee string, baseFee string, feeType FeeType) *EvmEip1559TransactionFee {
 	this := EvmEip1559TransactionFee{}
-	this.MaxFee = maxFee
 	this.MaxPriorityFee = maxPriorityFee
 	this.BaseFee = baseFee
 	var gasLimit string = "21000"
@@ -94,30 +89,6 @@ func (o *EvmEip1559TransactionFee) HasFeeTokenId() bool {
 // SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
 func (o *EvmEip1559TransactionFee) SetFeeTokenId(v string) {
 	o.FeeTokenId = &v
-}
-
-// GetMaxFee returns the MaxFee field value
-func (o *EvmEip1559TransactionFee) GetMaxFee() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.MaxFee
-}
-
-// GetMaxFeeOk returns a tuple with the MaxFee field value
-// and a boolean to check if the value has been set.
-func (o *EvmEip1559TransactionFee) GetMaxFeeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.MaxFee, true
-}
-
-// SetMaxFee sets field value
-func (o *EvmEip1559TransactionFee) SetMaxFee(v string) {
-	o.MaxFee = v
 }
 
 // GetMaxPriorityFee returns the MaxPriorityFee field value
@@ -200,38 +171,6 @@ func (o *EvmEip1559TransactionFee) SetGasLimit(v string) {
 	o.GasLimit = &v
 }
 
-// GetFeeAmount returns the FeeAmount field value if set, zero value otherwise.
-func (o *EvmEip1559TransactionFee) GetFeeAmount() string {
-	if o == nil || IsNil(o.FeeAmount) {
-		var ret string
-		return ret
-	}
-	return *o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmEip1559TransactionFee) GetFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeAmount) {
-		return nil, false
-	}
-	return o.FeeAmount, true
-}
-
-// HasFeeAmount returns a boolean if a field has been set.
-func (o *EvmEip1559TransactionFee) HasFeeAmount() bool {
-	if o != nil && !IsNil(o.FeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeAmount gets a reference to the given string and assigns it to the FeeAmount field.
-func (o *EvmEip1559TransactionFee) SetFeeAmount(v string) {
-	o.FeeAmount = &v
-}
-
 // GetFeeType returns the FeeType field value
 func (o *EvmEip1559TransactionFee) GetFeeType() FeeType {
 	if o == nil {
@@ -269,14 +208,10 @@ func (o EvmEip1559TransactionFee) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.FeeTokenId) {
 		toSerialize["fee_token_id"] = o.FeeTokenId
 	}
-	toSerialize["max_fee"] = o.MaxFee
 	toSerialize["max_priority_fee"] = o.MaxPriorityFee
 	toSerialize["base_fee"] = o.BaseFee
 	if !IsNil(o.GasLimit) {
 		toSerialize["gas_limit"] = o.GasLimit
-	}
-	if !IsNil(o.FeeAmount) {
-		toSerialize["fee_amount"] = o.FeeAmount
 	}
 	toSerialize["fee_type"] = o.FeeType
 	return toSerialize, nil
@@ -287,7 +222,6 @@ func (o *EvmEip1559TransactionFee) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"max_fee",
 		"max_priority_fee",
 		"base_fee",
 		"fee_type",

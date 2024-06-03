@@ -6,12 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | **string** | Unique id of the request. | 
 **RequestType** | **string** |  | 
-**FromWalletId** | Pointer to **string** | Unique id of the wallet to sign message. | [optional] 
-**FromAddressStr** | Pointer to **string** | signing address | [optional] 
 **ChainId** | **string** | The blockchain on which the token operates. | 
-**Message** | Pointer to **string** | Raw data to be signed, Base 64 encoded | [optional] 
-**StructuredData** | Pointer to **string** | Structured data to be signed, JSON encoded | [optional] 
-**MpcUsedKeyGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
+**Source** | Pointer to [**SignMessageSource**](SignMessageSource.md) |  | [optional] 
+**Destination** | Pointer to [**SignMessageDestination**](SignMessageDestination.md) |  | [optional] 
 
 ## Methods
 
@@ -72,56 +69,6 @@ and a boolean to check if the value has been set.
 SetRequestType sets RequestType field to given value.
 
 
-### GetFromWalletId
-
-`func (o *SignMessage) GetFromWalletId() string`
-
-GetFromWalletId returns the FromWalletId field if non-nil, zero value otherwise.
-
-### GetFromWalletIdOk
-
-`func (o *SignMessage) GetFromWalletIdOk() (*string, bool)`
-
-GetFromWalletIdOk returns a tuple with the FromWalletId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromWalletId
-
-`func (o *SignMessage) SetFromWalletId(v string)`
-
-SetFromWalletId sets FromWalletId field to given value.
-
-### HasFromWalletId
-
-`func (o *SignMessage) HasFromWalletId() bool`
-
-HasFromWalletId returns a boolean if a field has been set.
-
-### GetFromAddressStr
-
-`func (o *SignMessage) GetFromAddressStr() string`
-
-GetFromAddressStr returns the FromAddressStr field if non-nil, zero value otherwise.
-
-### GetFromAddressStrOk
-
-`func (o *SignMessage) GetFromAddressStrOk() (*string, bool)`
-
-GetFromAddressStrOk returns a tuple with the FromAddressStr field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromAddressStr
-
-`func (o *SignMessage) SetFromAddressStr(v string)`
-
-SetFromAddressStr sets FromAddressStr field to given value.
-
-### HasFromAddressStr
-
-`func (o *SignMessage) HasFromAddressStr() bool`
-
-HasFromAddressStr returns a boolean if a field has been set.
-
 ### GetChainId
 
 `func (o *SignMessage) GetChainId() string`
@@ -142,80 +89,55 @@ and a boolean to check if the value has been set.
 SetChainId sets ChainId field to given value.
 
 
-### GetMessage
+### GetSource
 
-`func (o *SignMessage) GetMessage() string`
+`func (o *SignMessage) GetSource() SignMessageSource`
 
-GetMessage returns the Message field if non-nil, zero value otherwise.
+GetSource returns the Source field if non-nil, zero value otherwise.
 
-### GetMessageOk
+### GetSourceOk
 
-`func (o *SignMessage) GetMessageOk() (*string, bool)`
+`func (o *SignMessage) GetSourceOk() (*SignMessageSource, bool)`
 
-GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
+GetSourceOk returns a tuple with the Source field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMessage
+### SetSource
 
-`func (o *SignMessage) SetMessage(v string)`
+`func (o *SignMessage) SetSource(v SignMessageSource)`
 
-SetMessage sets Message field to given value.
+SetSource sets Source field to given value.
 
-### HasMessage
+### HasSource
 
-`func (o *SignMessage) HasMessage() bool`
+`func (o *SignMessage) HasSource() bool`
 
-HasMessage returns a boolean if a field has been set.
+HasSource returns a boolean if a field has been set.
 
-### GetStructuredData
+### GetDestination
 
-`func (o *SignMessage) GetStructuredData() string`
+`func (o *SignMessage) GetDestination() SignMessageDestination`
 
-GetStructuredData returns the StructuredData field if non-nil, zero value otherwise.
+GetDestination returns the Destination field if non-nil, zero value otherwise.
 
-### GetStructuredDataOk
+### GetDestinationOk
 
-`func (o *SignMessage) GetStructuredDataOk() (*string, bool)`
+`func (o *SignMessage) GetDestinationOk() (*SignMessageDestination, bool)`
 
-GetStructuredDataOk returns a tuple with the StructuredData field if it's non-nil, zero value otherwise
+GetDestinationOk returns a tuple with the Destination field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStructuredData
+### SetDestination
 
-`func (o *SignMessage) SetStructuredData(v string)`
+`func (o *SignMessage) SetDestination(v SignMessageDestination)`
 
-SetStructuredData sets StructuredData field to given value.
+SetDestination sets Destination field to given value.
 
-### HasStructuredData
+### HasDestination
 
-`func (o *SignMessage) HasStructuredData() bool`
+`func (o *SignMessage) HasDestination() bool`
 
-HasStructuredData returns a boolean if a field has been set.
-
-### GetMpcUsedKeyGroup
-
-`func (o *SignMessage) GetMpcUsedKeyGroup() MpcSigningGroup`
-
-GetMpcUsedKeyGroup returns the MpcUsedKeyGroup field if non-nil, zero value otherwise.
-
-### GetMpcUsedKeyGroupOk
-
-`func (o *SignMessage) GetMpcUsedKeyGroupOk() (*MpcSigningGroup, bool)`
-
-GetMpcUsedKeyGroupOk returns a tuple with the MpcUsedKeyGroup field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMpcUsedKeyGroup
-
-`func (o *SignMessage) SetMpcUsedKeyGroup(v MpcSigningGroup)`
-
-SetMpcUsedKeyGroup sets MpcUsedKeyGroup field to given value.
-
-### HasMpcUsedKeyGroup
-
-`func (o *SignMessage) HasMpcUsedKeyGroup() bool`
-
-HasMpcUsedKeyGroup returns a boolean if a field has been set.
+HasDestination returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

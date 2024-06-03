@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WalletId** | **string** |  | 
+**WalletId** | **string** | The wallet ID. | 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
-**Name** | **string** |  | 
-**OrgId** | **string** | The owning custody organization id of the custodial wallet. | 
-**ChainId** | Pointer to **string** | The chain the wallet is on. | [optional] 
-**Label** | Pointer to **string** | The label of the wallet. | [optional] 
+**Name** | **string** | The wallet name. | 
+**OrgId** | **string** | The ID of the owning organization. | 
+**ChainId** | Pointer to **string** | The chain the wallet operates on. | [optional] 
+**Label** | Pointer to **string** | The wallet label. | [optional] 
 **SmartContractWalletType** | [**SmartContractWalletType**](SmartContractWalletType.md) |  | [default to SMARTCONTRACTWALLETTYPE_SAFE_WALLET]
-**SafeAddress** | Pointer to **string** | The address of the smart contract wallet. | [optional] 
-**Owners** | Pointer to **[]string** | The owners of the smart contract wallet. This MUST be provided when user want to create a new safe wallet. | [optional] 
-**Threshold** | Pointer to **int32** | The threshold of required confirmations for the smart contract wallet. This MUST be provided when user want to create a new safe wallet. | [optional] 
-**CoboSafeAddress** | Pointer to **string** | The address of the cobo safe module. | [optional] 
+**SafeAddress** | Pointer to **string** | The Smart Contract Wallet address. | [optional] 
+**Owners** | Pointer to **[]string** | The owners of the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}. | [optional] 
+**Threshold** | Pointer to **int32** | The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.  | [optional] 
+**CoboSafeAddress** | Pointer to **string** | The address of Cobo Safe. | [optional] 
 **Initiator** | Pointer to [**SafeWalletAllOfInitiator**](SafeWalletAllOfInitiator.md) |  | [optional] 
 
 ## Methods

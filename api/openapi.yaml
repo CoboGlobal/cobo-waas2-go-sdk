@@ -93,19 +93,12 @@ tags:
 paths:
   /wallets/chains:
     get:
-      description: |
-        This endpoint retrieves metadata for available blockchain chains.
-        It provides details such as chain_id, name, and other relevant information.
-        Pagination parameters can be used to manage the size of the response.
-        The chain list is publicly accessible without any permission restrictions.
-
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+      description: "This operation retrieves the metadata of available chains. \n\n\
+        It provides details such as chain ID, chain name, and other relevant information.\
+        \ The chain metadata is publicly available without any permission restrictions.\n"
       operationId: get_chains
       parameters:
-      - description: Unique id of the chain
+      - description: The chain ID.
         example: ETH
         explode: true
         in: query
@@ -156,7 +149,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_chains_200_response'
-          description: Successfully listed chains
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -172,18 +165,12 @@ paths:
   /wallets/tokens:
     get:
       description: |
-        This endpoint retrieves metadata for tokens stored in the wallet system.
-        It provides details such as token_id, symbol, and other relevant information.
-        Pagination parameters can be used to manage the size of the response.
-        The token list is publicly accessible without any permission restrictions.
+        This operation retrieves the metadata of the tokens stored under your account.
 
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+        It provides details such as token ID, token symbol, and other relevant information. The token metadata is publicly available without any permission restrictions.
       operationId: get_tokens
       parameters:
-      - description: Unique id of the token
+      - description: The token ID.
         example: ETH_USDT
         explode: true
         in: query
@@ -234,7 +221,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_tokens_200_response'
-          description: Successfully listed tokens
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -249,14 +236,20 @@ paths:
       - Wallets
   /wallets/supported_chains:
     get:
-      description: "This endpoint allows users to query supported chains based on\
-        \ wallet type and subtype. \nPagination parameters can be used to manage the\
-        \ response size.\nWallet type/subtype are enumerations as described in parameters.\n\
-        \nError codes this API may return:\n  | Error Code | Description |\n  | --\
-        \ | -- |\n  | `2006` | 参数格式或者值非法 |\n"
+      description: |
+        This operation retrieves all supported chains for the organization associated with your API key. You can also specify the wallet type and subtype you want to query.
       operationId: get_supported_chains
       parameters:
-      - description: Wallet type to query
+      - description: |
+          The wallet type.
+
+          - `Custodial`: Custodial Wallets
+
+          - `MPC`: MPC Wallets
+
+          - `SmartContract`: Smart Contract Wallets
+
+          - `Exchange`: Exchange Wallets
         explode: true
         in: query
         name: wallet_type
@@ -264,7 +257,12 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: Wallet subtype to query
+      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
+          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
+          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
+          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
+          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
+          \ Wallets (Safe{Wallet})\n"
         explode: true
         in: query
         name: wallet_subtype
@@ -314,7 +312,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_chains_200_response'
-          description: Successfully listed chains
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -330,18 +328,21 @@ paths:
   /wallets/supported_tokens:
     get:
       description: |
-        This endpoint allows users to query supported tokens based on wallet type, subtype, and chain ID if specified.
-        Pagination parameters can be used to manage the response size.
-        Wallet type/subtype are enumerations as described in parameters.
-        Chain_id can be get via List supported chains.
+        This operation retrieves all supported tokens for the organization associated with your API key. You can also specify the wallet type, subtype, and chain ID you want to query.
 
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+        You can retrieve chain IDs by using the [List supported chains](/api-references/v2/wallets/list-supported-chains) operation.
       operationId: get_supported_tokens
       parameters:
-      - description: Wallet type to query
+      - description: |
+          The wallet type.
+
+          - `Custodial`: Custodial Wallets
+
+          - `MPC`: MPC Wallets
+
+          - `SmartContract`: Smart Contract Wallets
+
+          - `Exchange`: Exchange Wallets
         explode: true
         in: query
         name: wallet_type
@@ -349,7 +350,12 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: Wallet subtype to query
+      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
+          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
+          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
+          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
+          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
+          \ Wallets (Safe{Wallet})\n"
         explode: true
         in: query
         name: wallet_subtype
@@ -357,7 +363,7 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletSubtype'
         style: form
-      - description: Unique id of the chain
+      - description: The chain ID.
         example: ETH
         explode: true
         in: query
@@ -408,7 +414,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_tokens_200_response'
-          description: Successfully listed tokens
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -423,15 +429,20 @@ paths:
       - Wallets
   /wallets/enabled_chains:
     get:
-      description: "This endpoint allows users to query enabled chains based on wallet\
-        \ type and subtype \nfor the organization associated with the API key.\nPagination\
-        \ parameters can be used to manage the response size.\nWallet type/subtype\
-        \ are enumerations as described in parameters.\n\nError codes this API may\
-        \ return:\n  | Error Code | Description |\n  | -- | -- |\n  | `2006` | 参数格\
-        式或者值非法 |\n"
+      description: |
+        This operation retrieves all the chains enabled for the organization associated with your API key. You can also specify the wallet type and subtype you want to query.
       operationId: get_enabled_chains
       parameters:
-      - description: Wallet type to query
+      - description: |
+          The wallet type.
+
+          - `Custodial`: Custodial Wallets
+
+          - `MPC`: MPC Wallets
+
+          - `SmartContract`: Smart Contract Wallets
+
+          - `Exchange`: Exchange Wallets
         explode: true
         in: query
         name: wallet_type
@@ -439,7 +450,12 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: Wallet subtype to query
+      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
+          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
+          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
+          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
+          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
+          \ Wallets (Safe{Wallet})\n"
         explode: true
         in: query
         name: wallet_subtype
@@ -489,7 +505,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_chains_200_response'
-          description: Successfully listed chains
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -504,15 +520,23 @@ paths:
       - Wallets
   /wallets/enabled_tokens:
     get:
-      description: "This endpoint allows users to query enabled tokens based on wallet\
-        \ type, subtype, \nand chain ID if specified for the organization associated\
-        \ with the API key.\nPagination parameters can be used to manage the response\
-        \ size.\nWallet type/subtype are enumerations as described in parameters.\n\
-        Chain_id can be get via List enabled chains.\n\nError codes this API may return:\n\
-        \  | Error Code | Description |\n  | -- | -- |\n  | `2006` | 参数格式或者值非法 |\n"
+      description: |2
+
+        This operation retrieves all the tokens enabled for the organization associated with your API key. You can also specify the wallet type, subtype, and chain ID you want to query.
+
+        You can retrieve chain IDs by using the [List enabled chains](/api-references/v2/wallets/list-enabled-chains) operation.
       operationId: get_enabled_tokens
       parameters:
-      - description: Wallet type to query
+      - description: |
+          The wallet type.
+
+          - `Custodial`: Custodial Wallets
+
+          - `MPC`: MPC Wallets
+
+          - `SmartContract`: Smart Contract Wallets
+
+          - `Exchange`: Exchange Wallets
         explode: true
         in: query
         name: wallet_type
@@ -520,7 +544,12 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: Wallet subtype to query
+      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
+          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
+          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
+          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
+          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
+          \ Wallets (Safe{Wallet})\n"
         explode: true
         in: query
         name: wallet_subtype
@@ -528,7 +557,7 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletSubtype'
         style: form
-      - description: Unique id of the chain
+      - description: The chain ID.
         example: ETH
         explode: true
         in: query
@@ -579,7 +608,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_tokens_200_response'
-          description: Successfully listed tokens
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -595,17 +624,21 @@ paths:
   /wallets:
     get:
       description: |
-        Retrieves a list of all wallets.
+        Retrieves the information of all wallets under your organization.
 
         This endpoint allows filtering by wallet type, subtype, and MPC vault ID (if applicable).
-
-        Error codes this API may return:
-              | Error Code | Description |
-              | -- | -- |
-              | `2006` | 参数格式或者值非法 |
       operationId: list_wallets
       parameters:
-      - description: Wallet type to query
+      - description: |
+          The wallet type.
+
+          - `Custodial`: Custodial Wallets
+
+          - `MPC`: MPC Wallets
+
+          - `SmartContract`: Smart Contract Wallets
+
+          - `Exchange`: Exchange Wallets
         explode: true
         in: query
         name: wallet_type
@@ -613,7 +646,12 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: Wallet subtype to query
+      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
+          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
+          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
+          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
+          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
+          \ Wallets (Safe{Wallet})\n"
         explode: true
         in: query
         name: wallet_subtype
@@ -621,7 +659,7 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletSubtype'
         style: form
-      - description: Unique id of the mpc vault
+      - description: The MPC Vault ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: true
         in: query
@@ -700,13 +738,7 @@ paths:
       - Wallets
     post:
       description: |
-        Creates a new wallet with the provided information.
-
-        Error codes this API may return:
-        | Error Code | Description |
-        | -- | -- |
-        | `2003` | 必选参数缺失 |
-        | `2006` | 参数格式或者值非法 |
+        This operation creates a wallet with the provided information.
       operationId: create_wallet
       requestBody:
         $ref: '#/components/requestBodies/createWalletBody'
@@ -745,22 +777,17 @@ paths:
           description: Too many requests.
       security:
       - CoboAuth: []
-      summary: Create new wallet
+      summary: Create wallet
       tags:
       - Wallets
   /wallets/{wallet_id}:
     delete:
       description: |
-        Deletes a specific wallet identified by its ID.
-        This endpoint is supported by Exchange wallets only.
-
-        Error codes this API may return:
-        | Error Code | Description |
-        | -- | -- |
-        | `2006` | 参数格式或者值非法 |
+        This operation deletes the specified wallet.
+        <Note>This operation is applicable to Exchange Wallets only.</Note>
       operationId: delete_wallet_by_id
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -772,7 +799,7 @@ paths:
         style: simple
       responses:
         "204":
-          description: Resource successfully deleted
+          description: Resource successfully deleted.
         "400":
           content:
             application/json:
@@ -793,15 +820,10 @@ paths:
       - Wallets
     get:
       description: |
-        Retrieves detailed information about a wallet identified by its unique ID.
-
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+        This operation retrieves detailed information about the specified wallet.
       operationId: get_wallet_by_id
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -838,16 +860,12 @@ paths:
       - Wallets
     put:
       description: |
-        Updates information for a specific wallet identified by its ID.
-        This endpoint is supported by Exchange wallets only.
+        This operation updates the information of a specified wallet.
 
-        Error codes this API may return:
-        | Error Code | Description |
-        | -- | -- |
-        | `2006` | 参数格式或者值非法 |
+        <Note>This operation is applicable to Exchange Wallets only.</Note>
       operationId: update_wallet_by_id
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -887,16 +905,10 @@ paths:
   /wallets/{wallet_id}/spendables:
     get:
       description: |
-        Retrieves a list of spendable unspent transaction outputs (UTXOs) for a given wallet and token.
-        This endpoint allows users to query UTXOs that can be spent in transactions.
-
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+        The operation retrieves a list of spendable unspent transaction outputs (UTXOs) for the specified wallet and token.
       operationId: get_spendable_list
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -906,22 +918,33 @@ paths:
           format: uuid
           type: string
         style: simple
-      - description: Unique id of the token
+      - description: The token ID.
         example: ETH_USDT
         explode: true
         in: query
         name: token_id
-        required: true
+        required: false
         schema:
           type: string
         style: form
-      - description: address
+      - description: The wallet address.
         example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         explode: true
         in: query
         name: address_str
         required: false
         schema:
+          description: The wallet address.
+          type: string
+        style: form
+      - description: Transaction hash of the UTXO.
+        example: dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83
+        explode: true
+        in: query
+        name: tx_hash
+        required: true
+        schema:
+          description: Transaction hash of the UTXO.
           type: string
         style: form
       responses:
@@ -932,7 +955,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/UTXO'
                 type: array
-          description: Successfully listed utxo
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -945,20 +968,13 @@ paths:
       summary: List spendable UTXOs
       tags:
       - Wallets
-  /wallets/{wallet_id}/max_transferable_value:
-    get:
+  /wallets/{wallet_id}/spendables/lock:
+    post:
       description: |
-        Retrieves the maximum transferable value and the corresponding transaction fee for a given address.
-        This endpoint allows users to determine the maximum amount that can be transferred from a wallet address,
-        along with the associated transaction fee.
-
-        Error codes this API may return:
-            | Error Code | Description |
-            | -- | -- |
-            | `2006` | 参数格式或者值非法 |
-      operationId: get_max_transferable_value
+        Lock/Unlock the UTXOs in the given tx hash list. The Locked UTXO can not be transferred until unlocked.
+      operationId: lock_spendable_list
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -968,7 +984,44 @@ paths:
           format: uuid
           type: string
         style: simple
-      - description: address
+      requestBody:
+        $ref: '#/components/requestBodies/lockSpendablesBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lock_spendable_list_200_response'
+          description: The request was successful.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+      security:
+      - CoboAuth: []
+      summary: Lock/Unlock the UTXOs in tx hash list
+      tags:
+      - Wallets
+  /wallets/{wallet_id}/max_transferable_value:
+    get:
+      description: |
+        This operation retrieves the maximum amount that you can transfer from a wallet address, along with the corresponding transaction fee.
+      operationId: get_max_transferable_value
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: The recipient's address.
         example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         explode: true
         in: query
@@ -977,7 +1030,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: address
+      - description: The sender's address.
         example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         explode: true
         in: query
@@ -992,7 +1045,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MaxTransferableValue'
-          description: Successful operation
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -1008,15 +1061,10 @@ paths:
   /wallets/{wallet_id}/addresses:
     get:
       description: |
-        Retrieve a list of addresses associated with a wallet.
-
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+        This operation retrieves a list of addresses under the specified wallet.
       operationId: list_addresses
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -1026,7 +1074,7 @@ paths:
           format: uuid
           type: string
         style: simple
-      - description: Unique id of the token
+      - description: The token ID.
         example: ETH_USDT
         explode: true
         in: query
@@ -1035,13 +1083,14 @@ paths:
         schema:
           type: string
         style: form
-      - description: address
+      - description: The wallet address.
         example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         explode: true
         in: query
         name: address_str
         required: false
         schema:
+          description: The wallet address.
           type: string
         style: form
       - description: "The maximum number of objects to return. The value range is\
@@ -1101,15 +1150,10 @@ paths:
       - Wallets
     post:
       description: |
-        Add an address to a wallet.
-
-        Error codes this API may return:
-        | Error Code | Description |
-        | -- | -- |
-        | `2006` | 参数格式或者值非法 |
+        This operation creates one or more addresses for the specified wallet.
       operationId: add_wallet_address
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -1129,7 +1173,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/AddressInfo'
                 type: array
-          description: Successfully created address for a wallet
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -1145,14 +1189,10 @@ paths:
   /wallets/address/validity:
     get:
       description: |
-        Verifies if the given address is valid for the specified token.
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+        This operation verifies if the given address is valid for the specified token.
       operationId: get_address_validity
       parameters:
-      - description: Unique id of the token
+      - description: The token ID.
         example: ETH_USDT
         explode: true
         in: query
@@ -1161,14 +1201,14 @@ paths:
         schema:
           type: string
         style: form
-      - description: The address string
+      - description: The wallet address.
         example: 0x0000000000000000000000000000000000000000
         explode: true
         in: query
         name: address_str
         required: true
         schema:
-          description: Then blockchain address
+          description: The wallet address.
           type: string
         style: form
       responses:
@@ -1177,7 +1217,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_address_validity_200_response'
-          description: Successfully get address validity
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -1193,18 +1233,11 @@ paths:
   /wallets/{wallet_id}/tokens:
     get:
       description: |
-        Retrieves a list of token balances within a wallet.
-        This endpoint allows users to query token balances based on the wallet ID and optionally token ID.
-        Pagination parameters can be used to manage the response size.
-        This endpoint is supported by Custodial/MPC wallets.
-
-        Error codes this API may return:
-          | Error Code | Description |
-          | -- | -- |
-          | `2006` | 参数格式或者值非法 |
+        The operation retrieves a list of token balances within the specified wallet.
+        <Note>This operation is applicable to Custodial Wallets and MPC Wallets only.</Note>
       operationId: get_wallet_token_balances
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -1214,7 +1247,7 @@ paths:
           format: uuid
           type: string
         style: simple
-      - description: Unique id of the token
+      - description: The token ID.
         example: ETH_USDT
         explode: true
         in: query
@@ -1265,7 +1298,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_wallet_token_balances_200_response'
-          description: Successfully listed tokens
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -1281,24 +1314,16 @@ paths:
           description: Resource not found.
       security:
       - CoboAuth: []
-      summary: List Token Balances in Wallet
+      summary: List token balances by wallet
       tags:
       - Wallets
   /wallets/{wallet_id}/addresses/{address_id}/tokens:
     get:
       description: |
-        Retrieves a list of token balances for a specific address within a wallet.
-        This endpoint allows users to query token balances based on the wallet ID, address ID, and optionally token ID.
-        Pagination parameters can be used to manage the response size.
-        This endpoint is supported by MPC wallets.
-
-        Error codes this API may return:
-            | Error Code | Description |
-            | -- | -- |
-            | `2006` | 参数格式或者值非法 |
+        The operation retrieves a list of token balances for a specified address within an MPC Wallet.
       operationId: get_wallet_address_token_balances
       parameters:
-      - description: Unique id of the wallet
+      - description: The wallet ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -1308,7 +1333,7 @@ paths:
           format: uuid
           type: string
         style: simple
-      - description: Unique id of the address
+      - description: The address ID.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -1318,7 +1343,7 @@ paths:
           format: uuid
           type: string
         style: simple
-      - description: Unique id of the token
+      - description: The token ID.
         example: ETH_USDT
         explode: true
         in: query
@@ -1369,7 +1394,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_wallet_token_balances_200_response'
-          description: Successfully listed tokens
+          description: The request was successful.
         "400":
           content:
             application/json:
@@ -1379,12 +1404,12 @@ paths:
             parameters.
       security:
       - CoboAuth: []
-      summary: List Token Balances by Address in Wallet
+      summary: List token balances by address
       tags:
       - Wallets
   /wallets/mpc/cobo_key_holders:
     get:
-      description: Retrieve a list of key holders.
+      description: This endpoint allows users to query cobo key holders information.
       operationId: list_cobo_key_holder
       responses:
         "200":
@@ -1421,7 +1446,8 @@ paths:
       - Wallets - MPC Wallet
   /wallets/mpc/projects:
     get:
-      description: Retrieve a list of mpc project.
+      description: |
+        Retrieves a list of mpc projects.
       operationId: list_mpc_project
       responses:
         "200":
@@ -1457,7 +1483,8 @@ paths:
       tags:
       - Wallets - MPC Wallet
     post:
-      description: create a mpc project
+      description: |
+        Create a mpc project with the provided information.
       operationId: create_mpc_project
       requestBody:
         $ref: '#/components/requestBodies/createMpcProjectBody'
@@ -1482,7 +1509,8 @@ paths:
       - Wallets - MPC Wallet
   /wallets/mpc/projects/{project_id}:
     get:
-      description: get a mpc vault
+      description: "Get detailed information about a mpc project identified by its\
+        \ unique ID. \n\nGet project ids by calling list_mpc_project.\n"
       operationId: get_mpc_project
       parameters:
       - description: Unique id of the mpc project
@@ -1523,11 +1551,12 @@ paths:
           description: Unknown internal error.
       security:
       - CoboAuth: []
-      summary: get a mpc project
+      summary: Get a mpc project information
       tags:
       - Wallets - MPC Wallet
     put:
-      description: update a mpc vault
+      description: |
+        Update a mpc project name information by its ID.
       operationId: update_mpc_project
       parameters:
       - description: Unique id of the mpc project
@@ -1570,12 +1599,13 @@ paths:
           description: Unknown internal error.
       security:
       - CoboAuth: []
-      summary: update a mpc project
+      summary: Update a mpc project
       tags:
       - Wallets - MPC Wallet
   /wallets/mpc/vaults:
     get:
-      description: Retrieve a list of mpc vault.
+      description: "Retrieves a list of mpc vaults. \nThis endpoint allows filtering\
+        \ by project ID.\n"
       operationId: list_mpc_vault
       parameters:
       - description: Unique id of the mpc project
@@ -1622,7 +1652,8 @@ paths:
       tags:
       - Wallets - MPC Wallet
     post:
-      description: create a mpc vault
+      description: |
+        Create a mpc vault with the provided information.
       operationId: create_mpc_vault
       requestBody:
         $ref: '#/components/requestBodies/createMpcVaultBody'
@@ -1647,7 +1678,8 @@ paths:
       - Wallets - MPC Wallet
   /wallets/mpc/vaults/{vault_id}:
     get:
-      description: get a mpc vault
+      description: "Get detailed information about a mpc vault identified by its unique\
+        \ ID. \nGet vault ids by calling list_mpc_vault.\n"
       operationId: get_mpc_vault
       parameters:
       - description: Unique id of the mpc vault
@@ -1688,11 +1720,12 @@ paths:
           description: Unknown internal error.
       security:
       - CoboAuth: []
-      summary: get a mpc vault
+      summary: Get a mpc vault information
       tags:
       - Wallets - MPC Wallet
     put:
-      description: modify a mpc vault
+      description: |
+        Update a mpc vault name information by its ID.
       operationId: modify_mpc_vault
       parameters:
       - description: Unique id of the mpc vault
@@ -1735,12 +1768,13 @@ paths:
           description: Too many requests.
       security:
       - CoboAuth: []
-      summary: Modify a mpc vault
+      summary: Update a mpc vault information
       tags:
       - Wallets - MPC Wallet
   /wallets/mpc/vaults/{vault_id}/key_groups:
     get:
-      description: Retrieve a list of mpc key groups.
+      description: "Retrieves a list of all key groups. \nThis endpoint allows filtering\
+        \ by vault ID and key group type.\n"
       operationId: list_key_group
       parameters:
       - description: Unique id of the mpc vault
@@ -1795,7 +1829,8 @@ paths:
       tags:
       - Wallets - MPC Wallet
     post:
-      description: create a mpc key group.
+      description: |
+        Create a mpc key group for vault ID with the provided information.
       operationId: create_key_group
       parameters:
       - description: Unique id of the mpc vault
@@ -1838,12 +1873,13 @@ paths:
           description: Too many requests.
       security:
       - CoboAuth: []
-      summary: create a mpc key group
+      summary: Create a mpc key group
       tags:
       - Wallets - MPC Wallet
   /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id}:
     delete:
-      description: delete a mpc key group.
+      description: |
+        Delete a key group by its unique ID.
       operationId: delete_key_group
       parameters:
       - description: Unique id of the mpc vault
@@ -1893,11 +1929,12 @@ paths:
           description: Too many requests.
       security:
       - CoboAuth: []
-      summary: delete a mpc key group
+      summary: Delete a mpc key group
       tags:
       - Wallets - MPC Wallet
     get:
-      description: get a mpc key group.
+      description: |
+        Get detailed information about a key group identified by its unique ID.
       operationId: get_key_group
       parameters:
       - description: Unique id of the mpc vault
@@ -1947,11 +1984,12 @@ paths:
           description: Unknown internal error.
       security:
       - CoboAuth: []
-      summary: get a mpc key group
+      summary: Get a mpc key group information by group id
       tags:
       - Wallets - MPC Wallet
     put:
-      description: update a mpc key group.
+      description: "Update a mpc key group type information by its ID. \n\nAction:\n\
+        - UpgradeToMainKeyGroup: change group type to main key group\n"
       operationId: update_key_group
       parameters:
       - description: Unique id of the mpc vault
@@ -2013,12 +2051,14 @@ paths:
           description: Too many requests.
       security:
       - CoboAuth: []
-      summary: update a mpc key group
+      summary: Update a mpc key group information
       tags:
       - Wallets - MPC Wallet
   /wallets/mpc/vaults/{vault_id}/tss_requests:
     get:
-      description: Detailed description on retrieving list of tss request information
+      description: |
+        Retrieving list of tss request information by vault ID.
+        This endpoint allows filtering by key group ID.
       operationId: list_tss_request
       parameters:
       - description: Unique id of the mpc vault
@@ -2068,11 +2108,12 @@ paths:
           description: Unknown internal error.
       security:
       - CoboAuth: []
-      summary: List tss request information of a vault
+      summary: List tss request information by vault ID
       tags:
       - Wallets - MPC Wallet
     post:
-      description: Create a tss request to generate key secrets for a tss group
+      description: |
+        Create a tss request to generate key secrets for a tss group.
       operationId: create_tss_request
       parameters:
       - description: Unique id of the mpc vault
@@ -2120,7 +2161,8 @@ paths:
       - Wallets - MPC Wallet
   /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id}:
     get:
-      description: get a tss request.
+      description: "Get detailed information about a tss request identified by its\
+        \ unique ID. \nGet project ids by calling list_tss_request.\n"
       operationId: get_tss_request
       parameters:
       - description: Unique id of the mpc vault
@@ -2171,11 +2213,12 @@ paths:
           description: Unknown internal error.
       security:
       - CoboAuth: []
-      summary: get a tss request
+      summary: Get a tss request information
       tags:
       - Wallets - MPC Wallet
     put:
-      description: cancel tss request.
+      description: |
+        Cancel a mpc tss request by its ID.
       operationId: cancel_tss_request
       parameters:
       - description: Unique id of the mpc vault
@@ -2238,7 +2281,7 @@ paths:
           description: Too many requests.
       security:
       - CoboAuth: []
-      summary: cancel tss request
+      summary: Cancel a tss request
       tags:
       - Wallets - MPC Wallet
   /transactions/fee_price:
@@ -2246,7 +2289,7 @@ paths:
       description: Retrieve the fee price data.
       operationId: get_chain_fee_price
       parameters:
-      - description: Unique id of the chain
+      - description: The chain ID.
         example: ETH
         explode: true
         in: query
@@ -2255,7 +2298,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: Unique id of the token
+      - description: The token ID.
         example: ETH_USDT
         explode: true
         in: query
@@ -2301,7 +2344,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransactionFee'
+                $ref: '#/components/schemas/EstimationFee'
           description: Successful get a transaction detail
         "400":
           content:
@@ -2419,7 +2462,9 @@ paths:
         name: type
         required: false
         schema:
-          $ref: '#/components/schemas/TransactionType'
+          items:
+            $ref: '#/components/schemas/TransactionType'
+          type: array
         style: form
       - description: The status of a transaction
         explode: true
@@ -2427,43 +2472,94 @@ paths:
         name: status
         required: false
         schema:
-          $ref: '#/components/schemas/TransactionStatus'
+          items:
+            $ref: '#/components/schemas/TransactionStatus'
+          type: array
+        style: form
+      - description: |
+          The wallet type.
+
+          - `Custodial`: Custodial Wallets
+
+          - `MPC`: MPC Wallets
+
+          - `SmartContract`: Smart Contract Wallets
+
+          - `Exchange`: Exchange Wallets
+        explode: true
+        in: query
+        name: wallet_type
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletType'
         style: form
       - description: Unique id of the wallet
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        example:
+        - f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: true
         in: query
         name: wallet_id
         required: false
         schema:
-          format: uuid
-          type: string
+          items:
+            format: uuid
+            type: string
+          type: array
         style: form
       - description: Unique id of the chain
-        example: ETH
+        example:
+        - ETH
         explode: true
         in: query
         name: chain_id
         required: false
         schema:
-          type: string
+          items:
+            type: string
+          type: array
         style: form
       - description: Unique id of the token
-        example: ETH_USDT
+        example:
+        - ETH_USDT
         explode: true
         in: query
         name: token_id
         required: false
         schema:
-          type: string
+          items:
+            type: string
+          type: array
         style: form
       - description: Unique id of the asset
-        example: USDT
+        example:
+        - USDT
         explode: true
         in: query
         name: asset_id
         required: false
         schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Unique id of the mpc vault
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: vault_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: Unique id of the mpc project
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: project_id
+        required: false
+        schema:
+          format: uuid
           type: string
         style: form
       - description: The minimum transaction creation timestamp in Unix epoch seconds
@@ -2640,6 +2736,39 @@ paths:
       summary: Resend a transaction by ID
       tags:
       - Transactions
+  /transactions/{transaction_id}/cancel:
+    post:
+      description: Cancel a transaction.
+      operationId: cancel_transaction_by_id
+      parameters:
+      - description: Unique id of the transaction
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: transaction_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_transfer_transaction_201_response'
+          description: Successful create a smart contract call request
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Resource not found.
+      security:
+      - CoboAuth: []
+      summary: Cancel a transaction by ID
+      tags:
+      - Transactions
   /transactions/{transaction_id}/drop:
     post:
       description: Drop a transaction.
@@ -2708,39 +2837,6 @@ paths:
       security:
       - CoboAuth: []
       summary: Speed up a transaction by ID
-      tags:
-      - Transactions
-  /transactions/{transaction_id}/callback_confirmation/retry:
-    post:
-      description: Retry a transaction double-check.
-      operationId: retry_transaction_double_check_by_id
-      parameters:
-      - description: Unique id of the transaction
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: transaction_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/create_transfer_transaction_201_response'
-          description: Successful create a smart contract call request
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Resource not found.
-      security:
-      - CoboAuth: []
-      summary: Retry up a transaction double-check by ID
       tags:
       - Transactions
   /webhooks/events:
@@ -3068,7 +3164,7 @@ components:
         type: string
       style: form
     optionalAssetIdParam:
-      description: Unique id of the asset
+      description: The asset ID.
       example: USDT
       explode: true
       in: query
@@ -3077,8 +3173,21 @@ components:
       schema:
         type: string
       style: form
-    requiredAssetIdParam:
+    optionalAssetIdListParam:
       description: Unique id of the asset
+      example:
+      - USDT
+      explode: true
+      in: query
+      name: asset_id
+      required: false
+      schema:
+        items:
+          type: string
+        type: array
+      style: form
+    requiredAssetIdParam:
+      description: The asset ID.
       example: USDT
       explode: true
       in: query
@@ -3088,7 +3197,7 @@ components:
         type: string
       style: form
     optionalChainIdParam:
-      description: Unique id of the chain
+      description: The chain ID.
       example: ETH
       explode: true
       in: query
@@ -3097,8 +3206,21 @@ components:
       schema:
         type: string
       style: form
+    optionalChainIdListParam:
+      description: Unique id of the chain
+      example:
+      - ETH
+      explode: true
+      in: query
+      name: chain_id
+      required: false
+      schema:
+        items:
+          type: string
+        type: array
+      style: form
     optionalTokenIdParam:
-      description: Unique id of the token
+      description: The token ID.
       example: ETH_USDT
       explode: true
       in: query
@@ -3107,8 +3229,21 @@ components:
       schema:
         type: string
       style: form
-    requiredTokenIdParam:
+    optionalTokenListIdParam:
       description: Unique id of the token
+      example:
+      - ETH_USDT
+      explode: true
+      in: query
+      name: token_id
+      required: false
+      schema:
+        items:
+          type: string
+        type: array
+      style: form
+    requiredTokenIdParam:
+      description: The token ID.
       example: ETH_USDT
       explode: true
       in: query
@@ -3118,7 +3253,22 @@ components:
         type: string
       style: form
     requiredWalletSubtypeParam:
-      description: Wallet subtype to query
+      description: |
+        The wallet subtype.
+
+        - `Asset`: Custodial Wallets (Asset Wallets)
+
+        - `Web3`: Custodial Wallets (Web3 Wallets)
+
+        - `Main`: Exchange Wallets (Main Account)
+
+        - `Sub`: Exchange Wallets (Sub Account)
+
+        - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+        - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+        - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
       explode: true
       in: query
       name: wallet_subtype
@@ -3127,7 +3277,16 @@ components:
         $ref: '#/components/schemas/WalletSubtype'
       style: form
     optionalWalletTypeParam:
-      description: Wallet type to query
+      description: |
+        The wallet type.
+
+        - `Custodial`: Custodial Wallets
+
+        - `MPC`: MPC Wallets
+
+        - `SmartContract`: Smart Contract Wallets
+
+        - `Exchange`: Exchange Wallets
       explode: true
       in: query
       name: wallet_type
@@ -3136,7 +3295,12 @@ components:
         $ref: '#/components/schemas/WalletType'
       style: form
     optionalWalletSubtypeParam:
-      description: Wallet subtype to query
+      description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
+        \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
+        \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
+        \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`: MPC\
+        \ Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract Wallets\
+        \ (Safe{Wallet})\n"
       explode: true
       in: query
       name: wallet_subtype
@@ -3145,7 +3309,7 @@ components:
         $ref: '#/components/schemas/WalletSubtype'
       style: form
     walletIdParam:
-      description: Unique id of the wallet
+      description: The wallet ID.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -3155,8 +3319,33 @@ components:
         format: uuid
         type: string
       style: simple
+    optionalWalletIdParam:
+      description: Unique id of the wallet
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: true
+      in: query
+      name: wallet_id
+      required: false
+      schema:
+        format: uuid
+        type: string
+      style: form
+    optionalWalletListIdParam:
+      description: Unique id of the wallet
+      example:
+      - f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: true
+      in: query
+      name: wallet_id
+      required: false
+      schema:
+        items:
+          format: uuid
+          type: string
+        type: array
+      style: form
     addressIdParam:
-      description: Unique id of the address
+      description: The address ID.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -3167,14 +3356,14 @@ components:
         type: string
       style: simple
     requiredAddressStrParam:
-      description: The address string
+      description: The wallet address.
       example: 0x0000000000000000000000000000000000000000
       explode: true
       in: query
       name: address_str
       required: true
       schema:
-        description: Then blockchain address
+        description: The wallet address.
         type: string
       style: form
     requiredSubWalletIdParam:
@@ -3188,17 +3377,18 @@ components:
         type: string
       style: form
     addressStrParam:
-      description: address
+      description: The wallet address.
       example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
       explode: true
       in: query
       name: address_str
       required: false
       schema:
+        description: The wallet address.
         type: string
       style: form
     toAddressStrParam:
-      description: address
+      description: The recipient's address.
       example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
       explode: true
       in: query
@@ -3208,13 +3398,24 @@ components:
         type: string
       style: form
     fromAddressStrParam:
-      description: address
+      description: The sender's address.
       example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
       explode: true
       in: query
       name: from_address
       required: false
       schema:
+        type: string
+      style: form
+    optionalUtxoTxHashParam:
+      description: Transaction hash of the UTXO.
+      example: dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83
+      explode: true
+      in: query
+      name: tx_hash
+      required: true
+      schema:
+        description: Transaction hash of the UTXO.
         type: string
       style: form
     keyGroupIdParam:
@@ -3247,6 +3448,28 @@ components:
         format: uuid
         type: string
       style: simple
+    optionalProjectIdQueryParam:
+      description: Unique id of the mpc project
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: true
+      in: query
+      name: project_id
+      required: false
+      schema:
+        format: uuid
+        type: string
+      style: form
+    optionalProjectIdListQueryParam:
+      description: Unique id of the mpc project
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: true
+      in: query
+      name: project_id
+      required: false
+      schema:
+        format: uuid
+        type: string
+      style: form
     optionalTargetKeyGroupIdParam:
       description: The target key group id of tss request.
       example: "880311524363903326"
@@ -3306,6 +3529,17 @@ components:
         type: string
       style: simple
     optionalVaultIdQueryParam:
+      description: The MPC Vault ID.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: true
+      in: query
+      name: vault_id
+      required: false
+      schema:
+        format: uuid
+        type: string
+      style: form
+    optionalVaultIdListQueryParam:
       description: Unique id of the mpc vault
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: true
@@ -3412,6 +3646,17 @@ components:
       schema:
         $ref: '#/components/schemas/TransactionType'
       style: form
+    optionalTransactionTypeListParam:
+      description: The type of a transaction
+      explode: true
+      in: query
+      name: type
+      required: false
+      schema:
+        items:
+          $ref: '#/components/schemas/TransactionType'
+        type: array
+      style: form
     optionalTransactionStatusParam:
       description: The status of a transaction
       explode: true
@@ -3420,6 +3665,17 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/TransactionStatus'
+      style: form
+    optionalTransactionStatusListParam:
+      description: The status of a transaction
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        items:
+          $ref: '#/components/schemas/TransactionStatus'
+        type: array
       style: form
     optionalMinCreatedTimestampParam:
       description: The minimum transaction creation timestamp in Unix epoch seconds
@@ -3476,13 +3732,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/update_wallet_by_id_request'
-      description: The request body to update a wallet
+      description: The request body.
     createAddressBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/add_wallet_address_request'
-      description: The request body to add address for a wallet
+      description: The request body to add address to a wallet.
+    lockSpendablesBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/lock_spendable_list_request'
+      description: The request body to lock/unlock spendable
     createKeyGroupBody:
       content:
         application/json:
@@ -3529,7 +3791,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SmartContractCall'
+            $ref: '#/components/schemas/ContractCall'
       description: The request body to create a smart contract transaction
     createMessageSignBody:
       content:
@@ -3593,7 +3855,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/get_chains_200_response'
-      description: Successfully listed chains
+      description: The request was successful.
     getAssetsResponse:
       content:
         application/json:
@@ -3606,19 +3868,19 @@ components:
               pagination:
                 $ref: '#/components/schemas/Pagination'
             type: object
-      description: Successfully listed assets
+      description: The request was successful.
     getTokensResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/get_tokens_200_response'
-      description: Successfully listed tokens
+      description: The request was successful.
     getTokenBalancesResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/get_wallet_token_balances_200_response'
-      description: Successfully listed tokens
+      description: The request was successful.
     getAssetBalancesResponse:
       content:
         application/json:
@@ -3663,13 +3925,19 @@ components:
             items:
               $ref: '#/components/schemas/UTXO'
             type: array
-      description: Successfully listed utxo
+      description: The request was successful.
+    lockSpendableResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/lock_spendable_list_200_response'
+      description: The request was successful.
     maxTransferableValueResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MaxTransferableValue'
-      description: Successful operation
+      description: The request was successful.
     getAddressesResponse:
       content:
         application/json:
@@ -3683,13 +3951,13 @@ components:
             items:
               $ref: '#/components/schemas/AddressInfo'
             type: array
-      description: Successfully created address for a wallet
+      description: The request was successful.
     getAddressValidityResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/get_address_validity_200_response'
-      description: Successfully get address validity
+      description: The request was successful.
     createKeyGroupsResponse:
       content:
         application/json:
@@ -3823,6 +4091,12 @@ components:
       content:
         application/json:
           schema:
+            $ref: '#/components/schemas/EstimationFee'
+      description: Successful get a transaction detail
+    transactionFeeResponse:
+      content:
+        application/json:
+          schema:
             $ref: '#/components/schemas/TransactionFee'
       description: Successful get a transaction detail
     createTransactionRequestResponse:
@@ -3881,15 +4155,15 @@ components:
       - success
       type: object
     AssetInfo:
-      description: The data for asset information.
+      description: The asset information.
       properties:
         asset_id:
-          description: ID of the asset. Unique in all assets scope.
+          description: The asset ID.
           example: USDT
           pattern: "^[A-Z0-9]+$"
           type: string
         display_code:
-          description: Display code for the asset.
+          description: The display code of the asset.
           example: USDT
           pattern: "^[A-Z0-9]+$"
           type: string
@@ -3898,17 +4172,17 @@ components:
           example: Tether USDT
           type: string
         icon_url:
-          description: URL of the asset
+          description: The URL of the asset.
           example: https://d.cobo.com/public/logos/USDT.png
           type: string
       required:
       - asset_id
       type: object
     TokenInfo:
-      description: The data for token information.
+      description: The token information.
       properties:
         token_id:
-          description: ID of the token. Unique in all chains scope.
+          description: The token ID. Unique in all chains scope.
           example: ETH_USDT
           type: string
         chain_id:
@@ -3916,23 +4190,25 @@ components:
           example: ETH
           type: string
         symbol:
-          description: Symbol for the token.
+          description: The token symbol.
           example: USDT
           type: string
         description:
-          description: The description of the token.
+          description: The token description.
           example: Tether USDT
           type: string
         icon_url:
-          description: URL of the icon image.
+          description: The URL of the token icon.
           example: https://static.waas.co/images/coins/ETH.png
           type: string
         token_address:
-          description: "Address for token, if applicable."
+          description: "The token address, if applicable."
           example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           type: string
         asset_id:
-          description: ID of the asset. Used to group token balance when needed.
+          description: "The asset ID, which is used to group the balances of the correponding\
+            \ tokens. For example, if you have $1,000 worth of ETH_USDT and $2,000\
+            \ worth of TRON_USDT, the balance of your USDT assets will be $3,000."
           example: USDT
           type: string
       required:
@@ -3940,33 +4216,28 @@ components:
       - token_id
       type: object
     ChainInfo:
-      description: The data for chain information.
+      description: The chain information.
       example:
         icon_url: https://static.waas.co/images/coins/ETH.png
         symbol: USDT
         chain_id: ETH
         explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
-        explorer_address_url: "https://etherscan.io/address/{address}"
       properties:
         chain_id:
-          description: The blockchain on which the token operates.
+          description: The chain on which the token operates.
           example: ETH
           type: string
         symbol:
-          description: Symbol for the chain.
+          description: The chain symbol.
           example: USDT
           type: string
         icon_url:
-          description: URL of the icon image.
+          description: The URL of the chain icon.
           example: https://static.waas.co/images/coins/ETH.png
           type: string
         explorer_tx_url:
-          description: URL of the explorer transaction.
+          description: The transaction URL on the blockchain explorer.
           example: "https://etherscan.io/tx/{txn_id}"
-          type: string
-        explorer_address_url:
-          description: URL of the explorer address.
-          example: "https://etherscan.io/address/{address}"
           type: string
       required:
       - chain_id
@@ -3979,6 +4250,11 @@ components:
       - Exchange
       example: Custodial
       type: string
+      x-enumDescriptions:
+        Custodial: Custodial Wallets.
+        MPC: MPC Wallets.
+        SmartContract: Smart Contract Wallets.
+        Exchange: Exchange Wallets.
     WalletSubtype:
       enum:
       - Asset
@@ -3992,20 +4268,20 @@ components:
       type: string
     SmartContractWalletType:
       default: SafeWallet
-      description: What kind of smart contract does this wallet use
+      description: The Smart Contract Wallet type.
       enum:
       - SafeWallet
       example: SafeWallet
       type: string
     SmartContractWalletOperationType:
       default: CoboSafe
-      description: The way use to interact with the smart contract wallet.
+      description: The way you interact with the Smart Contract Wallet.
       enum:
       - CoboSafe
       example: CoboSafe
       type: string
     ExchangeId:
-      description: The exchange identifier.
+      description: The ID of the exchange.
       enum:
       - binance
       - okx
@@ -4015,7 +4291,7 @@ components:
       example: binance
       type: string
     TokenBalance:
-      description: The data for token balance information.
+      description: The balance information.
       example:
         token_id: ETH_USDT
         balance:
@@ -4025,7 +4301,7 @@ components:
           locked: "3.0"
       properties:
         token_id:
-          description: ID of the token. Unique in all chains scope.
+          description: The token ID.
           example: ETH_USDT
           pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
@@ -4055,11 +4331,11 @@ components:
         - $ref: '#/components/schemas/CustodialWalletInfo'
         - properties:
             chain_id:
-              description: The chain the wallet is on.
+              description: The chain the wallet operates on.
               example: ETH
               type: string
             label:
-              description: The label of the wallet.
+              description: The wallet label.
               example: My Wallet
               type: string
           type: object
@@ -4067,14 +4343,14 @@ components:
           smart_contract_wallet_type:
             $ref: '#/components/schemas/SmartContractWalletType'
           safe_address:
-            description: The address of the smart contract wallet.
+            description: The Smart Contract Wallet address.
             example: 0x1234567890123456789012345678901234567890
             format: address
             pattern: "^0x[a-fA-F0-9]{40}$"
             type: string
           owners:
-            description: The owners of the smart contract wallet. This MUST be provided
-              when user want to create a new safe wallet.
+            description: "The owners of the Smart Contract Wallet. This field is required\
+              \ when creating a new Safe{Wallet}."
             items:
               example: 0x1234567890123456789012345678901234567890
               format: address
@@ -4082,13 +4358,13 @@ components:
               type: string
             type: array
           threshold:
-            description: The threshold of required confirmations for the smart contract
-              wallet. This MUST be provided when user want to create a new safe wallet.
+            description: "The minimum number of confirmations required for the Smart\
+              \ Contract Wallet. This field is required when creating a new Safe{Wallet}. "
             example: 2
             minimum: 1
             type: integer
           cobo_safe_address:
-            description: The address of the cobo safe module.
+            description: The address of Cobo Safe.
             example: 0x1234567890123456789012345678901234567890
             format: address
             pattern: "^0x[a-fA-F0-9]{40}$"
@@ -4099,7 +4375,7 @@ components:
         - smart_contract_wallet_type
         type: object
     CustodialWalletInfo:
-      description: The data for wallet information.
+      description: The basic information of a wallet.
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         wallet_subtype: Asset
@@ -4108,6 +4384,7 @@ components:
         wallet_type: Custodial
       properties:
         wallet_id:
+          description: The wallet ID.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           format: uuid
           type: string
@@ -4116,10 +4393,11 @@ components:
         wallet_subtype:
           $ref: '#/components/schemas/WalletSubtype'
         name:
+          description: The wallet name.
           example: Example Wallet
           type: string
         org_id:
-          description: The owning custody organization id of the custodial wallet.
+          description: The ID of the owning organization.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
       required:
@@ -4134,7 +4412,7 @@ components:
       - $ref: '#/components/schemas/CustodialWalletInfo'
       - properties:
           vault_id:
-            description: The owning mpc vault id of the mpc wallet.
+            description: The ID of the owning Vault.
             type: string
         required:
         - vault_id
@@ -4151,13 +4429,13 @@ components:
       - $ref: '#/components/schemas/CustodialWalletInfo'
       - properties:
           apikey:
-            description: The API Key for the exchange.
+            description: The API key of your exchange account.
             example: d8f062da-39f4-4a11-8b9d-12595854237f
             type: string
           exchange_id:
             $ref: '#/components/schemas/ExchangeId'
           parent_wallet_id:
-            description: The parent wallet id for this wallet if presented.
+            description: "The wallet ID of the Main Account, if applicable."
             example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             format: uuid
             type: string
@@ -4185,6 +4463,7 @@ components:
     BaseCreateWallet:
       properties:
         name:
+          description: The wallet name.
           example: My WaaS 2.0 Wallet
           type: string
       required:
@@ -4204,61 +4483,76 @@ components:
       - $ref: '#/components/schemas/CreateSmartContractWallet'
       - $ref: '#/components/schemas/CreateExchangeWallet'
     UTXO:
-      description: utxo information.
+      description: The UTXO information.
       example:
-        amount: "100000"
+        is_locked: false
         is_coinbase: false
         vout_n: 0
         tx_hash: dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83
         address_str: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         confirmed_number: 66716
+        token_balances:
+        - token_id: ETH_USDT
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
+        - token_id: ETH_USDT
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
       properties:
         tx_hash:
-          description: Transaction hash of the UTXO.
+          description: The transaction hash of the UTXO.
           example: dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83
           type: string
         vout_n:
-          description: Output index of the UTXO.
+          description: The output index of the UTXO.
           example: 0
           type: integer
         address_str:
-          description: Address of the UTXO.
+          description: The address of the UTXO.
           example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
           type: string
-        amount:
-          description: "UTXO amount in decimal places (e.g. one bitcoin is divisible\
-            \ to eight decimal places, and 100000000 represents 1 BTC)."
-          example: "100000"
-          type: string
+        token_balances:
+          items:
+            $ref: '#/components/schemas/TokenBalance'
+          type: array
         is_coinbase:
-          description: Whether the UTXO is a coinbase transaction.
+          description: Whether the UTXO comes from a coinbase transaction.
+          example: false
+          type: boolean
+        is_locked:
+          description: Whether the UTXO is locked.
           example: false
           type: boolean
         confirmed_number:
-          description: Number of confirmations for the UTXO.
+          description: The number of confirmations for the UTXO.
           example: 66716
           type: integer
       type: object
     MaxTransferableValue:
-      description: max send value and fee.
+      description: "The maximum amount that you can transfer from the specified wallet\
+        \ address, along with the corresponding transaction fee."
       example:
         token_id: ETH
         fee:
           base_fee: "0.9"
-          fee_amount: "0.1"
           gas_limit: "21000"
           max_priority_fee: "0.1"
           fee_type: EVM_EIP_1559
           fee_token_id: ETH
-          max_fee: "1"
-        max_send_value: "841165119243622"
+        max_transferable_value: "841165119243622"
       properties:
         token_id:
-          description: token name.
+          description: The token name.
           example: ETH
           type: string
-        max_send_value:
-          description: the maximum sendable value for the given address or current
+        max_transferable_value:
+          description: the maximum transferable value for the given address or current
             wallet.
           example: "841165119243622"
           type: string
@@ -4266,7 +4560,7 @@ components:
           $ref: '#/components/schemas/TransactionFee'
       type: object
     AddressInfo:
-      description: The data for address information.
+      description: The address information.
       example:
         path: m/44'/60'/0'/0
         token_id: ETH_USDT
@@ -4277,30 +4571,32 @@ components:
         pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
       properties:
         address_id:
+          description: The address ID.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           format: uuid
           type: string
         address_str:
-          description: Then blockchain address
+          description: The wallet address.
           example: 0x0000000000000000000000000000000000000000
           type: string
         token_id:
-          description: ID of the token. Unique in all chains scope.
+          description: The token ID.
           example: ETH_USDT
           pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
         memo:
-          description: From address memo
+          description: The memo code.
           example: "82840924"
           type: string
         path:
-          description: Derivation path of address pubkey，required for MPC wallet
+          description: The derivation path of the public key. This field is applicable
+            to MPC Wallets.
           example: m/44'/60'/0'/0
           type: string
         encoding:
           $ref: '#/components/schemas/AddressEncoding'
         pubkey:
-          description: Address pubkey，required for MPC wallet
+          description: The public key. This field is applicable to MPC Wallets.
           example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
           type: string
       required:
@@ -4309,7 +4605,7 @@ components:
       - token_id
       type: object
     AddressEncoding:
-      description: Encoding only apply to BTC-Liked chain
+      description: This parameter only applies to BTC chains.
       enum:
       - ENCODING_P2PKH
       - ENCODING_P2SH_P2WPKH
@@ -4325,6 +4621,7 @@ components:
       - $ref: '#/components/schemas/BaseCreateWallet'
       - properties:
           wallet_type:
+            description: The wallet type.
             enum:
             - Custodial
             type: string
@@ -4346,6 +4643,7 @@ components:
       - $ref: '#/components/schemas/BaseCreateWallet'
       - properties:
           wallet_type:
+            description: The wallet type.
             enum:
             - MPC
             type: string
@@ -4355,7 +4653,7 @@ components:
             - User-Controlled
             type: string
           vault_id:
-            description: The owning mpc vault id of the mpc wallet.
+            description: The ID of the owning vault.
             type: string
         required:
         - vault_id
@@ -4375,19 +4673,21 @@ components:
         - $ref: '#/components/schemas/BaseCreateWallet'
         - properties:
             wallet_type:
+              description: The Smart Contract Wallet type.
               enum:
               - SmartContract
               type: string
             wallet_subtype:
+              description: The Smart Contract Wallet subtype.
               enum:
               - "Safe{Wallet}"
               type: string
             label:
-              description: The label of the wallet.
+              description: The wallet label.
               example: ETH
               type: string
             chain_id:
-              description: The chain id the wallet is on.
+              description: The ID of the chain that the wallet operates on.
               example: ETH
               type: string
           required:
@@ -4399,16 +4699,16 @@ components:
           smart_contract_wallet_type:
             $ref: '#/components/schemas/SmartContractWalletType'
           safe_address:
-            description: "The address of the smart contract wallet. If this is not\
-              \ provided, WaaS 2.0 will create a new safe wallet and setup cobo safe\
-              \ module for user. In this case, threshold, owners is required."
+            description: "The address of the Smart Contract Wallet. If this is not\
+              \ provided, Cobo will create a new Safe{Wallet} and set up Cobo Safe\
+              \ for you. In that case, the `threshold` and `owners` fields are required."
             example: 0x1234567890123456789012345678901234567890
             format: address
             pattern: "^0x[a-fA-F0-9]{40}$"
             type: string
           owners:
-            description: The owners of the smart contract wallet. This MUST be provided
-              when user want to create a new safe wallet.
+            description: "The owners of the Smart Contract Wallet. This field is required\
+              \ when creating a new Safe{Wallet}."
             items:
               example: 0x1234567890123456789012345678901234567890
               format: address
@@ -4416,14 +4716,14 @@ components:
               type: string
             type: array
           threshold:
-            description: The threshold of required confirmations for the smart contract
-              wallet. This MUST be provided when user want to create a new safe wallet.
+            description: "The minimum number of confirmations required for the Smart\
+              \ Contract Wallet. This field is required when creating a new Safe{Wallet}. "
             example: 2
             minimum: 1
             type: integer
           cobo_safe_address:
-            description: The address of the cobo safe module. Cobo safe module must
-              has been created & enabled when import a existing safe wallet.
+            description: "The address of Cobo Safe. If you are importing an existing\
+              \ Safe{Wallet}, Cobo Safe must has been created and enabled."
             example: 0x1234567890123456789012345678901234567890
             format: address
             pattern: "^0x[a-fA-F0-9]{40}$"
@@ -4438,10 +4738,12 @@ components:
       - $ref: '#/components/schemas/BaseCreateWallet'
       - properties:
           wallet_type:
+            description: The wallet type.
             enum:
             - Exchange
             type: string
           wallet_subtype:
+            description: The wallet subtype.
             enum:
             - Main
             - Sub
@@ -4449,15 +4751,15 @@ components:
           exchange_id:
             $ref: '#/components/schemas/ExchangeId'
           apikey:
-            description: The API Key for the exchange.
+            description: The API key of your exchange account.
             example: d8f062da-39f4-4a11-8b9d-12595854237f
             type: string
           secret:
-            description: The API Secret for the exchange.
+            description: The API secret of your exchange account.
             example: 75B4F636193162488A3728B4A5797708
             type: string
           passphrase:
-            description: The passphrase for the exchange.
+            description: The passphrase of your exchange account.
             example: sXASDKWKLLsWWEE
             type: string
           ga_code:
@@ -4465,8 +4767,8 @@ components:
             example: sXASDKWKLLsWWEE75B4F636193162488A3728B4A5797708
             type: string
           sub_account_ids:
-            description: "The unique identifier associated with the exchange sub-account.\
-              \ It can be an email address, username, or a custom account ID."
+            description: "The Sub Account ID. It can be an email address, a user name,\
+              \ or a custom account ID."
             example:
             - sub01@xx.com
             - sub02@xx.com
@@ -4713,7 +5015,7 @@ components:
       type: string
     FeeType:
       default: EVM_EIP_1559
-      description: The fee type used
+      description: The fee type.
       enum:
       - Fixed
       - EVM_EIP_1559
@@ -4722,73 +5024,70 @@ components:
       example: EVM_EIP_1559
       type: string
     FeeAmount:
-      description: The estimated fee amount in fee_coin.
+      description: The estimated transaction fee in fee_coin.
       properties:
-        fee_amount:
-          description: The estimated fee amount in fee_coin.
+        max_fee_amount:
+          description: The max fee amount in fee_coin.
           example: "0.1"
           type: string
       type: object
     FeeData:
-      description: The estimated fee amount in fee_coin.
+      description: The estimated fee in fee_coin.
       properties:
         gas_limit:
           default: "21000"
-          description: The Limit of gas.
-          type: string
-        fee_amount:
-          description: The estimated fee amount in fee_coin.
-          example: "0.1"
+          description: "The gas limit, which represents the max number of gas units\
+            \ you are willing to pay for the execution of a transaction or Ethereum\
+            \ Virtual Machine (EVM) operation. Different operations require varying\
+            \ quantities of gas units."
           type: string
       type: object
     EvmEip1559FeeBasePrice:
-      description: The base eip1559 fee price for estimate fees or transfer.
+      description: The base transaction fee when using the EIP 1559 method.
       properties:
         fee_token_id:
-          description: ID of the fee token. Unique in all chains scope.
+          description: The token ID of the transaction fee. Unique in all chains scope.
           example: ETH
           type: string
-        max_fee:
-          description: "The highest Gas price paid for the transfer, unit GWei."
-          example: "1"
-          type: string
         max_priority_fee:
-          description: "The maximum Gas price paid to miners, the higher it is, the\
-            \ faster it is likely to be packaged into the block, unit GWei."
+          description: "The max priority fee, in gwei. The max priority fee represents\
+            \ the highest amount of miner tips you are willing to pay for your transaction."
           example: "0.1"
           type: string
         base_fee:
-          description: The Base Fee of chain.
+          description: The base fee of chain.
           example: "0.9"
           type: string
       required:
       - base_fee
-      - max_fee
       - max_priority_fee
       type: object
     EvmLegacyFeeBasePrice:
-      description: The legacy fee price for estimate fees or transfer.
+      description: The base transaction fee when using the legacy method.
       properties:
         fee_token_id:
-          description: ID of the fee token. Unique in all chains scope.
+          description: The token ID of the transaction fee. Unique in all chains scope.
           example: ETH_USDT
           type: string
         gas_price:
-          description: "The Price of Gas, unit GWei."
+          description: "The gas price, in gwei. The gas price represents the amount\
+            \ of ETH that must be paid to validators for processing transactions."
           example: "1"
           type: string
       required:
       - gas_price
       type: object
     UtxoFeeBasePrice:
-      description: The legacy fee price for estimate fees or transfer.
+      description: The base transaction fee for UTXO-based chains.
       properties:
         fee_token_id:
-          description: ID of the fee token. Unique in all chains scope.
+          description: The token ID of the transaction fee. Unique in all chains scope.
           example: ETH
           type: string
         fee_rate:
-          description: "The fee rate, unit sat/vB."
+          description: "The fee rate, in sats/vByte. The fee rate represents the satoshis\
+            \ you are willing to pay for each byte of data that your transaction will\
+            \ consume on the blockchain."
           example: "50"
           type: string
       required:
@@ -4801,13 +5100,12 @@ components:
             $ref: '#/components/schemas/FeeType'
         type: object
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
-      description: The base eip1559 fee data for estimate fees or transfer.
+      description: The transaction fee when using the EIP 1669 method.
       example:
         base_fee: "0.9"
         max_priority_fee: "0.1"
         fee_type: EVM_EIP_1559
         fee_token_id: ETH
-        max_fee: "1"
       required:
       - fee_type
       type: object
@@ -4818,7 +5116,7 @@ components:
             $ref: '#/components/schemas/FeeType'
         type: object
       - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
-      description: The legacy fee data for estimate fees or transfer.
+      description: The transaction fee when using the legacy method.
       required:
       - fee_type
       type: object
@@ -4828,7 +5126,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
       - $ref: '#/components/schemas/UtxoFeeBasePrice'
-      description: The legacy fee data for estimate fees or transfer.
+      description: The transaction fee for UTXO-based chains.
       required:
       - fee_type
       type: object
@@ -4838,17 +5136,35 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           fee_token_id:
-            description: ID of the fee token. Unique in all chains scope.
+            description: The token ID of the transaction fee. Unique in all chains
+              scope.
             example: ETH_USDT
             type: string
         type: object
       - $ref: '#/components/schemas/FeeAmount'
-      description: The estimated fee amount in fee_coin.
+      description: The estimated transaction fee in fee_coin.
       required:
       - fee_type
       type: object
     EvmEip1559Fee:
-      description: The eip1559 fee data for estimate fees or transfer.
+      description: The estimated transaction fee when using the EIP 1559 method.
+      example:
+        standard:
+          base_fee: "0.9"
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
+          fee_token_id: ETH
+        fast:
+          base_fee: "0.9"
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
+          fee_token_id: ETH
+        slow:
+          base_fee: "0.9"
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
+          fee_token_id: ETH
+        fee_type: EVM_EIP_1559
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -4863,7 +5179,7 @@ components:
       - standard
       type: object
     EvmLegacyFee:
-      description: The legacy fee data for estimate fees or transfer.
+      description: The estimated transaction fee when using the legacy method.
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -4878,7 +5194,7 @@ components:
       - standard
       type: object
     UtxoFee:
-      description: The UTXO fee for transfer.
+      description: The estimated transaction fee for UTXO-based chains.
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -4926,15 +5242,14 @@ components:
         type: object
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
       - $ref: '#/components/schemas/FeeData'
-      description: The fee data for transaction.
+      description: |
+        The transaction fee when using the EIP 1559 method. The estimated fee is calculated by multiplying the max fee by the gas limit: (max fee * gas limit).
       example:
         base_fee: "0.9"
-        fee_amount: "0.1"
         gas_limit: "21000"
         max_priority_fee: "0.1"
         fee_type: EVM_EIP_1559
         fee_token_id: ETH
-        max_fee: "1"
       required:
       - fee_type
       type: object
@@ -4946,7 +5261,8 @@ components:
         type: object
       - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
       - $ref: '#/components/schemas/FeeData'
-      description: The fee data for transaction.
+      description: |
+        The transaction fee when using the legacy method. The estimated fee is calculated by multiplying the gas price by the gas limit: (gas price * gas limit).
       required:
       - fee_type
       type: object
@@ -4958,7 +5274,8 @@ components:
         type: object
       - $ref: '#/components/schemas/UtxoFeeBasePrice'
       - $ref: '#/components/schemas/FeeAmount'
-      description: The fee data for transaction.
+      description: |
+        The transaction fee for UTXO-based chains. The estimated fee is calculated by multiplying the fee rate by the transaction size: (fee rate * transaction size).
       required:
       - fee_type
       type: object
@@ -4987,12 +5304,10 @@ components:
         initiator: "API Prod Key #1"
         fee:
           base_fee: "0.9"
-          fee_amount: "0.1"
           gas_limit: "21000"
           max_priority_fee: "0.1"
           fee_type: EVM_EIP_1559
           fee_token_id: ETH
-          max_fee: "1"
         destination:
           address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           memo: "82840924"
@@ -5434,12 +5749,25 @@ components:
         - address_str
         type: object
     MpcTransferSource:
-      allOf:
-      - properties:
-          mpc_used_key_group:
-            $ref: '#/components/schemas/MpcSigningGroup'
-        type: object
-      - $ref: '#/components/schemas/AddressTransferSource'
+      description: The base data for transfer source.
+      properties:
+        source_type:
+          $ref: '#/components/schemas/WalletSubtype'
+        wallet_id:
+          description: Unique id of the wallet to transfer from.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        account_input:
+          $ref: '#/components/schemas/MpcTransferSource_account_input'
+        utxo_inputs:
+          $ref: '#/components/schemas/MpcTransferSource_utxo_inputs'
+        mpc_used_key_group:
+          $ref: '#/components/schemas/MpcSigningGroup'
+      required:
+      - source_type
+      - wallet_id
+      type: object
     SafeTransferSource:
       allOf:
       - $ref: '#/components/schemas/AddressTransferSource'
@@ -5476,24 +5804,31 @@ components:
       - $ref: '#/components/schemas/SafeTransferSource'
       - $ref: '#/components/schemas/ExchangeTransferSource'
     AddressTransferDestination:
-      description: The data for address destination.
+      description: The data for address destination. Only one of account_output or
+        utxo_outputs needed.
       example:
+        account_output:
+          amount: "1.5"
+          memo: "82840924"
+          address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
         destination_type: Address
-        memo: "82840924"
-        address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+        utxo_outputs:
+          outputs:
+          - amount: "1.5"
+            address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+            script: 76a914fb37342f6275b13936799def06f2DEMO
+          - amount: "1.5"
+            address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+            script: 76a914fb37342f6275b13936799def06f2DEMO
+          change_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
       properties:
         destination_type:
           $ref: '#/components/schemas/TransferDestinationType'
-        address_str:
-          description: Destination address
-          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          type: string
-        memo:
-          description: Destination address memo
-          example: "82840924"
-          type: string
+        account_output:
+          $ref: '#/components/schemas/AddressTransferDestination_account_output'
+        utxo_outputs:
+          $ref: '#/components/schemas/AddressTransferDestination_utxo_outputs'
       required:
-      - address_str
       - destination_type
       type: object
     ExchangeTransferDestination:
@@ -5509,6 +5844,11 @@ components:
         sub_wallet_id:
           description: Exchange trading account or any sub wallet info for transfer.
           example: Asset
+          type: string
+        amount:
+          description: |
+            Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)
+          example: "1.5"
           type: string
       required:
       - destination_type
@@ -5533,21 +5873,29 @@ components:
     Transfer:
       description: The base data for transfer transaction.
       example:
-        amount: "1.5"
         request_type: Transfer
         token_id: ETH_USDT
         fee:
           base_fee: "0.9"
-          fee_amount: "0.1"
           gas_limit: "21000"
           max_priority_fee: "0.1"
           fee_type: EVM_EIP_1559
           fee_token_id: ETH
-          max_fee: "1"
         destination:
+          account_output:
+            amount: "1.5"
+            memo: "82840924"
+            address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           destination_type: Address
-          memo: "82840924"
-          address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          utxo_outputs:
+            outputs:
+            - amount: "1.5"
+              address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              script: 76a914fb37342f6275b13936799def06f2DEMO
+            - amount: "1.5"
+              address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              script: 76a914fb37342f6275b13936799def06f2DEMO
+            change_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
         description: Transfer from wallet
         source:
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -5575,11 +5923,6 @@ components:
           example: ETH_USDT
           pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
-        amount:
-          description: |
-            Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)
-          example: "1.5"
-          type: string
         destination:
           $ref: '#/components/schemas/TransferDestination'
         category_names:
@@ -5602,81 +5945,6 @@ components:
       - source
       - token_id
       type: object
-    SmartContractCall:
-      description: The data for create smart contract call transaction.
-      example:
-        from_address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-        request_type: "{}"
-        chain_id: ETH
-        calldata: !!binary |-
-          VTNkaFoyZGxjaUJ5YjJOcmN3PT0=
-        mpc_used_key_group:
-          used_node_ids:
-          - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
-          - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
-          used_key_group_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        fee:
-          base_fee: "0.9"
-          fee_amount: "0.1"
-          gas_limit: "21000"
-          max_priority_fee: "0.1"
-          fee_type: EVM_EIP_1559
-          fee_token_id: ETH
-          max_fee: "1"
-        to_address_str: bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v
-        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        value: "1.5"
-        from_wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-      properties:
-        request_id:
-          description: Unique id of the request.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          type: string
-        request_type:
-          $ref: '#/components/schemas/Transfer/properties/request_type'
-        from_wallet_id:
-          description: Unique id of the wallet to transfer from.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          format: uuid
-          type: string
-        from_address_str:
-          description: From address
-          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          type: string
-        chain_id:
-          description: The blockchain on which the token operates.
-          example: ETH
-          pattern: "^[A-Z]+$"
-          type: string
-        to_address_str:
-          description: To address
-          example: bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v
-          type: string
-        value:
-          description: |
-            Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)
-          example: "1.5"
-          type: string
-        calldata:
-          description: |
-            calldata for this transaction. Commonly used as part of contract interaction.
-          example: !!binary |-
-            VTNkaFoyZGxjaUJ5YjJOcmN3PT0=
-          format: byte
-          type: string
-        mpc_used_key_group:
-          $ref: '#/components/schemas/MpcSigningGroup'
-        fee:
-          $ref: '#/components/schemas/TransactionFee'
-      required:
-      - calldata
-      - chain_id
-      - from_address_str
-      - from_wallet_id
-      - request_id
-      - request_type
-      - to_address_str
-      type: object
     SignMessage:
       description: The data for create a message-signing transaction.
       properties:
@@ -5686,31 +5954,15 @@ components:
           type: string
         request_type:
           $ref: '#/components/schemas/Transfer/properties/request_type'
-        from_wallet_id:
-          description: Unique id of the wallet to sign message.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          format: uuid
-          type: string
-        from_address_str:
-          description: signing address
-          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          type: string
         chain_id:
           description: The blockchain on which the token operates.
           example: ETH
           pattern: "^[A-Z]+$"
           type: string
-        message:
-          description: "Raw data to be signed, Base 64 encoded"
-          example: YWFhYQ==
-          type: string
-        structured_data:
-          description: "Structured data to be signed, JSON encoded"
-          example: |
-            {\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}]}}
-          type: string
-        mpc_used_key_group:
-          $ref: '#/components/schemas/MpcSigningGroup'
+        source:
+          $ref: '#/components/schemas/SignMessage_source'
+        destination:
+          $ref: '#/components/schemas/SignMessage_destination'
       required:
       - chain_id
       - request_id
@@ -5726,7 +5978,119 @@ components:
         propertyName: request_type
       oneOf:
       - $ref: '#/components/schemas/Transfer'
-      - $ref: '#/components/schemas/SmartContractCall'
+      - $ref: '#/components/schemas/ContractCall'
+    BaseContractCallSource:
+      description: The base data for contract call source.
+      properties:
+        source_type:
+          enum:
+          - Org-Controlled
+          - User-Controlled
+          - "Safe{Wallet}"
+          example: Org-Controlled
+          type: string
+        wallet_id:
+          description: Unique id of the wallet to initiate contract call from.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address_str:
+          description: From address
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+      required:
+      - address_str
+      - source_type
+      - wallet_id
+      type: object
+    MpcContractCallSource:
+      allOf:
+      - $ref: '#/components/schemas/BaseContractCallSource'
+      - properties:
+          mpc_used_key_group:
+            $ref: '#/components/schemas/MpcSigningGroup'
+        required:
+        - mpc_used_key_group
+        type: object
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        mpc_used_key_group:
+          used_node_ids:
+          - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
+          - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
+          used_key_group_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        source_type: Org-Controlled
+        address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+    SafeContractCallSource:
+      allOf:
+      - $ref: '#/components/schemas/BaseContractCallSource'
+      - properties:
+          delegate:
+            $ref: '#/components/schemas/SafeContractCallSource_allOf_delegate'
+        required:
+        - delegate
+        type: object
+    ContractCallSource:
+      discriminator:
+        mapping:
+          Org-Controlled: '#/components/schemas/MpcContractCallSource'
+          User-Controlled: '#/components/schemas/MpcContractCallSource'
+          Safe{Wallet}: '#/components/schemas/SafeContractCallSource'
+        propertyName: source_type
+      oneOf:
+      - $ref: '#/components/schemas/MpcContractCallSource'
+      - $ref: '#/components/schemas/SafeContractCallSource'
+    ContractCall:
+      description: The data for create smart contract call transaction.
+      example:
+        request_type: "{}"
+        chain_id: ETH
+        fee:
+          base_fee: "0.9"
+          gas_limit: "21000"
+          max_priority_fee: "0.1"
+          fee_type: EVM_EIP_1559
+          fee_token_id: ETH
+        destination:
+          calldata: !!binary |-
+            VTNkaFoyZGxjaUJ5YjJOcmN3PT0=
+          address_str: bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v
+          value: "1.5"
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          mpc_used_key_group:
+            used_node_ids:
+            - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
+            - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
+            used_key_group_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          source_type: Org-Controlled
+          address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      properties:
+        request_id:
+          description: Unique id of the request.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        request_type:
+          $ref: '#/components/schemas/Transfer/properties/request_type'
+        chain_id:
+          description: The blockchain on which the token operates.
+          example: ETH
+          type: string
+        source:
+          $ref: '#/components/schemas/ContractCallSource'
+        destination:
+          $ref: '#/components/schemas/ContractCall_destination'
+        fee:
+          $ref: '#/components/schemas/TransactionFee'
+      required:
+      - calldata
+      - chain_id
+      - request_id
+      - request_type
+      - source
+      - to_address_str
+      type: object
     WebhookEvent:
       description: The webhook event payload.
       example:
@@ -5953,12 +6317,10 @@ components:
           symbol: USDT
           chain_id: ETH
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
-          explorer_address_url: "https://etherscan.io/address/{address}"
         - icon_url: https://static.waas.co/images/coins/ETH.png
           symbol: USDT
           chain_id: ETH
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
-          explorer_address_url: "https://etherscan.io/address/{address}"
       properties:
         data:
           items:
@@ -5972,12 +6334,22 @@ components:
       - properties:
           can_deposit:
             default: false
-            description: "Ture if the token can be deposited, False otherwise"
+            description: |
+              Whether the token can be deposited.
+
+              - `true`: The token can be deposited.
+
+              - `false`: The token cannot be deposited.
             example: false
             type: boolean
           can_withdraw:
             default: false
-            description: "Ture if the token can be withdrawn, False otherwise"
+            description: |
+              Whether the token can be withdrawn.
+
+              - `true`: The token can be withdrawn.
+
+              - `false`: The token cannot be withdrawn.
             example: false
             type: boolean
         type: object
@@ -6052,18 +6424,19 @@ components:
     update_wallet_by_id_request:
       properties:
         name:
+          description: The wallet name.
           example: Example Wallet
           type: string
         apikey:
-          description: The API Key for the exchange.
+          description: The API key of your exchange account.
           example: d8f062da-39f4-4a11-8b9d-12595854237f
           type: string
         secret:
-          description: The API Secret for the exchange.
+          description: The API secret of your exchange account.
           example: 75B4F636193162488A3728B4A5797708
           type: string
         passphrase:
-          description: The passphrase for the exchange.
+          description: The passphrase of your exchange account.
           example: sXASDKWKLLsWWEE
           type: string
         ga_code:
@@ -6071,14 +6444,35 @@ components:
           example: sXASDKWKLLsWWEE75B4F636193162488A3728B4A5797708
           type: string
         sub_account_ids:
-          description: "The unique identifier associated with the exchange sub-account.\
-            \ It can be an email address, username, or a custom account ID."
+          description: "The Sub Account ID. It can be an email address, a user name,\
+            \ or a custom account ID."
           example:
           - sub01@xx.com
           - sub02@xx.com
           items:
             type: string
           type: array
+      type: object
+    lock_spendable_list_request:
+      properties:
+        tx_hashes:
+          items:
+            example: dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83
+            type: string
+          type: array
+        is_locked:
+          description: "True if to lock the UTXOs, False to unlock."
+          example: true
+          type: boolean
+      type: object
+    lock_spendable_list_200_response:
+      example:
+        executed: true
+      properties:
+        executed:
+          description: Whether the spendable lock/unlock has been successfully executed.
+          example: true
+          type: boolean
       type: object
     list_addresses_200_response:
       example:
@@ -6111,13 +6505,13 @@ components:
     add_wallet_address_request:
       properties:
         token_id:
-          description: ID of the token. Unique in all chains scope.
+          description: The token ID.
           example: ETH_USDT
           pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
         count:
           default: 1
-          description: The number of addresses that need to be created
+          description: The number of addresses to create.
           example: 1
           maximum: 50
           minimum: 1
@@ -6133,7 +6527,10 @@ components:
         validity: true
       properties:
         validity:
-          description: The validity of the address.
+          description: |
+            Whether the address is valid.
+            - `true`: The address is valid.
+            - `false`: the address is invalid.
           example: true
           type: boolean
       type: object
@@ -6305,12 +6702,10 @@ components:
           initiator: "API Prod Key #1"
           fee:
             base_fee: "0.9"
-            fee_amount: "0.1"
             gas_limit: "21000"
             max_priority_fee: "0.1"
             fee_type: EVM_EIP_1559
             fee_token_id: ETH
-            max_fee: "1"
           destination:
             address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
             memo: "82840924"
@@ -6347,12 +6742,10 @@ components:
           initiator: "API Prod Key #1"
           fee:
             base_fee: "0.9"
-            fee_amount: "0.1"
             gas_limit: "21000"
             max_priority_fee: "0.1"
             fee_type: EVM_EIP_1559
             fee_token_id: ETH
-            max_fee: "1"
           destination:
             address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
             memo: "82840924"
@@ -6434,7 +6827,7 @@ components:
           type: boolean
       type: object
     TokenBalance_balance:
-      description: The data for balance information.
+      description: The balance details.
       example:
         total: "100.0"
         pending: "10.5"
@@ -6442,7 +6835,7 @@ components:
         locked: "3.0"
       properties:
         total:
-          description: "The total balance, sum of the following fields."
+          description: "The total balance, which is the sum of the remaining fields."
           example: "100.0"
           type: string
         available:
@@ -6451,7 +6844,7 @@ components:
           type: string
         pending:
           default: "0"
-          description: The pending balance not confirmed.
+          description: The balance pending confirmation.
           example: "10.5"
           type: string
         locked:
@@ -6466,31 +6859,32 @@ components:
     SafeWallet_allOf_initiator:
       properties:
         wallet_id:
-          description: The wallet id of the initiator. This is required when user
-            want to create a new safe wallet.
+          description: "The initiator's wallet ID. This field is required when creating\
+            \ a new Safe{Wallet}. "
           example: 123e4567-e89b-12d3-a456-426614174000
           format: uuid
           type: string
         wallet_type:
-          description: The wallet type of the initiator. This is required when user
-            want to create a new safe wallet.
+          description: "The initiator's wallet type. This field is required when creating\
+            \ a new Safe{Wallet}. "
           example: MPC
           type: string
         wallet_address:
-          description: The wallet address of the initiator. This is required when
-            user want to create a new safe wallet.
+          description: "The initiator's wallet address. This field is required when\
+            \ creating a new Safe{Wallet}. "
           example: 0x1234567890123456789012345678901234567890
           type: string
       type: object
     ExchangeWalletInfo_allOf_sub_accounts:
       properties:
         wallet_id:
+          description: The wallet ID of the Sub Account.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           format: uuid
           type: string
         account_id:
-          description: "The unique identifier associated with the exchange sub-account.\
-            \ It can be an email address, username, or a custom account ID."
+          description: "The unique identifier associated with the Sub Account. It\
+            \ can be an email address, a user name, or a custom account ID."
           example: sub01@xx.com
           type: string
       required:
@@ -6501,6 +6895,11 @@ components:
       allOf:
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
       - $ref: '#/components/schemas/FeeData'
+      example:
+        base_fee: "0.9"
+        gas_limit: "21000"
+        max_priority_fee: "0.1"
+        fee_token_id: ETH
     EvmLegacyFee_slow:
       allOf:
       - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
@@ -6561,6 +6960,38 @@ components:
           example: 0x1234567890123456789012345678901234567890
           type: string
       type: object
+    MpcTransferSource_account_input:
+      properties:
+        address_str:
+          description: From address
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+      type: object
+    MpcTransferSource_utxo_inputs_included_inputs_inner:
+      properties:
+        tx_hash:
+          description: UTXO tx hash to include
+          example: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+          type: string
+      type: object
+    MpcTransferSource_utxo_inputs_excluded_inputs_inner:
+      properties:
+        tx_hash:
+          description: UTXO tx hash to exclude
+          example: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+          type: string
+      type: object
+    MpcTransferSource_utxo_inputs:
+      properties:
+        included_inputs:
+          items:
+            $ref: '#/components/schemas/MpcTransferSource_utxo_inputs_included_inputs_inner'
+          type: array
+        excluded_inputs:
+          items:
+            $ref: '#/components/schemas/MpcTransferSource_utxo_inputs_excluded_inputs_inner'
+          type: array
+      type: object
     SafeTransferSource_allOf_delegate:
       properties:
         wallet_id:
@@ -6578,6 +7009,137 @@ components:
           description: The wallet address of the delegate. This is required when user
             initiate a transfer.
           example: 0x1234567890123456789012345678901234567890
+          type: string
+      type: object
+    AddressTransferDestination_account_output:
+      example:
+        amount: "1.5"
+        memo: "82840924"
+        address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+      properties:
+        address_str:
+          description: Destination address
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        memo:
+          description: Destination address memo
+          example: "82840924"
+          type: string
+        amount:
+          description: |
+            Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)
+          example: "1.5"
+          type: string
+      type: object
+    AddressTransferDestination_utxo_outputs_outputs_inner:
+      example:
+        amount: "1.5"
+        address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+        script: 76a914fb37342f6275b13936799def06f2DEMO
+      properties:
+        address_str:
+          description: Destination address
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+          type: string
+        amount:
+          description: |
+            Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)
+          example: "1.5"
+          type: string
+        script:
+          description: Script of the output
+          example: 76a914fb37342f6275b13936799def06f2DEMO
+          type: string
+      type: object
+    AddressTransferDestination_utxo_outputs:
+      example:
+        outputs:
+        - amount: "1.5"
+          address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+          script: 76a914fb37342f6275b13936799def06f2DEMO
+        - amount: "1.5"
+          address_str: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+          script: 76a914fb37342f6275b13936799def06f2DEMO
+        change_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+      properties:
+        outputs:
+          items:
+            $ref: '#/components/schemas/AddressTransferDestination_utxo_outputs_outputs_inner'
+          type: array
+        change_address:
+          description: Change address
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+          type: string
+      type: object
+    SignMessage_source:
+      properties:
+        wallet_id:
+          description: Unique id of the wallet to sign message.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address_str:
+          description: From address
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        mpc_used_key_group:
+          $ref: '#/components/schemas/MpcSigningGroup'
+      type: object
+    SignMessage_destination:
+      properties:
+        message:
+          description: "Raw data to be signed, Base 64 encoded"
+          example: YWFhYQ==
+          type: string
+        structured_data:
+          description: "Structured data to be signed, JSON encoded"
+          example: |
+            {\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}]}}
+          type: string
+      type: object
+    SafeContractCallSource_allOf_delegate:
+      properties:
+        wallet_id:
+          description: The wallet id of the delegate. This is required when user initiate
+            a transfer.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+        wallet_type:
+          description: The wallet type of the delegate. This is required when user
+            initiate a transfer.
+          example: MPC
+          type: string
+        wallet_address:
+          description: The wallet address of the delegate. This is required when user
+            initiate a transfer.
+          example: 0x1234567890123456789012345678901234567890
+          type: string
+        mpc_used_key_group:
+          $ref: '#/components/schemas/MpcSigningGroup'
+      type: object
+    ContractCall_destination:
+      example:
+        calldata: !!binary |-
+          VTNkaFoyZGxjaUJ5YjJOcmN3PT0=
+        address_str: bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v
+        value: "1.5"
+      properties:
+        address_str:
+          description: To address
+          example: bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v
+          type: string
+        value:
+          description: |
+            Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)
+          example: "1.5"
+          type: string
+        calldata:
+          description: |
+            calldata for this transaction. Commonly used as part of contract interaction.
+          example: !!binary |-
+            VTNkaFoyZGxjaUJ5YjJOcmN3PT0=
+          format: byte
           type: string
       type: object
   securitySchemes:

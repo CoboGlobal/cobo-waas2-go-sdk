@@ -18,19 +18,20 @@ import (
 // checks if the AddressInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressInfo{}
 
-// AddressInfo The data for address information.
+// AddressInfo The address information.
 type AddressInfo struct {
+	// The address ID.
 	AddressId string `json:"address_id"`
-	// Then blockchain address
+	// The wallet address.
 	AddressStr string `json:"address_str"`
-	// ID of the token. Unique in all chains scope.
+	// The token ID.
 	TokenId string `json:"token_id"`
-	// From address memo
+	// The memo code.
 	Memo *string `json:"memo,omitempty"`
-	// Derivation path of address pubkey，required for MPC wallet
+	// The derivation path of the public key. This field is applicable to MPC Wallets.
 	Path *string `json:"path,omitempty"`
 	Encoding *AddressEncoding `json:"encoding,omitempty"`
-	// Address pubkey，required for MPC wallet
+	// The public key. This field is applicable to MPC Wallets.
 	Pubkey *string `json:"pubkey,omitempty"`
 }
 

@@ -26,8 +26,6 @@ type Transfer struct {
 	Source TransferSource `json:"source"`
 	// ID of the token. Unique in all chains scope.
 	TokenId string `json:"token_id"`
-	// Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5) 
-	Amount string `json:"amount"`
 	Destination TransferDestination `json:"destination"`
 	// The category names for transfer.
 	CategoryNames []string `json:"category_names,omitempty"`
@@ -42,13 +40,12 @@ type _Transfer Transfer
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransfer(requestId string, requestType string, source TransferSource, tokenId string, amount string, destination TransferDestination) *Transfer {
+func NewTransfer(requestId string, requestType string, source TransferSource, tokenId string, destination TransferDestination) *Transfer {
 	this := Transfer{}
 	this.RequestId = requestId
 	this.RequestType = requestType
 	this.Source = source
 	this.TokenId = tokenId
-	this.Amount = amount
 	this.Destination = destination
 	return &this
 }
@@ -155,30 +152,6 @@ func (o *Transfer) GetTokenIdOk() (*string, bool) {
 // SetTokenId sets field value
 func (o *Transfer) SetTokenId(v string) {
 	o.TokenId = v
-}
-
-// GetAmount returns the Amount field value
-func (o *Transfer) GetAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Amount
-}
-
-// GetAmountOk returns a tuple with the Amount field value
-// and a boolean to check if the value has been set.
-func (o *Transfer) GetAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Amount, true
-}
-
-// SetAmount sets field value
-func (o *Transfer) SetAmount(v string) {
-	o.Amount = v
 }
 
 // GetDestination returns the Destination field value
@@ -315,7 +288,6 @@ func (o Transfer) ToMap() (map[string]interface{}, error) {
 	toSerialize["request_type"] = o.RequestType
 	toSerialize["source"] = o.Source
 	toSerialize["token_id"] = o.TokenId
-	toSerialize["amount"] = o.Amount
 	toSerialize["destination"] = o.Destination
 	if !IsNil(o.CategoryNames) {
 		toSerialize["category_names"] = o.CategoryNames
@@ -338,7 +310,6 @@ func (o *Transfer) UnmarshalJSON(data []byte) (err error) {
 		"request_type",
 		"source",
 		"token_id",
-		"amount",
 		"destination",
 	}
 

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **DestinationType** | [**TransferDestinationType**](TransferDestinationType.md) |  | 
 **WalletId** | **string** | Unique id of the wallet to transfer to. | 
 **SubWalletId** | **string** | Exchange trading account or any sub wallet info for transfer. | 
+**Amount** | Pointer to **string** | Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)  | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetSubWalletId sets SubWalletId field to given value.
 
+
+### GetAmount
+
+`func (o *ExchangeTransferDestination) GetAmount() string`
+
+GetAmount returns the Amount field if non-nil, zero value otherwise.
+
+### GetAmountOk
+
+`func (o *ExchangeTransferDestination) GetAmountOk() (*string, bool)`
+
+GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAmount
+
+`func (o *ExchangeTransferDestination) SetAmount(v string)`
+
+SetAmount sets Amount field to given value.
+
+### HasAmount
+
+`func (o *ExchangeTransferDestination) HasAmount() bool`
+
+HasAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**FeeRate** | **string** | The fee rate, unit sat/vB. | 
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
 
 ## Methods
 
@@ -72,30 +72,30 @@ and a boolean to check if the value has been set.
 SetFeeRate sets FeeRate field to given value.
 
 
-### GetFeeAmount
+### GetMaxFeeAmount
 
-`func (o *UtxoFeeSlow) GetFeeAmount() string`
+`func (o *UtxoFeeSlow) GetMaxFeeAmount() string`
 
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
+GetMaxFeeAmount returns the MaxFeeAmount field if non-nil, zero value otherwise.
 
-### GetFeeAmountOk
+### GetMaxFeeAmountOk
 
-`func (o *UtxoFeeSlow) GetFeeAmountOk() (*string, bool)`
+`func (o *UtxoFeeSlow) GetMaxFeeAmountOk() (*string, bool)`
 
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
+GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeeAmount
+### SetMaxFeeAmount
 
-`func (o *UtxoFeeSlow) SetFeeAmount(v string)`
+`func (o *UtxoFeeSlow) SetMaxFeeAmount(v string)`
 
-SetFeeAmount sets FeeAmount field to given value.
+SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasFeeAmount
+### HasMaxFeeAmount
 
-`func (o *UtxoFeeSlow) HasFeeAmount() bool`
+`func (o *UtxoFeeSlow) HasMaxFeeAmount() bool`
 
-HasFeeAmount returns a boolean if a field has been set.
+HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

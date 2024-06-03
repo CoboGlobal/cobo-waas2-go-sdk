@@ -29,7 +29,7 @@ type ApiAddWalletAddressRequest struct {
 	addWalletAddressRequest *AddWalletAddressRequest
 }
 
-// The request body to add address for a wallet
+// The request body to add address to a wallet.
 func (r ApiAddWalletAddressRequest) AddWalletAddressRequest(addWalletAddressRequest AddWalletAddressRequest) ApiAddWalletAddressRequest {
 	r.addWalletAddressRequest = &addWalletAddressRequest
 	return r
@@ -42,16 +42,11 @@ func (r ApiAddWalletAddressRequest) Execute() ([]AddressInfo, *http.Response, er
 /*
 AddWalletAddress Add address to wallet
 
-Add an address to a wallet.
-
-Error codes this API may return:
-| Error Code | Description |
-| -- | -- |
-| `2006` | 参数格式或者值非法 |
+This operation creates one or more addresses for the specified wallet.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiAddWalletAddressRequest
 */
 func (a *WalletsAPIService) AddWalletAddress(ctx context.Context, walletId string) ApiAddWalletAddressRequest {
@@ -167,15 +162,9 @@ func (r ApiCreateWalletRequest) Execute() (*WalletInfo, *http.Response, error) {
 }
 
 /*
-CreateWallet Create new wallet
+CreateWallet Create wallet
 
-Creates a new wallet with the provided information.
-
-Error codes this API may return:
-| Error Code | Description |
-| -- | -- |
-| `2003` | 必选参数缺失 |
-| `2006` | 参数格式或者值非法 |
+This operation creates a wallet with the provided information.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -321,17 +310,12 @@ func (r ApiDeleteWalletByIdRequest) Execute() (*http.Response, error) {
 /*
 DeleteWalletById Delete wallet by ID
 
-Deletes a specific wallet identified by its ID.
-This endpoint is supported by Exchange wallets only.
-
-Error codes this API may return:
-| Error Code | Description |
-| -- | -- |
-| `2006` | 参数格式或者值非法 |
+This operation deletes the specified wallet.
+<Note>This operation is applicable to Exchange Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiDeleteWalletByIdRequest
 */
 func (a *WalletsAPIService) DeleteWalletById(ctx context.Context, walletId string) ApiDeleteWalletByIdRequest {
@@ -435,13 +419,13 @@ type ApiGetAddressValidityRequest struct {
 	addressStr *string
 }
 
-// Unique id of the token
+// The token ID.
 func (r ApiGetAddressValidityRequest) TokenId(tokenId string) ApiGetAddressValidityRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// The address string
+// The wallet address.
 func (r ApiGetAddressValidityRequest) AddressStr(addressStr string) ApiGetAddressValidityRequest {
 	r.addressStr = &addressStr
 	return r
@@ -454,11 +438,7 @@ func (r ApiGetAddressValidityRequest) Execute() (*GetAddressValidity200Response,
 /*
 GetAddressValidity Check address validity
 
-Verifies if the given address is valid for the specified token.
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+This operation verifies if the given address is valid for the specified token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -573,7 +553,7 @@ type ApiGetChainsRequest struct {
 	after *string
 }
 
-// Unique id of the chain
+// The chain ID.
 func (r ApiGetChainsRequest) ChainId(chainId string) ApiGetChainsRequest {
 	r.chainId = &chainId
 	return r
@@ -604,15 +584,9 @@ func (r ApiGetChainsRequest) Execute() (*GetChains200Response, *http.Response, e
 /*
 GetChains List chain metadata
 
-This endpoint retrieves metadata for available blockchain chains.
-It provides details such as chain_id, name, and other relevant information.
-Pagination parameters can be used to manage the size of the response.
-The chain list is publicly accessible without any permission restrictions.
+This operation retrieves the metadata of available chains. 
 
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+It provides details such as chain ID, chain name, and other relevant information. The chain metadata is publicly available without any permission restrictions.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -735,13 +709,13 @@ type ApiGetEnabledChainsRequest struct {
 	after *string
 }
 
-// Wallet type to query
+// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
 func (r ApiGetEnabledChainsRequest) WalletType(walletType WalletType) ApiGetEnabledChainsRequest {
 	r.walletType = &walletType
 	return r
 }
 
-// Wallet subtype to query
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetEnabledChainsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetEnabledChainsRequest {
 	r.walletSubtype = &walletSubtype
 	return r
@@ -772,15 +746,7 @@ func (r ApiGetEnabledChainsRequest) Execute() (*GetChains200Response, *http.Resp
 /*
 GetEnabledChains List enabled chains
 
-This endpoint allows users to query enabled chains based on wallet type and subtype 
-for the organization associated with the API key.
-Pagination parameters can be used to manage the response size.
-Wallet type/subtype are enumerations as described in parameters.
-
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+This operation retrieves all the chains enabled for the organization associated with your API key. You can also specify the wallet type and subtype you want to query.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -907,19 +873,19 @@ type ApiGetEnabledTokensRequest struct {
 	after *string
 }
 
-// Wallet type to query
+// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
 func (r ApiGetEnabledTokensRequest) WalletType(walletType WalletType) ApiGetEnabledTokensRequest {
 	r.walletType = &walletType
 	return r
 }
 
-// Wallet subtype to query
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetEnabledTokensRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetEnabledTokensRequest {
 	r.walletSubtype = &walletSubtype
 	return r
 }
 
-// Unique id of the chain
+// The chain ID.
 func (r ApiGetEnabledTokensRequest) ChainId(chainId string) ApiGetEnabledTokensRequest {
 	r.chainId = &chainId
 	return r
@@ -950,16 +916,10 @@ func (r ApiGetEnabledTokensRequest) Execute() (*GetTokens200Response, *http.Resp
 /*
 GetEnabledTokens List enabled tokens
 
-This endpoint allows users to query enabled tokens based on wallet type, subtype, 
-and chain ID if specified for the organization associated with the API key.
-Pagination parameters can be used to manage the response size.
-Wallet type/subtype are enumerations as described in parameters.
-Chain_id can be get via List enabled chains.
 
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+This operation retrieves all the tokens enabled for the organization associated with your API key. You can also specify the wallet type, subtype, and chain ID you want to query.
+
+You can retrieve chain IDs by using the [List enabled chains](/api-references/v2/wallets/list-enabled-chains) operation.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1086,13 +1046,13 @@ type ApiGetMaxTransferableValueRequest struct {
 	fromAddress *string
 }
 
-// address
+// The recipient&#39;s address.
 func (r ApiGetMaxTransferableValueRequest) ToAddress(toAddress string) ApiGetMaxTransferableValueRequest {
 	r.toAddress = &toAddress
 	return r
 }
 
-// address
+// The sender&#39;s address.
 func (r ApiGetMaxTransferableValueRequest) FromAddress(fromAddress string) ApiGetMaxTransferableValueRequest {
 	r.fromAddress = &fromAddress
 	return r
@@ -1105,18 +1065,11 @@ func (r ApiGetMaxTransferableValueRequest) Execute() (*MaxTransferableValue, *ht
 /*
 GetMaxTransferableValue Get max transferable value
 
-Retrieves the maximum transferable value and the corresponding transaction fee for a given address.
-This endpoint allows users to determine the maximum amount that can be transferred from a wallet address,
-along with the associated transaction fee.
-
-Error codes this API may return:
-    | Error Code | Description |
-    | -- | -- |
-    | `2006` | 参数格式或者值非法 |
+This operation retrieves the maximum amount that you can transfer from a wallet address, along with the corresponding transaction fee.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiGetMaxTransferableValueRequest
 */
 func (a *WalletsAPIService) GetMaxTransferableValue(ctx context.Context, walletId string) ApiGetMaxTransferableValueRequest {
@@ -1224,17 +1177,24 @@ type ApiGetSpendableListRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
 	walletId string
+	txHash *string
 	tokenId *string
 	addressStr *string
 }
 
-// Unique id of the token
+// Transaction hash of the UTXO.
+func (r ApiGetSpendableListRequest) TxHash(txHash string) ApiGetSpendableListRequest {
+	r.txHash = &txHash
+	return r
+}
+
+// The token ID.
 func (r ApiGetSpendableListRequest) TokenId(tokenId string) ApiGetSpendableListRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// address
+// The wallet address.
 func (r ApiGetSpendableListRequest) AddressStr(addressStr string) ApiGetSpendableListRequest {
 	r.addressStr = &addressStr
 	return r
@@ -1247,17 +1207,11 @@ func (r ApiGetSpendableListRequest) Execute() ([]UTXO, *http.Response, error) {
 /*
 GetSpendableList List spendable UTXOs
 
-Retrieves a list of spendable unspent transaction outputs (UTXOs) for a given wallet and token.
-This endpoint allows users to query UTXOs that can be spent in transactions.
-
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+The operation retrieves a list of spendable unspent transaction outputs (UTXOs) for the specified wallet and token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiGetSpendableListRequest
 */
 func (a *WalletsAPIService) GetSpendableList(ctx context.Context, walletId string) ApiGetSpendableListRequest {
@@ -1289,14 +1243,17 @@ func (a *WalletsAPIService) GetSpendableListExecute(r ApiGetSpendableListRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.tokenId == nil {
-		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
+	if r.txHash == nil {
+		return localVarReturnValue, nil, reportError("txHash is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	if r.tokenId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	}
 	if r.addressStr != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "address_str", r.addressStr, "")
 	}
+	parameterAddToHeaderOrQuery(localVarQueryParams, "tx_hash", r.txHash, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1371,13 +1328,13 @@ type ApiGetSupportedChainsRequest struct {
 	after *string
 }
 
-// Wallet type to query
+// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
 func (r ApiGetSupportedChainsRequest) WalletType(walletType WalletType) ApiGetSupportedChainsRequest {
 	r.walletType = &walletType
 	return r
 }
 
-// Wallet subtype to query
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetSupportedChainsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetSupportedChainsRequest {
 	r.walletSubtype = &walletSubtype
 	return r
@@ -1408,14 +1365,7 @@ func (r ApiGetSupportedChainsRequest) Execute() (*GetChains200Response, *http.Re
 /*
 GetSupportedChains List supported chains
 
-This endpoint allows users to query supported chains based on wallet type and subtype. 
-Pagination parameters can be used to manage the response size.
-Wallet type/subtype are enumerations as described in parameters.
-
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+This operation retrieves all supported chains for the organization associated with your API key. You can also specify the wallet type and subtype you want to query.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1542,19 +1492,19 @@ type ApiGetSupportedTokensRequest struct {
 	after *string
 }
 
-// Wallet type to query
+// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
 func (r ApiGetSupportedTokensRequest) WalletType(walletType WalletType) ApiGetSupportedTokensRequest {
 	r.walletType = &walletType
 	return r
 }
 
-// Wallet subtype to query
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetSupportedTokensRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetSupportedTokensRequest {
 	r.walletSubtype = &walletSubtype
 	return r
 }
 
-// Unique id of the chain
+// The chain ID.
 func (r ApiGetSupportedTokensRequest) ChainId(chainId string) ApiGetSupportedTokensRequest {
 	r.chainId = &chainId
 	return r
@@ -1585,15 +1535,9 @@ func (r ApiGetSupportedTokensRequest) Execute() (*GetTokens200Response, *http.Re
 /*
 GetSupportedTokens List supported tokens
 
-This endpoint allows users to query supported tokens based on wallet type, subtype, and chain ID if specified.
-Pagination parameters can be used to manage the response size.
-Wallet type/subtype are enumerations as described in parameters.
-Chain_id can be get via List supported chains.
+This operation retrieves all supported tokens for the organization associated with your API key. You can also specify the wallet type, subtype, and chain ID you want to query.
 
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+You can retrieve chain IDs by using the [List supported chains](/api-references/v2/wallets/list-supported-chains) operation.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1721,7 +1665,7 @@ type ApiGetTokensRequest struct {
 	after *string
 }
 
-// Unique id of the token
+// The token ID.
 func (r ApiGetTokensRequest) TokenId(tokenId string) ApiGetTokensRequest {
 	r.tokenId = &tokenId
 	return r
@@ -1752,15 +1696,9 @@ func (r ApiGetTokensRequest) Execute() (*GetTokens200Response, *http.Response, e
 /*
 GetTokens List token metadata
 
-This endpoint retrieves metadata for tokens stored in the wallet system.
-It provides details such as token_id, symbol, and other relevant information.
-Pagination parameters can be used to manage the size of the response.
-The token list is publicly accessible without any permission restrictions.
+This operation retrieves the metadata of the tokens stored under your account.
 
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+It provides details such as token ID, token symbol, and other relevant information. The token metadata is publicly available without any permission restrictions.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1884,7 +1822,7 @@ type ApiGetWalletAddressTokenBalancesRequest struct {
 	after *string
 }
 
-// Unique id of the token
+// The token ID.
 func (r ApiGetWalletAddressTokenBalancesRequest) TokenId(tokenId string) ApiGetWalletAddressTokenBalancesRequest {
 	r.tokenId = &tokenId
 	return r
@@ -1913,22 +1851,14 @@ func (r ApiGetWalletAddressTokenBalancesRequest) Execute() (*GetWalletTokenBalan
 }
 
 /*
-GetWalletAddressTokenBalances List Token Balances by Address in Wallet
+GetWalletAddressTokenBalances List token balances by address
 
-Retrieves a list of token balances for a specific address within a wallet.
-This endpoint allows users to query token balances based on the wallet ID, address ID, and optionally token ID.
-Pagination parameters can be used to manage the response size.
-This endpoint is supported by MPC wallets.
-
-Error codes this API may return:
-    | Error Code | Description |
-    | -- | -- |
-    | `2006` | 参数格式或者值非法 |
+The operation retrieves a list of token balances for a specified address within an MPC Wallet.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
- @param addressId Unique id of the address
+ @param walletId The wallet ID.
+ @param addressId The address ID.
  @return ApiGetWalletAddressTokenBalancesRequest
 */
 func (a *WalletsAPIService) GetWalletAddressTokenBalances(ctx context.Context, walletId string, addressId string) ApiGetWalletAddressTokenBalancesRequest {
@@ -2055,16 +1985,11 @@ func (r ApiGetWalletByIdRequest) Execute() (*WalletInfo, *http.Response, error) 
 /*
 GetWalletById Retrieve wallet information by ID
 
-Retrieves detailed information about a wallet identified by its unique ID.
-
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+This operation retrieves detailed information about the specified wallet.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiGetWalletByIdRequest
 */
 func (a *WalletsAPIService) GetWalletById(ctx context.Context, walletId string) ApiGetWalletByIdRequest {
@@ -2182,7 +2107,7 @@ type ApiGetWalletTokenBalancesRequest struct {
 	after *string
 }
 
-// Unique id of the token
+// The token ID.
 func (r ApiGetWalletTokenBalancesRequest) TokenId(tokenId string) ApiGetWalletTokenBalancesRequest {
 	r.tokenId = &tokenId
 	return r
@@ -2211,21 +2136,14 @@ func (r ApiGetWalletTokenBalancesRequest) Execute() (*GetWalletTokenBalances200R
 }
 
 /*
-GetWalletTokenBalances List Token Balances in Wallet
+GetWalletTokenBalances List token balances by wallet
 
-Retrieves a list of token balances within a wallet.
-This endpoint allows users to query token balances based on the wallet ID and optionally token ID.
-Pagination parameters can be used to manage the response size.
-This endpoint is supported by Custodial/MPC wallets.
-
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+The operation retrieves a list of token balances within the specified wallet.
+<Note>This operation is applicable to Custodial Wallets and MPC Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiGetWalletTokenBalancesRequest
 */
 func (a *WalletsAPIService) GetWalletTokenBalances(ctx context.Context, walletId string) ApiGetWalletTokenBalancesRequest {
@@ -2359,13 +2277,13 @@ type ApiListAddressesRequest struct {
 	after *string
 }
 
-// Unique id of the token
+// The token ID.
 func (r ApiListAddressesRequest) TokenId(tokenId string) ApiListAddressesRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// address
+// The wallet address.
 func (r ApiListAddressesRequest) AddressStr(addressStr string) ApiListAddressesRequest {
 	r.addressStr = &addressStr
 	return r
@@ -2396,16 +2314,11 @@ func (r ApiListAddressesRequest) Execute() (*ListAddresses200Response, *http.Res
 /*
 ListAddresses List wallet addresses by wallet ID
 
-Retrieve a list of addresses associated with a wallet.
-
-Error codes this API may return:
-  | Error Code | Description |
-  | -- | -- |
-  | `2006` | 参数格式或者值非法 |
+This operation retrieves a list of addresses under the specified wallet.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiListAddressesRequest
 */
 func (a *WalletsAPIService) ListAddresses(ctx context.Context, walletId string) ApiListAddressesRequest {
@@ -2531,19 +2444,19 @@ type ApiListWalletsRequest struct {
 	after *string
 }
 
-// Wallet type to query
+// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
 func (r ApiListWalletsRequest) WalletType(walletType WalletType) ApiListWalletsRequest {
 	r.walletType = &walletType
 	return r
 }
 
-// Wallet subtype to query
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiListWalletsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiListWalletsRequest {
 	r.walletSubtype = &walletSubtype
 	return r
 }
 
-// Unique id of the mpc vault
+// The MPC Vault ID.
 func (r ApiListWalletsRequest) VaultId(vaultId string) ApiListWalletsRequest {
 	r.vaultId = &vaultId
 	return r
@@ -2574,14 +2487,9 @@ func (r ApiListWalletsRequest) Execute() (*ListWallets200Response, *http.Respons
 /*
 ListWallets List all wallets
 
-Retrieves a list of all wallets.
+Retrieves the information of all wallets under your organization.
 
 This endpoint allows filtering by wallet type, subtype, and MPC vault ID (if applicable).
-
-Error codes this API may return:
-      | Error Code | Description |
-      | -- | -- |
-      | `2006` | 参数格式或者值非法 |
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2722,6 +2630,129 @@ func (a *WalletsAPIService) ListWalletsExecute(r ApiListWalletsRequest) (*ListWa
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiLockSpendableListRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	walletId string
+	lockSpendableListRequest *LockSpendableListRequest
+}
+
+// The request body to lock/unlock spendable
+func (r ApiLockSpendableListRequest) LockSpendableListRequest(lockSpendableListRequest LockSpendableListRequest) ApiLockSpendableListRequest {
+	r.lockSpendableListRequest = &lockSpendableListRequest
+	return r
+}
+
+func (r ApiLockSpendableListRequest) Execute() (*LockSpendableList200Response, *http.Response, error) {
+	return r.ApiService.LockSpendableListExecute(r)
+}
+
+/*
+LockSpendableList Lock/Unlock the UTXOs in tx hash list
+
+Lock/Unlock the UTXOs in the given tx hash list. The Locked UTXO can not be transferred until unlocked.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param walletId The wallet ID.
+ @return ApiLockSpendableListRequest
+*/
+func (a *WalletsAPIService) LockSpendableList(ctx context.Context, walletId string) ApiLockSpendableListRequest {
+	return ApiLockSpendableListRequest{
+		ApiService: a,
+		ctx: ctx,
+		walletId: walletId,
+	}
+}
+
+// Execute executes the request
+//  @return LockSpendableList200Response
+func (a *WalletsAPIService) LockSpendableListExecute(r ApiLockSpendableListRequest) (*LockSpendableList200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *LockSpendableList200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.LockSpendableList")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/{wallet_id}/spendables/lock"
+	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.lockSpendableListRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateWalletByIdRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
@@ -2729,7 +2760,7 @@ type ApiUpdateWalletByIdRequest struct {
 	updateWalletByIdRequest *UpdateWalletByIdRequest
 }
 
-// The request body to update a wallet
+// The request body.
 func (r ApiUpdateWalletByIdRequest) UpdateWalletByIdRequest(updateWalletByIdRequest UpdateWalletByIdRequest) ApiUpdateWalletByIdRequest {
 	r.updateWalletByIdRequest = &updateWalletByIdRequest
 	return r
@@ -2742,17 +2773,13 @@ func (r ApiUpdateWalletByIdRequest) Execute() (*WalletInfo, *http.Response, erro
 /*
 UpdateWalletById Update wallet by ID
 
-Updates information for a specific wallet identified by its ID.
-This endpoint is supported by Exchange wallets only.
+This operation updates the information of a specified wallet.
 
-Error codes this API may return:
-| Error Code | Description |
-| -- | -- |
-| `2006` | 参数格式或者值非法 |
+<Note>This operation is applicable to Exchange Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiUpdateWalletByIdRequest
 */
 func (a *WalletsAPIService) UpdateWalletById(ctx context.Context, walletId string) ApiUpdateWalletByIdRequest {

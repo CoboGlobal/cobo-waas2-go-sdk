@@ -5,16 +5,17 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**TransferDestinationType**](TransferDestinationType.md) |  | 
-**AddressStr** | **string** | Destination address | 
-**Memo** | Pointer to **string** | Destination address memo | [optional] 
+**AccountOutput** | Pointer to [**AddressTransferDestinationAccountOutput**](AddressTransferDestinationAccountOutput.md) |  | [optional] 
+**UtxoOutputs** | Pointer to [**AddressTransferDestinationUtxoOutputs**](AddressTransferDestinationUtxoOutputs.md) |  | [optional] 
 **WalletId** | **string** | Unique id of the wallet to transfer to. | 
 **SubWalletId** | **string** | Exchange trading account or any sub wallet info for transfer. | 
+**Amount** | Pointer to **string** | Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)  | [optional] 
 
 ## Methods
 
 ### NewTransferDestination
 
-`func NewTransferDestination(destinationType TransferDestinationType, addressStr string, walletId string, subWalletId string, ) *TransferDestination`
+`func NewTransferDestination(destinationType TransferDestinationType, walletId string, subWalletId string, ) *TransferDestination`
 
 NewTransferDestination instantiates a new TransferDestination object
 This constructor will assign default values to properties that have it defined,
@@ -49,50 +50,55 @@ and a boolean to check if the value has been set.
 SetDestinationType sets DestinationType field to given value.
 
 
-### GetAddressStr
+### GetAccountOutput
 
-`func (o *TransferDestination) GetAddressStr() string`
+`func (o *TransferDestination) GetAccountOutput() AddressTransferDestinationAccountOutput`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAccountOutput returns the AccountOutput field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAccountOutputOk
 
-`func (o *TransferDestination) GetAddressStrOk() (*string, bool)`
+`func (o *TransferDestination) GetAccountOutputOk() (*AddressTransferDestinationAccountOutput, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAccountOutputOk returns a tuple with the AccountOutput field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAccountOutput
 
-`func (o *TransferDestination) SetAddressStr(v string)`
+`func (o *TransferDestination) SetAccountOutput(v AddressTransferDestinationAccountOutput)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAccountOutput sets AccountOutput field to given value.
 
+### HasAccountOutput
 
-### GetMemo
+`func (o *TransferDestination) HasAccountOutput() bool`
 
-`func (o *TransferDestination) GetMemo() string`
+HasAccountOutput returns a boolean if a field has been set.
 
-GetMemo returns the Memo field if non-nil, zero value otherwise.
+### GetUtxoOutputs
 
-### GetMemoOk
+`func (o *TransferDestination) GetUtxoOutputs() AddressTransferDestinationUtxoOutputs`
 
-`func (o *TransferDestination) GetMemoOk() (*string, bool)`
+GetUtxoOutputs returns the UtxoOutputs field if non-nil, zero value otherwise.
 
-GetMemoOk returns a tuple with the Memo field if it's non-nil, zero value otherwise
+### GetUtxoOutputsOk
+
+`func (o *TransferDestination) GetUtxoOutputsOk() (*AddressTransferDestinationUtxoOutputs, bool)`
+
+GetUtxoOutputsOk returns a tuple with the UtxoOutputs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMemo
+### SetUtxoOutputs
 
-`func (o *TransferDestination) SetMemo(v string)`
+`func (o *TransferDestination) SetUtxoOutputs(v AddressTransferDestinationUtxoOutputs)`
 
-SetMemo sets Memo field to given value.
+SetUtxoOutputs sets UtxoOutputs field to given value.
 
-### HasMemo
+### HasUtxoOutputs
 
-`func (o *TransferDestination) HasMemo() bool`
+`func (o *TransferDestination) HasUtxoOutputs() bool`
 
-HasMemo returns a boolean if a field has been set.
+HasUtxoOutputs returns a boolean if a field has been set.
 
 ### GetWalletId
 
@@ -133,6 +139,31 @@ and a boolean to check if the value has been set.
 
 SetSubWalletId sets SubWalletId field to given value.
 
+
+### GetAmount
+
+`func (o *TransferDestination) GetAmount() string`
+
+GetAmount returns the Amount field if non-nil, zero value otherwise.
+
+### GetAmountOk
+
+`func (o *TransferDestination) GetAmountOk() (*string, bool)`
+
+GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAmount
+
+`func (o *TransferDestination) SetAmount(v string)`
+
+SetAmount sets Amount field to given value.
+
+### HasAmount
+
+`func (o *TransferDestination) HasAmount() bool`
+
+HasAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

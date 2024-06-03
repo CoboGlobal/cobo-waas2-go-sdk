@@ -16,19 +16,20 @@ import (
 // checks if the UTXO type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UTXO{}
 
-// UTXO utxo information.
+// UTXO The UTXO information.
 type UTXO struct {
-	// Transaction hash of the UTXO.
+	// The transaction hash of the UTXO.
 	TxHash *string `json:"tx_hash,omitempty"`
-	// Output index of the UTXO.
+	// The output index of the UTXO.
 	VoutN *int32 `json:"vout_n,omitempty"`
-	// Address of the UTXO.
+	// The address of the UTXO.
 	AddressStr *string `json:"address_str,omitempty"`
-	// UTXO amount in decimal places (e.g. one bitcoin is divisible to eight decimal places, and 100000000 represents 1 BTC).
-	Amount *string `json:"amount,omitempty"`
-	// Whether the UTXO is a coinbase transaction.
+	TokenBalances []TokenBalance `json:"token_balances,omitempty"`
+	// Whether the UTXO comes from a coinbase transaction.
 	IsCoinbase *bool `json:"is_coinbase,omitempty"`
-	// Number of confirmations for the UTXO.
+	// Whether the UTXO is locked.
+	IsLocked *bool `json:"is_locked,omitempty"`
+	// The number of confirmations for the UTXO.
 	ConfirmedNumber *int32 `json:"confirmed_number,omitempty"`
 }
 
@@ -145,36 +146,36 @@ func (o *UTXO) SetAddressStr(v string) {
 	o.AddressStr = &v
 }
 
-// GetAmount returns the Amount field value if set, zero value otherwise.
-func (o *UTXO) GetAmount() string {
-	if o == nil || IsNil(o.Amount) {
-		var ret string
+// GetTokenBalances returns the TokenBalances field value if set, zero value otherwise.
+func (o *UTXO) GetTokenBalances() []TokenBalance {
+	if o == nil || IsNil(o.TokenBalances) {
+		var ret []TokenBalance
 		return ret
 	}
-	return *o.Amount
+	return o.TokenBalances
 }
 
-// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
+// GetTokenBalancesOk returns a tuple with the TokenBalances field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UTXO) GetAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.Amount) {
+func (o *UTXO) GetTokenBalancesOk() ([]TokenBalance, bool) {
+	if o == nil || IsNil(o.TokenBalances) {
 		return nil, false
 	}
-	return o.Amount, true
+	return o.TokenBalances, true
 }
 
-// HasAmount returns a boolean if a field has been set.
-func (o *UTXO) HasAmount() bool {
-	if o != nil && !IsNil(o.Amount) {
+// HasTokenBalances returns a boolean if a field has been set.
+func (o *UTXO) HasTokenBalances() bool {
+	if o != nil && !IsNil(o.TokenBalances) {
 		return true
 	}
 
 	return false
 }
 
-// SetAmount gets a reference to the given string and assigns it to the Amount field.
-func (o *UTXO) SetAmount(v string) {
-	o.Amount = &v
+// SetTokenBalances gets a reference to the given []TokenBalance and assigns it to the TokenBalances field.
+func (o *UTXO) SetTokenBalances(v []TokenBalance) {
+	o.TokenBalances = v
 }
 
 // GetIsCoinbase returns the IsCoinbase field value if set, zero value otherwise.
@@ -207,6 +208,38 @@ func (o *UTXO) HasIsCoinbase() bool {
 // SetIsCoinbase gets a reference to the given bool and assigns it to the IsCoinbase field.
 func (o *UTXO) SetIsCoinbase(v bool) {
 	o.IsCoinbase = &v
+}
+
+// GetIsLocked returns the IsLocked field value if set, zero value otherwise.
+func (o *UTXO) GetIsLocked() bool {
+	if o == nil || IsNil(o.IsLocked) {
+		var ret bool
+		return ret
+	}
+	return *o.IsLocked
+}
+
+// GetIsLockedOk returns a tuple with the IsLocked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UTXO) GetIsLockedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsLocked) {
+		return nil, false
+	}
+	return o.IsLocked, true
+}
+
+// HasIsLocked returns a boolean if a field has been set.
+func (o *UTXO) HasIsLocked() bool {
+	if o != nil && !IsNil(o.IsLocked) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsLocked gets a reference to the given bool and assigns it to the IsLocked field.
+func (o *UTXO) SetIsLocked(v bool) {
+	o.IsLocked = &v
 }
 
 // GetConfirmedNumber returns the ConfirmedNumber field value if set, zero value otherwise.
@@ -260,11 +293,14 @@ func (o UTXO) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AddressStr) {
 		toSerialize["address_str"] = o.AddressStr
 	}
-	if !IsNil(o.Amount) {
-		toSerialize["amount"] = o.Amount
+	if !IsNil(o.TokenBalances) {
+		toSerialize["token_balances"] = o.TokenBalances
 	}
 	if !IsNil(o.IsCoinbase) {
 		toSerialize["is_coinbase"] = o.IsCoinbase
+	}
+	if !IsNil(o.IsLocked) {
+		toSerialize["is_locked"] = o.IsLocked
 	}
 	if !IsNil(o.ConfirmedNumber) {
 		toSerialize["confirmed_number"] = o.ConfirmedNumber

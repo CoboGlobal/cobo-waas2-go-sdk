@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WalletId** | **string** |  | 
+**WalletId** | **string** | The wallet ID. | 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
-**Name** | **string** |  | 
-**OrgId** | **string** | The owning custody organization id of the custodial wallet. | 
-**VaultId** | **string** | The owning mpc vault id of the mpc wallet. | 
-**Apikey** | **string** | The API Key for the exchange. | 
+**Name** | **string** | The wallet name. | 
+**OrgId** | **string** | The ID of the owning organization. | 
+**VaultId** | **string** | The ID of the owning Vault. | 
+**Apikey** | **string** | The API key of your exchange account. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
-**ParentWalletId** | Pointer to **string** | The parent wallet id for this wallet if presented. | [optional] 
+**ParentWalletId** | Pointer to **string** | The wallet ID of the Main Account, if applicable. | [optional] 
 **SubAccounts** | Pointer to [**[]ExchangeWalletInfoAllOfSubAccounts**](ExchangeWalletInfoAllOfSubAccounts.md) |  | [optional] 
 
 ## Methods

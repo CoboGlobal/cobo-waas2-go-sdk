@@ -4,8 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**GasLimit** | Pointer to **string** | The Limit of gas. | [optional] [default to "21000"]
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**GasLimit** | Pointer to **string** | The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units. | [optional] [default to "21000"]
 
 ## Methods
 
@@ -50,31 +49,6 @@ SetGasLimit sets GasLimit field to given value.
 `func (o *FeeData) HasGasLimit() bool`
 
 HasGasLimit returns a boolean if a field has been set.
-
-### GetFeeAmount
-
-`func (o *FeeData) GetFeeAmount() string`
-
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
-
-### GetFeeAmountOk
-
-`func (o *FeeData) GetFeeAmountOk() (*string, bool)`
-
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeAmount
-
-`func (o *FeeData) SetFeeAmount(v string)`
-
-SetFeeAmount sets FeeAmount field to given value.
-
-### HasFeeAmount
-
-`func (o *FeeData) HasFeeAmount() bool`
-
-HasFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

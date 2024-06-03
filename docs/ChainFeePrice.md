@@ -5,19 +5,18 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**MaxFee** | **string** | The highest Gas price paid for the transfer, unit GWei. | 
-**MaxPriorityFee** | **string** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
-**BaseFee** | **string** | The Base Fee of chain. | 
-**GasPrice** | **string** | The Price of Gas, unit GWei. | 
-**FeeRate** | **string** | The fee rate, unit sat/vB. | 
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**MaxPriorityFee** | **string** | The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction. | 
+**BaseFee** | **string** | The base fee of chain. | 
+**GasPrice** | **string** | The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | 
+**FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
 
 ## Methods
 
 ### NewChainFeePrice
 
-`func NewChainFeePrice(feeType FeeType, maxFee string, maxPriorityFee string, baseFee string, gasPrice string, feeRate string, ) *ChainFeePrice`
+`func NewChainFeePrice(feeType FeeType, maxPriorityFee string, baseFee string, gasPrice string, feeRate string, ) *ChainFeePrice`
 
 NewChainFeePrice instantiates a new ChainFeePrice object
 This constructor will assign default values to properties that have it defined,
@@ -76,26 +75,6 @@ SetFeeTokenId sets FeeTokenId field to given value.
 `func (o *ChainFeePrice) HasFeeTokenId() bool`
 
 HasFeeTokenId returns a boolean if a field has been set.
-
-### GetMaxFee
-
-`func (o *ChainFeePrice) GetMaxFee() string`
-
-GetMaxFee returns the MaxFee field if non-nil, zero value otherwise.
-
-### GetMaxFeeOk
-
-`func (o *ChainFeePrice) GetMaxFeeOk() (*string, bool)`
-
-GetMaxFeeOk returns a tuple with the MaxFee field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaxFee
-
-`func (o *ChainFeePrice) SetMaxFee(v string)`
-
-SetMaxFee sets MaxFee field to given value.
-
 
 ### GetMaxPriorityFee
 
@@ -177,30 +156,30 @@ and a boolean to check if the value has been set.
 SetFeeRate sets FeeRate field to given value.
 
 
-### GetFeeAmount
+### GetMaxFeeAmount
 
-`func (o *ChainFeePrice) GetFeeAmount() string`
+`func (o *ChainFeePrice) GetMaxFeeAmount() string`
 
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
+GetMaxFeeAmount returns the MaxFeeAmount field if non-nil, zero value otherwise.
 
-### GetFeeAmountOk
+### GetMaxFeeAmountOk
 
-`func (o *ChainFeePrice) GetFeeAmountOk() (*string, bool)`
+`func (o *ChainFeePrice) GetMaxFeeAmountOk() (*string, bool)`
 
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
+GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeeAmount
+### SetMaxFeeAmount
 
-`func (o *ChainFeePrice) SetFeeAmount(v string)`
+`func (o *ChainFeePrice) SetMaxFeeAmount(v string)`
 
-SetFeeAmount sets FeeAmount field to given value.
+SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasFeeAmount
+### HasMaxFeeAmount
 
-`func (o *ChainFeePrice) HasFeeAmount() bool`
+`func (o *ChainFeePrice) HasMaxFeeAmount() bool`
 
-HasFeeAmount returns a boolean if a field has been set.
+HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

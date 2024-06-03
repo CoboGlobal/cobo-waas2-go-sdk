@@ -18,13 +18,11 @@ import (
 // checks if the AddressTransferDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressTransferDestination{}
 
-// AddressTransferDestination The data for address destination.
+// AddressTransferDestination The data for address destination. Only one of account_output or utxo_outputs needed.
 type AddressTransferDestination struct {
 	DestinationType TransferDestinationType `json:"destination_type"`
-	// Destination address
-	AddressStr string `json:"address_str"`
-	// Destination address memo
-	Memo *string `json:"memo,omitempty"`
+	AccountOutput *AddressTransferDestinationAccountOutput `json:"account_output,omitempty"`
+	UtxoOutputs *AddressTransferDestinationUtxoOutputs `json:"utxo_outputs,omitempty"`
 }
 
 type _AddressTransferDestination AddressTransferDestination
@@ -33,10 +31,9 @@ type _AddressTransferDestination AddressTransferDestination
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddressTransferDestination(destinationType TransferDestinationType, addressStr string) *AddressTransferDestination {
+func NewAddressTransferDestination(destinationType TransferDestinationType) *AddressTransferDestination {
 	this := AddressTransferDestination{}
 	this.DestinationType = destinationType
-	this.AddressStr = addressStr
 	return &this
 }
 
@@ -72,60 +69,68 @@ func (o *AddressTransferDestination) SetDestinationType(v TransferDestinationTyp
 	o.DestinationType = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *AddressTransferDestination) GetAddressStr() string {
-	if o == nil {
-		var ret string
+// GetAccountOutput returns the AccountOutput field value if set, zero value otherwise.
+func (o *AddressTransferDestination) GetAccountOutput() AddressTransferDestinationAccountOutput {
+	if o == nil || IsNil(o.AccountOutput) {
+		var ret AddressTransferDestinationAccountOutput
 		return ret
 	}
-
-	return o.AddressStr
+	return *o.AccountOutput
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAccountOutputOk returns a tuple with the AccountOutput field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddressTransferDestination) GetAddressStrOk() (*string, bool) {
-	if o == nil {
+func (o *AddressTransferDestination) GetAccountOutputOk() (*AddressTransferDestinationAccountOutput, bool) {
+	if o == nil || IsNil(o.AccountOutput) {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return o.AccountOutput, true
 }
 
-// SetAddressStr sets field value
-func (o *AddressTransferDestination) SetAddressStr(v string) {
-	o.AddressStr = v
-}
-
-// GetMemo returns the Memo field value if set, zero value otherwise.
-func (o *AddressTransferDestination) GetMemo() string {
-	if o == nil || IsNil(o.Memo) {
-		var ret string
-		return ret
-	}
-	return *o.Memo
-}
-
-// GetMemoOk returns a tuple with the Memo field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AddressTransferDestination) GetMemoOk() (*string, bool) {
-	if o == nil || IsNil(o.Memo) {
-		return nil, false
-	}
-	return o.Memo, true
-}
-
-// HasMemo returns a boolean if a field has been set.
-func (o *AddressTransferDestination) HasMemo() bool {
-	if o != nil && !IsNil(o.Memo) {
+// HasAccountOutput returns a boolean if a field has been set.
+func (o *AddressTransferDestination) HasAccountOutput() bool {
+	if o != nil && !IsNil(o.AccountOutput) {
 		return true
 	}
 
 	return false
 }
 
-// SetMemo gets a reference to the given string and assigns it to the Memo field.
-func (o *AddressTransferDestination) SetMemo(v string) {
-	o.Memo = &v
+// SetAccountOutput gets a reference to the given AddressTransferDestinationAccountOutput and assigns it to the AccountOutput field.
+func (o *AddressTransferDestination) SetAccountOutput(v AddressTransferDestinationAccountOutput) {
+	o.AccountOutput = &v
+}
+
+// GetUtxoOutputs returns the UtxoOutputs field value if set, zero value otherwise.
+func (o *AddressTransferDestination) GetUtxoOutputs() AddressTransferDestinationUtxoOutputs {
+	if o == nil || IsNil(o.UtxoOutputs) {
+		var ret AddressTransferDestinationUtxoOutputs
+		return ret
+	}
+	return *o.UtxoOutputs
+}
+
+// GetUtxoOutputsOk returns a tuple with the UtxoOutputs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressTransferDestination) GetUtxoOutputsOk() (*AddressTransferDestinationUtxoOutputs, bool) {
+	if o == nil || IsNil(o.UtxoOutputs) {
+		return nil, false
+	}
+	return o.UtxoOutputs, true
+}
+
+// HasUtxoOutputs returns a boolean if a field has been set.
+func (o *AddressTransferDestination) HasUtxoOutputs() bool {
+	if o != nil && !IsNil(o.UtxoOutputs) {
+		return true
+	}
+
+	return false
+}
+
+// SetUtxoOutputs gets a reference to the given AddressTransferDestinationUtxoOutputs and assigns it to the UtxoOutputs field.
+func (o *AddressTransferDestination) SetUtxoOutputs(v AddressTransferDestinationUtxoOutputs) {
+	o.UtxoOutputs = &v
 }
 
 func (o AddressTransferDestination) MarshalJSON() ([]byte, error) {
@@ -139,9 +144,11 @@ func (o AddressTransferDestination) MarshalJSON() ([]byte, error) {
 func (o AddressTransferDestination) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["destination_type"] = o.DestinationType
-	toSerialize["address_str"] = o.AddressStr
-	if !IsNil(o.Memo) {
-		toSerialize["memo"] = o.Memo
+	if !IsNil(o.AccountOutput) {
+		toSerialize["account_output"] = o.AccountOutput
+	}
+	if !IsNil(o.UtxoOutputs) {
+		toSerialize["utxo_outputs"] = o.UtxoOutputs
 	}
 	return toSerialize, nil
 }
@@ -152,7 +159,6 @@ func (o *AddressTransferDestination) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"destination_type",
-		"address_str",
 	}
 
 	allProperties := make(map[string]interface{})

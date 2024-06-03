@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// AddressEncoding Encoding only apply to BTC-Liked chain
+// AddressEncoding This parameter only applies to BTC chains.
 type AddressEncoding string
 
 // List of AddressEncoding

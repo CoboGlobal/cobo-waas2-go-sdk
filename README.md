@@ -135,6 +135,7 @@ Class | Method | HTTP request | Description
 *DevelopersWebhooksAPI* | [**GetWebhookEventLogs**](docs/DevelopersWebhooksAPI.md#getwebhookeventlogs) | **Get** /webhooks/events/{event_id}/logs | List event logs by ID
 *DevelopersWebhooksAPI* | [**ListEvents**](docs/DevelopersWebhooksAPI.md#listevents) | **Get** /webhooks/events | List all events
 *DevelopersWebhooksAPI* | [**RetryWebhookEvent**](docs/DevelopersWebhooksAPI.md#retrywebhookevent) | **Post** /webhooks/events/{event_id}/retry | Retry event by ID
+*TransactionsAPI* | [**CancelTransactionById**](docs/TransactionsAPI.md#canceltransactionbyid) | **Post** /transactions/{transaction_id}/cancel | Cancel a transaction by ID
 *TransactionsAPI* | [**CreateSmartContractCallTransaction**](docs/TransactionsAPI.md#createsmartcontractcalltransaction) | **Post** /transactions/contract_call | Create a smart contract call transaction
 *TransactionsAPI* | [**CreateTransferTransaction**](docs/TransactionsAPI.md#createtransfertransaction) | **Post** /transactions/transfer | Create a transfer transaction
 *TransactionsAPI* | [**DropTransactionById**](docs/TransactionsAPI.md#droptransactionbyid) | **Post** /transactions/{transaction_id}/drop | Drop a transaction by ID
@@ -143,10 +144,9 @@ Class | Method | HTTP request | Description
 *TransactionsAPI* | [**GetTransactionById**](docs/TransactionsAPI.md#gettransactionbyid) | **Get** /transactions/{transaction_id} | Get transaction information by ID
 *TransactionsAPI* | [**ListTransactions**](docs/TransactionsAPI.md#listtransactions) | **Get** /transactions | List all transactions
 *TransactionsAPI* | [**ResendTransactionById**](docs/TransactionsAPI.md#resendtransactionbyid) | **Post** /transactions/{transaction_id}/resend | Resend a transaction by ID
-*TransactionsAPI* | [**RetryTransactionDoubleCheckById**](docs/TransactionsAPI.md#retrytransactiondoublecheckbyid) | **Post** /transactions/{transaction_id}/callback_confirmation/retry | Retry up a transaction double-check by ID
 *TransactionsAPI* | [**SpeedupTransactionById**](docs/TransactionsAPI.md#speeduptransactionbyid) | **Post** /transactions/{transaction_id}/speedup | Speed up a transaction by ID
 *WalletsAPI* | [**AddWalletAddress**](docs/WalletsAPI.md#addwalletaddress) | **Post** /wallets/{wallet_id}/addresses | Add address to wallet
-*WalletsAPI* | [**CreateWallet**](docs/WalletsAPI.md#createwallet) | **Post** /wallets | Create new wallet
+*WalletsAPI* | [**CreateWallet**](docs/WalletsAPI.md#createwallet) | **Post** /wallets | Create wallet
 *WalletsAPI* | [**DeleteWalletById**](docs/WalletsAPI.md#deletewalletbyid) | **Delete** /wallets/{wallet_id} | Delete wallet by ID
 *WalletsAPI* | [**GetAddressValidity**](docs/WalletsAPI.md#getaddressvalidity) | **Get** /wallets/address/validity | Check address validity
 *WalletsAPI* | [**GetChains**](docs/WalletsAPI.md#getchains) | **Get** /wallets/chains | List chain metadata
@@ -157,30 +157,31 @@ Class | Method | HTTP request | Description
 *WalletsAPI* | [**GetSupportedChains**](docs/WalletsAPI.md#getsupportedchains) | **Get** /wallets/supported_chains | List supported chains
 *WalletsAPI* | [**GetSupportedTokens**](docs/WalletsAPI.md#getsupportedtokens) | **Get** /wallets/supported_tokens | List supported tokens
 *WalletsAPI* | [**GetTokens**](docs/WalletsAPI.md#gettokens) | **Get** /wallets/tokens | List token metadata
-*WalletsAPI* | [**GetWalletAddressTokenBalances**](docs/WalletsAPI.md#getwalletaddresstokenbalances) | **Get** /wallets/{wallet_id}/addresses/{address_id}/tokens | List Token Balances by Address in Wallet
+*WalletsAPI* | [**GetWalletAddressTokenBalances**](docs/WalletsAPI.md#getwalletaddresstokenbalances) | **Get** /wallets/{wallet_id}/addresses/{address_id}/tokens | List token balances by address
 *WalletsAPI* | [**GetWalletById**](docs/WalletsAPI.md#getwalletbyid) | **Get** /wallets/{wallet_id} | Retrieve wallet information by ID
-*WalletsAPI* | [**GetWalletTokenBalances**](docs/WalletsAPI.md#getwallettokenbalances) | **Get** /wallets/{wallet_id}/tokens | List Token Balances in Wallet
+*WalletsAPI* | [**GetWalletTokenBalances**](docs/WalletsAPI.md#getwallettokenbalances) | **Get** /wallets/{wallet_id}/tokens | List token balances by wallet
 *WalletsAPI* | [**ListAddresses**](docs/WalletsAPI.md#listaddresses) | **Get** /wallets/{wallet_id}/addresses | List wallet addresses by wallet ID
 *WalletsAPI* | [**ListWallets**](docs/WalletsAPI.md#listwallets) | **Get** /wallets | List all wallets
+*WalletsAPI* | [**LockSpendableList**](docs/WalletsAPI.md#lockspendablelist) | **Post** /wallets/{wallet_id}/spendables/lock | Lock/Unlock the UTXOs in tx hash list
 *WalletsAPI* | [**UpdateWalletById**](docs/WalletsAPI.md#updatewalletbyid) | **Put** /wallets/{wallet_id} | Update wallet by ID
-*WalletsMPCWalletAPI* | [**CancelTssRequest**](docs/WalletsMPCWalletAPI.md#canceltssrequest) | **Put** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | cancel tss request
-*WalletsMPCWalletAPI* | [**CreateKeyGroup**](docs/WalletsMPCWalletAPI.md#createkeygroup) | **Post** /wallets/mpc/vaults/{vault_id}/key_groups | create a mpc key group
+*WalletsMPCWalletAPI* | [**CancelTssRequest**](docs/WalletsMPCWalletAPI.md#canceltssrequest) | **Put** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | Cancel a tss request
+*WalletsMPCWalletAPI* | [**CreateKeyGroup**](docs/WalletsMPCWalletAPI.md#createkeygroup) | **Post** /wallets/mpc/vaults/{vault_id}/key_groups | Create a mpc key group
 *WalletsMPCWalletAPI* | [**CreateMpcProject**](docs/WalletsMPCWalletAPI.md#creatempcproject) | **Post** /wallets/mpc/projects | Create a mpc project
 *WalletsMPCWalletAPI* | [**CreateMpcVault**](docs/WalletsMPCWalletAPI.md#creatempcvault) | **Post** /wallets/mpc/vaults | Create a mpc vault
 *WalletsMPCWalletAPI* | [**CreateTssRequest**](docs/WalletsMPCWalletAPI.md#createtssrequest) | **Post** /wallets/mpc/vaults/{vault_id}/tss_requests | Create a tss request to generate key secrets for a tss group
-*WalletsMPCWalletAPI* | [**DeleteKeyGroup**](docs/WalletsMPCWalletAPI.md#deletekeygroup) | **Delete** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | delete a mpc key group
-*WalletsMPCWalletAPI* | [**GetKeyGroup**](docs/WalletsMPCWalletAPI.md#getkeygroup) | **Get** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | get a mpc key group
-*WalletsMPCWalletAPI* | [**GetMpcProject**](docs/WalletsMPCWalletAPI.md#getmpcproject) | **Get** /wallets/mpc/projects/{project_id} | get a mpc project
-*WalletsMPCWalletAPI* | [**GetMpcVault**](docs/WalletsMPCWalletAPI.md#getmpcvault) | **Get** /wallets/mpc/vaults/{vault_id} | get a mpc vault
-*WalletsMPCWalletAPI* | [**GetTssRequest**](docs/WalletsMPCWalletAPI.md#gettssrequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | get a tss request
+*WalletsMPCWalletAPI* | [**DeleteKeyGroup**](docs/WalletsMPCWalletAPI.md#deletekeygroup) | **Delete** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | Delete a mpc key group
+*WalletsMPCWalletAPI* | [**GetKeyGroup**](docs/WalletsMPCWalletAPI.md#getkeygroup) | **Get** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | Get a mpc key group information by group id
+*WalletsMPCWalletAPI* | [**GetMpcProject**](docs/WalletsMPCWalletAPI.md#getmpcproject) | **Get** /wallets/mpc/projects/{project_id} | Get a mpc project information
+*WalletsMPCWalletAPI* | [**GetMpcVault**](docs/WalletsMPCWalletAPI.md#getmpcvault) | **Get** /wallets/mpc/vaults/{vault_id} | Get a mpc vault information
+*WalletsMPCWalletAPI* | [**GetTssRequest**](docs/WalletsMPCWalletAPI.md#gettssrequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | Get a tss request information
 *WalletsMPCWalletAPI* | [**ListCoboKeyHolder**](docs/WalletsMPCWalletAPI.md#listcobokeyholder) | **Get** /wallets/mpc/cobo_key_holders | List all cobo key holders
 *WalletsMPCWalletAPI* | [**ListKeyGroup**](docs/WalletsMPCWalletAPI.md#listkeygroup) | **Get** /wallets/mpc/vaults/{vault_id}/key_groups | List all mpc key groups
 *WalletsMPCWalletAPI* | [**ListMpcProject**](docs/WalletsMPCWalletAPI.md#listmpcproject) | **Get** /wallets/mpc/projects | List all mpc projects
 *WalletsMPCWalletAPI* | [**ListMpcVault**](docs/WalletsMPCWalletAPI.md#listmpcvault) | **Get** /wallets/mpc/vaults | List all mpc vaults
-*WalletsMPCWalletAPI* | [**ListTssRequest**](docs/WalletsMPCWalletAPI.md#listtssrequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests | List tss request information of a vault
-*WalletsMPCWalletAPI* | [**ModifyMpcVault**](docs/WalletsMPCWalletAPI.md#modifympcvault) | **Put** /wallets/mpc/vaults/{vault_id} | Modify a mpc vault
-*WalletsMPCWalletAPI* | [**UpdateKeyGroup**](docs/WalletsMPCWalletAPI.md#updatekeygroup) | **Put** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | update a mpc key group
-*WalletsMPCWalletAPI* | [**UpdateMpcProject**](docs/WalletsMPCWalletAPI.md#updatempcproject) | **Put** /wallets/mpc/projects/{project_id} | update a mpc project
+*WalletsMPCWalletAPI* | [**ListTssRequest**](docs/WalletsMPCWalletAPI.md#listtssrequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests | List tss request information by vault ID
+*WalletsMPCWalletAPI* | [**ModifyMpcVault**](docs/WalletsMPCWalletAPI.md#modifympcvault) | **Put** /wallets/mpc/vaults/{vault_id} | Update a mpc vault information
+*WalletsMPCWalletAPI* | [**UpdateKeyGroup**](docs/WalletsMPCWalletAPI.md#updatekeygroup) | **Put** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | Update a mpc key group information
+*WalletsMPCWalletAPI* | [**UpdateMpcProject**](docs/WalletsMPCWalletAPI.md#updatempcproject) | **Put** /wallets/mpc/projects/{project_id} | Update a mpc project
 
 
 ## Documentation For Models
@@ -189,15 +190,22 @@ Class | Method | HTTP request | Description
  - [AddressEncoding](docs/AddressEncoding.md)
  - [AddressInfo](docs/AddressInfo.md)
  - [AddressTransferDestination](docs/AddressTransferDestination.md)
+ - [AddressTransferDestinationAccountOutput](docs/AddressTransferDestinationAccountOutput.md)
+ - [AddressTransferDestinationUtxoOutputs](docs/AddressTransferDestinationUtxoOutputs.md)
+ - [AddressTransferDestinationUtxoOutputsOutputsInner](docs/AddressTransferDestinationUtxoOutputsOutputsInner.md)
  - [AddressTransferSource](docs/AddressTransferSource.md)
  - [AssetBalance](docs/AssetBalance.md)
  - [AssetInfo](docs/AssetInfo.md)
+ - [BaseContractCallSource](docs/BaseContractCallSource.md)
  - [BaseCreateWallet](docs/BaseCreateWallet.md)
  - [BaseTransactionAddress](docs/BaseTransactionAddress.md)
  - [BaseTransferSource](docs/BaseTransferSource.md)
  - [BaseWalletTransactionAddress](docs/BaseWalletTransactionAddress.md)
  - [ChainFeePrice](docs/ChainFeePrice.md)
  - [ChainInfo](docs/ChainInfo.md)
+ - [ContractCall](docs/ContractCall.md)
+ - [ContractCallDestination](docs/ContractCallDestination.md)
+ - [ContractCallSource](docs/ContractCallSource.md)
  - [CreateCustodialWallet](docs/CreateCustodialWallet.md)
  - [CreateExchangeWallet](docs/CreateExchangeWallet.md)
  - [CreateKeyGroupRequest](docs/CreateKeyGroupRequest.md)
@@ -251,6 +259,8 @@ Class | Method | HTTP request | Description
  - [ListEvents200Response](docs/ListEvents200Response.md)
  - [ListTransactions200Response](docs/ListTransactions200Response.md)
  - [ListWallets200Response](docs/ListWallets200Response.md)
+ - [LockSpendableList200Response](docs/LockSpendableList200Response.md)
+ - [LockSpendableListRequest](docs/LockSpendableListRequest.md)
  - [MPCProject](docs/MPCProject.md)
  - [MPCVault](docs/MPCVault.md)
  - [MPCVaultType](docs/MPCVaultType.md)
@@ -258,11 +268,18 @@ Class | Method | HTTP request | Description
  - [MPCWalletTransactionAddress](docs/MPCWalletTransactionAddress.md)
  - [MaxTransferableValue](docs/MaxTransferableValue.md)
  - [ModifyMpcVaultRequest](docs/ModifyMpcVaultRequest.md)
+ - [MpcContractCallSource](docs/MpcContractCallSource.md)
  - [MpcSigningGroup](docs/MpcSigningGroup.md)
  - [MpcTransferSource](docs/MpcTransferSource.md)
+ - [MpcTransferSourceAccountInput](docs/MpcTransferSourceAccountInput.md)
+ - [MpcTransferSourceUtxoInputs](docs/MpcTransferSourceUtxoInputs.md)
+ - [MpcTransferSourceUtxoInputsExcludedInputsInner](docs/MpcTransferSourceUtxoInputsExcludedInputsInner.md)
+ - [MpcTransferSourceUtxoInputsIncludedInputsInner](docs/MpcTransferSourceUtxoInputsIncludedInputsInner.md)
  - [Pagination](docs/Pagination.md)
  - [RetryWebhookEvent201Response](docs/RetryWebhookEvent201Response.md)
  - [RootPubkey](docs/RootPubkey.md)
+ - [SafeContractCallSource](docs/SafeContractCallSource.md)
+ - [SafeContractCallSourceAllOfDelegate](docs/SafeContractCallSourceAllOfDelegate.md)
  - [SafeTransactionAddress](docs/SafeTransactionAddress.md)
  - [SafeTransactionAddressAllOfDelegate](docs/SafeTransactionAddressAllOfDelegate.md)
  - [SafeTransferSource](docs/SafeTransferSource.md)
@@ -270,7 +287,8 @@ Class | Method | HTTP request | Description
  - [SafeWallet](docs/SafeWallet.md)
  - [SafeWalletAllOfInitiator](docs/SafeWalletAllOfInitiator.md)
  - [SignMessage](docs/SignMessage.md)
- - [SmartContractCall](docs/SmartContractCall.md)
+ - [SignMessageDestination](docs/SignMessageDestination.md)
+ - [SignMessageSource](docs/SignMessageSource.md)
  - [SmartContractWalletInfo](docs/SmartContractWalletInfo.md)
  - [SmartContractWalletOperationType](docs/SmartContractWalletOperationType.md)
  - [SmartContractWalletType](docs/SmartContractWalletType.md)

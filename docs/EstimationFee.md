@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **Slow** | Pointer to [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | [optional] 
 **Standard** | [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | 
 **Fast** | Pointer to [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | [optional] 
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
 
 ## Methods
 
@@ -145,30 +145,30 @@ SetFeeTokenId sets FeeTokenId field to given value.
 
 HasFeeTokenId returns a boolean if a field has been set.
 
-### GetFeeAmount
+### GetMaxFeeAmount
 
-`func (o *EstimationFee) GetFeeAmount() string`
+`func (o *EstimationFee) GetMaxFeeAmount() string`
 
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
+GetMaxFeeAmount returns the MaxFeeAmount field if non-nil, zero value otherwise.
 
-### GetFeeAmountOk
+### GetMaxFeeAmountOk
 
-`func (o *EstimationFee) GetFeeAmountOk() (*string, bool)`
+`func (o *EstimationFee) GetMaxFeeAmountOk() (*string, bool)`
 
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
+GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeeAmount
+### SetMaxFeeAmount
 
-`func (o *EstimationFee) SetFeeAmount(v string)`
+`func (o *EstimationFee) SetMaxFeeAmount(v string)`
 
-SetFeeAmount sets FeeAmount field to given value.
+SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasFeeAmount
+### HasMaxFeeAmount
 
-`func (o *EstimationFee) HasFeeAmount() bool`
+`func (o *EstimationFee) HasMaxFeeAmount() bool`
 
-HasFeeAmount returns a boolean if a field has been set.
+HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

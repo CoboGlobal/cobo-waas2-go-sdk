@@ -18,16 +18,17 @@ var _ MappedNullable = &UpdateWalletByIdRequest{}
 
 // UpdateWalletByIdRequest struct for UpdateWalletByIdRequest
 type UpdateWalletByIdRequest struct {
+	// The wallet name.
 	Name *string `json:"name,omitempty"`
-	// The API Key for the exchange.
+	// The API key of your exchange account.
 	Apikey *string `json:"apikey,omitempty"`
-	// The API Secret for the exchange.
+	// The API secret of your exchange account.
 	Secret *string `json:"secret,omitempty"`
-	// The passphrase for the exchange.
+	// The passphrase of your exchange account.
 	Passphrase *string `json:"passphrase,omitempty"`
 	// The ga_code for the exchange.
 	GaCode *string `json:"ga_code,omitempty"`
-	// The unique identifier associated with the exchange sub-account. It can be an email address, username, or a custom account ID.
+	// The Sub Account ID. It can be an email address, a user name, or a custom account ID.
 	SubAccountIds []string `json:"sub_account_ids,omitempty"`
 }
 

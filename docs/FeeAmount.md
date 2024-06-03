@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewFeeAmountWithDefaults instantiates a new FeeAmount object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetFeeAmount
+### GetMaxFeeAmount
 
-`func (o *FeeAmount) GetFeeAmount() string`
+`func (o *FeeAmount) GetMaxFeeAmount() string`
 
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
+GetMaxFeeAmount returns the MaxFeeAmount field if non-nil, zero value otherwise.
 
-### GetFeeAmountOk
+### GetMaxFeeAmountOk
 
-`func (o *FeeAmount) GetFeeAmountOk() (*string, bool)`
+`func (o *FeeAmount) GetMaxFeeAmountOk() (*string, bool)`
 
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
+GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeeAmount
+### SetMaxFeeAmount
 
-`func (o *FeeAmount) SetFeeAmount(v string)`
+`func (o *FeeAmount) SetMaxFeeAmount(v string)`
 
-SetFeeAmount sets FeeAmount field to given value.
+SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasFeeAmount
+### HasMaxFeeAmount
 
-`func (o *FeeAmount) HasFeeAmount() bool`
+`func (o *FeeAmount) HasMaxFeeAmount() bool`
 
-HasFeeAmount returns a boolean if a field has been set.
+HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

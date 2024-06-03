@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** |  | 
-**WalletType** | **string** |  | 
+**Name** | **string** | The wallet name. | 
+**WalletType** | **string** | The wallet type. | 
 **WalletSubtype** | **string** |  | 
-**VaultId** | **string** | The owning mpc vault id of the mpc wallet. | 
+**VaultId** | **string** | The ID of the owning vault. | 
 
 ## Methods
 

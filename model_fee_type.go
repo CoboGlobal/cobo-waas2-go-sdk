@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// FeeType The fee type used
+// FeeType The fee type.
 type FeeType string
 
 // List of FeeType

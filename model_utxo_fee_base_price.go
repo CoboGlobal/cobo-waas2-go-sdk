@@ -18,11 +18,11 @@ import (
 // checks if the UtxoFeeBasePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UtxoFeeBasePrice{}
 
-// UtxoFeeBasePrice The legacy fee price for estimate fees or transfer.
+// UtxoFeeBasePrice The base transaction fee for UTXO-based chains.
 type UtxoFeeBasePrice struct {
-	// ID of the fee token. Unique in all chains scope.
+	// The token ID of the transaction fee. Unique in all chains scope.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The fee rate, unit sat/vB.
+	// The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
 }
 

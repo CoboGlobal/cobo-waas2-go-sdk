@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WalletId** | **string** |  | 
-**AccountId** | **string** | The unique identifier associated with the exchange sub-account. It can be an email address, username, or a custom account ID. | 
+**WalletId** | **string** | The wallet ID of the Sub Account. | 
+**AccountId** | **string** | The unique identifier associated with the Sub Account. It can be an email address, a user name, or a custom account ID. | 
 
 ## Methods
 

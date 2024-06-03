@@ -18,7 +18,7 @@ import (
 // checks if the UtxoFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UtxoFee{}
 
-// UtxoFee The UTXO fee for transfer.
+// UtxoFee The estimated transaction fee for UTXO-based chains.
 type UtxoFee struct {
 	FeeType FeeType `json:"fee_type"`
 	Slow *UtxoFeeSlow `json:"slow,omitempty"`

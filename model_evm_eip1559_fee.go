@@ -18,7 +18,7 @@ import (
 // checks if the EvmEip1559Fee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEip1559Fee{}
 
-// EvmEip1559Fee The eip1559 fee data for estimate fees or transfer.
+// EvmEip1559Fee The estimated transaction fee when using the EIP 1559 method.
 type EvmEip1559Fee struct {
 	FeeType FeeType `json:"fee_type"`
 	Slow *EvmEip1559FeeSlow `json:"slow,omitempty"`

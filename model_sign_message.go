@@ -23,17 +23,10 @@ type SignMessage struct {
 	// Unique id of the request.
 	RequestId string `json:"request_id"`
 	RequestType string `json:"request_type"`
-	// Unique id of the wallet to sign message.
-	FromWalletId *string `json:"from_wallet_id,omitempty"`
-	// signing address
-	FromAddressStr *string `json:"from_address_str,omitempty"`
 	// The blockchain on which the token operates.
 	ChainId string `json:"chain_id"`
-	// Raw data to be signed, Base 64 encoded
-	Message *string `json:"message,omitempty"`
-	// Structured data to be signed, JSON encoded
-	StructuredData *string `json:"structured_data,omitempty"`
-	MpcUsedKeyGroup *MpcSigningGroup `json:"mpc_used_key_group,omitempty"`
+	Source *SignMessageSource `json:"source,omitempty"`
+	Destination *SignMessageDestination `json:"destination,omitempty"`
 }
 
 type _SignMessage SignMessage
@@ -106,70 +99,6 @@ func (o *SignMessage) SetRequestType(v string) {
 	o.RequestType = v
 }
 
-// GetFromWalletId returns the FromWalletId field value if set, zero value otherwise.
-func (o *SignMessage) GetFromWalletId() string {
-	if o == nil || IsNil(o.FromWalletId) {
-		var ret string
-		return ret
-	}
-	return *o.FromWalletId
-}
-
-// GetFromWalletIdOk returns a tuple with the FromWalletId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SignMessage) GetFromWalletIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FromWalletId) {
-		return nil, false
-	}
-	return o.FromWalletId, true
-}
-
-// HasFromWalletId returns a boolean if a field has been set.
-func (o *SignMessage) HasFromWalletId() bool {
-	if o != nil && !IsNil(o.FromWalletId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFromWalletId gets a reference to the given string and assigns it to the FromWalletId field.
-func (o *SignMessage) SetFromWalletId(v string) {
-	o.FromWalletId = &v
-}
-
-// GetFromAddressStr returns the FromAddressStr field value if set, zero value otherwise.
-func (o *SignMessage) GetFromAddressStr() string {
-	if o == nil || IsNil(o.FromAddressStr) {
-		var ret string
-		return ret
-	}
-	return *o.FromAddressStr
-}
-
-// GetFromAddressStrOk returns a tuple with the FromAddressStr field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SignMessage) GetFromAddressStrOk() (*string, bool) {
-	if o == nil || IsNil(o.FromAddressStr) {
-		return nil, false
-	}
-	return o.FromAddressStr, true
-}
-
-// HasFromAddressStr returns a boolean if a field has been set.
-func (o *SignMessage) HasFromAddressStr() bool {
-	if o != nil && !IsNil(o.FromAddressStr) {
-		return true
-	}
-
-	return false
-}
-
-// SetFromAddressStr gets a reference to the given string and assigns it to the FromAddressStr field.
-func (o *SignMessage) SetFromAddressStr(v string) {
-	o.FromAddressStr = &v
-}
-
 // GetChainId returns the ChainId field value
 func (o *SignMessage) GetChainId() string {
 	if o == nil {
@@ -194,100 +123,68 @@ func (o *SignMessage) SetChainId(v string) {
 	o.ChainId = v
 }
 
-// GetMessage returns the Message field value if set, zero value otherwise.
-func (o *SignMessage) GetMessage() string {
-	if o == nil || IsNil(o.Message) {
-		var ret string
+// GetSource returns the Source field value if set, zero value otherwise.
+func (o *SignMessage) GetSource() SignMessageSource {
+	if o == nil || IsNil(o.Source) {
+		var ret SignMessageSource
 		return ret
 	}
-	return *o.Message
+	return *o.Source
 }
 
-// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// GetSourceOk returns a tuple with the Source field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SignMessage) GetMessageOk() (*string, bool) {
-	if o == nil || IsNil(o.Message) {
+func (o *SignMessage) GetSourceOk() (*SignMessageSource, bool) {
+	if o == nil || IsNil(o.Source) {
 		return nil, false
 	}
-	return o.Message, true
+	return o.Source, true
 }
 
-// HasMessage returns a boolean if a field has been set.
-func (o *SignMessage) HasMessage() bool {
-	if o != nil && !IsNil(o.Message) {
+// HasSource returns a boolean if a field has been set.
+func (o *SignMessage) HasSource() bool {
+	if o != nil && !IsNil(o.Source) {
 		return true
 	}
 
 	return false
 }
 
-// SetMessage gets a reference to the given string and assigns it to the Message field.
-func (o *SignMessage) SetMessage(v string) {
-	o.Message = &v
+// SetSource gets a reference to the given SignMessageSource and assigns it to the Source field.
+func (o *SignMessage) SetSource(v SignMessageSource) {
+	o.Source = &v
 }
 
-// GetStructuredData returns the StructuredData field value if set, zero value otherwise.
-func (o *SignMessage) GetStructuredData() string {
-	if o == nil || IsNil(o.StructuredData) {
-		var ret string
+// GetDestination returns the Destination field value if set, zero value otherwise.
+func (o *SignMessage) GetDestination() SignMessageDestination {
+	if o == nil || IsNil(o.Destination) {
+		var ret SignMessageDestination
 		return ret
 	}
-	return *o.StructuredData
+	return *o.Destination
 }
 
-// GetStructuredDataOk returns a tuple with the StructuredData field value if set, nil otherwise
+// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SignMessage) GetStructuredDataOk() (*string, bool) {
-	if o == nil || IsNil(o.StructuredData) {
+func (o *SignMessage) GetDestinationOk() (*SignMessageDestination, bool) {
+	if o == nil || IsNil(o.Destination) {
 		return nil, false
 	}
-	return o.StructuredData, true
+	return o.Destination, true
 }
 
-// HasStructuredData returns a boolean if a field has been set.
-func (o *SignMessage) HasStructuredData() bool {
-	if o != nil && !IsNil(o.StructuredData) {
+// HasDestination returns a boolean if a field has been set.
+func (o *SignMessage) HasDestination() bool {
+	if o != nil && !IsNil(o.Destination) {
 		return true
 	}
 
 	return false
 }
 
-// SetStructuredData gets a reference to the given string and assigns it to the StructuredData field.
-func (o *SignMessage) SetStructuredData(v string) {
-	o.StructuredData = &v
-}
-
-// GetMpcUsedKeyGroup returns the MpcUsedKeyGroup field value if set, zero value otherwise.
-func (o *SignMessage) GetMpcUsedKeyGroup() MpcSigningGroup {
-	if o == nil || IsNil(o.MpcUsedKeyGroup) {
-		var ret MpcSigningGroup
-		return ret
-	}
-	return *o.MpcUsedKeyGroup
-}
-
-// GetMpcUsedKeyGroupOk returns a tuple with the MpcUsedKeyGroup field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SignMessage) GetMpcUsedKeyGroupOk() (*MpcSigningGroup, bool) {
-	if o == nil || IsNil(o.MpcUsedKeyGroup) {
-		return nil, false
-	}
-	return o.MpcUsedKeyGroup, true
-}
-
-// HasMpcUsedKeyGroup returns a boolean if a field has been set.
-func (o *SignMessage) HasMpcUsedKeyGroup() bool {
-	if o != nil && !IsNil(o.MpcUsedKeyGroup) {
-		return true
-	}
-
-	return false
-}
-
-// SetMpcUsedKeyGroup gets a reference to the given MpcSigningGroup and assigns it to the MpcUsedKeyGroup field.
-func (o *SignMessage) SetMpcUsedKeyGroup(v MpcSigningGroup) {
-	o.MpcUsedKeyGroup = &v
+// SetDestination gets a reference to the given SignMessageDestination and assigns it to the Destination field.
+func (o *SignMessage) SetDestination(v SignMessageDestination) {
+	o.Destination = &v
 }
 
 func (o SignMessage) MarshalJSON() ([]byte, error) {
@@ -302,21 +199,12 @@ func (o SignMessage) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
 	toSerialize["request_type"] = o.RequestType
-	if !IsNil(o.FromWalletId) {
-		toSerialize["from_wallet_id"] = o.FromWalletId
-	}
-	if !IsNil(o.FromAddressStr) {
-		toSerialize["from_address_str"] = o.FromAddressStr
-	}
 	toSerialize["chain_id"] = o.ChainId
-	if !IsNil(o.Message) {
-		toSerialize["message"] = o.Message
+	if !IsNil(o.Source) {
+		toSerialize["source"] = o.Source
 	}
-	if !IsNil(o.StructuredData) {
-		toSerialize["structured_data"] = o.StructuredData
-	}
-	if !IsNil(o.MpcUsedKeyGroup) {
-		toSerialize["mpc_used_key_group"] = o.MpcUsedKeyGroup
+	if !IsNil(o.Destination) {
+		toSerialize["destination"] = o.Destination
 	}
 	return toSerialize, nil
 }

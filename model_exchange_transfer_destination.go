@@ -25,6 +25,8 @@ type ExchangeTransferDestination struct {
 	WalletId string `json:"wallet_id"`
 	// Exchange trading account or any sub wallet info for transfer.
 	SubWalletId string `json:"sub_wallet_id"`
+	// Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5) 
+	Amount *string `json:"amount,omitempty"`
 }
 
 type _ExchangeTransferDestination ExchangeTransferDestination
@@ -121,6 +123,38 @@ func (o *ExchangeTransferDestination) SetSubWalletId(v string) {
 	o.SubWalletId = v
 }
 
+// GetAmount returns the Amount field value if set, zero value otherwise.
+func (o *ExchangeTransferDestination) GetAmount() string {
+	if o == nil || IsNil(o.Amount) {
+		var ret string
+		return ret
+	}
+	return *o.Amount
+}
+
+// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ExchangeTransferDestination) GetAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.Amount) {
+		return nil, false
+	}
+	return o.Amount, true
+}
+
+// HasAmount returns a boolean if a field has been set.
+func (o *ExchangeTransferDestination) HasAmount() bool {
+	if o != nil && !IsNil(o.Amount) {
+		return true
+	}
+
+	return false
+}
+
+// SetAmount gets a reference to the given string and assigns it to the Amount field.
+func (o *ExchangeTransferDestination) SetAmount(v string) {
+	o.Amount = &v
+}
+
 func (o ExchangeTransferDestination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -134,6 +168,9 @@ func (o ExchangeTransferDestination) ToMap() (map[string]interface{}, error) {
 	toSerialize["destination_type"] = o.DestinationType
 	toSerialize["wallet_id"] = o.WalletId
 	toSerialize["sub_wallet_id"] = o.SubWalletId
+	if !IsNil(o.Amount) {
+		toSerialize["amount"] = o.Amount
+	}
 	return toSerialize, nil
 }
 

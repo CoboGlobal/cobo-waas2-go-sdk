@@ -16,12 +16,12 @@ import (
 // checks if the MaxTransferableValue type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MaxTransferableValue{}
 
-// MaxTransferableValue max send value and fee.
+// MaxTransferableValue The maximum amount that you can transfer from the specified wallet address, along with the corresponding transaction fee.
 type MaxTransferableValue struct {
-	// token name.
+	// The token name.
 	TokenId *string `json:"token_id,omitempty"`
-	// the maximum sendable value for the given address or current wallet.
-	MaxSendValue *string `json:"max_send_value,omitempty"`
+	// the maximum transferable value for the given address or current wallet.
+	MaxTransferableValue *string `json:"max_transferable_value,omitempty"`
 	Fee *TransactionFee `json:"fee,omitempty"`
 }
 
@@ -74,36 +74,36 @@ func (o *MaxTransferableValue) SetTokenId(v string) {
 	o.TokenId = &v
 }
 
-// GetMaxSendValue returns the MaxSendValue field value if set, zero value otherwise.
-func (o *MaxTransferableValue) GetMaxSendValue() string {
-	if o == nil || IsNil(o.MaxSendValue) {
+// GetMaxTransferableValue returns the MaxTransferableValue field value if set, zero value otherwise.
+func (o *MaxTransferableValue) GetMaxTransferableValue() string {
+	if o == nil || IsNil(o.MaxTransferableValue) {
 		var ret string
 		return ret
 	}
-	return *o.MaxSendValue
+	return *o.MaxTransferableValue
 }
 
-// GetMaxSendValueOk returns a tuple with the MaxSendValue field value if set, nil otherwise
+// GetMaxTransferableValueOk returns a tuple with the MaxTransferableValue field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MaxTransferableValue) GetMaxSendValueOk() (*string, bool) {
-	if o == nil || IsNil(o.MaxSendValue) {
+func (o *MaxTransferableValue) GetMaxTransferableValueOk() (*string, bool) {
+	if o == nil || IsNil(o.MaxTransferableValue) {
 		return nil, false
 	}
-	return o.MaxSendValue, true
+	return o.MaxTransferableValue, true
 }
 
-// HasMaxSendValue returns a boolean if a field has been set.
-func (o *MaxTransferableValue) HasMaxSendValue() bool {
-	if o != nil && !IsNil(o.MaxSendValue) {
+// HasMaxTransferableValue returns a boolean if a field has been set.
+func (o *MaxTransferableValue) HasMaxTransferableValue() bool {
+	if o != nil && !IsNil(o.MaxTransferableValue) {
 		return true
 	}
 
 	return false
 }
 
-// SetMaxSendValue gets a reference to the given string and assigns it to the MaxSendValue field.
-func (o *MaxTransferableValue) SetMaxSendValue(v string) {
-	o.MaxSendValue = &v
+// SetMaxTransferableValue gets a reference to the given string and assigns it to the MaxTransferableValue field.
+func (o *MaxTransferableValue) SetMaxTransferableValue(v string) {
+	o.MaxTransferableValue = &v
 }
 
 // GetFee returns the Fee field value if set, zero value otherwise.
@@ -151,8 +151,8 @@ func (o MaxTransferableValue) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TokenId) {
 		toSerialize["token_id"] = o.TokenId
 	}
-	if !IsNil(o.MaxSendValue) {
-		toSerialize["max_send_value"] = o.MaxSendValue
+	if !IsNil(o.MaxTransferableValue) {
+		toSerialize["max_transferable_value"] = o.MaxTransferableValue
 	}
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee

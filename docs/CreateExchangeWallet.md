@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** |  | 
-**WalletType** | **string** |  | 
-**WalletSubtype** | **string** |  | 
+**Name** | **string** | The wallet name. | 
+**WalletType** | **string** | The wallet type. | 
+**WalletSubtype** | **string** | The wallet subtype. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
-**Apikey** | **string** | The API Key for the exchange. | 
-**Secret** | **string** | The API Secret for the exchange. | 
-**Passphrase** | Pointer to **string** | The passphrase for the exchange. | [optional] 
+**Apikey** | **string** | The API key of your exchange account. | 
+**Secret** | **string** | The API secret of your exchange account. | 
+**Passphrase** | Pointer to **string** | The passphrase of your exchange account. | [optional] 
 **GaCode** | Pointer to **string** | The ga_code for the exchange. | [optional] 
-**SubAccountIds** | Pointer to **[]string** | The unique identifier associated with the exchange sub-account. It can be an email address, username, or a custom account ID. | [optional] 
+**SubAccountIds** | Pointer to **[]string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. | [optional] 
 
 ## Methods
 

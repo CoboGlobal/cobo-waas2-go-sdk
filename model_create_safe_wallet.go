@@ -20,21 +20,24 @@ var _ MappedNullable = &CreateSafeWallet{}
 
 // CreateSafeWallet struct for CreateSafeWallet
 type CreateSafeWallet struct {
+	// The wallet name.
 	Name string `json:"name"`
+	// The Smart Contract Wallet type.
 	WalletType string `json:"wallet_type"`
+	// The Smart Contract Wallet subtype.
 	WalletSubtype string `json:"wallet_subtype"`
-	// The label of the wallet.
+	// The wallet label.
 	Label *string `json:"label,omitempty"`
-	// The chain id the wallet is on.
+	// The ID of the chain that the wallet operates on.
 	ChainId string `json:"chain_id"`
 	SmartContractWalletType SmartContractWalletType `json:"smart_contract_wallet_type"`
-	// The address of the smart contract wallet. If this is not provided, WaaS 2.0 will create a new safe wallet and setup cobo safe module for user. In this case, threshold, owners is required.
+	// The address of the Smart Contract Wallet. If this is not provided, Cobo will create a new Safe{Wallet} and set up Cobo Safe for you. In that case, the `threshold` and `owners` fields are required.
 	SafeAddress *string `json:"safe_address,omitempty"`
-	// The owners of the smart contract wallet. This MUST be provided when user want to create a new safe wallet.
+	// The owners of the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.
 	Owners []string `json:"owners,omitempty"`
-	// The threshold of required confirmations for the smart contract wallet. This MUST be provided when user want to create a new safe wallet.
+	// The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}. 
 	Threshold *int32 `json:"threshold,omitempty"`
-	// The address of the cobo safe module. Cobo safe module must has been created & enabled when import a existing safe wallet.
+	// The address of Cobo Safe. If you are importing an existing Safe{Wallet}, Cobo Safe must has been created and enabled.
 	CoboSafeAddress *string `json:"cobo_safe_address,omitempty"`
 	Initiator *SafeWalletAllOfInitiator `json:"initiator,omitempty"`
 }

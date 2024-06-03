@@ -20,10 +20,12 @@ var _ MappedNullable = &CreateMpcWallet{}
 
 // CreateMpcWallet struct for CreateMpcWallet
 type CreateMpcWallet struct {
+	// The wallet name.
 	Name string `json:"name"`
+	// The wallet type.
 	WalletType string `json:"wallet_type"`
 	WalletSubtype string `json:"wallet_subtype"`
-	// The owning mpc vault id of the mpc wallet.
+	// The ID of the owning vault.
 	VaultId string `json:"vault_id"`
 }
 

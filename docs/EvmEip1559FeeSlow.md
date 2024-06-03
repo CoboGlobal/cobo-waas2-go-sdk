@@ -4,18 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**MaxFee** | **string** | The highest Gas price paid for the transfer, unit GWei. | 
-**MaxPriorityFee** | **string** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
-**BaseFee** | **string** | The Base Fee of chain. | 
-**GasLimit** | Pointer to **string** | The Limit of gas. | [optional] [default to "21000"]
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**MaxPriorityFee** | **string** | The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction. | 
+**BaseFee** | **string** | The base fee of chain. | 
+**GasLimit** | Pointer to **string** | The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units. | [optional] [default to "21000"]
 
 ## Methods
 
 ### NewEvmEip1559FeeSlow
 
-`func NewEvmEip1559FeeSlow(maxFee string, maxPriorityFee string, baseFee string, ) *EvmEip1559FeeSlow`
+`func NewEvmEip1559FeeSlow(maxPriorityFee string, baseFee string, ) *EvmEip1559FeeSlow`
 
 NewEvmEip1559FeeSlow instantiates a new EvmEip1559FeeSlow object
 This constructor will assign default values to properties that have it defined,
@@ -54,26 +52,6 @@ SetFeeTokenId sets FeeTokenId field to given value.
 `func (o *EvmEip1559FeeSlow) HasFeeTokenId() bool`
 
 HasFeeTokenId returns a boolean if a field has been set.
-
-### GetMaxFee
-
-`func (o *EvmEip1559FeeSlow) GetMaxFee() string`
-
-GetMaxFee returns the MaxFee field if non-nil, zero value otherwise.
-
-### GetMaxFeeOk
-
-`func (o *EvmEip1559FeeSlow) GetMaxFeeOk() (*string, bool)`
-
-GetMaxFeeOk returns a tuple with the MaxFee field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaxFee
-
-`func (o *EvmEip1559FeeSlow) SetMaxFee(v string)`
-
-SetMaxFee sets MaxFee field to given value.
-
 
 ### GetMaxPriorityFee
 
@@ -139,31 +117,6 @@ SetGasLimit sets GasLimit field to given value.
 `func (o *EvmEip1559FeeSlow) HasGasLimit() bool`
 
 HasGasLimit returns a boolean if a field has been set.
-
-### GetFeeAmount
-
-`func (o *EvmEip1559FeeSlow) GetFeeAmount() string`
-
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
-
-### GetFeeAmountOk
-
-`func (o *EvmEip1559FeeSlow) GetFeeAmountOk() (*string, bool)`
-
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeAmount
-
-`func (o *EvmEip1559FeeSlow) SetFeeAmount(v string)`
-
-SetFeeAmount sets FeeAmount field to given value.
-
-### HasFeeAmount
-
-`func (o *EvmEip1559FeeSlow) HasFeeAmount() bool`
-
-HasFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

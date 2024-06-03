@@ -18,7 +18,7 @@ import (
 // checks if the EvmLegacyFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmLegacyFee{}
 
-// EvmLegacyFee The legacy fee data for estimate fees or transfer.
+// EvmLegacyFee The estimated transaction fee when using the legacy method.
 type EvmLegacyFee struct {
 	FeeType FeeType `json:"fee_type"`
 	Slow *EvmLegacyFeeSlow `json:"slow,omitempty"`

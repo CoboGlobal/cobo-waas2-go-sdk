@@ -6,14 +6,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **WalletId** | **string** | Unique id of the wallet to transfer from. | 
-**AddressStr** | **string** | From address | 
+**AccountInput** | Pointer to [**MpcTransferSourceAccountInput**](MpcTransferSourceAccountInput.md) |  | [optional] 
+**UtxoInputs** | Pointer to [**MpcTransferSourceUtxoInputs**](MpcTransferSourceUtxoInputs.md) |  | [optional] 
 **MpcUsedKeyGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 
 ## Methods
 
 ### NewMpcTransferSource
 
-`func NewMpcTransferSource(sourceType WalletSubtype, walletId string, addressStr string, ) *MpcTransferSource`
+`func NewMpcTransferSource(sourceType WalletSubtype, walletId string, ) *MpcTransferSource`
 
 NewMpcTransferSource instantiates a new MpcTransferSource object
 This constructor will assign default values to properties that have it defined,
@@ -68,25 +69,55 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetAddressStr
+### GetAccountInput
 
-`func (o *MpcTransferSource) GetAddressStr() string`
+`func (o *MpcTransferSource) GetAccountInput() MpcTransferSourceAccountInput`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAccountInput returns the AccountInput field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAccountInputOk
 
-`func (o *MpcTransferSource) GetAddressStrOk() (*string, bool)`
+`func (o *MpcTransferSource) GetAccountInputOk() (*MpcTransferSourceAccountInput, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAccountInputOk returns a tuple with the AccountInput field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAccountInput
 
-`func (o *MpcTransferSource) SetAddressStr(v string)`
+`func (o *MpcTransferSource) SetAccountInput(v MpcTransferSourceAccountInput)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAccountInput sets AccountInput field to given value.
 
+### HasAccountInput
+
+`func (o *MpcTransferSource) HasAccountInput() bool`
+
+HasAccountInput returns a boolean if a field has been set.
+
+### GetUtxoInputs
+
+`func (o *MpcTransferSource) GetUtxoInputs() MpcTransferSourceUtxoInputs`
+
+GetUtxoInputs returns the UtxoInputs field if non-nil, zero value otherwise.
+
+### GetUtxoInputsOk
+
+`func (o *MpcTransferSource) GetUtxoInputsOk() (*MpcTransferSourceUtxoInputs, bool)`
+
+GetUtxoInputsOk returns a tuple with the UtxoInputs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUtxoInputs
+
+`func (o *MpcTransferSource) SetUtxoInputs(v MpcTransferSourceUtxoInputs)`
+
+SetUtxoInputs sets UtxoInputs field to given value.
+
+### HasUtxoInputs
+
+`func (o *MpcTransferSource) HasUtxoInputs() bool`
+
+HasUtxoInputs returns a boolean if a field has been set.
 
 ### GetMpcUsedKeyGroup
 

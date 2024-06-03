@@ -4,6 +4,7 @@ All URIs are relative to *https://api.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CancelTransactionById**](TransactionsAPI.md#CancelTransactionById) | **Post** /transactions/{transaction_id}/cancel | Cancel a transaction by ID
 [**CreateSmartContractCallTransaction**](TransactionsAPI.md#CreateSmartContractCallTransaction) | **Post** /transactions/contract_call | Create a smart contract call transaction
 [**CreateTransferTransaction**](TransactionsAPI.md#CreateTransferTransaction) | **Post** /transactions/transfer | Create a transfer transaction
 [**DropTransactionById**](TransactionsAPI.md#DropTransactionById) | **Post** /transactions/{transaction_id}/drop | Drop a transaction by ID
@@ -12,14 +13,90 @@ Method | HTTP request | Description
 [**GetTransactionById**](TransactionsAPI.md#GetTransactionById) | **Get** /transactions/{transaction_id} | Get transaction information by ID
 [**ListTransactions**](TransactionsAPI.md#ListTransactions) | **Get** /transactions | List all transactions
 [**ResendTransactionById**](TransactionsAPI.md#ResendTransactionById) | **Post** /transactions/{transaction_id}/resend | Resend a transaction by ID
-[**RetryTransactionDoubleCheckById**](TransactionsAPI.md#RetryTransactionDoubleCheckById) | **Post** /transactions/{transaction_id}/callback_confirmation/retry | Retry up a transaction double-check by ID
 [**SpeedupTransactionById**](TransactionsAPI.md#SpeedupTransactionById) | **Post** /transactions/{transaction_id}/speedup | Speed up a transaction by ID
 
 
 
+## CancelTransactionById
+
+> CreateTransferTransaction201Response CancelTransactionById(ctx, transactionId).Execute()
+
+Cancel a transaction by ID
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+)
+
+func main() {
+	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
+
+	configuration := CoboWaas2.NewConfiguration()
+	apiClient := CoboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.CancelTransactionById(ctx, transactionId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.CancelTransactionById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CancelTransactionById`: CreateTransferTransaction201Response
+	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.CancelTransactionById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**transactionId** | **string** | Unique id of the transaction | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCancelTransactionByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**CreateTransferTransaction201Response**](CreateTransferTransaction201Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## CreateSmartContractCallTransaction
 
-> CreateTransferTransaction201Response CreateSmartContractCallTransaction(ctx).SmartContractCall(smartContractCall).Execute()
+> CreateTransferTransaction201Response CreateSmartContractCallTransaction(ctx).ContractCall(contractCall).Execute()
 
 Create a smart contract call transaction
 
@@ -39,7 +116,7 @@ import (
 )
 
 func main() {
-	smartContractCall := *CoboWaas2.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@6aea99e7)) // SmartContractCall | The request body to create a smart contract transaction (optional)
+	contractCall := *CoboWaas2.NewContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "ETH", CoboWaas2.ContractCallSource{MpcContractCallSource: CoboWaas2.NewMpcContractCallSource("Org-Controlled", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", *CoboWaas2.NewMpcSigningGroup())}) // ContractCall | The request body to create a smart contract transaction (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -49,7 +126,7 @@ func main() {
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
-	resp, r, err := apiClient.TransactionsAPI.CreateSmartContractCallTransaction(ctx).SmartContractCall(smartContractCall).Execute()
+	resp, r, err := apiClient.TransactionsAPI.CreateSmartContractCallTransaction(ctx).ContractCall(contractCall).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.CreateSmartContractCallTransaction``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -70,7 +147,7 @@ Other parameters are passed through a pointer to a apiCreateSmartContractCallTra
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **smartContractCall** | [**SmartContractCall**](SmartContractCall.md) | The request body to create a smart contract transaction | 
+ **contractCall** | [**ContractCall**](ContractCall.md) | The request body to create a smart contract transaction | 
 
 ### Return type
 
@@ -112,7 +189,7 @@ import (
 )
 
 func main() {
-	transfer := *CoboWaas2.NewTransfer("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", CoboWaas2.TransferSource{BaseTransferSource: CoboWaas2.NewBaseTransferSource(CoboWaas2.WalletSubtype("Asset"), "f47ac10b-58cc-4372-a567-0e02b2c3d479")}, "ETH_USDT", "1.5", CoboWaas2.TransferDestination{AddressTransferDestination: CoboWaas2.NewAddressTransferDestination(CoboWaas2.TransferDestinationType("Address"), "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}) // Transfer | The request body to create a transfer transaction (optional)
+	transfer := *CoboWaas2.NewTransfer("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", CoboWaas2.TransferSource{BaseTransferSource: CoboWaas2.NewBaseTransferSource(CoboWaas2.WalletSubtype("Asset"), "f47ac10b-58cc-4372-a567-0e02b2c3d479")}, "ETH_USDT", CoboWaas2.TransferDestination{AddressTransferDestination: CoboWaas2.NewAddressTransferDestination(CoboWaas2.TransferDestinationType("Address"))}) // Transfer | The request body to create a transfer transaction (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -186,7 +263,7 @@ import (
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
-	transactionFee := CoboWaas2.TransactionFee{EvmEip1559TransactionFee: CoboWaas2.NewEvmEip1559TransactionFee("1", "0.1", "0.9", CoboWaas2.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
+	transactionFee := CoboWaas2.TransactionFee{EvmEip1559TransactionFee: CoboWaas2.NewEvmEip1559TransactionFee("0.1", "0.9", CoboWaas2.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -244,7 +321,7 @@ Name | Type | Description  | Notes
 
 ## EstimateFee
 
-> TransactionFee EstimateFee(ctx).EstimateFee(estimateFee).Execute()
+> EstimationFee EstimateFee(ctx).EstimateFee(estimateFee).Execute()
 
 Estimate the fee for transaction
 
@@ -264,7 +341,7 @@ import (
 )
 
 func main() {
-	estimateFee := CoboWaas2.EstimateFee{SmartContractCall: CoboWaas2.NewSmartContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", "ETH", "bc1q0qfzuge7vr5s2xkczrjkccmxemlyyn8mhx298v", string([B@6aea99e7))} // EstimateFee | The request body to estimate fee of transfer or call transaction (optional)
+	estimateFee := CoboWaas2.EstimateFee{ContractCall: CoboWaas2.NewContractCall("f47ac10b-58cc-4372-a567-0e02b2c3d479", "Transfer", "ETH", CoboWaas2.ContractCallSource{MpcContractCallSource: CoboWaas2.NewMpcContractCallSource("Org-Controlled", "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku", *CoboWaas2.NewMpcSigningGroup())})} // EstimateFee | The request body to estimate fee of transfer or call transaction (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -279,7 +356,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.EstimateFee``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EstimateFee`: TransactionFee
+	// response from `EstimateFee`: EstimationFee
 	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.EstimateFee`: %v\n", resp)
 }
 ```
@@ -299,7 +376,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TransactionFee**](TransactionFee.md)
+[**EstimationFee**](EstimationFee.md)
 
 ### Authorization
 
@@ -337,8 +414,8 @@ import (
 )
 
 func main() {
-	chainId := "ETH" // string | Unique id of the chain (optional)
-	tokenId := "ETH_USDT" // string | Unique id of the token (optional)
+	chainId := "ETH" // string | The chain ID. (optional)
+	tokenId := "ETH_USDT" // string | The token ID. (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
@@ -369,8 +446,8 @@ Other parameters are passed through a pointer to a apiGetChainFeePriceRequest st
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **chainId** | **string** | Unique id of the chain | 
- **tokenId** | **string** | Unique id of the token | 
+ **chainId** | **string** | The chain ID. | 
+ **tokenId** | **string** | The token ID. | 
 
 ### Return type
 
@@ -469,7 +546,7 @@ Name | Type | Description  | Notes
 
 ## ListTransactions
 
-> ListTransactions200Response ListTransactions(ctx).RequestId(requestId).CoboId(coboId).TransactionId(transactionId).TransactionHash(transactionHash).Type_(type_).Status(status).WalletId(walletId).ChainId(chainId).TokenId(tokenId).AssetId(assetId).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).SortBy(sortBy).Direction(direction).Limit(limit).Before(before).After(after).Execute()
+> ListTransactions200Response ListTransactions(ctx).RequestId(requestId).CoboId(coboId).TransactionId(transactionId).TransactionHash(transactionHash).Type_(type_).Status(status).WalletType(walletType).WalletId(walletId).ChainId(chainId).TokenId(tokenId).AssetId(assetId).VaultId(vaultId).ProjectId(projectId).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).SortBy(sortBy).Direction(direction).Limit(limit).Before(before).After(after).Execute()
 
 List all transactions
 
@@ -493,12 +570,15 @@ func main() {
 	coboId := "20231213122855000000000000000000" // string | Cobo ID (optional)
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction (optional)
 	transactionHash := "239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28" // string | Transaction hash (optional)
-	type_ := CoboWaas2.TransactionType("Deposit") // TransactionType | The type of a transaction (optional)
-	status := CoboWaas2.TransactionStatus("Submitted") // TransactionStatus | The status of a transaction (optional)
-	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the wallet (optional)
-	chainId := "ETH" // string | Unique id of the chain (optional)
-	tokenId := "ETH_USDT" // string | Unique id of the token (optional)
-	assetId := "USDT" // string | Unique id of the asset (optional)
+	type_ := []CoboWaas2.TransactionType{CoboWaas2.TransactionType("Deposit")} // []TransactionType | The type of a transaction (optional)
+	status := []CoboWaas2.TransactionStatus{CoboWaas2.TransactionStatus("Submitted")} // []TransactionStatus | The status of a transaction (optional)
+	walletType := CoboWaas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: Custodial Wallets  - `MPC`: MPC Wallets  - `SmartContract`: Smart Contract Wallets  - `Exchange`: Exchange Wallets  (optional)
+	walletId := []string{"Inner_example"} // []string | Unique id of the wallet (optional)
+	chainId := []string{"Inner_example"} // []string | Unique id of the chain (optional)
+	tokenId := []string{"Inner_example"} // []string | Unique id of the token (optional)
+	assetId := []string{"Inner_example"} // []string | Unique id of the asset (optional)
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc vault (optional)
+	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the mpc project (optional)
 	minCreatedTimestamp := int32(1635744000) // int32 | The minimum transaction creation timestamp in Unix epoch seconds (optional)
 	maxCreatedTimestamp := int32(1635744000) // int32 | The maximum transaction creation timestamp in Unix epoch seconds (optional)
 	sortBy := "timestamp" // string | Field of sort by (optional) (default to "")
@@ -515,7 +595,7 @@ func main() {
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
-	resp, r, err := apiClient.TransactionsAPI.ListTransactions(ctx).RequestId(requestId).CoboId(coboId).TransactionId(transactionId).TransactionHash(transactionHash).Type_(type_).Status(status).WalletId(walletId).ChainId(chainId).TokenId(tokenId).AssetId(assetId).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).SortBy(sortBy).Direction(direction).Limit(limit).Before(before).After(after).Execute()
+	resp, r, err := apiClient.TransactionsAPI.ListTransactions(ctx).RequestId(requestId).CoboId(coboId).TransactionId(transactionId).TransactionHash(transactionHash).Type_(type_).Status(status).WalletType(walletType).WalletId(walletId).ChainId(chainId).TokenId(tokenId).AssetId(assetId).VaultId(vaultId).ProjectId(projectId).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).SortBy(sortBy).Direction(direction).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.ListTransactions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -540,12 +620,15 @@ Name | Type | Description  | Notes
  **coboId** | **string** | Cobo ID | 
  **transactionId** | **string** | Unique id of the transaction | 
  **transactionHash** | **string** | Transaction hash | 
- **type_** | [**TransactionType**](TransactionType.md) | The type of a transaction | 
- **status** | [**TransactionStatus**](TransactionStatus.md) | The status of a transaction | 
- **walletId** | **string** | Unique id of the wallet | 
- **chainId** | **string** | Unique id of the chain | 
- **tokenId** | **string** | Unique id of the token | 
- **assetId** | **string** | Unique id of the asset | 
+ **type_** | [**[]TransactionType**](TransactionType.md) | The type of a transaction | 
+ **status** | [**[]TransactionStatus**](TransactionStatus.md) | The status of a transaction | 
+ **walletType** | [**WalletType**](WalletType.md) | The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets  | 
+ **walletId** | **[]string** | Unique id of the wallet | 
+ **chainId** | **[]string** | Unique id of the chain | 
+ **tokenId** | **[]string** | Unique id of the token | 
+ **assetId** | **[]string** | Unique id of the asset | 
+ **vaultId** | **string** | Unique id of the mpc vault | 
+ **projectId** | **string** | Unique id of the mpc project | 
  **minCreatedTimestamp** | **int32** | The minimum transaction creation timestamp in Unix epoch seconds | 
  **maxCreatedTimestamp** | **int32** | The maximum transaction creation timestamp in Unix epoch seconds | 
  **sortBy** | **string** | Field of sort by | [default to &quot;&quot;]
@@ -649,83 +732,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## RetryTransactionDoubleCheckById
-
-> CreateTransferTransaction201Response RetryTransactionDoubleCheckById(ctx, transactionId).Execute()
-
-Retry up a transaction double-check by ID
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
-)
-
-func main() {
-	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
-
-	configuration := CoboWaas2.NewConfiguration()
-	apiClient := CoboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, CoboWaas2.ContextEnv, CoboWaas2.DevEnv)
-	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
-	})
-	resp, r, err := apiClient.TransactionsAPI.RetryTransactionDoubleCheckById(ctx, transactionId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.RetryTransactionDoubleCheckById``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `RetryTransactionDoubleCheckById`: CreateTransferTransaction201Response
-	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.RetryTransactionDoubleCheckById`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**transactionId** | **string** | Unique id of the transaction | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiRetryTransactionDoubleCheckByIdRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**CreateTransferTransaction201Response**](CreateTransferTransaction201Response.md)
-
-### Authorization
-
-[CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## SpeedupTransactionById
 
 > CreateTransferTransaction201Response SpeedupTransactionById(ctx, transactionId).TransactionFee(transactionFee).Execute()
@@ -749,7 +755,7 @@ import (
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | Unique id of the transaction
-	transactionFee := CoboWaas2.TransactionFee{EvmEip1559TransactionFee: CoboWaas2.NewEvmEip1559TransactionFee("1", "0.1", "0.9", CoboWaas2.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
+	transactionFee := CoboWaas2.TransactionFee{EvmEip1559TransactionFee: CoboWaas2.NewEvmEip1559TransactionFee("0.1", "0.9", CoboWaas2.FeeType("Fixed"))} // TransactionFee | The request body of fee to initiate transaction (optional)
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)

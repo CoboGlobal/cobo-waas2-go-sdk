@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AddressId** | **string** |  | 
-**AddressStr** | **string** | Then blockchain address | 
-**TokenId** | **string** | ID of the token. Unique in all chains scope. | 
-**Memo** | Pointer to **string** | From address memo | [optional] 
-**Path** | Pointer to **string** | Derivation path of address pubkey，required for MPC wallet | [optional] 
+**AddressId** | **string** | The address ID. | 
+**AddressStr** | **string** | The wallet address. | 
+**TokenId** | **string** | The token ID. | 
+**Memo** | Pointer to **string** | The memo code. | [optional] 
+**Path** | Pointer to **string** | The derivation path of the public key. This field is applicable to MPC Wallets. | [optional] 
 **Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
-**Pubkey** | Pointer to **string** | Address pubkey，required for MPC wallet | [optional] 
+**Pubkey** | Pointer to **string** | The public key. This field is applicable to MPC Wallets. | [optional] 
 
 ## Methods
 

@@ -4,10 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**GasPrice** | **string** | The Price of Gas, unit GWei. | 
-**GasLimit** | Pointer to **string** | The Limit of gas. | [optional] [default to "21000"]
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**GasPrice** | **string** | The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | 
+**GasLimit** | Pointer to **string** | The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units. | [optional] [default to "21000"]
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 
 ## Methods
@@ -98,31 +97,6 @@ SetGasLimit sets GasLimit field to given value.
 `func (o *EvmLegacyTransactionFee) HasGasLimit() bool`
 
 HasGasLimit returns a boolean if a field has been set.
-
-### GetFeeAmount
-
-`func (o *EvmLegacyTransactionFee) GetFeeAmount() string`
-
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
-
-### GetFeeAmountOk
-
-`func (o *EvmLegacyTransactionFee) GetFeeAmountOk() (*string, bool)`
-
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeAmount
-
-`func (o *EvmLegacyTransactionFee) SetFeeAmount(v string)`
-
-SetFeeAmount sets FeeAmount field to given value.
-
-### HasFeeAmount
-
-`func (o *EvmLegacyTransactionFee) HasFeeAmount() bool`
-
-HasFeeAmount returns a boolean if a field has been set.
 
 ### GetFeeType
 

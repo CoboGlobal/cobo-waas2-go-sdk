@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**TransferDestinationType**](TransferDestinationType.md) |  | 
-**AddressStr** | **string** | Destination address | 
-**Memo** | Pointer to **string** | Destination address memo | [optional] 
+**AccountOutput** | Pointer to [**AddressTransferDestinationAccountOutput**](AddressTransferDestinationAccountOutput.md) |  | [optional] 
+**UtxoOutputs** | Pointer to [**AddressTransferDestinationUtxoOutputs**](AddressTransferDestinationUtxoOutputs.md) |  | [optional] 
 
 ## Methods
 
 ### NewAddressTransferDestination
 
-`func NewAddressTransferDestination(destinationType TransferDestinationType, addressStr string, ) *AddressTransferDestination`
+`func NewAddressTransferDestination(destinationType TransferDestinationType, ) *AddressTransferDestination`
 
 NewAddressTransferDestination instantiates a new AddressTransferDestination object
 This constructor will assign default values to properties that have it defined,
@@ -47,50 +47,55 @@ and a boolean to check if the value has been set.
 SetDestinationType sets DestinationType field to given value.
 
 
-### GetAddressStr
+### GetAccountOutput
 
-`func (o *AddressTransferDestination) GetAddressStr() string`
+`func (o *AddressTransferDestination) GetAccountOutput() AddressTransferDestinationAccountOutput`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAccountOutput returns the AccountOutput field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAccountOutputOk
 
-`func (o *AddressTransferDestination) GetAddressStrOk() (*string, bool)`
+`func (o *AddressTransferDestination) GetAccountOutputOk() (*AddressTransferDestinationAccountOutput, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAccountOutputOk returns a tuple with the AccountOutput field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAccountOutput
 
-`func (o *AddressTransferDestination) SetAddressStr(v string)`
+`func (o *AddressTransferDestination) SetAccountOutput(v AddressTransferDestinationAccountOutput)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAccountOutput sets AccountOutput field to given value.
 
+### HasAccountOutput
 
-### GetMemo
+`func (o *AddressTransferDestination) HasAccountOutput() bool`
 
-`func (o *AddressTransferDestination) GetMemo() string`
+HasAccountOutput returns a boolean if a field has been set.
 
-GetMemo returns the Memo field if non-nil, zero value otherwise.
+### GetUtxoOutputs
 
-### GetMemoOk
+`func (o *AddressTransferDestination) GetUtxoOutputs() AddressTransferDestinationUtxoOutputs`
 
-`func (o *AddressTransferDestination) GetMemoOk() (*string, bool)`
+GetUtxoOutputs returns the UtxoOutputs field if non-nil, zero value otherwise.
 
-GetMemoOk returns a tuple with the Memo field if it's non-nil, zero value otherwise
+### GetUtxoOutputsOk
+
+`func (o *AddressTransferDestination) GetUtxoOutputsOk() (*AddressTransferDestinationUtxoOutputs, bool)`
+
+GetUtxoOutputsOk returns a tuple with the UtxoOutputs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMemo
+### SetUtxoOutputs
 
-`func (o *AddressTransferDestination) SetMemo(v string)`
+`func (o *AddressTransferDestination) SetUtxoOutputs(v AddressTransferDestinationUtxoOutputs)`
 
-SetMemo sets Memo field to given value.
+SetUtxoOutputs sets UtxoOutputs field to given value.
 
-### HasMemo
+### HasUtxoOutputs
 
-`func (o *AddressTransferDestination) HasMemo() bool`
+`func (o *AddressTransferDestination) HasUtxoOutputs() bool`
 
-HasMemo returns a boolean if a field has been set.
+HasUtxoOutputs returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

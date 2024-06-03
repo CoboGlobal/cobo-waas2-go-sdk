@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AssetId** | **string** | ID of the asset. Unique in all assets scope. | 
-**DisplayCode** | Pointer to **string** | Display code for the asset. | [optional] 
+**AssetId** | **string** | The asset ID. | 
+**DisplayCode** | Pointer to **string** | The display code of the asset. | [optional] 
 **Description** | Pointer to **string** | The description of the asset. | [optional] 
-**IconUrl** | Pointer to **string** | URL of the asset | [optional] 
+**IconUrl** | Pointer to **string** | The URL of the asset. | [optional] 
 
 ## Methods
 

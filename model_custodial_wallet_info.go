@@ -18,13 +18,15 @@ import (
 // checks if the CustodialWalletInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CustodialWalletInfo{}
 
-// CustodialWalletInfo The data for wallet information.
+// CustodialWalletInfo The basic information of a wallet.
 type CustodialWalletInfo struct {
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
+	// The wallet name.
 	Name string `json:"name"`
-	// The owning custody organization id of the custodial wallet.
+	// The ID of the owning organization.
 	OrgId string `json:"org_id"`
 }
 

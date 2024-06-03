@@ -20,9 +20,9 @@ var _ MappedNullable = &AddWalletAddressRequest{}
 
 // AddWalletAddressRequest struct for AddWalletAddressRequest
 type AddWalletAddressRequest struct {
-	// ID of the token. Unique in all chains scope.
+	// The token ID.
 	TokenId string `json:"token_id"`
-	// The number of addresses that need to be created
+	// The number of addresses to create.
 	Count int32 `json:"count"`
 	Encoding *AddressEncoding `json:"encoding,omitempty"`
 }

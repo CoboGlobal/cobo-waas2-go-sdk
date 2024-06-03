@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | ID of the token. Unique in all chains scope. | 
+**TokenId** | **string** | The token ID. | 
 **Balance** | [**TokenBalanceBalance**](TokenBalanceBalance.md) |  | 
 
 ## Methods

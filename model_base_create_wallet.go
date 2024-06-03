@@ -20,6 +20,7 @@ var _ MappedNullable = &BaseCreateWallet{}
 
 // BaseCreateWallet struct for BaseCreateWallet
 type BaseCreateWallet struct {
+	// The wallet name.
 	Name string `json:"name"`
 }
 

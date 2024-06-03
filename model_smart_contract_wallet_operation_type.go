@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// SmartContractWalletOperationType The way use to interact with the smart contract wallet.
+// SmartContractWalletOperationType The way you interact with the Smart Contract Wallet.
 type SmartContractWalletOperationType string
 
 // List of SmartContractWalletOperationType

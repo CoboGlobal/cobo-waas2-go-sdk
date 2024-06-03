@@ -20,8 +20,9 @@ var _ MappedNullable = &ExchangeWalletInfoAllOfSubAccounts{}
 
 // ExchangeWalletInfoAllOfSubAccounts struct for ExchangeWalletInfoAllOfSubAccounts
 type ExchangeWalletInfoAllOfSubAccounts struct {
+	// The wallet ID of the Sub Account.
 	WalletId string `json:"wallet_id"`
-	// The unique identifier associated with the exchange sub-account. It can be an email address, username, or a custom account ID.
+	// The unique identifier associated with the Sub Account. It can be an email address, a user name, or a custom account ID.
 	AccountId string `json:"account_id"`
 }
 

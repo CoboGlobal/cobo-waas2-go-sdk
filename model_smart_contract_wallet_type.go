@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// SmartContractWalletType What kind of smart contract does this wallet use
+// SmartContractWalletType The Smart Contract Wallet type.
 type SmartContractWalletType string
 
 // List of SmartContractWalletType

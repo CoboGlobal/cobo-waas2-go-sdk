@@ -18,13 +18,13 @@ import (
 // checks if the TokenBalanceBalance type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TokenBalanceBalance{}
 
-// TokenBalanceBalance The data for balance information.
+// TokenBalanceBalance The balance details.
 type TokenBalanceBalance struct {
-	// The total balance, sum of the following fields.
+	// The total balance, which is the sum of the remaining fields.
 	Total string `json:"total"`
 	// The balance free to use.
 	Available string `json:"available"`
-	// The pending balance not confirmed.
+	// The balance pending confirmation.
 	Pending *string `json:"pending,omitempty"`
 	// The locked balance.
 	Locked *string `json:"locked,omitempty"`

@@ -4,24 +4,24 @@ All URIs are relative to *https://api.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CancelTssRequest**](WalletsMPCWalletAPI.md#CancelTssRequest) | **Put** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | cancel tss request
-[**CreateKeyGroup**](WalletsMPCWalletAPI.md#CreateKeyGroup) | **Post** /wallets/mpc/vaults/{vault_id}/key_groups | create a mpc key group
+[**CancelTssRequest**](WalletsMPCWalletAPI.md#CancelTssRequest) | **Put** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | Cancel a tss request
+[**CreateKeyGroup**](WalletsMPCWalletAPI.md#CreateKeyGroup) | **Post** /wallets/mpc/vaults/{vault_id}/key_groups | Create a mpc key group
 [**CreateMpcProject**](WalletsMPCWalletAPI.md#CreateMpcProject) | **Post** /wallets/mpc/projects | Create a mpc project
 [**CreateMpcVault**](WalletsMPCWalletAPI.md#CreateMpcVault) | **Post** /wallets/mpc/vaults | Create a mpc vault
 [**CreateTssRequest**](WalletsMPCWalletAPI.md#CreateTssRequest) | **Post** /wallets/mpc/vaults/{vault_id}/tss_requests | Create a tss request to generate key secrets for a tss group
-[**DeleteKeyGroup**](WalletsMPCWalletAPI.md#DeleteKeyGroup) | **Delete** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | delete a mpc key group
-[**GetKeyGroup**](WalletsMPCWalletAPI.md#GetKeyGroup) | **Get** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | get a mpc key group
-[**GetMpcProject**](WalletsMPCWalletAPI.md#GetMpcProject) | **Get** /wallets/mpc/projects/{project_id} | get a mpc project
-[**GetMpcVault**](WalletsMPCWalletAPI.md#GetMpcVault) | **Get** /wallets/mpc/vaults/{vault_id} | get a mpc vault
-[**GetTssRequest**](WalletsMPCWalletAPI.md#GetTssRequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | get a tss request
+[**DeleteKeyGroup**](WalletsMPCWalletAPI.md#DeleteKeyGroup) | **Delete** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | Delete a mpc key group
+[**GetKeyGroup**](WalletsMPCWalletAPI.md#GetKeyGroup) | **Get** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | Get a mpc key group information by group id
+[**GetMpcProject**](WalletsMPCWalletAPI.md#GetMpcProject) | **Get** /wallets/mpc/projects/{project_id} | Get a mpc project information
+[**GetMpcVault**](WalletsMPCWalletAPI.md#GetMpcVault) | **Get** /wallets/mpc/vaults/{vault_id} | Get a mpc vault information
+[**GetTssRequest**](WalletsMPCWalletAPI.md#GetTssRequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | Get a tss request information
 [**ListCoboKeyHolder**](WalletsMPCWalletAPI.md#ListCoboKeyHolder) | **Get** /wallets/mpc/cobo_key_holders | List all cobo key holders
 [**ListKeyGroup**](WalletsMPCWalletAPI.md#ListKeyGroup) | **Get** /wallets/mpc/vaults/{vault_id}/key_groups | List all mpc key groups
 [**ListMpcProject**](WalletsMPCWalletAPI.md#ListMpcProject) | **Get** /wallets/mpc/projects | List all mpc projects
 [**ListMpcVault**](WalletsMPCWalletAPI.md#ListMpcVault) | **Get** /wallets/mpc/vaults | List all mpc vaults
-[**ListTssRequest**](WalletsMPCWalletAPI.md#ListTssRequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests | List tss request information of a vault
-[**ModifyMpcVault**](WalletsMPCWalletAPI.md#ModifyMpcVault) | **Put** /wallets/mpc/vaults/{vault_id} | Modify a mpc vault
-[**UpdateKeyGroup**](WalletsMPCWalletAPI.md#UpdateKeyGroup) | **Put** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | update a mpc key group
-[**UpdateMpcProject**](WalletsMPCWalletAPI.md#UpdateMpcProject) | **Put** /wallets/mpc/projects/{project_id} | update a mpc project
+[**ListTssRequest**](WalletsMPCWalletAPI.md#ListTssRequest) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests | List tss request information by vault ID
+[**ModifyMpcVault**](WalletsMPCWalletAPI.md#ModifyMpcVault) | **Put** /wallets/mpc/vaults/{vault_id} | Update a mpc vault information
+[**UpdateKeyGroup**](WalletsMPCWalletAPI.md#UpdateKeyGroup) | **Put** /wallets/mpc/vaults/{vault_id}/key_groups/{key_group_id} | Update a mpc key group information
+[**UpdateMpcProject**](WalletsMPCWalletAPI.md#UpdateMpcProject) | **Put** /wallets/mpc/projects/{project_id} | Update a mpc project
 
 
 
@@ -29,7 +29,7 @@ Method | HTTP request | Description
 
 > TSSRequest CancelTssRequest(ctx, vaultId, tssRequestId).TssRequestAction(tssRequestAction).Execute()
 
-cancel tss request
+Cancel a tss request
 
 
 
@@ -111,7 +111,7 @@ Name | Type | Description  | Notes
 
 > KeyGroup CreateKeyGroup(ctx, vaultId).CreateKeyGroupRequest(createKeyGroupRequest).Execute()
 
-create a mpc key group
+Create a mpc key group
 
 
 
@@ -415,7 +415,7 @@ Name | Type | Description  | Notes
 
 > KeyGroup DeleteKeyGroup(ctx, vaultId, keyGroupId).Execute()
 
-delete a mpc key group
+Delete a mpc key group
 
 
 
@@ -495,7 +495,7 @@ Name | Type | Description  | Notes
 
 > KeyGroup GetKeyGroup(ctx, vaultId, keyGroupId).Execute()
 
-get a mpc key group
+Get a mpc key group information by group id
 
 
 
@@ -575,7 +575,7 @@ Name | Type | Description  | Notes
 
 > MPCProject GetMpcProject(ctx, projectId).Execute()
 
-get a mpc project
+Get a mpc project information
 
 
 
@@ -652,7 +652,7 @@ Name | Type | Description  | Notes
 
 > MPCVault GetMpcVault(ctx, vaultId).Execute()
 
-get a mpc vault
+Get a mpc vault information
 
 
 
@@ -729,7 +729,7 @@ Name | Type | Description  | Notes
 
 > TSSRequest GetTssRequest(ctx, vaultId, tssRequestId).Execute()
 
-get a tss request
+Get a tss request information
 
 
 
@@ -1097,7 +1097,7 @@ Name | Type | Description  | Notes
 
 > TSSRequest ListTssRequest(ctx, vaultId).TargetKeyGroupId(targetKeyGroupId).Execute()
 
-List tss request information of a vault
+List tss request information by vault ID
 
 
 
@@ -1176,7 +1176,7 @@ Name | Type | Description  | Notes
 
 > MPCVault ModifyMpcVault(ctx, vaultId).ModifyMpcVaultRequest(modifyMpcVaultRequest).Execute()
 
-Modify a mpc vault
+Update a mpc vault information
 
 
 
@@ -1255,7 +1255,7 @@ Name | Type | Description  | Notes
 
 > KeyGroup UpdateKeyGroup(ctx, vaultId, keyGroupId).UpdateKeyGroupAction(updateKeyGroupAction).Execute()
 
-update a mpc key group
+Update a mpc key group information
 
 
 
@@ -1337,7 +1337,7 @@ Name | Type | Description  | Notes
 
 > MPCProject UpdateMpcProject(ctx, projectId).UpdateMpcProjectRequest(updateMpcProjectRequest).Execute()
 
-update a mpc project
+Update a mpc project
 
 
 

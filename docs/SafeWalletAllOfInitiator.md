@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WalletId** | Pointer to **string** | The wallet id of the initiator. This is required when user want to create a new safe wallet. | [optional] 
-**WalletType** | Pointer to **string** | The wallet type of the initiator. This is required when user want to create a new safe wallet. | [optional] 
-**WalletAddress** | Pointer to **string** | The wallet address of the initiator. This is required when user want to create a new safe wallet. | [optional] 
+**WalletId** | Pointer to **string** | The initiator&#39;s wallet ID. This field is required when creating a new Safe{Wallet}.  | [optional] 
+**WalletType** | Pointer to **string** | The initiator&#39;s wallet type. This field is required when creating a new Safe{Wallet}.  | [optional] 
+**WalletAddress** | Pointer to **string** | The initiator&#39;s wallet address. This field is required when creating a new Safe{Wallet}.  | [optional] 
 
 ## Methods
 

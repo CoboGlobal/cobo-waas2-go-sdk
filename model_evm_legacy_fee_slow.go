@@ -20,14 +20,12 @@ var _ MappedNullable = &EvmLegacyFeeSlow{}
 
 // EvmLegacyFeeSlow struct for EvmLegacyFeeSlow
 type EvmLegacyFeeSlow struct {
-	// ID of the fee token. Unique in all chains scope.
+	// The token ID of the transaction fee. Unique in all chains scope.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The Price of Gas, unit GWei.
+	// The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions.
 	GasPrice string `json:"gas_price"`
-	// The Limit of gas.
+	// The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units.
 	GasLimit *string `json:"gas_limit,omitempty"`
-	// The estimated fee amount in fee_coin.
-	FeeAmount *string `json:"fee_amount,omitempty"`
 }
 
 type _EvmLegacyFeeSlow EvmLegacyFeeSlow
@@ -142,38 +140,6 @@ func (o *EvmLegacyFeeSlow) SetGasLimit(v string) {
 	o.GasLimit = &v
 }
 
-// GetFeeAmount returns the FeeAmount field value if set, zero value otherwise.
-func (o *EvmLegacyFeeSlow) GetFeeAmount() string {
-	if o == nil || IsNil(o.FeeAmount) {
-		var ret string
-		return ret
-	}
-	return *o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmLegacyFeeSlow) GetFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeAmount) {
-		return nil, false
-	}
-	return o.FeeAmount, true
-}
-
-// HasFeeAmount returns a boolean if a field has been set.
-func (o *EvmLegacyFeeSlow) HasFeeAmount() bool {
-	if o != nil && !IsNil(o.FeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeAmount gets a reference to the given string and assigns it to the FeeAmount field.
-func (o *EvmLegacyFeeSlow) SetFeeAmount(v string) {
-	o.FeeAmount = &v
-}
-
 func (o EvmLegacyFeeSlow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -190,9 +156,6 @@ func (o EvmLegacyFeeSlow) ToMap() (map[string]interface{}, error) {
 	toSerialize["gas_price"] = o.GasPrice
 	if !IsNil(o.GasLimit) {
 		toSerialize["gas_limit"] = o.GasLimit
-	}
-	if !IsNil(o.FeeAmount) {
-		toSerialize["fee_amount"] = o.FeeAmount
 	}
 	return toSerialize, nil
 }

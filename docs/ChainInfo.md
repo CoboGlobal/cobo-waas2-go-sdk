@@ -4,11 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ChainId** | **string** | The blockchain on which the token operates. | 
-**Symbol** | Pointer to **string** | Symbol for the chain. | [optional] 
-**IconUrl** | Pointer to **string** | URL of the icon image. | [optional] 
-**ExplorerTxUrl** | Pointer to **string** | URL of the explorer transaction. | [optional] 
-**ExplorerAddressUrl** | Pointer to **string** | URL of the explorer address. | [optional] 
+**ChainId** | **string** | The chain on which the token operates. | 
+**Symbol** | Pointer to **string** | The chain symbol. | [optional] 
+**IconUrl** | Pointer to **string** | The URL of the chain icon. | [optional] 
+**ExplorerTxUrl** | Pointer to **string** | The transaction URL on the blockchain explorer. | [optional] 
 
 ## Methods
 
@@ -123,31 +122,6 @@ SetExplorerTxUrl sets ExplorerTxUrl field to given value.
 `func (o *ChainInfo) HasExplorerTxUrl() bool`
 
 HasExplorerTxUrl returns a boolean if a field has been set.
-
-### GetExplorerAddressUrl
-
-`func (o *ChainInfo) GetExplorerAddressUrl() string`
-
-GetExplorerAddressUrl returns the ExplorerAddressUrl field if non-nil, zero value otherwise.
-
-### GetExplorerAddressUrlOk
-
-`func (o *ChainInfo) GetExplorerAddressUrlOk() (*string, bool)`
-
-GetExplorerAddressUrlOk returns a tuple with the ExplorerAddressUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetExplorerAddressUrl
-
-`func (o *ChainInfo) SetExplorerAddressUrl(v string)`
-
-SetExplorerAddressUrl sets ExplorerAddressUrl field to given value.
-
-### HasExplorerAddressUrl
-
-`func (o *ChainInfo) HasExplorerAddressUrl() bool`
-
-HasExplorerAddressUrl returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

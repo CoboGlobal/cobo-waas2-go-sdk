@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | ID of the token. Unique in all chains scope. | 
-**Count** | **int32** | The number of addresses that need to be created | [default to 1]
+**TokenId** | **string** | The token ID. | 
+**Count** | **int32** | The number of addresses to create. | [default to 1]
 **Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
 
 ## Methods

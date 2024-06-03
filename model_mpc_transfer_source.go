@@ -18,13 +18,13 @@ import (
 // checks if the MpcTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MpcTransferSource{}
 
-// MpcTransferSource struct for MpcTransferSource
+// MpcTransferSource The base data for transfer source.
 type MpcTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// Unique id of the wallet to transfer from.
 	WalletId string `json:"wallet_id"`
-	// From address
-	AddressStr string `json:"address_str"`
+	AccountInput *MpcTransferSourceAccountInput `json:"account_input,omitempty"`
+	UtxoInputs *MpcTransferSourceUtxoInputs `json:"utxo_inputs,omitempty"`
 	MpcUsedKeyGroup *MpcSigningGroup `json:"mpc_used_key_group,omitempty"`
 }
 
@@ -34,11 +34,10 @@ type _MpcTransferSource MpcTransferSource
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMpcTransferSource(sourceType WalletSubtype, walletId string, addressStr string) *MpcTransferSource {
+func NewMpcTransferSource(sourceType WalletSubtype, walletId string) *MpcTransferSource {
 	this := MpcTransferSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
-	this.AddressStr = addressStr
 	return &this
 }
 
@@ -98,28 +97,68 @@ func (o *MpcTransferSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *MpcTransferSource) GetAddressStr() string {
-	if o == nil {
-		var ret string
+// GetAccountInput returns the AccountInput field value if set, zero value otherwise.
+func (o *MpcTransferSource) GetAccountInput() MpcTransferSourceAccountInput {
+	if o == nil || IsNil(o.AccountInput) {
+		var ret MpcTransferSourceAccountInput
 		return ret
 	}
-
-	return o.AddressStr
+	return *o.AccountInput
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAccountInputOk returns a tuple with the AccountInput field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MpcTransferSource) GetAddressStrOk() (*string, bool) {
-	if o == nil {
+func (o *MpcTransferSource) GetAccountInputOk() (*MpcTransferSourceAccountInput, bool) {
+	if o == nil || IsNil(o.AccountInput) {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return o.AccountInput, true
 }
 
-// SetAddressStr sets field value
-func (o *MpcTransferSource) SetAddressStr(v string) {
-	o.AddressStr = v
+// HasAccountInput returns a boolean if a field has been set.
+func (o *MpcTransferSource) HasAccountInput() bool {
+	if o != nil && !IsNil(o.AccountInput) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountInput gets a reference to the given MpcTransferSourceAccountInput and assigns it to the AccountInput field.
+func (o *MpcTransferSource) SetAccountInput(v MpcTransferSourceAccountInput) {
+	o.AccountInput = &v
+}
+
+// GetUtxoInputs returns the UtxoInputs field value if set, zero value otherwise.
+func (o *MpcTransferSource) GetUtxoInputs() MpcTransferSourceUtxoInputs {
+	if o == nil || IsNil(o.UtxoInputs) {
+		var ret MpcTransferSourceUtxoInputs
+		return ret
+	}
+	return *o.UtxoInputs
+}
+
+// GetUtxoInputsOk returns a tuple with the UtxoInputs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MpcTransferSource) GetUtxoInputsOk() (*MpcTransferSourceUtxoInputs, bool) {
+	if o == nil || IsNil(o.UtxoInputs) {
+		return nil, false
+	}
+	return o.UtxoInputs, true
+}
+
+// HasUtxoInputs returns a boolean if a field has been set.
+func (o *MpcTransferSource) HasUtxoInputs() bool {
+	if o != nil && !IsNil(o.UtxoInputs) {
+		return true
+	}
+
+	return false
+}
+
+// SetUtxoInputs gets a reference to the given MpcTransferSourceUtxoInputs and assigns it to the UtxoInputs field.
+func (o *MpcTransferSource) SetUtxoInputs(v MpcTransferSourceUtxoInputs) {
+	o.UtxoInputs = &v
 }
 
 // GetMpcUsedKeyGroup returns the MpcUsedKeyGroup field value if set, zero value otherwise.
@@ -166,7 +205,12 @@ func (o MpcTransferSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["address_str"] = o.AddressStr
+	if !IsNil(o.AccountInput) {
+		toSerialize["account_input"] = o.AccountInput
+	}
+	if !IsNil(o.UtxoInputs) {
+		toSerialize["utxo_inputs"] = o.UtxoInputs
+	}
 	if !IsNil(o.MpcUsedKeyGroup) {
 		toSerialize["mpc_used_key_group"] = o.MpcUsedKeyGroup
 	}
@@ -180,7 +224,6 @@ func (o *MpcTransferSource) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"source_type",
 		"wallet_id",
-		"address_str",
 	}
 
 	allProperties := make(map[string]interface{})

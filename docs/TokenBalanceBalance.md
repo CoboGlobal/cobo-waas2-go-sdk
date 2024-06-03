@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Total** | **string** | The total balance, sum of the following fields. | 
+**Total** | **string** | The total balance, which is the sum of the remaining fields. | 
 **Available** | **string** | The balance free to use. | 
-**Pending** | Pointer to **string** | The pending balance not confirmed. | [optional] [default to "0"]
+**Pending** | Pointer to **string** | The balance pending confirmation. | [optional] [default to "0"]
 **Locked** | Pointer to **string** | The locked balance. | [optional] [default to "0"]
 
 ## Methods

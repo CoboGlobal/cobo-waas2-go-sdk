@@ -20,24 +20,26 @@ var _ MappedNullable = &SafeWallet{}
 
 // SafeWallet struct for SafeWallet
 type SafeWallet struct {
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
+	// The wallet name.
 	Name string `json:"name"`
-	// The owning custody organization id of the custodial wallet.
+	// The ID of the owning organization.
 	OrgId string `json:"org_id"`
-	// The chain the wallet is on.
+	// The chain the wallet operates on.
 	ChainId *string `json:"chain_id,omitempty"`
-	// The label of the wallet.
+	// The wallet label.
 	Label *string `json:"label,omitempty"`
 	SmartContractWalletType SmartContractWalletType `json:"smart_contract_wallet_type"`
-	// The address of the smart contract wallet.
+	// The Smart Contract Wallet address.
 	SafeAddress *string `json:"safe_address,omitempty"`
-	// The owners of the smart contract wallet. This MUST be provided when user want to create a new safe wallet.
+	// The owners of the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.
 	Owners []string `json:"owners,omitempty"`
-	// The threshold of required confirmations for the smart contract wallet. This MUST be provided when user want to create a new safe wallet.
+	// The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}. 
 	Threshold *int32 `json:"threshold,omitempty"`
-	// The address of the cobo safe module.
+	// The address of Cobo Safe.
 	CoboSafeAddress *string `json:"cobo_safe_address,omitempty"`
 	Initiator *SafeWalletAllOfInitiator `json:"initiator,omitempty"`
 }

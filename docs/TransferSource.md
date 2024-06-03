@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **WalletId** | **string** | Unique id of the wallet to transfer from. | 
+**AccountInput** | Pointer to [**MpcTransferSourceAccountInput**](MpcTransferSourceAccountInput.md) |  | [optional] 
+**UtxoInputs** | Pointer to [**MpcTransferSourceUtxoInputs**](MpcTransferSourceUtxoInputs.md) |  | [optional] 
 **MpcUsedKeyGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 **AddressStr** | **string** | From address | 
 **Delegate** | [**SafeTransferSourceAllOfDelegate**](SafeTransferSourceAllOfDelegate.md) |  | 
@@ -69,6 +71,56 @@ and a boolean to check if the value has been set.
 
 SetWalletId sets WalletId field to given value.
 
+
+### GetAccountInput
+
+`func (o *TransferSource) GetAccountInput() MpcTransferSourceAccountInput`
+
+GetAccountInput returns the AccountInput field if non-nil, zero value otherwise.
+
+### GetAccountInputOk
+
+`func (o *TransferSource) GetAccountInputOk() (*MpcTransferSourceAccountInput, bool)`
+
+GetAccountInputOk returns a tuple with the AccountInput field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountInput
+
+`func (o *TransferSource) SetAccountInput(v MpcTransferSourceAccountInput)`
+
+SetAccountInput sets AccountInput field to given value.
+
+### HasAccountInput
+
+`func (o *TransferSource) HasAccountInput() bool`
+
+HasAccountInput returns a boolean if a field has been set.
+
+### GetUtxoInputs
+
+`func (o *TransferSource) GetUtxoInputs() MpcTransferSourceUtxoInputs`
+
+GetUtxoInputs returns the UtxoInputs field if non-nil, zero value otherwise.
+
+### GetUtxoInputsOk
+
+`func (o *TransferSource) GetUtxoInputsOk() (*MpcTransferSourceUtxoInputs, bool)`
+
+GetUtxoInputsOk returns a tuple with the UtxoInputs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUtxoInputs
+
+`func (o *TransferSource) SetUtxoInputs(v MpcTransferSourceUtxoInputs)`
+
+SetUtxoInputs sets UtxoInputs field to given value.
+
+### HasUtxoInputs
+
+`func (o *TransferSource) HasUtxoInputs() bool`
+
+HasUtxoInputs returns a boolean if a field has been set.
 
 ### GetMpcUsedKeyGroup
 

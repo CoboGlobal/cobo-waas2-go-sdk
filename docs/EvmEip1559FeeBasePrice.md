@@ -4,16 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**MaxFee** | **string** | The highest Gas price paid for the transfer, unit GWei. | 
-**MaxPriorityFee** | **string** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
-**BaseFee** | **string** | The Base Fee of chain. | 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**MaxPriorityFee** | **string** | The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction. | 
+**BaseFee** | **string** | The base fee of chain. | 
 
 ## Methods
 
 ### NewEvmEip1559FeeBasePrice
 
-`func NewEvmEip1559FeeBasePrice(maxFee string, maxPriorityFee string, baseFee string, ) *EvmEip1559FeeBasePrice`
+`func NewEvmEip1559FeeBasePrice(maxPriorityFee string, baseFee string, ) *EvmEip1559FeeBasePrice`
 
 NewEvmEip1559FeeBasePrice instantiates a new EvmEip1559FeeBasePrice object
 This constructor will assign default values to properties that have it defined,
@@ -52,26 +51,6 @@ SetFeeTokenId sets FeeTokenId field to given value.
 `func (o *EvmEip1559FeeBasePrice) HasFeeTokenId() bool`
 
 HasFeeTokenId returns a boolean if a field has been set.
-
-### GetMaxFee
-
-`func (o *EvmEip1559FeeBasePrice) GetMaxFee() string`
-
-GetMaxFee returns the MaxFee field if non-nil, zero value otherwise.
-
-### GetMaxFeeOk
-
-`func (o *EvmEip1559FeeBasePrice) GetMaxFeeOk() (*string, bool)`
-
-GetMaxFeeOk returns a tuple with the MaxFee field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaxFee
-
-`func (o *EvmEip1559FeeBasePrice) SetMaxFee(v string)`
-
-SetMaxFee sets MaxFee field to given value.
-
 
 ### GetMaxPriorityFee
 

@@ -18,15 +18,15 @@ import (
 // checks if the AssetInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AssetInfo{}
 
-// AssetInfo The data for asset information.
+// AssetInfo The asset information.
 type AssetInfo struct {
-	// ID of the asset. Unique in all assets scope.
+	// The asset ID.
 	AssetId string `json:"asset_id"`
-	// Display code for the asset.
+	// The display code of the asset.
 	DisplayCode *string `json:"display_code,omitempty"`
 	// The description of the asset.
 	Description *string `json:"description,omitempty"`
-	// URL of the asset
+	// The URL of the asset.
 	IconUrl *string `json:"icon_url,omitempty"`
 }
 

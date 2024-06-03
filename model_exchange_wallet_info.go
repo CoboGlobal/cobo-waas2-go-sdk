@@ -20,16 +20,18 @@ var _ MappedNullable = &ExchangeWalletInfo{}
 
 // ExchangeWalletInfo struct for ExchangeWalletInfo
 type ExchangeWalletInfo struct {
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
+	// The wallet name.
 	Name string `json:"name"`
-	// The owning custody organization id of the custodial wallet.
+	// The ID of the owning organization.
 	OrgId string `json:"org_id"`
-	// The API Key for the exchange.
+	// The API key of your exchange account.
 	Apikey string `json:"apikey"`
 	ExchangeId ExchangeId `json:"exchange_id"`
-	// The parent wallet id for this wallet if presented.
+	// The wallet ID of the Main Account, if applicable.
 	ParentWalletId *string `json:"parent_wallet_id,omitempty"`
 	SubAccounts []ExchangeWalletInfoAllOfSubAccounts `json:"sub_accounts,omitempty"`
 }

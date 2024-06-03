@@ -16,14 +16,14 @@ import (
 
 // EstimateFee - struct for EstimateFee
 type EstimateFee struct {
-	SmartContractCall *SmartContractCall
+	ContractCall *ContractCall
 	Transfer *Transfer
 }
 
-// SmartContractCallAsEstimateFee is a convenience function that returns SmartContractCall wrapped in EstimateFee
-func SmartContractCallAsEstimateFee(v *SmartContractCall) EstimateFee {
+// ContractCallAsEstimateFee is a convenience function that returns ContractCall wrapped in EstimateFee
+func ContractCallAsEstimateFee(v *ContractCall) EstimateFee {
 	return EstimateFee{
-		SmartContractCall: v,
+		ContractCall: v,
 	}
 }
 
@@ -69,15 +69,15 @@ func (dst *EstimateFee) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'SmartContractCall'
-	if jsonDict["request_type"] == "SmartContractCall" {
-		// try to unmarshal JSON data into SmartContractCall
-		err = json.Unmarshal(data, &dst.SmartContractCall)
+	// check if the discriminator value is 'ContractCall'
+	if jsonDict["request_type"] == "ContractCall" {
+		// try to unmarshal JSON data into ContractCall
+		err = json.Unmarshal(data, &dst.ContractCall)
 		if err == nil {
-			return nil // data stored in dst.SmartContractCall, return on the first match
+			return nil // data stored in dst.ContractCall, return on the first match
 		} else {
-			dst.SmartContractCall = nil
-			return fmt.Errorf("failed to unmarshal EstimateFee as SmartContractCall: %s", err.Error())
+			dst.ContractCall = nil
+			return fmt.Errorf("failed to unmarshal EstimateFee as ContractCall: %s", err.Error())
 		}
 	}
 
@@ -86,8 +86,8 @@ func (dst *EstimateFee) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src EstimateFee) MarshalJSON() ([]byte, error) {
-	if src.SmartContractCall != nil {
-		return json.Marshal(&src.SmartContractCall)
+	if src.ContractCall != nil {
+		return json.Marshal(&src.ContractCall)
 	}
 
 	if src.Transfer != nil {
@@ -102,8 +102,8 @@ func (obj *EstimateFee) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
-	if obj.SmartContractCall != nil {
-		return obj.SmartContractCall
+	if obj.ContractCall != nil {
+		return obj.ContractCall
 	}
 
 	if obj.Transfer != nil {

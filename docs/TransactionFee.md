@@ -5,20 +5,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**FeeTokenId** | Pointer to **string** | ID of the fee token. Unique in all chains scope. | [optional] 
-**MaxFee** | **string** | The highest Gas price paid for the transfer, unit GWei. | 
-**MaxPriorityFee** | **string** | The maximum Gas price paid to miners, the higher it is, the faster it is likely to be packaged into the block, unit GWei. | 
-**BaseFee** | **string** | The Base Fee of chain. | 
-**GasLimit** | Pointer to **string** | The Limit of gas. | [optional] [default to "21000"]
-**FeeAmount** | Pointer to **string** | The estimated fee amount in fee_coin. | [optional] 
-**GasPrice** | **string** | The Price of Gas, unit GWei. | 
-**FeeRate** | **string** | The fee rate, unit sat/vB. | 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**MaxPriorityFee** | **string** | The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction. | 
+**BaseFee** | **string** | The base fee of chain. | 
+**GasLimit** | Pointer to **string** | The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units. | [optional] [default to "21000"]
+**GasPrice** | **string** | The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | 
+**FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
 
 ## Methods
 
 ### NewTransactionFee
 
-`func NewTransactionFee(feeType FeeType, maxFee string, maxPriorityFee string, baseFee string, gasPrice string, feeRate string, ) *TransactionFee`
+`func NewTransactionFee(feeType FeeType, maxPriorityFee string, baseFee string, gasPrice string, feeRate string, ) *TransactionFee`
 
 NewTransactionFee instantiates a new TransactionFee object
 This constructor will assign default values to properties that have it defined,
@@ -77,26 +76,6 @@ SetFeeTokenId sets FeeTokenId field to given value.
 `func (o *TransactionFee) HasFeeTokenId() bool`
 
 HasFeeTokenId returns a boolean if a field has been set.
-
-### GetMaxFee
-
-`func (o *TransactionFee) GetMaxFee() string`
-
-GetMaxFee returns the MaxFee field if non-nil, zero value otherwise.
-
-### GetMaxFeeOk
-
-`func (o *TransactionFee) GetMaxFeeOk() (*string, bool)`
-
-GetMaxFeeOk returns a tuple with the MaxFee field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaxFee
-
-`func (o *TransactionFee) SetMaxFee(v string)`
-
-SetMaxFee sets MaxFee field to given value.
-
 
 ### GetMaxPriorityFee
 
@@ -163,31 +142,6 @@ SetGasLimit sets GasLimit field to given value.
 
 HasGasLimit returns a boolean if a field has been set.
 
-### GetFeeAmount
-
-`func (o *TransactionFee) GetFeeAmount() string`
-
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
-
-### GetFeeAmountOk
-
-`func (o *TransactionFee) GetFeeAmountOk() (*string, bool)`
-
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeAmount
-
-`func (o *TransactionFee) SetFeeAmount(v string)`
-
-SetFeeAmount sets FeeAmount field to given value.
-
-### HasFeeAmount
-
-`func (o *TransactionFee) HasFeeAmount() bool`
-
-HasFeeAmount returns a boolean if a field has been set.
-
 ### GetGasPrice
 
 `func (o *TransactionFee) GetGasPrice() string`
@@ -227,6 +181,31 @@ and a boolean to check if the value has been set.
 
 SetFeeRate sets FeeRate field to given value.
 
+
+### GetMaxFeeAmount
+
+`func (o *TransactionFee) GetMaxFeeAmount() string`
+
+GetMaxFeeAmount returns the MaxFeeAmount field if non-nil, zero value otherwise.
+
+### GetMaxFeeAmountOk
+
+`func (o *TransactionFee) GetMaxFeeAmountOk() (*string, bool)`
+
+GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaxFeeAmount
+
+`func (o *TransactionFee) SetMaxFeeAmount(v string)`
+
+SetMaxFeeAmount sets MaxFeeAmount field to given value.
+
+### HasMaxFeeAmount
+
+`func (o *TransactionFee) HasMaxFeeAmount() bool`
+
+HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
