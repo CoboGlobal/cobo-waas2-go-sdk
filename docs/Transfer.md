@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **RequestId** | **string** | Unique id of the request. | 
 **RequestType** | **string** |  | 
 **Source** | [**TransferSource**](TransferSource.md) |  | 
-**TokenId** | **string** | ID of the token. Unique in all chains scope. | 
+**TokenId** | **string** | The token ID. | 
 **Destination** | [**TransferDestination**](TransferDestination.md) |  | 
 **CategoryNames** | Pointer to **[]string** | The category names for transfer. | [optional] 
 **Description** | Pointer to **string** | The description for transfer. | [optional] 

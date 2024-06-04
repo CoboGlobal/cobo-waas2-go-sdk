@@ -5,12 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **MaxPriorityFee** | **string** | The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction. | 
 **BaseFee** | **string** | The base fee of chain. | 
 **GasPrice** | **string** | The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | 
 **FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
-**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
 
 ## Methods
 

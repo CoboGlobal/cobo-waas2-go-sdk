@@ -24,7 +24,7 @@ type Transfer struct {
 	RequestId string `json:"request_id"`
 	RequestType string `json:"request_type"`
 	Source TransferSource `json:"source"`
-	// ID of the token. Unique in all chains scope.
+	// The token ID.
 	TokenId string `json:"token_id"`
 	Destination TransferDestination `json:"destination"`
 	// The category names for transfer.

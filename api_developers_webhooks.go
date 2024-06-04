@@ -326,7 +326,7 @@ type ApiListEventsRequest struct {
 	after *string
 }
 
-// The event status. Possible values include: - &#x60;Success&#x60;: The event has been delivered, and the webhook endpoint has responded to the event. - &#x60;Retrying&#x60;: The event has been delivered, but the webhook endpoint has not responded. In this case, Cobo will retry delivering the event. - &#x60;Failed&#x60;: The event cannot be delivered and Cobo will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error. 
+// The event status. Possible values include: - &#x60;Success&#x60;: The event has been delivered, and the webhook endpoint has responded to the event. - &#x60;Retrying&#x60;: The event has been delivered, but the webhook endpoint has not responded. In this case, the WaaS service will retry delivering the event. - &#x60;Failed&#x60;: The event cannot be delivered and the WaaS service will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error. 
 func (r ApiListEventsRequest) Status(status WebhookEventStatus) ApiListEventsRequest {
 	r.status = &status
 	return r

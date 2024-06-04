@@ -28,10 +28,10 @@ type AddressInfo struct {
 	TokenId string `json:"token_id"`
 	// The memo code.
 	Memo *string `json:"memo,omitempty"`
-	// The derivation path of the public key. This field is applicable to MPC Wallets.
+	// The derivation path of the address. This field is applicable to MPC Wallets.
 	Path *string `json:"path,omitempty"`
 	Encoding *AddressEncoding `json:"encoding,omitempty"`
-	// The public key. This field is applicable to MPC Wallets.
+	// The public key of the address. This field is applicable to MPC Wallets.
 	Pubkey *string `json:"pubkey,omitempty"`
 }
 

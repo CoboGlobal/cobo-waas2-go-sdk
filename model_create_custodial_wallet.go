@@ -22,9 +22,8 @@ var _ MappedNullable = &CreateCustodialWallet{}
 type CreateCustodialWallet struct {
 	// The wallet name.
 	Name string `json:"name"`
-	// The wallet type.
-	WalletType string `json:"wallet_type"`
-	WalletSubtype string `json:"wallet_subtype"`
+	WalletType WalletType `json:"wallet_type"`
+	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 }
 
 type _CreateCustodialWallet CreateCustodialWallet
@@ -33,7 +32,7 @@ type _CreateCustodialWallet CreateCustodialWallet
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCustodialWallet(name string, walletType string, walletSubtype string) *CreateCustodialWallet {
+func NewCreateCustodialWallet(name string, walletType WalletType, walletSubtype WalletSubtype) *CreateCustodialWallet {
 	this := CreateCustodialWallet{}
 	this.Name = name
 	this.WalletType = walletType
@@ -74,9 +73,9 @@ func (o *CreateCustodialWallet) SetName(v string) {
 }
 
 // GetWalletType returns the WalletType field value
-func (o *CreateCustodialWallet) GetWalletType() string {
+func (o *CreateCustodialWallet) GetWalletType() WalletType {
 	if o == nil {
-		var ret string
+		var ret WalletType
 		return ret
 	}
 
@@ -85,7 +84,7 @@ func (o *CreateCustodialWallet) GetWalletType() string {
 
 // GetWalletTypeOk returns a tuple with the WalletType field value
 // and a boolean to check if the value has been set.
-func (o *CreateCustodialWallet) GetWalletTypeOk() (*string, bool) {
+func (o *CreateCustodialWallet) GetWalletTypeOk() (*WalletType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -93,14 +92,14 @@ func (o *CreateCustodialWallet) GetWalletTypeOk() (*string, bool) {
 }
 
 // SetWalletType sets field value
-func (o *CreateCustodialWallet) SetWalletType(v string) {
+func (o *CreateCustodialWallet) SetWalletType(v WalletType) {
 	o.WalletType = v
 }
 
 // GetWalletSubtype returns the WalletSubtype field value
-func (o *CreateCustodialWallet) GetWalletSubtype() string {
+func (o *CreateCustodialWallet) GetWalletSubtype() WalletSubtype {
 	if o == nil {
-		var ret string
+		var ret WalletSubtype
 		return ret
 	}
 
@@ -109,7 +108,7 @@ func (o *CreateCustodialWallet) GetWalletSubtype() string {
 
 // GetWalletSubtypeOk returns a tuple with the WalletSubtype field value
 // and a boolean to check if the value has been set.
-func (o *CreateCustodialWallet) GetWalletSubtypeOk() (*string, bool) {
+func (o *CreateCustodialWallet) GetWalletSubtypeOk() (*WalletSubtype, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -117,7 +116,7 @@ func (o *CreateCustodialWallet) GetWalletSubtypeOk() (*string, bool) {
 }
 
 // SetWalletSubtype sets field value
-func (o *CreateCustodialWallet) SetWalletSubtype(v string) {
+func (o *CreateCustodialWallet) SetWalletSubtype(v WalletSubtype) {
 	o.WalletSubtype = v
 }
 

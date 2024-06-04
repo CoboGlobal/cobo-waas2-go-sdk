@@ -23,7 +23,6 @@ docs/AddressTransferSource.md
 docs/AssetBalance.md
 docs/AssetInfo.md
 docs/BaseContractCallSource.md
-docs/BaseCreateWallet.md
 docs/BaseTransactionAddress.md
 docs/BaseTransferSource.md
 docs/BaseWalletTransactionAddress.md
@@ -40,6 +39,7 @@ docs/CreateMpcProjectRequest.md
 docs/CreateMpcVaultRequest.md
 docs/CreateMpcWallet.md
 docs/CreateSafeWallet.md
+docs/CreateSafeWalletAllOfInitiator.md
 docs/CreateSmartContractWallet.md
 docs/CreateTransferTransaction201Response.md
 docs/CreateTssRequestRequest.md
@@ -177,7 +177,6 @@ model_address_transfer_source.go
 model_asset_balance.go
 model_asset_info.go
 model_base_contract_call_source.go
-model_base_create_wallet.go
 model_base_transaction_address.go
 model_base_transfer_source.go
 model_base_wallet_transaction_address.go
@@ -194,6 +193,7 @@ model_create_mpc_project_request.go
 model_create_mpc_vault_request.go
 model_create_mpc_wallet.go
 model_create_safe_wallet.go
+model_create_safe_wallet_all_of_initiator.go
 model_create_smart_contract_wallet.go
 model_create_transfer_transaction_201_response.go
 model_create_tss_request_request.go
@@ -314,8 +314,4 @@ model_webhook_event_log.go
 model_webhook_event_status.go
 model_webhook_event_type.go
 response.go
-test/api_developers_webhooks_test.go
-test/api_transactions_test.go
-test/api_wallets_mpc_wallet_test.go
-test/api_wallets_test.go
 utils.go

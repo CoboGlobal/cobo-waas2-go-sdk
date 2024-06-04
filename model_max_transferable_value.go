@@ -16,11 +16,11 @@ import (
 // checks if the MaxTransferableValue type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MaxTransferableValue{}
 
-// MaxTransferableValue The maximum amount that you can transfer from the specified wallet address, along with the corresponding transaction fee.
+// MaxTransferableValue The maximum amount you can transfer from the wallet or the specified wallet address, along with the corresponding transaction fee.
 type MaxTransferableValue struct {
 	// The token name.
 	TokenId *string `json:"token_id,omitempty"`
-	// the maximum transferable value for the given address or current wallet.
+	// The maximum amount you can transfer from the wallet or the specified wallet address.
 	MaxTransferableValue *string `json:"max_transferable_value,omitempty"`
 	Fee *TransactionFee `json:"fee,omitempty"`
 }

@@ -47,13 +47,13 @@ func (dst *EstimateFee) UnmarshalJSON(data []byte) error {
 
 	// check if the discriminator value is 'Call'
 	if jsonDict["request_type"] == "Call" {
-		// try to unmarshal JSON data into SmartContractCall
-		err = json.Unmarshal(data, &dst.SmartContractCall)
+		// try to unmarshal JSON data into ContractCall
+		err = json.Unmarshal(data, &dst.ContractCall)
 		if err == nil {
-			return nil // data stored in dst.SmartContractCall, return on the first match
+			return nil // data stored in dst.ContractCall, return on the first match
 		} else {
-			dst.SmartContractCall = nil
-			return fmt.Errorf("failed to unmarshal EstimateFee as SmartContractCall: %s", err.Error())
+			dst.ContractCall = nil
+			return fmt.Errorf("failed to unmarshal EstimateFee as ContractCall: %s", err.Error())
 		}
 	}
 

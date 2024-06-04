@@ -155,13 +155,13 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 
 	// check if the discriminator value is 'SafeContractWallet'
 	if jsonDict["type"] == "SafeContractWallet" {
-		// try to unmarshal JSON data into SafeWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.SafeWalletTransactionAddress)
+		// try to unmarshal JSON data into SafeTransactionAddress
+		err = json.Unmarshal(data, &dst.SafeTransactionAddress)
 		if err == nil {
-			return nil // data stored in dst.SafeWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.SafeTransactionAddress, return on the first match
 		} else {
-			dst.SafeWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as SafeWalletTransactionAddress: %s", err.Error())
+			dst.SafeTransactionAddress = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as SafeTransactionAddress: %s", err.Error())
 		}
 	}
 

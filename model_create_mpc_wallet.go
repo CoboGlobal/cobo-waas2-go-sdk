@@ -22,9 +22,8 @@ var _ MappedNullable = &CreateMpcWallet{}
 type CreateMpcWallet struct {
 	// The wallet name.
 	Name string `json:"name"`
-	// The wallet type.
-	WalletType string `json:"wallet_type"`
-	WalletSubtype string `json:"wallet_subtype"`
+	WalletType WalletType `json:"wallet_type"`
+	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 	// The ID of the owning vault.
 	VaultId string `json:"vault_id"`
 }
@@ -35,7 +34,7 @@ type _CreateMpcWallet CreateMpcWallet
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateMpcWallet(name string, walletType string, walletSubtype string, vaultId string) *CreateMpcWallet {
+func NewCreateMpcWallet(name string, walletType WalletType, walletSubtype WalletSubtype, vaultId string) *CreateMpcWallet {
 	this := CreateMpcWallet{}
 	this.Name = name
 	this.WalletType = walletType
@@ -77,9 +76,9 @@ func (o *CreateMpcWallet) SetName(v string) {
 }
 
 // GetWalletType returns the WalletType field value
-func (o *CreateMpcWallet) GetWalletType() string {
+func (o *CreateMpcWallet) GetWalletType() WalletType {
 	if o == nil {
-		var ret string
+		var ret WalletType
 		return ret
 	}
 
@@ -88,7 +87,7 @@ func (o *CreateMpcWallet) GetWalletType() string {
 
 // GetWalletTypeOk returns a tuple with the WalletType field value
 // and a boolean to check if the value has been set.
-func (o *CreateMpcWallet) GetWalletTypeOk() (*string, bool) {
+func (o *CreateMpcWallet) GetWalletTypeOk() (*WalletType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -96,14 +95,14 @@ func (o *CreateMpcWallet) GetWalletTypeOk() (*string, bool) {
 }
 
 // SetWalletType sets field value
-func (o *CreateMpcWallet) SetWalletType(v string) {
+func (o *CreateMpcWallet) SetWalletType(v WalletType) {
 	o.WalletType = v
 }
 
 // GetWalletSubtype returns the WalletSubtype field value
-func (o *CreateMpcWallet) GetWalletSubtype() string {
+func (o *CreateMpcWallet) GetWalletSubtype() WalletSubtype {
 	if o == nil {
-		var ret string
+		var ret WalletSubtype
 		return ret
 	}
 
@@ -112,7 +111,7 @@ func (o *CreateMpcWallet) GetWalletSubtype() string {
 
 // GetWalletSubtypeOk returns a tuple with the WalletSubtype field value
 // and a boolean to check if the value has been set.
-func (o *CreateMpcWallet) GetWalletSubtypeOk() (*string, bool) {
+func (o *CreateMpcWallet) GetWalletSubtypeOk() (*WalletSubtype, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -120,7 +119,7 @@ func (o *CreateMpcWallet) GetWalletSubtypeOk() (*string, bool) {
 }
 
 // SetWalletSubtype sets field value
-func (o *CreateMpcWallet) SetWalletSubtype(v string) {
+func (o *CreateMpcWallet) SetWalletSubtype(v WalletSubtype) {
 	o.WalletSubtype = v
 }
 

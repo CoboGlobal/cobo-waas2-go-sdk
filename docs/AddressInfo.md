@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **AddressStr** | **string** | The wallet address. | 
 **TokenId** | **string** | The token ID. | 
 **Memo** | Pointer to **string** | The memo code. | [optional] 
-**Path** | Pointer to **string** | The derivation path of the public key. This field is applicable to MPC Wallets. | [optional] 
+**Path** | Pointer to **string** | The derivation path of the address. This field is applicable to MPC Wallets. | [optional] 
 **Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
-**Pubkey** | Pointer to **string** | The public key. This field is applicable to MPC Wallets. | [optional] 
+**Pubkey** | Pointer to **string** | The public key of the address. This field is applicable to MPC Wallets. | [optional] 
 
 ## Methods
 

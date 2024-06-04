@@ -22,10 +22,8 @@ var _ MappedNullable = &CreateSafeWallet{}
 type CreateSafeWallet struct {
 	// The wallet name.
 	Name string `json:"name"`
-	// The Smart Contract Wallet type.
-	WalletType string `json:"wallet_type"`
-	// The Smart Contract Wallet subtype.
-	WalletSubtype string `json:"wallet_subtype"`
+	WalletType WalletType `json:"wallet_type"`
+	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 	// The wallet label.
 	Label *string `json:"label,omitempty"`
 	// The ID of the chain that the wallet operates on.
@@ -35,11 +33,11 @@ type CreateSafeWallet struct {
 	SafeAddress *string `json:"safe_address,omitempty"`
 	// The owners of the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.
 	Owners []string `json:"owners,omitempty"`
-	// The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}. 
+	// The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.
 	Threshold *int32 `json:"threshold,omitempty"`
 	// The address of Cobo Safe. If you are importing an existing Safe{Wallet}, Cobo Safe must has been created and enabled.
 	CoboSafeAddress *string `json:"cobo_safe_address,omitempty"`
-	Initiator *SafeWalletAllOfInitiator `json:"initiator,omitempty"`
+	Initiator *CreateSafeWalletAllOfInitiator `json:"initiator,omitempty"`
 }
 
 type _CreateSafeWallet CreateSafeWallet
@@ -48,7 +46,7 @@ type _CreateSafeWallet CreateSafeWallet
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateSafeWallet(name string, walletType string, walletSubtype string, chainId string, smartContractWalletType SmartContractWalletType) *CreateSafeWallet {
+func NewCreateSafeWallet(name string, walletType WalletType, walletSubtype WalletSubtype, chainId string, smartContractWalletType SmartContractWalletType) *CreateSafeWallet {
 	this := CreateSafeWallet{}
 	this.Name = name
 	this.WalletType = walletType
@@ -93,9 +91,9 @@ func (o *CreateSafeWallet) SetName(v string) {
 }
 
 // GetWalletType returns the WalletType field value
-func (o *CreateSafeWallet) GetWalletType() string {
+func (o *CreateSafeWallet) GetWalletType() WalletType {
 	if o == nil {
-		var ret string
+		var ret WalletType
 		return ret
 	}
 
@@ -104,7 +102,7 @@ func (o *CreateSafeWallet) GetWalletType() string {
 
 // GetWalletTypeOk returns a tuple with the WalletType field value
 // and a boolean to check if the value has been set.
-func (o *CreateSafeWallet) GetWalletTypeOk() (*string, bool) {
+func (o *CreateSafeWallet) GetWalletTypeOk() (*WalletType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -112,14 +110,14 @@ func (o *CreateSafeWallet) GetWalletTypeOk() (*string, bool) {
 }
 
 // SetWalletType sets field value
-func (o *CreateSafeWallet) SetWalletType(v string) {
+func (o *CreateSafeWallet) SetWalletType(v WalletType) {
 	o.WalletType = v
 }
 
 // GetWalletSubtype returns the WalletSubtype field value
-func (o *CreateSafeWallet) GetWalletSubtype() string {
+func (o *CreateSafeWallet) GetWalletSubtype() WalletSubtype {
 	if o == nil {
-		var ret string
+		var ret WalletSubtype
 		return ret
 	}
 
@@ -128,7 +126,7 @@ func (o *CreateSafeWallet) GetWalletSubtype() string {
 
 // GetWalletSubtypeOk returns a tuple with the WalletSubtype field value
 // and a boolean to check if the value has been set.
-func (o *CreateSafeWallet) GetWalletSubtypeOk() (*string, bool) {
+func (o *CreateSafeWallet) GetWalletSubtypeOk() (*WalletSubtype, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -136,7 +134,7 @@ func (o *CreateSafeWallet) GetWalletSubtypeOk() (*string, bool) {
 }
 
 // SetWalletSubtype sets field value
-func (o *CreateSafeWallet) SetWalletSubtype(v string) {
+func (o *CreateSafeWallet) SetWalletSubtype(v WalletSubtype) {
 	o.WalletSubtype = v
 }
 
@@ -349,9 +347,9 @@ func (o *CreateSafeWallet) SetCoboSafeAddress(v string) {
 }
 
 // GetInitiator returns the Initiator field value if set, zero value otherwise.
-func (o *CreateSafeWallet) GetInitiator() SafeWalletAllOfInitiator {
+func (o *CreateSafeWallet) GetInitiator() CreateSafeWalletAllOfInitiator {
 	if o == nil || IsNil(o.Initiator) {
-		var ret SafeWalletAllOfInitiator
+		var ret CreateSafeWalletAllOfInitiator
 		return ret
 	}
 	return *o.Initiator
@@ -359,7 +357,7 @@ func (o *CreateSafeWallet) GetInitiator() SafeWalletAllOfInitiator {
 
 // GetInitiatorOk returns a tuple with the Initiator field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateSafeWallet) GetInitiatorOk() (*SafeWalletAllOfInitiator, bool) {
+func (o *CreateSafeWallet) GetInitiatorOk() (*CreateSafeWalletAllOfInitiator, bool) {
 	if o == nil || IsNil(o.Initiator) {
 		return nil, false
 	}
@@ -375,8 +373,8 @@ func (o *CreateSafeWallet) HasInitiator() bool {
 	return false
 }
 
-// SetInitiator gets a reference to the given SafeWalletAllOfInitiator and assigns it to the Initiator field.
-func (o *CreateSafeWallet) SetInitiator(v SafeWalletAllOfInitiator) {
+// SetInitiator gets a reference to the given CreateSafeWalletAllOfInitiator and assigns it to the Initiator field.
+func (o *CreateSafeWallet) SetInitiator(v CreateSafeWalletAllOfInitiator) {
 	o.Initiator = &v
 }
 

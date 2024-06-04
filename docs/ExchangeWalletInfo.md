@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **OrgId** | **string** | The ID of the owning organization. | 
 **Apikey** | **string** | The API key of your exchange account. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
-**ParentWalletId** | Pointer to **string** | The wallet ID of the Main Account, if applicable. | [optional] 
+**ParentWalletId** | Pointer to **string** | The wallet ID of the Main Account associated with the Sub Account. This is returned only if you are querying a Sub Account. | [optional] 
 **SubAccounts** | Pointer to [**[]ExchangeWalletInfoAllOfSubAccounts**](ExchangeWalletInfoAllOfSubAccounts.md) |  | [optional] 
 
 ## Methods

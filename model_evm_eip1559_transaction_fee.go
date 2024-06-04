@@ -20,7 +20,7 @@ var _ MappedNullable = &EvmEip1559TransactionFee{}
 
 // EvmEip1559TransactionFee The transaction fee when using the EIP 1559 method. The estimated fee is calculated by multiplying the max fee by the gas limit: (max fee * gas limit). 
 type EvmEip1559TransactionFee struct {
-	// The token ID of the transaction fee. Unique in all chains scope.
+	// The token ID of the transaction fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction.
 	MaxPriorityFee string `json:"max_priority_fee"`

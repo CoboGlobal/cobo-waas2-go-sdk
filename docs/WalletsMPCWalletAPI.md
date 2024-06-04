@@ -1095,7 +1095,7 @@ Name | Type | Description  | Notes
 
 ## ListTssRequest
 
-> TSSRequest ListTssRequest(ctx, vaultId).TargetKeyGroupId(targetKeyGroupId).Execute()
+> []TSSRequest ListTssRequest(ctx, vaultId).TargetKeyGroupId(targetKeyGroupId).Execute()
 
 List tss request information by vault ID
 
@@ -1131,7 +1131,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletAPI.ListTssRequest``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListTssRequest`: TSSRequest
+	// response from `ListTssRequest`: []TSSRequest
 	fmt.Fprintf(os.Stdout, "Response from `WalletsMPCWalletAPI.ListTssRequest`: %v\n", resp)
 }
 ```
@@ -1156,7 +1156,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TSSRequest**](TSSRequest.md)
+[**[]TSSRequest**](TSSRequest.md)
 
 ### Authorization
 

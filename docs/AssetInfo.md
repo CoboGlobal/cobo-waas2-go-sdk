@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AssetId** | **string** | The asset ID. | 
-**DisplayCode** | Pointer to **string** | The display code of the asset. | [optional] 
+**DisplayCode** | Pointer to **string** | The asset symbol. You can use the value for display purposes. | [optional] 
 **Description** | Pointer to **string** | The description of the asset. | [optional] 
-**IconUrl** | Pointer to **string** | The URL of the asset. | [optional] 
+**IconUrl** | Pointer to **string** | The URL of the asset icon. | [optional] 
 
 ## Methods
 

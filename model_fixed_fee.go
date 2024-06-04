@@ -20,10 +20,10 @@ var _ MappedNullable = &FixedFee{}
 
 // FixedFee The estimated transaction fee in fee_coin.
 type FixedFee struct {
-	// The max fee amount in fee_coin.
+	// The maximum fee amount in fee_coin.
 	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee. Unique in all chains scope.
+	// The token ID of the transaction fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
 }
 

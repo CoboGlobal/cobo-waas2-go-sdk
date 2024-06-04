@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 
 ## Methods
 

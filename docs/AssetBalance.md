@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AssetId** | **string** | ID of the asset. Unique in all assets scope. | 
+**AssetId** | **string** | The asset ID. | 
 **Balance** | [**TokenBalanceBalance**](TokenBalanceBalance.md) |  | 
 
 ## Methods

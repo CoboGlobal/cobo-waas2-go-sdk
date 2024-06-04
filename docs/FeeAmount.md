@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
 
 ## Methods
 

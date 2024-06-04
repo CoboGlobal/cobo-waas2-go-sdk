@@ -24,9 +24,9 @@ type TokenBalanceBalance struct {
 	Total string `json:"total"`
 	// The balance free to use.
 	Available string `json:"available"`
-	// The balance pending confirmation.
+	// The balance that is currently pending confirmation.
 	Pending *string `json:"pending,omitempty"`
-	// The locked balance.
+	// The balance that is currently not accessible to transactions.
 	Locked *string `json:"locked,omitempty"`
 }
 

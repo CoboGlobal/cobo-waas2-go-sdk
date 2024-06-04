@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | The token ID. Unique in all chains scope. | 
+**TokenId** | **string** | The token ID. | 
 **ChainId** | **string** | The blockchain on which the token operates. | 
 **Symbol** | Pointer to **string** | The token symbol. | [optional] 
 **Description** | Pointer to **string** | The token description. | [optional] 

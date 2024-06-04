@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// AddressEncoding This parameter only applies to BTC chains.
+// AddressEncoding The address encoding formats. This parameter only applies to blockchains with Bitcoin-like architecture.
 type AddressEncoding string
 
 // List of AddressEncoding

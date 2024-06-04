@@ -1963,7 +1963,7 @@ func (r ApiListTssRequestRequest) TargetKeyGroupId(targetKeyGroupId string) ApiL
 	return r
 }
 
-func (r ApiListTssRequestRequest) Execute() (*TSSRequest, *http.Response, error) {
+func (r ApiListTssRequestRequest) Execute() ([]TSSRequest, *http.Response, error) {
 	return r.ApiService.ListTssRequestExecute(r)
 }
 
@@ -1987,13 +1987,13 @@ func (a *WalletsMPCWalletAPIService) ListTssRequest(ctx context.Context, vaultId
 }
 
 // Execute executes the request
-//  @return TSSRequest
-func (a *WalletsMPCWalletAPIService) ListTssRequestExecute(r ApiListTssRequestRequest) (*TSSRequest, *http.Response, error) {
+//  @return []TSSRequest
+func (a *WalletsMPCWalletAPIService) ListTssRequestExecute(r ApiListTssRequestRequest) ([]TSSRequest, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *TSSRequest
+		localVarReturnValue  []TSSRequest
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsMPCWalletAPIService.ListTssRequest")

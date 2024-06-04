@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **Slow** | Pointer to [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | [optional] 
 **Standard** | [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | 
 **Fast** | Pointer to [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | [optional] 
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
-**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
+**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
 
 ## Methods
 

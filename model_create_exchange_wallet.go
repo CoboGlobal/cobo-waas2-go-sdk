@@ -22,10 +22,8 @@ var _ MappedNullable = &CreateExchangeWallet{}
 type CreateExchangeWallet struct {
 	// The wallet name.
 	Name string `json:"name"`
-	// The wallet type.
-	WalletType string `json:"wallet_type"`
-	// The wallet subtype.
-	WalletSubtype string `json:"wallet_subtype"`
+	WalletType WalletType `json:"wallet_type"`
+	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 	ExchangeId ExchangeId `json:"exchange_id"`
 	// The API key of your exchange account.
 	Apikey string `json:"apikey"`
@@ -33,7 +31,7 @@ type CreateExchangeWallet struct {
 	Secret string `json:"secret"`
 	// The passphrase of your exchange account.
 	Passphrase *string `json:"passphrase,omitempty"`
-	// The ga_code for the exchange.
+	// The GA code for the exchange.
 	GaCode *string `json:"ga_code,omitempty"`
 	// The Sub Account ID. It can be an email address, a user name, or a custom account ID.
 	SubAccountIds []string `json:"sub_account_ids,omitempty"`
@@ -45,7 +43,7 @@ type _CreateExchangeWallet CreateExchangeWallet
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateExchangeWallet(name string, walletType string, walletSubtype string, exchangeId ExchangeId, apikey string, secret string) *CreateExchangeWallet {
+func NewCreateExchangeWallet(name string, walletType WalletType, walletSubtype WalletSubtype, exchangeId ExchangeId, apikey string, secret string) *CreateExchangeWallet {
 	this := CreateExchangeWallet{}
 	this.Name = name
 	this.WalletType = walletType
@@ -89,9 +87,9 @@ func (o *CreateExchangeWallet) SetName(v string) {
 }
 
 // GetWalletType returns the WalletType field value
-func (o *CreateExchangeWallet) GetWalletType() string {
+func (o *CreateExchangeWallet) GetWalletType() WalletType {
 	if o == nil {
-		var ret string
+		var ret WalletType
 		return ret
 	}
 
@@ -100,7 +98,7 @@ func (o *CreateExchangeWallet) GetWalletType() string {
 
 // GetWalletTypeOk returns a tuple with the WalletType field value
 // and a boolean to check if the value has been set.
-func (o *CreateExchangeWallet) GetWalletTypeOk() (*string, bool) {
+func (o *CreateExchangeWallet) GetWalletTypeOk() (*WalletType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -108,14 +106,14 @@ func (o *CreateExchangeWallet) GetWalletTypeOk() (*string, bool) {
 }
 
 // SetWalletType sets field value
-func (o *CreateExchangeWallet) SetWalletType(v string) {
+func (o *CreateExchangeWallet) SetWalletType(v WalletType) {
 	o.WalletType = v
 }
 
 // GetWalletSubtype returns the WalletSubtype field value
-func (o *CreateExchangeWallet) GetWalletSubtype() string {
+func (o *CreateExchangeWallet) GetWalletSubtype() WalletSubtype {
 	if o == nil {
-		var ret string
+		var ret WalletSubtype
 		return ret
 	}
 
@@ -124,7 +122,7 @@ func (o *CreateExchangeWallet) GetWalletSubtype() string {
 
 // GetWalletSubtypeOk returns a tuple with the WalletSubtype field value
 // and a boolean to check if the value has been set.
-func (o *CreateExchangeWallet) GetWalletSubtypeOk() (*string, bool) {
+func (o *CreateExchangeWallet) GetWalletSubtypeOk() (*WalletSubtype, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -132,7 +130,7 @@ func (o *CreateExchangeWallet) GetWalletSubtypeOk() (*string, bool) {
 }
 
 // SetWalletSubtype sets field value
-func (o *CreateExchangeWallet) SetWalletSubtype(v string) {
+func (o *CreateExchangeWallet) SetWalletSubtype(v WalletSubtype) {
 	o.WalletSubtype = v
 }
 

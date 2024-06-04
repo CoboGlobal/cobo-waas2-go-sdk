@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Apikey** | Pointer to **string** | The API key of your exchange account. | [optional] 
 **Secret** | Pointer to **string** | The API secret of your exchange account. | [optional] 
 **Passphrase** | Pointer to **string** | The passphrase of your exchange account. | [optional] 
-**GaCode** | Pointer to **string** | The ga_code for the exchange. | [optional] 
+**GaCode** | Pointer to **string** | The GA code for the exchange. | [optional] 
 **SubAccountIds** | Pointer to **[]string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. | [optional] 
 
 ## Methods

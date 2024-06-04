@@ -1,104 +1,104 @@
-# SafeWalletAllOfInitiator
+# CreateSafeWalletAllOfInitiator
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **WalletId** | Pointer to **string** | The initiator&#39;s wallet ID. This field is required when creating a new Safe{Wallet}.  | [optional] 
-**WalletType** | Pointer to **string** | The initiator&#39;s wallet type. This field is required when creating a new Safe{Wallet}. | [optional] 
+**WalletType** | Pointer to **string** | The initiator&#39;s wallet type. This field is required when creating a new Safe{Wallet}.  | [optional] 
 **WalletAddress** | Pointer to **string** | The initiator&#39;s wallet address. This field is required when creating a new Safe{Wallet}.  | [optional] 
 
 ## Methods
 
-### NewSafeWalletAllOfInitiator
+### NewCreateSafeWalletAllOfInitiator
 
-`func NewSafeWalletAllOfInitiator() *SafeWalletAllOfInitiator`
+`func NewCreateSafeWalletAllOfInitiator() *CreateSafeWalletAllOfInitiator`
 
-NewSafeWalletAllOfInitiator instantiates a new SafeWalletAllOfInitiator object
+NewCreateSafeWalletAllOfInitiator instantiates a new CreateSafeWalletAllOfInitiator object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewSafeWalletAllOfInitiatorWithDefaults
+### NewCreateSafeWalletAllOfInitiatorWithDefaults
 
-`func NewSafeWalletAllOfInitiatorWithDefaults() *SafeWalletAllOfInitiator`
+`func NewCreateSafeWalletAllOfInitiatorWithDefaults() *CreateSafeWalletAllOfInitiator`
 
-NewSafeWalletAllOfInitiatorWithDefaults instantiates a new SafeWalletAllOfInitiator object
+NewCreateSafeWalletAllOfInitiatorWithDefaults instantiates a new CreateSafeWalletAllOfInitiator object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetWalletId
 
-`func (o *SafeWalletAllOfInitiator) GetWalletId() string`
+`func (o *CreateSafeWalletAllOfInitiator) GetWalletId() string`
 
 GetWalletId returns the WalletId field if non-nil, zero value otherwise.
 
 ### GetWalletIdOk
 
-`func (o *SafeWalletAllOfInitiator) GetWalletIdOk() (*string, bool)`
+`func (o *CreateSafeWalletAllOfInitiator) GetWalletIdOk() (*string, bool)`
 
 GetWalletIdOk returns a tuple with the WalletId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletId
 
-`func (o *SafeWalletAllOfInitiator) SetWalletId(v string)`
+`func (o *CreateSafeWalletAllOfInitiator) SetWalletId(v string)`
 
 SetWalletId sets WalletId field to given value.
 
 ### HasWalletId
 
-`func (o *SafeWalletAllOfInitiator) HasWalletId() bool`
+`func (o *CreateSafeWalletAllOfInitiator) HasWalletId() bool`
 
 HasWalletId returns a boolean if a field has been set.
 
 ### GetWalletType
 
-`func (o *SafeWalletAllOfInitiator) GetWalletType() string`
+`func (o *CreateSafeWalletAllOfInitiator) GetWalletType() string`
 
 GetWalletType returns the WalletType field if non-nil, zero value otherwise.
 
 ### GetWalletTypeOk
 
-`func (o *SafeWalletAllOfInitiator) GetWalletTypeOk() (*string, bool)`
+`func (o *CreateSafeWalletAllOfInitiator) GetWalletTypeOk() (*string, bool)`
 
 GetWalletTypeOk returns a tuple with the WalletType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletType
 
-`func (o *SafeWalletAllOfInitiator) SetWalletType(v string)`
+`func (o *CreateSafeWalletAllOfInitiator) SetWalletType(v string)`
 
 SetWalletType sets WalletType field to given value.
 
 ### HasWalletType
 
-`func (o *SafeWalletAllOfInitiator) HasWalletType() bool`
+`func (o *CreateSafeWalletAllOfInitiator) HasWalletType() bool`
 
 HasWalletType returns a boolean if a field has been set.
 
 ### GetWalletAddress
 
-`func (o *SafeWalletAllOfInitiator) GetWalletAddress() string`
+`func (o *CreateSafeWalletAllOfInitiator) GetWalletAddress() string`
 
 GetWalletAddress returns the WalletAddress field if non-nil, zero value otherwise.
 
 ### GetWalletAddressOk
 
-`func (o *SafeWalletAllOfInitiator) GetWalletAddressOk() (*string, bool)`
+`func (o *CreateSafeWalletAllOfInitiator) GetWalletAddressOk() (*string, bool)`
 
 GetWalletAddressOk returns a tuple with the WalletAddress field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletAddress
 
-`func (o *SafeWalletAllOfInitiator) SetWalletAddress(v string)`
+`func (o *CreateSafeWalletAllOfInitiator) SetWalletAddress(v string)`
 
 SetWalletAddress sets WalletAddress field to given value.
 
 ### HasWalletAddress
 
-`func (o *SafeWalletAllOfInitiator) HasWalletAddress() bool`
+`func (o *CreateSafeWalletAllOfInitiator) HasWalletAddress() bool`
 
 HasWalletAddress returns a boolean if a field has been set.
 

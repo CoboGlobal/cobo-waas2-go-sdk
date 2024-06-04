@@ -20,7 +20,7 @@ var _ MappedNullable = &TransactionToken{}
 
 // TransactionToken The data for transaction asset information.
 type TransactionToken struct {
-	// ID of the token. Unique in all chains scope.
+	// The token ID.
 	TokenId *string `json:"token_id,omitempty"`
 	// ID of the asset. Used to group token balance when needed.
 	AssetId string `json:"asset_id"`

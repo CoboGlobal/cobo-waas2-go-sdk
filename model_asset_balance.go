@@ -20,7 +20,7 @@ var _ MappedNullable = &AssetBalance{}
 
 // AssetBalance The data for token balance information.
 type AssetBalance struct {
-	// ID of the asset. Unique in all assets scope.
+	// The asset ID.
 	AssetId string `json:"asset_id"`
 	Balance TokenBalanceBalance `json:"balance"`
 }

@@ -5,20 +5,20 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The wallet name. | 
-**WalletType** | **string** | The wallet type. | 
-**WalletSubtype** | **string** | The wallet subtype. | 
+**WalletType** | [**WalletType**](WalletType.md) |  | 
+**WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **Apikey** | **string** | The API key of your exchange account. | 
 **Secret** | **string** | The API secret of your exchange account. | 
 **Passphrase** | Pointer to **string** | The passphrase of your exchange account. | [optional] 
-**GaCode** | Pointer to **string** | The ga_code for the exchange. | [optional] 
+**GaCode** | Pointer to **string** | The GA code for the exchange. | [optional] 
 **SubAccountIds** | Pointer to **[]string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. | [optional] 
 
 ## Methods
 
 ### NewCreateExchangeWallet
 
-`func NewCreateExchangeWallet(name string, walletType string, walletSubtype string, exchangeId ExchangeId, apikey string, secret string, ) *CreateExchangeWallet`
+`func NewCreateExchangeWallet(name string, walletType WalletType, walletSubtype WalletSubtype, exchangeId ExchangeId, apikey string, secret string, ) *CreateExchangeWallet`
 
 NewCreateExchangeWallet instantiates a new CreateExchangeWallet object
 This constructor will assign default values to properties that have it defined,
@@ -55,40 +55,40 @@ SetName sets Name field to given value.
 
 ### GetWalletType
 
-`func (o *CreateExchangeWallet) GetWalletType() string`
+`func (o *CreateExchangeWallet) GetWalletType() WalletType`
 
 GetWalletType returns the WalletType field if non-nil, zero value otherwise.
 
 ### GetWalletTypeOk
 
-`func (o *CreateExchangeWallet) GetWalletTypeOk() (*string, bool)`
+`func (o *CreateExchangeWallet) GetWalletTypeOk() (*WalletType, bool)`
 
 GetWalletTypeOk returns a tuple with the WalletType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletType
 
-`func (o *CreateExchangeWallet) SetWalletType(v string)`
+`func (o *CreateExchangeWallet) SetWalletType(v WalletType)`
 
 SetWalletType sets WalletType field to given value.
 
 
 ### GetWalletSubtype
 
-`func (o *CreateExchangeWallet) GetWalletSubtype() string`
+`func (o *CreateExchangeWallet) GetWalletSubtype() WalletSubtype`
 
 GetWalletSubtype returns the WalletSubtype field if non-nil, zero value otherwise.
 
 ### GetWalletSubtypeOk
 
-`func (o *CreateExchangeWallet) GetWalletSubtypeOk() (*string, bool)`
+`func (o *CreateExchangeWallet) GetWalletSubtypeOk() (*WalletSubtype, bool)`
 
 GetWalletSubtypeOk returns a tuple with the WalletSubtype field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletSubtype
 
-`func (o *CreateExchangeWallet) SetWalletSubtype(v string)`
+`func (o *CreateExchangeWallet) SetWalletSubtype(v WalletSubtype)`
 
 SetWalletSubtype sets WalletSubtype field to given value.
 

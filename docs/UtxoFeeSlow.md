@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. Unique in all chains scope. | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
-**MaxFeeAmount** | Pointer to **string** | The max fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
 
 ## Methods
 

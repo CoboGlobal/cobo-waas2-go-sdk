@@ -16,9 +16,9 @@ import (
 // checks if the FeeAmount type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FeeAmount{}
 
-// FeeAmount The estimated transaction fee in fee_coin.
+// FeeAmount The estimated transaction fee in transaction tokens.
 type FeeAmount struct {
-	// The max fee amount in fee_coin.
+	// The maximum fee amount in fee_coin.
 	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
 }
 

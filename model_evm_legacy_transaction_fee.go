@@ -20,7 +20,7 @@ var _ MappedNullable = &EvmLegacyTransactionFee{}
 
 // EvmLegacyTransactionFee The transaction fee when using the legacy method. The estimated fee is calculated by multiplying the gas price by the gas limit: (gas price * gas limit). 
 type EvmLegacyTransactionFee struct {
-	// The token ID of the transaction fee. Unique in all chains scope.
+	// The token ID of the transaction fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions.
 	GasPrice string `json:"gas_price"`

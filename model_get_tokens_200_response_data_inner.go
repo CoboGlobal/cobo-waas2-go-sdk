@@ -20,7 +20,7 @@ var _ MappedNullable = &GetTokens200ResponseDataInner{}
 
 // GetTokens200ResponseDataInner struct for GetTokens200ResponseDataInner
 type GetTokens200ResponseDataInner struct {
-	// The token ID. Unique in all chains scope.
+	// The token ID.
 	TokenId string `json:"token_id"`
 	// The blockchain on which the token operates.
 	ChainId string `json:"chain_id"`

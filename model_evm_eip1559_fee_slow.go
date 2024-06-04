@@ -20,7 +20,7 @@ var _ MappedNullable = &EvmEip1559FeeSlow{}
 
 // EvmEip1559FeeSlow struct for EvmEip1559FeeSlow
 type EvmEip1559FeeSlow struct {
-	// The token ID of the transaction fee. Unique in all chains scope.
+	// The token ID of the transaction fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction.
 	MaxPriorityFee string `json:"max_priority_fee"`

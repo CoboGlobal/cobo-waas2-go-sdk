@@ -584,7 +584,7 @@ func (r ApiGetChainsRequest) Execute() (*GetChains200Response, *http.Response, e
 /*
 GetChains List chain metadata
 
-This operation retrieves the metadata of available chains. 
+This operation retrieves the metadata of all chains supported by Cobo WaaS 2.0.
 
 It provides details such as chain ID, chain name, and other relevant information. The chain metadata is publicly available without any permission restrictions.
 
@@ -715,7 +715,7 @@ func (r ApiGetEnabledChainsRequest) WalletType(walletType WalletType) ApiGetEnab
 	return r
 }
 
-// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)  - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetEnabledChainsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetEnabledChainsRequest {
 	r.walletSubtype = &walletSubtype
 	return r
@@ -879,7 +879,7 @@ func (r ApiGetEnabledTokensRequest) WalletType(walletType WalletType) ApiGetEnab
 	return r
 }
 
-// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)  - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetEnabledTokensRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetEnabledTokensRequest {
 	r.walletSubtype = &walletSubtype
 	return r
@@ -916,8 +916,7 @@ func (r ApiGetEnabledTokensRequest) Execute() (*GetTokens200Response, *http.Resp
 /*
 GetEnabledTokens List enabled tokens
 
-
-This operation retrieves all the tokens enabled for the organization associated with your API key. You can also specify the wallet type, subtype, and chain ID you want to query.
+This operation retrieves all tokens that can be used by the organization associated with your API key. You can filter the result by wallet type, subtype, and chain ID.
 
 You can retrieve chain IDs by using the [List enabled chains](/api-references/v2/wallets/list-enabled-chains) operation.
 
@@ -1065,7 +1064,7 @@ func (r ApiGetMaxTransferableValueRequest) Execute() (*MaxTransferableValue, *ht
 /*
 GetMaxTransferableValue Get max transferable value
 
-This operation retrieves the maximum amount that you can transfer from a wallet address, along with the corresponding transaction fee.
+This operation retrieves the maximum amount that you can transfer from a wallet or a specified wallet address, along with the corresponding transaction fee.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1334,7 +1333,7 @@ func (r ApiGetSupportedChainsRequest) WalletType(walletType WalletType) ApiGetSu
 	return r
 }
 
-// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)  - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetSupportedChainsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetSupportedChainsRequest {
 	r.walletSubtype = &walletSubtype
 	return r
@@ -1365,7 +1364,7 @@ func (r ApiGetSupportedChainsRequest) Execute() (*GetChains200Response, *http.Re
 /*
 GetSupportedChains List supported chains
 
-This operation retrieves all supported chains for the organization associated with your API key. You can also specify the wallet type and subtype you want to query.
+This operation retrieves all chains supported by the specified wallet type or subtype.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1498,7 +1497,7 @@ func (r ApiGetSupportedTokensRequest) WalletType(walletType WalletType) ApiGetSu
 	return r
 }
 
-// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)  - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiGetSupportedTokensRequest) WalletSubtype(walletSubtype WalletSubtype) ApiGetSupportedTokensRequest {
 	r.walletSubtype = &walletSubtype
 	return r
@@ -2450,7 +2449,7 @@ func (r ApiListWalletsRequest) WalletType(walletType WalletType) ApiListWalletsR
 	return r
 }
 
-// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)   - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)  - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
 func (r ApiListWalletsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiListWalletsRequest {
 	r.walletSubtype = &walletSubtype
 	return r
@@ -2487,9 +2486,7 @@ func (r ApiListWalletsRequest) Execute() (*ListWallets200Response, *http.Respons
 /*
 ListWallets List all wallets
 
-Retrieves the information of all wallets under your organization.
-
-This endpoint allows filtering by wallet type, subtype, and MPC vault ID (if applicable).
+This operation retrieves the information of all wallets under your organization. You can filter the result by wallet type, subtype, and Vault ID (for MPC Wallets).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

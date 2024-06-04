@@ -26,7 +26,7 @@ type UpdateWalletByIdRequest struct {
 	Secret *string `json:"secret,omitempty"`
 	// The passphrase of your exchange account.
 	Passphrase *string `json:"passphrase,omitempty"`
-	// The ga_code for the exchange.
+	// The GA code for the exchange.
 	GaCode *string `json:"ga_code,omitempty"`
 	// The Sub Account ID. It can be an email address, a user name, or a custom account ID.
 	SubAccountIds []string `json:"sub_account_ids,omitempty"`

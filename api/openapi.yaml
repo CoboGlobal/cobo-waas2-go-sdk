@@ -93,9 +93,10 @@ tags:
 paths:
   /wallets/chains:
     get:
-      description: "This operation retrieves the metadata of available chains. \n\n\
-        It provides details such as chain ID, chain name, and other relevant information.\
-        \ The chain metadata is publicly available without any permission restrictions.\n"
+      description: |
+        This operation retrieves the metadata of all chains supported by Cobo WaaS 2.0.
+
+        It provides details such as chain ID, chain name, and other relevant information. The chain metadata is publicly available without any permission restrictions.
       operationId: get_chains
       parameters:
       - description: The chain ID.
@@ -237,7 +238,7 @@ paths:
   /wallets/supported_chains:
     get:
       description: |
-        This operation retrieves all supported chains for the organization associated with your API key. You can also specify the wallet type and subtype you want to query.
+        This operation retrieves all chains supported by the specified wallet type or subtype.
       operationId: get_supported_chains
       parameters:
       - description: |
@@ -257,12 +258,22 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
-          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
-          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
-          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
-          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
-          \ Wallets (Safe{Wallet})\n"
+      - description: |
+          The wallet subtype.
+
+          - `Asset`: Custodial Wallets (Asset Wallets)
+
+          - `Web3`: Custodial Wallets (Web3 Wallets)
+
+          - `Main`: Exchange Wallets (Main Account)
+
+          - `Sub`: Exchange Wallets (Sub Account)
+
+          - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+          - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -350,12 +361,22 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
-          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
-          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
-          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
-          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
-          \ Wallets (Safe{Wallet})\n"
+      - description: |
+          The wallet subtype.
+
+          - `Asset`: Custodial Wallets (Asset Wallets)
+
+          - `Web3`: Custodial Wallets (Web3 Wallets)
+
+          - `Main`: Exchange Wallets (Main Account)
+
+          - `Sub`: Exchange Wallets (Sub Account)
+
+          - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+          - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -450,12 +471,22 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
-          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
-          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
-          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
-          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
-          \ Wallets (Safe{Wallet})\n"
+      - description: |
+          The wallet subtype.
+
+          - `Asset`: Custodial Wallets (Asset Wallets)
+
+          - `Web3`: Custodial Wallets (Web3 Wallets)
+
+          - `Main`: Exchange Wallets (Main Account)
+
+          - `Sub`: Exchange Wallets (Sub Account)
+
+          - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+          - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -520,9 +551,8 @@ paths:
       - Wallets
   /wallets/enabled_tokens:
     get:
-      description: |2
-
-        This operation retrieves all the tokens enabled for the organization associated with your API key. You can also specify the wallet type, subtype, and chain ID you want to query.
+      description: |
+        This operation retrieves all tokens that can be used by the organization associated with your API key. You can filter the result by wallet type, subtype, and chain ID.
 
         You can retrieve chain IDs by using the [List enabled chains](/api-references/v2/wallets/list-enabled-chains) operation.
       operationId: get_enabled_tokens
@@ -544,12 +574,22 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
-          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
-          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
-          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
-          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
-          \ Wallets (Safe{Wallet})\n"
+      - description: |
+          The wallet subtype.
+
+          - `Asset`: Custodial Wallets (Asset Wallets)
+
+          - `Web3`: Custodial Wallets (Web3 Wallets)
+
+          - `Main`: Exchange Wallets (Main Account)
+
+          - `Sub`: Exchange Wallets (Sub Account)
+
+          - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+          - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -624,9 +664,7 @@ paths:
   /wallets:
     get:
       description: |
-        Retrieves the information of all wallets under your organization.
-
-        This endpoint allows filtering by wallet type, subtype, and MPC vault ID (if applicable).
+        This operation retrieves the information of all wallets under your organization. You can filter the result by wallet type, subtype, and Vault ID (for MPC Wallets).
       operationId: list_wallets
       parameters:
       - description: |
@@ -646,12 +684,22 @@ paths:
         schema:
           $ref: '#/components/schemas/WalletType'
         style: form
-      - description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
-          \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
-          \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
-          \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`:\
-          \ MPC Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract\
-          \ Wallets (Safe{Wallet})\n"
+      - description: |
+          The wallet subtype.
+
+          - `Asset`: Custodial Wallets (Asset Wallets)
+
+          - `Web3`: Custodial Wallets (Web3 Wallets)
+
+          - `Main`: Exchange Wallets (Main Account)
+
+          - `Sub`: Exchange Wallets (Sub Account)
+
+          - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+          - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -1008,7 +1056,7 @@ paths:
   /wallets/{wallet_id}/max_transferable_value:
     get:
       description: |
-        This operation retrieves the maximum amount that you can transfer from a wallet address, along with the corresponding transaction fee.
+        This operation retrieves the maximum amount that you can transfer from a wallet or a specified wallet address, along with the corresponding transaction fee.
       operationId: get_max_transferable_value
       parameters:
       - description: The wallet ID.
@@ -2085,7 +2133,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TSSRequest'
+                items:
+                  $ref: '#/components/schemas/TSSRequest'
+                type: array
           description: get mpc tss request successfully
         "400":
           content:
@@ -2345,7 +2395,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EstimationFee'
-          description: Successful get a transaction detail
+          description: Successful get the fee estimation result
         "400":
           content:
             application/json:
@@ -2850,8 +2900,8 @@ paths:
       - description: |
           The event status. Possible values include:
           - `Success`: The event has been delivered, and the webhook endpoint has responded to the event.
-          - `Retrying`: The event has been delivered, but the webhook endpoint has not responded. In this case, Cobo will retry delivering the event.
-          - `Failed`: The event cannot be delivered and Cobo will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error.
+          - `Retrying`: The event has been delivered, but the webhook endpoint has not responded. In this case, the WaaS service will retry delivering the event.
+          - `Failed`: The event cannot be delivered and the WaaS service will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error.
         example: Success
         explode: true
         in: query
@@ -3295,12 +3345,22 @@ components:
         $ref: '#/components/schemas/WalletType'
       style: form
     optionalWalletSubtypeParam:
-      description: "The wallet subtype.\n\n- `Asset`: Custodial Wallets (Asset Wallets)\n\
-        \n- `Web3`: Custodial Wallets (Web3 Wallets)\n\n- `Main`: Exchange Wallets\
-        \ (Main Account) \n\n- `Sub`: Exchange Wallets (Sub Account)\n\n- `Org-Controlled`:\
-        \ MPC Wallets (Organization-Controlled Wallets)\n\n- `User-Controlled`: MPC\
-        \ Wallets (User-Controlled Wallets)\n\n- `Safe{Wallet}`: Smart Contract Wallets\
-        \ (Safe{Wallet})\n"
+      description: |
+        The wallet subtype.
+
+        - `Asset`: Custodial Wallets (Asset Wallets)
+
+        - `Web3`: Custodial Wallets (Web3 Wallets)
+
+        - `Main`: Exchange Wallets (Main Account)
+
+        - `Sub`: Exchange Wallets (Sub Account)
+
+        - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+        - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+        - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
       explode: true
       in: query
       name: wallet_subtype
@@ -3320,7 +3380,7 @@ components:
         type: string
       style: simple
     optionalWalletIdParam:
-      description: Unique id of the wallet
+      description: The wallet ID.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: true
       in: query
@@ -4092,7 +4152,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/EstimationFee'
-      description: Successful get a transaction detail
+      description: Successful get the fee estimation result
     transactionFeeResponse:
       content:
         application/json:
@@ -4160,19 +4220,17 @@ components:
         asset_id:
           description: The asset ID.
           example: USDT
-          pattern: "^[A-Z0-9]+$"
           type: string
         display_code:
-          description: The display code of the asset.
+          description: The asset symbol. You can use the value for display purposes.
           example: USDT
-          pattern: "^[A-Z0-9]+$"
           type: string
         description:
           description: The description of the asset.
           example: Tether USDT
           type: string
         icon_url:
-          description: The URL of the asset.
+          description: The URL of the asset icon.
           example: https://d.cobo.com/public/logos/USDT.png
           type: string
       required:
@@ -4182,7 +4240,7 @@ components:
       description: The token information.
       properties:
         token_id:
-          description: The token ID. Unique in all chains scope.
+          description: The token ID.
           example: ETH_USDT
           type: string
         chain_id:
@@ -4219,9 +4277,10 @@ components:
       description: The chain information.
       example:
         icon_url: https://static.waas.co/images/coins/ETH.png
-        symbol: USDT
+        symbol: ETH
         chain_id: ETH
         explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
+        explorer_address_url: "https://etherscan.io/address/{address}"
       properties:
         chain_id:
           description: The chain on which the token operates.
@@ -4229,15 +4288,21 @@ components:
           type: string
         symbol:
           description: The chain symbol.
-          example: USDT
+          example: ETH
           type: string
         icon_url:
           description: The URL of the chain icon.
           example: https://static.waas.co/images/coins/ETH.png
           type: string
         explorer_tx_url:
-          description: The transaction URL on the blockchain explorer.
+          description: The transaction URL pattern on the blockchain explorer. You
+            can use it to concatenate the transaction URLs.
           example: "https://etherscan.io/tx/{txn_id}"
+          type: string
+        explorer_address_url:
+          description: The address URL pattern on the blockchain explorer. You can
+            use it to concatenate the address URLs.
+          example: "https://etherscan.io/address/{address}"
           type: string
       required:
       - chain_id
@@ -4315,7 +4380,7 @@ components:
       description: The data for token balance information.
       properties:
         asset_id:
-          description: ID of the asset. Unique in all assets scope.
+          description: The asset ID.
           example: USDT
           pattern: "^[A-Z0-9]+$"
           type: string
@@ -4435,7 +4500,8 @@ components:
           exchange_id:
             $ref: '#/components/schemas/ExchangeId'
           parent_wallet_id:
-            description: "The wallet ID of the Main Account, if applicable."
+            description: The wallet ID of the Main Account associated with the Sub
+              Account. This is returned only if you are querying a Sub Account.
             example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             format: uuid
             type: string
@@ -4460,15 +4526,6 @@ components:
       - $ref: '#/components/schemas/MPCWalletInfo'
       - $ref: '#/components/schemas/SmartContractWalletInfo'
       - $ref: '#/components/schemas/ExchangeWalletInfo'
-    BaseCreateWallet:
-      properties:
-        name:
-          description: The wallet name.
-          example: My WaaS 2.0 Wallet
-          type: string
-      required:
-      - name
-      type: object
     CreatedWallet:
       discriminator:
         mapping:
@@ -4535,8 +4592,8 @@ components:
           type: integer
       type: object
     MaxTransferableValue:
-      description: "The maximum amount that you can transfer from the specified wallet\
-        \ address, along with the corresponding transaction fee."
+      description: "The maximum amount you can transfer from the wallet or the specified\
+        \ wallet address, along with the corresponding transaction fee."
       example:
         token_id: ETH
         fee:
@@ -4552,8 +4609,8 @@ components:
           example: ETH
           type: string
         max_transferable_value:
-          description: the maximum transferable value for the given address or current
-            wallet.
+          description: The maximum amount you can transfer from the wallet or the
+            specified wallet address.
           example: "841165119243622"
           type: string
         fee:
@@ -4589,14 +4646,15 @@ components:
           example: "82840924"
           type: string
         path:
-          description: The derivation path of the public key. This field is applicable
+          description: The derivation path of the address. This field is applicable
             to MPC Wallets.
           example: m/44'/60'/0'/0
           type: string
         encoding:
           $ref: '#/components/schemas/AddressEncoding'
         pubkey:
-          description: The public key. This field is applicable to MPC Wallets.
+          description: The public key of the address. This field is applicable to
+            MPC Wallets.
           example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
           type: string
       required:
@@ -4605,7 +4663,8 @@ components:
       - token_id
       type: object
     AddressEncoding:
-      description: This parameter only applies to BTC chains.
+      description: The address encoding formats. This parameter only applies to blockchains
+        with Bitcoin-like architecture.
       enum:
       - ENCODING_P2PKH
       - ENCODING_P2SH_P2WPKH
@@ -4617,48 +4676,33 @@ components:
       example: ENCODING_P2PKH
       type: string
     CreateCustodialWallet:
-      allOf:
-      - $ref: '#/components/schemas/BaseCreateWallet'
-      - properties:
-          wallet_type:
-            description: The wallet type.
-            enum:
-            - Custodial
-            type: string
-          wallet_subtype:
-            enum:
-            - Asset
-            - Web3
-            type: string
-        required:
-        - wallet_subtype
-        - wallet_type
-        type: object
       example:
         wallet_subtype: Asset
         name: My WaaS 2.0 Wallet
         wallet_type: Custodial
+      properties:
+        name:
+          description: The wallet name.
+          example: My WaaS 2.0 Wallet
+          type: string
+        wallet_type:
+          $ref: '#/components/schemas/WalletType'
+        wallet_subtype:
+          $ref: '#/components/schemas/WalletSubtype'
+      required:
+      - name
+      - wallet_subtype
+      - wallet_type
+      type: object
     CreateMpcWallet:
       allOf:
-      - $ref: '#/components/schemas/BaseCreateWallet'
+      - $ref: '#/components/schemas/CreateCustodialWallet'
       - properties:
-          wallet_type:
-            description: The wallet type.
-            enum:
-            - MPC
-            type: string
-          wallet_subtype:
-            enum:
-            - Org-Controlled
-            - User-Controlled
-            type: string
           vault_id:
             description: The ID of the owning vault.
             type: string
         required:
         - vault_id
-        - wallet_subtype
-        - wallet_type
         type: object
     CreateSmartContractWallet:
       discriminator:
@@ -4670,18 +4714,8 @@ components:
     CreateSafeWallet:
       allOf:
       - allOf:
-        - $ref: '#/components/schemas/BaseCreateWallet'
+        - $ref: '#/components/schemas/CreateCustodialWallet'
         - properties:
-            wallet_type:
-              description: The Smart Contract Wallet type.
-              enum:
-              - SmartContract
-              type: string
-            wallet_subtype:
-              description: The Smart Contract Wallet subtype.
-              enum:
-              - "Safe{Wallet}"
-              type: string
             label:
               description: The wallet label.
               example: ETH
@@ -4692,8 +4726,6 @@ components:
               type: string
           required:
           - chain_id
-          - wallet_subtype
-          - wallet_type
           type: object
       - properties:
           smart_contract_wallet_type:
@@ -4717,7 +4749,7 @@ components:
             type: array
           threshold:
             description: "The minimum number of confirmations required for the Smart\
-              \ Contract Wallet. This field is required when creating a new Safe{Wallet}. "
+              \ Contract Wallet. This field is required when creating a new Safe{Wallet}."
             example: 2
             minimum: 1
             type: integer
@@ -4729,25 +4761,14 @@ components:
             pattern: "^0x[a-fA-F0-9]{40}$"
             type: string
           initiator:
-            $ref: '#/components/schemas/SafeWallet_allOf_initiator'
+            $ref: '#/components/schemas/CreateSafeWallet_allOf_initiator'
         required:
         - smart_contract_wallet_type
         type: object
     CreateExchangeWallet:
       allOf:
-      - $ref: '#/components/schemas/BaseCreateWallet'
+      - $ref: '#/components/schemas/CreateCustodialWallet'
       - properties:
-          wallet_type:
-            description: The wallet type.
-            enum:
-            - Exchange
-            type: string
-          wallet_subtype:
-            description: The wallet subtype.
-            enum:
-            - Main
-            - Sub
-            type: string
           exchange_id:
             $ref: '#/components/schemas/ExchangeId'
           apikey:
@@ -4763,7 +4784,7 @@ components:
             example: sXASDKWKLLsWWEE
             type: string
           ga_code:
-            description: The ga_code for the exchange.
+            description: The GA code for the exchange.
             example: sXASDKWKLLsWWEE75B4F636193162488A3728B4A5797708
             type: string
           sub_account_ids:
@@ -4779,8 +4800,6 @@ components:
         - apikey
         - exchange_id
         - secret
-        - wallet_subtype
-        - wallet_type
         type: object
     CurveType:
       enum:
@@ -5024,10 +5043,10 @@ components:
       example: EVM_EIP_1559
       type: string
     FeeAmount:
-      description: The estimated transaction fee in fee_coin.
+      description: The estimated transaction fee in transaction tokens.
       properties:
         max_fee_amount:
-          description: The max fee amount in fee_coin.
+          description: The maximum fee amount in fee_coin.
           example: "0.1"
           type: string
       type: object
@@ -5046,7 +5065,7 @@ components:
       description: The base transaction fee when using the EIP 1559 method.
       properties:
         fee_token_id:
-          description: The token ID of the transaction fee. Unique in all chains scope.
+          description: The token ID of the transaction fee.
           example: ETH
           type: string
         max_priority_fee:
@@ -5066,7 +5085,7 @@ components:
       description: The base transaction fee when using the legacy method.
       properties:
         fee_token_id:
-          description: The token ID of the transaction fee. Unique in all chains scope.
+          description: The token ID of the transaction fee.
           example: ETH_USDT
           type: string
         gas_price:
@@ -5081,7 +5100,7 @@ components:
       description: The base transaction fee for UTXO-based chains.
       properties:
         fee_token_id:
-          description: The token ID of the transaction fee. Unique in all chains scope.
+          description: The token ID of the transaction fee.
           example: ETH
           type: string
         fee_rate:
@@ -5136,8 +5155,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           fee_token_id:
-            description: The token ID of the transaction fee. Unique in all chains
-              scope.
+            description: The token ID of the transaction fee.
             example: ETH_USDT
             type: string
         type: object
@@ -5444,7 +5462,7 @@ components:
         asset_id: USDT
       properties:
         token_id:
-          description: ID of the token. Unique in all chains scope.
+          description: The token ID.
           example: ETH_USDT
           pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
@@ -5919,7 +5937,7 @@ components:
         source:
           $ref: '#/components/schemas/TransferSource'
         token_id:
-          description: ID of the token. Unique in all chains scope.
+          description: The token ID.
           example: ETH_USDT
           pattern: "^[A-Z]+(_[A-Z0-9]+)?$"
           type: string
@@ -5974,7 +5992,7 @@ components:
       discriminator:
         mapping:
           Transfer: '#/components/schemas/Transfer'
-          Call: '#/components/schemas/SmartContractCall'
+          Call: '#/components/schemas/ContractCall'
         propertyName: request_type
       oneOf:
       - $ref: '#/components/schemas/Transfer'
@@ -6314,13 +6332,15 @@ components:
           after: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
         - icon_url: https://static.waas.co/images/coins/ETH.png
-          symbol: USDT
+          symbol: ETH
           chain_id: ETH
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
+          explorer_address_url: "https://etherscan.io/address/{address}"
         - icon_url: https://static.waas.co/images/coins/ETH.png
-          symbol: USDT
+          symbol: ETH
           chain_id: ETH
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
+          explorer_address_url: "https://etherscan.io/address/{address}"
       properties:
         data:
           items:
@@ -6440,7 +6460,7 @@ components:
           example: sXASDKWKLLsWWEE
           type: string
         ga_code:
-          description: The ga_code for the exchange.
+          description: The GA code for the exchange.
           example: sXASDKWKLLsWWEE75B4F636193162488A3728B4A5797708
           type: string
         sub_account_ids:
@@ -6844,12 +6864,12 @@ components:
           type: string
         pending:
           default: "0"
-          description: The balance pending confirmation.
+          description: The balance that is currently pending confirmation.
           example: "10.5"
           type: string
         locked:
           default: "0"
-          description: The locked balance.
+          description: The balance that is currently not accessible to transactions.
           example: "3.0"
           type: string
       required:
@@ -6857,6 +6877,43 @@ components:
       - total
       type: object
     SafeWallet_allOf_initiator:
+      properties:
+        wallet_id:
+          description: "The initiator's wallet ID. This field is required when creating\
+            \ a new Safe{Wallet}. "
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+        wallet_type:
+          description: "The initiator's wallet type. This field is required when creating\
+            \ a new Safe{Wallet}."
+          example: MPC
+          type: string
+        wallet_address:
+          description: "The initiator's wallet address. This field is required when\
+            \ creating a new Safe{Wallet}. "
+          example: 0x1234567890123456789012345678901234567890
+          type: string
+      type: object
+    ExchangeWalletInfo_allOf_sub_accounts:
+      description: The information of a Sub Account associated with the Main Account.
+        This is returned only if you are querying a Main Account.
+      properties:
+        wallet_id:
+          description: The wallet ID of the Sub Account.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        account_id:
+          description: "The Sub Account ID. It can be an email address, a user name,\
+            \ or a custom account ID."
+          example: sub01@xx.com
+          type: string
+      required:
+      - account_id
+      - wallet_id
+      type: object
+    CreateSafeWallet_allOf_initiator:
       properties:
         wallet_id:
           description: "The initiator's wallet ID. This field is required when creating\
@@ -6874,22 +6931,6 @@ components:
             \ creating a new Safe{Wallet}. "
           example: 0x1234567890123456789012345678901234567890
           type: string
-      type: object
-    ExchangeWalletInfo_allOf_sub_accounts:
-      properties:
-        wallet_id:
-          description: The wallet ID of the Sub Account.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          format: uuid
-          type: string
-        account_id:
-          description: "The unique identifier associated with the Sub Account. It\
-            \ can be an email address, a user name, or a custom account ID."
-          example: sub01@xx.com
-          type: string
-      required:
-      - account_id
-      - wallet_id
       type: object
     EvmEip1559Fee_slow:
       allOf:
@@ -6917,7 +6958,7 @@ components:
           CustodialWeb3Wallet: '#/components/schemas/BaseWalletTransactionAddress'
           MPCClientControlledWallet: '#/components/schemas/MPCWalletTransactionAddress'
           MPCUserControlledWallet: '#/components/schemas/MPCWalletTransactionAddress'
-          SafeContractWallet: '#/components/schemas/SafeWalletTransactionAddress'
+          SafeContractWallet: '#/components/schemas/SafeTransactionAddress'
           ExchangeAccount: '#/components/schemas/ExchangeWalletTransactionAddress'
         propertyName: type
       oneOf:

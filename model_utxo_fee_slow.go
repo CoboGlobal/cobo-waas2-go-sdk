@@ -20,11 +20,11 @@ var _ MappedNullable = &UtxoFeeSlow{}
 
 // UtxoFeeSlow struct for UtxoFeeSlow
 type UtxoFeeSlow struct {
-	// The token ID of the transaction fee. Unique in all chains scope.
+	// The token ID of the transaction fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
-	// The max fee amount in fee_coin.
+	// The maximum fee amount in fee_coin.
 	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
 }
 

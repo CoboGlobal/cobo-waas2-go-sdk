@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **WalletId** | **string** | The wallet ID of the Sub Account. | 
-**AccountId** | **string** | The unique identifier associated with the Sub Account. It can be an email address, a user name, or a custom account ID. | 
+**AccountId** | **string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. | 
 
 ## Methods
 

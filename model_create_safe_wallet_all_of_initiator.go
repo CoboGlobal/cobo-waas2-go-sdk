@@ -13,38 +13,38 @@ import (
 	"encoding/json"
 )
 
-// checks if the SafeWalletAllOfInitiator type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &SafeWalletAllOfInitiator{}
+// checks if the CreateSafeWalletAllOfInitiator type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateSafeWalletAllOfInitiator{}
 
-// SafeWalletAllOfInitiator struct for SafeWalletAllOfInitiator
-type SafeWalletAllOfInitiator struct {
+// CreateSafeWalletAllOfInitiator struct for CreateSafeWalletAllOfInitiator
+type CreateSafeWalletAllOfInitiator struct {
 	// The initiator's wallet ID. This field is required when creating a new Safe{Wallet}. 
 	WalletId *string `json:"wallet_id,omitempty"`
-	// The initiator's wallet type. This field is required when creating a new Safe{Wallet}.
+	// The initiator's wallet type. This field is required when creating a new Safe{Wallet}. 
 	WalletType *string `json:"wallet_type,omitempty"`
 	// The initiator's wallet address. This field is required when creating a new Safe{Wallet}. 
 	WalletAddress *string `json:"wallet_address,omitempty"`
 }
 
-// NewSafeWalletAllOfInitiator instantiates a new SafeWalletAllOfInitiator object
+// NewCreateSafeWalletAllOfInitiator instantiates a new CreateSafeWalletAllOfInitiator object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSafeWalletAllOfInitiator() *SafeWalletAllOfInitiator {
-	this := SafeWalletAllOfInitiator{}
+func NewCreateSafeWalletAllOfInitiator() *CreateSafeWalletAllOfInitiator {
+	this := CreateSafeWalletAllOfInitiator{}
 	return &this
 }
 
-// NewSafeWalletAllOfInitiatorWithDefaults instantiates a new SafeWalletAllOfInitiator object
+// NewCreateSafeWalletAllOfInitiatorWithDefaults instantiates a new CreateSafeWalletAllOfInitiator object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSafeWalletAllOfInitiatorWithDefaults() *SafeWalletAllOfInitiator {
-	this := SafeWalletAllOfInitiator{}
+func NewCreateSafeWalletAllOfInitiatorWithDefaults() *CreateSafeWalletAllOfInitiator {
+	this := CreateSafeWalletAllOfInitiator{}
 	return &this
 }
 
 // GetWalletId returns the WalletId field value if set, zero value otherwise.
-func (o *SafeWalletAllOfInitiator) GetWalletId() string {
+func (o *CreateSafeWalletAllOfInitiator) GetWalletId() string {
 	if o == nil || IsNil(o.WalletId) {
 		var ret string
 		return ret
@@ -54,7 +54,7 @@ func (o *SafeWalletAllOfInitiator) GetWalletId() string {
 
 // GetWalletIdOk returns a tuple with the WalletId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SafeWalletAllOfInitiator) GetWalletIdOk() (*string, bool) {
+func (o *CreateSafeWalletAllOfInitiator) GetWalletIdOk() (*string, bool) {
 	if o == nil || IsNil(o.WalletId) {
 		return nil, false
 	}
@@ -62,7 +62,7 @@ func (o *SafeWalletAllOfInitiator) GetWalletIdOk() (*string, bool) {
 }
 
 // HasWalletId returns a boolean if a field has been set.
-func (o *SafeWalletAllOfInitiator) HasWalletId() bool {
+func (o *CreateSafeWalletAllOfInitiator) HasWalletId() bool {
 	if o != nil && !IsNil(o.WalletId) {
 		return true
 	}
@@ -71,12 +71,12 @@ func (o *SafeWalletAllOfInitiator) HasWalletId() bool {
 }
 
 // SetWalletId gets a reference to the given string and assigns it to the WalletId field.
-func (o *SafeWalletAllOfInitiator) SetWalletId(v string) {
+func (o *CreateSafeWalletAllOfInitiator) SetWalletId(v string) {
 	o.WalletId = &v
 }
 
 // GetWalletType returns the WalletType field value if set, zero value otherwise.
-func (o *SafeWalletAllOfInitiator) GetWalletType() string {
+func (o *CreateSafeWalletAllOfInitiator) GetWalletType() string {
 	if o == nil || IsNil(o.WalletType) {
 		var ret string
 		return ret
@@ -86,7 +86,7 @@ func (o *SafeWalletAllOfInitiator) GetWalletType() string {
 
 // GetWalletTypeOk returns a tuple with the WalletType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SafeWalletAllOfInitiator) GetWalletTypeOk() (*string, bool) {
+func (o *CreateSafeWalletAllOfInitiator) GetWalletTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.WalletType) {
 		return nil, false
 	}
@@ -94,7 +94,7 @@ func (o *SafeWalletAllOfInitiator) GetWalletTypeOk() (*string, bool) {
 }
 
 // HasWalletType returns a boolean if a field has been set.
-func (o *SafeWalletAllOfInitiator) HasWalletType() bool {
+func (o *CreateSafeWalletAllOfInitiator) HasWalletType() bool {
 	if o != nil && !IsNil(o.WalletType) {
 		return true
 	}
@@ -103,12 +103,12 @@ func (o *SafeWalletAllOfInitiator) HasWalletType() bool {
 }
 
 // SetWalletType gets a reference to the given string and assigns it to the WalletType field.
-func (o *SafeWalletAllOfInitiator) SetWalletType(v string) {
+func (o *CreateSafeWalletAllOfInitiator) SetWalletType(v string) {
 	o.WalletType = &v
 }
 
 // GetWalletAddress returns the WalletAddress field value if set, zero value otherwise.
-func (o *SafeWalletAllOfInitiator) GetWalletAddress() string {
+func (o *CreateSafeWalletAllOfInitiator) GetWalletAddress() string {
 	if o == nil || IsNil(o.WalletAddress) {
 		var ret string
 		return ret
@@ -118,7 +118,7 @@ func (o *SafeWalletAllOfInitiator) GetWalletAddress() string {
 
 // GetWalletAddressOk returns a tuple with the WalletAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SafeWalletAllOfInitiator) GetWalletAddressOk() (*string, bool) {
+func (o *CreateSafeWalletAllOfInitiator) GetWalletAddressOk() (*string, bool) {
 	if o == nil || IsNil(o.WalletAddress) {
 		return nil, false
 	}
@@ -126,7 +126,7 @@ func (o *SafeWalletAllOfInitiator) GetWalletAddressOk() (*string, bool) {
 }
 
 // HasWalletAddress returns a boolean if a field has been set.
-func (o *SafeWalletAllOfInitiator) HasWalletAddress() bool {
+func (o *CreateSafeWalletAllOfInitiator) HasWalletAddress() bool {
 	if o != nil && !IsNil(o.WalletAddress) {
 		return true
 	}
@@ -135,11 +135,11 @@ func (o *SafeWalletAllOfInitiator) HasWalletAddress() bool {
 }
 
 // SetWalletAddress gets a reference to the given string and assigns it to the WalletAddress field.
-func (o *SafeWalletAllOfInitiator) SetWalletAddress(v string) {
+func (o *CreateSafeWalletAllOfInitiator) SetWalletAddress(v string) {
 	o.WalletAddress = &v
 }
 
-func (o SafeWalletAllOfInitiator) MarshalJSON() ([]byte, error) {
+func (o CreateSafeWalletAllOfInitiator) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -147,7 +147,7 @@ func (o SafeWalletAllOfInitiator) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o SafeWalletAllOfInitiator) ToMap() (map[string]interface{}, error) {
+func (o CreateSafeWalletAllOfInitiator) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.WalletId) {
 		toSerialize["wallet_id"] = o.WalletId
@@ -161,38 +161,38 @@ func (o SafeWalletAllOfInitiator) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableSafeWalletAllOfInitiator struct {
-	value *SafeWalletAllOfInitiator
+type NullableCreateSafeWalletAllOfInitiator struct {
+	value *CreateSafeWalletAllOfInitiator
 	isSet bool
 }
 
-func (v NullableSafeWalletAllOfInitiator) Get() *SafeWalletAllOfInitiator {
+func (v NullableCreateSafeWalletAllOfInitiator) Get() *CreateSafeWalletAllOfInitiator {
 	return v.value
 }
 
-func (v *NullableSafeWalletAllOfInitiator) Set(val *SafeWalletAllOfInitiator) {
+func (v *NullableCreateSafeWalletAllOfInitiator) Set(val *CreateSafeWalletAllOfInitiator) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSafeWalletAllOfInitiator) IsSet() bool {
+func (v NullableCreateSafeWalletAllOfInitiator) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSafeWalletAllOfInitiator) Unset() {
+func (v *NullableCreateSafeWalletAllOfInitiator) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSafeWalletAllOfInitiator(val *SafeWalletAllOfInitiator) *NullableSafeWalletAllOfInitiator {
-	return &NullableSafeWalletAllOfInitiator{value: val, isSet: true}
+func NewNullableCreateSafeWalletAllOfInitiator(val *CreateSafeWalletAllOfInitiator) *NullableCreateSafeWalletAllOfInitiator {
+	return &NullableCreateSafeWalletAllOfInitiator{value: val, isSet: true}
 }
 
-func (v NullableSafeWalletAllOfInitiator) MarshalJSON() ([]byte, error) {
+func (v NullableCreateSafeWalletAllOfInitiator) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSafeWalletAllOfInitiator) UnmarshalJSON(src []byte) error {
+func (v *NullableCreateSafeWalletAllOfInitiator) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

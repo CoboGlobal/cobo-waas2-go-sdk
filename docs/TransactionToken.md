@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | Pointer to **string** | ID of the token. Unique in all chains scope. | [optional] 
+**TokenId** | Pointer to **string** | The token ID. | [optional] 
 **AssetId** | **string** | ID of the asset. Used to group token balance when needed. | 
 **Amount** | **float32** | Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5)  | 
 

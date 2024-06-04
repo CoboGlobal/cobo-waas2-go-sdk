@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The wallet name. | 
-**WalletType** | **string** | The wallet type. | 
-**WalletSubtype** | **string** |  | 
+**WalletType** | [**WalletType**](WalletType.md) |  | 
+**WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 
 ## Methods
 
 ### NewCreateCustodialWallet
 
-`func NewCreateCustodialWallet(name string, walletType string, walletSubtype string, ) *CreateCustodialWallet`
+`func NewCreateCustodialWallet(name string, walletType WalletType, walletSubtype WalletSubtype, ) *CreateCustodialWallet`
 
 NewCreateCustodialWallet instantiates a new CreateCustodialWallet object
 This constructor will assign default values to properties that have it defined,
@@ -49,40 +49,40 @@ SetName sets Name field to given value.
 
 ### GetWalletType
 
-`func (o *CreateCustodialWallet) GetWalletType() string`
+`func (o *CreateCustodialWallet) GetWalletType() WalletType`
 
 GetWalletType returns the WalletType field if non-nil, zero value otherwise.
 
 ### GetWalletTypeOk
 
-`func (o *CreateCustodialWallet) GetWalletTypeOk() (*string, bool)`
+`func (o *CreateCustodialWallet) GetWalletTypeOk() (*WalletType, bool)`
 
 GetWalletTypeOk returns a tuple with the WalletType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletType
 
-`func (o *CreateCustodialWallet) SetWalletType(v string)`
+`func (o *CreateCustodialWallet) SetWalletType(v WalletType)`
 
 SetWalletType sets WalletType field to given value.
 
 
 ### GetWalletSubtype
 
-`func (o *CreateCustodialWallet) GetWalletSubtype() string`
+`func (o *CreateCustodialWallet) GetWalletSubtype() WalletSubtype`
 
 GetWalletSubtype returns the WalletSubtype field if non-nil, zero value otherwise.
 
 ### GetWalletSubtypeOk
 
-`func (o *CreateCustodialWallet) GetWalletSubtypeOk() (*string, bool)`
+`func (o *CreateCustodialWallet) GetWalletSubtypeOk() (*WalletSubtype, bool)`
 
 GetWalletSubtypeOk returns a tuple with the WalletSubtype field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletSubtype
 
-`func (o *CreateCustodialWallet) SetWalletSubtype(v string)`
+`func (o *CreateCustodialWallet) SetWalletSubtype(v WalletSubtype)`
 
 SetWalletSubtype sets WalletSubtype field to given value.
 

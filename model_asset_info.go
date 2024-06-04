@@ -22,11 +22,11 @@ var _ MappedNullable = &AssetInfo{}
 type AssetInfo struct {
 	// The asset ID.
 	AssetId string `json:"asset_id"`
-	// The display code of the asset.
+	// The asset symbol. You can use the value for display purposes.
 	DisplayCode *string `json:"display_code,omitempty"`
 	// The description of the asset.
 	Description *string `json:"description,omitempty"`
-	// The URL of the asset.
+	// The URL of the asset icon.
 	IconUrl *string `json:"icon_url,omitempty"`
 }
 

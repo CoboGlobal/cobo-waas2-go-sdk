@@ -5,15 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The wallet name. | 
-**WalletType** | **string** | The wallet type. | 
-**WalletSubtype** | **string** |  | 
+**WalletType** | [**WalletType**](WalletType.md) |  | 
+**WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **VaultId** | **string** | The ID of the owning vault. | 
 
 ## Methods
 
 ### NewCreateMpcWallet
 
-`func NewCreateMpcWallet(name string, walletType string, walletSubtype string, vaultId string, ) *CreateMpcWallet`
+`func NewCreateMpcWallet(name string, walletType WalletType, walletSubtype WalletSubtype, vaultId string, ) *CreateMpcWallet`
 
 NewCreateMpcWallet instantiates a new CreateMpcWallet object
 This constructor will assign default values to properties that have it defined,
@@ -50,40 +50,40 @@ SetName sets Name field to given value.
 
 ### GetWalletType
 
-`func (o *CreateMpcWallet) GetWalletType() string`
+`func (o *CreateMpcWallet) GetWalletType() WalletType`
 
 GetWalletType returns the WalletType field if non-nil, zero value otherwise.
 
 ### GetWalletTypeOk
 
-`func (o *CreateMpcWallet) GetWalletTypeOk() (*string, bool)`
+`func (o *CreateMpcWallet) GetWalletTypeOk() (*WalletType, bool)`
 
 GetWalletTypeOk returns a tuple with the WalletType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletType
 
-`func (o *CreateMpcWallet) SetWalletType(v string)`
+`func (o *CreateMpcWallet) SetWalletType(v WalletType)`
 
 SetWalletType sets WalletType field to given value.
 
 
 ### GetWalletSubtype
 
-`func (o *CreateMpcWallet) GetWalletSubtype() string`
+`func (o *CreateMpcWallet) GetWalletSubtype() WalletSubtype`
 
 GetWalletSubtype returns the WalletSubtype field if non-nil, zero value otherwise.
 
 ### GetWalletSubtypeOk
 
-`func (o *CreateMpcWallet) GetWalletSubtypeOk() (*string, bool)`
+`func (o *CreateMpcWallet) GetWalletSubtypeOk() (*WalletSubtype, bool)`
 
 GetWalletSubtypeOk returns a tuple with the WalletSubtype field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWalletSubtype
 
-`func (o *CreateMpcWallet) SetWalletSubtype(v string)`
+`func (o *CreateMpcWallet) SetWalletSubtype(v WalletSubtype)`
 
 SetWalletSubtype sets WalletSubtype field to given value.
 

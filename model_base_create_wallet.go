@@ -22,6 +22,8 @@ var _ MappedNullable = &BaseCreateWallet{}
 type BaseCreateWallet struct {
 	// The wallet name.
 	Name string `json:"name"`
+	WalletType WalletType `json:"wallet_type"`
+	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 }
 
 type _BaseCreateWallet BaseCreateWallet
@@ -30,9 +32,11 @@ type _BaseCreateWallet BaseCreateWallet
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBaseCreateWallet(name string) *BaseCreateWallet {
+func NewBaseCreateWallet(name string, walletType WalletType, walletSubtype WalletSubtype) *BaseCreateWallet {
 	this := BaseCreateWallet{}
 	this.Name = name
+	this.WalletType = walletType
+	this.WalletSubtype = walletSubtype
 	return &this
 }
 
@@ -68,6 +72,54 @@ func (o *BaseCreateWallet) SetName(v string) {
 	o.Name = v
 }
 
+// GetWalletType returns the WalletType field value
+func (o *BaseCreateWallet) GetWalletType() WalletType {
+	if o == nil {
+		var ret WalletType
+		return ret
+	}
+
+	return o.WalletType
+}
+
+// GetWalletTypeOk returns a tuple with the WalletType field value
+// and a boolean to check if the value has been set.
+func (o *BaseCreateWallet) GetWalletTypeOk() (*WalletType, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.WalletType, true
+}
+
+// SetWalletType sets field value
+func (o *BaseCreateWallet) SetWalletType(v WalletType) {
+	o.WalletType = v
+}
+
+// GetWalletSubtype returns the WalletSubtype field value
+func (o *BaseCreateWallet) GetWalletSubtype() WalletSubtype {
+	if o == nil {
+		var ret WalletSubtype
+		return ret
+	}
+
+	return o.WalletSubtype
+}
+
+// GetWalletSubtypeOk returns a tuple with the WalletSubtype field value
+// and a boolean to check if the value has been set.
+func (o *BaseCreateWallet) GetWalletSubtypeOk() (*WalletSubtype, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.WalletSubtype, true
+}
+
+// SetWalletSubtype sets field value
+func (o *BaseCreateWallet) SetWalletSubtype(v WalletSubtype) {
+	o.WalletSubtype = v
+}
+
 func (o BaseCreateWallet) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -79,6 +131,8 @@ func (o BaseCreateWallet) MarshalJSON() ([]byte, error) {
 func (o BaseCreateWallet) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
+	toSerialize["wallet_type"] = o.WalletType
+	toSerialize["wallet_subtype"] = o.WalletSubtype
 	return toSerialize, nil
 }
 
@@ -88,6 +142,8 @@ func (o *BaseCreateWallet) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"name",
+		"wallet_type",
+		"wallet_subtype",
 	}
 
 	allProperties := make(map[string]interface{})

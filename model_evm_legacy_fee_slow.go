@@ -20,7 +20,7 @@ var _ MappedNullable = &EvmLegacyFeeSlow{}
 
 // EvmLegacyFeeSlow struct for EvmLegacyFeeSlow
 type EvmLegacyFeeSlow struct {
-	// The token ID of the transaction fee. Unique in all chains scope.
+	// The token ID of the transaction fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions.
 	GasPrice string `json:"gas_price"`

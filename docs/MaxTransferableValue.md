@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TokenId** | Pointer to **string** | The token name. | [optional] 
-**MaxTransferableValue** | Pointer to **string** | the maximum transferable value for the given address or current wallet. | [optional] 
+**MaxTransferableValue** | Pointer to **string** | The maximum amount you can transfer from the wallet or the specified wallet address. | [optional] 
 **Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
 
 ## Methods

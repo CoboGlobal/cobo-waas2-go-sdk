@@ -31,7 +31,7 @@ type ExchangeWalletInfo struct {
 	// The API key of your exchange account.
 	Apikey string `json:"apikey"`
 	ExchangeId ExchangeId `json:"exchange_id"`
-	// The wallet ID of the Main Account, if applicable.
+	// The wallet ID of the Main Account associated with the Sub Account. This is returned only if you are querying a Sub Account.
 	ParentWalletId *string `json:"parent_wallet_id,omitempty"`
 	SubAccounts []ExchangeWalletInfoAllOfSubAccounts `json:"sub_accounts,omitempty"`
 }
