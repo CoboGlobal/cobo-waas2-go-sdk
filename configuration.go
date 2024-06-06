@@ -12,6 +12,7 @@ package CoboWaas2
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -52,6 +53,16 @@ type ServerConfiguration struct {
 // ServerConfigurations stores multiple ServerConfiguration items
 type ServerConfigurations []ServerConfiguration
 
+type Logger interface {
+	Printf(ctx context.Context, format string, v ...any)
+}
+
+type DefaultLogger struct{}
+
+func (l *DefaultLogger) Printf(ctx context.Context, format string, v ...any) {
+	log.Printf(format, v...)
+}
+
 // Configuration stores the configuration of the API client
 type Configuration struct {
 	Host             string            `json:"host,omitempty"`
@@ -62,6 +73,7 @@ type Configuration struct {
 	Servers          ServerConfigurations
 	OperationServers map[string]ServerConfigurations
 	HTTPClient       *http.Client
+	Log              Logger
 }
 
 // NewConfiguration returns a new Configuration object
@@ -70,6 +82,7 @@ func NewConfiguration() *Configuration {
 		DefaultHeader:    make(map[string]string),
 		UserAgent:        "cobo-waas2-go-api/0.1.0",
 		Debug:            false,
+		Log:              &DefaultLogger{},
 		Servers:          ServerConfigurations{
 			{
 				URL: "https://api.cobo.com/v2",

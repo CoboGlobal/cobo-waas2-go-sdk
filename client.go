@@ -17,8 +17,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	"github.com/google/uuid"
 	"io"
-	"log"
 	"mime/multipart"
 	"net/http"
 	"net/http/httputil"
@@ -248,12 +248,14 @@ func parameterToJson(obj interface{}) (string, error) {
 
 // callAPI do the request.
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
+    traceID := ""
 	if c.cfg.Debug {
+	    traceID = uuid.NewString()
 		dump, err := httputil.DumpRequestOut(request, true)
 		if err != nil {
 			return nil, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		c.cfg.Log.Printf(request.Context(), "traceID:%s\n%s\n", traceID, string(dump))
 	}
 
 	resp, err := c.cfg.HTTPClient.Do(request)
@@ -266,7 +268,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return resp, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		c.cfg.Log.Printf(request.Context(), "traceID:%s\n%s\n", traceID, string(dump))
 	}
 	return resp, err
 }
