@@ -18,20 +18,19 @@ import (
 // checks if the Transfer type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Transfer{}
 
-// Transfer The base data for transfer transaction.
+// Transfer The information about a token transfer.
 type Transfer struct {
-	// Unique id of the request.
+	// The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization.
 	RequestId string `json:"request_id"`
-	RequestType string `json:"request_type"`
 	Source TransferSource `json:"source"`
-	// The token ID.
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 	TokenId string `json:"token_id"`
 	Destination TransferDestination `json:"destination"`
-	// The category names for transfer.
+	// The custom category for you to identify your transactions.
 	CategoryNames []string `json:"category_names,omitempty"`
-	// The description for transfer.
+	// The description of the transfer.
 	Description *string `json:"description,omitempty"`
-	Fee *TransactionFee `json:"fee,omitempty"`
+	Fee *TransactionTransferFee `json:"fee,omitempty"`
 }
 
 type _Transfer Transfer
@@ -40,10 +39,9 @@ type _Transfer Transfer
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransfer(requestId string, requestType string, source TransferSource, tokenId string, destination TransferDestination) *Transfer {
+func NewTransfer(requestId string, source TransferSource, tokenId string, destination TransferDestination) *Transfer {
 	this := Transfer{}
 	this.RequestId = requestId
-	this.RequestType = requestType
 	this.Source = source
 	this.TokenId = tokenId
 	this.Destination = destination
@@ -80,30 +78,6 @@ func (o *Transfer) GetRequestIdOk() (*string, bool) {
 // SetRequestId sets field value
 func (o *Transfer) SetRequestId(v string) {
 	o.RequestId = v
-}
-
-// GetRequestType returns the RequestType field value
-func (o *Transfer) GetRequestType() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.RequestType
-}
-
-// GetRequestTypeOk returns a tuple with the RequestType field value
-// and a boolean to check if the value has been set.
-func (o *Transfer) GetRequestTypeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.RequestType, true
-}
-
-// SetRequestType sets field value
-func (o *Transfer) SetRequestType(v string) {
-	o.RequestType = v
 }
 
 // GetSource returns the Source field value
@@ -243,9 +217,9 @@ func (o *Transfer) SetDescription(v string) {
 }
 
 // GetFee returns the Fee field value if set, zero value otherwise.
-func (o *Transfer) GetFee() TransactionFee {
+func (o *Transfer) GetFee() TransactionTransferFee {
 	if o == nil || IsNil(o.Fee) {
-		var ret TransactionFee
+		var ret TransactionTransferFee
 		return ret
 	}
 	return *o.Fee
@@ -253,7 +227,7 @@ func (o *Transfer) GetFee() TransactionFee {
 
 // GetFeeOk returns a tuple with the Fee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transfer) GetFeeOk() (*TransactionFee, bool) {
+func (o *Transfer) GetFeeOk() (*TransactionTransferFee, bool) {
 	if o == nil || IsNil(o.Fee) {
 		return nil, false
 	}
@@ -269,8 +243,8 @@ func (o *Transfer) HasFee() bool {
 	return false
 }
 
-// SetFee gets a reference to the given TransactionFee and assigns it to the Fee field.
-func (o *Transfer) SetFee(v TransactionFee) {
+// SetFee gets a reference to the given TransactionTransferFee and assigns it to the Fee field.
+func (o *Transfer) SetFee(v TransactionTransferFee) {
 	o.Fee = &v
 }
 
@@ -285,7 +259,6 @@ func (o Transfer) MarshalJSON() ([]byte, error) {
 func (o Transfer) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
-	toSerialize["request_type"] = o.RequestType
 	toSerialize["source"] = o.Source
 	toSerialize["token_id"] = o.TokenId
 	toSerialize["destination"] = o.Destination
@@ -307,7 +280,6 @@ func (o *Transfer) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"request_id",
-		"request_type",
 		"source",
 		"token_id",
 		"destination",

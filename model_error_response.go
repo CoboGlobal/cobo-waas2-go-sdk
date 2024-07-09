@@ -20,13 +20,11 @@ var _ MappedNullable = &ErrorResponse{}
 
 // ErrorResponse The response of a failed request.
 type ErrorResponse struct {
-	// Whether the API operation was successful. This is always `false` for a failed request.
-	Success bool `json:"success"`
 	// The error code.
 	ErrorCode int32 `json:"error_code"`
 	// The error description.
-	ErrorDescription string `json:"error_description"`
-	// A error log ID. You can use it for debugging purposes.
+	ErrorMessage string `json:"error_message"`
+	// The error log ID. You can provide the error ID when submitting a ticket to help Cobo to locate the issue.
 	ErrorId string `json:"error_id"`
 }
 
@@ -36,11 +34,10 @@ type _ErrorResponse ErrorResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewErrorResponse(success bool, errorCode int32, errorDescription string, errorId string) *ErrorResponse {
+func NewErrorResponse(errorCode int32, errorMessage string, errorId string) *ErrorResponse {
 	this := ErrorResponse{}
-	this.Success = success
 	this.ErrorCode = errorCode
-	this.ErrorDescription = errorDescription
+	this.ErrorMessage = errorMessage
 	this.ErrorId = errorId
 	return &this
 }
@@ -50,33 +47,7 @@ func NewErrorResponse(success bool, errorCode int32, errorDescription string, er
 // but it doesn't guarantee that properties required by API are set
 func NewErrorResponseWithDefaults() *ErrorResponse {
 	this := ErrorResponse{}
-	var success bool = false
-	this.Success = success
 	return &this
-}
-
-// GetSuccess returns the Success field value
-func (o *ErrorResponse) GetSuccess() bool {
-	if o == nil {
-		var ret bool
-		return ret
-	}
-
-	return o.Success
-}
-
-// GetSuccessOk returns a tuple with the Success field value
-// and a boolean to check if the value has been set.
-func (o *ErrorResponse) GetSuccessOk() (*bool, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Success, true
-}
-
-// SetSuccess sets field value
-func (o *ErrorResponse) SetSuccess(v bool) {
-	o.Success = v
 }
 
 // GetErrorCode returns the ErrorCode field value
@@ -103,28 +74,28 @@ func (o *ErrorResponse) SetErrorCode(v int32) {
 	o.ErrorCode = v
 }
 
-// GetErrorDescription returns the ErrorDescription field value
-func (o *ErrorResponse) GetErrorDescription() string {
+// GetErrorMessage returns the ErrorMessage field value
+func (o *ErrorResponse) GetErrorMessage() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.ErrorDescription
+	return o.ErrorMessage
 }
 
-// GetErrorDescriptionOk returns a tuple with the ErrorDescription field value
+// GetErrorMessageOk returns a tuple with the ErrorMessage field value
 // and a boolean to check if the value has been set.
-func (o *ErrorResponse) GetErrorDescriptionOk() (*string, bool) {
+func (o *ErrorResponse) GetErrorMessageOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.ErrorDescription, true
+	return &o.ErrorMessage, true
 }
 
-// SetErrorDescription sets field value
-func (o *ErrorResponse) SetErrorDescription(v string) {
-	o.ErrorDescription = v
+// SetErrorMessage sets field value
+func (o *ErrorResponse) SetErrorMessage(v string) {
+	o.ErrorMessage = v
 }
 
 // GetErrorId returns the ErrorId field value
@@ -161,9 +132,8 @@ func (o ErrorResponse) MarshalJSON() ([]byte, error) {
 
 func (o ErrorResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["success"] = o.Success
 	toSerialize["error_code"] = o.ErrorCode
-	toSerialize["error_description"] = o.ErrorDescription
+	toSerialize["error_message"] = o.ErrorMessage
 	toSerialize["error_id"] = o.ErrorId
 	return toSerialize, nil
 }
@@ -173,9 +143,8 @@ func (o *ErrorResponse) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"success",
 		"error_code",
-		"error_description",
+		"error_message",
 		"error_id",
 	}
 

@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique id of the key group | [optional] 
+**Id** | Pointer to **string** | The key share group ID. | [optional] 
 **Type** | Pointer to [**KeyGroupType**](KeyGroupType.md) |  | [optional] 
 **TssGroupIds** | Pointer to [**[]TSSGroupId**](TSSGroupId.md) |  | [optional] 
 **KeyHolders** | Pointer to [**[]KeyHolder**](KeyHolder.md) |  | [optional] 
-**NodeCount** | Pointer to **int32** |  | [optional] 
-**Threshold** | Pointer to **int32** |  | [optional] 
+**NodeCount** | Pointer to **int32** | The number of key share holders in this key share group. | [optional] 
+**Threshold** | Pointer to **int32** | The number of key share holders required to approve each operation in this key share group. | [optional] 
 **Status** | Pointer to [**KeyGroupStatus**](KeyGroupStatus.md) |  | [optional] 
+**CreateTimestamp** | Pointer to **int64** |  | [optional] 
 
 ## Methods
 
@@ -205,6 +206,31 @@ SetStatus sets Status field to given value.
 `func (o *KeyGroup) HasStatus() bool`
 
 HasStatus returns a boolean if a field has been set.
+
+### GetCreateTimestamp
+
+`func (o *KeyGroup) GetCreateTimestamp() int64`
+
+GetCreateTimestamp returns the CreateTimestamp field if non-nil, zero value otherwise.
+
+### GetCreateTimestampOk
+
+`func (o *KeyGroup) GetCreateTimestampOk() (*int64, bool)`
+
+GetCreateTimestampOk returns a tuple with the CreateTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreateTimestamp
+
+`func (o *KeyGroup) SetCreateTimestamp(v int64)`
+
+SetCreateTimestamp sets CreateTimestamp field to given value.
+
+### HasCreateTimestamp
+
+`func (o *KeyGroup) HasCreateTimestamp() bool`
+
+HasCreateTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

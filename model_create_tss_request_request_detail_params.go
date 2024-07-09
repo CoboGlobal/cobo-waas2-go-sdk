@@ -16,9 +16,10 @@ import (
 // checks if the CreateTssRequestRequestDetailParams type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateTssRequestRequestDetailParams{}
 
-// CreateTssRequestRequestDetailParams for KeyGen request, this parameters can be null
+// CreateTssRequestRequestDetailParams struct for CreateTssRequestRequestDetailParams
 type CreateTssRequestRequestDetailParams struct {
-	UsedNodeIds []string `json:"used_node_ids,omitempty"`
+	// The TSS Node IDs participating in creating a new key share group when the action `type` is either `KeyGenFromKeyGroup` or `Recovery`.   **Note:** In any [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) such as the 2-2, 2-3, and 3-3 schemes (`threshold`-`node_count`), for `used_node_ids`, you only need to fill in 1 Cobo TSS Node ID and enough non-Cobo TSS Node IDs to satisfy the number of approvers specified in `threshold`. 
+	NodeIds []string `json:"node_ids,omitempty"`
 }
 
 // NewCreateTssRequestRequestDetailParams instantiates a new CreateTssRequestRequestDetailParams object
@@ -38,36 +39,36 @@ func NewCreateTssRequestRequestDetailParamsWithDefaults() *CreateTssRequestReque
 	return &this
 }
 
-// GetUsedNodeIds returns the UsedNodeIds field value if set, zero value otherwise.
-func (o *CreateTssRequestRequestDetailParams) GetUsedNodeIds() []string {
-	if o == nil || IsNil(o.UsedNodeIds) {
+// GetNodeIds returns the NodeIds field value if set, zero value otherwise.
+func (o *CreateTssRequestRequestDetailParams) GetNodeIds() []string {
+	if o == nil || IsNil(o.NodeIds) {
 		var ret []string
 		return ret
 	}
-	return o.UsedNodeIds
+	return o.NodeIds
 }
 
-// GetUsedNodeIdsOk returns a tuple with the UsedNodeIds field value if set, nil otherwise
+// GetNodeIdsOk returns a tuple with the NodeIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateTssRequestRequestDetailParams) GetUsedNodeIdsOk() ([]string, bool) {
-	if o == nil || IsNil(o.UsedNodeIds) {
+func (o *CreateTssRequestRequestDetailParams) GetNodeIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.NodeIds) {
 		return nil, false
 	}
-	return o.UsedNodeIds, true
+	return o.NodeIds, true
 }
 
-// HasUsedNodeIds returns a boolean if a field has been set.
-func (o *CreateTssRequestRequestDetailParams) HasUsedNodeIds() bool {
-	if o != nil && !IsNil(o.UsedNodeIds) {
+// HasNodeIds returns a boolean if a field has been set.
+func (o *CreateTssRequestRequestDetailParams) HasNodeIds() bool {
+	if o != nil && !IsNil(o.NodeIds) {
 		return true
 	}
 
 	return false
 }
 
-// SetUsedNodeIds gets a reference to the given []string and assigns it to the UsedNodeIds field.
-func (o *CreateTssRequestRequestDetailParams) SetUsedNodeIds(v []string) {
-	o.UsedNodeIds = v
+// SetNodeIds gets a reference to the given []string and assigns it to the NodeIds field.
+func (o *CreateTssRequestRequestDetailParams) SetNodeIds(v []string) {
+	o.NodeIds = v
 }
 
 func (o CreateTssRequestRequestDetailParams) MarshalJSON() ([]byte, error) {
@@ -80,8 +81,8 @@ func (o CreateTssRequestRequestDetailParams) MarshalJSON() ([]byte, error) {
 
 func (o CreateTssRequestRequestDetailParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.UsedNodeIds) {
-		toSerialize["used_node_ids"] = o.UsedNodeIds
+	if !IsNil(o.NodeIds) {
+		toSerialize["node_ids"] = o.NodeIds
 	}
 	return toSerialize, nil
 }

@@ -16,19 +16,20 @@ import (
 // checks if the MPCProject type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MPCProject{}
 
-// MPCProject The data for mpc project information.
+// MPCProject The data for project information.
 type MPCProject struct {
-	// Unique id of the project
+	// The project ID.
 	Id *string `json:"id,omitempty"`
-	// Unique id of org
+	// The organization ID.
 	OrgId *string `json:"org_id,omitempty"`
+	// The project name.
 	Name *string `json:"name,omitempty"`
-	// The count of tss node of the project
+	// The number of key share holders in the project.
 	NodeCount *int32 `json:"node_count,omitempty"`
-	// The threshold number of project required for signature
+	// The number of key share holders required to sign an operation in the project.
 	Threshold *int32 `json:"threshold,omitempty"`
-	// The create time the vault.
-	CreateTimestamp *int32 `json:"create_timestamp,omitempty"`
+	// The project's creation time in Unix timestamp format, measured in milliseconds.
+	CreateTimestamp *int64 `json:"create_timestamp,omitempty"`
 }
 
 // NewMPCProject instantiates a new MPCProject object
@@ -209,9 +210,9 @@ func (o *MPCProject) SetThreshold(v int32) {
 }
 
 // GetCreateTimestamp returns the CreateTimestamp field value if set, zero value otherwise.
-func (o *MPCProject) GetCreateTimestamp() int32 {
+func (o *MPCProject) GetCreateTimestamp() int64 {
 	if o == nil || IsNil(o.CreateTimestamp) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.CreateTimestamp
@@ -219,7 +220,7 @@ func (o *MPCProject) GetCreateTimestamp() int32 {
 
 // GetCreateTimestampOk returns a tuple with the CreateTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MPCProject) GetCreateTimestampOk() (*int32, bool) {
+func (o *MPCProject) GetCreateTimestampOk() (*int64, bool) {
 	if o == nil || IsNil(o.CreateTimestamp) {
 		return nil, false
 	}
@@ -235,8 +236,8 @@ func (o *MPCProject) HasCreateTimestamp() bool {
 	return false
 }
 
-// SetCreateTimestamp gets a reference to the given int32 and assigns it to the CreateTimestamp field.
-func (o *MPCProject) SetCreateTimestamp(v int32) {
+// SetCreateTimestamp gets a reference to the given int64 and assigns it to the CreateTimestamp field.
+func (o *MPCProject) SetCreateTimestamp(v int64) {
 	o.CreateTimestamp = &v
 }
 

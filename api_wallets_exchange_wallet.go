@@ -31,25 +31,25 @@ type ApiGetExchangeSupportedAssetsRequest struct {
 	after *string
 }
 
-// size of page to return (pagination)
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetExchangeSupportedAssetsRequest) Limit(limit int32) ApiGetExchangeSupportedAssetsRequest {
 	r.limit = &limit
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetExchangeSupportedAssetsRequest) Before(before string) ApiGetExchangeSupportedAssetsRequest {
 	r.before = &before
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetExchangeSupportedAssetsRequest) After(after string) ApiGetExchangeSupportedAssetsRequest {
 	r.after = &after
 	return r
 }
 
-func (r ApiGetExchangeSupportedAssetsRequest) Execute() (*GetAssets200Response, *http.Response, error) {
+func (r ApiGetExchangeSupportedAssetsRequest) Execute() (*GetExchangeSupportedAssets200Response, *http.Response, error) {
 	return r.ApiService.GetExchangeSupportedAssetsExecute(r)
 }
 
@@ -71,13 +71,13 @@ func (a *WalletsExchangeWalletAPIService) GetExchangeSupportedAssets(ctx context
 }
 
 // Execute executes the request
-//  @return GetAssets200Response
-func (a *WalletsExchangeWalletAPIService) GetExchangeSupportedAssetsExecute(r ApiGetExchangeSupportedAssetsRequest) (*GetAssets200Response, *http.Response, error) {
+//  @return GetExchangeSupportedAssets200Response
+func (a *WalletsExchangeWalletAPIService) GetExchangeSupportedAssetsExecute(r ApiGetExchangeSupportedAssetsRequest) (*GetExchangeSupportedAssets200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetAssets200Response
+		localVarReturnValue  *GetExchangeSupportedAssets200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsExchangeWalletAPIService.GetExchangeSupportedAssets")
@@ -100,15 +100,9 @@ func (a *WalletsExchangeWalletAPIService) GetExchangeSupportedAssetsExecute(r Ap
 	}
 	if r.before != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
-	} else {
-		var defaultValue string = ""
-		r.before = &defaultValue
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
-	} else {
-		var defaultValue string = ""
-		r.after = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -195,25 +189,25 @@ type ApiGetExchangeSupportedChainsRequest struct {
 	after *string
 }
 
-// Unique id of the asset
+// (This concept applies to Exchange Wallets only) The asset ID. An asset is a digital representation of a valuable resource on a blockchain network. Exchange Wallets group your holdings by asset, even if the same asset exists on different blockchains. For example, if your Exchange Wallet has 1 USDT on Ethereum and 1 USDT on TRON, then your asset balance is 2 USDT.
 func (r ApiGetExchangeSupportedChainsRequest) AssetId(assetId string) ApiGetExchangeSupportedChainsRequest {
 	r.assetId = &assetId
 	return r
 }
 
-// size of page to return (pagination)
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetExchangeSupportedChainsRequest) Limit(limit int32) ApiGetExchangeSupportedChainsRequest {
 	r.limit = &limit
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetExchangeSupportedChainsRequest) Before(before string) ApiGetExchangeSupportedChainsRequest {
 	r.before = &before
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetExchangeSupportedChainsRequest) After(after string) ApiGetExchangeSupportedChainsRequest {
 	r.after = &after
 	return r
@@ -274,15 +268,9 @@ func (a *WalletsExchangeWalletAPIService) GetExchangeSupportedChainsExecute(r Ap
 	}
 	if r.before != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
-	} else {
-		var defaultValue string = ""
-		r.before = &defaultValue
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
-	} else {
-		var defaultValue string = ""
-		r.after = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -376,25 +364,25 @@ func (r ApiGetExchangeWalletAssetBalancesRequest) SubWalletId(subWalletId string
 	return r
 }
 
-// Unique id of the asset
+// (This concept applies to Exchange Wallets only) The asset ID. An asset is a digital representation of a valuable resource on a blockchain network. Exchange Wallets group your holdings by asset, even if the same asset exists on different blockchains. For example, if your Exchange Wallet has 1 USDT on Ethereum and 1 USDT on TRON, then your asset balance is 2 USDT.
 func (r ApiGetExchangeWalletAssetBalancesRequest) AssetId(assetId string) ApiGetExchangeWalletAssetBalancesRequest {
 	r.assetId = &assetId
 	return r
 }
 
-// size of page to return (pagination)
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetExchangeWalletAssetBalancesRequest) Limit(limit int32) ApiGetExchangeWalletAssetBalancesRequest {
 	r.limit = &limit
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetExchangeWalletAssetBalancesRequest) Before(before string) ApiGetExchangeWalletAssetBalancesRequest {
 	r.before = &before
 	return r
 }
 
-// Cursor string received from previous request
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetExchangeWalletAssetBalancesRequest) After(after string) ApiGetExchangeWalletAssetBalancesRequest {
 	r.after = &after
 	return r
@@ -410,7 +398,7 @@ GetExchangeWalletAssetBalances List the asset balance in exchange wallet
 Retrieve a list of asset balance in exchange wallet.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiGetExchangeWalletAssetBalancesRequest
 */
 func (a *WalletsExchangeWalletAPIService) GetExchangeWalletAssetBalances(ctx context.Context, walletId string) ApiGetExchangeWalletAssetBalancesRequest {
@@ -436,7 +424,7 @@ func (a *WalletsExchangeWalletAPIService) GetExchangeWalletAssetBalancesExecute(
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/wallets/exchanges/{wallet_id}/assets"
+	localVarPath := localBasePath + "/wallets/{wallet_id}/exchanges/assets"
 	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -458,15 +446,9 @@ func (a *WalletsExchangeWalletAPIService) GetExchangeWalletAssetBalancesExecute(
 	}
 	if r.before != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
-	} else {
-		var defaultValue string = ""
-		r.before = &defaultValue
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
-	} else {
-		var defaultValue string = ""
-		r.after = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -566,7 +548,7 @@ LinkSubAccountsByWalletId Link exchange sub accounts by wallet id
 Link exchange sub accounts.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiLinkSubAccountsByWalletIdRequest
 */
 func (a *WalletsExchangeWalletAPIService) LinkSubAccountsByWalletId(ctx context.Context, walletId string) ApiLinkSubAccountsByWalletIdRequest {
@@ -955,7 +937,7 @@ ListSubAccountsByWalletId List exchange sub accounts by wallet id
 Retrieve a list of exchange sub accounts.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId Unique id of the wallet
+ @param walletId The wallet ID.
  @return ApiListSubAccountsByWalletIdRequest
 */
 func (a *WalletsExchangeWalletAPIService) ListSubAccountsByWalletId(ctx context.Context, walletId string) ApiListSubAccountsByWalletIdRequest {

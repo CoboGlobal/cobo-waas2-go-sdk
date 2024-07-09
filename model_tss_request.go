@@ -16,9 +16,9 @@ import (
 // checks if the TSSRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TSSRequest{}
 
-// TSSRequest The data for mpc tss request information.
+// TSSRequest The data for the TSS request information.
 type TSSRequest struct {
-	// Unique id of the tss request.
+	// The TSS request ID.
 	Id *string `json:"id,omitempty"`
 	Type *TSSRequestType `json:"type,omitempty"`
 	Status *TSSRequestStatus `json:"status,omitempty"`

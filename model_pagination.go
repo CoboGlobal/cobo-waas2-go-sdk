@@ -11,6 +11,8 @@ package CoboWaas2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the Pagination type satisfies the MappedNullable interface at compile time
@@ -18,18 +20,25 @@ var _ MappedNullable = &Pagination{}
 
 // Pagination The pagination information of the returned data.
 type Pagination struct {
-	// An object ID which serves as a cursor for pagination. For example, if the value of `before` is `foo`, the returned data ends before the object with the object ID `foo`.
-	Before *string `json:"before,omitempty"`
-	// An object ID which serves as a cursor for pagination. For example, if the value of `after` is `bar`, the returned data starts after the object with the object ID `bar`.
-	After *string `json:"after,omitempty"`
+	// An object ID which serves as a cursor for pagination. For example, if the value of `before` is `8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f`, the returned data ends before the object with the object ID `8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f`.
+	Before string `json:"before"`
+	// An object ID which serves as a cursor for pagination. For example, if the value of `after` is `8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f`, the returned data starts after the object with the object ID `8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f`.
+	After string `json:"after"`
+	// The total count of the result set
+	TotalCount float32 `json:"total_count"`
 }
+
+type _Pagination Pagination
 
 // NewPagination instantiates a new Pagination object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPagination() *Pagination {
+func NewPagination(before string, after string, totalCount float32) *Pagination {
 	this := Pagination{}
+	this.Before = before
+	this.After = after
+	this.TotalCount = totalCount
 	return &this
 }
 
@@ -41,68 +50,76 @@ func NewPaginationWithDefaults() *Pagination {
 	return &this
 }
 
-// GetBefore returns the Before field value if set, zero value otherwise.
+// GetBefore returns the Before field value
 func (o *Pagination) GetBefore() string {
-	if o == nil || IsNil(o.Before) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Before
+
+	return o.Before
 }
 
-// GetBeforeOk returns a tuple with the Before field value if set, nil otherwise
+// GetBeforeOk returns a tuple with the Before field value
 // and a boolean to check if the value has been set.
 func (o *Pagination) GetBeforeOk() (*string, bool) {
-	if o == nil || IsNil(o.Before) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Before, true
+	return &o.Before, true
 }
 
-// HasBefore returns a boolean if a field has been set.
-func (o *Pagination) HasBefore() bool {
-	if o != nil && !IsNil(o.Before) {
-		return true
-	}
-
-	return false
-}
-
-// SetBefore gets a reference to the given string and assigns it to the Before field.
+// SetBefore sets field value
 func (o *Pagination) SetBefore(v string) {
-	o.Before = &v
+	o.Before = v
 }
 
-// GetAfter returns the After field value if set, zero value otherwise.
+// GetAfter returns the After field value
 func (o *Pagination) GetAfter() string {
-	if o == nil || IsNil(o.After) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.After
+
+	return o.After
 }
 
-// GetAfterOk returns a tuple with the After field value if set, nil otherwise
+// GetAfterOk returns a tuple with the After field value
 // and a boolean to check if the value has been set.
 func (o *Pagination) GetAfterOk() (*string, bool) {
-	if o == nil || IsNil(o.After) {
+	if o == nil {
 		return nil, false
 	}
-	return o.After, true
+	return &o.After, true
 }
 
-// HasAfter returns a boolean if a field has been set.
-func (o *Pagination) HasAfter() bool {
-	if o != nil && !IsNil(o.After) {
-		return true
+// SetAfter sets field value
+func (o *Pagination) SetAfter(v string) {
+	o.After = v
+}
+
+// GetTotalCount returns the TotalCount field value
+func (o *Pagination) GetTotalCount() float32 {
+	if o == nil {
+		var ret float32
+		return ret
 	}
 
-	return false
+	return o.TotalCount
 }
 
-// SetAfter gets a reference to the given string and assigns it to the After field.
-func (o *Pagination) SetAfter(v string) {
-	o.After = &v
+// GetTotalCountOk returns a tuple with the TotalCount field value
+// and a boolean to check if the value has been set.
+func (o *Pagination) GetTotalCountOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TotalCount, true
+}
+
+// SetTotalCount sets field value
+func (o *Pagination) SetTotalCount(v float32) {
+	o.TotalCount = v
 }
 
 func (o Pagination) MarshalJSON() ([]byte, error) {
@@ -115,13 +132,49 @@ func (o Pagination) MarshalJSON() ([]byte, error) {
 
 func (o Pagination) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Before) {
-		toSerialize["before"] = o.Before
-	}
-	if !IsNil(o.After) {
-		toSerialize["after"] = o.After
-	}
+	toSerialize["before"] = o.Before
+	toSerialize["after"] = o.After
+	toSerialize["total_count"] = o.TotalCount
 	return toSerialize, nil
+}
+
+func (o *Pagination) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"before",
+		"after",
+		"total_count",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varPagination := _Pagination{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	//decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varPagination)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Pagination(varPagination)
+
+	return err
 }
 
 type NullablePagination struct {

@@ -18,15 +18,15 @@ import (
 // checks if the UtxoTransactionFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UtxoTransactionFee{}
 
-// UtxoTransactionFee The transaction fee for UTXO-based chains. The estimated fee is calculated by multiplying the fee rate by the transaction size: (fee rate * transaction size). 
+// UtxoTransactionFee The transaction fee is calculated by multiplying the fee rate (fee price) by the transaction size. This can be expressed as: Transaction fee = fee rate * transaction size. The transaction will fail if the transaction fee exceeds the maximum fee. 
 type UtxoTransactionFee struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
+	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
-	// The maximum fee amount in fee_coin.
-	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
+	// The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee.
+	MaxFeeAmount string `json:"max_fee_amount"`
 	FeeType FeeType `json:"fee_type"`
+	// The token ID of the transaction fee.
+	TokenId string `json:"token_id"`
 }
 
 type _UtxoTransactionFee UtxoTransactionFee
@@ -35,10 +35,12 @@ type _UtxoTransactionFee UtxoTransactionFee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUtxoTransactionFee(feeRate string, feeType FeeType) *UtxoTransactionFee {
+func NewUtxoTransactionFee(feeRate string, maxFeeAmount string, feeType FeeType, tokenId string) *UtxoTransactionFee {
 	this := UtxoTransactionFee{}
 	this.FeeRate = feeRate
+	this.MaxFeeAmount = maxFeeAmount
 	this.FeeType = feeType
+	this.TokenId = tokenId
 	return &this
 }
 
@@ -50,38 +52,6 @@ func NewUtxoTransactionFeeWithDefaults() *UtxoTransactionFee {
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *UtxoTransactionFee) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UtxoTransactionFee) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *UtxoTransactionFee) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *UtxoTransactionFee) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
 }
 
 // GetFeeRate returns the FeeRate field value
@@ -108,36 +78,28 @@ func (o *UtxoTransactionFee) SetFeeRate(v string) {
 	o.FeeRate = v
 }
 
-// GetMaxFeeAmount returns the MaxFeeAmount field value if set, zero value otherwise.
+// GetMaxFeeAmount returns the MaxFeeAmount field value
 func (o *UtxoTransactionFee) GetMaxFeeAmount() string {
-	if o == nil || IsNil(o.MaxFeeAmount) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.MaxFeeAmount
+
+	return o.MaxFeeAmount
 }
 
-// GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field value if set, nil otherwise
+// GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field value
 // and a boolean to check if the value has been set.
 func (o *UtxoTransactionFee) GetMaxFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.MaxFeeAmount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MaxFeeAmount, true
+	return &o.MaxFeeAmount, true
 }
 
-// HasMaxFeeAmount returns a boolean if a field has been set.
-func (o *UtxoTransactionFee) HasMaxFeeAmount() bool {
-	if o != nil && !IsNil(o.MaxFeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetMaxFeeAmount gets a reference to the given string and assigns it to the MaxFeeAmount field.
+// SetMaxFeeAmount sets field value
 func (o *UtxoTransactionFee) SetMaxFeeAmount(v string) {
-	o.MaxFeeAmount = &v
+	o.MaxFeeAmount = v
 }
 
 // GetFeeType returns the FeeType field value
@@ -164,6 +126,30 @@ func (o *UtxoTransactionFee) SetFeeType(v FeeType) {
 	o.FeeType = v
 }
 
+// GetTokenId returns the TokenId field value
+func (o *UtxoTransactionFee) GetTokenId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value
+// and a boolean to check if the value has been set.
+func (o *UtxoTransactionFee) GetTokenIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TokenId, true
+}
+
+// SetTokenId sets field value
+func (o *UtxoTransactionFee) SetTokenId(v string) {
+	o.TokenId = v
+}
+
 func (o UtxoTransactionFee) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -174,14 +160,10 @@ func (o UtxoTransactionFee) MarshalJSON() ([]byte, error) {
 
 func (o UtxoTransactionFee) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
 	toSerialize["fee_rate"] = o.FeeRate
-	if !IsNil(o.MaxFeeAmount) {
-		toSerialize["max_fee_amount"] = o.MaxFeeAmount
-	}
+	toSerialize["max_fee_amount"] = o.MaxFeeAmount
 	toSerialize["fee_type"] = o.FeeType
+	toSerialize["token_id"] = o.TokenId
 	return toSerialize, nil
 }
 
@@ -191,7 +173,9 @@ func (o *UtxoTransactionFee) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"fee_rate",
+		"max_fee_amount",
 		"fee_type",
+		"token_id",
 	}
 
 	allProperties := make(map[string]interface{})

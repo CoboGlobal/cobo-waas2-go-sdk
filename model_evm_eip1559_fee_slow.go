@@ -20,14 +20,12 @@ var _ MappedNullable = &EvmEip1559FeeSlow{}
 
 // EvmEip1559FeeSlow struct for EvmEip1559FeeSlow
 type EvmEip1559FeeSlow struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction.
+	// The maximum priority fee, in gwei. The maximum priority fee represents the highest amount of miner tips that you are willing to pay for your transaction.
 	MaxPriorityFee string `json:"max_priority_fee"`
-	// The base fee of chain.
+	// The base fee price of the chain, in gwei.
 	BaseFee string `json:"base_fee"`
-	// The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units.
-	GasLimit *string `json:"gas_limit,omitempty"`
+	// The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies.
+	GasLimit string `json:"gas_limit"`
 }
 
 type _EvmEip1559FeeSlow EvmEip1559FeeSlow
@@ -36,12 +34,11 @@ type _EvmEip1559FeeSlow EvmEip1559FeeSlow
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmEip1559FeeSlow(maxPriorityFee string, baseFee string) *EvmEip1559FeeSlow {
+func NewEvmEip1559FeeSlow(maxPriorityFee string, baseFee string, gasLimit string) *EvmEip1559FeeSlow {
 	this := EvmEip1559FeeSlow{}
 	this.MaxPriorityFee = maxPriorityFee
 	this.BaseFee = baseFee
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
+	this.GasLimit = gasLimit
 	return &this
 }
 
@@ -51,40 +48,8 @@ func NewEvmEip1559FeeSlow(maxPriorityFee string, baseFee string) *EvmEip1559FeeS
 func NewEvmEip1559FeeSlowWithDefaults() *EvmEip1559FeeSlow {
 	this := EvmEip1559FeeSlow{}
 	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
+	this.GasLimit = gasLimit
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *EvmEip1559FeeSlow) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmEip1559FeeSlow) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *EvmEip1559FeeSlow) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *EvmEip1559FeeSlow) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
 }
 
 // GetMaxPriorityFee returns the MaxPriorityFee field value
@@ -135,36 +100,28 @@ func (o *EvmEip1559FeeSlow) SetBaseFee(v string) {
 	o.BaseFee = v
 }
 
-// GetGasLimit returns the GasLimit field value if set, zero value otherwise.
+// GetGasLimit returns the GasLimit field value
 func (o *EvmEip1559FeeSlow) GetGasLimit() string {
-	if o == nil || IsNil(o.GasLimit) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.GasLimit
+
+	return o.GasLimit
 }
 
-// GetGasLimitOk returns a tuple with the GasLimit field value if set, nil otherwise
+// GetGasLimitOk returns a tuple with the GasLimit field value
 // and a boolean to check if the value has been set.
 func (o *EvmEip1559FeeSlow) GetGasLimitOk() (*string, bool) {
-	if o == nil || IsNil(o.GasLimit) {
+	if o == nil {
 		return nil, false
 	}
-	return o.GasLimit, true
+	return &o.GasLimit, true
 }
 
-// HasGasLimit returns a boolean if a field has been set.
-func (o *EvmEip1559FeeSlow) HasGasLimit() bool {
-	if o != nil && !IsNil(o.GasLimit) {
-		return true
-	}
-
-	return false
-}
-
-// SetGasLimit gets a reference to the given string and assigns it to the GasLimit field.
+// SetGasLimit sets field value
 func (o *EvmEip1559FeeSlow) SetGasLimit(v string) {
-	o.GasLimit = &v
+	o.GasLimit = v
 }
 
 func (o EvmEip1559FeeSlow) MarshalJSON() ([]byte, error) {
@@ -177,14 +134,9 @@ func (o EvmEip1559FeeSlow) MarshalJSON() ([]byte, error) {
 
 func (o EvmEip1559FeeSlow) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
 	toSerialize["max_priority_fee"] = o.MaxPriorityFee
 	toSerialize["base_fee"] = o.BaseFee
-	if !IsNil(o.GasLimit) {
-		toSerialize["gas_limit"] = o.GasLimit
-	}
+	toSerialize["gas_limit"] = o.GasLimit
 	return toSerialize, nil
 }
 
@@ -195,6 +147,7 @@ func (o *EvmEip1559FeeSlow) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"max_priority_fee",
 		"base_fee",
+		"gas_limit",
 	}
 
 	allProperties := make(map[string]interface{})

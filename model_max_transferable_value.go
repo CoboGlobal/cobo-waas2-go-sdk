@@ -18,11 +18,11 @@ var _ MappedNullable = &MaxTransferableValue{}
 
 // MaxTransferableValue The maximum amount you can transfer from the wallet or the specified wallet address, along with the corresponding transaction fee.
 type MaxTransferableValue struct {
-	// The token name.
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 	TokenId *string `json:"token_id,omitempty"`
 	// The maximum amount you can transfer from the wallet or the specified wallet address.
 	MaxTransferableValue *string `json:"max_transferable_value,omitempty"`
-	Fee *TransactionFee `json:"fee,omitempty"`
+	Fee *TransactionTransferFee `json:"fee,omitempty"`
 }
 
 // NewMaxTransferableValue instantiates a new MaxTransferableValue object
@@ -107,9 +107,9 @@ func (o *MaxTransferableValue) SetMaxTransferableValue(v string) {
 }
 
 // GetFee returns the Fee field value if set, zero value otherwise.
-func (o *MaxTransferableValue) GetFee() TransactionFee {
+func (o *MaxTransferableValue) GetFee() TransactionTransferFee {
 	if o == nil || IsNil(o.Fee) {
-		var ret TransactionFee
+		var ret TransactionTransferFee
 		return ret
 	}
 	return *o.Fee
@@ -117,7 +117,7 @@ func (o *MaxTransferableValue) GetFee() TransactionFee {
 
 // GetFeeOk returns a tuple with the Fee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MaxTransferableValue) GetFeeOk() (*TransactionFee, bool) {
+func (o *MaxTransferableValue) GetFeeOk() (*TransactionTransferFee, bool) {
 	if o == nil || IsNil(o.Fee) {
 		return nil, false
 	}
@@ -133,8 +133,8 @@ func (o *MaxTransferableValue) HasFee() bool {
 	return false
 }
 
-// SetFee gets a reference to the given TransactionFee and assigns it to the Fee field.
-func (o *MaxTransferableValue) SetFee(v TransactionFee) {
+// SetFee gets a reference to the given TransactionTransferFee and assigns it to the Fee field.
+func (o *MaxTransferableValue) SetFee(v TransactionTransferFee) {
 	o.Fee = &v
 }
 

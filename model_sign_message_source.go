@@ -16,12 +16,12 @@ import (
 // checks if the SignMessageSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SignMessageSource{}
 
-// SignMessageSource struct for SignMessageSource
+// SignMessageSource The information about the transaction source.
 type SignMessageSource struct {
-	// Unique id of the wallet to sign message.
+	// The wallet ID.
 	WalletId *string `json:"wallet_id,omitempty"`
-	// From address
-	AddressStr *string `json:"address_str,omitempty"`
+	// The wallet address.
+	Address *string `json:"address,omitempty"`
 	MpcUsedKeyGroup *MpcSigningGroup `json:"mpc_used_key_group,omitempty"`
 }
 
@@ -74,36 +74,36 @@ func (o *SignMessageSource) SetWalletId(v string) {
 	o.WalletId = &v
 }
 
-// GetAddressStr returns the AddressStr field value if set, zero value otherwise.
-func (o *SignMessageSource) GetAddressStr() string {
-	if o == nil || IsNil(o.AddressStr) {
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *SignMessageSource) GetAddress() string {
+	if o == nil || IsNil(o.Address) {
 		var ret string
 		return ret
 	}
-	return *o.AddressStr
+	return *o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value if set, nil otherwise
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SignMessageSource) GetAddressStrOk() (*string, bool) {
-	if o == nil || IsNil(o.AddressStr) {
+func (o *SignMessageSource) GetAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
-	return o.AddressStr, true
+	return o.Address, true
 }
 
-// HasAddressStr returns a boolean if a field has been set.
-func (o *SignMessageSource) HasAddressStr() bool {
-	if o != nil && !IsNil(o.AddressStr) {
+// HasAddress returns a boolean if a field has been set.
+func (o *SignMessageSource) HasAddress() bool {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
 	return false
 }
 
-// SetAddressStr gets a reference to the given string and assigns it to the AddressStr field.
-func (o *SignMessageSource) SetAddressStr(v string) {
-	o.AddressStr = &v
+// SetAddress gets a reference to the given string and assigns it to the Address field.
+func (o *SignMessageSource) SetAddress(v string) {
+	o.Address = &v
 }
 
 // GetMpcUsedKeyGroup returns the MpcUsedKeyGroup field value if set, zero value otherwise.
@@ -151,8 +151,8 @@ func (o SignMessageSource) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.WalletId) {
 		toSerialize["wallet_id"] = o.WalletId
 	}
-	if !IsNil(o.AddressStr) {
-		toSerialize["address_str"] = o.AddressStr
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
 	}
 	if !IsNil(o.MpcUsedKeyGroup) {
 		toSerialize["mpc_used_key_group"] = o.MpcUsedKeyGroup

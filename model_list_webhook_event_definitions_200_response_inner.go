@@ -18,7 +18,8 @@ var _ MappedNullable = &ListWebhookEventDefinitions200ResponseInner{}
 
 // ListWebhookEventDefinitions200ResponseInner struct for ListWebhookEventDefinitions200ResponseInner
 type ListWebhookEventDefinitions200ResponseInner struct {
-	EventType *string `json:"event_type,omitempty"`
+	EventType *WebhookEventType `json:"event_type,omitempty"`
+	// The description of the webhook event type.
 	Description *string `json:"description,omitempty"`
 }
 
@@ -40,9 +41,9 @@ func NewListWebhookEventDefinitions200ResponseInnerWithDefaults() *ListWebhookEv
 }
 
 // GetEventType returns the EventType field value if set, zero value otherwise.
-func (o *ListWebhookEventDefinitions200ResponseInner) GetEventType() string {
+func (o *ListWebhookEventDefinitions200ResponseInner) GetEventType() WebhookEventType {
 	if o == nil || IsNil(o.EventType) {
-		var ret string
+		var ret WebhookEventType
 		return ret
 	}
 	return *o.EventType
@@ -50,7 +51,7 @@ func (o *ListWebhookEventDefinitions200ResponseInner) GetEventType() string {
 
 // GetEventTypeOk returns a tuple with the EventType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListWebhookEventDefinitions200ResponseInner) GetEventTypeOk() (*string, bool) {
+func (o *ListWebhookEventDefinitions200ResponseInner) GetEventTypeOk() (*WebhookEventType, bool) {
 	if o == nil || IsNil(o.EventType) {
 		return nil, false
 	}
@@ -66,8 +67,8 @@ func (o *ListWebhookEventDefinitions200ResponseInner) HasEventType() bool {
 	return false
 }
 
-// SetEventType gets a reference to the given string and assigns it to the EventType field.
-func (o *ListWebhookEventDefinitions200ResponseInner) SetEventType(v string) {
+// SetEventType gets a reference to the given WebhookEventType and assigns it to the EventType field.
+func (o *ListWebhookEventDefinitions200ResponseInner) SetEventType(v WebhookEventType) {
 	o.EventType = &v
 }
 

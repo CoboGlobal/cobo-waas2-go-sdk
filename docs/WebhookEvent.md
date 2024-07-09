@@ -5,11 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | The event ID. | 
-**Url** | **string** | The URL of the webhook endpoint. | 
+**Url** | **string** | The webhook endpoint URL. | 
 **CreatedTimestamp** | **int32** | The time when the event occurred, in Unix timestamp format, measured in milliseconds. | 
 **Type** | [**WebhookEventType**](WebhookEventType.md) |  | 
-**Data** | **map[string]interface{}** | The data of the webhook event, in JSON format. | 
-**Status** | [**WebhookEventStatus**](WebhookEventStatus.md) |  | 
+**Data** | [**Transaction**](Transaction.md) |  | 
+**Status** | Pointer to [**WebhookEventStatus**](WebhookEventStatus.md) |  | [optional] 
 **NextRetryTimestamp** | Pointer to **int32** | The timestamp indicating the next scheduled retry to deliver this event, in Unix timestamp format, measured in milliseconds. This field is only present if the event status is &#x60;Retrying&#x60;.  | [optional] 
 **RetriesLeft** | Pointer to **int32** | The number of retries left. This field is only present if the event status is &#x60;Retrying&#x60;. | [optional] 
 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewWebhookEvent
 
-`func NewWebhookEvent(id string, url string, createdTimestamp int32, type_ WebhookEventType, data map[string]interface{}, status WebhookEventStatus, ) *WebhookEvent`
+`func NewWebhookEvent(id string, url string, createdTimestamp int32, type_ WebhookEventType, data Transaction, ) *WebhookEvent`
 
 NewWebhookEvent instantiates a new WebhookEvent object
 This constructor will assign default values to properties that have it defined,
@@ -114,20 +114,20 @@ SetType sets Type field to given value.
 
 ### GetData
 
-`func (o *WebhookEvent) GetData() map[string]interface{}`
+`func (o *WebhookEvent) GetData() Transaction`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *WebhookEvent) GetDataOk() (*map[string]interface{}, bool)`
+`func (o *WebhookEvent) GetDataOk() (*Transaction, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *WebhookEvent) SetData(v map[string]interface{})`
+`func (o *WebhookEvent) SetData(v Transaction)`
 
 SetData sets Data field to given value.
 
@@ -151,6 +151,11 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+### HasStatus
+
+`func (o *WebhookEvent) HasStatus() bool`
+
+HasStatus returns a boolean if a field has been set.
 
 ### GetNextRetryTimestamp
 

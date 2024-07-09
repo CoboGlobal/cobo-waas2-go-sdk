@@ -32,6 +32,7 @@ import (
 	"time"
 	"unicode/utf8"
 
+	"golang.org/x/oauth2"
 )
 
 var (
@@ -52,11 +53,17 @@ type APIClient struct {
 
 	DevelopersWebhooksAPI *DevelopersWebhooksAPIService
 
+	OAuthAPI *OAuthAPIService
+
+	StakingsAPI *StakingsAPIService
+
 	TransactionsAPI *TransactionsAPIService
 
 	WalletsAPI *WalletsAPIService
 
-	WalletsMPCWalletAPI *WalletsMPCWalletAPIService
+	WalletsExchangeWalletAPI *WalletsExchangeWalletAPIService
+
+	WalletsMPCWalletsAPI *WalletsMPCWalletsAPIService
 }
 
 type service struct {
@@ -76,9 +83,12 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
+	c.OAuthAPI = (*OAuthAPIService)(&c.common)
+	c.StakingsAPI = (*StakingsAPIService)(&c.common)
 	c.TransactionsAPI = (*TransactionsAPIService)(&c.common)
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)
-	c.WalletsMPCWalletAPI = (*WalletsMPCWalletAPIService)(&c.common)
+	c.WalletsExchangeWalletAPI = (*WalletsExchangeWalletAPIService)(&c.common)
+	c.WalletsMPCWalletsAPI = (*WalletsMPCWalletsAPIService)(&c.common)
 
 	return c
 }
@@ -421,6 +431,17 @@ func (c *APIClient) prepareRequest(
 		localVarRequest = localVarRequest.WithContext(ctx)
 
 		// Walk through any authentication.
+
+		// OAuth2 authentication
+		if tok, ok := ctx.Value(ContextOAuth2).(oauth2.TokenSource); ok {
+			// We were able to grab an oauth2 token from the context
+			var latestToken *oauth2.Token
+			if latestToken, err = tok.Token(); err != nil {
+				return nil, err
+			}
+
+			latestToken.SetAuthHeader(localVarRequest)
+		}
 
 	}
 

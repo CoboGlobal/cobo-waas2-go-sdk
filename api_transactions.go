@@ -34,12 +34,19 @@ func (r ApiCancelTransactionByIdRequest) Execute() (*CreateTransferTransaction20
 }
 
 /*
-CancelTransactionById Cancel a transaction by ID
+CancelTransactionById Cancel transaction
 
-Cancel a transaction.
+This operation cancels a specified transaction. A transaction can be cancelled if its status is either of the following:
+- `Submitted`
+- `PendingScreening`
+- `PendingAuthorization`
+- `PendingSignature` 
+
+A transaction request for tracking is returned upon successful operation.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param transactionId Unique id of the transaction
+ @param transactionId The transaction ID.
  @return ApiCancelTransactionByIdRequest
 */
 func (a *TransactionsAPIService) CancelTransactionById(ctx context.Context, transactionId string) ApiCancelTransactionByIdRequest {
@@ -136,32 +143,37 @@ func (a *TransactionsAPIService) CancelTransactionByIdExecute(r ApiCancelTransac
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiCreateSmartContractCallTransactionRequest struct {
+type ApiCreateContractCallTransactionRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
 	contractCall *ContractCall
 }
 
-// The request body to create a smart contract transaction
-func (r ApiCreateSmartContractCallTransactionRequest) ContractCall(contractCall ContractCall) ApiCreateSmartContractCallTransactionRequest {
+// The request body for making a contract call.
+func (r ApiCreateContractCallTransactionRequest) ContractCall(contractCall ContractCall) ApiCreateContractCallTransactionRequest {
 	r.contractCall = &contractCall
 	return r
 }
 
-func (r ApiCreateSmartContractCallTransactionRequest) Execute() (*CreateTransferTransaction201Response, *http.Response, error) {
-	return r.ApiService.CreateSmartContractCallTransactionExecute(r)
+func (r ApiCreateContractCallTransactionRequest) Execute() (*CreateTransferTransaction201Response, *http.Response, error) {
+	return r.ApiService.CreateContractCallTransactionExecute(r)
 }
 
 /*
-CreateSmartContractCallTransaction Create a smart contract call transaction
+CreateContractCallTransaction Call smart contract
 
-Create a transaction to call a smart contract.
+This operation creates a transaction to interact with a smart contract on the blockchain.
+
+You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
+
+Currently, this operation only applies to blockchains that have a similar architecture to Ethereum.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateSmartContractCallTransactionRequest
+ @return ApiCreateContractCallTransactionRequest
 */
-func (a *TransactionsAPIService) CreateSmartContractCallTransaction(ctx context.Context) ApiCreateSmartContractCallTransactionRequest {
-	return ApiCreateSmartContractCallTransactionRequest{
+func (a *TransactionsAPIService) CreateContractCallTransaction(ctx context.Context) ApiCreateContractCallTransactionRequest {
+	return ApiCreateContractCallTransactionRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -169,7 +181,7 @@ func (a *TransactionsAPIService) CreateSmartContractCallTransaction(ctx context.
 
 // Execute executes the request
 //  @return CreateTransferTransaction201Response
-func (a *TransactionsAPIService) CreateSmartContractCallTransactionExecute(r ApiCreateSmartContractCallTransactionRequest) (*CreateTransferTransaction201Response, *http.Response, error) {
+func (a *TransactionsAPIService) CreateContractCallTransactionExecute(r ApiCreateContractCallTransactionRequest) (*CreateTransferTransaction201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -177,7 +189,7 @@ func (a *TransactionsAPIService) CreateSmartContractCallTransactionExecute(r Api
 		localVarReturnValue  *CreateTransferTransaction201Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.CreateSmartContractCallTransaction")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.CreateContractCallTransaction")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -254,6 +266,129 @@ func (a *TransactionsAPIService) CreateSmartContractCallTransactionExecute(r Api
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateMessageSignTransactionRequest struct {
+	ctx context.Context
+	ApiService *TransactionsAPIService
+	signMessage *SignMessage
+}
+
+// The request body to create a message sign transaction
+func (r ApiCreateMessageSignTransactionRequest) SignMessage(signMessage SignMessage) ApiCreateMessageSignTransactionRequest {
+	r.signMessage = &signMessage
+	return r
+}
+
+func (r ApiCreateMessageSignTransactionRequest) Execute() (*CreateTransferTransaction201Response, *http.Response, error) {
+	return r.ApiService.CreateMessageSignTransactionExecute(r)
+}
+
+/*
+CreateMessageSignTransaction Sign message
+
+This operation creates a transaction to sign the provided message using cryptographic techniques.
+
+In some scenarios, you want to sign a message for identity authentication or transaction approval. You need to provide details such as the source address, destination address, and the message to be signed. A transaction request for tracking is returned upon successful operation.
+
+Currently, only MPC Wallets support this type of transaction to sign a message.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateMessageSignTransactionRequest
+*/
+func (a *TransactionsAPIService) CreateMessageSignTransaction(ctx context.Context) ApiCreateMessageSignTransactionRequest {
+	return ApiCreateMessageSignTransactionRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateTransferTransaction201Response
+func (a *TransactionsAPIService) CreateMessageSignTransactionExecute(r ApiCreateMessageSignTransactionRequest) (*CreateTransferTransaction201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateTransferTransaction201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.CreateMessageSignTransaction")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/transactions/message_sign"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.signMessage
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateTransferTransactionRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
@@ -271,9 +406,14 @@ func (r ApiCreateTransferTransactionRequest) Execute() (*CreateTransferTransacti
 }
 
 /*
-CreateTransferTransaction Create a transfer transaction
+CreateTransferTransaction Transfer token
 
-Create a transaction to transfer funds from one account to another.
+The operation transfers your assets from a wallet created on Cobo Protal to another address.
+
+You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee.
+
+A transaction request for tracking is returned upon successful operation.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateTransferTransactionRequest
@@ -376,12 +516,12 @@ type ApiDropTransactionByIdRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
 	transactionId string
-	transactionFee *TransactionFee
+	transactionRbf *TransactionRbf
 }
 
-// The request body of fee to initiate transaction
-func (r ApiDropTransactionByIdRequest) TransactionFee(transactionFee TransactionFee) ApiDropTransactionByIdRequest {
-	r.transactionFee = &transactionFee
+// The request body to drop or to speed up transactions
+func (r ApiDropTransactionByIdRequest) TransactionRbf(transactionRbf TransactionRbf) ApiDropTransactionByIdRequest {
+	r.transactionRbf = &transactionRbf
 	return r
 }
 
@@ -390,12 +530,17 @@ func (r ApiDropTransactionByIdRequest) Execute() (*CreateTransferTransaction201R
 }
 
 /*
-DropTransactionById Drop a transaction by ID
+DropTransactionById Drop transaction
 
-Drop a transaction.
+This operation drops a specified transaction. 
+
+Dropping a transaction will trigger a Replace-By-Fee (RBF) transaction, which allows the you to replace your unconfirmed transaction with a new one with a higher transaction fee. A transaction can be dropped if its status is `Broadcasting` or `Confirming`.
+
+A transaction request for tracking is returned upon successful operation.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param transactionId Unique id of the transaction
+ @param transactionId The transaction ID.
  @return ApiDropTransactionByIdRequest
 */
 func (a *TransactionsAPIService) DropTransactionById(ctx context.Context, transactionId string) ApiDropTransactionByIdRequest {
@@ -446,7 +591,7 @@ func (a *TransactionsAPIService) DropTransactionByIdExecute(r ApiDropTransaction
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.transactionFee
+	localVarPostBody = r.transactionRbf
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -500,20 +645,23 @@ type ApiEstimateFeeRequest struct {
 	estimateFee *EstimateFee
 }
 
-// The request body to estimate fee of transfer or call transaction
+// The request body to estimate the transaction fee of a token transfer or a contract call.
 func (r ApiEstimateFeeRequest) EstimateFee(estimateFee EstimateFee) ApiEstimateFeeRequest {
 	r.estimateFee = &estimateFee
 	return r
 }
 
-func (r ApiEstimateFeeRequest) Execute() (*EstimationFee, *http.Response, error) {
+func (r ApiEstimateFeeRequest) Execute() ([]EstimationFee, *http.Response, error) {
 	return r.ApiService.EstimateFeeExecute(r)
 }
 
 /*
-EstimateFee Estimate the fee for transaction
+EstimateFee Estimate transaction fee
 
-Estimate the transaction fee.
+This operation estimates the transaction fee rates of a token transfer or a contract call for three different transaction speeds (slow, recommended, and fast), based on factors such as network congestion and transaction complexity.
+
+You need to specify the transaction information, including the request ID, request type, source address, destination address, and token ID of the transaction fee.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiEstimateFeeRequest
@@ -526,13 +674,13 @@ func (a *TransactionsAPIService) EstimateFee(ctx context.Context) ApiEstimateFee
 }
 
 // Execute executes the request
-//  @return EstimationFee
-func (a *TransactionsAPIService) EstimateFeeExecute(r ApiEstimateFeeRequest) (*EstimationFee, *http.Response, error) {
+//  @return []EstimationFee
+func (a *TransactionsAPIService) EstimateFeeExecute(r ApiEstimateFeeRequest) ([]EstimationFee, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *EstimationFee
+		localVarReturnValue  []EstimationFee
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.EstimateFee")
@@ -623,146 +771,6 @@ func (a *TransactionsAPIService) EstimateFeeExecute(r ApiEstimateFeeRequest) (*E
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetChainFeePriceRequest struct {
-	ctx context.Context
-	ApiService *TransactionsAPIService
-	chainId *string
-	tokenId *string
-}
-
-// The chain ID.
-func (r ApiGetChainFeePriceRequest) ChainId(chainId string) ApiGetChainFeePriceRequest {
-	r.chainId = &chainId
-	return r
-}
-
-// The token ID.
-func (r ApiGetChainFeePriceRequest) TokenId(tokenId string) ApiGetChainFeePriceRequest {
-	r.tokenId = &tokenId
-	return r
-}
-
-func (r ApiGetChainFeePriceRequest) Execute() (*ChainFeePrice, *http.Response, error) {
-	return r.ApiService.GetChainFeePriceExecute(r)
-}
-
-/*
-GetChainFeePrice Get the fee price data for chain and/or token(Hold, TBD after normalize fee settings)
-
-Retrieve the fee price data.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetChainFeePriceRequest
-*/
-func (a *TransactionsAPIService) GetChainFeePrice(ctx context.Context) ApiGetChainFeePriceRequest {
-	return ApiGetChainFeePriceRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return ChainFeePrice
-func (a *TransactionsAPIService) GetChainFeePriceExecute(r ApiGetChainFeePriceRequest) (*ChainFeePrice, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ChainFeePrice
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.GetChainFeePrice")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/transactions/fee_price"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.chainId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "chain_id", r.chainId, "")
-	}
-	if r.tokenId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiGetTransactionByIdRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
@@ -774,12 +782,13 @@ func (r ApiGetTransactionByIdRequest) Execute() (*Transaction, *http.Response, e
 }
 
 /*
-GetTransactionById Get transaction information by ID
+GetTransactionById Get transaction information
 
-Detailed description on retrieving transaction information by id
+This operation retrieves detailed information about a specified transaction, such as the transaction status, source address, destination address, and timestamp.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param transactionId Unique id of the transaction
+ @param transactionId The transaction ID.
  @return ApiGetTransactionByIdRequest
 */
 func (a *TransactionsAPIService) GetTransactionById(ctx context.Context, transactionId string) ApiGetTransactionByIdRequest {
@@ -876,6 +885,138 @@ func (a *TransactionsAPIService) GetTransactionByIdExecute(r ApiGetTransactionBy
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiListFeeRatesRequest struct {
+	ctx context.Context
+	ApiService *TransactionsAPIService
+	chainId *string
+}
+
+// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
+func (r ApiListFeeRatesRequest) ChainId(chainId string) ApiListFeeRatesRequest {
+	r.chainId = &chainId
+	return r
+}
+
+func (r ApiListFeeRatesRequest) Execute() ([]FeeRate, *http.Response, error) {
+	return r.ApiService.ListFeeRatesExecute(r)
+}
+
+/*
+ListFeeRates Get fee rates
+
+This operation retrieves current transaction fee rates on the blockchain based on the specified chain ID.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListFeeRatesRequest
+*/
+func (a *TransactionsAPIService) ListFeeRates(ctx context.Context) ApiListFeeRatesRequest {
+	return ApiListFeeRatesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return []FeeRate
+func (a *TransactionsAPIService) ListFeeRatesExecute(r ApiListFeeRatesRequest) ([]FeeRate, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []FeeRate
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.ListFeeRates")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/transactions/fee_rates"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.chainId == nil {
+		return localVarReturnValue, nil, reportError("chainId is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "chain_id", r.chainId, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListTransactionsRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
@@ -885,13 +1026,17 @@ type ApiListTransactionsRequest struct {
 	transactionHash *string
 	type_ *[]TransactionType
 	status *[]TransactionStatus
-	walletType *WalletType
-	walletId *[]string
-	chainId *[]string
-	tokenId *[]string
-	assetId *[]string
-	vaultId *string
-	projectId *string
+	sourceType *[]TransactionSourceType
+	sourceWalletId *[]string
+	sourceAddress *[]string
+	destinationType *[]TransactionDestinationType
+	destinationWalletId *[]string
+	destinationAddress *[]string
+	chainIds *string
+	tokenIds *string
+	assetIds *string
+	vaultId *[]string
+	projectId *[]string
 	minCreatedTimestamp *int32
 	maxCreatedTimestamp *int32
 	sortBy *string
@@ -901,121 +1046,145 @@ type ApiListTransactionsRequest struct {
 	after *string
 }
 
-// Request ID
+// The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization.
 func (r ApiListTransactionsRequest) RequestId(requestId string) ApiListTransactionsRequest {
 	r.requestId = &requestId
 	return r
 }
 
-// Cobo ID
+// The Cobo ID, which can be used to track a transaction.
 func (r ApiListTransactionsRequest) CoboId(coboId string) ApiListTransactionsRequest {
 	r.coboId = &coboId
 	return r
 }
 
-// Unique id of the transaction
+// The transaction ID.
 func (r ApiListTransactionsRequest) TransactionId(transactionId string) ApiListTransactionsRequest {
 	r.transactionId = &transactionId
 	return r
 }
 
-// Transaction hash
+// The transaction hash.
 func (r ApiListTransactionsRequest) TransactionHash(transactionHash string) ApiListTransactionsRequest {
 	r.transactionHash = &transactionHash
 	return r
 }
 
-// The type of a transaction
+// The transaction type. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.   - &#x60;TokenApproval&#x60;: A transaction that grants permission to access your tokens.    - &#x60;ContractCall&#x60;: A transaction that interacts with a smart contract.   - &#x60;TransactionFeePayment&#x60;: A transaction that is initiated by Fee Station to pay your transaction fee.   - &#x60;RawMessage&#x60;: A transaction that signs a message. 
 func (r ApiListTransactionsRequest) Type_(type_ []TransactionType) ApiListTransactionsRequest {
 	r.type_ = &type_
 	return r
 }
 
-// The status of a transaction
+// The transaction status. Possible values include:    - &#x60;Submitted&#x60;: The transaction is submitted.   - &#x60;PendingScreening&#x60;: The transaction is pending screening by Risk Control.    - &#x60;PendingAuthorization&#x60;: The transaction is pending approvals.   - &#x60;PendingSignature&#x60;: The transaction is pending signature.    - &#x60;Broadcasting&#x60;: The transaction is being broadcast.   - &#x60;Confirming&#x60;: The transaction is waiting for the required number of confirmations.   - &#x60;Completed&#x60;: The transaction is completed.   - &#x60;Failed&#x60;: The transaction failed.   - &#x60;Rejected&#x60;: The transaction is rejected. 
 func (r ApiListTransactionsRequest) Status(status []TransactionStatus) ApiListTransactionsRequest {
 	r.status = &status
 	return r
 }
 
-// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
-func (r ApiListTransactionsRequest) WalletType(walletType WalletType) ApiListTransactionsRequest {
-	r.walletType = &walletType
+// The type of transaction source. Possible values include:   - &#x60;Address&#x60;: An external address.   - &#x60;CustodialWallet&#x60;: A Custodial Wallet.   - &#x60;MPCWallet&#x60;: An MPC Wallet.   - &#x60;SafeWallet&#x60;: A Smart Contract Wallet (Safe{Wallet}).   - &#x60;ExchangeWallet&#x60;: An Exchange Wallet.   - &#x60;FeeStation&#x60;: A Fee Station. 
+func (r ApiListTransactionsRequest) SourceType(sourceType []TransactionSourceType) ApiListTransactionsRequest {
+	r.sourceType = &sourceType
 	return r
 }
 
-// Unique id of the wallet
-func (r ApiListTransactionsRequest) WalletId(walletId []string) ApiListTransactionsRequest {
-	r.walletId = &walletId
+// The wallet ID of the transaction source.
+func (r ApiListTransactionsRequest) SourceWalletId(sourceWalletId []string) ApiListTransactionsRequest {
+	r.sourceWalletId = &sourceWalletId
 	return r
 }
 
-// Unique id of the chain
-func (r ApiListTransactionsRequest) ChainId(chainId []string) ApiListTransactionsRequest {
-	r.chainId = &chainId
+// The address of the transaction source.
+func (r ApiListTransactionsRequest) SourceAddress(sourceAddress []string) ApiListTransactionsRequest {
+	r.sourceAddress = &sourceAddress
 	return r
 }
 
-// Unique id of the token
-func (r ApiListTransactionsRequest) TokenId(tokenId []string) ApiListTransactionsRequest {
-	r.tokenId = &tokenId
+// The transaction destination type. Possible values include:   - &#x60;Address&#x60;: An external address.    - &#x60;ContractCall&#x60;: A transaction that interacts with a smart contract.   - &#x60;MessageSign&#x60;: A transaction that signs a message.    - &#x60;CustodialWallet&#x60;: A Custodial Wallet.   - &#x60;MPCWallet&#x60;: An MPC Wallet.   - &#x60;SafeWallet&#x60;: A Smart Contract Wallets (Safe{Wallet}).   - &#x60;ExchangeWallet&#x60;: An Exchange Wallet. 
+func (r ApiListTransactionsRequest) DestinationType(destinationType []TransactionDestinationType) ApiListTransactionsRequest {
+	r.destinationType = &destinationType
 	return r
 }
 
-// Unique id of the asset
-func (r ApiListTransactionsRequest) AssetId(assetId []string) ApiListTransactionsRequest {
-	r.assetId = &assetId
+// The wallet ID of the transaction destination.
+func (r ApiListTransactionsRequest) DestinationWalletId(destinationWalletId []string) ApiListTransactionsRequest {
+	r.destinationWalletId = &destinationWalletId
 	return r
 }
 
-// Unique id of the mpc vault
-func (r ApiListTransactionsRequest) VaultId(vaultId string) ApiListTransactionsRequest {
+// The address of the transaction destination.
+func (r ApiListTransactionsRequest) DestinationAddress(destinationAddress []string) ApiListTransactionsRequest {
+	r.destinationAddress = &destinationAddress
+	return r
+}
+
+// A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
+func (r ApiListTransactionsRequest) ChainIds(chainIds string) ApiListTransactionsRequest {
+	r.chainIds = &chainIds
+	return r
+}
+
+// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
+func (r ApiListTransactionsRequest) TokenIds(tokenIds string) ApiListTransactionsRequest {
+	r.tokenIds = &tokenIds
+	return r
+}
+
+// A list of asset IDs, separated by comma. (This concept applies to Exchange Wallets only) An asset is a digital representation of a valuable resource on a blockchain network. Exchange Wallets group your holdings by asset, even if the same asset exists on different blockchains. For example, if your Exchange Wallet has 1 USDT on Ethereum and 1 USDT on TRON, then your asset balance is 2 USDT.
+func (r ApiListTransactionsRequest) AssetIds(assetIds string) ApiListTransactionsRequest {
+	r.assetIds = &assetIds
+	return r
+}
+
+// The MPC vault ID.
+func (r ApiListTransactionsRequest) VaultId(vaultId []string) ApiListTransactionsRequest {
 	r.vaultId = &vaultId
 	return r
 }
 
-// Unique id of the mpc project
-func (r ApiListTransactionsRequest) ProjectId(projectId string) ApiListTransactionsRequest {
+// The MPC project ID.
+func (r ApiListTransactionsRequest) ProjectId(projectId []string) ApiListTransactionsRequest {
 	r.projectId = &projectId
 	return r
 }
 
-// The minimum transaction creation timestamp in Unix epoch seconds
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
 func (r ApiListTransactionsRequest) MinCreatedTimestamp(minCreatedTimestamp int32) ApiListTransactionsRequest {
 	r.minCreatedTimestamp = &minCreatedTimestamp
 	return r
 }
 
-// The maximum transaction creation timestamp in Unix epoch seconds
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
 func (r ApiListTransactionsRequest) MaxCreatedTimestamp(maxCreatedTimestamp int32) ApiListTransactionsRequest {
 	r.maxCreatedTimestamp = &maxCreatedTimestamp
 	return r
 }
 
-// Field of sort by
+// The field used for sorting.
 func (r ApiListTransactionsRequest) SortBy(sortBy string) ApiListTransactionsRequest {
 	r.sortBy = &sortBy
 	return r
 }
 
-// Direction to sort by
+// The sort direction. Possible values include:   - &#x60;ASC&#x60;: Sort the results in ascending order.   - &#x60;DESC&#x60;: Sort the results in descending order. 
 func (r ApiListTransactionsRequest) Direction(direction string) ApiListTransactionsRequest {
 	r.direction = &direction
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiListTransactionsRequest) Limit(limit int32) ApiListTransactionsRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiListTransactionsRequest) Before(before string) ApiListTransactionsRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiListTransactionsRequest) After(after string) ApiListTransactionsRequest {
 	r.after = &after
 	return r
@@ -1028,7 +1197,10 @@ func (r ApiListTransactionsRequest) Execute() (*ListTransactions200Response, *ht
 /*
 ListTransactions List all transactions
 
-Retrieve a list of transactions.
+This operation retrieves all the transactions under your organization.
+
+You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamps. You can also paginate and sort your query results.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListTransactionsRequest
@@ -1095,58 +1267,102 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 			parameterAddToHeaderOrQuery(localVarQueryParams, "status", t, "multi")
 		}
 	}
-	if r.walletType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_type", r.walletType, "")
-	}
-	if r.walletId != nil {
-		t := *r.walletId
+	if r.sourceType != nil {
+		t := *r.sourceType
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_id", s.Index(i).Interface(), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "source_type", s.Index(i).Interface(), "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_id", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "source_type", t, "multi")
 		}
 	}
-	if r.chainId != nil {
-		t := *r.chainId
+	if r.sourceWalletId != nil {
+		t := *r.sourceWalletId
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "chain_id", s.Index(i).Interface(), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "source_wallet_id", s.Index(i).Interface(), "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "chain_id", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "source_wallet_id", t, "multi")
 		}
 	}
-	if r.tokenId != nil {
-		t := *r.tokenId
+	if r.sourceAddress != nil {
+		t := *r.sourceAddress
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", s.Index(i).Interface(), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "source_address", s.Index(i).Interface(), "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "source_address", t, "multi")
 		}
 	}
-	if r.assetId != nil {
-		t := *r.assetId
+	if r.destinationType != nil {
+		t := *r.destinationType
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "asset_id", s.Index(i).Interface(), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "destination_type", s.Index(i).Interface(), "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "asset_id", t, "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "destination_type", t, "multi")
 		}
+	}
+	if r.destinationWalletId != nil {
+		t := *r.destinationWalletId
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "destination_wallet_id", s.Index(i).Interface(), "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "destination_wallet_id", t, "multi")
+		}
+	}
+	if r.destinationAddress != nil {
+		t := *r.destinationAddress
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "destination_address", s.Index(i).Interface(), "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "destination_address", t, "multi")
+		}
+	}
+	if r.chainIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "chain_ids", r.chainIds, "")
+	}
+	if r.tokenIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_ids", r.tokenIds, "")
+	}
+	if r.assetIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "asset_ids", r.assetIds, "")
 	}
 	if r.vaultId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vault_id", r.vaultId, "")
+		t := *r.vaultId
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vault_id", s.Index(i).Interface(), "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vault_id", t, "multi")
+		}
 	}
 	if r.projectId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "project_id", r.projectId, "")
+		t := *r.projectId
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "project_id", s.Index(i).Interface(), "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "project_id", t, "multi")
+		}
 	}
 	if r.minCreatedTimestamp != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "min_created_timestamp", r.minCreatedTimestamp, "")
@@ -1268,6 +1484,13 @@ type ApiResendTransactionByIdRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
 	transactionId string
+	transactionResend *TransactionResend
+}
+
+// The request body to resend transactions
+func (r ApiResendTransactionByIdRequest) TransactionResend(transactionResend TransactionResend) ApiResendTransactionByIdRequest {
+	r.transactionResend = &transactionResend
+	return r
 }
 
 func (r ApiResendTransactionByIdRequest) Execute() (*CreateTransferTransaction201Response, *http.Response, error) {
@@ -1275,12 +1498,17 @@ func (r ApiResendTransactionByIdRequest) Execute() (*CreateTransferTransaction20
 }
 
 /*
-ResendTransactionById Resend a transaction by ID
+ResendTransactionById Resend transaction
 
-Resend a transaction.
+This operation resends a specified transaction. 
+
+Resending a transaction initiates a new attempt to process the transaction that failed previously. A transaction can be resent if its status is `failed`.
+
+A transaction request for tracking is returned upon successful operation.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param transactionId Unique id of the transaction
+ @param transactionId The transaction ID.
  @return ApiResendTransactionByIdRequest
 */
 func (a *TransactionsAPIService) ResendTransactionById(ctx context.Context, transactionId string) ApiResendTransactionByIdRequest {
@@ -1314,7 +1542,7 @@ func (a *TransactionsAPIService) ResendTransactionByIdExecute(r ApiResendTransac
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1330,6 +1558,8 @@ func (a *TransactionsAPIService) ResendTransactionByIdExecute(r ApiResendTransac
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.transactionResend
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1381,12 +1611,12 @@ type ApiSpeedupTransactionByIdRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
 	transactionId string
-	transactionFee *TransactionFee
+	transactionRbf *TransactionRbf
 }
 
-// The request body of fee to initiate transaction
-func (r ApiSpeedupTransactionByIdRequest) TransactionFee(transactionFee TransactionFee) ApiSpeedupTransactionByIdRequest {
-	r.transactionFee = &transactionFee
+// The request body to drop or to speed up transactions
+func (r ApiSpeedupTransactionByIdRequest) TransactionRbf(transactionRbf TransactionRbf) ApiSpeedupTransactionByIdRequest {
+	r.transactionRbf = &transactionRbf
 	return r
 }
 
@@ -1395,12 +1625,17 @@ func (r ApiSpeedupTransactionByIdRequest) Execute() (*CreateTransferTransaction2
 }
 
 /*
-SpeedupTransactionById Speed up a transaction by ID
+SpeedupTransactionById Speed up transaction
 
-Speed up a transaction.
+This operation accelerates a specified transaction. 
+
+Speeding up a transaction will trigger a Replace-By-Fee (RBF) transaction, which allows the you to replace your unconfirmed transaction with a new one with a higher transaction fee. A transaction can be accelerated if its status is either `Broadcasting` or `Confirming`.
+
+A transaction request for tracking is returned upon successful operation.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param transactionId Unique id of the transaction
+ @param transactionId The transaction ID.
  @return ApiSpeedupTransactionByIdRequest
 */
 func (a *TransactionsAPIService) SpeedupTransactionById(ctx context.Context, transactionId string) ApiSpeedupTransactionByIdRequest {
@@ -1451,7 +1686,7 @@ func (a *TransactionsAPIService) SpeedupTransactionByIdExecute(r ApiSpeedupTrans
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.transactionFee
+	localVarPostBody = r.transactionRbf
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

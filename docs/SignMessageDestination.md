@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Message** | Pointer to **string** | Raw data to be signed, Base 64 encoded | [optional] 
-**StructuredData** | Pointer to **string** | Structured data to be signed, JSON encoded | [optional] 
+**Message** | Pointer to **string** | The raw data of the message to be signed, encoded in Base64 format. | [optional] 
+**StructuredData** | Pointer to **map[string]interface{}** | The structured data of the message to be signed, encoded in JSON format. | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasMessage returns a boolean if a field has been set.
 
 ### GetStructuredData
 
-`func (o *SignMessageDestination) GetStructuredData() string`
+`func (o *SignMessageDestination) GetStructuredData() map[string]interface{}`
 
 GetStructuredData returns the StructuredData field if non-nil, zero value otherwise.
 
 ### GetStructuredDataOk
 
-`func (o *SignMessageDestination) GetStructuredDataOk() (*string, bool)`
+`func (o *SignMessageDestination) GetStructuredDataOk() (*map[string]interface{}, bool)`
 
 GetStructuredDataOk returns a tuple with the StructuredData field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStructuredData
 
-`func (o *SignMessageDestination) SetStructuredData(v string)`
+`func (o *SignMessageDestination) SetStructuredData(v map[string]interface{})`
 
 SetStructuredData sets StructuredData field to given value.
 

@@ -16,12 +16,12 @@ import (
 // checks if the SignMessageDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SignMessageDestination{}
 
-// SignMessageDestination struct for SignMessageDestination
+// SignMessageDestination The information about the transaction destination.
 type SignMessageDestination struct {
-	// Raw data to be signed, Base 64 encoded
+	// The raw data of the message to be signed, encoded in Base64 format.
 	Message *string `json:"message,omitempty"`
-	// Structured data to be signed, JSON encoded
-	StructuredData *string `json:"structured_data,omitempty"`
+	// The structured data of the message to be signed, encoded in JSON format.
+	StructuredData map[string]interface{} `json:"structured_data,omitempty"`
 }
 
 // NewSignMessageDestination instantiates a new SignMessageDestination object
@@ -74,19 +74,19 @@ func (o *SignMessageDestination) SetMessage(v string) {
 }
 
 // GetStructuredData returns the StructuredData field value if set, zero value otherwise.
-func (o *SignMessageDestination) GetStructuredData() string {
+func (o *SignMessageDestination) GetStructuredData() map[string]interface{} {
 	if o == nil || IsNil(o.StructuredData) {
-		var ret string
+		var ret map[string]interface{}
 		return ret
 	}
-	return *o.StructuredData
+	return o.StructuredData
 }
 
 // GetStructuredDataOk returns a tuple with the StructuredData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SignMessageDestination) GetStructuredDataOk() (*string, bool) {
+func (o *SignMessageDestination) GetStructuredDataOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.StructuredData) {
-		return nil, false
+		return map[string]interface{}{}, false
 	}
 	return o.StructuredData, true
 }
@@ -100,9 +100,9 @@ func (o *SignMessageDestination) HasStructuredData() bool {
 	return false
 }
 
-// SetStructuredData gets a reference to the given string and assigns it to the StructuredData field.
-func (o *SignMessageDestination) SetStructuredData(v string) {
-	o.StructuredData = &v
+// SetStructuredData gets a reference to the given map[string]interface{} and assigns it to the StructuredData field.
+func (o *SignMessageDestination) SetStructuredData(v map[string]interface{}) {
+	o.StructuredData = v
 }
 
 func (o SignMessageDestination) MarshalJSON() ([]byte, error) {

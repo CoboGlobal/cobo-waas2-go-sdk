@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **Secret** | **string** | The API secret of your exchange account. | 
 **Passphrase** | Pointer to **string** | The passphrase of your exchange account. | [optional] 
 **GaCode** | Pointer to **string** | The GA code for the exchange. | [optional] 
-**SubAccountIds** | Pointer to **[]string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. | [optional] 
+**MainWalletId** | Pointer to **string** | The ID of the Exchange Wallet (Main Account). | [optional] 
 
 ## Methods
 
@@ -203,30 +203,30 @@ SetGaCode sets GaCode field to given value.
 
 HasGaCode returns a boolean if a field has been set.
 
-### GetSubAccountIds
+### GetMainWalletId
 
-`func (o *CreateExchangeWallet) GetSubAccountIds() []string`
+`func (o *CreateExchangeWallet) GetMainWalletId() string`
 
-GetSubAccountIds returns the SubAccountIds field if non-nil, zero value otherwise.
+GetMainWalletId returns the MainWalletId field if non-nil, zero value otherwise.
 
-### GetSubAccountIdsOk
+### GetMainWalletIdOk
 
-`func (o *CreateExchangeWallet) GetSubAccountIdsOk() (*[]string, bool)`
+`func (o *CreateExchangeWallet) GetMainWalletIdOk() (*string, bool)`
 
-GetSubAccountIdsOk returns a tuple with the SubAccountIds field if it's non-nil, zero value otherwise
+GetMainWalletIdOk returns a tuple with the MainWalletId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubAccountIds
+### SetMainWalletId
 
-`func (o *CreateExchangeWallet) SetSubAccountIds(v []string)`
+`func (o *CreateExchangeWallet) SetMainWalletId(v string)`
 
-SetSubAccountIds sets SubAccountIds field to given value.
+SetMainWalletId sets MainWalletId field to given value.
 
-### HasSubAccountIds
+### HasMainWalletId
 
-`func (o *CreateExchangeWallet) HasSubAccountIds() bool`
+`func (o *CreateExchangeWallet) HasMainWalletId() bool`
 
-HasSubAccountIds returns a boolean if a field has been set.
+HasMainWalletId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

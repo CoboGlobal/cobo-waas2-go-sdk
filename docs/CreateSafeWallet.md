@@ -10,10 +10,10 @@ Name | Type | Description | Notes
 **Label** | Pointer to **string** | The wallet label. | [optional] 
 **ChainId** | **string** | The ID of the chain that the wallet operates on. | 
 **SmartContractWalletType** | [**SmartContractWalletType**](SmartContractWalletType.md) |  | [default to SMARTCONTRACTWALLETTYPE_SAFE_WALLET]
-**SafeAddress** | Pointer to **string** | The address of the Smart Contract Wallet. If this is not provided, Cobo will create a new Safe{Wallet} and set up Cobo Safe for you. In that case, the &#x60;threshold&#x60; and &#x60;owners&#x60; fields are required. | [optional] 
-**Owners** | Pointer to **[]string** | The owners of the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}. | [optional] 
-**Threshold** | Pointer to **int32** | The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}. | [optional] 
-**CoboSafeAddress** | Pointer to **string** | The address of Cobo Safe. If you are importing an existing Safe{Wallet}, Cobo Safe must has been created and enabled. | [optional] 
+**SafeAddress** | Pointer to **string** | The address of the Smart Contract Wallet. If this is not provided, Cobo will create a new Safe{Wallet} and set up Cobo Safe for you. In that case, the &#x60;threshold&#x60; and &#x60;signers&#x60; properties are required. | [optional] 
+**Signers** | Pointer to **[]string** | The signers of the Smart Contract Wallet. This property is required when creating a new Safe{Wallet}. | [optional] 
+**Threshold** | Pointer to **int32** | The minimum number of confirmations required for the Smart Contract Wallet. This property is required when creating a new Safe{Wallet}. | [optional] 
+**CoboSafeAddress** | Pointer to **string** | The address of Cobo Safe. If you are importing an existing Safe{Wallet}, Cobo Safe must have been created and enabled. | [optional] 
 **Initiator** | Pointer to [**CreateSafeWalletAllOfInitiator**](CreateSafeWalletAllOfInitiator.md) |  | [optional] 
 
 ## Methods
@@ -185,30 +185,30 @@ SetSafeAddress sets SafeAddress field to given value.
 
 HasSafeAddress returns a boolean if a field has been set.
 
-### GetOwners
+### GetSigners
 
-`func (o *CreateSafeWallet) GetOwners() []string`
+`func (o *CreateSafeWallet) GetSigners() []string`
 
-GetOwners returns the Owners field if non-nil, zero value otherwise.
+GetSigners returns the Signers field if non-nil, zero value otherwise.
 
-### GetOwnersOk
+### GetSignersOk
 
-`func (o *CreateSafeWallet) GetOwnersOk() (*[]string, bool)`
+`func (o *CreateSafeWallet) GetSignersOk() (*[]string, bool)`
 
-GetOwnersOk returns a tuple with the Owners field if it's non-nil, zero value otherwise
+GetSignersOk returns a tuple with the Signers field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOwners
+### SetSigners
 
-`func (o *CreateSafeWallet) SetOwners(v []string)`
+`func (o *CreateSafeWallet) SetSigners(v []string)`
 
-SetOwners sets Owners field to given value.
+SetSigners sets Signers field to given value.
 
-### HasOwners
+### HasSigners
 
-`func (o *CreateSafeWallet) HasOwners() bool`
+`func (o *CreateSafeWallet) HasSigners() bool`
 
-HasOwners returns a boolean if a field has been set.
+HasSigners returns a boolean if a field has been set.
 
 ### GetThreshold
 

@@ -18,13 +18,11 @@ import (
 // checks if the EvmEip1559FeeBasePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEip1559FeeBasePrice{}
 
-// EvmEip1559FeeBasePrice The base transaction fee when using the EIP 1559 method.
+// EvmEip1559FeeBasePrice The transaction fee price based on the EIP-1559 fee model, which equals the base fee price plus the maximum priority fee.
 type EvmEip1559FeeBasePrice struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction.
+	// The maximum priority fee, in gwei. The maximum priority fee represents the highest amount of miner tips that you are willing to pay for your transaction.
 	MaxPriorityFee string `json:"max_priority_fee"`
-	// The base fee of chain.
+	// The base fee price of the chain, in gwei.
 	BaseFee string `json:"base_fee"`
 }
 
@@ -47,38 +45,6 @@ func NewEvmEip1559FeeBasePrice(maxPriorityFee string, baseFee string) *EvmEip155
 func NewEvmEip1559FeeBasePriceWithDefaults() *EvmEip1559FeeBasePrice {
 	this := EvmEip1559FeeBasePrice{}
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *EvmEip1559FeeBasePrice) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmEip1559FeeBasePrice) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *EvmEip1559FeeBasePrice) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *EvmEip1559FeeBasePrice) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
 }
 
 // GetMaxPriorityFee returns the MaxPriorityFee field value
@@ -139,9 +105,6 @@ func (o EvmEip1559FeeBasePrice) MarshalJSON() ([]byte, error) {
 
 func (o EvmEip1559FeeBasePrice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
 	toSerialize["max_priority_fee"] = o.MaxPriorityFee
 	toSerialize["base_fee"] = o.BaseFee
 	return toSerialize, nil

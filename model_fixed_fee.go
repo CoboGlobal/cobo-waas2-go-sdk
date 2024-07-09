@@ -18,13 +18,13 @@ import (
 // checks if the FixedFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FixedFee{}
 
-// FixedFee The estimated transaction fee in fee_coin.
+// FixedFee The transaction fee that you are willing to pay based on the fixed fee model for come blockchains. The fee can vary between different chains.
 type FixedFee struct {
-	// The maximum fee amount in fee_coin.
-	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
+	// The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee.
+	MaxFeeAmount string `json:"max_fee_amount"`
 	FeeType FeeType `json:"fee_type"`
 	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
+	TokenId string `json:"token_id"`
 }
 
 type _FixedFee FixedFee
@@ -33,9 +33,11 @@ type _FixedFee FixedFee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFixedFee(feeType FeeType) *FixedFee {
+func NewFixedFee(maxFeeAmount string, feeType FeeType, tokenId string) *FixedFee {
 	this := FixedFee{}
+	this.MaxFeeAmount = maxFeeAmount
 	this.FeeType = feeType
+	this.TokenId = tokenId
 	return &this
 }
 
@@ -49,36 +51,28 @@ func NewFixedFeeWithDefaults() *FixedFee {
 	return &this
 }
 
-// GetMaxFeeAmount returns the MaxFeeAmount field value if set, zero value otherwise.
+// GetMaxFeeAmount returns the MaxFeeAmount field value
 func (o *FixedFee) GetMaxFeeAmount() string {
-	if o == nil || IsNil(o.MaxFeeAmount) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.MaxFeeAmount
+
+	return o.MaxFeeAmount
 }
 
-// GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field value if set, nil otherwise
+// GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field value
 // and a boolean to check if the value has been set.
 func (o *FixedFee) GetMaxFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.MaxFeeAmount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MaxFeeAmount, true
+	return &o.MaxFeeAmount, true
 }
 
-// HasMaxFeeAmount returns a boolean if a field has been set.
-func (o *FixedFee) HasMaxFeeAmount() bool {
-	if o != nil && !IsNil(o.MaxFeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetMaxFeeAmount gets a reference to the given string and assigns it to the MaxFeeAmount field.
+// SetMaxFeeAmount sets field value
 func (o *FixedFee) SetMaxFeeAmount(v string) {
-	o.MaxFeeAmount = &v
+	o.MaxFeeAmount = v
 }
 
 // GetFeeType returns the FeeType field value
@@ -105,36 +99,28 @@ func (o *FixedFee) SetFeeType(v FeeType) {
 	o.FeeType = v
 }
 
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *FixedFee) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
+// GetTokenId returns the TokenId field value
+func (o *FixedFee) GetTokenId() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.FeeTokenId
+
+	return o.TokenId
 }
 
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
+// GetTokenIdOk returns a tuple with the TokenId field value
 // and a boolean to check if the value has been set.
-func (o *FixedFee) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
+func (o *FixedFee) GetTokenIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FeeTokenId, true
+	return &o.TokenId, true
 }
 
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *FixedFee) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *FixedFee) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
+// SetTokenId sets field value
+func (o *FixedFee) SetTokenId(v string) {
+	o.TokenId = v
 }
 
 func (o FixedFee) MarshalJSON() ([]byte, error) {
@@ -147,13 +133,9 @@ func (o FixedFee) MarshalJSON() ([]byte, error) {
 
 func (o FixedFee) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.MaxFeeAmount) {
-		toSerialize["max_fee_amount"] = o.MaxFeeAmount
-	}
+	toSerialize["max_fee_amount"] = o.MaxFeeAmount
 	toSerialize["fee_type"] = o.FeeType
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
+	toSerialize["token_id"] = o.TokenId
 	return toSerialize, nil
 }
 
@@ -162,7 +144,9 @@ func (o *FixedFee) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"max_fee_amount",
 		"fee_type",
+		"token_id",
 	}
 
 	allProperties := make(map[string]interface{})

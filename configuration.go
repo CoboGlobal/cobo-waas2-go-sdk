@@ -31,6 +31,7 @@ const ProdEnv = 0
 const DevEnv = 1
 
 var (
+	//ContextOAuth2 = contextKey("token")
 	ContextServerHost =contextKey("serverHost")
 	ContextEnv = contextKey("env")
 	ContextPortalSigner = contextKey("apiSigner")
@@ -85,12 +86,12 @@ func NewConfiguration() *Configuration {
 		Log:              &DefaultLogger{},
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://api.cobo.com/v2",
-				Description: "Production environment",
-			},
-			{
 				URL: "https://api.dev.cobo.com/v2",
 				Description: "Development environment",
+			},
+			{
+				URL: "https://api.cobo.com/v2",
+				Description: "Production environment",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{

@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | Pointer to **string** | Unique id of the request. | [optional] 
-**TransactionId** | Pointer to **string** | The transaction id of of the request. | [optional] 
-**Status** | Pointer to [**TransactionStatus**](TransactionStatus.md) |  | [optional] 
+**RequestId** | **string** | The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization. | 
+**TransactionId** | **string** | The transaction ID. | 
+**Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
 
 ## Methods
 
 ### NewCreateTransferTransaction201Response
 
-`func NewCreateTransferTransaction201Response() *CreateTransferTransaction201Response`
+`func NewCreateTransferTransaction201Response(requestId string, transactionId string, status TransactionStatus, ) *CreateTransferTransaction201Response`
 
 NewCreateTransferTransaction201Response instantiates a new CreateTransferTransaction201Response object
 This constructor will assign default values to properties that have it defined,
@@ -46,11 +46,6 @@ and a boolean to check if the value has been set.
 
 SetRequestId sets RequestId field to given value.
 
-### HasRequestId
-
-`func (o *CreateTransferTransaction201Response) HasRequestId() bool`
-
-HasRequestId returns a boolean if a field has been set.
 
 ### GetTransactionId
 
@@ -71,11 +66,6 @@ and a boolean to check if the value has been set.
 
 SetTransactionId sets TransactionId field to given value.
 
-### HasTransactionId
-
-`func (o *CreateTransferTransaction201Response) HasTransactionId() bool`
-
-HasTransactionId returns a boolean if a field has been set.
 
 ### GetStatus
 
@@ -96,11 +86,6 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
-### HasStatus
-
-`func (o *CreateTransferTransaction201Response) HasStatus() bool`
-
-HasStatus returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

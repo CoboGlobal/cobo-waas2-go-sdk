@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | **string** | The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee. | 
 
 ## Methods
 
 ### NewFeeAmount
 
-`func NewFeeAmount() *FeeAmount`
+`func NewFeeAmount(maxFeeAmount string, ) *FeeAmount`
 
 NewFeeAmount instantiates a new FeeAmount object
 This constructor will assign default values to properties that have it defined,
@@ -44,11 +44,6 @@ and a boolean to check if the value has been set.
 
 SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasMaxFeeAmount
-
-`func (o *FeeAmount) HasMaxFeeAmount() bool`
-
-HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// WalletSubtype the model 'WalletSubtype'
+// WalletSubtype The wallet type. Possible values include: - `Asset`: Custodial Wallets (Asset Wallets). - `Web3`: Custodial Wallets (Web3  Wallets). - `Main`: Exchange Wallets (Main Account). - `Sub`: Exchange Wallets (Sub Account). - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets). - `User-Controlled`: MPC Wallets (User-Controlled Wallets). - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}). 
 type WalletSubtype string
 
 // List of WalletSubtype
@@ -45,15 +45,8 @@ func (v *WalletSubtype) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := WalletSubtype(value)
-	for _, existing := range AllowedWalletSubtypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid WalletSubtype", value)
+	*v = WalletSubtype(value)
+	return nil
 }
 
 // NewWalletSubtypeFromValue returns a pointer to a valid WalletSubtype

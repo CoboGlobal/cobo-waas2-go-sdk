@@ -11,6 +11,8 @@ package CoboWaas2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the LockSpendableListRequest type satisfies the MappedNullable interface at compile time
@@ -18,17 +20,25 @@ var _ MappedNullable = &LockSpendableListRequest{}
 
 // LockSpendableListRequest struct for LockSpendableListRequest
 type LockSpendableListRequest struct {
-	TxHashes []string `json:"tx_hashes,omitempty"`
-	// True if to lock the UTXOs, False to unlock.
-	IsLocked *bool `json:"is_locked,omitempty"`
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
+	TokenId string `json:"token_id"`
+	// The transaction hash.
+	TxHash string `json:"tx_hash"`
+	// The output index of the UTXO.
+	VoutN int32 `json:"vout_n"`
 }
+
+type _LockSpendableListRequest LockSpendableListRequest
 
 // NewLockSpendableListRequest instantiates a new LockSpendableListRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLockSpendableListRequest() *LockSpendableListRequest {
+func NewLockSpendableListRequest(tokenId string, txHash string, voutN int32) *LockSpendableListRequest {
 	this := LockSpendableListRequest{}
+	this.TokenId = tokenId
+	this.TxHash = txHash
+	this.VoutN = voutN
 	return &this
 }
 
@@ -40,68 +50,76 @@ func NewLockSpendableListRequestWithDefaults() *LockSpendableListRequest {
 	return &this
 }
 
-// GetTxHashes returns the TxHashes field value if set, zero value otherwise.
-func (o *LockSpendableListRequest) GetTxHashes() []string {
-	if o == nil || IsNil(o.TxHashes) {
-		var ret []string
+// GetTokenId returns the TokenId field value
+func (o *LockSpendableListRequest) GetTokenId() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return o.TxHashes
+
+	return o.TokenId
 }
 
-// GetTxHashesOk returns a tuple with the TxHashes field value if set, nil otherwise
+// GetTokenIdOk returns a tuple with the TokenId field value
 // and a boolean to check if the value has been set.
-func (o *LockSpendableListRequest) GetTxHashesOk() ([]string, bool) {
-	if o == nil || IsNil(o.TxHashes) {
+func (o *LockSpendableListRequest) GetTokenIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.TxHashes, true
+	return &o.TokenId, true
 }
 
-// HasTxHashes returns a boolean if a field has been set.
-func (o *LockSpendableListRequest) HasTxHashes() bool {
-	if o != nil && !IsNil(o.TxHashes) {
-		return true
-	}
-
-	return false
+// SetTokenId sets field value
+func (o *LockSpendableListRequest) SetTokenId(v string) {
+	o.TokenId = v
 }
 
-// SetTxHashes gets a reference to the given []string and assigns it to the TxHashes field.
-func (o *LockSpendableListRequest) SetTxHashes(v []string) {
-	o.TxHashes = v
-}
-
-// GetIsLocked returns the IsLocked field value if set, zero value otherwise.
-func (o *LockSpendableListRequest) GetIsLocked() bool {
-	if o == nil || IsNil(o.IsLocked) {
-		var ret bool
+// GetTxHash returns the TxHash field value
+func (o *LockSpendableListRequest) GetTxHash() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return *o.IsLocked
+
+	return o.TxHash
 }
 
-// GetIsLockedOk returns a tuple with the IsLocked field value if set, nil otherwise
+// GetTxHashOk returns a tuple with the TxHash field value
 // and a boolean to check if the value has been set.
-func (o *LockSpendableListRequest) GetIsLockedOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsLocked) {
+func (o *LockSpendableListRequest) GetTxHashOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.IsLocked, true
+	return &o.TxHash, true
 }
 
-// HasIsLocked returns a boolean if a field has been set.
-func (o *LockSpendableListRequest) HasIsLocked() bool {
-	if o != nil && !IsNil(o.IsLocked) {
-		return true
+// SetTxHash sets field value
+func (o *LockSpendableListRequest) SetTxHash(v string) {
+	o.TxHash = v
+}
+
+// GetVoutN returns the VoutN field value
+func (o *LockSpendableListRequest) GetVoutN() int32 {
+	if o == nil {
+		var ret int32
+		return ret
 	}
 
-	return false
+	return o.VoutN
 }
 
-// SetIsLocked gets a reference to the given bool and assigns it to the IsLocked field.
-func (o *LockSpendableListRequest) SetIsLocked(v bool) {
-	o.IsLocked = &v
+// GetVoutNOk returns a tuple with the VoutN field value
+// and a boolean to check if the value has been set.
+func (o *LockSpendableListRequest) GetVoutNOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.VoutN, true
+}
+
+// SetVoutN sets field value
+func (o *LockSpendableListRequest) SetVoutN(v int32) {
+	o.VoutN = v
 }
 
 func (o LockSpendableListRequest) MarshalJSON() ([]byte, error) {
@@ -114,13 +132,49 @@ func (o LockSpendableListRequest) MarshalJSON() ([]byte, error) {
 
 func (o LockSpendableListRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.TxHashes) {
-		toSerialize["tx_hashes"] = o.TxHashes
-	}
-	if !IsNil(o.IsLocked) {
-		toSerialize["is_locked"] = o.IsLocked
-	}
+	toSerialize["token_id"] = o.TokenId
+	toSerialize["tx_hash"] = o.TxHash
+	toSerialize["vout_n"] = o.VoutN
 	return toSerialize, nil
+}
+
+func (o *LockSpendableListRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"token_id",
+		"tx_hash",
+		"vout_n",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varLockSpendableListRequest := _LockSpendableListRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	//decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varLockSpendableListRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = LockSpendableListRequest(varLockSpendableListRequest)
+
+	return err
 }
 
 type NullableLockSpendableListRequest struct {

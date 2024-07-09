@@ -20,7 +20,7 @@ var _ MappedNullable = &TokenBalanceBalance{}
 
 // TokenBalanceBalance The balance details.
 type TokenBalanceBalance struct {
-	// The total balance, which is the sum of the remaining fields.
+	// The total balance, which is the sum of the available, pending, and locked balances.
 	Total string `json:"total"`
 	// The balance free to use.
 	Available string `json:"available"`

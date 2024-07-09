@@ -4,15 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
-**FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
-**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
+**FeeRate** | **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**MaxFeeAmount** | **string** | The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee. | 
 
 ## Methods
 
 ### NewUtxoFeeSlow
 
-`func NewUtxoFeeSlow(feeRate string, ) *UtxoFeeSlow`
+`func NewUtxoFeeSlow(feeRate string, maxFeeAmount string, ) *UtxoFeeSlow`
 
 NewUtxoFeeSlow instantiates a new UtxoFeeSlow object
 This constructor will assign default values to properties that have it defined,
@@ -26,31 +25,6 @@ will change when the set of required properties is changed
 NewUtxoFeeSlowWithDefaults instantiates a new UtxoFeeSlow object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetFeeTokenId
-
-`func (o *UtxoFeeSlow) GetFeeTokenId() string`
-
-GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
-
-### GetFeeTokenIdOk
-
-`func (o *UtxoFeeSlow) GetFeeTokenIdOk() (*string, bool)`
-
-GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeTokenId
-
-`func (o *UtxoFeeSlow) SetFeeTokenId(v string)`
-
-SetFeeTokenId sets FeeTokenId field to given value.
-
-### HasFeeTokenId
-
-`func (o *UtxoFeeSlow) HasFeeTokenId() bool`
-
-HasFeeTokenId returns a boolean if a field has been set.
 
 ### GetFeeRate
 
@@ -91,11 +65,6 @@ and a boolean to check if the value has been set.
 
 SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasMaxFeeAmount
-
-`func (o *UtxoFeeSlow) HasMaxFeeAmount() bool`
-
-HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

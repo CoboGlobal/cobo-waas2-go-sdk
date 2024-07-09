@@ -18,10 +18,10 @@ import (
 // checks if the BaseTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BaseTransferSource{}
 
-// BaseTransferSource The base data for transfer source.
+// BaseTransferSource The information about the transaction source.
 type BaseTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
-	// Unique id of the wallet to transfer from.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
 }
 

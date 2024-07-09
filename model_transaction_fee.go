@@ -16,37 +16,37 @@ import (
 
 // TransactionFee - struct for TransactionFee
 type TransactionFee struct {
-	EvmEip1559TransactionFee *EvmEip1559TransactionFee
-	EvmLegacyTransactionFee *EvmLegacyTransactionFee
-	FixedFee *FixedFee
-	UtxoTransactionFee *UtxoTransactionFee
+	TransactionEvmEip1559Fee *TransactionEvmEip1559Fee
+	TransactionEvmLegacyFee *TransactionEvmLegacyFee
+	TransactionFixedFee *TransactionFixedFee
+	TransactionUtxoFee *TransactionUtxoFee
 }
 
-// EvmEip1559TransactionFeeAsTransactionFee is a convenience function that returns EvmEip1559TransactionFee wrapped in TransactionFee
-func EvmEip1559TransactionFeeAsTransactionFee(v *EvmEip1559TransactionFee) TransactionFee {
+// TransactionEvmEip1559FeeAsTransactionFee is a convenience function that returns TransactionEvmEip1559Fee wrapped in TransactionFee
+func TransactionEvmEip1559FeeAsTransactionFee(v *TransactionEvmEip1559Fee) TransactionFee {
 	return TransactionFee{
-		EvmEip1559TransactionFee: v,
+		TransactionEvmEip1559Fee: v,
 	}
 }
 
-// EvmLegacyTransactionFeeAsTransactionFee is a convenience function that returns EvmLegacyTransactionFee wrapped in TransactionFee
-func EvmLegacyTransactionFeeAsTransactionFee(v *EvmLegacyTransactionFee) TransactionFee {
+// TransactionEvmLegacyFeeAsTransactionFee is a convenience function that returns TransactionEvmLegacyFee wrapped in TransactionFee
+func TransactionEvmLegacyFeeAsTransactionFee(v *TransactionEvmLegacyFee) TransactionFee {
 	return TransactionFee{
-		EvmLegacyTransactionFee: v,
+		TransactionEvmLegacyFee: v,
 	}
 }
 
-// FixedFeeAsTransactionFee is a convenience function that returns FixedFee wrapped in TransactionFee
-func FixedFeeAsTransactionFee(v *FixedFee) TransactionFee {
+// TransactionFixedFeeAsTransactionFee is a convenience function that returns TransactionFixedFee wrapped in TransactionFee
+func TransactionFixedFeeAsTransactionFee(v *TransactionFixedFee) TransactionFee {
 	return TransactionFee{
-		FixedFee: v,
+		TransactionFixedFee: v,
 	}
 }
 
-// UtxoTransactionFeeAsTransactionFee is a convenience function that returns UtxoTransactionFee wrapped in TransactionFee
-func UtxoTransactionFeeAsTransactionFee(v *UtxoTransactionFee) TransactionFee {
+// TransactionUtxoFeeAsTransactionFee is a convenience function that returns TransactionUtxoFee wrapped in TransactionFee
+func TransactionUtxoFeeAsTransactionFee(v *TransactionUtxoFee) TransactionFee {
 	return TransactionFee{
-		UtxoTransactionFee: v,
+		TransactionUtxoFee: v,
 	}
 }
 
@@ -63,97 +63,97 @@ func (dst *TransactionFee) UnmarshalJSON(data []byte) error {
 
 	// check if the discriminator value is 'EVM_EIP_1559'
 	if jsonDict["fee_type"] == "EVM_EIP_1559" {
-		// try to unmarshal JSON data into EvmEip1559TransactionFee
-		err = json.Unmarshal(data, &dst.EvmEip1559TransactionFee)
+		// try to unmarshal JSON data into TransactionEvmEip1559Fee
+		err = json.Unmarshal(data, &dst.TransactionEvmEip1559Fee)
 		if err == nil {
-			return nil // data stored in dst.EvmEip1559TransactionFee, return on the first match
+			return nil // data stored in dst.TransactionEvmEip1559Fee, return on the first match
 		} else {
-			dst.EvmEip1559TransactionFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as EvmEip1559TransactionFee: %s", err.Error())
+			dst.TransactionEvmEip1559Fee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionEvmEip1559Fee: %s", err.Error())
 		}
 	}
 
 	// check if the discriminator value is 'EVM_Legacy'
 	if jsonDict["fee_type"] == "EVM_Legacy" {
-		// try to unmarshal JSON data into EvmLegacyTransactionFee
-		err = json.Unmarshal(data, &dst.EvmLegacyTransactionFee)
+		// try to unmarshal JSON data into TransactionEvmLegacyFee
+		err = json.Unmarshal(data, &dst.TransactionEvmLegacyFee)
 		if err == nil {
-			return nil // data stored in dst.EvmLegacyTransactionFee, return on the first match
+			return nil // data stored in dst.TransactionEvmLegacyFee, return on the first match
 		} else {
-			dst.EvmLegacyTransactionFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as EvmLegacyTransactionFee: %s", err.Error())
+			dst.TransactionEvmLegacyFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionEvmLegacyFee: %s", err.Error())
 		}
 	}
 
 	// check if the discriminator value is 'Fixed'
 	if jsonDict["fee_type"] == "Fixed" {
-		// try to unmarshal JSON data into FixedFee
-		err = json.Unmarshal(data, &dst.FixedFee)
+		// try to unmarshal JSON data into TransactionFixedFee
+		err = json.Unmarshal(data, &dst.TransactionFixedFee)
 		if err == nil {
-			return nil // data stored in dst.FixedFee, return on the first match
+			return nil // data stored in dst.TransactionFixedFee, return on the first match
 		} else {
-			dst.FixedFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as FixedFee: %s", err.Error())
+			dst.TransactionFixedFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionFixedFee: %s", err.Error())
 		}
 	}
 
 	// check if the discriminator value is 'UTXO'
 	if jsonDict["fee_type"] == "UTXO" {
-		// try to unmarshal JSON data into UtxoTransactionFee
-		err = json.Unmarshal(data, &dst.UtxoTransactionFee)
+		// try to unmarshal JSON data into TransactionUtxoFee
+		err = json.Unmarshal(data, &dst.TransactionUtxoFee)
 		if err == nil {
-			return nil // data stored in dst.UtxoTransactionFee, return on the first match
+			return nil // data stored in dst.TransactionUtxoFee, return on the first match
 		} else {
-			dst.UtxoTransactionFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as UtxoTransactionFee: %s", err.Error())
+			dst.TransactionUtxoFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionUtxoFee: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'EvmEip1559TransactionFee'
-	if jsonDict["fee_type"] == "EvmEip1559TransactionFee" {
-		// try to unmarshal JSON data into EvmEip1559TransactionFee
-		err = json.Unmarshal(data, &dst.EvmEip1559TransactionFee)
+	// check if the discriminator value is 'TransactionEvmEip1559Fee'
+	if jsonDict["fee_type"] == "TransactionEvmEip1559Fee" {
+		// try to unmarshal JSON data into TransactionEvmEip1559Fee
+		err = json.Unmarshal(data, &dst.TransactionEvmEip1559Fee)
 		if err == nil {
-			return nil // data stored in dst.EvmEip1559TransactionFee, return on the first match
+			return nil // data stored in dst.TransactionEvmEip1559Fee, return on the first match
 		} else {
-			dst.EvmEip1559TransactionFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as EvmEip1559TransactionFee: %s", err.Error())
+			dst.TransactionEvmEip1559Fee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionEvmEip1559Fee: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'EvmLegacyTransactionFee'
-	if jsonDict["fee_type"] == "EvmLegacyTransactionFee" {
-		// try to unmarshal JSON data into EvmLegacyTransactionFee
-		err = json.Unmarshal(data, &dst.EvmLegacyTransactionFee)
+	// check if the discriminator value is 'TransactionEvmLegacyFee'
+	if jsonDict["fee_type"] == "TransactionEvmLegacyFee" {
+		// try to unmarshal JSON data into TransactionEvmLegacyFee
+		err = json.Unmarshal(data, &dst.TransactionEvmLegacyFee)
 		if err == nil {
-			return nil // data stored in dst.EvmLegacyTransactionFee, return on the first match
+			return nil // data stored in dst.TransactionEvmLegacyFee, return on the first match
 		} else {
-			dst.EvmLegacyTransactionFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as EvmLegacyTransactionFee: %s", err.Error())
+			dst.TransactionEvmLegacyFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionEvmLegacyFee: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'FixedFee'
-	if jsonDict["fee_type"] == "FixedFee" {
-		// try to unmarshal JSON data into FixedFee
-		err = json.Unmarshal(data, &dst.FixedFee)
+	// check if the discriminator value is 'TransactionFixedFee'
+	if jsonDict["fee_type"] == "TransactionFixedFee" {
+		// try to unmarshal JSON data into TransactionFixedFee
+		err = json.Unmarshal(data, &dst.TransactionFixedFee)
 		if err == nil {
-			return nil // data stored in dst.FixedFee, return on the first match
+			return nil // data stored in dst.TransactionFixedFee, return on the first match
 		} else {
-			dst.FixedFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as FixedFee: %s", err.Error())
+			dst.TransactionFixedFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionFixedFee: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'UtxoTransactionFee'
-	if jsonDict["fee_type"] == "UtxoTransactionFee" {
-		// try to unmarshal JSON data into UtxoTransactionFee
-		err = json.Unmarshal(data, &dst.UtxoTransactionFee)
+	// check if the discriminator value is 'TransactionUtxoFee'
+	if jsonDict["fee_type"] == "TransactionUtxoFee" {
+		// try to unmarshal JSON data into TransactionUtxoFee
+		err = json.Unmarshal(data, &dst.TransactionUtxoFee)
 		if err == nil {
-			return nil // data stored in dst.UtxoTransactionFee, return on the first match
+			return nil // data stored in dst.TransactionUtxoFee, return on the first match
 		} else {
-			dst.UtxoTransactionFee = nil
-			return fmt.Errorf("failed to unmarshal TransactionFee as UtxoTransactionFee: %s", err.Error())
+			dst.TransactionUtxoFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionFee as TransactionUtxoFee: %s", err.Error())
 		}
 	}
 
@@ -162,20 +162,20 @@ func (dst *TransactionFee) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src TransactionFee) MarshalJSON() ([]byte, error) {
-	if src.EvmEip1559TransactionFee != nil {
-		return json.Marshal(&src.EvmEip1559TransactionFee)
+	if src.TransactionEvmEip1559Fee != nil {
+		return json.Marshal(&src.TransactionEvmEip1559Fee)
 	}
 
-	if src.EvmLegacyTransactionFee != nil {
-		return json.Marshal(&src.EvmLegacyTransactionFee)
+	if src.TransactionEvmLegacyFee != nil {
+		return json.Marshal(&src.TransactionEvmLegacyFee)
 	}
 
-	if src.FixedFee != nil {
-		return json.Marshal(&src.FixedFee)
+	if src.TransactionFixedFee != nil {
+		return json.Marshal(&src.TransactionFixedFee)
 	}
 
-	if src.UtxoTransactionFee != nil {
-		return json.Marshal(&src.UtxoTransactionFee)
+	if src.TransactionUtxoFee != nil {
+		return json.Marshal(&src.TransactionUtxoFee)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -186,20 +186,20 @@ func (obj *TransactionFee) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
-	if obj.EvmEip1559TransactionFee != nil {
-		return obj.EvmEip1559TransactionFee
+	if obj.TransactionEvmEip1559Fee != nil {
+		return obj.TransactionEvmEip1559Fee
 	}
 
-	if obj.EvmLegacyTransactionFee != nil {
-		return obj.EvmLegacyTransactionFee
+	if obj.TransactionEvmLegacyFee != nil {
+		return obj.TransactionEvmLegacyFee
 	}
 
-	if obj.FixedFee != nil {
-		return obj.FixedFee
+	if obj.TransactionFixedFee != nil {
+		return obj.TransactionFixedFee
 	}
 
-	if obj.UtxoTransactionFee != nil {
-		return obj.UtxoTransactionFee
+	if obj.TransactionUtxoFee != nil {
+		return obj.TransactionUtxoFee
 	}
 
 	// all schemas are nil

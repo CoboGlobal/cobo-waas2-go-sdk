@@ -7,9 +7,11 @@ Name | Type | Description | Notes
 **DestinationType** | [**TransferDestinationType**](TransferDestinationType.md) |  | 
 **AccountOutput** | Pointer to [**AddressTransferDestinationAccountOutput**](AddressTransferDestinationAccountOutput.md) |  | [optional] 
 **UtxoOutputs** | Pointer to [**AddressTransferDestinationUtxoOutputs**](AddressTransferDestinationUtxoOutputs.md) |  | [optional] 
-**WalletId** | **string** | Unique id of the wallet to transfer to. | 
-**SubWalletId** | **string** | Exchange trading account or any sub wallet info for transfer. | 
-**Amount** | Pointer to **string** | Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)  | [optional] 
+**ForceInternal** | Pointer to **bool** | Whether the transfer request must be executed as an off-chain transfer.    - &#x60;true&#x60;: The transfer request must be executed an off-chain transfer.    - &#x60;false&#x60;: The transfer may not be executed as an off-chain transfer.  | [optional] 
+**ForceExternal** | Pointer to **bool** | Whether the transfer must be executed as an on-chain transfer. - &#x60;true&#x60;: The transfer must be executed as an on-chain transfer. - &#x60;false&#x60;: The transfer may not be executed as an on-chain transfer.  | [optional] 
+**WalletId** | **string** | The wallet ID. | 
+**SubWalletId** | **string** | The exchange trading account or the sub-wallet ID. | 
+**Amount** | Pointer to **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 
 ## Methods
 
@@ -99,6 +101,56 @@ SetUtxoOutputs sets UtxoOutputs field to given value.
 `func (o *TransferDestination) HasUtxoOutputs() bool`
 
 HasUtxoOutputs returns a boolean if a field has been set.
+
+### GetForceInternal
+
+`func (o *TransferDestination) GetForceInternal() bool`
+
+GetForceInternal returns the ForceInternal field if non-nil, zero value otherwise.
+
+### GetForceInternalOk
+
+`func (o *TransferDestination) GetForceInternalOk() (*bool, bool)`
+
+GetForceInternalOk returns a tuple with the ForceInternal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetForceInternal
+
+`func (o *TransferDestination) SetForceInternal(v bool)`
+
+SetForceInternal sets ForceInternal field to given value.
+
+### HasForceInternal
+
+`func (o *TransferDestination) HasForceInternal() bool`
+
+HasForceInternal returns a boolean if a field has been set.
+
+### GetForceExternal
+
+`func (o *TransferDestination) GetForceExternal() bool`
+
+GetForceExternal returns the ForceExternal field if non-nil, zero value otherwise.
+
+### GetForceExternalOk
+
+`func (o *TransferDestination) GetForceExternalOk() (*bool, bool)`
+
+GetForceExternalOk returns a tuple with the ForceExternal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetForceExternal
+
+`func (o *TransferDestination) SetForceExternal(v bool)`
+
+SetForceExternal sets ForceExternal field to given value.
+
+### HasForceExternal
+
+`func (o *TransferDestination) HasForceExternal() bool`
+
+HasForceExternal returns a boolean if a field has been set.
 
 ### GetWalletId
 

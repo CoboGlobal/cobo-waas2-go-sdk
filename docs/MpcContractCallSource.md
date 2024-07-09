@@ -4,16 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SourceType** | **string** |  | 
-**WalletId** | **string** | Unique id of the wallet to initiate contract call from. | 
-**AddressStr** | **string** | From address | 
+**SourceType** | **string** | The type of the wallet. Possible values include: - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled). - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled). - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}).  | 
+**WalletId** | **string** | The wallet ID. | 
+**Address** | **string** | The wallet address. | 
 **MpcUsedKeyGroup** | [**MpcSigningGroup**](MpcSigningGroup.md) |  | 
 
 ## Methods
 
 ### NewMpcContractCallSource
 
-`func NewMpcContractCallSource(sourceType string, walletId string, addressStr string, mpcUsedKeyGroup MpcSigningGroup, ) *MpcContractCallSource`
+`func NewMpcContractCallSource(sourceType string, walletId string, address string, mpcUsedKeyGroup MpcSigningGroup, ) *MpcContractCallSource`
 
 NewMpcContractCallSource instantiates a new MpcContractCallSource object
 This constructor will assign default values to properties that have it defined,
@@ -68,24 +68,24 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetAddressStr
+### GetAddress
 
-`func (o *MpcContractCallSource) GetAddressStr() string`
+`func (o *MpcContractCallSource) GetAddress() string`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAddress returns the Address field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAddressOk
 
-`func (o *MpcContractCallSource) GetAddressStrOk() (*string, bool)`
+`func (o *MpcContractCallSource) GetAddressOk() (*string, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAddress
 
-`func (o *MpcContractCallSource) SetAddressStr(v string)`
+`func (o *MpcContractCallSource) SetAddress(v string)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAddress sets Address field to given value.
 
 
 ### GetMpcUsedKeyGroup

@@ -20,11 +20,12 @@ var _ MappedNullable = &MpcContractCallSource{}
 
 // MpcContractCallSource struct for MpcContractCallSource
 type MpcContractCallSource struct {
+	// The type of the wallet. Possible values include: - `Org-Controlled`: MPC Wallets (Organization-Controlled). - `User-Controlled`: MPC Wallets (User-Controlled). - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}). 
 	SourceType string `json:"source_type"`
-	// Unique id of the wallet to initiate contract call from.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// From address
-	AddressStr string `json:"address_str"`
+	// The wallet address.
+	Address string `json:"address"`
 	MpcUsedKeyGroup MpcSigningGroup `json:"mpc_used_key_group"`
 }
 
@@ -34,11 +35,11 @@ type _MpcContractCallSource MpcContractCallSource
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMpcContractCallSource(sourceType string, walletId string, addressStr string, mpcUsedKeyGroup MpcSigningGroup) *MpcContractCallSource {
+func NewMpcContractCallSource(sourceType string, walletId string, address string, mpcUsedKeyGroup MpcSigningGroup) *MpcContractCallSource {
 	this := MpcContractCallSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
-	this.AddressStr = addressStr
+	this.Address = address
 	this.MpcUsedKeyGroup = mpcUsedKeyGroup
 	return &this
 }
@@ -99,28 +100,28 @@ func (o *MpcContractCallSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *MpcContractCallSource) GetAddressStr() string {
+// GetAddress returns the Address field value
+func (o *MpcContractCallSource) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.AddressStr
+	return o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *MpcContractCallSource) GetAddressStrOk() (*string, bool) {
+func (o *MpcContractCallSource) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return &o.Address, true
 }
 
-// SetAddressStr sets field value
-func (o *MpcContractCallSource) SetAddressStr(v string) {
-	o.AddressStr = v
+// SetAddress sets field value
+func (o *MpcContractCallSource) SetAddress(v string) {
+	o.Address = v
 }
 
 // GetMpcUsedKeyGroup returns the MpcUsedKeyGroup field value
@@ -159,7 +160,7 @@ func (o MpcContractCallSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["address_str"] = o.AddressStr
+	toSerialize["address"] = o.Address
 	toSerialize["mpc_used_key_group"] = o.MpcUsedKeyGroup
 	return toSerialize, nil
 }
@@ -171,7 +172,7 @@ func (o *MpcContractCallSource) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"source_type",
 		"wallet_id",
-		"address_str",
+		"address",
 		"mpc_used_key_group",
 	}
 

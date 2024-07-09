@@ -18,39 +18,55 @@ import (
 // checks if the Transaction type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Transaction{}
 
-// Transaction The data for transaction information.
+// Transaction The information about a transaction.
 type Transaction struct {
-	// Unique transaction ID
+	// The transaction ID.
 	TransactionId string `json:"transaction_id"`
-	// Wallet ID
-	WalletId string `json:"wallet_id"`
-	// Request ID
+	// The Cobo ID, which can be used to track a transaction.
+	CoboId *string `json:"cobo_id,omitempty"`
+	// The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization.
 	RequestId *string `json:"request_id,omitempty"`
-	// Cobo ID
-	CoboId string `json:"cobo_id"`
-	// Transaction initiator
-	Initiator *string `json:"initiator,omitempty"`
-	// Transaction hash.
-	TransactionHash *string `json:"transaction_hash,omitempty"`
+	Type *TransactionType `json:"type,omitempty"`
 	Status TransactionStatus `json:"status"`
 	SubStatus *TransactionSubStatus `json:"sub_status,omitempty"`
-	Type TransactionType `json:"type"`
+	// The reason why the transaction failed.
+	FailedReason *string `json:"failed_reason,omitempty"`
+	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
+	ChainId *string `json:"chain_id,omitempty"`
 	Source TransactionSource `json:"source"`
 	Destination TransactionDestination `json:"destination"`
-	// The blockchain on which the token operates.
-	ChainId *string `json:"chain_id,omitempty"`
-	ExchangeId *ExchangeId `json:"exchange_id,omitempty"`
-	Tokens []TransactionToken `json:"tokens,omitempty"`
 	Fee *TransactionFee `json:"fee,omitempty"`
-	Category []string `json:"category,omitempty"`
-	Description *string `json:"description,omitempty"`
-	// Transaction confirmed number
+	// The transaction initiator.
+	Initiator *string `json:"initiator,omitempty"`
+	InitiatorType TransactionInitiatorType `json:"initiator_type"`
+	// The number of confirmations this transaction has received.
 	ConfirmedNum *float32 `json:"confirmed_num,omitempty"`
-	// Number of confirmations required for a transaction, such as 15 for ETH chain.
+	// The minimum number of confirmations required to deem a transaction secure. The common threshold is 6 for a Bitcoin transaction.
 	ConfirmingThreshold *int32 `json:"confirming_threshold,omitempty"`
-	// Transaction creation time
+	// The block number.
+	BlockNumber *int64 `json:"block_number,omitempty"`
+	// The time when the block was created, in Unix timestamp format, measured in milliseconds.
+	BlockTime *int64 `json:"block_time,omitempty"`
+	// The block hash.
+	BlockHash *string `json:"block_hash,omitempty"`
+	// The transaction nonce.
+	Nonce *int32 `json:"nonce,omitempty"`
+	// The transaction hash.
+	TransactionHash *string `json:"transaction_hash,omitempty"`
+	Replacement *TransactionReplacement `json:"replacement,omitempty"`
+	// A custom transaction category for you to identify your transfers more easily.
+	Category []string `json:"category,omitempty"`
+	// The description for your transaction.
+	Description *string `json:"description,omitempty"`
+	// Whether the transfer request must be executed as an off-chain transfer.    - `true`: The transfer request must be executed an off-chain transfer.    - `false`: The transfer may not be executed as an off-chain transfer. 
+	ForceInternal *bool `json:"force_internal,omitempty"`
+	// Whether the transfer must be executed as an on-chain transfer.   - `true`: The transfer must be executed as an on-chain transfer.   - `false`: The transfer may not be executed as an on-chain transfer. 
+	ForceExternal *bool `json:"force_external,omitempty"`
+	// Whether the transfer is a Loop transfer. For more information about Loop, see [the website](https://loop.top/).  - `true`: The transfer is a Loop transfer. - `false`: The transfer is not a Loop transfer. 
+	IsLoop *bool `json:"is_loop,omitempty"`
+	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTime float32 `json:"created_time"`
-	// Transaction update time
+	// The time when the transaction was updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTime float32 `json:"updated_time"`
 }
 
@@ -60,15 +76,13 @@ type _Transaction Transaction
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransaction(transactionId string, walletId string, coboId string, status TransactionStatus, type_ TransactionType, source TransactionSource, destination TransactionDestination, createdTime float32, updatedTime float32) *Transaction {
+func NewTransaction(transactionId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTime float32, updatedTime float32) *Transaction {
 	this := Transaction{}
 	this.TransactionId = transactionId
-	this.WalletId = walletId
-	this.CoboId = coboId
 	this.Status = status
-	this.Type = type_
 	this.Source = source
 	this.Destination = destination
+	this.InitiatorType = initiatorType
 	this.CreatedTime = createdTime
 	this.UpdatedTime = updatedTime
 	return &this
@@ -106,28 +120,36 @@ func (o *Transaction) SetTransactionId(v string) {
 	o.TransactionId = v
 }
 
-// GetWalletId returns the WalletId field value
-func (o *Transaction) GetWalletId() string {
-	if o == nil {
+// GetCoboId returns the CoboId field value if set, zero value otherwise.
+func (o *Transaction) GetCoboId() string {
+	if o == nil || IsNil(o.CoboId) {
 		var ret string
 		return ret
 	}
-
-	return o.WalletId
+	return *o.CoboId
 }
 
-// GetWalletIdOk returns a tuple with the WalletId field value
+// GetCoboIdOk returns a tuple with the CoboId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetWalletIdOk() (*string, bool) {
-	if o == nil {
+func (o *Transaction) GetCoboIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CoboId) {
 		return nil, false
 	}
-	return &o.WalletId, true
+	return o.CoboId, true
 }
 
-// SetWalletId sets field value
-func (o *Transaction) SetWalletId(v string) {
-	o.WalletId = v
+// HasCoboId returns a boolean if a field has been set.
+func (o *Transaction) HasCoboId() bool {
+	if o != nil && !IsNil(o.CoboId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCoboId gets a reference to the given string and assigns it to the CoboId field.
+func (o *Transaction) SetCoboId(v string) {
+	o.CoboId = &v
 }
 
 // GetRequestId returns the RequestId field value if set, zero value otherwise.
@@ -162,92 +184,36 @@ func (o *Transaction) SetRequestId(v string) {
 	o.RequestId = &v
 }
 
-// GetCoboId returns the CoboId field value
-func (o *Transaction) GetCoboId() string {
-	if o == nil {
-		var ret string
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *Transaction) GetType() TransactionType {
+	if o == nil || IsNil(o.Type) {
+		var ret TransactionType
 		return ret
 	}
-
-	return o.CoboId
+	return *o.Type
 }
 
-// GetCoboIdOk returns a tuple with the CoboId field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetCoboIdOk() (*string, bool) {
-	if o == nil {
+func (o *Transaction) GetTypeOk() (*TransactionType, bool) {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.CoboId, true
+	return o.Type, true
 }
 
-// SetCoboId sets field value
-func (o *Transaction) SetCoboId(v string) {
-	o.CoboId = v
-}
-
-// GetInitiator returns the Initiator field value if set, zero value otherwise.
-func (o *Transaction) GetInitiator() string {
-	if o == nil || IsNil(o.Initiator) {
-		var ret string
-		return ret
-	}
-	return *o.Initiator
-}
-
-// GetInitiatorOk returns a tuple with the Initiator field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Transaction) GetInitiatorOk() (*string, bool) {
-	if o == nil || IsNil(o.Initiator) {
-		return nil, false
-	}
-	return o.Initiator, true
-}
-
-// HasInitiator returns a boolean if a field has been set.
-func (o *Transaction) HasInitiator() bool {
-	if o != nil && !IsNil(o.Initiator) {
+// HasType returns a boolean if a field has been set.
+func (o *Transaction) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
 	return false
 }
 
-// SetInitiator gets a reference to the given string and assigns it to the Initiator field.
-func (o *Transaction) SetInitiator(v string) {
-	o.Initiator = &v
-}
-
-// GetTransactionHash returns the TransactionHash field value if set, zero value otherwise.
-func (o *Transaction) GetTransactionHash() string {
-	if o == nil || IsNil(o.TransactionHash) {
-		var ret string
-		return ret
-	}
-	return *o.TransactionHash
-}
-
-// GetTransactionHashOk returns a tuple with the TransactionHash field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Transaction) GetTransactionHashOk() (*string, bool) {
-	if o == nil || IsNil(o.TransactionHash) {
-		return nil, false
-	}
-	return o.TransactionHash, true
-}
-
-// HasTransactionHash returns a boolean if a field has been set.
-func (o *Transaction) HasTransactionHash() bool {
-	if o != nil && !IsNil(o.TransactionHash) {
-		return true
-	}
-
-	return false
-}
-
-// SetTransactionHash gets a reference to the given string and assigns it to the TransactionHash field.
-func (o *Transaction) SetTransactionHash(v string) {
-	o.TransactionHash = &v
+// SetType gets a reference to the given TransactionType and assigns it to the Type field.
+func (o *Transaction) SetType(v TransactionType) {
+	o.Type = &v
 }
 
 // GetStatus returns the Status field value
@@ -306,28 +272,68 @@ func (o *Transaction) SetSubStatus(v TransactionSubStatus) {
 	o.SubStatus = &v
 }
 
-// GetType returns the Type field value
-func (o *Transaction) GetType() TransactionType {
-	if o == nil {
-		var ret TransactionType
+// GetFailedReason returns the FailedReason field value if set, zero value otherwise.
+func (o *Transaction) GetFailedReason() string {
+	if o == nil || IsNil(o.FailedReason) {
+		var ret string
 		return ret
 	}
-
-	return o.Type
+	return *o.FailedReason
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetFailedReasonOk returns a tuple with the FailedReason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetTypeOk() (*TransactionType, bool) {
-	if o == nil {
+func (o *Transaction) GetFailedReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.FailedReason) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.FailedReason, true
 }
 
-// SetType sets field value
-func (o *Transaction) SetType(v TransactionType) {
-	o.Type = v
+// HasFailedReason returns a boolean if a field has been set.
+func (o *Transaction) HasFailedReason() bool {
+	if o != nil && !IsNil(o.FailedReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetFailedReason gets a reference to the given string and assigns it to the FailedReason field.
+func (o *Transaction) SetFailedReason(v string) {
+	o.FailedReason = &v
+}
+
+// GetChainId returns the ChainId field value if set, zero value otherwise.
+func (o *Transaction) GetChainId() string {
+	if o == nil || IsNil(o.ChainId) {
+		var ret string
+		return ret
+	}
+	return *o.ChainId
+}
+
+// GetChainIdOk returns a tuple with the ChainId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetChainIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ChainId) {
+		return nil, false
+	}
+	return o.ChainId, true
+}
+
+// HasChainId returns a boolean if a field has been set.
+func (o *Transaction) HasChainId() bool {
+	if o != nil && !IsNil(o.ChainId) {
+		return true
+	}
+
+	return false
+}
+
+// SetChainId gets a reference to the given string and assigns it to the ChainId field.
+func (o *Transaction) SetChainId(v string) {
+	o.ChainId = &v
 }
 
 // GetSource returns the Source field value
@@ -378,102 +384,6 @@ func (o *Transaction) SetDestination(v TransactionDestination) {
 	o.Destination = v
 }
 
-// GetChainId returns the ChainId field value if set, zero value otherwise.
-func (o *Transaction) GetChainId() string {
-	if o == nil || IsNil(o.ChainId) {
-		var ret string
-		return ret
-	}
-	return *o.ChainId
-}
-
-// GetChainIdOk returns a tuple with the ChainId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Transaction) GetChainIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ChainId) {
-		return nil, false
-	}
-	return o.ChainId, true
-}
-
-// HasChainId returns a boolean if a field has been set.
-func (o *Transaction) HasChainId() bool {
-	if o != nil && !IsNil(o.ChainId) {
-		return true
-	}
-
-	return false
-}
-
-// SetChainId gets a reference to the given string and assigns it to the ChainId field.
-func (o *Transaction) SetChainId(v string) {
-	o.ChainId = &v
-}
-
-// GetExchangeId returns the ExchangeId field value if set, zero value otherwise.
-func (o *Transaction) GetExchangeId() ExchangeId {
-	if o == nil || IsNil(o.ExchangeId) {
-		var ret ExchangeId
-		return ret
-	}
-	return *o.ExchangeId
-}
-
-// GetExchangeIdOk returns a tuple with the ExchangeId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Transaction) GetExchangeIdOk() (*ExchangeId, bool) {
-	if o == nil || IsNil(o.ExchangeId) {
-		return nil, false
-	}
-	return o.ExchangeId, true
-}
-
-// HasExchangeId returns a boolean if a field has been set.
-func (o *Transaction) HasExchangeId() bool {
-	if o != nil && !IsNil(o.ExchangeId) {
-		return true
-	}
-
-	return false
-}
-
-// SetExchangeId gets a reference to the given ExchangeId and assigns it to the ExchangeId field.
-func (o *Transaction) SetExchangeId(v ExchangeId) {
-	o.ExchangeId = &v
-}
-
-// GetTokens returns the Tokens field value if set, zero value otherwise.
-func (o *Transaction) GetTokens() []TransactionToken {
-	if o == nil || IsNil(o.Tokens) {
-		var ret []TransactionToken
-		return ret
-	}
-	return o.Tokens
-}
-
-// GetTokensOk returns a tuple with the Tokens field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Transaction) GetTokensOk() ([]TransactionToken, bool) {
-	if o == nil || IsNil(o.Tokens) {
-		return nil, false
-	}
-	return o.Tokens, true
-}
-
-// HasTokens returns a boolean if a field has been set.
-func (o *Transaction) HasTokens() bool {
-	if o != nil && !IsNil(o.Tokens) {
-		return true
-	}
-
-	return false
-}
-
-// SetTokens gets a reference to the given []TransactionToken and assigns it to the Tokens field.
-func (o *Transaction) SetTokens(v []TransactionToken) {
-	o.Tokens = v
-}
-
 // GetFee returns the Fee field value if set, zero value otherwise.
 func (o *Transaction) GetFee() TransactionFee {
 	if o == nil || IsNil(o.Fee) {
@@ -506,68 +416,60 @@ func (o *Transaction) SetFee(v TransactionFee) {
 	o.Fee = &v
 }
 
-// GetCategory returns the Category field value if set, zero value otherwise.
-func (o *Transaction) GetCategory() []string {
-	if o == nil || IsNil(o.Category) {
-		var ret []string
-		return ret
-	}
-	return o.Category
-}
-
-// GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Transaction) GetCategoryOk() ([]string, bool) {
-	if o == nil || IsNil(o.Category) {
-		return nil, false
-	}
-	return o.Category, true
-}
-
-// HasCategory returns a boolean if a field has been set.
-func (o *Transaction) HasCategory() bool {
-	if o != nil && !IsNil(o.Category) {
-		return true
-	}
-
-	return false
-}
-
-// SetCategory gets a reference to the given []string and assigns it to the Category field.
-func (o *Transaction) SetCategory(v []string) {
-	o.Category = v
-}
-
-// GetDescription returns the Description field value if set, zero value otherwise.
-func (o *Transaction) GetDescription() string {
-	if o == nil || IsNil(o.Description) {
+// GetInitiator returns the Initiator field value if set, zero value otherwise.
+func (o *Transaction) GetInitiator() string {
+	if o == nil || IsNil(o.Initiator) {
 		var ret string
 		return ret
 	}
-	return *o.Description
+	return *o.Initiator
 }
 
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// GetInitiatorOk returns a tuple with the Initiator field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetDescriptionOk() (*string, bool) {
-	if o == nil || IsNil(o.Description) {
+func (o *Transaction) GetInitiatorOk() (*string, bool) {
+	if o == nil || IsNil(o.Initiator) {
 		return nil, false
 	}
-	return o.Description, true
+	return o.Initiator, true
 }
 
-// HasDescription returns a boolean if a field has been set.
-func (o *Transaction) HasDescription() bool {
-	if o != nil && !IsNil(o.Description) {
+// HasInitiator returns a boolean if a field has been set.
+func (o *Transaction) HasInitiator() bool {
+	if o != nil && !IsNil(o.Initiator) {
 		return true
 	}
 
 	return false
 }
 
-// SetDescription gets a reference to the given string and assigns it to the Description field.
-func (o *Transaction) SetDescription(v string) {
-	o.Description = &v
+// SetInitiator gets a reference to the given string and assigns it to the Initiator field.
+func (o *Transaction) SetInitiator(v string) {
+	o.Initiator = &v
+}
+
+// GetInitiatorType returns the InitiatorType field value
+func (o *Transaction) GetInitiatorType() TransactionInitiatorType {
+	if o == nil {
+		var ret TransactionInitiatorType
+		return ret
+	}
+
+	return o.InitiatorType
+}
+
+// GetInitiatorTypeOk returns a tuple with the InitiatorType field value
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetInitiatorTypeOk() (*TransactionInitiatorType, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.InitiatorType, true
+}
+
+// SetInitiatorType sets field value
+func (o *Transaction) SetInitiatorType(v TransactionInitiatorType) {
+	o.InitiatorType = v
 }
 
 // GetConfirmedNum returns the ConfirmedNum field value if set, zero value otherwise.
@@ -634,6 +536,358 @@ func (o *Transaction) SetConfirmingThreshold(v int32) {
 	o.ConfirmingThreshold = &v
 }
 
+// GetBlockNumber returns the BlockNumber field value if set, zero value otherwise.
+func (o *Transaction) GetBlockNumber() int64 {
+	if o == nil || IsNil(o.BlockNumber) {
+		var ret int64
+		return ret
+	}
+	return *o.BlockNumber
+}
+
+// GetBlockNumberOk returns a tuple with the BlockNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetBlockNumberOk() (*int64, bool) {
+	if o == nil || IsNil(o.BlockNumber) {
+		return nil, false
+	}
+	return o.BlockNumber, true
+}
+
+// HasBlockNumber returns a boolean if a field has been set.
+func (o *Transaction) HasBlockNumber() bool {
+	if o != nil && !IsNil(o.BlockNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlockNumber gets a reference to the given int64 and assigns it to the BlockNumber field.
+func (o *Transaction) SetBlockNumber(v int64) {
+	o.BlockNumber = &v
+}
+
+// GetBlockTime returns the BlockTime field value if set, zero value otherwise.
+func (o *Transaction) GetBlockTime() int64 {
+	if o == nil || IsNil(o.BlockTime) {
+		var ret int64
+		return ret
+	}
+	return *o.BlockTime
+}
+
+// GetBlockTimeOk returns a tuple with the BlockTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetBlockTimeOk() (*int64, bool) {
+	if o == nil || IsNil(o.BlockTime) {
+		return nil, false
+	}
+	return o.BlockTime, true
+}
+
+// HasBlockTime returns a boolean if a field has been set.
+func (o *Transaction) HasBlockTime() bool {
+	if o != nil && !IsNil(o.BlockTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlockTime gets a reference to the given int64 and assigns it to the BlockTime field.
+func (o *Transaction) SetBlockTime(v int64) {
+	o.BlockTime = &v
+}
+
+// GetBlockHash returns the BlockHash field value if set, zero value otherwise.
+func (o *Transaction) GetBlockHash() string {
+	if o == nil || IsNil(o.BlockHash) {
+		var ret string
+		return ret
+	}
+	return *o.BlockHash
+}
+
+// GetBlockHashOk returns a tuple with the BlockHash field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetBlockHashOk() (*string, bool) {
+	if o == nil || IsNil(o.BlockHash) {
+		return nil, false
+	}
+	return o.BlockHash, true
+}
+
+// HasBlockHash returns a boolean if a field has been set.
+func (o *Transaction) HasBlockHash() bool {
+	if o != nil && !IsNil(o.BlockHash) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlockHash gets a reference to the given string and assigns it to the BlockHash field.
+func (o *Transaction) SetBlockHash(v string) {
+	o.BlockHash = &v
+}
+
+// GetNonce returns the Nonce field value if set, zero value otherwise.
+func (o *Transaction) GetNonce() int32 {
+	if o == nil || IsNil(o.Nonce) {
+		var ret int32
+		return ret
+	}
+	return *o.Nonce
+}
+
+// GetNonceOk returns a tuple with the Nonce field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetNonceOk() (*int32, bool) {
+	if o == nil || IsNil(o.Nonce) {
+		return nil, false
+	}
+	return o.Nonce, true
+}
+
+// HasNonce returns a boolean if a field has been set.
+func (o *Transaction) HasNonce() bool {
+	if o != nil && !IsNil(o.Nonce) {
+		return true
+	}
+
+	return false
+}
+
+// SetNonce gets a reference to the given int32 and assigns it to the Nonce field.
+func (o *Transaction) SetNonce(v int32) {
+	o.Nonce = &v
+}
+
+// GetTransactionHash returns the TransactionHash field value if set, zero value otherwise.
+func (o *Transaction) GetTransactionHash() string {
+	if o == nil || IsNil(o.TransactionHash) {
+		var ret string
+		return ret
+	}
+	return *o.TransactionHash
+}
+
+// GetTransactionHashOk returns a tuple with the TransactionHash field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetTransactionHashOk() (*string, bool) {
+	if o == nil || IsNil(o.TransactionHash) {
+		return nil, false
+	}
+	return o.TransactionHash, true
+}
+
+// HasTransactionHash returns a boolean if a field has been set.
+func (o *Transaction) HasTransactionHash() bool {
+	if o != nil && !IsNil(o.TransactionHash) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactionHash gets a reference to the given string and assigns it to the TransactionHash field.
+func (o *Transaction) SetTransactionHash(v string) {
+	o.TransactionHash = &v
+}
+
+// GetReplacement returns the Replacement field value if set, zero value otherwise.
+func (o *Transaction) GetReplacement() TransactionReplacement {
+	if o == nil || IsNil(o.Replacement) {
+		var ret TransactionReplacement
+		return ret
+	}
+	return *o.Replacement
+}
+
+// GetReplacementOk returns a tuple with the Replacement field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetReplacementOk() (*TransactionReplacement, bool) {
+	if o == nil || IsNil(o.Replacement) {
+		return nil, false
+	}
+	return o.Replacement, true
+}
+
+// HasReplacement returns a boolean if a field has been set.
+func (o *Transaction) HasReplacement() bool {
+	if o != nil && !IsNil(o.Replacement) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplacement gets a reference to the given TransactionReplacement and assigns it to the Replacement field.
+func (o *Transaction) SetReplacement(v TransactionReplacement) {
+	o.Replacement = &v
+}
+
+// GetCategory returns the Category field value if set, zero value otherwise.
+func (o *Transaction) GetCategory() []string {
+	if o == nil || IsNil(o.Category) {
+		var ret []string
+		return ret
+	}
+	return o.Category
+}
+
+// GetCategoryOk returns a tuple with the Category field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetCategoryOk() ([]string, bool) {
+	if o == nil || IsNil(o.Category) {
+		return nil, false
+	}
+	return o.Category, true
+}
+
+// HasCategory returns a boolean if a field has been set.
+func (o *Transaction) HasCategory() bool {
+	if o != nil && !IsNil(o.Category) {
+		return true
+	}
+
+	return false
+}
+
+// SetCategory gets a reference to the given []string and assigns it to the Category field.
+func (o *Transaction) SetCategory(v []string) {
+	o.Category = v
+}
+
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *Transaction) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *Transaction) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *Transaction) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetForceInternal returns the ForceInternal field value if set, zero value otherwise.
+func (o *Transaction) GetForceInternal() bool {
+	if o == nil || IsNil(o.ForceInternal) {
+		var ret bool
+		return ret
+	}
+	return *o.ForceInternal
+}
+
+// GetForceInternalOk returns a tuple with the ForceInternal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetForceInternalOk() (*bool, bool) {
+	if o == nil || IsNil(o.ForceInternal) {
+		return nil, false
+	}
+	return o.ForceInternal, true
+}
+
+// HasForceInternal returns a boolean if a field has been set.
+func (o *Transaction) HasForceInternal() bool {
+	if o != nil && !IsNil(o.ForceInternal) {
+		return true
+	}
+
+	return false
+}
+
+// SetForceInternal gets a reference to the given bool and assigns it to the ForceInternal field.
+func (o *Transaction) SetForceInternal(v bool) {
+	o.ForceInternal = &v
+}
+
+// GetForceExternal returns the ForceExternal field value if set, zero value otherwise.
+func (o *Transaction) GetForceExternal() bool {
+	if o == nil || IsNil(o.ForceExternal) {
+		var ret bool
+		return ret
+	}
+	return *o.ForceExternal
+}
+
+// GetForceExternalOk returns a tuple with the ForceExternal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetForceExternalOk() (*bool, bool) {
+	if o == nil || IsNil(o.ForceExternal) {
+		return nil, false
+	}
+	return o.ForceExternal, true
+}
+
+// HasForceExternal returns a boolean if a field has been set.
+func (o *Transaction) HasForceExternal() bool {
+	if o != nil && !IsNil(o.ForceExternal) {
+		return true
+	}
+
+	return false
+}
+
+// SetForceExternal gets a reference to the given bool and assigns it to the ForceExternal field.
+func (o *Transaction) SetForceExternal(v bool) {
+	o.ForceExternal = &v
+}
+
+// GetIsLoop returns the IsLoop field value if set, zero value otherwise.
+func (o *Transaction) GetIsLoop() bool {
+	if o == nil || IsNil(o.IsLoop) {
+		var ret bool
+		return ret
+	}
+	return *o.IsLoop
+}
+
+// GetIsLoopOk returns a tuple with the IsLoop field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transaction) GetIsLoopOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsLoop) {
+		return nil, false
+	}
+	return o.IsLoop, true
+}
+
+// HasIsLoop returns a boolean if a field has been set.
+func (o *Transaction) HasIsLoop() bool {
+	if o != nil && !IsNil(o.IsLoop) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsLoop gets a reference to the given bool and assigns it to the IsLoop field.
+func (o *Transaction) SetIsLoop(v bool) {
+	o.IsLoop = &v
+}
+
 // GetCreatedTime returns the CreatedTime field value
 func (o *Transaction) GetCreatedTime() float32 {
 	if o == nil {
@@ -693,35 +947,57 @@ func (o Transaction) MarshalJSON() ([]byte, error) {
 func (o Transaction) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["transaction_id"] = o.TransactionId
-	toSerialize["wallet_id"] = o.WalletId
+	if !IsNil(o.CoboId) {
+		toSerialize["cobo_id"] = o.CoboId
+	}
 	if !IsNil(o.RequestId) {
 		toSerialize["request_id"] = o.RequestId
 	}
-	toSerialize["cobo_id"] = o.CoboId
-	if !IsNil(o.Initiator) {
-		toSerialize["initiator"] = o.Initiator
-	}
-	if !IsNil(o.TransactionHash) {
-		toSerialize["transaction_hash"] = o.TransactionHash
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
 	}
 	toSerialize["status"] = o.Status
 	if !IsNil(o.SubStatus) {
 		toSerialize["sub_status"] = o.SubStatus
 	}
-	toSerialize["type"] = o.Type
-	toSerialize["source"] = o.Source
-	toSerialize["destination"] = o.Destination
+	if !IsNil(o.FailedReason) {
+		toSerialize["failed_reason"] = o.FailedReason
+	}
 	if !IsNil(o.ChainId) {
 		toSerialize["chain_id"] = o.ChainId
 	}
-	if !IsNil(o.ExchangeId) {
-		toSerialize["exchange_id"] = o.ExchangeId
-	}
-	if !IsNil(o.Tokens) {
-		toSerialize["tokens"] = o.Tokens
-	}
+	toSerialize["source"] = o.Source
+	toSerialize["destination"] = o.Destination
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee
+	}
+	if !IsNil(o.Initiator) {
+		toSerialize["initiator"] = o.Initiator
+	}
+	toSerialize["initiator_type"] = o.InitiatorType
+	if !IsNil(o.ConfirmedNum) {
+		toSerialize["confirmed_num"] = o.ConfirmedNum
+	}
+	if !IsNil(o.ConfirmingThreshold) {
+		toSerialize["confirming_threshold"] = o.ConfirmingThreshold
+	}
+	if !IsNil(o.BlockNumber) {
+		toSerialize["block_number"] = o.BlockNumber
+	}
+	if !IsNil(o.BlockTime) {
+		toSerialize["block_time"] = o.BlockTime
+	}
+	if !IsNil(o.BlockHash) {
+		toSerialize["block_hash"] = o.BlockHash
+	}
+	if !IsNil(o.Nonce) {
+		toSerialize["nonce"] = o.Nonce
+	}
+	if !IsNil(o.TransactionHash) {
+		toSerialize["transaction_hash"] = o.TransactionHash
+	}
+	if !IsNil(o.Replacement) {
+		toSerialize["replacement"] = o.Replacement
 	}
 	if !IsNil(o.Category) {
 		toSerialize["category"] = o.Category
@@ -729,11 +1005,14 @@ func (o Transaction) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	if !IsNil(o.ConfirmedNum) {
-		toSerialize["confirmed_num"] = o.ConfirmedNum
+	if !IsNil(o.ForceInternal) {
+		toSerialize["force_internal"] = o.ForceInternal
 	}
-	if !IsNil(o.ConfirmingThreshold) {
-		toSerialize["confirming_threshold"] = o.ConfirmingThreshold
+	if !IsNil(o.ForceExternal) {
+		toSerialize["force_external"] = o.ForceExternal
+	}
+	if !IsNil(o.IsLoop) {
+		toSerialize["is_loop"] = o.IsLoop
 	}
 	toSerialize["created_time"] = o.CreatedTime
 	toSerialize["updated_time"] = o.UpdatedTime
@@ -746,12 +1025,10 @@ func (o *Transaction) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"transaction_id",
-		"wallet_id",
-		"cobo_id",
 		"status",
-		"type",
 		"source",
 		"destination",
+		"initiator_type",
 		"created_time",
 		"updated_time",
 	}

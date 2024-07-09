@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **GroupType** | [**KeyGroupType**](KeyGroupType.md) |  | 
-**NodeCount** | **int32** | The count of tss node of the key group | 
-**Threshold** | **int32** | The threshold number of tss node required for signature | 
+**NodeCount** | **int32** | The number of key share holders in this key share group.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (&#x60;threshold&#x60;-&#x60;node_count&#x60;), so you can only set &#x60;node_count&#x60; to 2 or 3.   2. &#x60;threshold&#x60; must be less than or equal to &#x60;node_count&#x60;.  | 
+**Threshold** | **int32** | The number of key share holders required to sign an operation.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (&#x60;threshold&#x60;-&#x60;node_count&#x60;), so you can only set &#x60;threshold&#x60; to 2 or 3.   2. &#x60;threshold&#x60; must be less than or equal to &#x60;node_count&#x60;.  | 
 **KeyHolders** | [**[]CreateKeyGroupRequestKeyHoldersInner**](CreateKeyGroupRequestKeyHoldersInner.md) |  | 
 
 ## Methods

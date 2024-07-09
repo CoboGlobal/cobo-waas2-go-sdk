@@ -20,9 +20,9 @@ var _ MappedNullable = &CreateMpcVaultRequest{}
 
 // CreateMpcVaultRequest struct for CreateMpcVaultRequest
 type CreateMpcVaultRequest struct {
-	// The id of the mpc project.
+	// The project ID.  **Notes:** 1. If `vault_type` is `OrgControlled`, the value of `project_id` will be ignored. 2. If `vault_type` is `UserControlled`, then `project_id` is required. 
 	ProjectId *string `json:"project_id,omitempty"`
-	// The name of the mpc vault.
+	// The name of the new vault.
 	Name string `json:"name"`
 	VaultType MPCVaultType `json:"vault_type"`
 }

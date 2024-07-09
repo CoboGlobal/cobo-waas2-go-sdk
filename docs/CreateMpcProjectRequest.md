@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** | The name of the mpc project. | [optional] 
-**NodeCount** | **int32** | Number of tss nodes in the key group | 
-**Threshold** | **int32** | The threshold number of tss node required for signature | 
+**Name** | **string** | The project name. | 
+**NodeCount** | **int32** | The number of key share holders in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (&#x60;threshold&#x60;-&#x60;node_count&#x60;), so you can only set &#x60;node_count&#x60; to 2 or 3.   2. &#x60;threshold&#x60; must be less than or equal to &#x60;node_count&#x60;.  | 
+**Threshold** | **int32** | The number of key share holders required to sign an operation in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (&#x60;threshold&#x60;-&#x60;node_count&#x60;), so you can only set &#x60;threshold&#x60; to 2 or 3.   2. &#x60;threshold&#x60; must be less than or equal to &#x60;node_count&#x60;.  | 
 
 ## Methods
 
 ### NewCreateMpcProjectRequest
 
-`func NewCreateMpcProjectRequest(nodeCount int32, threshold int32, ) *CreateMpcProjectRequest`
+`func NewCreateMpcProjectRequest(name string, nodeCount int32, threshold int32, ) *CreateMpcProjectRequest`
 
 NewCreateMpcProjectRequest instantiates a new CreateMpcProjectRequest object
 This constructor will assign default values to properties that have it defined,
@@ -46,11 +46,6 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
-### HasName
-
-`func (o *CreateMpcProjectRequest) HasName() bool`
-
-HasName returns a boolean if a field has been set.
 
 ### GetNodeCount
 

@@ -19,15 +19,15 @@ type KeyHolderType string
 
 // List of KeyHolderType
 const (
-	KEYHOLDERTYPE_COBO KeyHolderType = "COBO"
-	KEYHOLDERTYPE_MOBILE KeyHolderType = "MOBILE"
+	KEYHOLDERTYPE_COBO KeyHolderType = "Cobo"
+	KEYHOLDERTYPE_MOBILE KeyHolderType = "Mobile"
 	KEYHOLDERTYPE_API KeyHolderType = "API"
 )
 
 // All allowed values of KeyHolderType enum
 var AllowedKeyHolderTypeEnumValues = []KeyHolderType{
-	"COBO",
-	"MOBILE",
+	"Cobo",
+	"Mobile",
 	"API",
 }
 
@@ -37,15 +37,8 @@ func (v *KeyHolderType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := KeyHolderType(value)
-	for _, existing := range AllowedKeyHolderTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid KeyHolderType", value)
+	*v = KeyHolderType(value)
+	return nil
 }
 
 // NewKeyHolderTypeFromValue returns a pointer to a valid KeyHolderType

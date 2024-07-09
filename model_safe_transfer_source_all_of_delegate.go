@@ -18,11 +18,11 @@ var _ MappedNullable = &SafeTransferSourceAllOfDelegate{}
 
 // SafeTransferSourceAllOfDelegate struct for SafeTransferSourceAllOfDelegate
 type SafeTransferSourceAllOfDelegate struct {
-	// The wallet id of the delegate. This is required when user initiate a transfer.
+	// The wallet ID of the Delegate. This is required when initiating a transfer from Smart Contract Wallets (Safe{Wallet}). 
 	WalletId *string `json:"wallet_id,omitempty"`
-	// The wallet type of the delegate. This is required when user initiate a transfer.
+	// The wallet type of the Delegate. This is required when initiating a transfer from Smart Contract Wallets (Safe{Wallet}).
 	WalletType *string `json:"wallet_type,omitempty"`
-	// The wallet address of the delegate. This is required when user initiate a transfer.
+	// The wallet address of the Delegate. This is required when initiating a transfer from Smart Contract Wallets (Safe{Wallet}).
 	WalletAddress *string `json:"wallet_address,omitempty"`
 }
 

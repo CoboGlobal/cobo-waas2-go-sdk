@@ -11,25 +11,28 @@ package CoboWaas2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the FeeData type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FeeData{}
 
-// FeeData The estimated fee in fee_coin.
+// FeeData struct for FeeData
 type FeeData struct {
-	// The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units.
-	GasLimit *string `json:"gas_limit,omitempty"`
+	// The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies.
+	GasLimit string `json:"gas_limit"`
 }
+
+type _FeeData FeeData
 
 // NewFeeData instantiates a new FeeData object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFeeData() *FeeData {
+func NewFeeData(gasLimit string) *FeeData {
 	this := FeeData{}
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
+	this.GasLimit = gasLimit
 	return &this
 }
 
@@ -39,40 +42,32 @@ func NewFeeData() *FeeData {
 func NewFeeDataWithDefaults() *FeeData {
 	this := FeeData{}
 	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
+	this.GasLimit = gasLimit
 	return &this
 }
 
-// GetGasLimit returns the GasLimit field value if set, zero value otherwise.
+// GetGasLimit returns the GasLimit field value
 func (o *FeeData) GetGasLimit() string {
-	if o == nil || IsNil(o.GasLimit) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.GasLimit
+
+	return o.GasLimit
 }
 
-// GetGasLimitOk returns a tuple with the GasLimit field value if set, nil otherwise
+// GetGasLimitOk returns a tuple with the GasLimit field value
 // and a boolean to check if the value has been set.
 func (o *FeeData) GetGasLimitOk() (*string, bool) {
-	if o == nil || IsNil(o.GasLimit) {
+	if o == nil {
 		return nil, false
 	}
-	return o.GasLimit, true
+	return &o.GasLimit, true
 }
 
-// HasGasLimit returns a boolean if a field has been set.
-func (o *FeeData) HasGasLimit() bool {
-	if o != nil && !IsNil(o.GasLimit) {
-		return true
-	}
-
-	return false
-}
-
-// SetGasLimit gets a reference to the given string and assigns it to the GasLimit field.
+// SetGasLimit sets field value
 func (o *FeeData) SetGasLimit(v string) {
-	o.GasLimit = &v
+	o.GasLimit = v
 }
 
 func (o FeeData) MarshalJSON() ([]byte, error) {
@@ -85,10 +80,45 @@ func (o FeeData) MarshalJSON() ([]byte, error) {
 
 func (o FeeData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.GasLimit) {
-		toSerialize["gas_limit"] = o.GasLimit
-	}
+	toSerialize["gas_limit"] = o.GasLimit
 	return toSerialize, nil
+}
+
+func (o *FeeData) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"gas_limit",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFeeData := _FeeData{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	//decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFeeData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FeeData(varFeeData)
+
+	return err
 }
 
 type NullableFeeData struct {

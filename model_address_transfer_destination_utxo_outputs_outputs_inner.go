@@ -18,11 +18,11 @@ var _ MappedNullable = &AddressTransferDestinationUtxoOutputsOutputsInner{}
 
 // AddressTransferDestinationUtxoOutputsOutputsInner struct for AddressTransferDestinationUtxoOutputsOutputsInner
 type AddressTransferDestinationUtxoOutputsOutputsInner struct {
-	// Destination address
-	AddressStr *string `json:"address_str,omitempty"`
-	// Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5) 
+	// The external address.
+	Address *string `json:"address,omitempty"`
+	// The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Amount *string `json:"amount,omitempty"`
-	// Script of the output
+	// The script of the output. It is a programmable code fragment that defines the conditions under which the UTXO can be spent.
 	Script *string `json:"script,omitempty"`
 }
 
@@ -43,36 +43,36 @@ func NewAddressTransferDestinationUtxoOutputsOutputsInnerWithDefaults() *Address
 	return &this
 }
 
-// GetAddressStr returns the AddressStr field value if set, zero value otherwise.
-func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddressStr() string {
-	if o == nil || IsNil(o.AddressStr) {
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddress() string {
+	if o == nil || IsNil(o.Address) {
 		var ret string
 		return ret
 	}
-	return *o.AddressStr
+	return *o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value if set, nil otherwise
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddressStrOk() (*string, bool) {
-	if o == nil || IsNil(o.AddressStr) {
+func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
-	return o.AddressStr, true
+	return o.Address, true
 }
 
-// HasAddressStr returns a boolean if a field has been set.
-func (o *AddressTransferDestinationUtxoOutputsOutputsInner) HasAddressStr() bool {
-	if o != nil && !IsNil(o.AddressStr) {
+// HasAddress returns a boolean if a field has been set.
+func (o *AddressTransferDestinationUtxoOutputsOutputsInner) HasAddress() bool {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
 	return false
 }
 
-// SetAddressStr gets a reference to the given string and assigns it to the AddressStr field.
-func (o *AddressTransferDestinationUtxoOutputsOutputsInner) SetAddressStr(v string) {
-	o.AddressStr = &v
+// SetAddress gets a reference to the given string and assigns it to the Address field.
+func (o *AddressTransferDestinationUtxoOutputsOutputsInner) SetAddress(v string) {
+	o.Address = &v
 }
 
 // GetAmount returns the Amount field value if set, zero value otherwise.
@@ -149,8 +149,8 @@ func (o AddressTransferDestinationUtxoOutputsOutputsInner) MarshalJSON() ([]byte
 
 func (o AddressTransferDestinationUtxoOutputsOutputsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AddressStr) {
-		toSerialize["address_str"] = o.AddressStr
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
 	}
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount

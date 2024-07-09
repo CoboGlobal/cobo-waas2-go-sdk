@@ -57,8 +57,8 @@ func (dst *TransferDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'Exchange'
-	if jsonDict["destination_type"] == "Exchange" {
+	// check if the discriminator value is 'ExchangeWallet'
+	if jsonDict["destination_type"] == "ExchangeWallet" {
 		// try to unmarshal JSON data into ExchangeTransferDestination
 		err = json.Unmarshal(data, &dst.ExchangeTransferDestination)
 		if err == nil {

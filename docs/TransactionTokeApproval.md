@@ -4,13 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | The token ID. | 
-**ChainId** | **string** | The blockchain on which the token operates. | 
-**Symbol** | Pointer to **string** | The token symbol. | [optional] 
-**Description** | Pointer to **string** | The token description. | [optional] 
+**TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens). | 
+**ChainId** | **string** | The ID of the chain on which the token operates. | 
+**AssetId** | Pointer to **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset is a digital representation of a valuable resource on a blockchain network. Exchange Wallets group your holdings by asset, even if the same asset exists on different blockchains. For example, if your Exchange Wallet has 1 USDT on Ethereum and 1 USDT on TRON, then your asset balance is 2 USDT. | [optional] 
+**Symbol** | Pointer to **string** | The token symbol, which is the abbreviated name of a token. | [optional] 
+**Name** | Pointer to **string** | The token name, which is the full name of a token. | [optional] 
+**Decimal** | Pointer to **int32** | The token decimal. | [optional] 
 **IconUrl** | Pointer to **string** | The URL of the token icon. | [optional] 
 **TokenAddress** | Pointer to **string** | The token address, if applicable. | [optional] 
-**AssetId** | Pointer to **string** | The asset ID, which is used to group the balances of the correponding tokens. For example, if you have $1,000 worth of ETH_USDT and $2,000 worth of TRON_USDT, the balance of your USDT assets will be $3,000. | [optional] 
+**FeeTokenId** | Pointer to **string** | The fee token ID. A fee token is the token with which you pay transaction fees. | [optional] 
+**CanDeposit** | Pointer to **bool** | Whether deposits are enabled for this token. | [optional] 
+**CanWithdraw** | Pointer to **bool** | Whether withdrawals are enabled for this token. | [optional] 
 **Amount** | Pointer to **float32** | Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5)  | [optional] 
 **Spender** | Pointer to **string** | Spender address | [optional] 
 
@@ -73,6 +77,31 @@ and a boolean to check if the value has been set.
 SetChainId sets ChainId field to given value.
 
 
+### GetAssetId
+
+`func (o *TransactionTokeApproval) GetAssetId() string`
+
+GetAssetId returns the AssetId field if non-nil, zero value otherwise.
+
+### GetAssetIdOk
+
+`func (o *TransactionTokeApproval) GetAssetIdOk() (*string, bool)`
+
+GetAssetIdOk returns a tuple with the AssetId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssetId
+
+`func (o *TransactionTokeApproval) SetAssetId(v string)`
+
+SetAssetId sets AssetId field to given value.
+
+### HasAssetId
+
+`func (o *TransactionTokeApproval) HasAssetId() bool`
+
+HasAssetId returns a boolean if a field has been set.
+
 ### GetSymbol
 
 `func (o *TransactionTokeApproval) GetSymbol() string`
@@ -98,30 +127,55 @@ SetSymbol sets Symbol field to given value.
 
 HasSymbol returns a boolean if a field has been set.
 
-### GetDescription
+### GetName
 
-`func (o *TransactionTokeApproval) GetDescription() string`
+`func (o *TransactionTokeApproval) GetName() string`
 
-GetDescription returns the Description field if non-nil, zero value otherwise.
+GetName returns the Name field if non-nil, zero value otherwise.
 
-### GetDescriptionOk
+### GetNameOk
 
-`func (o *TransactionTokeApproval) GetDescriptionOk() (*string, bool)`
+`func (o *TransactionTokeApproval) GetNameOk() (*string, bool)`
 
-GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDescription
+### SetName
 
-`func (o *TransactionTokeApproval) SetDescription(v string)`
+`func (o *TransactionTokeApproval) SetName(v string)`
 
-SetDescription sets Description field to given value.
+SetName sets Name field to given value.
 
-### HasDescription
+### HasName
 
-`func (o *TransactionTokeApproval) HasDescription() bool`
+`func (o *TransactionTokeApproval) HasName() bool`
 
-HasDescription returns a boolean if a field has been set.
+HasName returns a boolean if a field has been set.
+
+### GetDecimal
+
+`func (o *TransactionTokeApproval) GetDecimal() int32`
+
+GetDecimal returns the Decimal field if non-nil, zero value otherwise.
+
+### GetDecimalOk
+
+`func (o *TransactionTokeApproval) GetDecimalOk() (*int32, bool)`
+
+GetDecimalOk returns a tuple with the Decimal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDecimal
+
+`func (o *TransactionTokeApproval) SetDecimal(v int32)`
+
+SetDecimal sets Decimal field to given value.
+
+### HasDecimal
+
+`func (o *TransactionTokeApproval) HasDecimal() bool`
+
+HasDecimal returns a boolean if a field has been set.
 
 ### GetIconUrl
 
@@ -173,30 +227,80 @@ SetTokenAddress sets TokenAddress field to given value.
 
 HasTokenAddress returns a boolean if a field has been set.
 
-### GetAssetId
+### GetFeeTokenId
 
-`func (o *TransactionTokeApproval) GetAssetId() string`
+`func (o *TransactionTokeApproval) GetFeeTokenId() string`
 
-GetAssetId returns the AssetId field if non-nil, zero value otherwise.
+GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
 
-### GetAssetIdOk
+### GetFeeTokenIdOk
 
-`func (o *TransactionTokeApproval) GetAssetIdOk() (*string, bool)`
+`func (o *TransactionTokeApproval) GetFeeTokenIdOk() (*string, bool)`
 
-GetAssetIdOk returns a tuple with the AssetId field if it's non-nil, zero value otherwise
+GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAssetId
+### SetFeeTokenId
 
-`func (o *TransactionTokeApproval) SetAssetId(v string)`
+`func (o *TransactionTokeApproval) SetFeeTokenId(v string)`
 
-SetAssetId sets AssetId field to given value.
+SetFeeTokenId sets FeeTokenId field to given value.
 
-### HasAssetId
+### HasFeeTokenId
 
-`func (o *TransactionTokeApproval) HasAssetId() bool`
+`func (o *TransactionTokeApproval) HasFeeTokenId() bool`
 
-HasAssetId returns a boolean if a field has been set.
+HasFeeTokenId returns a boolean if a field has been set.
+
+### GetCanDeposit
+
+`func (o *TransactionTokeApproval) GetCanDeposit() bool`
+
+GetCanDeposit returns the CanDeposit field if non-nil, zero value otherwise.
+
+### GetCanDepositOk
+
+`func (o *TransactionTokeApproval) GetCanDepositOk() (*bool, bool)`
+
+GetCanDepositOk returns a tuple with the CanDeposit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanDeposit
+
+`func (o *TransactionTokeApproval) SetCanDeposit(v bool)`
+
+SetCanDeposit sets CanDeposit field to given value.
+
+### HasCanDeposit
+
+`func (o *TransactionTokeApproval) HasCanDeposit() bool`
+
+HasCanDeposit returns a boolean if a field has been set.
+
+### GetCanWithdraw
+
+`func (o *TransactionTokeApproval) GetCanWithdraw() bool`
+
+GetCanWithdraw returns the CanWithdraw field if non-nil, zero value otherwise.
+
+### GetCanWithdrawOk
+
+`func (o *TransactionTokeApproval) GetCanWithdrawOk() (*bool, bool)`
+
+GetCanWithdrawOk returns a tuple with the CanWithdraw field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanWithdraw
+
+`func (o *TransactionTokeApproval) SetCanWithdraw(v bool)`
+
+SetCanWithdraw sets CanWithdraw field to given value.
+
+### HasCanWithdraw
+
+`func (o *TransactionTokeApproval) HasCanWithdraw() bool`
+
+HasCanWithdraw returns a boolean if a field has been set.
 
 ### GetAmount
 

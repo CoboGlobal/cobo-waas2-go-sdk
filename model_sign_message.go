@@ -18,15 +18,14 @@ import (
 // checks if the SignMessage type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SignMessage{}
 
-// SignMessage The data for create a message-signing transaction.
+// SignMessage The information about a transaction that signs a message. You can provide the message either as raw data or as structured data.
 type SignMessage struct {
-	// Unique id of the request.
+	// The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization.
 	RequestId string `json:"request_id"`
-	RequestType string `json:"request_type"`
-	// The blockchain on which the token operates.
+	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
 	ChainId string `json:"chain_id"`
-	Source *SignMessageSource `json:"source,omitempty"`
-	Destination *SignMessageDestination `json:"destination,omitempty"`
+	Source SignMessageSource `json:"source"`
+	Destination SignMessageDestination `json:"destination"`
 }
 
 type _SignMessage SignMessage
@@ -35,11 +34,12 @@ type _SignMessage SignMessage
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSignMessage(requestId string, requestType string, chainId string) *SignMessage {
+func NewSignMessage(requestId string, chainId string, source SignMessageSource, destination SignMessageDestination) *SignMessage {
 	this := SignMessage{}
 	this.RequestId = requestId
-	this.RequestType = requestType
 	this.ChainId = chainId
+	this.Source = source
+	this.Destination = destination
 	return &this
 }
 
@@ -75,30 +75,6 @@ func (o *SignMessage) SetRequestId(v string) {
 	o.RequestId = v
 }
 
-// GetRequestType returns the RequestType field value
-func (o *SignMessage) GetRequestType() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.RequestType
-}
-
-// GetRequestTypeOk returns a tuple with the RequestType field value
-// and a boolean to check if the value has been set.
-func (o *SignMessage) GetRequestTypeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.RequestType, true
-}
-
-// SetRequestType sets field value
-func (o *SignMessage) SetRequestType(v string) {
-	o.RequestType = v
-}
-
 // GetChainId returns the ChainId field value
 func (o *SignMessage) GetChainId() string {
 	if o == nil {
@@ -123,68 +99,52 @@ func (o *SignMessage) SetChainId(v string) {
 	o.ChainId = v
 }
 
-// GetSource returns the Source field value if set, zero value otherwise.
+// GetSource returns the Source field value
 func (o *SignMessage) GetSource() SignMessageSource {
-	if o == nil || IsNil(o.Source) {
+	if o == nil {
 		var ret SignMessageSource
 		return ret
 	}
-	return *o.Source
+
+	return o.Source
 }
 
-// GetSourceOk returns a tuple with the Source field value if set, nil otherwise
+// GetSourceOk returns a tuple with the Source field value
 // and a boolean to check if the value has been set.
 func (o *SignMessage) GetSourceOk() (*SignMessageSource, bool) {
-	if o == nil || IsNil(o.Source) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Source, true
+	return &o.Source, true
 }
 
-// HasSource returns a boolean if a field has been set.
-func (o *SignMessage) HasSource() bool {
-	if o != nil && !IsNil(o.Source) {
-		return true
-	}
-
-	return false
-}
-
-// SetSource gets a reference to the given SignMessageSource and assigns it to the Source field.
+// SetSource sets field value
 func (o *SignMessage) SetSource(v SignMessageSource) {
-	o.Source = &v
+	o.Source = v
 }
 
-// GetDestination returns the Destination field value if set, zero value otherwise.
+// GetDestination returns the Destination field value
 func (o *SignMessage) GetDestination() SignMessageDestination {
-	if o == nil || IsNil(o.Destination) {
+	if o == nil {
 		var ret SignMessageDestination
 		return ret
 	}
-	return *o.Destination
+
+	return o.Destination
 }
 
-// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
+// GetDestinationOk returns a tuple with the Destination field value
 // and a boolean to check if the value has been set.
 func (o *SignMessage) GetDestinationOk() (*SignMessageDestination, bool) {
-	if o == nil || IsNil(o.Destination) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Destination, true
+	return &o.Destination, true
 }
 
-// HasDestination returns a boolean if a field has been set.
-func (o *SignMessage) HasDestination() bool {
-	if o != nil && !IsNil(o.Destination) {
-		return true
-	}
-
-	return false
-}
-
-// SetDestination gets a reference to the given SignMessageDestination and assigns it to the Destination field.
+// SetDestination sets field value
 func (o *SignMessage) SetDestination(v SignMessageDestination) {
-	o.Destination = &v
+	o.Destination = v
 }
 
 func (o SignMessage) MarshalJSON() ([]byte, error) {
@@ -198,14 +158,9 @@ func (o SignMessage) MarshalJSON() ([]byte, error) {
 func (o SignMessage) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
-	toSerialize["request_type"] = o.RequestType
 	toSerialize["chain_id"] = o.ChainId
-	if !IsNil(o.Source) {
-		toSerialize["source"] = o.Source
-	}
-	if !IsNil(o.Destination) {
-		toSerialize["destination"] = o.Destination
-	}
+	toSerialize["source"] = o.Source
+	toSerialize["destination"] = o.Destination
 	return toSerialize, nil
 }
 
@@ -215,8 +170,9 @@ func (o *SignMessage) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"request_id",
-		"request_type",
 		"chain_id",
+		"source",
+		"destination",
 	}
 
 	allProperties := make(map[string]interface{})

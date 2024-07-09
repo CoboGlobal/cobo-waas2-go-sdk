@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Executed** | Pointer to **bool** | Whether the spendable lock/unlock has been successfully executed. | [optional] 
+**Executed** | Pointer to **bool** | Whether the locking or unlocking operation has been successfully executed. - &#x60;true&#x60;: The operation has been successfully executed. - &#x60;false&#x60;: The operation has not been executed.  | [optional] 
 
 ## Methods
 

@@ -19,16 +19,16 @@ type KeyGroupType string
 
 // List of KeyGroupType
 const (
-	KEYGROUPTYPE_MAIN_KEY_GROUP KeyGroupType = "MainKeyGroup"
-	KEYGROUPTYPE_SIGNING_KEY_GROUP KeyGroupType = "SigningKeyGroup"
-	KEYGROUPTYPE_RECOVERY_KEY_GROUP KeyGroupType = "RecoveryKeyGroup"
+	KEYGROUPTYPE_MAIN_GROUP KeyGroupType = "MainGroup"
+	KEYGROUPTYPE_SIGNING_GROUP KeyGroupType = "SigningGroup"
+	KEYGROUPTYPE_RECOVERY_GROUP KeyGroupType = "RecoveryGroup"
 )
 
 // All allowed values of KeyGroupType enum
 var AllowedKeyGroupTypeEnumValues = []KeyGroupType{
-	"MainKeyGroup",
-	"SigningKeyGroup",
-	"RecoveryKeyGroup",
+	"MainGroup",
+	"SigningGroup",
+	"RecoveryGroup",
 }
 
 func (v *KeyGroupType) UnmarshalJSON(src []byte) error {
@@ -37,15 +37,8 @@ func (v *KeyGroupType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := KeyGroupType(value)
-	for _, existing := range AllowedKeyGroupTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid KeyGroupType", value)
+	*v = KeyGroupType(value)
+	return nil
 }
 
 // NewKeyGroupTypeFromValue returns a pointer to a valid KeyGroupType

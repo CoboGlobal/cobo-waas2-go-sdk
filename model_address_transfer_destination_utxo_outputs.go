@@ -19,7 +19,7 @@ var _ MappedNullable = &AddressTransferDestinationUtxoOutputs{}
 // AddressTransferDestinationUtxoOutputs struct for AddressTransferDestinationUtxoOutputs
 type AddressTransferDestinationUtxoOutputs struct {
 	Outputs []AddressTransferDestinationUtxoOutputsOutputsInner `json:"outputs,omitempty"`
-	// Change address
+	// The address used to receive the remaining funds or change from the transaction.
 	ChangeAddress *string `json:"change_address,omitempty"`
 }
 

@@ -18,11 +18,15 @@ import (
 // checks if the AddressTransferDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressTransferDestination{}
 
-// AddressTransferDestination The data for address destination. Only one of account_output or utxo_outputs needed.
+// AddressTransferDestination The information about the transaction destination. Specify either the `account_output` property or the `utxo_outputs` property. 
 type AddressTransferDestination struct {
 	DestinationType TransferDestinationType `json:"destination_type"`
 	AccountOutput *AddressTransferDestinationAccountOutput `json:"account_output,omitempty"`
 	UtxoOutputs *AddressTransferDestinationUtxoOutputs `json:"utxo_outputs,omitempty"`
+	// Whether the transfer request must be executed as an off-chain transfer.    - `true`: The transfer request must be executed an off-chain transfer.    - `false`: The transfer may not be executed as an off-chain transfer. 
+	ForceInternal *bool `json:"force_internal,omitempty"`
+	// Whether the transfer must be executed as an on-chain transfer. - `true`: The transfer must be executed as an on-chain transfer. - `false`: The transfer may not be executed as an on-chain transfer. 
+	ForceExternal *bool `json:"force_external,omitempty"`
 }
 
 type _AddressTransferDestination AddressTransferDestination
@@ -133,6 +137,70 @@ func (o *AddressTransferDestination) SetUtxoOutputs(v AddressTransferDestination
 	o.UtxoOutputs = &v
 }
 
+// GetForceInternal returns the ForceInternal field value if set, zero value otherwise.
+func (o *AddressTransferDestination) GetForceInternal() bool {
+	if o == nil || IsNil(o.ForceInternal) {
+		var ret bool
+		return ret
+	}
+	return *o.ForceInternal
+}
+
+// GetForceInternalOk returns a tuple with the ForceInternal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressTransferDestination) GetForceInternalOk() (*bool, bool) {
+	if o == nil || IsNil(o.ForceInternal) {
+		return nil, false
+	}
+	return o.ForceInternal, true
+}
+
+// HasForceInternal returns a boolean if a field has been set.
+func (o *AddressTransferDestination) HasForceInternal() bool {
+	if o != nil && !IsNil(o.ForceInternal) {
+		return true
+	}
+
+	return false
+}
+
+// SetForceInternal gets a reference to the given bool and assigns it to the ForceInternal field.
+func (o *AddressTransferDestination) SetForceInternal(v bool) {
+	o.ForceInternal = &v
+}
+
+// GetForceExternal returns the ForceExternal field value if set, zero value otherwise.
+func (o *AddressTransferDestination) GetForceExternal() bool {
+	if o == nil || IsNil(o.ForceExternal) {
+		var ret bool
+		return ret
+	}
+	return *o.ForceExternal
+}
+
+// GetForceExternalOk returns a tuple with the ForceExternal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressTransferDestination) GetForceExternalOk() (*bool, bool) {
+	if o == nil || IsNil(o.ForceExternal) {
+		return nil, false
+	}
+	return o.ForceExternal, true
+}
+
+// HasForceExternal returns a boolean if a field has been set.
+func (o *AddressTransferDestination) HasForceExternal() bool {
+	if o != nil && !IsNil(o.ForceExternal) {
+		return true
+	}
+
+	return false
+}
+
+// SetForceExternal gets a reference to the given bool and assigns it to the ForceExternal field.
+func (o *AddressTransferDestination) SetForceExternal(v bool) {
+	o.ForceExternal = &v
+}
+
 func (o AddressTransferDestination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -149,6 +217,12 @@ func (o AddressTransferDestination) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UtxoOutputs) {
 		toSerialize["utxo_outputs"] = o.UtxoOutputs
+	}
+	if !IsNil(o.ForceInternal) {
+		toSerialize["force_internal"] = o.ForceInternal
+	}
+	if !IsNil(o.ForceExternal) {
+		toSerialize["force_external"] = o.ForceExternal
 	}
 	return toSerialize, nil
 }

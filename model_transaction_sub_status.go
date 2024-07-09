@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TransactionSubStatus Enumeration representing the sub-status of a transaction.
+// TransactionSubStatus The transaction sub-status. Possible values include:    - `PendingDoubleCheck`: The transaction is pending a double check.    - `RejectedDoubleCheck`: The transaction is rejected because it failed a double check.   - `PendingSpenderCheck`: The transaction is pending a spender check.   - `RejectedSpenderAuth`: The transaction is rejected because it is rejected by the spender.   - `RejectedTravelRule`: The transaction is rejected because it failed to comply with the Travel Rule.   - `RejectedKYT`: The transaction is rejected because it did not pass the Know Your Transaction (KYT) compliance checks.   - `PendingRiskControlCheck`: The transaction is pending for a Risk Control check.   - `RejectedRiskControlCheck`: The transaction is rejected because it failed the Risk Control check.   - `PendingApproverCheck`: The transaction is pending approval from the approver.   - `RejectedApproverAuth`: The transaction is rejected by the approver.   - `RejectedCoboCheck`: The transaction is rejected because it failed the internal check by Cobo.   - `RejectedWhiteList`: The transaction is rejected because the sender or receiver is not included in a whitelist.   - `PendingWaitSigner`: The transaction is pending signature.   - `FailedBySigner`: The transaction failed during the signing process.   - `FailedBroadcasting`: The transaction failed to be broadcast to the blockchain network. 
 type TransactionSubStatus string
 
 // List of TransactionSubStatus
@@ -61,15 +61,8 @@ func (v *TransactionSubStatus) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TransactionSubStatus(value)
-	for _, existing := range AllowedTransactionSubStatusEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TransactionSubStatus", value)
+	*v = TransactionSubStatus(value)
+	return nil
 }
 
 // NewTransactionSubStatusFromValue returns a pointer to a valid TransactionSubStatus

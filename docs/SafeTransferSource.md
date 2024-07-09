@@ -5,15 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**WalletSubtype**](WalletSubtype.md) |  | 
-**WalletId** | **string** | Unique id of the wallet to transfer from. | 
-**AddressStr** | **string** | From address | 
+**WalletId** | **string** | The wallet ID. | 
+**Address** | **string** | The wallet address. | 
 **Delegate** | [**SafeTransferSourceAllOfDelegate**](SafeTransferSourceAllOfDelegate.md) |  | 
 
 ## Methods
 
 ### NewSafeTransferSource
 
-`func NewSafeTransferSource(sourceType WalletSubtype, walletId string, addressStr string, delegate SafeTransferSourceAllOfDelegate, ) *SafeTransferSource`
+`func NewSafeTransferSource(sourceType WalletSubtype, walletId string, address string, delegate SafeTransferSourceAllOfDelegate, ) *SafeTransferSource`
 
 NewSafeTransferSource instantiates a new SafeTransferSource object
 This constructor will assign default values to properties that have it defined,
@@ -68,24 +68,24 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetAddressStr
+### GetAddress
 
-`func (o *SafeTransferSource) GetAddressStr() string`
+`func (o *SafeTransferSource) GetAddress() string`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAddress returns the Address field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAddressOk
 
-`func (o *SafeTransferSource) GetAddressStrOk() (*string, bool)`
+`func (o *SafeTransferSource) GetAddressOk() (*string, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAddress
 
-`func (o *SafeTransferSource) SetAddressStr(v string)`
+`func (o *SafeTransferSource) SetAddress(v string)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAddress sets Address field to given value.
 
 
 ### GetDelegate

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WalletId** | **string** | The wallet ID of the Sub Account. | 
-**AccountId** | **string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. | 
+**WalletId** | **string** | The wallet ID of the Sub Account. This property is returned only if you are creating or querying an Exchange Wallet (Main Account). | 
+**AccountId** | **string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. This property is returned only if you are creating or querying an Exchange Wallet (Main Account). | 
 
 ## Methods
 

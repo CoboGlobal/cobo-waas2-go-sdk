@@ -5,15 +5,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
+**TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **Slow** | Pointer to [**EvmLegacyFeeSlow**](EvmLegacyFeeSlow.md) |  | [optional] 
-**Standard** | [**EvmLegacyFeeSlow**](EvmLegacyFeeSlow.md) |  | 
+**Recommended** | [**EvmLegacyFeeSlow**](EvmLegacyFeeSlow.md) |  | 
 **Fast** | Pointer to [**EvmLegacyFeeSlow**](EvmLegacyFeeSlow.md) |  | [optional] 
 
 ## Methods
 
 ### NewEvmLegacyFee
 
-`func NewEvmLegacyFee(feeType FeeType, standard EvmLegacyFeeSlow, ) *EvmLegacyFee`
+`func NewEvmLegacyFee(feeType FeeType, recommended EvmLegacyFeeSlow, ) *EvmLegacyFee`
 
 NewEvmLegacyFee instantiates a new EvmLegacyFee object
 This constructor will assign default values to properties that have it defined,
@@ -48,6 +49,31 @@ and a boolean to check if the value has been set.
 SetFeeType sets FeeType field to given value.
 
 
+### GetTokenId
+
+`func (o *EvmLegacyFee) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *EvmLegacyFee) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *EvmLegacyFee) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+### HasTokenId
+
+`func (o *EvmLegacyFee) HasTokenId() bool`
+
+HasTokenId returns a boolean if a field has been set.
+
 ### GetSlow
 
 `func (o *EvmLegacyFee) GetSlow() EvmLegacyFeeSlow`
@@ -73,24 +99,24 @@ SetSlow sets Slow field to given value.
 
 HasSlow returns a boolean if a field has been set.
 
-### GetStandard
+### GetRecommended
 
-`func (o *EvmLegacyFee) GetStandard() EvmLegacyFeeSlow`
+`func (o *EvmLegacyFee) GetRecommended() EvmLegacyFeeSlow`
 
-GetStandard returns the Standard field if non-nil, zero value otherwise.
+GetRecommended returns the Recommended field if non-nil, zero value otherwise.
 
-### GetStandardOk
+### GetRecommendedOk
 
-`func (o *EvmLegacyFee) GetStandardOk() (*EvmLegacyFeeSlow, bool)`
+`func (o *EvmLegacyFee) GetRecommendedOk() (*EvmLegacyFeeSlow, bool)`
 
-GetStandardOk returns a tuple with the Standard field if it's non-nil, zero value otherwise
+GetRecommendedOk returns a tuple with the Recommended field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStandard
+### SetRecommended
 
-`func (o *EvmLegacyFee) SetStandard(v EvmLegacyFeeSlow)`
+`func (o *EvmLegacyFee) SetRecommended(v EvmLegacyFeeSlow)`
 
-SetStandard sets Standard field to given value.
+SetRecommended sets Recommended field to given value.
 
 
 ### GetFast

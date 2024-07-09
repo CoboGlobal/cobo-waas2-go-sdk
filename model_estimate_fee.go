@@ -16,21 +16,21 @@ import (
 
 // EstimateFee - struct for EstimateFee
 type EstimateFee struct {
-	ContractCall *ContractCall
-	Transfer *Transfer
+	EstimateFeeContractCall *EstimateFeeContractCall
+	EstimateFeeTransfer *EstimateFeeTransfer
 }
 
-// ContractCallAsEstimateFee is a convenience function that returns ContractCall wrapped in EstimateFee
-func ContractCallAsEstimateFee(v *ContractCall) EstimateFee {
+// EstimateFeeContractCallAsEstimateFee is a convenience function that returns EstimateFeeContractCall wrapped in EstimateFee
+func EstimateFeeContractCallAsEstimateFee(v *EstimateFeeContractCall) EstimateFee {
 	return EstimateFee{
-		ContractCall: v,
+		EstimateFeeContractCall: v,
 	}
 }
 
-// TransferAsEstimateFee is a convenience function that returns Transfer wrapped in EstimateFee
-func TransferAsEstimateFee(v *Transfer) EstimateFee {
+// EstimateFeeTransferAsEstimateFee is a convenience function that returns EstimateFeeTransfer wrapped in EstimateFee
+func EstimateFeeTransferAsEstimateFee(v *EstimateFeeTransfer) EstimateFee {
 	return EstimateFee{
-		Transfer: v,
+		EstimateFeeTransfer: v,
 	}
 }
 
@@ -47,37 +47,49 @@ func (dst *EstimateFee) UnmarshalJSON(data []byte) error {
 
 	// check if the discriminator value is 'Call'
 	if jsonDict["request_type"] == "Call" {
-		// try to unmarshal JSON data into ContractCall
-		err = json.Unmarshal(data, &dst.ContractCall)
+		// try to unmarshal JSON data into EstimateFeeContractCall
+		err = json.Unmarshal(data, &dst.EstimateFeeContractCall)
 		if err == nil {
-			return nil // data stored in dst.ContractCall, return on the first match
+			return nil // data stored in dst.EstimateFeeContractCall, return on the first match
 		} else {
-			dst.ContractCall = nil
-			return fmt.Errorf("failed to unmarshal EstimateFee as ContractCall: %s", err.Error())
+			dst.EstimateFeeContractCall = nil
+			return fmt.Errorf("failed to unmarshal EstimateFee as EstimateFeeContractCall: %s", err.Error())
 		}
 	}
 
 	// check if the discriminator value is 'Transfer'
 	if jsonDict["request_type"] == "Transfer" {
-		// try to unmarshal JSON data into Transfer
-		err = json.Unmarshal(data, &dst.Transfer)
+		// try to unmarshal JSON data into EstimateFeeTransfer
+		err = json.Unmarshal(data, &dst.EstimateFeeTransfer)
 		if err == nil {
-			return nil // data stored in dst.Transfer, return on the first match
+			return nil // data stored in dst.EstimateFeeTransfer, return on the first match
 		} else {
-			dst.Transfer = nil
-			return fmt.Errorf("failed to unmarshal EstimateFee as Transfer: %s", err.Error())
+			dst.EstimateFeeTransfer = nil
+			return fmt.Errorf("failed to unmarshal EstimateFee as EstimateFeeTransfer: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'ContractCall'
-	if jsonDict["request_type"] == "ContractCall" {
-		// try to unmarshal JSON data into ContractCall
-		err = json.Unmarshal(data, &dst.ContractCall)
+	// check if the discriminator value is 'EstimateFeeContractCall'
+	if jsonDict["request_type"] == "EstimateFeeContractCall" {
+		// try to unmarshal JSON data into EstimateFeeContractCall
+		err = json.Unmarshal(data, &dst.EstimateFeeContractCall)
 		if err == nil {
-			return nil // data stored in dst.ContractCall, return on the first match
+			return nil // data stored in dst.EstimateFeeContractCall, return on the first match
 		} else {
-			dst.ContractCall = nil
-			return fmt.Errorf("failed to unmarshal EstimateFee as ContractCall: %s", err.Error())
+			dst.EstimateFeeContractCall = nil
+			return fmt.Errorf("failed to unmarshal EstimateFee as EstimateFeeContractCall: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'EstimateFeeTransfer'
+	if jsonDict["request_type"] == "EstimateFeeTransfer" {
+		// try to unmarshal JSON data into EstimateFeeTransfer
+		err = json.Unmarshal(data, &dst.EstimateFeeTransfer)
+		if err == nil {
+			return nil // data stored in dst.EstimateFeeTransfer, return on the first match
+		} else {
+			dst.EstimateFeeTransfer = nil
+			return fmt.Errorf("failed to unmarshal EstimateFee as EstimateFeeTransfer: %s", err.Error())
 		}
 	}
 
@@ -86,12 +98,12 @@ func (dst *EstimateFee) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src EstimateFee) MarshalJSON() ([]byte, error) {
-	if src.ContractCall != nil {
-		return json.Marshal(&src.ContractCall)
+	if src.EstimateFeeContractCall != nil {
+		return json.Marshal(&src.EstimateFeeContractCall)
 	}
 
-	if src.Transfer != nil {
-		return json.Marshal(&src.Transfer)
+	if src.EstimateFeeTransfer != nil {
+		return json.Marshal(&src.EstimateFeeTransfer)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -102,12 +114,12 @@ func (obj *EstimateFee) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
-	if obj.ContractCall != nil {
-		return obj.ContractCall
+	if obj.EstimateFeeContractCall != nil {
+		return obj.EstimateFeeContractCall
 	}
 
-	if obj.Transfer != nil {
-		return obj.Transfer
+	if obj.EstimateFeeTransfer != nil {
+		return obj.EstimateFeeTransfer
 	}
 
 	// all schemas are nil

@@ -22,65 +22,76 @@ import (
 // WalletsAPIService WalletsAPI service
 type WalletsAPIService service
 
-type ApiAddWalletAddressRequest struct {
+type ApiCheckAddressValidityRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
-	walletId string
-	addWalletAddressRequest *AddWalletAddressRequest
+	tokenId *string
+	address *string
 }
 
-// The request body to add address to a wallet.
-func (r ApiAddWalletAddressRequest) AddWalletAddressRequest(addWalletAddressRequest AddWalletAddressRequest) ApiAddWalletAddressRequest {
-	r.addWalletAddressRequest = &addWalletAddressRequest
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
+func (r ApiCheckAddressValidityRequest) TokenId(tokenId string) ApiCheckAddressValidityRequest {
+	r.tokenId = &tokenId
 	return r
 }
 
-func (r ApiAddWalletAddressRequest) Execute() ([]AddressInfo, *http.Response, error) {
-	return r.ApiService.AddWalletAddressExecute(r)
+// The wallet address.
+func (r ApiCheckAddressValidityRequest) Address(address string) ApiCheckAddressValidityRequest {
+	r.address = &address
+	return r
+}
+
+func (r ApiCheckAddressValidityRequest) Execute() (*CheckAddressValidity200Response, *http.Response, error) {
+	return r.ApiService.CheckAddressValidityExecute(r)
 }
 
 /*
-AddWalletAddress Add address to wallet
+CheckAddressValidity Check address validity
 
-This operation creates one or more addresses for the specified wallet.
+This operation verifies if a given address is valid for a specific token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param walletId The wallet ID.
- @return ApiAddWalletAddressRequest
+ @return ApiCheckAddressValidityRequest
 */
-func (a *WalletsAPIService) AddWalletAddress(ctx context.Context, walletId string) ApiAddWalletAddressRequest {
-	return ApiAddWalletAddressRequest{
+func (a *WalletsAPIService) CheckAddressValidity(ctx context.Context) ApiCheckAddressValidityRequest {
+	return ApiCheckAddressValidityRequest{
 		ApiService: a,
 		ctx: ctx,
-		walletId: walletId,
 	}
 }
 
 // Execute executes the request
-//  @return []AddressInfo
-func (a *WalletsAPIService) AddWalletAddressExecute(r ApiAddWalletAddressRequest) ([]AddressInfo, *http.Response, error) {
+//  @return CheckAddressValidity200Response
+func (a *WalletsAPIService) CheckAddressValidityExecute(r ApiCheckAddressValidityRequest) (*CheckAddressValidity200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
+		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []AddressInfo
+		localVarReturnValue  *CheckAddressValidity200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.AddWalletAddress")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.CheckAddressValidity")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/wallets/{wallet_id}/addresses"
-	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
+	localVarPath := localBasePath + "/wallets/address/check_validity"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.tokenId == nil {
+		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
+	}
+	if r.address == nil {
+		return localVarReturnValue, nil, reportError("address is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "address", r.address, "")
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -96,8 +107,6 @@ func (a *WalletsAPIService) AddWalletAddressExecute(r ApiAddWalletAddressRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	// body params
-	localVarPostBody = r.addWalletAddressRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -303,14 +312,15 @@ type ApiDeleteWalletByIdRequest struct {
 	walletId string
 }
 
-func (r ApiDeleteWalletByIdRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteWalletByIdRequest) Execute() (*DeleteWalletById200Response, *http.Response, error) {
 	return r.ApiService.DeleteWalletByIdExecute(r)
 }
 
 /*
-DeleteWalletById Delete wallet by ID
+DeleteWalletById Delete wallet
 
-This operation deletes the specified wallet.
+This operation deletes a specified wallet.
+
 <Note>This operation is applicable to Exchange Wallets only.</Note>
 
 
@@ -327,19 +337,21 @@ func (a *WalletsAPIService) DeleteWalletById(ctx context.Context, walletId strin
 }
 
 // Execute executes the request
-func (a *WalletsAPIService) DeleteWalletByIdExecute(r ApiDeleteWalletByIdRequest) (*http.Response, error) {
+//  @return DeleteWalletById200Response
+func (a *WalletsAPIService) DeleteWalletByIdExecute(r ApiDeleteWalletByIdRequest) (*DeleteWalletById200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
+		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *DeleteWalletById200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.DeleteWalletById")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/wallets/{wallet_id}"
+	localVarPath := localBasePath + "/wallets/{wallet_id}/delete"
 	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -365,19 +377,19 @@ func (a *WalletsAPIService) DeleteWalletByIdExecute(r ApiDeleteWalletByIdRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -390,96 +402,373 @@ func (a *WalletsAPIService) DeleteWalletByIdExecute(r ApiDeleteWalletByIdRequest
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
+				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-			return localVarHTTPResponse, newErr
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
+				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetAddressValidityRequest struct {
+type ApiGenerateWalletAddressRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
-	tokenId *string
-	addressStr *string
+	walletId string
+	generateWalletAddressRequest *GenerateWalletAddressRequest
 }
 
-// The token ID.
-func (r ApiGetAddressValidityRequest) TokenId(tokenId string) ApiGetAddressValidityRequest {
-	r.tokenId = &tokenId
+// The request body to generates addresses within a specified wallet.
+func (r ApiGenerateWalletAddressRequest) GenerateWalletAddressRequest(generateWalletAddressRequest GenerateWalletAddressRequest) ApiGenerateWalletAddressRequest {
+	r.generateWalletAddressRequest = &generateWalletAddressRequest
 	return r
 }
 
-// The wallet address.
-func (r ApiGetAddressValidityRequest) AddressStr(addressStr string) ApiGetAddressValidityRequest {
-	r.addressStr = &addressStr
-	return r
-}
-
-func (r ApiGetAddressValidityRequest) Execute() (*GetAddressValidity200Response, *http.Response, error) {
-	return r.ApiService.GetAddressValidityExecute(r)
+func (r ApiGenerateWalletAddressRequest) Execute() ([]AddressInfo, *http.Response, error) {
+	return r.ApiService.GenerateWalletAddressExecute(r)
 }
 
 /*
-GetAddressValidity Check address validity
+GenerateWalletAddress Generate new addresses in wallet
 
-This operation verifies if the given address is valid for the specified token.
+This operation generates one or more addresses within a specified wallet.
+
+<Note>This operation is applicable to Custodial Wallets and MPC Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetAddressValidityRequest
+ @param walletId The wallet ID.
+ @return ApiGenerateWalletAddressRequest
 */
-func (a *WalletsAPIService) GetAddressValidity(ctx context.Context) ApiGetAddressValidityRequest {
-	return ApiGetAddressValidityRequest{
+func (a *WalletsAPIService) GenerateWalletAddress(ctx context.Context, walletId string) ApiGenerateWalletAddressRequest {
+	return ApiGenerateWalletAddressRequest{
 		ApiService: a,
 		ctx: ctx,
+		walletId: walletId,
 	}
 }
 
 // Execute executes the request
-//  @return GetAddressValidity200Response
-func (a *WalletsAPIService) GetAddressValidityExecute(r ApiGetAddressValidityRequest) (*GetAddressValidity200Response, *http.Response, error) {
+//  @return []AddressInfo
+func (a *WalletsAPIService) GenerateWalletAddressExecute(r ApiGenerateWalletAddressRequest) ([]AddressInfo, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
+		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetAddressValidity200Response
+		localVarReturnValue  []AddressInfo
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.GetAddressValidity")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.GenerateWalletAddress")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/wallets/address/validity"
+	localVarPath := localBasePath + "/wallets/{wallet_id}/addresses"
+	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.tokenId == nil {
-		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
-	}
-	if r.addressStr == nil {
-		return localVarReturnValue, nil, reportError("addressStr is required and must be specified")
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "address_str", r.addressStr, "")
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.generateWalletAddressRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAddressByIdRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	walletId string
+	address string
+	tokenId *string
+	limit *int32
+	before *string
+	after *string
+}
+
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
+func (r ApiGetAddressByIdRequest) TokenId(tokenId string) ApiGetAddressByIdRequest {
+	r.tokenId = &tokenId
+	return r
+}
+
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
+func (r ApiGetAddressByIdRequest) Limit(limit int32) ApiGetAddressByIdRequest {
+	r.limit = &limit
+	return r
+}
+
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
+func (r ApiGetAddressByIdRequest) Before(before string) ApiGetAddressByIdRequest {
+	r.before = &before
+	return r
+}
+
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
+func (r ApiGetAddressByIdRequest) After(after string) ApiGetAddressByIdRequest {
+	r.after = &after
+	return r
+}
+
+func (r ApiGetAddressByIdRequest) Execute() (*ListAddresses200Response, *http.Response, error) {
+	return r.ApiService.GetAddressByIdExecute(r)
+}
+
+/*
+GetAddressById Get address information
+
+This operation retrieves the detailed information about a specified address within a wallet.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param walletId The wallet ID.
+ @param address The wallet address.
+ @return ApiGetAddressByIdRequest
+*/
+func (a *WalletsAPIService) GetAddressById(ctx context.Context, walletId string, address string) ApiGetAddressByIdRequest {
+	return ApiGetAddressByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		walletId: walletId,
+		address: address,
+	}
+}
+
+// Execute executes the request
+//  @return ListAddresses200Response
+func (a *WalletsAPIService) GetAddressByIdExecute(r ApiGetAddressByIdRequest) (*ListAddresses200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListAddresses200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.GetAddressById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/{wallet_id}/addresses/{address}"
+	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"address"+"}", url.PathEscape(parameterValueToString(r.address, "address")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.tokenId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetChainByIdRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	chainId string
+}
+
+func (r ApiGetChainByIdRequest) Execute() (*ChainInfo, *http.Response, error) {
+	return r.ApiService.GetChainByIdExecute(r)
+}
+
+/*
+GetChainById Get chain information
+
+This operation retrieves the detailed information about a specified chain.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param chainId The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
+ @return ApiGetChainByIdRequest
+*/
+func (a *WalletsAPIService) GetChainById(ctx context.Context, chainId string) ApiGetChainByIdRequest {
+	return ApiGetChainByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		chainId: chainId,
+	}
+}
+
+// Execute executes the request
+//  @return ChainInfo
+func (a *WalletsAPIService) GetChainByIdExecute(r ApiGetChainByIdRequest) (*ChainInfo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ChainInfo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.GetChainById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/chains/{chain_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"chain_id"+"}", url.PathEscape(parameterValueToString(r.chainId, "chainId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -547,31 +836,31 @@ func (a *WalletsAPIService) GetAddressValidityExecute(r ApiGetAddressValidityReq
 type ApiGetChainsRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
-	chainId *string
+	chainIds *string
 	limit *int32
 	before *string
 	after *string
 }
 
-// The chain ID.
-func (r ApiGetChainsRequest) ChainId(chainId string) ApiGetChainsRequest {
-	r.chainId = &chainId
+// A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
+func (r ApiGetChainsRequest) ChainIds(chainIds string) ApiGetChainsRequest {
+	r.chainIds = &chainIds
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetChainsRequest) Limit(limit int32) ApiGetChainsRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetChainsRequest) Before(before string) ApiGetChainsRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetChainsRequest) After(after string) ApiGetChainsRequest {
 	r.after = &after
 	return r
@@ -582,11 +871,11 @@ func (r ApiGetChainsRequest) Execute() (*GetChains200Response, *http.Response, e
 }
 
 /*
-GetChains List chain metadata
+GetChains List all supported chains
 
 This operation retrieves the metadata of all chains supported by Cobo WaaS 2.0.
 
-It provides details such as chain ID, chain name, and other relevant information. The chain metadata is publicly available without any permission restrictions.
+It provides details such as the chain ID, chain symbol, and other relevant information. You can filter the result by chain ID. The chain metadata is publicly available without any permission restrictions.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -620,8 +909,8 @@ func (a *WalletsAPIService) GetChainsExecute(r ApiGetChainsRequest) (*GetChains2
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.chainId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "chain_id", r.chainId, "")
+	if r.chainIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "chain_ids", r.chainIds, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -709,7 +998,7 @@ type ApiGetEnabledChainsRequest struct {
 	after *string
 }
 
-// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
+// The wallet type.  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 func (r ApiGetEnabledChainsRequest) WalletType(walletType WalletType) ApiGetEnabledChainsRequest {
 	r.walletType = &walletType
 	return r
@@ -721,19 +1010,19 @@ func (r ApiGetEnabledChainsRequest) WalletSubtype(walletSubtype WalletSubtype) A
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetEnabledChainsRequest) Limit(limit int32) ApiGetEnabledChainsRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetEnabledChainsRequest) Before(before string) ApiGetEnabledChainsRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetEnabledChainsRequest) After(after string) ApiGetEnabledChainsRequest {
 	r.after = &after
 	return r
@@ -744,9 +1033,11 @@ func (r ApiGetEnabledChainsRequest) Execute() (*GetChains200Response, *http.Resp
 }
 
 /*
-GetEnabledChains List enabled chains
+GetEnabledChains List organization enabled chains
 
-This operation retrieves all the chains enabled for the organization associated with your API key. You can also specify the wallet type and subtype you want to query.
+This operation retrieves all the chains that can be used by your organization. 
+
+You can filter the result by wallet type or subtype. If you do not specify a wallet type, this operation returns a combination of chains supported by each wallet type.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -873,7 +1164,7 @@ type ApiGetEnabledTokensRequest struct {
 	after *string
 }
 
-// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
+// The wallet type.  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 func (r ApiGetEnabledTokensRequest) WalletType(walletType WalletType) ApiGetEnabledTokensRequest {
 	r.walletType = &walletType
 	return r
@@ -885,25 +1176,25 @@ func (r ApiGetEnabledTokensRequest) WalletSubtype(walletSubtype WalletSubtype) A
 	return r
 }
 
-// The chain ID.
+// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
 func (r ApiGetEnabledTokensRequest) ChainId(chainId string) ApiGetEnabledTokensRequest {
 	r.chainId = &chainId
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetEnabledTokensRequest) Limit(limit int32) ApiGetEnabledTokensRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetEnabledTokensRequest) Before(before string) ApiGetEnabledTokensRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetEnabledTokensRequest) After(after string) ApiGetEnabledTokensRequest {
 	r.after = &after
 	return r
@@ -914,11 +1205,11 @@ func (r ApiGetEnabledTokensRequest) Execute() (*GetTokens200Response, *http.Resp
 }
 
 /*
-GetEnabledTokens List enabled tokens
+GetEnabledTokens List organization enabled tokens
 
-This operation retrieves all tokens that can be used by the organization associated with your API key. You can filter the result by wallet type, subtype, and chain ID.
+This operation retrieves all the tokens that can be used by your organization. 
 
-You can retrieve chain IDs by using the [List enabled chains](/api-references/v2/wallets/list-enabled-chains) operation.
+You can filter the result by wallet type, subtype, and chain ID. If you do not specify a wallet type, this operation returns a combination of chains supported by each wallet type.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1041,8 +1332,22 @@ type ApiGetMaxTransferableValueRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
 	walletId string
+	tokenId *string
+	feeRate *string
 	toAddress *string
 	fromAddress *string
+}
+
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
+func (r ApiGetMaxTransferableValueRequest) TokenId(tokenId string) ApiGetMaxTransferableValueRequest {
+	r.tokenId = &tokenId
+	return r
+}
+
+// The fee rate in sats/vByte or fee_price in gwei.
+func (r ApiGetMaxTransferableValueRequest) FeeRate(feeRate string) ApiGetMaxTransferableValueRequest {
+	r.feeRate = &feeRate
+	return r
 }
 
 // The recipient&#39;s address.
@@ -1062,9 +1367,11 @@ func (r ApiGetMaxTransferableValueRequest) Execute() (*MaxTransferableValue, *ht
 }
 
 /*
-GetMaxTransferableValue Get max transferable value
+GetMaxTransferableValue Get maximum transferable value
 
 This operation retrieves the maximum amount that you can transfer from a wallet or a specified wallet address, along with the corresponding transaction fee.
+
+You must specify `to_address` in your query because it affects the transaction fee.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1100,10 +1407,18 @@ func (a *WalletsAPIService) GetMaxTransferableValueExecute(r ApiGetMaxTransferab
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.tokenId == nil {
+		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
+	}
+	if r.feeRate == nil {
+		return localVarReturnValue, nil, reportError("feeRate is required and must be specified")
+	}
 	if r.toAddress == nil {
 		return localVarReturnValue, nil, reportError("toAddress is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "fee_rate", r.feeRate, "")
 	parameterAddToHeaderOrQuery(localVarQueryParams, "to_address", r.toAddress, "")
 	if r.fromAddress != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "from_address", r.fromAddress, "")
@@ -1176,37 +1491,32 @@ type ApiGetSpendableListRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
 	walletId string
-	txHash *string
 	tokenId *string
-	addressStr *string
+	address *string
 }
 
-// Transaction hash of the UTXO.
-func (r ApiGetSpendableListRequest) TxHash(txHash string) ApiGetSpendableListRequest {
-	r.txHash = &txHash
-	return r
-}
-
-// The token ID.
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 func (r ApiGetSpendableListRequest) TokenId(tokenId string) ApiGetSpendableListRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
 // The wallet address.
-func (r ApiGetSpendableListRequest) AddressStr(addressStr string) ApiGetSpendableListRequest {
-	r.addressStr = &addressStr
+func (r ApiGetSpendableListRequest) Address(address string) ApiGetSpendableListRequest {
+	r.address = &address
 	return r
 }
 
-func (r ApiGetSpendableListRequest) Execute() ([]UTXO, *http.Response, error) {
+func (r ApiGetSpendableListRequest) Execute() (*GetSpendableList200Response, *http.Response, error) {
 	return r.ApiService.GetSpendableListExecute(r)
 }
 
 /*
 GetSpendableList List spendable UTXOs
 
-The operation retrieves a list of spendable unspent transaction outputs (UTXOs) for the specified wallet and token.
+The operation retrieves a list of spendable unspent transaction outputs (UTXOs) for a specified wallet and token.
+
+<Note>This operation is applicable to MPC Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1222,13 +1532,13 @@ func (a *WalletsAPIService) GetSpendableList(ctx context.Context, walletId strin
 }
 
 // Execute executes the request
-//  @return []UTXO
-func (a *WalletsAPIService) GetSpendableListExecute(r ApiGetSpendableListRequest) ([]UTXO, *http.Response, error) {
+//  @return GetSpendableList200Response
+func (a *WalletsAPIService) GetSpendableListExecute(r ApiGetSpendableListRequest) (*GetSpendableList200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []UTXO
+		localVarReturnValue  *GetSpendableList200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.GetSpendableList")
@@ -1242,17 +1552,14 @@ func (a *WalletsAPIService) GetSpendableListExecute(r ApiGetSpendableListRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.txHash == nil {
-		return localVarReturnValue, nil, reportError("txHash is required and must be specified")
+	if r.tokenId == nil {
+		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
 	}
 
-	if r.tokenId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	if r.address != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "address", r.address, "")
 	}
-	if r.addressStr != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "address_str", r.addressStr, "")
-	}
-	parameterAddToHeaderOrQuery(localVarQueryParams, "tx_hash", r.txHash, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1327,7 +1634,7 @@ type ApiGetSupportedChainsRequest struct {
 	after *string
 }
 
-// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
+// The wallet type.  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 func (r ApiGetSupportedChainsRequest) WalletType(walletType WalletType) ApiGetSupportedChainsRequest {
 	r.walletType = &walletType
 	return r
@@ -1339,19 +1646,19 @@ func (r ApiGetSupportedChainsRequest) WalletSubtype(walletSubtype WalletSubtype)
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetSupportedChainsRequest) Limit(limit int32) ApiGetSupportedChainsRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetSupportedChainsRequest) Before(before string) ApiGetSupportedChainsRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetSupportedChainsRequest) After(after string) ApiGetSupportedChainsRequest {
 	r.after = &after
 	return r
@@ -1362,9 +1669,9 @@ func (r ApiGetSupportedChainsRequest) Execute() (*GetChains200Response, *http.Re
 }
 
 /*
-GetSupportedChains List supported chains
+GetSupportedChains List wallet supported chains
 
-This operation retrieves all chains supported by the specified wallet type or subtype.
+This operation retrieves all chains supported by a specific wallet type or subtype.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1491,7 +1798,7 @@ type ApiGetSupportedTokensRequest struct {
 	after *string
 }
 
-// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
+// The wallet type.  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 func (r ApiGetSupportedTokensRequest) WalletType(walletType WalletType) ApiGetSupportedTokensRequest {
 	r.walletType = &walletType
 	return r
@@ -1503,25 +1810,25 @@ func (r ApiGetSupportedTokensRequest) WalletSubtype(walletSubtype WalletSubtype)
 	return r
 }
 
-// The chain ID.
+// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
 func (r ApiGetSupportedTokensRequest) ChainId(chainId string) ApiGetSupportedTokensRequest {
 	r.chainId = &chainId
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetSupportedTokensRequest) Limit(limit int32) ApiGetSupportedTokensRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetSupportedTokensRequest) Before(before string) ApiGetSupportedTokensRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetSupportedTokensRequest) After(after string) ApiGetSupportedTokensRequest {
 	r.after = &after
 	return r
@@ -1532,11 +1839,9 @@ func (r ApiGetSupportedTokensRequest) Execute() (*GetTokens200Response, *http.Re
 }
 
 /*
-GetSupportedTokens List supported tokens
+GetSupportedTokens List wallet supported tokens
 
-This operation retrieves all supported tokens for the organization associated with your API key. You can also specify the wallet type, subtype, and chain ID you want to query.
-
-You can retrieve chain IDs by using the [List supported chains](/api-references/v2/wallets/list-supported-chains) operation.
+This operation retrieves all tokens supported by a specific wallet type or subtype. You can filter the result by chain ID.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1655,34 +1960,148 @@ func (a *WalletsAPIService) GetSupportedTokensExecute(r ApiGetSupportedTokensReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetTokenByIdRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	tokenId string
+}
+
+func (r ApiGetTokenByIdRequest) Execute() (*GetTokens200Response, *http.Response, error) {
+	return r.ApiService.GetTokenByIdExecute(r)
+}
+
+/*
+GetTokenById Get token information
+
+This operation retrieves the detailed information about a specified token.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param tokenId The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
+ @return ApiGetTokenByIdRequest
+*/
+func (a *WalletsAPIService) GetTokenById(ctx context.Context, tokenId string) ApiGetTokenByIdRequest {
+	return ApiGetTokenByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return GetTokens200Response
+func (a *WalletsAPIService) GetTokenByIdExecute(r ApiGetTokenByIdRequest) (*GetTokens200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetTokens200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.GetTokenById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/tokens/{token_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetTokensRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
-	tokenId *string
+	tokenIds *string
 	limit *int32
 	before *string
 	after *string
 }
 
-// The token ID.
-func (r ApiGetTokensRequest) TokenId(tokenId string) ApiGetTokensRequest {
-	r.tokenId = &tokenId
+// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
+func (r ApiGetTokensRequest) TokenIds(tokenIds string) ApiGetTokensRequest {
+	r.tokenIds = &tokenIds
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetTokensRequest) Limit(limit int32) ApiGetTokensRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetTokensRequest) Before(before string) ApiGetTokensRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetTokensRequest) After(after string) ApiGetTokensRequest {
 	r.after = &after
 	return r
@@ -1693,11 +2112,11 @@ func (r ApiGetTokensRequest) Execute() (*GetTokens200Response, *http.Response, e
 }
 
 /*
-GetTokens List token metadata
+GetTokens List all supported tokens
 
-This operation retrieves the metadata of the tokens stored under your account.
+This operation retrieves the metadata of all tokens supported by Cobo WaaS 2.0.
 
-It provides details such as token ID, token symbol, and other relevant information. The token metadata is publicly available without any permission restrictions.
+It provides details such as token ID, token symbol, and other relevant information. You can filter the result by token ID.  The token metadata is publicly available without any permission restrictions.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1731,8 +2150,8 @@ func (a *WalletsAPIService) GetTokensExecute(r ApiGetTokensRequest) (*GetTokens2
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.tokenId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	if r.tokenIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_ids", r.tokenIds, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1814,32 +2233,32 @@ type ApiGetWalletAddressTokenBalancesRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
 	walletId string
-	addressId string
+	address string
 	tokenId *string
 	limit *int32
 	before *string
 	after *string
 }
 
-// The token ID.
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 func (r ApiGetWalletAddressTokenBalancesRequest) TokenId(tokenId string) ApiGetWalletAddressTokenBalancesRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetWalletAddressTokenBalancesRequest) Limit(limit int32) ApiGetWalletAddressTokenBalancesRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetWalletAddressTokenBalancesRequest) Before(before string) ApiGetWalletAddressTokenBalancesRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetWalletAddressTokenBalancesRequest) After(after string) ApiGetWalletAddressTokenBalancesRequest {
 	r.after = &after
 	return r
@@ -1852,20 +2271,22 @@ func (r ApiGetWalletAddressTokenBalancesRequest) Execute() (*GetWalletTokenBalan
 /*
 GetWalletAddressTokenBalances List token balances by address
 
-The operation retrieves a list of token balances for a specified address within an MPC Wallet.
+The operation retrieves a list of token balances for a specified address within an MPC Wallet. 
+
+<Note>This operation is applicable to MPC Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param walletId The wallet ID.
- @param addressId The address ID.
+ @param address The wallet address.
  @return ApiGetWalletAddressTokenBalancesRequest
 */
-func (a *WalletsAPIService) GetWalletAddressTokenBalances(ctx context.Context, walletId string, addressId string) ApiGetWalletAddressTokenBalancesRequest {
+func (a *WalletsAPIService) GetWalletAddressTokenBalances(ctx context.Context, walletId string, address string) ApiGetWalletAddressTokenBalancesRequest {
 	return ApiGetWalletAddressTokenBalancesRequest{
 		ApiService: a,
 		ctx: ctx,
 		walletId: walletId,
-		addressId: addressId,
+		address: address,
 	}
 }
 
@@ -1884,9 +2305,9 @@ func (a *WalletsAPIService) GetWalletAddressTokenBalancesExecute(r ApiGetWalletA
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/wallets/{wallet_id}/addresses/{address_id}/tokens"
+	localVarPath := localBasePath + "/wallets/{wallet_id}/addresses/{address}/tokens"
 	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"address_id"+"}", url.PathEscape(parameterValueToString(r.addressId, "addressId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"address"+"}", url.PathEscape(parameterValueToString(r.address, "address")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1982,9 +2403,9 @@ func (r ApiGetWalletByIdRequest) Execute() (*WalletInfo, *http.Response, error) 
 }
 
 /*
-GetWalletById Retrieve wallet information by ID
+GetWalletById Get wallet information
 
-This operation retrieves detailed information about the specified wallet.
+This operation retrieves the detailed information about a specified wallet.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2106,25 +2527,25 @@ type ApiGetWalletTokenBalancesRequest struct {
 	after *string
 }
 
-// The token ID.
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 func (r ApiGetWalletTokenBalancesRequest) TokenId(tokenId string) ApiGetWalletTokenBalancesRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiGetWalletTokenBalancesRequest) Limit(limit int32) ApiGetWalletTokenBalancesRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiGetWalletTokenBalancesRequest) Before(before string) ApiGetWalletTokenBalancesRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiGetWalletTokenBalancesRequest) After(after string) ApiGetWalletTokenBalancesRequest {
 	r.after = &after
 	return r
@@ -2137,7 +2558,8 @@ func (r ApiGetWalletTokenBalancesRequest) Execute() (*GetWalletTokenBalances200R
 /*
 GetWalletTokenBalances List token balances by wallet
 
-The operation retrieves a list of token balances within the specified wallet.
+The operation retrieves a list of token balances within a specified wallet.
+
 <Note>This operation is applicable to Custodial Wallets and MPC Wallets only.</Note>
 
 
@@ -2270,37 +2692,37 @@ type ApiListAddressesRequest struct {
 	ApiService *WalletsAPIService
 	walletId string
 	tokenId *string
-	addressStr *string
+	addresses *string
 	limit *int32
 	before *string
 	after *string
 }
 
-// The token ID.
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 func (r ApiListAddressesRequest) TokenId(tokenId string) ApiListAddressesRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// The wallet address.
-func (r ApiListAddressesRequest) AddressStr(addressStr string) ApiListAddressesRequest {
-	r.addressStr = &addressStr
+// A list of wallet addresses, separated by comma.
+func (r ApiListAddressesRequest) Addresses(addresses string) ApiListAddressesRequest {
+	r.addresses = &addresses
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiListAddressesRequest) Limit(limit int32) ApiListAddressesRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiListAddressesRequest) Before(before string) ApiListAddressesRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiListAddressesRequest) After(after string) ApiListAddressesRequest {
 	r.after = &after
 	return r
@@ -2311,9 +2733,9 @@ func (r ApiListAddressesRequest) Execute() (*ListAddresses200Response, *http.Res
 }
 
 /*
-ListAddresses List wallet addresses by wallet ID
+ListAddresses List wallet addresses
 
-This operation retrieves a list of addresses under the specified wallet.
+This operation retrieves a list of addresses within a specified wallet.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2353,8 +2775,8 @@ func (a *WalletsAPIService) ListAddressesExecute(r ApiListAddressesRequest) (*Li
 	if r.tokenId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
 	}
-	if r.addressStr != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "address_str", r.addressStr, "")
+	if r.addresses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "addresses", r.addresses, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -2437,13 +2859,14 @@ type ApiListWalletsRequest struct {
 	ApiService *WalletsAPIService
 	walletType *WalletType
 	walletSubtype *WalletSubtype
+	projectId *string
 	vaultId *string
 	limit *int32
 	before *string
 	after *string
 }
 
-// The wallet type.  - &#x60;Custodial&#x60;: Custodial Wallets  - &#x60;MPC&#x60;: MPC Wallets  - &#x60;SmartContract&#x60;: Smart Contract Wallets  - &#x60;Exchange&#x60;: Exchange Wallets 
+// The wallet type.  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 func (r ApiListWalletsRequest) WalletType(walletType WalletType) ApiListWalletsRequest {
 	r.walletType = &walletType
 	return r
@@ -2455,25 +2878,31 @@ func (r ApiListWalletsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiLis
 	return r
 }
 
-// The MPC Vault ID.
+// The project ID.
+func (r ApiListWalletsRequest) ProjectId(projectId string) ApiListWalletsRequest {
+	r.projectId = &projectId
+	return r
+}
+
+// The MPC vault ID. This parameter is applicable to MPC Wallets only.
 func (r ApiListWalletsRequest) VaultId(vaultId string) ApiListWalletsRequest {
 	r.vaultId = &vaultId
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiListWalletsRequest) Limit(limit int32) ApiListWalletsRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiListWalletsRequest) Before(before string) ApiListWalletsRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiListWalletsRequest) After(after string) ApiListWalletsRequest {
 	r.after = &after
 	return r
@@ -2486,7 +2915,9 @@ func (r ApiListWalletsRequest) Execute() (*ListWallets200Response, *http.Respons
 /*
 ListWallets List all wallets
 
-This operation retrieves the information of all wallets under your organization. You can filter the result by wallet type, subtype, and Vault ID (for MPC Wallets).
+This operation retrieves the information of all wallets under your organization. You can filter the result by wallet type, subtype, and vault ID (for MPC Wallets).
+
+<Note>You must specify either the wallet type or subtype, or both.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2525,6 +2956,9 @@ func (a *WalletsAPIService) ListWalletsExecute(r ApiListWalletsRequest) (*ListWa
 	}
 	if r.walletSubtype != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_subtype", r.walletSubtype, "")
+	}
+	if r.projectId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "project_id", r.projectId, "")
 	}
 	if r.vaultId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "vault_id", r.vaultId, "")
@@ -2634,7 +3068,7 @@ type ApiLockSpendableListRequest struct {
 	lockSpendableListRequest *LockSpendableListRequest
 }
 
-// The request body to lock/unlock spendable
+// The request body of the Lock/Unlock UTXOs operation.
 func (r ApiLockSpendableListRequest) LockSpendableListRequest(lockSpendableListRequest LockSpendableListRequest) ApiLockSpendableListRequest {
 	r.lockSpendableListRequest = &lockSpendableListRequest
 	return r
@@ -2645,9 +3079,11 @@ func (r ApiLockSpendableListRequest) Execute() (*LockSpendableList200Response, *
 }
 
 /*
-LockSpendableList Lock/Unlock the UTXOs in tx hash list
+LockSpendableList Lock UTXOs
 
-Lock/Unlock the UTXOs in the given tx hash list. The Locked UTXO can not be transferred until unlocked.
+This operation locks the UTXOs with specified transaction hashes. Locked UTXOs cannot be transferred until unlocked.
+
+<Note>This operation is applicable to MPC Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2750,6 +3186,131 @@ func (a *WalletsAPIService) LockSpendableListExecute(r ApiLockSpendableListReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUnlockSpendableListRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	walletId string
+	lockSpendableListRequest *LockSpendableListRequest
+}
+
+// The request body of the Lock/Unlock UTXOs operation.
+func (r ApiUnlockSpendableListRequest) LockSpendableListRequest(lockSpendableListRequest LockSpendableListRequest) ApiUnlockSpendableListRequest {
+	r.lockSpendableListRequest = &lockSpendableListRequest
+	return r
+}
+
+func (r ApiUnlockSpendableListRequest) Execute() (*LockSpendableList200Response, *http.Response, error) {
+	return r.ApiService.UnlockSpendableListExecute(r)
+}
+
+/*
+UnlockSpendableList Unlock UTXOs
+
+This operation unlocks the UTXOs with specified transaction hashes. Locked UTXOs cannot be transferred until unlocked.
+
+<Note>This operation is applicable to MPC Wallets only.</Note>
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param walletId The wallet ID.
+ @return ApiUnlockSpendableListRequest
+*/
+func (a *WalletsAPIService) UnlockSpendableList(ctx context.Context, walletId string) ApiUnlockSpendableListRequest {
+	return ApiUnlockSpendableListRequest{
+		ApiService: a,
+		ctx: ctx,
+		walletId: walletId,
+	}
+}
+
+// Execute executes the request
+//  @return LockSpendableList200Response
+func (a *WalletsAPIService) UnlockSpendableListExecute(r ApiUnlockSpendableListRequest) (*LockSpendableList200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *LockSpendableList200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.UnlockSpendableList")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/{wallet_id}/spendables/unlock"
+	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.lockSpendableListRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateWalletByIdRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
@@ -2768,11 +3329,11 @@ func (r ApiUpdateWalletByIdRequest) Execute() (*WalletInfo, *http.Response, erro
 }
 
 /*
-UpdateWalletById Update wallet by ID
+UpdateWalletById Update wallet
 
 This operation updates the information of a specified wallet.
 
-<Note>This operation is applicable to Exchange Wallets only.</Note>
+For Exchange Wallets, you can update the API key, API secret, and other information about your exchange accounts with this operation. For other wallet types, you can only update the wallet name.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

@@ -4,14 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Before** | Pointer to **string** | An object ID which serves as a cursor for pagination. For example, if the value of &#x60;before&#x60; is &#x60;foo&#x60;, the returned data ends before the object with the object ID &#x60;foo&#x60;. | [optional] 
-**After** | Pointer to **string** | An object ID which serves as a cursor for pagination. For example, if the value of &#x60;after&#x60; is &#x60;bar&#x60;, the returned data starts after the object with the object ID &#x60;bar&#x60;. | [optional] 
+**Before** | **string** | An object ID which serves as a cursor for pagination. For example, if the value of &#x60;before&#x60; is &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the returned data ends before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. | 
+**After** | **string** | An object ID which serves as a cursor for pagination. For example, if the value of &#x60;after&#x60; is &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the returned data starts after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. | 
+**TotalCount** | **float32** | The total count of the result set | 
 
 ## Methods
 
 ### NewPagination
 
-`func NewPagination() *Pagination`
+`func NewPagination(before string, after string, totalCount float32, ) *Pagination`
 
 NewPagination instantiates a new Pagination object
 This constructor will assign default values to properties that have it defined,
@@ -45,11 +46,6 @@ and a boolean to check if the value has been set.
 
 SetBefore sets Before field to given value.
 
-### HasBefore
-
-`func (o *Pagination) HasBefore() bool`
-
-HasBefore returns a boolean if a field has been set.
 
 ### GetAfter
 
@@ -70,11 +66,26 @@ and a boolean to check if the value has been set.
 
 SetAfter sets After field to given value.
 
-### HasAfter
 
-`func (o *Pagination) HasAfter() bool`
+### GetTotalCount
 
-HasAfter returns a boolean if a field has been set.
+`func (o *Pagination) GetTotalCount() float32`
+
+GetTotalCount returns the TotalCount field if non-nil, zero value otherwise.
+
+### GetTotalCountOk
+
+`func (o *Pagination) GetTotalCountOk() (*float32, bool)`
+
+GetTotalCountOk returns a tuple with the TotalCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTotalCount
+
+`func (o *Pagination) SetTotalCount(v float32)`
+
+SetTotalCount sets TotalCount field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

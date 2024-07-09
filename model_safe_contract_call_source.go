@@ -20,11 +20,12 @@ var _ MappedNullable = &SafeContractCallSource{}
 
 // SafeContractCallSource struct for SafeContractCallSource
 type SafeContractCallSource struct {
+	// The type of the wallet. Possible values include: - `Org-Controlled`: MPC Wallets (Organization-Controlled). - `User-Controlled`: MPC Wallets (User-Controlled). - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}). 
 	SourceType string `json:"source_type"`
-	// Unique id of the wallet to initiate contract call from.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// From address
-	AddressStr string `json:"address_str"`
+	// The wallet address.
+	Address string `json:"address"`
 	Delegate SafeContractCallSourceAllOfDelegate `json:"delegate"`
 }
 
@@ -34,11 +35,11 @@ type _SafeContractCallSource SafeContractCallSource
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSafeContractCallSource(sourceType string, walletId string, addressStr string, delegate SafeContractCallSourceAllOfDelegate) *SafeContractCallSource {
+func NewSafeContractCallSource(sourceType string, walletId string, address string, delegate SafeContractCallSourceAllOfDelegate) *SafeContractCallSource {
 	this := SafeContractCallSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
-	this.AddressStr = addressStr
+	this.Address = address
 	this.Delegate = delegate
 	return &this
 }
@@ -99,28 +100,28 @@ func (o *SafeContractCallSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *SafeContractCallSource) GetAddressStr() string {
+// GetAddress returns the Address field value
+func (o *SafeContractCallSource) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.AddressStr
+	return o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *SafeContractCallSource) GetAddressStrOk() (*string, bool) {
+func (o *SafeContractCallSource) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return &o.Address, true
 }
 
-// SetAddressStr sets field value
-func (o *SafeContractCallSource) SetAddressStr(v string) {
-	o.AddressStr = v
+// SetAddress sets field value
+func (o *SafeContractCallSource) SetAddress(v string) {
+	o.Address = v
 }
 
 // GetDelegate returns the Delegate field value
@@ -159,7 +160,7 @@ func (o SafeContractCallSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["address_str"] = o.AddressStr
+	toSerialize["address"] = o.Address
 	toSerialize["delegate"] = o.Delegate
 	return toSerialize, nil
 }
@@ -171,7 +172,7 @@ func (o *SafeContractCallSource) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"source_type",
 		"wallet_id",
-		"address_str",
+		"address",
 		"delegate",
 	}
 

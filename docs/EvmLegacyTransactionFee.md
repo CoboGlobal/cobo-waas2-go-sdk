@@ -4,16 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **GasPrice** | **string** | The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | 
-**GasLimit** | Pointer to **string** | The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units. | [optional] [default to "21000"]
+**GasLimit** | **string** | The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies. | [default to "21000"]
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
+**TokenId** | **string** | The token ID of the transaction fee. | 
 
 ## Methods
 
 ### NewEvmLegacyTransactionFee
 
-`func NewEvmLegacyTransactionFee(gasPrice string, feeType FeeType, ) *EvmLegacyTransactionFee`
+`func NewEvmLegacyTransactionFee(gasPrice string, gasLimit string, feeType FeeType, tokenId string, ) *EvmLegacyTransactionFee`
 
 NewEvmLegacyTransactionFee instantiates a new EvmLegacyTransactionFee object
 This constructor will assign default values to properties that have it defined,
@@ -27,31 +27,6 @@ will change when the set of required properties is changed
 NewEvmLegacyTransactionFeeWithDefaults instantiates a new EvmLegacyTransactionFee object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetFeeTokenId
-
-`func (o *EvmLegacyTransactionFee) GetFeeTokenId() string`
-
-GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
-
-### GetFeeTokenIdOk
-
-`func (o *EvmLegacyTransactionFee) GetFeeTokenIdOk() (*string, bool)`
-
-GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeTokenId
-
-`func (o *EvmLegacyTransactionFee) SetFeeTokenId(v string)`
-
-SetFeeTokenId sets FeeTokenId field to given value.
-
-### HasFeeTokenId
-
-`func (o *EvmLegacyTransactionFee) HasFeeTokenId() bool`
-
-HasFeeTokenId returns a boolean if a field has been set.
 
 ### GetGasPrice
 
@@ -92,11 +67,6 @@ and a boolean to check if the value has been set.
 
 SetGasLimit sets GasLimit field to given value.
 
-### HasGasLimit
-
-`func (o *EvmLegacyTransactionFee) HasGasLimit() bool`
-
-HasGasLimit returns a boolean if a field has been set.
 
 ### GetFeeType
 
@@ -116,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *EvmLegacyTransactionFee) SetFeeType(v FeeType)`
 
 SetFeeType sets FeeType field to given value.
+
+
+### GetTokenId
+
+`func (o *EvmLegacyTransactionFee) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *EvmLegacyTransactionFee) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *EvmLegacyTransactionFee) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
 
 
 

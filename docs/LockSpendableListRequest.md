@@ -4,14 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TxHashes** | Pointer to **[]string** |  | [optional] 
-**IsLocked** | Pointer to **bool** | True if to lock the UTXOs, False to unlock. | [optional] 
+**TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens). | 
+**TxHash** | **string** | The transaction hash. | 
+**VoutN** | **int32** | The output index of the UTXO. | 
 
 ## Methods
 
 ### NewLockSpendableListRequest
 
-`func NewLockSpendableListRequest() *LockSpendableListRequest`
+`func NewLockSpendableListRequest(tokenId string, txHash string, voutN int32, ) *LockSpendableListRequest`
 
 NewLockSpendableListRequest instantiates a new LockSpendableListRequest object
 This constructor will assign default values to properties that have it defined,
@@ -26,55 +27,65 @@ NewLockSpendableListRequestWithDefaults instantiates a new LockSpendableListRequ
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetTxHashes
+### GetTokenId
 
-`func (o *LockSpendableListRequest) GetTxHashes() []string`
+`func (o *LockSpendableListRequest) GetTokenId() string`
 
-GetTxHashes returns the TxHashes field if non-nil, zero value otherwise.
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
 
-### GetTxHashesOk
+### GetTokenIdOk
 
-`func (o *LockSpendableListRequest) GetTxHashesOk() (*[]string, bool)`
+`func (o *LockSpendableListRequest) GetTokenIdOk() (*string, bool)`
 
-GetTxHashesOk returns a tuple with the TxHashes field if it's non-nil, zero value otherwise
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTxHashes
+### SetTokenId
 
-`func (o *LockSpendableListRequest) SetTxHashes(v []string)`
+`func (o *LockSpendableListRequest) SetTokenId(v string)`
 
-SetTxHashes sets TxHashes field to given value.
+SetTokenId sets TokenId field to given value.
 
-### HasTxHashes
 
-`func (o *LockSpendableListRequest) HasTxHashes() bool`
+### GetTxHash
 
-HasTxHashes returns a boolean if a field has been set.
+`func (o *LockSpendableListRequest) GetTxHash() string`
 
-### GetIsLocked
+GetTxHash returns the TxHash field if non-nil, zero value otherwise.
 
-`func (o *LockSpendableListRequest) GetIsLocked() bool`
+### GetTxHashOk
 
-GetIsLocked returns the IsLocked field if non-nil, zero value otherwise.
+`func (o *LockSpendableListRequest) GetTxHashOk() (*string, bool)`
 
-### GetIsLockedOk
-
-`func (o *LockSpendableListRequest) GetIsLockedOk() (*bool, bool)`
-
-GetIsLockedOk returns a tuple with the IsLocked field if it's non-nil, zero value otherwise
+GetTxHashOk returns a tuple with the TxHash field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIsLocked
+### SetTxHash
 
-`func (o *LockSpendableListRequest) SetIsLocked(v bool)`
+`func (o *LockSpendableListRequest) SetTxHash(v string)`
 
-SetIsLocked sets IsLocked field to given value.
+SetTxHash sets TxHash field to given value.
 
-### HasIsLocked
 
-`func (o *LockSpendableListRequest) HasIsLocked() bool`
+### GetVoutN
 
-HasIsLocked returns a boolean if a field has been set.
+`func (o *LockSpendableListRequest) GetVoutN() int32`
+
+GetVoutN returns the VoutN field if non-nil, zero value otherwise.
+
+### GetVoutNOk
+
+`func (o *LockSpendableListRequest) GetVoutNOk() (*int32, bool)`
+
+GetVoutNOk returns a tuple with the VoutN field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVoutN
+
+`func (o *LockSpendableListRequest) SetVoutN(v int32)`
+
+SetVoutN sets VoutN field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

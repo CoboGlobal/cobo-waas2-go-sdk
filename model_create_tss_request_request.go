@@ -21,8 +21,10 @@ var _ MappedNullable = &CreateTssRequestRequest{}
 // CreateTssRequestRequest struct for CreateTssRequestRequest
 type CreateTssRequestRequest struct {
 	Type TSSRequestType `json:"type"`
+	// The target key share group ID.
 	TargetKeyGroupId string `json:"target_key_group_id"`
-	UsedKeyGroupId *string `json:"used_key_group_id,omitempty"`
+	// The used key share group ID.  **Note:** `used_key_group_id` is used only when the action `type` is either `KeyGenfromKeyGroup` or `Recovery`. This is to specify the key share group to be used as the source group to create a new `target_key_group`. 
+	SourceKeyGroupId *string `json:"source_key_group_id,omitempty"`
 	DetailParams *CreateTssRequestRequestDetailParams `json:"detail_params,omitempty"`
 }
 
@@ -95,36 +97,36 @@ func (o *CreateTssRequestRequest) SetTargetKeyGroupId(v string) {
 	o.TargetKeyGroupId = v
 }
 
-// GetUsedKeyGroupId returns the UsedKeyGroupId field value if set, zero value otherwise.
-func (o *CreateTssRequestRequest) GetUsedKeyGroupId() string {
-	if o == nil || IsNil(o.UsedKeyGroupId) {
+// GetSourceKeyGroupId returns the SourceKeyGroupId field value if set, zero value otherwise.
+func (o *CreateTssRequestRequest) GetSourceKeyGroupId() string {
+	if o == nil || IsNil(o.SourceKeyGroupId) {
 		var ret string
 		return ret
 	}
-	return *o.UsedKeyGroupId
+	return *o.SourceKeyGroupId
 }
 
-// GetUsedKeyGroupIdOk returns a tuple with the UsedKeyGroupId field value if set, nil otherwise
+// GetSourceKeyGroupIdOk returns a tuple with the SourceKeyGroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateTssRequestRequest) GetUsedKeyGroupIdOk() (*string, bool) {
-	if o == nil || IsNil(o.UsedKeyGroupId) {
+func (o *CreateTssRequestRequest) GetSourceKeyGroupIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceKeyGroupId) {
 		return nil, false
 	}
-	return o.UsedKeyGroupId, true
+	return o.SourceKeyGroupId, true
 }
 
-// HasUsedKeyGroupId returns a boolean if a field has been set.
-func (o *CreateTssRequestRequest) HasUsedKeyGroupId() bool {
-	if o != nil && !IsNil(o.UsedKeyGroupId) {
+// HasSourceKeyGroupId returns a boolean if a field has been set.
+func (o *CreateTssRequestRequest) HasSourceKeyGroupId() bool {
+	if o != nil && !IsNil(o.SourceKeyGroupId) {
 		return true
 	}
 
 	return false
 }
 
-// SetUsedKeyGroupId gets a reference to the given string and assigns it to the UsedKeyGroupId field.
-func (o *CreateTssRequestRequest) SetUsedKeyGroupId(v string) {
-	o.UsedKeyGroupId = &v
+// SetSourceKeyGroupId gets a reference to the given string and assigns it to the SourceKeyGroupId field.
+func (o *CreateTssRequestRequest) SetSourceKeyGroupId(v string) {
+	o.SourceKeyGroupId = &v
 }
 
 // GetDetailParams returns the DetailParams field value if set, zero value otherwise.
@@ -171,8 +173,8 @@ func (o CreateTssRequestRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
 	toSerialize["target_key_group_id"] = o.TargetKeyGroupId
-	if !IsNil(o.UsedKeyGroupId) {
-		toSerialize["used_key_group_id"] = o.UsedKeyGroupId
+	if !IsNil(o.SourceKeyGroupId) {
+		toSerialize["source_key_group_id"] = o.SourceKeyGroupId
 	}
 	if !IsNil(o.DetailParams) {
 		toSerialize["detail_params"] = o.DetailParams

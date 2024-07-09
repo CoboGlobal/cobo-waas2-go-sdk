@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Total** | **string** | The total balance, which is the sum of the remaining fields. | 
+**Total** | **string** | The total balance, which is the sum of the available, pending, and locked balances. | 
 **Available** | **string** | The balance free to use. | 
 **Pending** | Pointer to **string** | The balance that is currently pending confirmation. | [optional] [default to "0"]
 **Locked** | Pointer to **string** | The balance that is currently not accessible to transactions. | [optional] [default to "0"]

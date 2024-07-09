@@ -33,15 +33,8 @@ func (v *SmartContractWalletOperationType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := SmartContractWalletOperationType(value)
-	for _, existing := range AllowedSmartContractWalletOperationTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid SmartContractWalletOperationType", value)
+	*v = SmartContractWalletOperationType(value)
+	return nil
 }
 
 // NewSmartContractWalletOperationTypeFromValue returns a pointer to a valid SmartContractWalletOperationType

@@ -21,10 +21,10 @@ var _ MappedNullable = &SafeTransferSource{}
 // SafeTransferSource struct for SafeTransferSource
 type SafeTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
-	// Unique id of the wallet to transfer from.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// From address
-	AddressStr string `json:"address_str"`
+	// The wallet address.
+	Address string `json:"address"`
 	Delegate SafeTransferSourceAllOfDelegate `json:"delegate"`
 }
 
@@ -34,11 +34,11 @@ type _SafeTransferSource SafeTransferSource
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSafeTransferSource(sourceType WalletSubtype, walletId string, addressStr string, delegate SafeTransferSourceAllOfDelegate) *SafeTransferSource {
+func NewSafeTransferSource(sourceType WalletSubtype, walletId string, address string, delegate SafeTransferSourceAllOfDelegate) *SafeTransferSource {
 	this := SafeTransferSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
-	this.AddressStr = addressStr
+	this.Address = address
 	this.Delegate = delegate
 	return &this
 }
@@ -99,28 +99,28 @@ func (o *SafeTransferSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *SafeTransferSource) GetAddressStr() string {
+// GetAddress returns the Address field value
+func (o *SafeTransferSource) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.AddressStr
+	return o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *SafeTransferSource) GetAddressStrOk() (*string, bool) {
+func (o *SafeTransferSource) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return &o.Address, true
 }
 
-// SetAddressStr sets field value
-func (o *SafeTransferSource) SetAddressStr(v string) {
-	o.AddressStr = v
+// SetAddress sets field value
+func (o *SafeTransferSource) SetAddress(v string) {
+	o.Address = v
 }
 
 // GetDelegate returns the Delegate field value
@@ -159,7 +159,7 @@ func (o SafeTransferSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["address_str"] = o.AddressStr
+	toSerialize["address"] = o.Address
 	toSerialize["delegate"] = o.Delegate
 	return toSerialize, nil
 }
@@ -171,7 +171,7 @@ func (o *SafeTransferSource) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"source_type",
 		"wallet_id",
-		"address_str",
+		"address",
 		"delegate",
 	}
 

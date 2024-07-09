@@ -11,29 +11,56 @@ package CoboWaas2
 
 import (
 	"context"
-	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
-	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api.sandbox.cobo.com/v2")
+	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "c203fccc02a2269ec486d9c32ff74b5ba6ab0cdb461ee1fb0dfc616109115c06",
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+	})
+
+	t.Run("Test DevelopersWebhooksAPIService CreateWebhookEndpoint", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.CreateWebhookEndpoint(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DevelopersWebhooksAPIService GetWebhookEndpointById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var endpointId string
+
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEndpointById(ctx, endpointId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
 	})
 
 	t.Run("Test DevelopersWebhooksAPIService GetWebhookEvent", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var eventId string
+		var endpointId string
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEvent(ctx, eventId).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEvent(ctx, eventId, endpointId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -43,11 +70,12 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 	t.Run("Test DevelopersWebhooksAPIService GetWebhookEventLogs", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var eventId string
+		var endpointId string
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEventLogs(ctx, eventId).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.GetWebhookEventLogs(ctx, eventId, endpointId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -57,9 +85,35 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 	t.Run("Test DevelopersWebhooksAPIService ListEvents", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListEvents(ctx).Execute()
+		var endpointId string
+
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListEvents(ctx, endpointId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DevelopersWebhooksAPIService ListWebhookEndpoints", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListWebhookEndpoints(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DevelopersWebhooksAPIService ListWebhookEventDefinitions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.ListWebhookEventDefinitions(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -69,11 +123,26 @@ func Test_CoboWaas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 	t.Run("Test DevelopersWebhooksAPIService RetryWebhookEvent", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var eventId string
+		var endpointId string
 
-		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.RetryWebhookEvent(ctx, eventId).Execute()
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.RetryWebhookEvent(ctx, eventId, endpointId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DevelopersWebhooksAPIService UpdateWebhookEndpoint", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var endpointId string
+
+		resp, httpRes, err := apiClient.DevelopersWebhooksAPI.UpdateWebhookEndpoint(ctx, endpointId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -20,7 +20,7 @@ var _ MappedNullable = &UpdateMpcProjectRequest{}
 
 // UpdateMpcProjectRequest struct for UpdateMpcProjectRequest
 type UpdateMpcProjectRequest struct {
-	// The name of the mpc project.
+	// The project's new name.
 	Name string `json:"name"`
 }
 

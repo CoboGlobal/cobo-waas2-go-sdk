@@ -14,19 +14,19 @@ import (
 	"fmt"
 )
 
-// TransferDestinationType the model 'TransferDestinationType'
+// TransferDestinationType The transaction destination type. Possible values include: - `Address`: An external address. - `ExchangeWallet`: An Exchange Wallet. 
 type TransferDestinationType string
 
 // List of TransferDestinationType
 const (
 	TRANSFERDESTINATIONTYPE_ADDRESS TransferDestinationType = "Address"
-	TRANSFERDESTINATIONTYPE_EXCHANGE TransferDestinationType = "Exchange"
+	TRANSFERDESTINATIONTYPE_EXCHANGE_WALLET TransferDestinationType = "ExchangeWallet"
 )
 
 // All allowed values of TransferDestinationType enum
 var AllowedTransferDestinationTypeEnumValues = []TransferDestinationType{
 	"Address",
-	"Exchange",
+	"ExchangeWallet",
 }
 
 func (v *TransferDestinationType) UnmarshalJSON(src []byte) error {
@@ -35,15 +35,8 @@ func (v *TransferDestinationType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TransferDestinationType(value)
-	for _, existing := range AllowedTransferDestinationTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TransferDestinationType", value)
+	*v = TransferDestinationType(value)
+	return nil
 }
 
 // NewTransferDestinationTypeFromValue returns a pointer to a valid TransferDestinationType

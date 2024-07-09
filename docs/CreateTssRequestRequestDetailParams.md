@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**UsedNodeIds** | Pointer to **[]string** |  | [optional] 
+**NodeIds** | Pointer to **[]string** | The TSS Node IDs participating in creating a new key share group when the action &#x60;type&#x60; is either &#x60;KeyGenFromKeyGroup&#x60; or &#x60;Recovery&#x60;.   **Note:** In any [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) such as the 2-2, 2-3, and 3-3 schemes (&#x60;threshold&#x60;-&#x60;node_count&#x60;), for &#x60;used_node_ids&#x60;, you only need to fill in 1 Cobo TSS Node ID and enough non-Cobo TSS Node IDs to satisfy the number of approvers specified in &#x60;threshold&#x60;.  | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewCreateTssRequestRequestDetailParamsWithDefaults instantiates a new CreateTssR
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetUsedNodeIds
+### GetNodeIds
 
-`func (o *CreateTssRequestRequestDetailParams) GetUsedNodeIds() []string`
+`func (o *CreateTssRequestRequestDetailParams) GetNodeIds() []string`
 
-GetUsedNodeIds returns the UsedNodeIds field if non-nil, zero value otherwise.
+GetNodeIds returns the NodeIds field if non-nil, zero value otherwise.
 
-### GetUsedNodeIdsOk
+### GetNodeIdsOk
 
-`func (o *CreateTssRequestRequestDetailParams) GetUsedNodeIdsOk() (*[]string, bool)`
+`func (o *CreateTssRequestRequestDetailParams) GetNodeIdsOk() (*[]string, bool)`
 
-GetUsedNodeIdsOk returns a tuple with the UsedNodeIds field if it's non-nil, zero value otherwise
+GetNodeIdsOk returns a tuple with the NodeIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUsedNodeIds
+### SetNodeIds
 
-`func (o *CreateTssRequestRequestDetailParams) SetUsedNodeIds(v []string)`
+`func (o *CreateTssRequestRequestDetailParams) SetNodeIds(v []string)`
 
-SetUsedNodeIds sets UsedNodeIds field to given value.
+SetNodeIds sets NodeIds field to given value.
 
-### HasUsedNodeIds
+### HasNodeIds
 
-`func (o *CreateTssRequestRequestDetailParams) HasUsedNodeIds() bool`
+`func (o *CreateTssRequestRequestDetailParams) HasNodeIds() bool`
 
-HasUsedNodeIds returns a boolean if a field has been set.
+HasNodeIds returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

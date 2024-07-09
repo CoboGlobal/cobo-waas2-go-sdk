@@ -20,12 +20,10 @@ var _ MappedNullable = &UtxoFeeSlow{}
 
 // UtxoFeeSlow struct for UtxoFeeSlow
 type UtxoFeeSlow struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
+	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
-	// The maximum fee amount in fee_coin.
-	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
+	// The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee.
+	MaxFeeAmount string `json:"max_fee_amount"`
 }
 
 type _UtxoFeeSlow UtxoFeeSlow
@@ -34,9 +32,10 @@ type _UtxoFeeSlow UtxoFeeSlow
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUtxoFeeSlow(feeRate string) *UtxoFeeSlow {
+func NewUtxoFeeSlow(feeRate string, maxFeeAmount string) *UtxoFeeSlow {
 	this := UtxoFeeSlow{}
 	this.FeeRate = feeRate
+	this.MaxFeeAmount = maxFeeAmount
 	return &this
 }
 
@@ -46,38 +45,6 @@ func NewUtxoFeeSlow(feeRate string) *UtxoFeeSlow {
 func NewUtxoFeeSlowWithDefaults() *UtxoFeeSlow {
 	this := UtxoFeeSlow{}
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *UtxoFeeSlow) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UtxoFeeSlow) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *UtxoFeeSlow) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *UtxoFeeSlow) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
 }
 
 // GetFeeRate returns the FeeRate field value
@@ -104,36 +71,28 @@ func (o *UtxoFeeSlow) SetFeeRate(v string) {
 	o.FeeRate = v
 }
 
-// GetMaxFeeAmount returns the MaxFeeAmount field value if set, zero value otherwise.
+// GetMaxFeeAmount returns the MaxFeeAmount field value
 func (o *UtxoFeeSlow) GetMaxFeeAmount() string {
-	if o == nil || IsNil(o.MaxFeeAmount) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.MaxFeeAmount
+
+	return o.MaxFeeAmount
 }
 
-// GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field value if set, nil otherwise
+// GetMaxFeeAmountOk returns a tuple with the MaxFeeAmount field value
 // and a boolean to check if the value has been set.
 func (o *UtxoFeeSlow) GetMaxFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.MaxFeeAmount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MaxFeeAmount, true
+	return &o.MaxFeeAmount, true
 }
 
-// HasMaxFeeAmount returns a boolean if a field has been set.
-func (o *UtxoFeeSlow) HasMaxFeeAmount() bool {
-	if o != nil && !IsNil(o.MaxFeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetMaxFeeAmount gets a reference to the given string and assigns it to the MaxFeeAmount field.
+// SetMaxFeeAmount sets field value
 func (o *UtxoFeeSlow) SetMaxFeeAmount(v string) {
-	o.MaxFeeAmount = &v
+	o.MaxFeeAmount = v
 }
 
 func (o UtxoFeeSlow) MarshalJSON() ([]byte, error) {
@@ -146,13 +105,8 @@ func (o UtxoFeeSlow) MarshalJSON() ([]byte, error) {
 
 func (o UtxoFeeSlow) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
 	toSerialize["fee_rate"] = o.FeeRate
-	if !IsNil(o.MaxFeeAmount) {
-		toSerialize["max_fee_amount"] = o.MaxFeeAmount
-	}
+	toSerialize["max_fee_amount"] = o.MaxFeeAmount
 	return toSerialize, nil
 }
 
@@ -162,6 +116,7 @@ func (o *UtxoFeeSlow) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"fee_rate",
+		"max_fee_amount",
 	}
 
 	allProperties := make(map[string]interface{})

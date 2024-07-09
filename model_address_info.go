@@ -23,15 +23,15 @@ type AddressInfo struct {
 	// The address ID.
 	AddressId string `json:"address_id"`
 	// The wallet address.
-	AddressStr string `json:"address_str"`
-	// The token ID.
+	Address string `json:"address"`
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 	TokenId string `json:"token_id"`
 	// The memo code.
 	Memo *string `json:"memo,omitempty"`
-	// The derivation path of the address. This field is applicable to MPC Wallets.
+	// The derivation path of the address.
 	Path *string `json:"path,omitempty"`
 	Encoding *AddressEncoding `json:"encoding,omitempty"`
-	// The public key of the address. This field is applicable to MPC Wallets.
+	// The public key of the address.
 	Pubkey *string `json:"pubkey,omitempty"`
 }
 
@@ -41,10 +41,10 @@ type _AddressInfo AddressInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddressInfo(addressId string, addressStr string, tokenId string) *AddressInfo {
+func NewAddressInfo(addressId string, address string, tokenId string) *AddressInfo {
 	this := AddressInfo{}
 	this.AddressId = addressId
-	this.AddressStr = addressStr
+	this.Address = address
 	this.TokenId = tokenId
 	return &this
 }
@@ -81,28 +81,28 @@ func (o *AddressInfo) SetAddressId(v string) {
 	o.AddressId = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *AddressInfo) GetAddressStr() string {
+// GetAddress returns the Address field value
+func (o *AddressInfo) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.AddressStr
+	return o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *AddressInfo) GetAddressStrOk() (*string, bool) {
+func (o *AddressInfo) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return &o.Address, true
 }
 
-// SetAddressStr sets field value
-func (o *AddressInfo) SetAddressStr(v string) {
-	o.AddressStr = v
+// SetAddress sets field value
+func (o *AddressInfo) SetAddress(v string) {
+	o.Address = v
 }
 
 // GetTokenId returns the TokenId field value
@@ -268,7 +268,7 @@ func (o AddressInfo) MarshalJSON() ([]byte, error) {
 func (o AddressInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["address_id"] = o.AddressId
-	toSerialize["address_str"] = o.AddressStr
+	toSerialize["address"] = o.Address
 	toSerialize["token_id"] = o.TokenId
 	if !IsNil(o.Memo) {
 		toSerialize["memo"] = o.Memo
@@ -291,7 +291,7 @@ func (o *AddressInfo) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"address_id",
-		"address_str",
+		"address",
 		"token_id",
 	}
 

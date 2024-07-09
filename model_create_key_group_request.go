@@ -21,9 +21,9 @@ var _ MappedNullable = &CreateKeyGroupRequest{}
 // CreateKeyGroupRequest struct for CreateKeyGroupRequest
 type CreateKeyGroupRequest struct {
 	GroupType KeyGroupType `json:"group_type"`
-	// The count of tss node of the key group
+	// The number of key share holders in this key share group.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (`threshold`-`node_count`), so you can only set `node_count` to 2 or 3.   2. `threshold` must be less than or equal to `node_count`. 
 	NodeCount int32 `json:"node_count"`
-	// The threshold number of tss node required for signature
+	// The number of key share holders required to sign an operation.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (`threshold`-`node_count`), so you can only set `threshold` to 2 or 3.   2. `threshold` must be less than or equal to `node_count`. 
 	Threshold int32 `json:"threshold"`
 	KeyHolders []CreateKeyGroupRequestKeyHoldersInner `json:"key_holders"`
 }

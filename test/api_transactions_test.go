@@ -41,11 +41,23 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TransactionsAPIService CreateSmartContractCallTransaction", func(t *testing.T) {
+	t.Run("Test TransactionsAPIService CreateContractCallTransaction", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TransactionsAPI.CreateSmartContractCallTransaction(ctx).Execute()
+		resp, httpRes, err := apiClient.TransactionsAPI.CreateContractCallTransaction(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TransactionsAPIService CreateMessageSignTransaction", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TransactionsAPI.CreateMessageSignTransaction(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -91,18 +103,6 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TransactionsAPIService GetChainFeePrice", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.TransactionsAPI.GetChainFeePrice(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test TransactionsAPIService GetTransactionById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -110,6 +110,18 @@ func Test_CoboWaas2_TransactionsAPIService(t *testing.T) {
 		var transactionId string
 
 		resp, httpRes, err := apiClient.TransactionsAPI.GetTransactionById(ctx, transactionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TransactionsAPIService ListFeeRates", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TransactionsAPI.ListFeeRates(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

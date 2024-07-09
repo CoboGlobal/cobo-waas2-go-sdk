@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// ExchangeId The ID of the exchange.
+// ExchangeId The ID of the exchange:   - `binance`: Binance.   - `okx`: OKX.   - `deribit`: Deribit.   - `bybit`: Bybit.   - `gate`: Gate.io 
 type ExchangeId string
 
 // List of ExchangeId
@@ -41,15 +41,8 @@ func (v *ExchangeId) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := ExchangeId(value)
-	for _, existing := range AllowedExchangeIdEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid ExchangeId", value)
+	*v = ExchangeId(value)
+	return nil
 }
 
 // NewExchangeIdFromValue returns a pointer to a valid ExchangeId

@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique id of the vault | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **string** | The vault ID. | [optional] 
+**Name** | Pointer to **string** | The vault name. | [optional] 
 **Type** | Pointer to [**MPCVaultType**](MPCVaultType.md) |  | [optional] 
 **RootPubkeys** | Pointer to [**[]RootPubkey**](RootPubkey.md) |  | [optional] 
-**CreateTimestamp** | Pointer to **float32** | The create time the vault. | [optional] 
+**CreateTimestamp** | Pointer to **float32** | The vault&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 

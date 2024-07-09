@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TransactionAddressType Enumeration representing the address type of a transaction.
+// TransactionAddressType The address type. Possible values include:   - `CustodialAssetWallet`: Custodial Wallets (Asset Wallets).   - `CustodialWeb3Wallet`: Custodial Wallets (Web3 Wallets).   - `MPCClientControlledWallet`: MPC Wallets (Organization-Controlled).   - `MPCUserControlledWallet`: MPC Wallets (User-Controlled).   - `SafeContractWallet`: Smart Contract Wallets (Safe{Wallet}).   - `ExchangeAccount`: Exchange Wallets.   - `FeeStation`: A Fee Station.   - `ExternalAddress`: An external address. 
 type TransactionAddressType string
 
 // List of TransactionAddressType
@@ -25,7 +25,7 @@ const (
 	TRANSACTIONADDRESSTYPE_MPC_USER_CONTROLLED_WALLET TransactionAddressType = "MPCUserControlledWallet"
 	TRANSACTIONADDRESSTYPE_SAFE_CONTRACT_WALLET TransactionAddressType = "SafeContractWallet"
 	TRANSACTIONADDRESSTYPE_EXCHANGE_ACCOUNT TransactionAddressType = "ExchangeAccount"
-	TRANSACTIONADDRESSTYPE_GAS_STATION TransactionAddressType = "GasStation"
+	TRANSACTIONADDRESSTYPE_FEE_STATION TransactionAddressType = "FeeStation"
 	TRANSACTIONADDRESSTYPE_EXTERNAL_ADDRESS TransactionAddressType = "ExternalAddress"
 )
 
@@ -37,7 +37,7 @@ var AllowedTransactionAddressTypeEnumValues = []TransactionAddressType{
 	"MPCUserControlledWallet",
 	"SafeContractWallet",
 	"ExchangeAccount",
-	"GasStation",
+	"FeeStation",
 	"ExternalAddress",
 }
 
@@ -47,15 +47,8 @@ func (v *TransactionAddressType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TransactionAddressType(value)
-	for _, existing := range AllowedTransactionAddressTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TransactionAddressType", value)
+	*v = TransactionAddressType(value)
+	return nil
 }
 
 // NewTransactionAddressTypeFromValue returns a pointer to a valid TransactionAddressType

@@ -18,13 +18,14 @@ import (
 // checks if the UtxoFeePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UtxoFeePrice{}
 
-// UtxoFeePrice The transaction fee for UTXO-based chains.
+// UtxoFeePrice The transaction fee price for UTXO-based chains.
 type UtxoFeePrice struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
-	FeeRate string `json:"fee_rate"`
 	FeeType FeeType `json:"fee_type"`
+	// The token ID of the transaction fee.
+	TokenId *string `json:"token_id,omitempty"`
+	Slow *UtxoFeeBasePrice `json:"slow,omitempty"`
+	Recommended UtxoFeeBasePrice `json:"recommended"`
+	Fast *UtxoFeeBasePrice `json:"fast,omitempty"`
 }
 
 type _UtxoFeePrice UtxoFeePrice
@@ -33,10 +34,10 @@ type _UtxoFeePrice UtxoFeePrice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUtxoFeePrice(feeRate string, feeType FeeType) *UtxoFeePrice {
+func NewUtxoFeePrice(feeType FeeType, recommended UtxoFeeBasePrice) *UtxoFeePrice {
 	this := UtxoFeePrice{}
-	this.FeeRate = feeRate
 	this.FeeType = feeType
+	this.Recommended = recommended
 	return &this
 }
 
@@ -48,62 +49,6 @@ func NewUtxoFeePriceWithDefaults() *UtxoFeePrice {
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *UtxoFeePrice) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UtxoFeePrice) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *UtxoFeePrice) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *UtxoFeePrice) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
-}
-
-// GetFeeRate returns the FeeRate field value
-func (o *UtxoFeePrice) GetFeeRate() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.FeeRate
-}
-
-// GetFeeRateOk returns a tuple with the FeeRate field value
-// and a boolean to check if the value has been set.
-func (o *UtxoFeePrice) GetFeeRateOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.FeeRate, true
-}
-
-// SetFeeRate sets field value
-func (o *UtxoFeePrice) SetFeeRate(v string) {
-	o.FeeRate = v
 }
 
 // GetFeeType returns the FeeType field value
@@ -130,6 +75,126 @@ func (o *UtxoFeePrice) SetFeeType(v FeeType) {
 	o.FeeType = v
 }
 
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *UtxoFeePrice) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UtxoFeePrice) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *UtxoFeePrice) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *UtxoFeePrice) SetTokenId(v string) {
+	o.TokenId = &v
+}
+
+// GetSlow returns the Slow field value if set, zero value otherwise.
+func (o *UtxoFeePrice) GetSlow() UtxoFeeBasePrice {
+	if o == nil || IsNil(o.Slow) {
+		var ret UtxoFeeBasePrice
+		return ret
+	}
+	return *o.Slow
+}
+
+// GetSlowOk returns a tuple with the Slow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UtxoFeePrice) GetSlowOk() (*UtxoFeeBasePrice, bool) {
+	if o == nil || IsNil(o.Slow) {
+		return nil, false
+	}
+	return o.Slow, true
+}
+
+// HasSlow returns a boolean if a field has been set.
+func (o *UtxoFeePrice) HasSlow() bool {
+	if o != nil && !IsNil(o.Slow) {
+		return true
+	}
+
+	return false
+}
+
+// SetSlow gets a reference to the given UtxoFeeBasePrice and assigns it to the Slow field.
+func (o *UtxoFeePrice) SetSlow(v UtxoFeeBasePrice) {
+	o.Slow = &v
+}
+
+// GetRecommended returns the Recommended field value
+func (o *UtxoFeePrice) GetRecommended() UtxoFeeBasePrice {
+	if o == nil {
+		var ret UtxoFeeBasePrice
+		return ret
+	}
+
+	return o.Recommended
+}
+
+// GetRecommendedOk returns a tuple with the Recommended field value
+// and a boolean to check if the value has been set.
+func (o *UtxoFeePrice) GetRecommendedOk() (*UtxoFeeBasePrice, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Recommended, true
+}
+
+// SetRecommended sets field value
+func (o *UtxoFeePrice) SetRecommended(v UtxoFeeBasePrice) {
+	o.Recommended = v
+}
+
+// GetFast returns the Fast field value if set, zero value otherwise.
+func (o *UtxoFeePrice) GetFast() UtxoFeeBasePrice {
+	if o == nil || IsNil(o.Fast) {
+		var ret UtxoFeeBasePrice
+		return ret
+	}
+	return *o.Fast
+}
+
+// GetFastOk returns a tuple with the Fast field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UtxoFeePrice) GetFastOk() (*UtxoFeeBasePrice, bool) {
+	if o == nil || IsNil(o.Fast) {
+		return nil, false
+	}
+	return o.Fast, true
+}
+
+// HasFast returns a boolean if a field has been set.
+func (o *UtxoFeePrice) HasFast() bool {
+	if o != nil && !IsNil(o.Fast) {
+		return true
+	}
+
+	return false
+}
+
+// SetFast gets a reference to the given UtxoFeeBasePrice and assigns it to the Fast field.
+func (o *UtxoFeePrice) SetFast(v UtxoFeeBasePrice) {
+	o.Fast = &v
+}
+
 func (o UtxoFeePrice) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -140,11 +205,17 @@ func (o UtxoFeePrice) MarshalJSON() ([]byte, error) {
 
 func (o UtxoFeePrice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
-	toSerialize["fee_rate"] = o.FeeRate
 	toSerialize["fee_type"] = o.FeeType
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
+	if !IsNil(o.Slow) {
+		toSerialize["slow"] = o.Slow
+	}
+	toSerialize["recommended"] = o.Recommended
+	if !IsNil(o.Fast) {
+		toSerialize["fast"] = o.Fast
+	}
 	return toSerialize, nil
 }
 
@@ -153,8 +224,8 @@ func (o *UtxoFeePrice) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"fee_rate",
 		"fee_type",
+		"recommended",
 	}
 
 	allProperties := make(map[string]interface{})

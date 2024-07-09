@@ -18,11 +18,13 @@ import (
 // checks if the EvmEip1559Fee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEip1559Fee{}
 
-// EvmEip1559Fee The estimated transaction fee when using the EIP 1559 method.
+// EvmEip1559Fee The estimated transaction fee based on the EIP-1559 fee model.
 type EvmEip1559Fee struct {
 	FeeType FeeType `json:"fee_type"`
+	// The token ID of the transaction fee.
+	TokenId *string `json:"token_id,omitempty"`
 	Slow *EvmEip1559FeeSlow `json:"slow,omitempty"`
-	Standard EvmEip1559FeeSlow `json:"standard"`
+	Recommended EvmEip1559FeeSlow `json:"recommended"`
 	Fast *EvmEip1559FeeSlow `json:"fast,omitempty"`
 }
 
@@ -32,10 +34,10 @@ type _EvmEip1559Fee EvmEip1559Fee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmEip1559Fee(feeType FeeType, standard EvmEip1559FeeSlow) *EvmEip1559Fee {
+func NewEvmEip1559Fee(feeType FeeType, recommended EvmEip1559FeeSlow) *EvmEip1559Fee {
 	this := EvmEip1559Fee{}
 	this.FeeType = feeType
-	this.Standard = standard
+	this.Recommended = recommended
 	return &this
 }
 
@@ -73,6 +75,38 @@ func (o *EvmEip1559Fee) SetFeeType(v FeeType) {
 	o.FeeType = v
 }
 
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *EvmEip1559Fee) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmEip1559Fee) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *EvmEip1559Fee) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *EvmEip1559Fee) SetTokenId(v string) {
+	o.TokenId = &v
+}
+
 // GetSlow returns the Slow field value if set, zero value otherwise.
 func (o *EvmEip1559Fee) GetSlow() EvmEip1559FeeSlow {
 	if o == nil || IsNil(o.Slow) {
@@ -105,28 +139,28 @@ func (o *EvmEip1559Fee) SetSlow(v EvmEip1559FeeSlow) {
 	o.Slow = &v
 }
 
-// GetStandard returns the Standard field value
-func (o *EvmEip1559Fee) GetStandard() EvmEip1559FeeSlow {
+// GetRecommended returns the Recommended field value
+func (o *EvmEip1559Fee) GetRecommended() EvmEip1559FeeSlow {
 	if o == nil {
 		var ret EvmEip1559FeeSlow
 		return ret
 	}
 
-	return o.Standard
+	return o.Recommended
 }
 
-// GetStandardOk returns a tuple with the Standard field value
+// GetRecommendedOk returns a tuple with the Recommended field value
 // and a boolean to check if the value has been set.
-func (o *EvmEip1559Fee) GetStandardOk() (*EvmEip1559FeeSlow, bool) {
+func (o *EvmEip1559Fee) GetRecommendedOk() (*EvmEip1559FeeSlow, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Standard, true
+	return &o.Recommended, true
 }
 
-// SetStandard sets field value
-func (o *EvmEip1559Fee) SetStandard(v EvmEip1559FeeSlow) {
-	o.Standard = v
+// SetRecommended sets field value
+func (o *EvmEip1559Fee) SetRecommended(v EvmEip1559FeeSlow) {
+	o.Recommended = v
 }
 
 // GetFast returns the Fast field value if set, zero value otherwise.
@@ -172,10 +206,13 @@ func (o EvmEip1559Fee) MarshalJSON() ([]byte, error) {
 func (o EvmEip1559Fee) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["fee_type"] = o.FeeType
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
 	if !IsNil(o.Slow) {
 		toSerialize["slow"] = o.Slow
 	}
-	toSerialize["standard"] = o.Standard
+	toSerialize["recommended"] = o.Recommended
 	if !IsNil(o.Fast) {
 		toSerialize["fast"] = o.Fast
 	}
@@ -188,7 +225,7 @@ func (o *EvmEip1559Fee) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"fee_type",
-		"standard",
+		"recommended",
 	}
 
 	allProperties := make(map[string]interface{})

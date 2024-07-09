@@ -20,9 +20,9 @@ var _ MappedNullable = &ChainInfo{}
 
 // ChainInfo The chain information.
 type ChainInfo struct {
-	// The chain on which the token operates.
+	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
 	ChainId string `json:"chain_id"`
-	// The chain symbol.
+	// The chain symbol, which is the abbreviated name of a chain.
 	Symbol *string `json:"symbol,omitempty"`
 	// The URL of the chain icon.
 	IconUrl *string `json:"icon_url,omitempty"`
@@ -30,6 +30,8 @@ type ChainInfo struct {
 	ExplorerTxUrl *string `json:"explorer_tx_url,omitempty"`
 	// The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs.
 	ExplorerAddressUrl *string `json:"explorer_address_url,omitempty"`
+	// Whether the chain requires a memo.
+	RequireMemo *bool `json:"require_memo,omitempty"`
 }
 
 type _ChainInfo ChainInfo
@@ -204,6 +206,38 @@ func (o *ChainInfo) SetExplorerAddressUrl(v string) {
 	o.ExplorerAddressUrl = &v
 }
 
+// GetRequireMemo returns the RequireMemo field value if set, zero value otherwise.
+func (o *ChainInfo) GetRequireMemo() bool {
+	if o == nil || IsNil(o.RequireMemo) {
+		var ret bool
+		return ret
+	}
+	return *o.RequireMemo
+}
+
+// GetRequireMemoOk returns a tuple with the RequireMemo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ChainInfo) GetRequireMemoOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequireMemo) {
+		return nil, false
+	}
+	return o.RequireMemo, true
+}
+
+// HasRequireMemo returns a boolean if a field has been set.
+func (o *ChainInfo) HasRequireMemo() bool {
+	if o != nil && !IsNil(o.RequireMemo) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireMemo gets a reference to the given bool and assigns it to the RequireMemo field.
+func (o *ChainInfo) SetRequireMemo(v bool) {
+	o.RequireMemo = &v
+}
+
 func (o ChainInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -226,6 +260,9 @@ func (o ChainInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExplorerAddressUrl) {
 		toSerialize["explorer_address_url"] = o.ExplorerAddressUrl
+	}
+	if !IsNil(o.RequireMemo) {
+		toSerialize["require_memo"] = o.RequireMemo
 	}
 	return toSerialize, nil
 }

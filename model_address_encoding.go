@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// AddressEncoding The address encoding formats. This parameter only applies to blockchains with Bitcoin-like architecture.
+// AddressEncoding The address encoding formats. This property only applies to blockchains that have a similar architecture to Bitcoin.
 type AddressEncoding string
 
 // List of AddressEncoding
@@ -45,15 +45,8 @@ func (v *AddressEncoding) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := AddressEncoding(value)
-	for _, existing := range AllowedAddressEncodingEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid AddressEncoding", value)
+	*v = AddressEncoding(value)
+	return nil
 }
 
 // NewAddressEncodingFromValue returns a pointer to a valid AddressEncoding

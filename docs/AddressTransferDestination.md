@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **DestinationType** | [**TransferDestinationType**](TransferDestinationType.md) |  | 
 **AccountOutput** | Pointer to [**AddressTransferDestinationAccountOutput**](AddressTransferDestinationAccountOutput.md) |  | [optional] 
 **UtxoOutputs** | Pointer to [**AddressTransferDestinationUtxoOutputs**](AddressTransferDestinationUtxoOutputs.md) |  | [optional] 
+**ForceInternal** | Pointer to **bool** | Whether the transfer request must be executed as an off-chain transfer.    - &#x60;true&#x60;: The transfer request must be executed an off-chain transfer.    - &#x60;false&#x60;: The transfer may not be executed as an off-chain transfer.  | [optional] 
+**ForceExternal** | Pointer to **bool** | Whether the transfer must be executed as an on-chain transfer. - &#x60;true&#x60;: The transfer must be executed as an on-chain transfer. - &#x60;false&#x60;: The transfer may not be executed as an on-chain transfer.  | [optional] 
 
 ## Methods
 
@@ -96,6 +98,56 @@ SetUtxoOutputs sets UtxoOutputs field to given value.
 `func (o *AddressTransferDestination) HasUtxoOutputs() bool`
 
 HasUtxoOutputs returns a boolean if a field has been set.
+
+### GetForceInternal
+
+`func (o *AddressTransferDestination) GetForceInternal() bool`
+
+GetForceInternal returns the ForceInternal field if non-nil, zero value otherwise.
+
+### GetForceInternalOk
+
+`func (o *AddressTransferDestination) GetForceInternalOk() (*bool, bool)`
+
+GetForceInternalOk returns a tuple with the ForceInternal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetForceInternal
+
+`func (o *AddressTransferDestination) SetForceInternal(v bool)`
+
+SetForceInternal sets ForceInternal field to given value.
+
+### HasForceInternal
+
+`func (o *AddressTransferDestination) HasForceInternal() bool`
+
+HasForceInternal returns a boolean if a field has been set.
+
+### GetForceExternal
+
+`func (o *AddressTransferDestination) GetForceExternal() bool`
+
+GetForceExternal returns the ForceExternal field if non-nil, zero value otherwise.
+
+### GetForceExternalOk
+
+`func (o *AddressTransferDestination) GetForceExternalOk() (*bool, bool)`
+
+GetForceExternalOk returns a tuple with the ForceExternal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetForceExternal
+
+`func (o *AddressTransferDestination) SetForceExternal(v bool)`
+
+SetForceExternal sets ForceExternal field to given value.
+
+### HasForceExternal
+
+`func (o *AddressTransferDestination) HasForceExternal() bool`
+
+HasForceExternal returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

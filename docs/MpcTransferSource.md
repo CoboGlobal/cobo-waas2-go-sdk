@@ -5,16 +5,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**WalletSubtype**](WalletSubtype.md) |  | 
-**WalletId** | **string** | Unique id of the wallet to transfer from. | 
-**AccountInput** | Pointer to [**MpcTransferSourceAccountInput**](MpcTransferSourceAccountInput.md) |  | [optional] 
-**UtxoInputs** | Pointer to [**MpcTransferSourceUtxoInputs**](MpcTransferSourceUtxoInputs.md) |  | [optional] 
-**MpcUsedKeyGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
+**WalletId** | **string** | The wallet ID. | 
+**AccountInput** | Pointer to [**TransactionMPCWalletSourceAccountInput**](TransactionMPCWalletSourceAccountInput.md) |  | [optional] 
+**UtxoInputs** | Pointer to [**MpcTransferSourceAllOfUtxoInputs**](MpcTransferSourceAllOfUtxoInputs.md) |  | [optional] 
+**MpcUsedKeyGroup** | [**MpcSigningGroup**](MpcSigningGroup.md) |  | 
 
 ## Methods
 
 ### NewMpcTransferSource
 
-`func NewMpcTransferSource(sourceType WalletSubtype, walletId string, ) *MpcTransferSource`
+`func NewMpcTransferSource(sourceType WalletSubtype, walletId string, mpcUsedKeyGroup MpcSigningGroup, ) *MpcTransferSource`
 
 NewMpcTransferSource instantiates a new MpcTransferSource object
 This constructor will assign default values to properties that have it defined,
@@ -71,20 +71,20 @@ SetWalletId sets WalletId field to given value.
 
 ### GetAccountInput
 
-`func (o *MpcTransferSource) GetAccountInput() MpcTransferSourceAccountInput`
+`func (o *MpcTransferSource) GetAccountInput() TransactionMPCWalletSourceAccountInput`
 
 GetAccountInput returns the AccountInput field if non-nil, zero value otherwise.
 
 ### GetAccountInputOk
 
-`func (o *MpcTransferSource) GetAccountInputOk() (*MpcTransferSourceAccountInput, bool)`
+`func (o *MpcTransferSource) GetAccountInputOk() (*TransactionMPCWalletSourceAccountInput, bool)`
 
 GetAccountInputOk returns a tuple with the AccountInput field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAccountInput
 
-`func (o *MpcTransferSource) SetAccountInput(v MpcTransferSourceAccountInput)`
+`func (o *MpcTransferSource) SetAccountInput(v TransactionMPCWalletSourceAccountInput)`
 
 SetAccountInput sets AccountInput field to given value.
 
@@ -96,20 +96,20 @@ HasAccountInput returns a boolean if a field has been set.
 
 ### GetUtxoInputs
 
-`func (o *MpcTransferSource) GetUtxoInputs() MpcTransferSourceUtxoInputs`
+`func (o *MpcTransferSource) GetUtxoInputs() MpcTransferSourceAllOfUtxoInputs`
 
 GetUtxoInputs returns the UtxoInputs field if non-nil, zero value otherwise.
 
 ### GetUtxoInputsOk
 
-`func (o *MpcTransferSource) GetUtxoInputsOk() (*MpcTransferSourceUtxoInputs, bool)`
+`func (o *MpcTransferSource) GetUtxoInputsOk() (*MpcTransferSourceAllOfUtxoInputs, bool)`
 
 GetUtxoInputsOk returns a tuple with the UtxoInputs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUtxoInputs
 
-`func (o *MpcTransferSource) SetUtxoInputs(v MpcTransferSourceUtxoInputs)`
+`func (o *MpcTransferSource) SetUtxoInputs(v MpcTransferSourceAllOfUtxoInputs)`
 
 SetUtxoInputs sets UtxoInputs field to given value.
 
@@ -138,11 +138,6 @@ and a boolean to check if the value has been set.
 
 SetMpcUsedKeyGroup sets MpcUsedKeyGroup field to given value.
 
-### HasMpcUsedKeyGroup
-
-`func (o *MpcTransferSource) HasMpcUsedKeyGroup() bool`
-
-HasMpcUsedKeyGroup returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

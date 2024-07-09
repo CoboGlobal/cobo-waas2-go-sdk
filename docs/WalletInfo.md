@@ -9,10 +9,10 @@ Name | Type | Description | Notes
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Name** | **string** | The wallet name. | 
 **OrgId** | **string** | The ID of the owning organization. | 
-**VaultId** | **string** | The ID of the owning Vault. | 
+**VaultId** | **string** | The ID of the owning vault. | 
 **Apikey** | **string** | The API key of your exchange account. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
-**ParentWalletId** | Pointer to **string** | The wallet ID of the Main Account associated with the Sub Account. This is returned only if you are querying a Sub Account. | [optional] 
+**ParentWalletId** | Pointer to **string** | The wallet ID of the Main Account associated with the Sub Account. This property is returned only if you are creating or querying an Exchange Wallet (Sub Account). | [optional] 
 **SubAccounts** | Pointer to [**[]ExchangeWalletInfoAllOfSubAccounts**](ExchangeWalletInfoAllOfSubAccounts.md) |  | [optional] 
 
 ## Methods

@@ -33,8 +33,8 @@ type CreateExchangeWallet struct {
 	Passphrase *string `json:"passphrase,omitempty"`
 	// The GA code for the exchange.
 	GaCode *string `json:"ga_code,omitempty"`
-	// The Sub Account ID. It can be an email address, a user name, or a custom account ID.
-	SubAccountIds []string `json:"sub_account_ids,omitempty"`
+	// The ID of the Exchange Wallet (Main Account).
+	MainWalletId *string `json:"main_wallet_id,omitempty"`
 }
 
 type _CreateExchangeWallet CreateExchangeWallet
@@ -270,36 +270,36 @@ func (o *CreateExchangeWallet) SetGaCode(v string) {
 	o.GaCode = &v
 }
 
-// GetSubAccountIds returns the SubAccountIds field value if set, zero value otherwise.
-func (o *CreateExchangeWallet) GetSubAccountIds() []string {
-	if o == nil || IsNil(o.SubAccountIds) {
-		var ret []string
+// GetMainWalletId returns the MainWalletId field value if set, zero value otherwise.
+func (o *CreateExchangeWallet) GetMainWalletId() string {
+	if o == nil || IsNil(o.MainWalletId) {
+		var ret string
 		return ret
 	}
-	return o.SubAccountIds
+	return *o.MainWalletId
 }
 
-// GetSubAccountIdsOk returns a tuple with the SubAccountIds field value if set, nil otherwise
+// GetMainWalletIdOk returns a tuple with the MainWalletId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateExchangeWallet) GetSubAccountIdsOk() ([]string, bool) {
-	if o == nil || IsNil(o.SubAccountIds) {
+func (o *CreateExchangeWallet) GetMainWalletIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MainWalletId) {
 		return nil, false
 	}
-	return o.SubAccountIds, true
+	return o.MainWalletId, true
 }
 
-// HasSubAccountIds returns a boolean if a field has been set.
-func (o *CreateExchangeWallet) HasSubAccountIds() bool {
-	if o != nil && !IsNil(o.SubAccountIds) {
+// HasMainWalletId returns a boolean if a field has been set.
+func (o *CreateExchangeWallet) HasMainWalletId() bool {
+	if o != nil && !IsNil(o.MainWalletId) {
 		return true
 	}
 
 	return false
 }
 
-// SetSubAccountIds gets a reference to the given []string and assigns it to the SubAccountIds field.
-func (o *CreateExchangeWallet) SetSubAccountIds(v []string) {
-	o.SubAccountIds = v
+// SetMainWalletId gets a reference to the given string and assigns it to the MainWalletId field.
+func (o *CreateExchangeWallet) SetMainWalletId(v string) {
+	o.MainWalletId = &v
 }
 
 func (o CreateExchangeWallet) MarshalJSON() ([]byte, error) {
@@ -324,8 +324,8 @@ func (o CreateExchangeWallet) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.GaCode) {
 		toSerialize["ga_code"] = o.GaCode
 	}
-	if !IsNil(o.SubAccountIds) {
-		toSerialize["sub_account_ids"] = o.SubAccountIds
+	if !IsNil(o.MainWalletId) {
+		toSerialize["main_wallet_id"] = o.MainWalletId
 	}
 	return toSerialize, nil
 }

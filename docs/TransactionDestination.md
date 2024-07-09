@@ -4,18 +4,27 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | [**TransactionAddressType**](TransactionAddressType.md) |  | 
-**Address** | Pointer to **string** | Address | [optional] 
-**Memo** | Pointer to **string** | Address memo | [optional] 
-**WalletId** | **string** | Unique id of the wallet. | 
+**DestinationType** | [**TransactionDestinationType**](TransactionDestinationType.md) |  | 
+**TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens). | 
+**AssetId** | **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset is a digital representation of a valuable resource on a blockchain network. Exchange Wallets group your holdings by asset, even if the same asset exists on different blockchains. For example, if your Exchange Wallet has 1 USDT on Ethereum and 1 USDT on TRON, then your asset balance is 2 USDT. | 
+**AccountOutput** | Pointer to [**TransactionAddressDestinationAccountOutput**](TransactionAddressDestinationAccountOutput.md) |  | [optional] 
+**UtxoOutputs** | Pointer to [**TransactionAddressDestinationUtxoOutputs**](TransactionAddressDestinationUtxoOutputs.md) |  | [optional] 
+**Address** | **string** | The destination address. | 
+**Value** | **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
+**Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
+**Message** | Pointer to **string** | The raw data to be signed that are encoded in Base64. | [optional] 
+**StructuredData** | Pointer to **string** | The structured data to be signed that are encoded in JSON. | [optional] 
+**WalletId** | **string** | The wallet ID. | 
+**Memo** | Pointer to **string** | The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON. | [optional] 
+**Amount** | **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
-**SubWalletId** | Pointer to **string** | Exchange trading account or any sub wallet info for transfer. | [optional] 
+**SubWalletId** | Pointer to **string** | The exchange trading account or the sub-wallet ID. | [optional] 
 
 ## Methods
 
 ### NewTransactionDestination
 
-`func NewTransactionDestination(type_ TransactionAddressType, walletId string, exchangeId ExchangeId, ) *TransactionDestination`
+`func NewTransactionDestination(destinationType TransactionDestinationType, tokenId string, assetId string, address string, value string, calldata string, walletId string, amount string, exchangeId ExchangeId, ) *TransactionDestination`
 
 NewTransactionDestination instantiates a new TransactionDestination object
 This constructor will assign default values to properties that have it defined,
@@ -30,25 +39,115 @@ NewTransactionDestinationWithDefaults instantiates a new TransactionDestination 
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetType
+### GetDestinationType
 
-`func (o *TransactionDestination) GetType() TransactionAddressType`
+`func (o *TransactionDestination) GetDestinationType() TransactionDestinationType`
 
-GetType returns the Type field if non-nil, zero value otherwise.
+GetDestinationType returns the DestinationType field if non-nil, zero value otherwise.
 
-### GetTypeOk
+### GetDestinationTypeOk
 
-`func (o *TransactionDestination) GetTypeOk() (*TransactionAddressType, bool)`
+`func (o *TransactionDestination) GetDestinationTypeOk() (*TransactionDestinationType, bool)`
 
-GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+GetDestinationTypeOk returns a tuple with the DestinationType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetType
+### SetDestinationType
 
-`func (o *TransactionDestination) SetType(v TransactionAddressType)`
+`func (o *TransactionDestination) SetDestinationType(v TransactionDestinationType)`
 
-SetType sets Type field to given value.
+SetDestinationType sets DestinationType field to given value.
 
+
+### GetTokenId
+
+`func (o *TransactionDestination) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *TransactionDestination) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *TransactionDestination) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+
+### GetAssetId
+
+`func (o *TransactionDestination) GetAssetId() string`
+
+GetAssetId returns the AssetId field if non-nil, zero value otherwise.
+
+### GetAssetIdOk
+
+`func (o *TransactionDestination) GetAssetIdOk() (*string, bool)`
+
+GetAssetIdOk returns a tuple with the AssetId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssetId
+
+`func (o *TransactionDestination) SetAssetId(v string)`
+
+SetAssetId sets AssetId field to given value.
+
+
+### GetAccountOutput
+
+`func (o *TransactionDestination) GetAccountOutput() TransactionAddressDestinationAccountOutput`
+
+GetAccountOutput returns the AccountOutput field if non-nil, zero value otherwise.
+
+### GetAccountOutputOk
+
+`func (o *TransactionDestination) GetAccountOutputOk() (*TransactionAddressDestinationAccountOutput, bool)`
+
+GetAccountOutputOk returns a tuple with the AccountOutput field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccountOutput
+
+`func (o *TransactionDestination) SetAccountOutput(v TransactionAddressDestinationAccountOutput)`
+
+SetAccountOutput sets AccountOutput field to given value.
+
+### HasAccountOutput
+
+`func (o *TransactionDestination) HasAccountOutput() bool`
+
+HasAccountOutput returns a boolean if a field has been set.
+
+### GetUtxoOutputs
+
+`func (o *TransactionDestination) GetUtxoOutputs() TransactionAddressDestinationUtxoOutputs`
+
+GetUtxoOutputs returns the UtxoOutputs field if non-nil, zero value otherwise.
+
+### GetUtxoOutputsOk
+
+`func (o *TransactionDestination) GetUtxoOutputsOk() (*TransactionAddressDestinationUtxoOutputs, bool)`
+
+GetUtxoOutputsOk returns a tuple with the UtxoOutputs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUtxoOutputs
+
+`func (o *TransactionDestination) SetUtxoOutputs(v TransactionAddressDestinationUtxoOutputs)`
+
+SetUtxoOutputs sets UtxoOutputs field to given value.
+
+### HasUtxoOutputs
+
+`func (o *TransactionDestination) HasUtxoOutputs() bool`
+
+HasUtxoOutputs returns a boolean if a field has been set.
 
 ### GetAddress
 
@@ -69,11 +168,116 @@ and a boolean to check if the value has been set.
 
 SetAddress sets Address field to given value.
 
-### HasAddress
 
-`func (o *TransactionDestination) HasAddress() bool`
+### GetValue
 
-HasAddress returns a boolean if a field has been set.
+`func (o *TransactionDestination) GetValue() string`
+
+GetValue returns the Value field if non-nil, zero value otherwise.
+
+### GetValueOk
+
+`func (o *TransactionDestination) GetValueOk() (*string, bool)`
+
+GetValueOk returns a tuple with the Value field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetValue
+
+`func (o *TransactionDestination) SetValue(v string)`
+
+SetValue sets Value field to given value.
+
+
+### GetCalldata
+
+`func (o *TransactionDestination) GetCalldata() string`
+
+GetCalldata returns the Calldata field if non-nil, zero value otherwise.
+
+### GetCalldataOk
+
+`func (o *TransactionDestination) GetCalldataOk() (*string, bool)`
+
+GetCalldataOk returns a tuple with the Calldata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCalldata
+
+`func (o *TransactionDestination) SetCalldata(v string)`
+
+SetCalldata sets Calldata field to given value.
+
+
+### GetMessage
+
+`func (o *TransactionDestination) GetMessage() string`
+
+GetMessage returns the Message field if non-nil, zero value otherwise.
+
+### GetMessageOk
+
+`func (o *TransactionDestination) GetMessageOk() (*string, bool)`
+
+GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMessage
+
+`func (o *TransactionDestination) SetMessage(v string)`
+
+SetMessage sets Message field to given value.
+
+### HasMessage
+
+`func (o *TransactionDestination) HasMessage() bool`
+
+HasMessage returns a boolean if a field has been set.
+
+### GetStructuredData
+
+`func (o *TransactionDestination) GetStructuredData() string`
+
+GetStructuredData returns the StructuredData field if non-nil, zero value otherwise.
+
+### GetStructuredDataOk
+
+`func (o *TransactionDestination) GetStructuredDataOk() (*string, bool)`
+
+GetStructuredDataOk returns a tuple with the StructuredData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStructuredData
+
+`func (o *TransactionDestination) SetStructuredData(v string)`
+
+SetStructuredData sets StructuredData field to given value.
+
+### HasStructuredData
+
+`func (o *TransactionDestination) HasStructuredData() bool`
+
+HasStructuredData returns a boolean if a field has been set.
+
+### GetWalletId
+
+`func (o *TransactionDestination) GetWalletId() string`
+
+GetWalletId returns the WalletId field if non-nil, zero value otherwise.
+
+### GetWalletIdOk
+
+`func (o *TransactionDestination) GetWalletIdOk() (*string, bool)`
+
+GetWalletIdOk returns a tuple with the WalletId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWalletId
+
+`func (o *TransactionDestination) SetWalletId(v string)`
+
+SetWalletId sets WalletId field to given value.
+
 
 ### GetMemo
 
@@ -100,24 +304,24 @@ SetMemo sets Memo field to given value.
 
 HasMemo returns a boolean if a field has been set.
 
-### GetWalletId
+### GetAmount
 
-`func (o *TransactionDestination) GetWalletId() string`
+`func (o *TransactionDestination) GetAmount() string`
 
-GetWalletId returns the WalletId field if non-nil, zero value otherwise.
+GetAmount returns the Amount field if non-nil, zero value otherwise.
 
-### GetWalletIdOk
+### GetAmountOk
 
-`func (o *TransactionDestination) GetWalletIdOk() (*string, bool)`
+`func (o *TransactionDestination) GetAmountOk() (*string, bool)`
 
-GetWalletIdOk returns a tuple with the WalletId field if it's non-nil, zero value otherwise
+GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetWalletId
+### SetAmount
 
-`func (o *TransactionDestination) SetWalletId(v string)`
+`func (o *TransactionDestination) SetAmount(v string)`
 
-SetWalletId sets WalletId field to given value.
+SetAmount sets Amount field to given value.
 
 
 ### GetExchangeId

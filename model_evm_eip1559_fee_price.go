@@ -18,15 +18,14 @@ import (
 // checks if the EvmEip1559FeePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEip1559FeePrice{}
 
-// EvmEip1559FeePrice The transaction fee when using the EIP 1669 method.
+// EvmEip1559FeePrice The transaction fee price based on the EIP-1559 fee model.
 type EvmEip1559FeePrice struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction.
-	MaxPriorityFee string `json:"max_priority_fee"`
-	// The base fee of chain.
-	BaseFee string `json:"base_fee"`
 	FeeType FeeType `json:"fee_type"`
+	// The token ID of the transaction fee.
+	TokenId *string `json:"token_id,omitempty"`
+	Slow *EvmEip1559FeeBasePrice `json:"slow,omitempty"`
+	Recommended EvmEip1559FeeBasePrice `json:"recommended"`
+	Fast *EvmEip1559FeeBasePrice `json:"fast,omitempty"`
 }
 
 type _EvmEip1559FeePrice EvmEip1559FeePrice
@@ -35,11 +34,10 @@ type _EvmEip1559FeePrice EvmEip1559FeePrice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmEip1559FeePrice(maxPriorityFee string, baseFee string, feeType FeeType) *EvmEip1559FeePrice {
+func NewEvmEip1559FeePrice(feeType FeeType, recommended EvmEip1559FeeBasePrice) *EvmEip1559FeePrice {
 	this := EvmEip1559FeePrice{}
-	this.MaxPriorityFee = maxPriorityFee
-	this.BaseFee = baseFee
 	this.FeeType = feeType
+	this.Recommended = recommended
 	return &this
 }
 
@@ -51,86 +49,6 @@ func NewEvmEip1559FeePriceWithDefaults() *EvmEip1559FeePrice {
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *EvmEip1559FeePrice) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmEip1559FeePrice) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *EvmEip1559FeePrice) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *EvmEip1559FeePrice) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
-}
-
-// GetMaxPriorityFee returns the MaxPriorityFee field value
-func (o *EvmEip1559FeePrice) GetMaxPriorityFee() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.MaxPriorityFee
-}
-
-// GetMaxPriorityFeeOk returns a tuple with the MaxPriorityFee field value
-// and a boolean to check if the value has been set.
-func (o *EvmEip1559FeePrice) GetMaxPriorityFeeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.MaxPriorityFee, true
-}
-
-// SetMaxPriorityFee sets field value
-func (o *EvmEip1559FeePrice) SetMaxPriorityFee(v string) {
-	o.MaxPriorityFee = v
-}
-
-// GetBaseFee returns the BaseFee field value
-func (o *EvmEip1559FeePrice) GetBaseFee() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.BaseFee
-}
-
-// GetBaseFeeOk returns a tuple with the BaseFee field value
-// and a boolean to check if the value has been set.
-func (o *EvmEip1559FeePrice) GetBaseFeeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.BaseFee, true
-}
-
-// SetBaseFee sets field value
-func (o *EvmEip1559FeePrice) SetBaseFee(v string) {
-	o.BaseFee = v
 }
 
 // GetFeeType returns the FeeType field value
@@ -157,6 +75,126 @@ func (o *EvmEip1559FeePrice) SetFeeType(v FeeType) {
 	o.FeeType = v
 }
 
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *EvmEip1559FeePrice) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmEip1559FeePrice) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *EvmEip1559FeePrice) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *EvmEip1559FeePrice) SetTokenId(v string) {
+	o.TokenId = &v
+}
+
+// GetSlow returns the Slow field value if set, zero value otherwise.
+func (o *EvmEip1559FeePrice) GetSlow() EvmEip1559FeeBasePrice {
+	if o == nil || IsNil(o.Slow) {
+		var ret EvmEip1559FeeBasePrice
+		return ret
+	}
+	return *o.Slow
+}
+
+// GetSlowOk returns a tuple with the Slow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmEip1559FeePrice) GetSlowOk() (*EvmEip1559FeeBasePrice, bool) {
+	if o == nil || IsNil(o.Slow) {
+		return nil, false
+	}
+	return o.Slow, true
+}
+
+// HasSlow returns a boolean if a field has been set.
+func (o *EvmEip1559FeePrice) HasSlow() bool {
+	if o != nil && !IsNil(o.Slow) {
+		return true
+	}
+
+	return false
+}
+
+// SetSlow gets a reference to the given EvmEip1559FeeBasePrice and assigns it to the Slow field.
+func (o *EvmEip1559FeePrice) SetSlow(v EvmEip1559FeeBasePrice) {
+	o.Slow = &v
+}
+
+// GetRecommended returns the Recommended field value
+func (o *EvmEip1559FeePrice) GetRecommended() EvmEip1559FeeBasePrice {
+	if o == nil {
+		var ret EvmEip1559FeeBasePrice
+		return ret
+	}
+
+	return o.Recommended
+}
+
+// GetRecommendedOk returns a tuple with the Recommended field value
+// and a boolean to check if the value has been set.
+func (o *EvmEip1559FeePrice) GetRecommendedOk() (*EvmEip1559FeeBasePrice, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Recommended, true
+}
+
+// SetRecommended sets field value
+func (o *EvmEip1559FeePrice) SetRecommended(v EvmEip1559FeeBasePrice) {
+	o.Recommended = v
+}
+
+// GetFast returns the Fast field value if set, zero value otherwise.
+func (o *EvmEip1559FeePrice) GetFast() EvmEip1559FeeBasePrice {
+	if o == nil || IsNil(o.Fast) {
+		var ret EvmEip1559FeeBasePrice
+		return ret
+	}
+	return *o.Fast
+}
+
+// GetFastOk returns a tuple with the Fast field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmEip1559FeePrice) GetFastOk() (*EvmEip1559FeeBasePrice, bool) {
+	if o == nil || IsNil(o.Fast) {
+		return nil, false
+	}
+	return o.Fast, true
+}
+
+// HasFast returns a boolean if a field has been set.
+func (o *EvmEip1559FeePrice) HasFast() bool {
+	if o != nil && !IsNil(o.Fast) {
+		return true
+	}
+
+	return false
+}
+
+// SetFast gets a reference to the given EvmEip1559FeeBasePrice and assigns it to the Fast field.
+func (o *EvmEip1559FeePrice) SetFast(v EvmEip1559FeeBasePrice) {
+	o.Fast = &v
+}
+
 func (o EvmEip1559FeePrice) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -167,12 +205,17 @@ func (o EvmEip1559FeePrice) MarshalJSON() ([]byte, error) {
 
 func (o EvmEip1559FeePrice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
-	toSerialize["max_priority_fee"] = o.MaxPriorityFee
-	toSerialize["base_fee"] = o.BaseFee
 	toSerialize["fee_type"] = o.FeeType
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
+	if !IsNil(o.Slow) {
+		toSerialize["slow"] = o.Slow
+	}
+	toSerialize["recommended"] = o.Recommended
+	if !IsNil(o.Fast) {
+		toSerialize["fast"] = o.Fast
+	}
 	return toSerialize, nil
 }
 
@@ -181,9 +224,8 @@ func (o *EvmEip1559FeePrice) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"max_priority_fee",
-		"base_fee",
 		"fee_type",
+		"recommended",
 	}
 
 	allProperties := make(map[string]interface{})

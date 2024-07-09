@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WalletId** | Pointer to **string** | The wallet id of the delegate. This is required when user initiate a transfer. | [optional] 
-**WalletType** | Pointer to **string** | The wallet type of the delegate. This is required when user initiate a transfer. | [optional] 
-**WalletAddress** | Pointer to **string** | The wallet address of the delegate. This is required when user initiate a transfer. | [optional] 
+**WalletId** | Pointer to **string** | The wallet ID of the Delegate. This is required for initiating a transfer from a Smart Contract Wallet (Safe{Wallet}). | [optional] 
+**WalletType** | Pointer to **string** | The wallet type of the Delegate. This is required for initiating a transfer from a Smart Contract Wallet (Safe{Wallet}). | [optional] 
+**WalletAddress** | Pointer to **string** | The wallet address of the Delegate. This is required for initiating a transfer from a Smart Contract Wallet (Safe{Wallet}). | [optional] 
 **MpcUsedKeyGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 
 ## Methods

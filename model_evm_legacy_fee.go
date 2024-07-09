@@ -18,11 +18,13 @@ import (
 // checks if the EvmLegacyFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmLegacyFee{}
 
-// EvmLegacyFee The estimated transaction fee when using the legacy method.
+// EvmLegacyFee The estimated transaction fee based on the legacy fee model.
 type EvmLegacyFee struct {
 	FeeType FeeType `json:"fee_type"`
+	// The token ID of the transaction fee.
+	TokenId *string `json:"token_id,omitempty"`
 	Slow *EvmLegacyFeeSlow `json:"slow,omitempty"`
-	Standard EvmLegacyFeeSlow `json:"standard"`
+	Recommended EvmLegacyFeeSlow `json:"recommended"`
 	Fast *EvmLegacyFeeSlow `json:"fast,omitempty"`
 }
 
@@ -32,10 +34,10 @@ type _EvmLegacyFee EvmLegacyFee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmLegacyFee(feeType FeeType, standard EvmLegacyFeeSlow) *EvmLegacyFee {
+func NewEvmLegacyFee(feeType FeeType, recommended EvmLegacyFeeSlow) *EvmLegacyFee {
 	this := EvmLegacyFee{}
 	this.FeeType = feeType
-	this.Standard = standard
+	this.Recommended = recommended
 	return &this
 }
 
@@ -73,6 +75,38 @@ func (o *EvmLegacyFee) SetFeeType(v FeeType) {
 	o.FeeType = v
 }
 
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *EvmLegacyFee) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmLegacyFee) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *EvmLegacyFee) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *EvmLegacyFee) SetTokenId(v string) {
+	o.TokenId = &v
+}
+
 // GetSlow returns the Slow field value if set, zero value otherwise.
 func (o *EvmLegacyFee) GetSlow() EvmLegacyFeeSlow {
 	if o == nil || IsNil(o.Slow) {
@@ -105,28 +139,28 @@ func (o *EvmLegacyFee) SetSlow(v EvmLegacyFeeSlow) {
 	o.Slow = &v
 }
 
-// GetStandard returns the Standard field value
-func (o *EvmLegacyFee) GetStandard() EvmLegacyFeeSlow {
+// GetRecommended returns the Recommended field value
+func (o *EvmLegacyFee) GetRecommended() EvmLegacyFeeSlow {
 	if o == nil {
 		var ret EvmLegacyFeeSlow
 		return ret
 	}
 
-	return o.Standard
+	return o.Recommended
 }
 
-// GetStandardOk returns a tuple with the Standard field value
+// GetRecommendedOk returns a tuple with the Recommended field value
 // and a boolean to check if the value has been set.
-func (o *EvmLegacyFee) GetStandardOk() (*EvmLegacyFeeSlow, bool) {
+func (o *EvmLegacyFee) GetRecommendedOk() (*EvmLegacyFeeSlow, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Standard, true
+	return &o.Recommended, true
 }
 
-// SetStandard sets field value
-func (o *EvmLegacyFee) SetStandard(v EvmLegacyFeeSlow) {
-	o.Standard = v
+// SetRecommended sets field value
+func (o *EvmLegacyFee) SetRecommended(v EvmLegacyFeeSlow) {
+	o.Recommended = v
 }
 
 // GetFast returns the Fast field value if set, zero value otherwise.
@@ -172,10 +206,13 @@ func (o EvmLegacyFee) MarshalJSON() ([]byte, error) {
 func (o EvmLegacyFee) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["fee_type"] = o.FeeType
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
 	if !IsNil(o.Slow) {
 		toSerialize["slow"] = o.Slow
 	}
-	toSerialize["standard"] = o.Standard
+	toSerialize["recommended"] = o.Recommended
 	if !IsNil(o.Fast) {
 		toSerialize["fast"] = o.Fast
 	}
@@ -188,7 +225,7 @@ func (o *EvmLegacyFee) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"fee_type",
-		"standard",
+		"recommended",
 	}
 
 	allProperties := make(map[string]interface{})

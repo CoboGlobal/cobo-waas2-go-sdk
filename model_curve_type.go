@@ -35,15 +35,8 @@ func (v *CurveType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := CurveType(value)
-	for _, existing := range AllowedCurveTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid CurveType", value)
+	*v = CurveType(value)
+	return nil
 }
 
 // NewCurveTypeFromValue returns a pointer to a valid CurveType

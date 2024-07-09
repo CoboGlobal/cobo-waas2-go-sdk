@@ -11,6 +11,8 @@ package CoboWaas2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CreateTransferTransaction201Response type satisfies the MappedNullable interface at compile time
@@ -18,19 +20,24 @@ var _ MappedNullable = &CreateTransferTransaction201Response{}
 
 // CreateTransferTransaction201Response struct for CreateTransferTransaction201Response
 type CreateTransferTransaction201Response struct {
-	// Unique id of the request.
-	RequestId *string `json:"request_id,omitempty"`
-	// The transaction id of of the request.
-	TransactionId *string `json:"transaction_id,omitempty"`
-	Status *TransactionStatus `json:"status,omitempty"`
+	// The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization.
+	RequestId string `json:"request_id"`
+	// The transaction ID.
+	TransactionId string `json:"transaction_id"`
+	Status TransactionStatus `json:"status"`
 }
+
+type _CreateTransferTransaction201Response CreateTransferTransaction201Response
 
 // NewCreateTransferTransaction201Response instantiates a new CreateTransferTransaction201Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateTransferTransaction201Response() *CreateTransferTransaction201Response {
+func NewCreateTransferTransaction201Response(requestId string, transactionId string, status TransactionStatus) *CreateTransferTransaction201Response {
 	this := CreateTransferTransaction201Response{}
+	this.RequestId = requestId
+	this.TransactionId = transactionId
+	this.Status = status
 	return &this
 }
 
@@ -42,100 +49,76 @@ func NewCreateTransferTransaction201ResponseWithDefaults() *CreateTransferTransa
 	return &this
 }
 
-// GetRequestId returns the RequestId field value if set, zero value otherwise.
+// GetRequestId returns the RequestId field value
 func (o *CreateTransferTransaction201Response) GetRequestId() string {
-	if o == nil || IsNil(o.RequestId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.RequestId
+
+	return o.RequestId
 }
 
-// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// GetRequestIdOk returns a tuple with the RequestId field value
 // and a boolean to check if the value has been set.
 func (o *CreateTransferTransaction201Response) GetRequestIdOk() (*string, bool) {
-	if o == nil || IsNil(o.RequestId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RequestId, true
+	return &o.RequestId, true
 }
 
-// HasRequestId returns a boolean if a field has been set.
-func (o *CreateTransferTransaction201Response) HasRequestId() bool {
-	if o != nil && !IsNil(o.RequestId) {
-		return true
-	}
-
-	return false
-}
-
-// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+// SetRequestId sets field value
 func (o *CreateTransferTransaction201Response) SetRequestId(v string) {
-	o.RequestId = &v
+	o.RequestId = v
 }
 
-// GetTransactionId returns the TransactionId field value if set, zero value otherwise.
+// GetTransactionId returns the TransactionId field value
 func (o *CreateTransferTransaction201Response) GetTransactionId() string {
-	if o == nil || IsNil(o.TransactionId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.TransactionId
+
+	return o.TransactionId
 }
 
-// GetTransactionIdOk returns a tuple with the TransactionId field value if set, nil otherwise
+// GetTransactionIdOk returns a tuple with the TransactionId field value
 // and a boolean to check if the value has been set.
 func (o *CreateTransferTransaction201Response) GetTransactionIdOk() (*string, bool) {
-	if o == nil || IsNil(o.TransactionId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.TransactionId, true
+	return &o.TransactionId, true
 }
 
-// HasTransactionId returns a boolean if a field has been set.
-func (o *CreateTransferTransaction201Response) HasTransactionId() bool {
-	if o != nil && !IsNil(o.TransactionId) {
-		return true
-	}
-
-	return false
-}
-
-// SetTransactionId gets a reference to the given string and assigns it to the TransactionId field.
+// SetTransactionId sets field value
 func (o *CreateTransferTransaction201Response) SetTransactionId(v string) {
-	o.TransactionId = &v
+	o.TransactionId = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *CreateTransferTransaction201Response) GetStatus() TransactionStatus {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret TransactionStatus
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *CreateTransferTransaction201Response) GetStatusOk() (*TransactionStatus, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *CreateTransferTransaction201Response) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given TransactionStatus and assigns it to the Status field.
+// SetStatus sets field value
 func (o *CreateTransferTransaction201Response) SetStatus(v TransactionStatus) {
-	o.Status = &v
+	o.Status = v
 }
 
 func (o CreateTransferTransaction201Response) MarshalJSON() ([]byte, error) {
@@ -148,16 +131,49 @@ func (o CreateTransferTransaction201Response) MarshalJSON() ([]byte, error) {
 
 func (o CreateTransferTransaction201Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.RequestId) {
-		toSerialize["request_id"] = o.RequestId
-	}
-	if !IsNil(o.TransactionId) {
-		toSerialize["transaction_id"] = o.TransactionId
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
+	toSerialize["request_id"] = o.RequestId
+	toSerialize["transaction_id"] = o.TransactionId
+	toSerialize["status"] = o.Status
 	return toSerialize, nil
+}
+
+func (o *CreateTransferTransaction201Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"request_id",
+		"transaction_id",
+		"status",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateTransferTransaction201Response := _CreateTransferTransaction201Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	//decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateTransferTransaction201Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateTransferTransaction201Response(varCreateTransferTransaction201Response)
+
+	return err
 }
 
 type NullableCreateTransferTransaction201Response struct {

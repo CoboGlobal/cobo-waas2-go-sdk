@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | The new name of vault | 
+**Name** | **string** | The new name of the vault. | 
 
 ## Methods
 

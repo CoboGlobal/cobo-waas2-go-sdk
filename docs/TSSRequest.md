@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique id of the tss request. | [optional] 
+**Id** | Pointer to **string** | The TSS request ID. | [optional] 
 **Type** | Pointer to [**TSSRequestType**](TSSRequestType.md) |  | [optional] 
 **Status** | Pointer to [**TSSRequestStatus**](TSSRequestStatus.md) |  | [optional] 
 

@@ -39,15 +39,8 @@ func (v *KeyHolderStatus) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := KeyHolderStatus(value)
-	for _, existing := range AllowedKeyHolderStatusEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid KeyHolderStatus", value)
+	*v = KeyHolderStatus(value)
+	return nil
 }
 
 // NewKeyHolderStatusFromValue returns a pointer to a valid KeyHolderStatus

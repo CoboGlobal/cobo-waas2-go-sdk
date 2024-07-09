@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TSSRequestType The type of tss request, keygen is key generation
+// TSSRequestType The TSS request type. Possible values include: - `KeyGen`: This is a key generation request to create a [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key).  - `KeyGenFromKeyGroup`: This is a request to use the [Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups) to create a [Signing Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups) and a [Recovery Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups).  - `Recovery`: This is a request to create a new [Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups) from the [Recovery Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups) if the old Main Group has been lost. 
 type TSSRequestType string
 
 // List of TSSRequestType
@@ -37,15 +37,8 @@ func (v *TSSRequestType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TSSRequestType(value)
-	for _, existing := range AllowedTSSRequestTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TSSRequestType", value)
+	*v = TSSRequestType(value)
+	return nil
 }
 
 // NewTSSRequestTypeFromValue returns a pointer to a valid TSSRequestType

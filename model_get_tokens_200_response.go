@@ -18,7 +18,7 @@ var _ MappedNullable = &GetTokens200Response{}
 
 // GetTokens200Response struct for GetTokens200Response
 type GetTokens200Response struct {
-	Data []GetTokens200ResponseDataInner `json:"data,omitempty"`
+	Data []ExtendedTokenInfo `json:"data,omitempty"`
 	Pagination *Pagination `json:"pagination,omitempty"`
 }
 
@@ -40,9 +40,9 @@ func NewGetTokens200ResponseWithDefaults() *GetTokens200Response {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *GetTokens200Response) GetData() []GetTokens200ResponseDataInner {
+func (o *GetTokens200Response) GetData() []ExtendedTokenInfo {
 	if o == nil || IsNil(o.Data) {
-		var ret []GetTokens200ResponseDataInner
+		var ret []ExtendedTokenInfo
 		return ret
 	}
 	return o.Data
@@ -50,7 +50,7 @@ func (o *GetTokens200Response) GetData() []GetTokens200ResponseDataInner {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetTokens200Response) GetDataOk() ([]GetTokens200ResponseDataInner, bool) {
+func (o *GetTokens200Response) GetDataOk() ([]ExtendedTokenInfo, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -66,8 +66,8 @@ func (o *GetTokens200Response) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []GetTokens200ResponseDataInner and assigns it to the Data field.
-func (o *GetTokens200Response) SetData(v []GetTokens200ResponseDataInner) {
+// SetData gets a reference to the given []ExtendedTokenInfo and assigns it to the Data field.
+func (o *GetTokens200Response) SetData(v []ExtendedTokenInfo) {
 	o.Data = v
 }
 

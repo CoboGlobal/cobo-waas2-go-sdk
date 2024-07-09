@@ -20,12 +20,10 @@ var _ MappedNullable = &EvmLegacyFeeSlow{}
 
 // EvmLegacyFeeSlow struct for EvmLegacyFeeSlow
 type EvmLegacyFeeSlow struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions.
 	GasPrice string `json:"gas_price"`
-	// The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units.
-	GasLimit *string `json:"gas_limit,omitempty"`
+	// The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies.
+	GasLimit string `json:"gas_limit"`
 }
 
 type _EvmLegacyFeeSlow EvmLegacyFeeSlow
@@ -34,11 +32,10 @@ type _EvmLegacyFeeSlow EvmLegacyFeeSlow
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmLegacyFeeSlow(gasPrice string) *EvmLegacyFeeSlow {
+func NewEvmLegacyFeeSlow(gasPrice string, gasLimit string) *EvmLegacyFeeSlow {
 	this := EvmLegacyFeeSlow{}
 	this.GasPrice = gasPrice
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
+	this.GasLimit = gasLimit
 	return &this
 }
 
@@ -48,40 +45,8 @@ func NewEvmLegacyFeeSlow(gasPrice string) *EvmLegacyFeeSlow {
 func NewEvmLegacyFeeSlowWithDefaults() *EvmLegacyFeeSlow {
 	this := EvmLegacyFeeSlow{}
 	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
+	this.GasLimit = gasLimit
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *EvmLegacyFeeSlow) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmLegacyFeeSlow) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *EvmLegacyFeeSlow) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *EvmLegacyFeeSlow) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
 }
 
 // GetGasPrice returns the GasPrice field value
@@ -108,36 +73,28 @@ func (o *EvmLegacyFeeSlow) SetGasPrice(v string) {
 	o.GasPrice = v
 }
 
-// GetGasLimit returns the GasLimit field value if set, zero value otherwise.
+// GetGasLimit returns the GasLimit field value
 func (o *EvmLegacyFeeSlow) GetGasLimit() string {
-	if o == nil || IsNil(o.GasLimit) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.GasLimit
+
+	return o.GasLimit
 }
 
-// GetGasLimitOk returns a tuple with the GasLimit field value if set, nil otherwise
+// GetGasLimitOk returns a tuple with the GasLimit field value
 // and a boolean to check if the value has been set.
 func (o *EvmLegacyFeeSlow) GetGasLimitOk() (*string, bool) {
-	if o == nil || IsNil(o.GasLimit) {
+	if o == nil {
 		return nil, false
 	}
-	return o.GasLimit, true
+	return &o.GasLimit, true
 }
 
-// HasGasLimit returns a boolean if a field has been set.
-func (o *EvmLegacyFeeSlow) HasGasLimit() bool {
-	if o != nil && !IsNil(o.GasLimit) {
-		return true
-	}
-
-	return false
-}
-
-// SetGasLimit gets a reference to the given string and assigns it to the GasLimit field.
+// SetGasLimit sets field value
 func (o *EvmLegacyFeeSlow) SetGasLimit(v string) {
-	o.GasLimit = &v
+	o.GasLimit = v
 }
 
 func (o EvmLegacyFeeSlow) MarshalJSON() ([]byte, error) {
@@ -150,13 +107,8 @@ func (o EvmLegacyFeeSlow) MarshalJSON() ([]byte, error) {
 
 func (o EvmLegacyFeeSlow) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
 	toSerialize["gas_price"] = o.GasPrice
-	if !IsNil(o.GasLimit) {
-		toSerialize["gas_limit"] = o.GasLimit
-	}
+	toSerialize["gas_limit"] = o.GasLimit
 	return toSerialize, nil
 }
 
@@ -166,6 +118,7 @@ func (o *EvmLegacyFeeSlow) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"gas_price",
+		"gas_limit",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -18,14 +18,14 @@ import (
 // checks if the ExchangeTransferDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ExchangeTransferDestination{}
 
-// ExchangeTransferDestination The data for exchange destination.
+// ExchangeTransferDestination The information about the transaction destination.
 type ExchangeTransferDestination struct {
 	DestinationType TransferDestinationType `json:"destination_type"`
-	// Unique id of the wallet to transfer to.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// Exchange trading account or any sub wallet info for transfer.
+	// The exchange trading account or the sub-wallet ID.
 	SubWalletId string `json:"sub_wallet_id"`
-	// Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5) 
+	// The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Amount *string `json:"amount,omitempty"`
 }
 

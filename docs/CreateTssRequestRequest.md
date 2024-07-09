@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**TSSRequestType**](TSSRequestType.md) |  | 
-**TargetKeyGroupId** | **string** |  | 
-**UsedKeyGroupId** | Pointer to **string** |  | [optional] 
+**TargetKeyGroupId** | **string** | The target key share group ID. | 
+**SourceKeyGroupId** | Pointer to **string** | The used key share group ID.  **Note:** &#x60;used_key_group_id&#x60; is used only when the action &#x60;type&#x60; is either &#x60;KeyGenfromKeyGroup&#x60; or &#x60;Recovery&#x60;. This is to specify the key share group to be used as the source group to create a new &#x60;target_key_group&#x60;.  | [optional] 
 **DetailParams** | Pointer to [**CreateTssRequestRequestDetailParams**](CreateTssRequestRequestDetailParams.md) |  | [optional] 
 
 ## Methods
@@ -68,30 +68,30 @@ and a boolean to check if the value has been set.
 SetTargetKeyGroupId sets TargetKeyGroupId field to given value.
 
 
-### GetUsedKeyGroupId
+### GetSourceKeyGroupId
 
-`func (o *CreateTssRequestRequest) GetUsedKeyGroupId() string`
+`func (o *CreateTssRequestRequest) GetSourceKeyGroupId() string`
 
-GetUsedKeyGroupId returns the UsedKeyGroupId field if non-nil, zero value otherwise.
+GetSourceKeyGroupId returns the SourceKeyGroupId field if non-nil, zero value otherwise.
 
-### GetUsedKeyGroupIdOk
+### GetSourceKeyGroupIdOk
 
-`func (o *CreateTssRequestRequest) GetUsedKeyGroupIdOk() (*string, bool)`
+`func (o *CreateTssRequestRequest) GetSourceKeyGroupIdOk() (*string, bool)`
 
-GetUsedKeyGroupIdOk returns a tuple with the UsedKeyGroupId field if it's non-nil, zero value otherwise
+GetSourceKeyGroupIdOk returns a tuple with the SourceKeyGroupId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUsedKeyGroupId
+### SetSourceKeyGroupId
 
-`func (o *CreateTssRequestRequest) SetUsedKeyGroupId(v string)`
+`func (o *CreateTssRequestRequest) SetSourceKeyGroupId(v string)`
 
-SetUsedKeyGroupId sets UsedKeyGroupId field to given value.
+SetSourceKeyGroupId sets SourceKeyGroupId field to given value.
 
-### HasUsedKeyGroupId
+### HasSourceKeyGroupId
 
-`func (o *CreateTssRequestRequest) HasUsedKeyGroupId() bool`
+`func (o *CreateTssRequestRequest) HasSourceKeyGroupId() bool`
 
-HasUsedKeyGroupId returns a boolean if a field has been set.
+HasSourceKeyGroupId returns a boolean if a field has been set.
 
 ### GetDetailParams
 

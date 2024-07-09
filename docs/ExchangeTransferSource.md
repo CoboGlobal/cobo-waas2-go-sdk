@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**WalletSubtype**](WalletSubtype.md) |  | 
-**WalletId** | **string** | Unique id of the wallet to transfer from. | 
-**SubWalletId** | **string** | Exchange trading account or any sub wallet info for transfer. | 
+**WalletId** | **string** | The wallet ID. | 
+**SubWalletId** | **string** | The exchange trading account or the sub-wallet ID. | 
 
 ## Methods
 

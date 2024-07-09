@@ -4,11 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ChainId** | **string** | The chain on which the token operates. | 
-**Symbol** | Pointer to **string** | The chain symbol. | [optional] 
+**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains). | 
+**Symbol** | Pointer to **string** | The chain symbol, which is the abbreviated name of a chain. | [optional] 
 **IconUrl** | Pointer to **string** | The URL of the chain icon. | [optional] 
 **ExplorerTxUrl** | Pointer to **string** | The transaction URL pattern on the blockchain explorer. You can use it to concatenate the transaction URLs. | [optional] 
 **ExplorerAddressUrl** | Pointer to **string** | The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs. | [optional] 
+**RequireMemo** | Pointer to **bool** | Whether the chain requires a memo. | [optional] 
 
 ## Methods
 
@@ -148,6 +149,31 @@ SetExplorerAddressUrl sets ExplorerAddressUrl field to given value.
 `func (o *ChainInfo) HasExplorerAddressUrl() bool`
 
 HasExplorerAddressUrl returns a boolean if a field has been set.
+
+### GetRequireMemo
+
+`func (o *ChainInfo) GetRequireMemo() bool`
+
+GetRequireMemo returns the RequireMemo field if non-nil, zero value otherwise.
+
+### GetRequireMemoOk
+
+`func (o *ChainInfo) GetRequireMemoOk() (*bool, bool)`
+
+GetRequireMemoOk returns a tuple with the RequireMemo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequireMemo
+
+`func (o *ChainInfo) SetRequireMemo(v bool)`
+
+SetRequireMemo sets RequireMemo field to given value.
+
+### HasRequireMemo
+
+`func (o *ChainInfo) HasRequireMemo() bool`
+
+HasRequireMemo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

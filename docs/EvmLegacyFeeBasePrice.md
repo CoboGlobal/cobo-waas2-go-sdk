@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **GasPrice** | **string** | The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | 
 
 ## Methods
@@ -25,31 +24,6 @@ will change when the set of required properties is changed
 NewEvmLegacyFeeBasePriceWithDefaults instantiates a new EvmLegacyFeeBasePrice object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetFeeTokenId
-
-`func (o *EvmLegacyFeeBasePrice) GetFeeTokenId() string`
-
-GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
-
-### GetFeeTokenIdOk
-
-`func (o *EvmLegacyFeeBasePrice) GetFeeTokenIdOk() (*string, bool)`
-
-GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeTokenId
-
-`func (o *EvmLegacyFeeBasePrice) SetFeeTokenId(v string)`
-
-SetFeeTokenId sets FeeTokenId field to given value.
-
-### HasFeeTokenId
-
-`func (o *EvmLegacyFeeBasePrice) HasFeeTokenId() bool`
-
-HasFeeTokenId returns a boolean if a field has been set.
 
 ### GetGasPrice
 

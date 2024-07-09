@@ -16,13 +16,14 @@ import (
 // checks if the KeyHolder type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &KeyHolder{}
 
-// KeyHolder The data for mpc wallet key holder information.
+// KeyHolder The data for MPC Wallets' key share holder information.
 type KeyHolder struct {
+	// The key share holder name.
 	Name *string `json:"name,omitempty"`
 	Type *KeyHolderType `json:"type,omitempty"`
-	// The IDs of the tss node.
+	// Key share holder's TSS Node ID.
 	TssNodeId *string `json:"tss_node_id,omitempty"`
-	// Indicates if the tss node online
+	// Whether the key share holder's TSS Node is online. - `true`: The TSS Node is online.  - `false`: The TSS Node is offline. 
 	Online *bool `json:"online,omitempty"`
 	Status *KeyHolderStatus `json:"status,omitempty"`
 }

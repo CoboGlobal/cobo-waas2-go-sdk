@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// FeeType The fee type.
+// FeeType The fee model. Possible values include: - `Fixed`: The fixed fee model.  - `EVM_EIP_1559`: The EIP-1559 fee model. - `EVM_Legacy`: The legacy fee model. - `UTXO`: The fee model used in UTXO-based blockchains, such as Bitcoin. 
 type FeeType string
 
 // List of FeeType
@@ -39,15 +39,8 @@ func (v *FeeType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := FeeType(value)
-	for _, existing := range AllowedFeeTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid FeeType", value)
+	*v = FeeType(value)
+	return nil
 }
 
 // NewFeeTypeFromValue returns a pointer to a valid FeeType

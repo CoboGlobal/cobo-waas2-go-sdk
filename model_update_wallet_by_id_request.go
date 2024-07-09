@@ -20,16 +20,16 @@ var _ MappedNullable = &UpdateWalletByIdRequest{}
 type UpdateWalletByIdRequest struct {
 	// The wallet name.
 	Name *string `json:"name,omitempty"`
-	// The API key of your exchange account.
+	// The API key of your exchange account. This property is required when updating the information of an Exchange Wallet.
 	Apikey *string `json:"apikey,omitempty"`
-	// The API secret of your exchange account.
+	// The API secret of your exchange account. This property is required when updating the information of an Exchange Wallet.
 	Secret *string `json:"secret,omitempty"`
-	// The passphrase of your exchange account.
+	// The passphrase of your exchange account. This property is required when updating the information of an Exchange Wallet.
 	Passphrase *string `json:"passphrase,omitempty"`
 	// The GA code for the exchange.
 	GaCode *string `json:"ga_code,omitempty"`
-	// The Sub Account ID. It can be an email address, a user name, or a custom account ID.
-	SubAccountIds []string `json:"sub_account_ids,omitempty"`
+	// The ID of the Exchange Wallet (Main Account).
+	MainWalletId *string `json:"main_wallet_id,omitempty"`
 }
 
 // NewUpdateWalletByIdRequest instantiates a new UpdateWalletByIdRequest object
@@ -209,36 +209,36 @@ func (o *UpdateWalletByIdRequest) SetGaCode(v string) {
 	o.GaCode = &v
 }
 
-// GetSubAccountIds returns the SubAccountIds field value if set, zero value otherwise.
-func (o *UpdateWalletByIdRequest) GetSubAccountIds() []string {
-	if o == nil || IsNil(o.SubAccountIds) {
-		var ret []string
+// GetMainWalletId returns the MainWalletId field value if set, zero value otherwise.
+func (o *UpdateWalletByIdRequest) GetMainWalletId() string {
+	if o == nil || IsNil(o.MainWalletId) {
+		var ret string
 		return ret
 	}
-	return o.SubAccountIds
+	return *o.MainWalletId
 }
 
-// GetSubAccountIdsOk returns a tuple with the SubAccountIds field value if set, nil otherwise
+// GetMainWalletIdOk returns a tuple with the MainWalletId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateWalletByIdRequest) GetSubAccountIdsOk() ([]string, bool) {
-	if o == nil || IsNil(o.SubAccountIds) {
+func (o *UpdateWalletByIdRequest) GetMainWalletIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MainWalletId) {
 		return nil, false
 	}
-	return o.SubAccountIds, true
+	return o.MainWalletId, true
 }
 
-// HasSubAccountIds returns a boolean if a field has been set.
-func (o *UpdateWalletByIdRequest) HasSubAccountIds() bool {
-	if o != nil && !IsNil(o.SubAccountIds) {
+// HasMainWalletId returns a boolean if a field has been set.
+func (o *UpdateWalletByIdRequest) HasMainWalletId() bool {
+	if o != nil && !IsNil(o.MainWalletId) {
 		return true
 	}
 
 	return false
 }
 
-// SetSubAccountIds gets a reference to the given []string and assigns it to the SubAccountIds field.
-func (o *UpdateWalletByIdRequest) SetSubAccountIds(v []string) {
-	o.SubAccountIds = v
+// SetMainWalletId gets a reference to the given string and assigns it to the MainWalletId field.
+func (o *UpdateWalletByIdRequest) SetMainWalletId(v string) {
+	o.MainWalletId = &v
 }
 
 func (o UpdateWalletByIdRequest) MarshalJSON() ([]byte, error) {
@@ -266,8 +266,8 @@ func (o UpdateWalletByIdRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.GaCode) {
 		toSerialize["ga_code"] = o.GaCode
 	}
-	if !IsNil(o.SubAccountIds) {
-		toSerialize["sub_account_ids"] = o.SubAccountIds
+	if !IsNil(o.MainWalletId) {
+		toSerialize["main_wallet_id"] = o.MainWalletId
 	}
 	return toSerialize, nil
 }

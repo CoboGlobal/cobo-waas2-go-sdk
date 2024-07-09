@@ -16,11 +16,12 @@ import (
 // checks if the CreateKeyGroupRequestKeyHoldersInner type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateKeyGroupRequestKeyHoldersInner{}
 
-// CreateKeyGroupRequestKeyHoldersInner When creating MainKeyGroup and SigningKeyGroup, the cobo key holder will be added automatically
+// CreateKeyGroupRequestKeyHoldersInner When creating MainKeyGroup and SigningKeyGroup, the Cobo key share holder will be added automatically.
 type CreateKeyGroupRequestKeyHoldersInner struct {
+	// Key share holder's name.
 	Name *string `json:"name,omitempty"`
 	Type *KeyHolderType `json:"type,omitempty"`
-	// The ID of the tss node.
+	// The TSS Node ID.
 	TssNodeId *string `json:"tss_node_id,omitempty"`
 }
 

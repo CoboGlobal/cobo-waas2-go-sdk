@@ -16,10 +16,11 @@ import (
 // checks if the MpcSigningGroup type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MpcSigningGroup{}
 
-// MpcSigningGroup The data for mpc signing key group.
+// MpcSigningGroup The information about the Signing Group of an MPC Wallet.
 type MpcSigningGroup struct {
-	// Unique id of the using key group.
+	// The ID of the Signing Group.
 	UsedKeyGroupId *string `json:"used_key_group_id,omitempty"`
+	// The ID of the TSS Nodes that are required to participate in the signature.
 	UsedNodeIds []string `json:"used_node_ids,omitempty"`
 }
 

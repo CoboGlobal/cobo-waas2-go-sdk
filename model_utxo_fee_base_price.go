@@ -18,11 +18,9 @@ import (
 // checks if the UtxoFeeBasePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UtxoFeeBasePrice{}
 
-// UtxoFeeBasePrice The base transaction fee for UTXO-based chains.
+// UtxoFeeBasePrice The transaction fee price for UTXO-based chains (such as Bitcoin), which equals the fee rate.
 type UtxoFeeBasePrice struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
+	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
 }
 
@@ -44,38 +42,6 @@ func NewUtxoFeeBasePrice(feeRate string) *UtxoFeeBasePrice {
 func NewUtxoFeeBasePriceWithDefaults() *UtxoFeeBasePrice {
 	this := UtxoFeeBasePrice{}
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *UtxoFeeBasePrice) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UtxoFeeBasePrice) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *UtxoFeeBasePrice) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *UtxoFeeBasePrice) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
 }
 
 // GetFeeRate returns the FeeRate field value
@@ -112,9 +78,6 @@ func (o UtxoFeeBasePrice) MarshalJSON() ([]byte, error) {
 
 func (o UtxoFeeBasePrice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
 	toSerialize["fee_rate"] = o.FeeRate
 	return toSerialize, nil
 }

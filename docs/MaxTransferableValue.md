@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | Pointer to **string** | The token name. | [optional] 
+**TokenId** | Pointer to **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens). | [optional] 
 **MaxTransferableValue** | Pointer to **string** | The maximum amount you can transfer from the wallet or the specified wallet address. | [optional] 
-**Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
+**Fee** | Pointer to [**TransactionTransferFee**](TransactionTransferFee.md) |  | [optional] 
 
 ## Methods
 
@@ -79,20 +79,20 @@ HasMaxTransferableValue returns a boolean if a field has been set.
 
 ### GetFee
 
-`func (o *MaxTransferableValue) GetFee() TransactionFee`
+`func (o *MaxTransferableValue) GetFee() TransactionTransferFee`
 
 GetFee returns the Fee field if non-nil, zero value otherwise.
 
 ### GetFeeOk
 
-`func (o *MaxTransferableValue) GetFeeOk() (*TransactionFee, bool)`
+`func (o *MaxTransferableValue) GetFeeOk() (*TransactionTransferFee, bool)`
 
 GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFee
 
-`func (o *MaxTransferableValue) SetFee(v TransactionFee)`
+`func (o *MaxTransferableValue) SetFee(v TransactionTransferFee)`
 
 SetFee sets Fee field to given value.
 

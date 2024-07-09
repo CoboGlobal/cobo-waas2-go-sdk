@@ -18,11 +18,11 @@ var _ MappedNullable = &CreateSafeWalletAllOfInitiator{}
 
 // CreateSafeWalletAllOfInitiator struct for CreateSafeWalletAllOfInitiator
 type CreateSafeWalletAllOfInitiator struct {
-	// The initiator's wallet ID. This field is required when creating a new Safe{Wallet}. 
+	// The initiator's wallet ID. This property is required when creating a new Safe{Wallet}.
 	WalletId *string `json:"wallet_id,omitempty"`
-	// The initiator's wallet type. This field is required when creating a new Safe{Wallet}. 
+	// The initiator's wallet type. This property is required when creating a new Safe{Wallet}.
 	WalletType *string `json:"wallet_type,omitempty"`
-	// The initiator's wallet address. This field is required when creating a new Safe{Wallet}. 
+	// The initiator's wallet address. This property is required when creating a new Safe{Wallet}.
 	WalletAddress *string `json:"wallet_address,omitempty"`
 }
 

@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// WalletType the model 'WalletType'
+// WalletType The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 type WalletType string
 
 // List of WalletType
@@ -39,15 +39,8 @@ func (v *WalletType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := WalletType(value)
-	for _, existing := range AllowedWalletTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid WalletType", value)
+	*v = WalletType(value)
+	return nil
 }
 
 // NewWalletTypeFromValue returns a pointer to a valid WalletType

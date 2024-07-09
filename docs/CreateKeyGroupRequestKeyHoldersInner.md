@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** |  | [optional] 
+**Name** | Pointer to **string** | Key share holder&#39;s name. | [optional] 
 **Type** | Pointer to [**KeyHolderType**](KeyHolderType.md) |  | [optional] 
-**TssNodeId** | Pointer to **string** | The ID of the tss node. | [optional] 
+**TssNodeId** | Pointer to **string** | The TSS Node ID. | [optional] 
 
 ## Methods
 

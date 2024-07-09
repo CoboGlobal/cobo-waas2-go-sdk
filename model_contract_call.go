@@ -18,16 +18,15 @@ import (
 // checks if the ContractCall type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ContractCall{}
 
-// ContractCall The data for create smart contract call transaction.
+// ContractCall The information about a transaction that interacts with a smart contract
 type ContractCall struct {
-	// Unique id of the request.
+	// The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization.
 	RequestId string `json:"request_id"`
-	RequestType string `json:"request_type"`
-	// The blockchain on which the token operates.
+	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains).
 	ChainId string `json:"chain_id"`
 	Source ContractCallSource `json:"source"`
-	Destination *ContractCallDestination `json:"destination,omitempty"`
-	Fee *TransactionFee `json:"fee,omitempty"`
+	Destination EstimateFeeContractCallDestination `json:"destination"`
+	Fee *TransactionTransferFee `json:"fee,omitempty"`
 }
 
 type _ContractCall ContractCall
@@ -36,12 +35,12 @@ type _ContractCall ContractCall
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewContractCall(requestId string, requestType string, chainId string, source ContractCallSource) *ContractCall {
+func NewContractCall(requestId string, chainId string, source ContractCallSource, destination EstimateFeeContractCallDestination) *ContractCall {
 	this := ContractCall{}
 	this.RequestId = requestId
-	this.RequestType = requestType
 	this.ChainId = chainId
 	this.Source = source
+	this.Destination = destination
 	return &this
 }
 
@@ -75,30 +74,6 @@ func (o *ContractCall) GetRequestIdOk() (*string, bool) {
 // SetRequestId sets field value
 func (o *ContractCall) SetRequestId(v string) {
 	o.RequestId = v
-}
-
-// GetRequestType returns the RequestType field value
-func (o *ContractCall) GetRequestType() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.RequestType
-}
-
-// GetRequestTypeOk returns a tuple with the RequestType field value
-// and a boolean to check if the value has been set.
-func (o *ContractCall) GetRequestTypeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.RequestType, true
-}
-
-// SetRequestType sets field value
-func (o *ContractCall) SetRequestType(v string) {
-	o.RequestType = v
 }
 
 // GetChainId returns the ChainId field value
@@ -149,42 +124,34 @@ func (o *ContractCall) SetSource(v ContractCallSource) {
 	o.Source = v
 }
 
-// GetDestination returns the Destination field value if set, zero value otherwise.
-func (o *ContractCall) GetDestination() ContractCallDestination {
-	if o == nil || IsNil(o.Destination) {
-		var ret ContractCallDestination
+// GetDestination returns the Destination field value
+func (o *ContractCall) GetDestination() EstimateFeeContractCallDestination {
+	if o == nil {
+		var ret EstimateFeeContractCallDestination
 		return ret
 	}
-	return *o.Destination
+
+	return o.Destination
 }
 
-// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
+// GetDestinationOk returns a tuple with the Destination field value
 // and a boolean to check if the value has been set.
-func (o *ContractCall) GetDestinationOk() (*ContractCallDestination, bool) {
-	if o == nil || IsNil(o.Destination) {
+func (o *ContractCall) GetDestinationOk() (*EstimateFeeContractCallDestination, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Destination, true
+	return &o.Destination, true
 }
 
-// HasDestination returns a boolean if a field has been set.
-func (o *ContractCall) HasDestination() bool {
-	if o != nil && !IsNil(o.Destination) {
-		return true
-	}
-
-	return false
-}
-
-// SetDestination gets a reference to the given ContractCallDestination and assigns it to the Destination field.
-func (o *ContractCall) SetDestination(v ContractCallDestination) {
-	o.Destination = &v
+// SetDestination sets field value
+func (o *ContractCall) SetDestination(v EstimateFeeContractCallDestination) {
+	o.Destination = v
 }
 
 // GetFee returns the Fee field value if set, zero value otherwise.
-func (o *ContractCall) GetFee() TransactionFee {
+func (o *ContractCall) GetFee() TransactionTransferFee {
 	if o == nil || IsNil(o.Fee) {
-		var ret TransactionFee
+		var ret TransactionTransferFee
 		return ret
 	}
 	return *o.Fee
@@ -192,7 +159,7 @@ func (o *ContractCall) GetFee() TransactionFee {
 
 // GetFeeOk returns a tuple with the Fee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ContractCall) GetFeeOk() (*TransactionFee, bool) {
+func (o *ContractCall) GetFeeOk() (*TransactionTransferFee, bool) {
 	if o == nil || IsNil(o.Fee) {
 		return nil, false
 	}
@@ -208,8 +175,8 @@ func (o *ContractCall) HasFee() bool {
 	return false
 }
 
-// SetFee gets a reference to the given TransactionFee and assigns it to the Fee field.
-func (o *ContractCall) SetFee(v TransactionFee) {
+// SetFee gets a reference to the given TransactionTransferFee and assigns it to the Fee field.
+func (o *ContractCall) SetFee(v TransactionTransferFee) {
 	o.Fee = &v
 }
 
@@ -224,12 +191,9 @@ func (o ContractCall) MarshalJSON() ([]byte, error) {
 func (o ContractCall) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
-	toSerialize["request_type"] = o.RequestType
 	toSerialize["chain_id"] = o.ChainId
 	toSerialize["source"] = o.Source
-	if !IsNil(o.Destination) {
-		toSerialize["destination"] = o.Destination
-	}
+	toSerialize["destination"] = o.Destination
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee
 	}
@@ -242,9 +206,9 @@ func (o *ContractCall) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"request_id",
-		"request_type",
 		"chain_id",
 		"source",
+		"destination",
 	}
 
 	allProperties := make(map[string]interface{})

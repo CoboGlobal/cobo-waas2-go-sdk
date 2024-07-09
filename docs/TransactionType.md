@@ -11,7 +11,7 @@
 
 * `CONTRACT_CALL` (value: `"ContractCall"`)
 
-* `AUTO_FUELING` (value: `"AutoFueling"`)
+* `TRANSACTION_FEE_PAYMENT` (value: `"TransactionFeePayment"`)
 
 * `RAW_MESSAGE` (value: `"RawMessage"`)
 

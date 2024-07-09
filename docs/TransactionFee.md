@@ -5,19 +5,21 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
-**MaxPriorityFee** | **string** | The max priority fee, in gwei. The max priority fee represents the highest amount of miner tips you are willing to pay for your transaction. | 
-**BaseFee** | **string** | The base fee of chain. | 
-**GasLimit** | Pointer to **string** | The gas limit, which represents the max number of gas units you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. Different operations require varying quantities of gas units. | [optional] [default to "21000"]
+**FeeUsed** | Pointer to **string** | The transaction fee. | [optional] 
+**GasUsed** | Pointer to **string** | The gas units used in the transaction. | [optional] 
+**MaxPriorityFee** | **string** | The maximum priority fee, in gwei. The maximum priority fee represents the highest amount of miner tips that you are willing to pay for your transaction. | 
+**BaseFee** | **string** | The base fee price of the chain, in gwei. | 
+**GasLimit** | **string** | The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies. | [default to "21000"]
 **GasPrice** | **string** | The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | 
-**FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
-**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
+**FeeRate** | **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**MaxFeeAmount** | **string** | The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee. | 
+**TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 
 ## Methods
 
 ### NewTransactionFee
 
-`func NewTransactionFee(feeType FeeType, maxPriorityFee string, baseFee string, gasPrice string, feeRate string, ) *TransactionFee`
+`func NewTransactionFee(feeType FeeType, maxPriorityFee string, baseFee string, gasLimit string, gasPrice string, feeRate string, maxFeeAmount string, ) *TransactionFee`
 
 NewTransactionFee instantiates a new TransactionFee object
 This constructor will assign default values to properties that have it defined,
@@ -52,30 +54,55 @@ and a boolean to check if the value has been set.
 SetFeeType sets FeeType field to given value.
 
 
-### GetFeeTokenId
+### GetFeeUsed
 
-`func (o *TransactionFee) GetFeeTokenId() string`
+`func (o *TransactionFee) GetFeeUsed() string`
 
-GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
+GetFeeUsed returns the FeeUsed field if non-nil, zero value otherwise.
 
-### GetFeeTokenIdOk
+### GetFeeUsedOk
 
-`func (o *TransactionFee) GetFeeTokenIdOk() (*string, bool)`
+`func (o *TransactionFee) GetFeeUsedOk() (*string, bool)`
 
-GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
+GetFeeUsedOk returns a tuple with the FeeUsed field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeeTokenId
+### SetFeeUsed
 
-`func (o *TransactionFee) SetFeeTokenId(v string)`
+`func (o *TransactionFee) SetFeeUsed(v string)`
 
-SetFeeTokenId sets FeeTokenId field to given value.
+SetFeeUsed sets FeeUsed field to given value.
 
-### HasFeeTokenId
+### HasFeeUsed
 
-`func (o *TransactionFee) HasFeeTokenId() bool`
+`func (o *TransactionFee) HasFeeUsed() bool`
 
-HasFeeTokenId returns a boolean if a field has been set.
+HasFeeUsed returns a boolean if a field has been set.
+
+### GetGasUsed
+
+`func (o *TransactionFee) GetGasUsed() string`
+
+GetGasUsed returns the GasUsed field if non-nil, zero value otherwise.
+
+### GetGasUsedOk
+
+`func (o *TransactionFee) GetGasUsedOk() (*string, bool)`
+
+GetGasUsedOk returns a tuple with the GasUsed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGasUsed
+
+`func (o *TransactionFee) SetGasUsed(v string)`
+
+SetGasUsed sets GasUsed field to given value.
+
+### HasGasUsed
+
+`func (o *TransactionFee) HasGasUsed() bool`
+
+HasGasUsed returns a boolean if a field has been set.
 
 ### GetMaxPriorityFee
 
@@ -136,11 +163,6 @@ and a boolean to check if the value has been set.
 
 SetGasLimit sets GasLimit field to given value.
 
-### HasGasLimit
-
-`func (o *TransactionFee) HasGasLimit() bool`
-
-HasGasLimit returns a boolean if a field has been set.
 
 ### GetGasPrice
 
@@ -201,11 +223,31 @@ and a boolean to check if the value has been set.
 
 SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasMaxFeeAmount
 
-`func (o *TransactionFee) HasMaxFeeAmount() bool`
+### GetTokenId
 
-HasMaxFeeAmount returns a boolean if a field has been set.
+`func (o *TransactionFee) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *TransactionFee) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *TransactionFee) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+### HasTokenId
+
+`func (o *TransactionFee) HasTokenId() bool`
+
+HasTokenId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

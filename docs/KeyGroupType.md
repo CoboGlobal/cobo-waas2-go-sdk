@@ -3,11 +3,11 @@
 ## Enum
 
 
-* `MAIN_KEY_GROUP` (value: `"MainKeyGroup"`)
+* `MAIN_GROUP` (value: `"MainGroup"`)
 
-* `SIGNING_KEY_GROUP` (value: `"SigningKeyGroup"`)
+* `SIGNING_GROUP` (value: `"SigningGroup"`)
 
-* `RECOVERY_KEY_GROUP` (value: `"RecoveryKeyGroup"`)
+* `RECOVERY_GROUP` (value: `"RecoveryGroup"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

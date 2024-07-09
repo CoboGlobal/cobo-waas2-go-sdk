@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TransactionStatus Enumeration representing the status of a transaction.
+// TransactionStatus The transaction status. Possible values include:    - `Submitted`: The transaction is submitted.   - `PendingScreening`: The transaction is pending screening by Risk Control.    - `PendingAuthorization`: The transaction is pending approvals.   - `PendingSignature`: The transaction is pending signature.    - `Broadcasting`: The transaction is being broadcast.   - `Confirming`: The transaction is waiting for the required number of confirmations.   - `Completed`: The transaction is completed.   - `Failed`: The transaction failed.   - `Rejected`: The transaction is rejected. 
 type TransactionStatus string
 
 // List of TransactionStatus
@@ -51,15 +51,8 @@ func (v *TransactionStatus) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TransactionStatus(value)
-	for _, existing := range AllowedTransactionStatusEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TransactionStatus", value)
+	*v = TransactionStatus(value)
+	return nil
 }
 
 // NewTransactionStatusFromValue returns a pointer to a valid TransactionStatus

@@ -21,9 +21,9 @@ var _ MappedNullable = &ExchangeTransferSource{}
 // ExchangeTransferSource struct for ExchangeTransferSource
 type ExchangeTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
-	// Unique id of the wallet to transfer from.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// Exchange trading account or any sub wallet info for transfer.
+	// The exchange trading account or the sub-wallet ID.
 	SubWalletId string `json:"sub_wallet_id"`
 }
 

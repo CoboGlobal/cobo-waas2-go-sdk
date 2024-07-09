@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AddressStr** | Pointer to **string** | Destination address | [optional] 
-**Amount** | Pointer to **string** | Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)  | [optional] 
-**Script** | Pointer to **string** | Script of the output | [optional] 
+**Address** | Pointer to **string** | The external address. | [optional] 
+**Amount** | Pointer to **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
+**Script** | Pointer to **string** | The script of the output. It is a programmable code fragment that defines the conditions under which the UTXO can be spent. | [optional] 
 
 ## Methods
 
@@ -27,30 +27,30 @@ NewAddressTransferDestinationUtxoOutputsOutputsInnerWithDefaults instantiates a 
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAddressStr
+### GetAddress
 
-`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddressStr() string`
+`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddress() string`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAddress returns the Address field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAddressOk
 
-`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddressStrOk() (*string, bool)`
+`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) GetAddressOk() (*string, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAddress
 
-`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) SetAddressStr(v string)`
+`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) SetAddress(v string)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAddress sets Address field to given value.
 
-### HasAddressStr
+### HasAddress
 
-`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) HasAddressStr() bool`
+`func (o *AddressTransferDestinationUtxoOutputsOutputsInner) HasAddress() bool`
 
-HasAddressStr returns a boolean if a field has been set.
+HasAddress returns a boolean if a field has been set.
 
 ### GetAmount
 

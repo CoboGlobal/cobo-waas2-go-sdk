@@ -18,13 +18,14 @@ import (
 // checks if the EvmLegacyFeePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmLegacyFeePrice{}
 
-// EvmLegacyFeePrice The transaction fee when using the legacy method.
+// EvmLegacyFeePrice The transaction fee price based on the legacy fee model.
 type EvmLegacyFeePrice struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions.
-	GasPrice string `json:"gas_price"`
 	FeeType FeeType `json:"fee_type"`
+	// The token ID of the transaction fee.
+	TokenId *string `json:"token_id,omitempty"`
+	Slow *EvmLegacyFeeBasePrice `json:"slow,omitempty"`
+	Recommended EvmLegacyFeeBasePrice `json:"recommended"`
+	Fast *EvmLegacyFeeBasePrice `json:"fast,omitempty"`
 }
 
 type _EvmLegacyFeePrice EvmLegacyFeePrice
@@ -33,10 +34,10 @@ type _EvmLegacyFeePrice EvmLegacyFeePrice
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEvmLegacyFeePrice(gasPrice string, feeType FeeType) *EvmLegacyFeePrice {
+func NewEvmLegacyFeePrice(feeType FeeType, recommended EvmLegacyFeeBasePrice) *EvmLegacyFeePrice {
 	this := EvmLegacyFeePrice{}
-	this.GasPrice = gasPrice
 	this.FeeType = feeType
+	this.Recommended = recommended
 	return &this
 }
 
@@ -48,62 +49,6 @@ func NewEvmLegacyFeePriceWithDefaults() *EvmLegacyFeePrice {
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *EvmLegacyFeePrice) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmLegacyFeePrice) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *EvmLegacyFeePrice) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *EvmLegacyFeePrice) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
-}
-
-// GetGasPrice returns the GasPrice field value
-func (o *EvmLegacyFeePrice) GetGasPrice() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.GasPrice
-}
-
-// GetGasPriceOk returns a tuple with the GasPrice field value
-// and a boolean to check if the value has been set.
-func (o *EvmLegacyFeePrice) GetGasPriceOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.GasPrice, true
-}
-
-// SetGasPrice sets field value
-func (o *EvmLegacyFeePrice) SetGasPrice(v string) {
-	o.GasPrice = v
 }
 
 // GetFeeType returns the FeeType field value
@@ -130,6 +75,126 @@ func (o *EvmLegacyFeePrice) SetFeeType(v FeeType) {
 	o.FeeType = v
 }
 
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *EvmLegacyFeePrice) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmLegacyFeePrice) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *EvmLegacyFeePrice) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *EvmLegacyFeePrice) SetTokenId(v string) {
+	o.TokenId = &v
+}
+
+// GetSlow returns the Slow field value if set, zero value otherwise.
+func (o *EvmLegacyFeePrice) GetSlow() EvmLegacyFeeBasePrice {
+	if o == nil || IsNil(o.Slow) {
+		var ret EvmLegacyFeeBasePrice
+		return ret
+	}
+	return *o.Slow
+}
+
+// GetSlowOk returns a tuple with the Slow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmLegacyFeePrice) GetSlowOk() (*EvmLegacyFeeBasePrice, bool) {
+	if o == nil || IsNil(o.Slow) {
+		return nil, false
+	}
+	return o.Slow, true
+}
+
+// HasSlow returns a boolean if a field has been set.
+func (o *EvmLegacyFeePrice) HasSlow() bool {
+	if o != nil && !IsNil(o.Slow) {
+		return true
+	}
+
+	return false
+}
+
+// SetSlow gets a reference to the given EvmLegacyFeeBasePrice and assigns it to the Slow field.
+func (o *EvmLegacyFeePrice) SetSlow(v EvmLegacyFeeBasePrice) {
+	o.Slow = &v
+}
+
+// GetRecommended returns the Recommended field value
+func (o *EvmLegacyFeePrice) GetRecommended() EvmLegacyFeeBasePrice {
+	if o == nil {
+		var ret EvmLegacyFeeBasePrice
+		return ret
+	}
+
+	return o.Recommended
+}
+
+// GetRecommendedOk returns a tuple with the Recommended field value
+// and a boolean to check if the value has been set.
+func (o *EvmLegacyFeePrice) GetRecommendedOk() (*EvmLegacyFeeBasePrice, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Recommended, true
+}
+
+// SetRecommended sets field value
+func (o *EvmLegacyFeePrice) SetRecommended(v EvmLegacyFeeBasePrice) {
+	o.Recommended = v
+}
+
+// GetFast returns the Fast field value if set, zero value otherwise.
+func (o *EvmLegacyFeePrice) GetFast() EvmLegacyFeeBasePrice {
+	if o == nil || IsNil(o.Fast) {
+		var ret EvmLegacyFeeBasePrice
+		return ret
+	}
+	return *o.Fast
+}
+
+// GetFastOk returns a tuple with the Fast field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EvmLegacyFeePrice) GetFastOk() (*EvmLegacyFeeBasePrice, bool) {
+	if o == nil || IsNil(o.Fast) {
+		return nil, false
+	}
+	return o.Fast, true
+}
+
+// HasFast returns a boolean if a field has been set.
+func (o *EvmLegacyFeePrice) HasFast() bool {
+	if o != nil && !IsNil(o.Fast) {
+		return true
+	}
+
+	return false
+}
+
+// SetFast gets a reference to the given EvmLegacyFeeBasePrice and assigns it to the Fast field.
+func (o *EvmLegacyFeePrice) SetFast(v EvmLegacyFeeBasePrice) {
+	o.Fast = &v
+}
+
 func (o EvmLegacyFeePrice) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -140,11 +205,17 @@ func (o EvmLegacyFeePrice) MarshalJSON() ([]byte, error) {
 
 func (o EvmLegacyFeePrice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
-	toSerialize["gas_price"] = o.GasPrice
 	toSerialize["fee_type"] = o.FeeType
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
+	if !IsNil(o.Slow) {
+		toSerialize["slow"] = o.Slow
+	}
+	toSerialize["recommended"] = o.Recommended
+	if !IsNil(o.Fast) {
+		toSerialize["fast"] = o.Fast
+	}
 	return toSerialize, nil
 }
 
@@ -153,8 +224,8 @@ func (o *EvmLegacyFeePrice) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"gas_price",
 		"fee_type",
+		"recommended",
 	}
 
 	allProperties := make(map[string]interface{})

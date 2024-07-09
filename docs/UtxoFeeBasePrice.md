@@ -4,8 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
-**FeeRate** | **string** | The fee rate, in sats/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**FeeRate** | **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
 
 ## Methods
 
@@ -25,31 +24,6 @@ will change when the set of required properties is changed
 NewUtxoFeeBasePriceWithDefaults instantiates a new UtxoFeeBasePrice object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetFeeTokenId
-
-`func (o *UtxoFeeBasePrice) GetFeeTokenId() string`
-
-GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
-
-### GetFeeTokenIdOk
-
-`func (o *UtxoFeeBasePrice) GetFeeTokenIdOk() (*string, bool)`
-
-GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeTokenId
-
-`func (o *UtxoFeeBasePrice) SetFeeTokenId(v string)`
-
-SetFeeTokenId sets FeeTokenId field to given value.
-
-### HasFeeTokenId
-
-`func (o *UtxoFeeBasePrice) HasFeeTokenId() bool`
-
-HasFeeTokenId returns a boolean if a field has been set.
 
 ### GetFeeRate
 

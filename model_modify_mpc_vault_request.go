@@ -20,7 +20,7 @@ var _ MappedNullable = &ModifyMpcVaultRequest{}
 
 // ModifyMpcVaultRequest struct for ModifyMpcVaultRequest
 type ModifyMpcVaultRequest struct {
-	// The new name of vault
+	// The new name of the vault.
 	Name string `json:"name"`
 }
 

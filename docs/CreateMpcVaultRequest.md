@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ProjectId** | Pointer to **string** | The id of the mpc project. | [optional] 
-**Name** | **string** | The name of the mpc vault. | 
+**ProjectId** | Pointer to **string** | The project ID.  **Notes:** 1. If &#x60;vault_type&#x60; is &#x60;OrgControlled&#x60;, the value of &#x60;project_id&#x60; will be ignored. 2. If &#x60;vault_type&#x60; is &#x60;UserControlled&#x60;, then &#x60;project_id&#x60; is required.  | [optional] 
+**Name** | **string** | The name of the new vault. | 
 **VaultType** | [**MPCVaultType**](MPCVaultType.md) |  | 
 
 ## Methods

@@ -18,11 +18,11 @@ var _ MappedNullable = &AddressTransferDestinationAccountOutput{}
 
 // AddressTransferDestinationAccountOutput struct for AddressTransferDestinationAccountOutput
 type AddressTransferDestinationAccountOutput struct {
-	// Destination address
-	AddressStr *string `json:"address_str,omitempty"`
-	// Destination address memo
+	// The destination address.
+	Address *string `json:"address,omitempty"`
+	// The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON.
 	Memo *string `json:"memo,omitempty"`
-	// Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5) 
+	// The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Amount *string `json:"amount,omitempty"`
 }
 
@@ -43,36 +43,36 @@ func NewAddressTransferDestinationAccountOutputWithDefaults() *AddressTransferDe
 	return &this
 }
 
-// GetAddressStr returns the AddressStr field value if set, zero value otherwise.
-func (o *AddressTransferDestinationAccountOutput) GetAddressStr() string {
-	if o == nil || IsNil(o.AddressStr) {
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *AddressTransferDestinationAccountOutput) GetAddress() string {
+	if o == nil || IsNil(o.Address) {
 		var ret string
 		return ret
 	}
-	return *o.AddressStr
+	return *o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value if set, nil otherwise
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddressTransferDestinationAccountOutput) GetAddressStrOk() (*string, bool) {
-	if o == nil || IsNil(o.AddressStr) {
+func (o *AddressTransferDestinationAccountOutput) GetAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
-	return o.AddressStr, true
+	return o.Address, true
 }
 
-// HasAddressStr returns a boolean if a field has been set.
-func (o *AddressTransferDestinationAccountOutput) HasAddressStr() bool {
-	if o != nil && !IsNil(o.AddressStr) {
+// HasAddress returns a boolean if a field has been set.
+func (o *AddressTransferDestinationAccountOutput) HasAddress() bool {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
 	return false
 }
 
-// SetAddressStr gets a reference to the given string and assigns it to the AddressStr field.
-func (o *AddressTransferDestinationAccountOutput) SetAddressStr(v string) {
-	o.AddressStr = &v
+// SetAddress gets a reference to the given string and assigns it to the Address field.
+func (o *AddressTransferDestinationAccountOutput) SetAddress(v string) {
+	o.Address = &v
 }
 
 // GetMemo returns the Memo field value if set, zero value otherwise.
@@ -149,8 +149,8 @@ func (o AddressTransferDestinationAccountOutput) MarshalJSON() ([]byte, error) {
 
 func (o AddressTransferDestinationAccountOutput) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AddressStr) {
-		toSerialize["address_str"] = o.AddressStr
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
 	}
 	if !IsNil(o.Memo) {
 		toSerialize["memo"] = o.Memo

@@ -28,7 +28,7 @@ type MPCWalletInfo struct {
 	Name string `json:"name"`
 	// The ID of the owning organization.
 	OrgId string `json:"org_id"`
-	// The ID of the owning Vault.
+	// The ID of the owning vault.
 	VaultId string `json:"vault_id"`
 }
 

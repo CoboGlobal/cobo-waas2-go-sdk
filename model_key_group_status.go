@@ -37,15 +37,8 @@ func (v *KeyGroupStatus) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := KeyGroupStatus(value)
-	for _, existing := range AllowedKeyGroupStatusEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid KeyGroupStatus", value)
+	*v = KeyGroupStatus(value)
+	return nil
 }
 
 // NewKeyGroupStatusFromValue returns a pointer to a valid KeyGroupStatus

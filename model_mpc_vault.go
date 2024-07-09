@@ -16,14 +16,15 @@ import (
 // checks if the MPCVault type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MPCVault{}
 
-// MPCVault The data for mpc vault information.
+// MPCVault The data for vault information.
 type MPCVault struct {
-	// Unique id of the vault
+	// The vault ID.
 	Id *string `json:"id,omitempty"`
+	// The vault name.
 	Name *string `json:"name,omitempty"`
 	Type *MPCVaultType `json:"type,omitempty"`
 	RootPubkeys []RootPubkey `json:"root_pubkeys,omitempty"`
-	// The create time the vault.
+	// The vault's creation time in Unix timestamp format, measured in milliseconds.
 	CreateTimestamp *float32 `json:"create_timestamp,omitempty"`
 }
 

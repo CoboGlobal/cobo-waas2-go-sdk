@@ -5,11 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | The wallet name. | [optional] 
-**Apikey** | Pointer to **string** | The API key of your exchange account. | [optional] 
-**Secret** | Pointer to **string** | The API secret of your exchange account. | [optional] 
-**Passphrase** | Pointer to **string** | The passphrase of your exchange account. | [optional] 
+**Apikey** | Pointer to **string** | The API key of your exchange account. This property is required when updating the information of an Exchange Wallet. | [optional] 
+**Secret** | Pointer to **string** | The API secret of your exchange account. This property is required when updating the information of an Exchange Wallet. | [optional] 
+**Passphrase** | Pointer to **string** | The passphrase of your exchange account. This property is required when updating the information of an Exchange Wallet. | [optional] 
 **GaCode** | Pointer to **string** | The GA code for the exchange. | [optional] 
-**SubAccountIds** | Pointer to **[]string** | The Sub Account ID. It can be an email address, a user name, or a custom account ID. | [optional] 
+**MainWalletId** | Pointer to **string** | The ID of the Exchange Wallet (Main Account). | [optional] 
 
 ## Methods
 
@@ -155,30 +155,30 @@ SetGaCode sets GaCode field to given value.
 
 HasGaCode returns a boolean if a field has been set.
 
-### GetSubAccountIds
+### GetMainWalletId
 
-`func (o *UpdateWalletByIdRequest) GetSubAccountIds() []string`
+`func (o *UpdateWalletByIdRequest) GetMainWalletId() string`
 
-GetSubAccountIds returns the SubAccountIds field if non-nil, zero value otherwise.
+GetMainWalletId returns the MainWalletId field if non-nil, zero value otherwise.
 
-### GetSubAccountIdsOk
+### GetMainWalletIdOk
 
-`func (o *UpdateWalletByIdRequest) GetSubAccountIdsOk() (*[]string, bool)`
+`func (o *UpdateWalletByIdRequest) GetMainWalletIdOk() (*string, bool)`
 
-GetSubAccountIdsOk returns a tuple with the SubAccountIds field if it's non-nil, zero value otherwise
+GetMainWalletIdOk returns a tuple with the MainWalletId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubAccountIds
+### SetMainWalletId
 
-`func (o *UpdateWalletByIdRequest) SetSubAccountIds(v []string)`
+`func (o *UpdateWalletByIdRequest) SetMainWalletId(v string)`
 
-SetSubAccountIds sets SubAccountIds field to given value.
+SetMainWalletId sets MainWalletId field to given value.
 
-### HasSubAccountIds
+### HasMainWalletId
 
-`func (o *UpdateWalletByIdRequest) HasSubAccountIds() bool`
+`func (o *UpdateWalletByIdRequest) HasMainWalletId() bool`
 
-HasSubAccountIds returns a boolean if a field has been set.
+HasMainWalletId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

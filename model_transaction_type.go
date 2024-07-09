@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TransactionType Enumeration representing the type of a transaction.
+// TransactionType The transaction type. Possible values include:    - `Deposit`: A deposit transaction.   - `Withdrawal`: A withdrawal transaction.   - `TokenApproval`: A transaction that grants permission to access your tokens.    - `ContractCall`: A transaction that interacts with a smart contract.   - `TransactionFeePayment`: A transaction that is initiated from Fee Station to pay your transaction fees.   - `RawMessage`: A transaction that signs a message. 
 type TransactionType string
 
 // List of TransactionType
@@ -23,7 +23,7 @@ const (
 	TRANSACTIONTYPE_WITHDRAWAL TransactionType = "Withdrawal"
 	TRANSACTIONTYPE_TOKEN_APPROVAL TransactionType = "TokenApproval"
 	TRANSACTIONTYPE_CONTRACT_CALL TransactionType = "ContractCall"
-	TRANSACTIONTYPE_AUTO_FUELING TransactionType = "AutoFueling"
+	TRANSACTIONTYPE_TRANSACTION_FEE_PAYMENT TransactionType = "TransactionFeePayment"
 	TRANSACTIONTYPE_RAW_MESSAGE TransactionType = "RawMessage"
 )
 
@@ -33,7 +33,7 @@ var AllowedTransactionTypeEnumValues = []TransactionType{
 	"Withdrawal",
 	"TokenApproval",
 	"ContractCall",
-	"AutoFueling",
+	"TransactionFeePayment",
 	"RawMessage",
 }
 
@@ -43,15 +43,8 @@ func (v *TransactionType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TransactionType(value)
-	for _, existing := range AllowedTransactionTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TransactionType", value)
+	*v = TransactionType(value)
+	return nil
 }
 
 // NewTransactionTypeFromValue returns a pointer to a valid TransactionType

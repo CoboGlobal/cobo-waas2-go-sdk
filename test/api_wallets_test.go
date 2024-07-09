@@ -11,29 +11,27 @@ package CoboWaas2
 
 import (
 	"context"
-	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
+	CoboWaas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+	"github.com/CoboGlobal/cobo-waas2-go-api/crypto"
 )
 
 func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	configuration := CoboWaas2.NewConfiguration()
 	apiClient := CoboWaas2.NewAPIClient(configuration)
-	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api.sandbox.cobo.com/v2")
+	ctx := context.WithValue(context.Background(), CoboWaas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
 	ctx = context.WithValue(ctx, CoboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "c203fccc02a2269ec486d9c32ff74b5ba6ab0cdb461ee1fb0dfc616109115c06",
+		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
-	t.Run("Test WalletsAPIService AddWalletAddress", func(t *testing.T) {
+	t.Run("Test WalletsAPIService CheckAddressValidity", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
-		var walletId string
-
-		resp, httpRes, err := apiClient.WalletsAPI.AddWalletAddress(ctx, walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.CheckAddressValidity(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -43,7 +41,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService CreateWallet", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.CreateWallet(ctx).Execute()
 
@@ -55,22 +53,54 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService DeleteWalletById", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 
-		httpRes, err := apiClient.WalletsAPI.DeleteWalletById(ctx, walletId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.DeleteWalletById(ctx, walletId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
-	t.Run("Test WalletsAPIService GetAddressValidity", func(t *testing.T) {
+	t.Run("Test WalletsAPIService GenerateWalletAddress", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetAddressValidity(ctx).Execute()
+		var walletId string
+
+		resp, httpRes, err := apiClient.WalletsAPI.GenerateWalletAddress(ctx, walletId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test WalletsAPIService GetAddressById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var walletId string
+		var address string
+
+		resp, httpRes, err := apiClient.WalletsAPI.GetAddressById(ctx, walletId, address).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test WalletsAPIService GetChainById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var chainId string
+
+		resp, httpRes, err := apiClient.WalletsAPI.GetChainById(ctx, chainId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -80,7 +110,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetChains", func(t *testing.T) {
 
-		//t.Skip("skip test")  // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.GetChains(ctx).Execute()
 
@@ -92,7 +122,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetEnabledChains", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.GetEnabledChains(ctx).Execute()
 
@@ -104,7 +134,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetEnabledTokens", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.GetEnabledTokens(ctx).Execute()
 
@@ -116,7 +146,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetMaxTransferableValue", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 
@@ -130,7 +160,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetSpendableList", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 
@@ -144,7 +174,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetSupportedChains", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.GetSupportedChains(ctx).Execute()
 
@@ -156,7 +186,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetSupportedTokens", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.GetSupportedTokens(ctx).Execute()
 
@@ -166,9 +196,23 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test WalletsAPIService GetTokenById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var tokenId string
+
+		resp, httpRes, err := apiClient.WalletsAPI.GetTokenById(ctx, tokenId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test WalletsAPIService GetTokens", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.GetTokens(ctx).Execute()
 
@@ -180,12 +224,12 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetWalletAddressTokenBalances", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
-		var addressId string
+		var address string
 
-		resp, httpRes, err := apiClient.WalletsAPI.GetWalletAddressTokenBalances(ctx, walletId, addressId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.GetWalletAddressTokenBalances(ctx, walletId, address).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -195,7 +239,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetWalletById", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 
@@ -209,7 +253,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService GetWalletTokenBalances", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 
@@ -223,7 +267,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService ListAddresses", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 
@@ -237,7 +281,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService ListWallets", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WalletsAPI.ListWallets(ctx).Execute()
 
@@ -249,7 +293,7 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	t.Run("Test WalletsAPIService LockSpendableList", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 
@@ -261,9 +305,23 @@ func Test_CoboWaas2_WalletsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test WalletsAPIService UnlockSpendableList", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var walletId string
+
+		resp, httpRes, err := apiClient.WalletsAPI.UnlockSpendableList(ctx, walletId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test WalletsAPIService UpdateWalletById", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**UsedKeyGroupId** | Pointer to **string** | Unique id of the using key group. | [optional] 
-**UsedNodeIds** | Pointer to **[]string** |  | [optional] 
+**UsedKeyGroupId** | Pointer to **string** | The ID of the Signing Group. | [optional] 
+**UsedNodeIds** | Pointer to **[]string** | The ID of the TSS Nodes that are required to participate in the signature. | [optional] 
 
 ## Methods
 

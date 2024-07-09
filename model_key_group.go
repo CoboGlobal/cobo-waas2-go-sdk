@@ -16,16 +16,19 @@ import (
 // checks if the KeyGroup type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &KeyGroup{}
 
-// KeyGroup The data for mpc key group information.
+// KeyGroup The data for key share group information.
 type KeyGroup struct {
-	// Unique id of the key group
+	// The key share group ID.
 	Id *string `json:"id,omitempty"`
 	Type *KeyGroupType `json:"type,omitempty"`
 	TssGroupIds []TSSGroupId `json:"tss_group_ids,omitempty"`
 	KeyHolders []KeyHolder `json:"key_holders,omitempty"`
+	// The number of key share holders in this key share group.
 	NodeCount *int32 `json:"node_count,omitempty"`
+	// The number of key share holders required to approve each operation in this key share group.
 	Threshold *int32 `json:"threshold,omitempty"`
 	Status *KeyGroupStatus `json:"status,omitempty"`
+	CreateTimestamp *int64 `json:"create_timestamp,omitempty"`
 }
 
 // NewKeyGroup instantiates a new KeyGroup object
@@ -269,6 +272,38 @@ func (o *KeyGroup) SetStatus(v KeyGroupStatus) {
 	o.Status = &v
 }
 
+// GetCreateTimestamp returns the CreateTimestamp field value if set, zero value otherwise.
+func (o *KeyGroup) GetCreateTimestamp() int64 {
+	if o == nil || IsNil(o.CreateTimestamp) {
+		var ret int64
+		return ret
+	}
+	return *o.CreateTimestamp
+}
+
+// GetCreateTimestampOk returns a tuple with the CreateTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *KeyGroup) GetCreateTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.CreateTimestamp) {
+		return nil, false
+	}
+	return o.CreateTimestamp, true
+}
+
+// HasCreateTimestamp returns a boolean if a field has been set.
+func (o *KeyGroup) HasCreateTimestamp() bool {
+	if o != nil && !IsNil(o.CreateTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreateTimestamp gets a reference to the given int64 and assigns it to the CreateTimestamp field.
+func (o *KeyGroup) SetCreateTimestamp(v int64) {
+	o.CreateTimestamp = &v
+}
+
 func (o KeyGroup) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -299,6 +334,9 @@ func (o KeyGroup) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.CreateTimestamp) {
+		toSerialize["create_timestamp"] = o.CreateTimestamp
 	}
 	return toSerialize, nil
 }

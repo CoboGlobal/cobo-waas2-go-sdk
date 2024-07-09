@@ -29,13 +29,13 @@ type CreateSafeWallet struct {
 	// The ID of the chain that the wallet operates on.
 	ChainId string `json:"chain_id"`
 	SmartContractWalletType SmartContractWalletType `json:"smart_contract_wallet_type"`
-	// The address of the Smart Contract Wallet. If this is not provided, Cobo will create a new Safe{Wallet} and set up Cobo Safe for you. In that case, the `threshold` and `owners` fields are required.
+	// The address of the Smart Contract Wallet. If this is not provided, Cobo will create a new Safe{Wallet} and set up Cobo Safe for you. In that case, the `threshold` and `signers` properties are required.
 	SafeAddress *string `json:"safe_address,omitempty"`
-	// The owners of the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.
-	Owners []string `json:"owners,omitempty"`
-	// The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.
+	// The signers of the Smart Contract Wallet. This property is required when creating a new Safe{Wallet}.
+	Signers []string `json:"signers,omitempty"`
+	// The minimum number of confirmations required for the Smart Contract Wallet. This property is required when creating a new Safe{Wallet}.
 	Threshold *int32 `json:"threshold,omitempty"`
-	// The address of Cobo Safe. If you are importing an existing Safe{Wallet}, Cobo Safe must has been created and enabled.
+	// The address of Cobo Safe. If you are importing an existing Safe{Wallet}, Cobo Safe must have been created and enabled.
 	CoboSafeAddress *string `json:"cobo_safe_address,omitempty"`
 	Initiator *CreateSafeWalletAllOfInitiator `json:"initiator,omitempty"`
 }
@@ -250,36 +250,36 @@ func (o *CreateSafeWallet) SetSafeAddress(v string) {
 	o.SafeAddress = &v
 }
 
-// GetOwners returns the Owners field value if set, zero value otherwise.
-func (o *CreateSafeWallet) GetOwners() []string {
-	if o == nil || IsNil(o.Owners) {
+// GetSigners returns the Signers field value if set, zero value otherwise.
+func (o *CreateSafeWallet) GetSigners() []string {
+	if o == nil || IsNil(o.Signers) {
 		var ret []string
 		return ret
 	}
-	return o.Owners
+	return o.Signers
 }
 
-// GetOwnersOk returns a tuple with the Owners field value if set, nil otherwise
+// GetSignersOk returns a tuple with the Signers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateSafeWallet) GetOwnersOk() ([]string, bool) {
-	if o == nil || IsNil(o.Owners) {
+func (o *CreateSafeWallet) GetSignersOk() ([]string, bool) {
+	if o == nil || IsNil(o.Signers) {
 		return nil, false
 	}
-	return o.Owners, true
+	return o.Signers, true
 }
 
-// HasOwners returns a boolean if a field has been set.
-func (o *CreateSafeWallet) HasOwners() bool {
-	if o != nil && !IsNil(o.Owners) {
+// HasSigners returns a boolean if a field has been set.
+func (o *CreateSafeWallet) HasSigners() bool {
+	if o != nil && !IsNil(o.Signers) {
 		return true
 	}
 
 	return false
 }
 
-// SetOwners gets a reference to the given []string and assigns it to the Owners field.
-func (o *CreateSafeWallet) SetOwners(v []string) {
-	o.Owners = v
+// SetSigners gets a reference to the given []string and assigns it to the Signers field.
+func (o *CreateSafeWallet) SetSigners(v []string) {
+	o.Signers = v
 }
 
 // GetThreshold returns the Threshold field value if set, zero value otherwise.
@@ -399,8 +399,8 @@ func (o CreateSafeWallet) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SafeAddress) {
 		toSerialize["safe_address"] = o.SafeAddress
 	}
-	if !IsNil(o.Owners) {
-		toSerialize["owners"] = o.Owners
+	if !IsNil(o.Signers) {
+		toSerialize["signers"] = o.Signers
 	}
 	if !IsNil(o.Threshold) {
 		toSerialize["threshold"] = o.Threshold

@@ -37,15 +37,8 @@ func (v *WebhookEventStatus) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := WebhookEventStatus(value)
-	for _, existing := range AllowedWebhookEventStatusEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid WebhookEventStatus", value)
+	*v = WebhookEventStatus(value)
+	return nil
 }
 
 // NewWebhookEventStatusFromValue returns a pointer to a valid WebhookEventStatus

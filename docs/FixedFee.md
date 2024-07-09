@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | **string** | The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee. | 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
+**TokenId** | **string** | The token ID of the transaction fee. | 
 
 ## Methods
 
 ### NewFixedFee
 
-`func NewFixedFee(feeType FeeType, ) *FixedFee`
+`func NewFixedFee(maxFeeAmount string, feeType FeeType, tokenId string, ) *FixedFee`
 
 NewFixedFee instantiates a new FixedFee object
 This constructor will assign default values to properties that have it defined,
@@ -46,11 +46,6 @@ and a boolean to check if the value has been set.
 
 SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasMaxFeeAmount
-
-`func (o *FixedFee) HasMaxFeeAmount() bool`
-
-HasMaxFeeAmount returns a boolean if a field has been set.
 
 ### GetFeeType
 
@@ -72,30 +67,25 @@ and a boolean to check if the value has been set.
 SetFeeType sets FeeType field to given value.
 
 
-### GetFeeTokenId
+### GetTokenId
 
-`func (o *FixedFee) GetFeeTokenId() string`
+`func (o *FixedFee) GetTokenId() string`
 
-GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
 
-### GetFeeTokenIdOk
+### GetTokenIdOk
 
-`func (o *FixedFee) GetFeeTokenIdOk() (*string, bool)`
+`func (o *FixedFee) GetTokenIdOk() (*string, bool)`
 
-GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeeTokenId
+### SetTokenId
 
-`func (o *FixedFee) SetFeeTokenId(v string)`
+`func (o *FixedFee) SetTokenId(v string)`
 
-SetFeeTokenId sets FeeTokenId field to given value.
+SetTokenId sets TokenId field to given value.
 
-### HasFeeTokenId
-
-`func (o *FixedFee) HasFeeTokenId() bool`
-
-HasFeeTokenId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

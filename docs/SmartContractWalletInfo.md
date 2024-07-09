@@ -9,12 +9,12 @@ Name | Type | Description | Notes
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Name** | **string** | The wallet name. | 
 **OrgId** | **string** | The ID of the owning organization. | 
-**ChainId** | Pointer to **string** | The chain the wallet operates on. | [optional] 
+**ChainId** | Pointer to **string** | The ID of the chain on which the wallet operates. | [optional] 
 **Label** | Pointer to **string** | The wallet label. | [optional] 
 **SmartContractWalletType** | [**SmartContractWalletType**](SmartContractWalletType.md) |  | [default to SMARTCONTRACTWALLETTYPE_SAFE_WALLET]
 **SafeAddress** | Pointer to **string** | The Smart Contract Wallet address. | [optional] 
-**Owners** | Pointer to **[]string** | The owners of the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}. | [optional] 
-**Threshold** | Pointer to **int32** | The minimum number of confirmations required for the Smart Contract Wallet. This field is required when creating a new Safe{Wallet}.  | [optional] 
+**Signers** | Pointer to **[]string** | The signers of the Smart Contract Wallet. | [optional] 
+**Threshold** | Pointer to **int32** | The minimum number of confirmations required for the Smart Contract Wallet.  | [optional] 
 **CoboSafeAddress** | Pointer to **string** | The address of Cobo Safe. | [optional] 
 **Initiator** | Pointer to [**SafeWalletAllOfInitiator**](SafeWalletAllOfInitiator.md) |  | [optional] 
 
@@ -232,30 +232,30 @@ SetSafeAddress sets SafeAddress field to given value.
 
 HasSafeAddress returns a boolean if a field has been set.
 
-### GetOwners
+### GetSigners
 
-`func (o *SmartContractWalletInfo) GetOwners() []string`
+`func (o *SmartContractWalletInfo) GetSigners() []string`
 
-GetOwners returns the Owners field if non-nil, zero value otherwise.
+GetSigners returns the Signers field if non-nil, zero value otherwise.
 
-### GetOwnersOk
+### GetSignersOk
 
-`func (o *SmartContractWalletInfo) GetOwnersOk() (*[]string, bool)`
+`func (o *SmartContractWalletInfo) GetSignersOk() (*[]string, bool)`
 
-GetOwnersOk returns a tuple with the Owners field if it's non-nil, zero value otherwise
+GetSignersOk returns a tuple with the Signers field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOwners
+### SetSigners
 
-`func (o *SmartContractWalletInfo) SetOwners(v []string)`
+`func (o *SmartContractWalletInfo) SetSigners(v []string)`
 
-SetOwners sets Owners field to given value.
+SetSigners sets Signers field to given value.
 
-### HasOwners
+### HasSigners
 
-`func (o *SmartContractWalletInfo) HasOwners() bool`
+`func (o *SmartContractWalletInfo) HasSigners() bool`
 
-HasOwners returns a boolean if a field has been set.
+HasSigners returns a boolean if a field has been set.
 
 ### GetThreshold
 

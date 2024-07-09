@@ -20,11 +20,11 @@ var _ MappedNullable = &CreateMpcProjectRequest{}
 
 // CreateMpcProjectRequest struct for CreateMpcProjectRequest
 type CreateMpcProjectRequest struct {
-	// The name of the mpc project.
-	Name *string `json:"name,omitempty"`
-	// Number of tss nodes in the key group
+	// The project name.
+	Name string `json:"name"`
+	// The number of key share holders in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (`threshold`-`node_count`), so you can only set `node_count` to 2 or 3.   2. `threshold` must be less than or equal to `node_count`. 
 	NodeCount int32 `json:"node_count"`
-	// The threshold number of tss node required for signature
+	// The number of key share holders required to sign an operation in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (`threshold`-`node_count`), so you can only set `threshold` to 2 or 3.   2. `threshold` must be less than or equal to `node_count`. 
 	Threshold int32 `json:"threshold"`
 }
 
@@ -34,8 +34,9 @@ type _CreateMpcProjectRequest CreateMpcProjectRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateMpcProjectRequest(nodeCount int32, threshold int32) *CreateMpcProjectRequest {
+func NewCreateMpcProjectRequest(name string, nodeCount int32, threshold int32) *CreateMpcProjectRequest {
 	this := CreateMpcProjectRequest{}
+	this.Name = name
 	this.NodeCount = nodeCount
 	this.Threshold = threshold
 	return &this
@@ -49,36 +50,28 @@ func NewCreateMpcProjectRequestWithDefaults() *CreateMpcProjectRequest {
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *CreateMpcProjectRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *CreateMpcProjectRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *CreateMpcProjectRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *CreateMpcProjectRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 // GetNodeCount returns the NodeCount field value
@@ -139,9 +132,7 @@ func (o CreateMpcProjectRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateMpcProjectRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	toSerialize["node_count"] = o.NodeCount
 	toSerialize["threshold"] = o.Threshold
 	return toSerialize, nil
@@ -152,6 +143,7 @@ func (o *CreateMpcProjectRequest) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"name",
 		"node_count",
 		"threshold",
 	}

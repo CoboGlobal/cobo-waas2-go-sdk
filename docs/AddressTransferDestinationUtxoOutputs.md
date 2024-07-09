@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Outputs** | Pointer to [**[]AddressTransferDestinationUtxoOutputsOutputsInner**](AddressTransferDestinationUtxoOutputsOutputsInner.md) |  | [optional] 
-**ChangeAddress** | Pointer to **string** | Change address | [optional] 
+**ChangeAddress** | Pointer to **string** | The address used to receive the remaining funds or change from the transaction. | [optional] 
 
 ## Methods
 

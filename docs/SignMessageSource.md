@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WalletId** | Pointer to **string** | Unique id of the wallet to sign message. | [optional] 
-**AddressStr** | Pointer to **string** | From address | [optional] 
+**WalletId** | Pointer to **string** | The wallet ID. | [optional] 
+**Address** | Pointer to **string** | The wallet address. | [optional] 
 **MpcUsedKeyGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 
 ## Methods
@@ -52,30 +52,30 @@ SetWalletId sets WalletId field to given value.
 
 HasWalletId returns a boolean if a field has been set.
 
-### GetAddressStr
+### GetAddress
 
-`func (o *SignMessageSource) GetAddressStr() string`
+`func (o *SignMessageSource) GetAddress() string`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAddress returns the Address field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAddressOk
 
-`func (o *SignMessageSource) GetAddressStrOk() (*string, bool)`
+`func (o *SignMessageSource) GetAddressOk() (*string, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAddress
 
-`func (o *SignMessageSource) SetAddressStr(v string)`
+`func (o *SignMessageSource) SetAddress(v string)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAddress sets Address field to given value.
 
-### HasAddressStr
+### HasAddress
 
-`func (o *SignMessageSource) HasAddressStr() bool`
+`func (o *SignMessageSource) HasAddress() bool`
 
-HasAddressStr returns a boolean if a field has been set.
+HasAddress returns a boolean if a field has been set.
 
 ### GetMpcUsedKeyGroup
 

@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | Unique id of the project | [optional] 
-**OrgId** | Pointer to **string** | Unique id of org | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**NodeCount** | Pointer to **int32** | The count of tss node of the project | [optional] 
-**Threshold** | Pointer to **int32** | The threshold number of project required for signature | [optional] 
-**CreateTimestamp** | Pointer to **int32** | The create time the vault. | [optional] 
+**Id** | Pointer to **string** | The project ID. | [optional] 
+**OrgId** | Pointer to **string** | The organization ID. | [optional] 
+**Name** | Pointer to **string** | The project name. | [optional] 
+**NodeCount** | Pointer to **int32** | The number of key share holders in the project. | [optional] 
+**Threshold** | Pointer to **int32** | The number of key share holders required to sign an operation in the project. | [optional] 
+**CreateTimestamp** | Pointer to **int64** | The project&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 
@@ -157,20 +157,20 @@ HasThreshold returns a boolean if a field has been set.
 
 ### GetCreateTimestamp
 
-`func (o *MPCProject) GetCreateTimestamp() int32`
+`func (o *MPCProject) GetCreateTimestamp() int64`
 
 GetCreateTimestamp returns the CreateTimestamp field if non-nil, zero value otherwise.
 
 ### GetCreateTimestampOk
 
-`func (o *MPCProject) GetCreateTimestampOk() (*int32, bool)`
+`func (o *MPCProject) GetCreateTimestampOk() (*int64, bool)`
 
 GetCreateTimestampOk returns a tuple with the CreateTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreateTimestamp
 
-`func (o *MPCProject) SetCreateTimestamp(v int32)`
+`func (o *MPCProject) SetCreateTimestamp(v int64)`
 
 SetCreateTimestamp sets CreateTimestamp field to given value.
 

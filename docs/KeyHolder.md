@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** |  | [optional] 
+**Name** | Pointer to **string** | The key share holder name. | [optional] 
 **Type** | Pointer to [**KeyHolderType**](KeyHolderType.md) |  | [optional] 
-**TssNodeId** | Pointer to **string** | The IDs of the tss node. | [optional] 
-**Online** | Pointer to **bool** | Indicates if the tss node online | [optional] 
+**TssNodeId** | Pointer to **string** | Key share holder&#39;s TSS Node ID. | [optional] 
+**Online** | Pointer to **bool** | Whether the key share holder&#39;s TSS Node is online. - &#x60;true&#x60;: The TSS Node is online.  - &#x60;false&#x60;: The TSS Node is offline.  | [optional] 
 **Status** | Pointer to [**KeyHolderStatus**](KeyHolderStatus.md) |  | [optional] 
 
 ## Methods

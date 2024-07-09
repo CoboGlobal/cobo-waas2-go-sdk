@@ -5,18 +5,18 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AddressId** | **string** | The address ID. | 
-**AddressStr** | **string** | The wallet address. | 
-**TokenId** | **string** | The token ID. | 
+**Address** | **string** | The wallet address. | 
+**TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens). | 
 **Memo** | Pointer to **string** | The memo code. | [optional] 
-**Path** | Pointer to **string** | The derivation path of the address. This field is applicable to MPC Wallets. | [optional] 
+**Path** | Pointer to **string** | The derivation path of the address. | [optional] 
 **Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
-**Pubkey** | Pointer to **string** | The public key of the address. This field is applicable to MPC Wallets. | [optional] 
+**Pubkey** | Pointer to **string** | The public key of the address. | [optional] 
 
 ## Methods
 
 ### NewAddressInfo
 
-`func NewAddressInfo(addressId string, addressStr string, tokenId string, ) *AddressInfo`
+`func NewAddressInfo(addressId string, address string, tokenId string, ) *AddressInfo`
 
 NewAddressInfo instantiates a new AddressInfo object
 This constructor will assign default values to properties that have it defined,
@@ -51,24 +51,24 @@ and a boolean to check if the value has been set.
 SetAddressId sets AddressId field to given value.
 
 
-### GetAddressStr
+### GetAddress
 
-`func (o *AddressInfo) GetAddressStr() string`
+`func (o *AddressInfo) GetAddress() string`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAddress returns the Address field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAddressOk
 
-`func (o *AddressInfo) GetAddressStrOk() (*string, bool)`
+`func (o *AddressInfo) GetAddressOk() (*string, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAddress
 
-`func (o *AddressInfo) SetAddressStr(v string)`
+`func (o *AddressInfo) SetAddress(v string)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAddress sets Address field to given value.
 
 
 ### GetTokenId

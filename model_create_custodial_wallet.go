@@ -18,7 +18,7 @@ import (
 // checks if the CreateCustodialWallet type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateCustodialWallet{}
 
-// CreateCustodialWallet struct for CreateCustodialWallet
+// CreateCustodialWallet The information of Custodial Wallets.
 type CreateCustodialWallet struct {
 	// The wallet name.
 	Name string `json:"name"`

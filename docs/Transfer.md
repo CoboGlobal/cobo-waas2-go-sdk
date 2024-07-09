@@ -4,20 +4,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | **string** | Unique id of the request. | 
-**RequestType** | **string** |  | 
+**RequestId** | **string** | The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization. | 
 **Source** | [**TransferSource**](TransferSource.md) |  | 
-**TokenId** | **string** | The token ID. | 
+**TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens). | 
 **Destination** | [**TransferDestination**](TransferDestination.md) |  | 
-**CategoryNames** | Pointer to **[]string** | The category names for transfer. | [optional] 
-**Description** | Pointer to **string** | The description for transfer. | [optional] 
-**Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
+**CategoryNames** | Pointer to **[]string** | The custom category for you to identify your transactions. | [optional] 
+**Description** | Pointer to **string** | The description of the transfer. | [optional] 
+**Fee** | Pointer to [**TransactionTransferFee**](TransactionTransferFee.md) |  | [optional] 
 
 ## Methods
 
 ### NewTransfer
 
-`func NewTransfer(requestId string, requestType string, source TransferSource, tokenId string, destination TransferDestination, ) *Transfer`
+`func NewTransfer(requestId string, source TransferSource, tokenId string, destination TransferDestination, ) *Transfer`
 
 NewTransfer instantiates a new Transfer object
 This constructor will assign default values to properties that have it defined,
@@ -50,26 +49,6 @@ and a boolean to check if the value has been set.
 `func (o *Transfer) SetRequestId(v string)`
 
 SetRequestId sets RequestId field to given value.
-
-
-### GetRequestType
-
-`func (o *Transfer) GetRequestType() string`
-
-GetRequestType returns the RequestType field if non-nil, zero value otherwise.
-
-### GetRequestTypeOk
-
-`func (o *Transfer) GetRequestTypeOk() (*string, bool)`
-
-GetRequestTypeOk returns a tuple with the RequestType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRequestType
-
-`func (o *Transfer) SetRequestType(v string)`
-
-SetRequestType sets RequestType field to given value.
 
 
 ### GetSource
@@ -184,20 +163,20 @@ HasDescription returns a boolean if a field has been set.
 
 ### GetFee
 
-`func (o *Transfer) GetFee() TransactionFee`
+`func (o *Transfer) GetFee() TransactionTransferFee`
 
 GetFee returns the Fee field if non-nil, zero value otherwise.
 
 ### GetFeeOk
 
-`func (o *Transfer) GetFeeOk() (*TransactionFee, bool)`
+`func (o *Transfer) GetFeeOk() (*TransactionTransferFee, bool)`
 
 GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFee
 
-`func (o *Transfer) SetFee(v TransactionFee)`
+`func (o *Transfer) SetFee(v TransactionTransferFee)`
 
 SetFee sets Fee field to given value.
 

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Pubkey** | Pointer to **string** | the root pubkey of the mpc vault. | [optional] 
+**Pubkey** | Pointer to **string** | The vault&#39;s [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key). | [optional] 
 **Curve** | Pointer to [**CurveType**](CurveType.md) |  | [optional] 
 
 ## Methods

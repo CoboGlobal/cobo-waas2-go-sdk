@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**GroupId** | Pointer to **string** | the group id of the tss group. | [optional] 
+**GroupId** | Pointer to **string** | The TSS group ID. | [optional] 
 **Curve** | Pointer to [**CurveType**](CurveType.md) |  | [optional] 
 
 ## Methods

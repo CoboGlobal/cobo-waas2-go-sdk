@@ -4,21 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | **string** | Unique id of the request. | 
-**RequestType** | **string** |  | 
+**RequestId** | **string** | The request ID that is used to track a withdrawal request. The request ID is provided by you and must be unique within your organization. | 
+**RequestType** | **string** | The request type. Possible values include:   - &#x60;Transfer&#x60;: A request to transfer tokens.   - &#x60;ContractCall&#x60;: A request to interact with a smart contract.   - &#x60;MessageSign&#x60;: A request to sign a message.  | 
 **Source** | [**ContractCallSource**](ContractCallSource.md) |  | 
-**TokenId** | **string** | The token ID. | 
-**Destination** | [**ContractCallDestination**](ContractCallDestination.md) |  | 
-**CategoryNames** | Pointer to **[]string** | The category names for transfer. | [optional] 
-**Description** | Pointer to **string** | The description for transfer. | [optional] 
-**Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
-**ChainId** | **string** | The blockchain on which the token operates. | 
+**TokenId** | **string** | The token ID of the transaction fee. You can retrieve token IDs by using the [Get fee rates](/api-references/v2/transactions/get-fee-rates) operation. | 
+**Destination** | [**EstimateFeeContractCallDestination**](EstimateFeeContractCallDestination.md) |  | 
+**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List organization enabled chains](/v2/api-references/wallets/list-organization-enabled-chains). | 
 
 ## Methods
 
 ### NewEstimateFee
 
-`func NewEstimateFee(requestId string, requestType string, source ContractCallSource, tokenId string, destination ContractCallDestination, chainId string, ) *EstimateFee`
+`func NewEstimateFee(requestId string, requestType string, source ContractCallSource, tokenId string, destination EstimateFeeContractCallDestination, chainId string, ) *EstimateFee`
 
 NewEstimateFee instantiates a new EstimateFee object
 This constructor will assign default values to properties that have it defined,
@@ -115,98 +112,23 @@ SetTokenId sets TokenId field to given value.
 
 ### GetDestination
 
-`func (o *EstimateFee) GetDestination() ContractCallDestination`
+`func (o *EstimateFee) GetDestination() EstimateFeeContractCallDestination`
 
 GetDestination returns the Destination field if non-nil, zero value otherwise.
 
 ### GetDestinationOk
 
-`func (o *EstimateFee) GetDestinationOk() (*ContractCallDestination, bool)`
+`func (o *EstimateFee) GetDestinationOk() (*EstimateFeeContractCallDestination, bool)`
 
 GetDestinationOk returns a tuple with the Destination field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDestination
 
-`func (o *EstimateFee) SetDestination(v ContractCallDestination)`
+`func (o *EstimateFee) SetDestination(v EstimateFeeContractCallDestination)`
 
 SetDestination sets Destination field to given value.
 
-
-### GetCategoryNames
-
-`func (o *EstimateFee) GetCategoryNames() []string`
-
-GetCategoryNames returns the CategoryNames field if non-nil, zero value otherwise.
-
-### GetCategoryNamesOk
-
-`func (o *EstimateFee) GetCategoryNamesOk() (*[]string, bool)`
-
-GetCategoryNamesOk returns a tuple with the CategoryNames field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCategoryNames
-
-`func (o *EstimateFee) SetCategoryNames(v []string)`
-
-SetCategoryNames sets CategoryNames field to given value.
-
-### HasCategoryNames
-
-`func (o *EstimateFee) HasCategoryNames() bool`
-
-HasCategoryNames returns a boolean if a field has been set.
-
-### GetDescription
-
-`func (o *EstimateFee) GetDescription() string`
-
-GetDescription returns the Description field if non-nil, zero value otherwise.
-
-### GetDescriptionOk
-
-`func (o *EstimateFee) GetDescriptionOk() (*string, bool)`
-
-GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDescription
-
-`func (o *EstimateFee) SetDescription(v string)`
-
-SetDescription sets Description field to given value.
-
-### HasDescription
-
-`func (o *EstimateFee) HasDescription() bool`
-
-HasDescription returns a boolean if a field has been set.
-
-### GetFee
-
-`func (o *EstimateFee) GetFee() TransactionFee`
-
-GetFee returns the Fee field if non-nil, zero value otherwise.
-
-### GetFeeOk
-
-`func (o *EstimateFee) GetFeeOk() (*TransactionFee, bool)`
-
-GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFee
-
-`func (o *EstimateFee) SetFee(v TransactionFee)`
-
-SetFee sets Fee field to given value.
-
-### HasFee
-
-`func (o *EstimateFee) HasFee() bool`
-
-HasFee returns a boolean if a field has been set.
 
 ### GetChainId
 

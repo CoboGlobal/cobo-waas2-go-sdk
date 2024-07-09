@@ -18,13 +18,14 @@ import (
 // checks if the BaseContractCallSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BaseContractCallSource{}
 
-// BaseContractCallSource The base data for contract call source.
+// BaseContractCallSource The information about the transaction source.
 type BaseContractCallSource struct {
+	// The type of the wallet. Possible values include: - `Org-Controlled`: MPC Wallets (Organization-Controlled). - `User-Controlled`: MPC Wallets (User-Controlled). - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}). 
 	SourceType string `json:"source_type"`
-	// Unique id of the wallet to initiate contract call from.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// From address
-	AddressStr string `json:"address_str"`
+	// The wallet address.
+	Address string `json:"address"`
 }
 
 type _BaseContractCallSource BaseContractCallSource
@@ -33,11 +34,11 @@ type _BaseContractCallSource BaseContractCallSource
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBaseContractCallSource(sourceType string, walletId string, addressStr string) *BaseContractCallSource {
+func NewBaseContractCallSource(sourceType string, walletId string, address string) *BaseContractCallSource {
 	this := BaseContractCallSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
-	this.AddressStr = addressStr
+	this.Address = address
 	return &this
 }
 
@@ -97,28 +98,28 @@ func (o *BaseContractCallSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *BaseContractCallSource) GetAddressStr() string {
+// GetAddress returns the Address field value
+func (o *BaseContractCallSource) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.AddressStr
+	return o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *BaseContractCallSource) GetAddressStrOk() (*string, bool) {
+func (o *BaseContractCallSource) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return &o.Address, true
 }
 
-// SetAddressStr sets field value
-func (o *BaseContractCallSource) SetAddressStr(v string) {
-	o.AddressStr = v
+// SetAddress sets field value
+func (o *BaseContractCallSource) SetAddress(v string) {
+	o.Address = v
 }
 
 func (o BaseContractCallSource) MarshalJSON() ([]byte, error) {
@@ -133,7 +134,7 @@ func (o BaseContractCallSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["address_str"] = o.AddressStr
+	toSerialize["address"] = o.Address
 	return toSerialize, nil
 }
 
@@ -144,7 +145,7 @@ func (o *BaseContractCallSource) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"source_type",
 		"wallet_id",
-		"address_str",
+		"address",
 	}
 
 	allProperties := make(map[string]interface{})

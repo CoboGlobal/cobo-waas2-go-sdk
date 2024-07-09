@@ -18,7 +18,7 @@ var _ MappedNullable = &LockSpendableList200Response{}
 
 // LockSpendableList200Response struct for LockSpendableList200Response
 type LockSpendableList200Response struct {
-	// Whether the spendable lock/unlock has been successfully executed.
+	// Whether the locking or unlocking operation has been successfully executed. - `true`: The operation has been successfully executed. - `false`: The operation has not been executed. 
 	Executed *bool `json:"executed,omitempty"`
 }
 

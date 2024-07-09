@@ -14,13 +14,14 @@ import (
 	"fmt"
 )
 
-// TransactionInitiatorType Enumeration representing the initiator type of a transaction.
+// TransactionInitiatorType The transaction initiator type. Possible values include:   - `API`: An API initiator, who initiates the transaction by using the WaaS API.   - `Web`: An web initiator, who initiates the transaction from Cobo Portal.   - `App`: An App initiator, who initiates the transaction from Cobo Portal Apps.   - `External`: An external initiator, who initiates the transaction outside Cobo. 
 type TransactionInitiatorType string
 
 // List of TransactionInitiatorType
 const (
 	TRANSACTIONINITIATORTYPE_API TransactionInitiatorType = "API"
 	TRANSACTIONINITIATORTYPE_WEB TransactionInitiatorType = "Web"
+	TRANSACTIONINITIATORTYPE_APP TransactionInitiatorType = "App"
 	TRANSACTIONINITIATORTYPE_EXTERNAL TransactionInitiatorType = "External"
 )
 
@@ -28,6 +29,7 @@ const (
 var AllowedTransactionInitiatorTypeEnumValues = []TransactionInitiatorType{
 	"API",
 	"Web",
+	"App",
 	"External",
 }
 
@@ -37,15 +39,8 @@ func (v *TransactionInitiatorType) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TransactionInitiatorType(value)
-	for _, existing := range AllowedTransactionInitiatorTypeEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TransactionInitiatorType", value)
+	*v = TransactionInitiatorType(value)
+	return nil
 }
 
 // NewTransactionInitiatorTypeFromValue returns a pointer to a valid TransactionInitiatorType

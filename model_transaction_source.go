@@ -16,45 +16,53 @@ import (
 
 // TransactionSource - struct for TransactionSource
 type TransactionSource struct {
-	BaseTransactionAddress *BaseTransactionAddress
-	BaseWalletTransactionAddress *BaseWalletTransactionAddress
-	ExchangeWalletTransactionAddress *ExchangeWalletTransactionAddress
-	MPCWalletTransactionAddress *MPCWalletTransactionAddress
-	SafeTransactionAddress *SafeTransactionAddress
+	TransactionAddressSource *TransactionAddressSource
+	TransactionCustodialWalletSource *TransactionCustodialWalletSource
+	TransactionExchangeWalletSource *TransactionExchangeWalletSource
+	TransactionFeeStationWalletSource *TransactionFeeStationWalletSource
+	TransactionMPCWalletSource *TransactionMPCWalletSource
+	TransactionSafeWalletSource *TransactionSafeWalletSource
 }
 
-// BaseTransactionAddressAsTransactionSource is a convenience function that returns BaseTransactionAddress wrapped in TransactionSource
-func BaseTransactionAddressAsTransactionSource(v *BaseTransactionAddress) TransactionSource {
+// TransactionAddressSourceAsTransactionSource is a convenience function that returns TransactionAddressSource wrapped in TransactionSource
+func TransactionAddressSourceAsTransactionSource(v *TransactionAddressSource) TransactionSource {
 	return TransactionSource{
-		BaseTransactionAddress: v,
+		TransactionAddressSource: v,
 	}
 }
 
-// BaseWalletTransactionAddressAsTransactionSource is a convenience function that returns BaseWalletTransactionAddress wrapped in TransactionSource
-func BaseWalletTransactionAddressAsTransactionSource(v *BaseWalletTransactionAddress) TransactionSource {
+// TransactionCustodialWalletSourceAsTransactionSource is a convenience function that returns TransactionCustodialWalletSource wrapped in TransactionSource
+func TransactionCustodialWalletSourceAsTransactionSource(v *TransactionCustodialWalletSource) TransactionSource {
 	return TransactionSource{
-		BaseWalletTransactionAddress: v,
+		TransactionCustodialWalletSource: v,
 	}
 }
 
-// ExchangeWalletTransactionAddressAsTransactionSource is a convenience function that returns ExchangeWalletTransactionAddress wrapped in TransactionSource
-func ExchangeWalletTransactionAddressAsTransactionSource(v *ExchangeWalletTransactionAddress) TransactionSource {
+// TransactionExchangeWalletSourceAsTransactionSource is a convenience function that returns TransactionExchangeWalletSource wrapped in TransactionSource
+func TransactionExchangeWalletSourceAsTransactionSource(v *TransactionExchangeWalletSource) TransactionSource {
 	return TransactionSource{
-		ExchangeWalletTransactionAddress: v,
+		TransactionExchangeWalletSource: v,
 	}
 }
 
-// MPCWalletTransactionAddressAsTransactionSource is a convenience function that returns MPCWalletTransactionAddress wrapped in TransactionSource
-func MPCWalletTransactionAddressAsTransactionSource(v *MPCWalletTransactionAddress) TransactionSource {
+// TransactionFeeStationWalletSourceAsTransactionSource is a convenience function that returns TransactionFeeStationWalletSource wrapped in TransactionSource
+func TransactionFeeStationWalletSourceAsTransactionSource(v *TransactionFeeStationWalletSource) TransactionSource {
 	return TransactionSource{
-		MPCWalletTransactionAddress: v,
+		TransactionFeeStationWalletSource: v,
 	}
 }
 
-// SafeTransactionAddressAsTransactionSource is a convenience function that returns SafeTransactionAddress wrapped in TransactionSource
-func SafeTransactionAddressAsTransactionSource(v *SafeTransactionAddress) TransactionSource {
+// TransactionMPCWalletSourceAsTransactionSource is a convenience function that returns TransactionMPCWalletSource wrapped in TransactionSource
+func TransactionMPCWalletSourceAsTransactionSource(v *TransactionMPCWalletSource) TransactionSource {
 	return TransactionSource{
-		SafeTransactionAddress: v,
+		TransactionMPCWalletSource: v,
+	}
+}
+
+// TransactionSafeWalletSourceAsTransactionSource is a convenience function that returns TransactionSafeWalletSource wrapped in TransactionSource
+func TransactionSafeWalletSourceAsTransactionSource(v *TransactionSafeWalletSource) TransactionSource {
+	return TransactionSource{
+		TransactionSafeWalletSource: v,
 	}
 }
 
@@ -69,159 +77,147 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
-	// check if the discriminator value is 'CustodialAssetWallet'
-	if jsonDict["type"] == "CustodialAssetWallet" {
-		// try to unmarshal JSON data into BaseWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.BaseWalletTransactionAddress)
+	// check if the discriminator value is 'Address'
+	if jsonDict["source_type"] == "Address" {
+		// try to unmarshal JSON data into TransactionAddressSource
+		err = json.Unmarshal(data, &dst.TransactionAddressSource)
 		if err == nil {
-			return nil // data stored in dst.BaseWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionAddressSource, return on the first match
 		} else {
-			dst.BaseWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as BaseWalletTransactionAddress: %s", err.Error())
+			dst.TransactionAddressSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionAddressSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'CustodialWeb3Wallet'
-	if jsonDict["type"] == "CustodialWeb3Wallet" {
-		// try to unmarshal JSON data into BaseWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.BaseWalletTransactionAddress)
+	// check if the discriminator value is 'CustodialWallet'
+	if jsonDict["source_type"] == "CustodialWallet" {
+		// try to unmarshal JSON data into TransactionCustodialWalletSource
+		err = json.Unmarshal(data, &dst.TransactionCustodialWalletSource)
 		if err == nil {
-			return nil // data stored in dst.BaseWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionCustodialWalletSource, return on the first match
 		} else {
-			dst.BaseWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as BaseWalletTransactionAddress: %s", err.Error())
+			dst.TransactionCustodialWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionCustodialWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'ExchangeAccount'
-	if jsonDict["type"] == "ExchangeAccount" {
-		// try to unmarshal JSON data into ExchangeWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.ExchangeWalletTransactionAddress)
+	// check if the discriminator value is 'ExchangeWallet'
+	if jsonDict["source_type"] == "ExchangeWallet" {
+		// try to unmarshal JSON data into TransactionExchangeWalletSource
+		err = json.Unmarshal(data, &dst.TransactionExchangeWalletSource)
 		if err == nil {
-			return nil // data stored in dst.ExchangeWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionExchangeWalletSource, return on the first match
 		} else {
-			dst.ExchangeWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as ExchangeWalletTransactionAddress: %s", err.Error())
+			dst.TransactionExchangeWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionExchangeWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'ExternalAddress'
-	if jsonDict["type"] == "ExternalAddress" {
-		// try to unmarshal JSON data into BaseTransactionAddress
-		err = json.Unmarshal(data, &dst.BaseTransactionAddress)
+	// check if the discriminator value is 'FeeStation'
+	if jsonDict["source_type"] == "FeeStation" {
+		// try to unmarshal JSON data into TransactionFeeStationWalletSource
+		err = json.Unmarshal(data, &dst.TransactionFeeStationWalletSource)
 		if err == nil {
-			return nil // data stored in dst.BaseTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionFeeStationWalletSource, return on the first match
 		} else {
-			dst.BaseTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as BaseTransactionAddress: %s", err.Error())
+			dst.TransactionFeeStationWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionFeeStationWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'GasStation'
-	if jsonDict["type"] == "GasStation" {
-		// try to unmarshal JSON data into BaseWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.BaseWalletTransactionAddress)
+	// check if the discriminator value is 'MPCWallet'
+	if jsonDict["source_type"] == "MPCWallet" {
+		// try to unmarshal JSON data into TransactionMPCWalletSource
+		err = json.Unmarshal(data, &dst.TransactionMPCWalletSource)
 		if err == nil {
-			return nil // data stored in dst.BaseWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionMPCWalletSource, return on the first match
 		} else {
-			dst.BaseWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as BaseWalletTransactionAddress: %s", err.Error())
+			dst.TransactionMPCWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionMPCWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'MPCClientControlledWallet'
-	if jsonDict["type"] == "MPCClientControlledWallet" {
-		// try to unmarshal JSON data into MPCWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.MPCWalletTransactionAddress)
+	// check if the discriminator value is 'SafeWallet'
+	if jsonDict["source_type"] == "SafeWallet" {
+		// try to unmarshal JSON data into TransactionSafeWalletSource
+		err = json.Unmarshal(data, &dst.TransactionSafeWalletSource)
 		if err == nil {
-			return nil // data stored in dst.MPCWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionSafeWalletSource, return on the first match
 		} else {
-			dst.MPCWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as MPCWalletTransactionAddress: %s", err.Error())
+			dst.TransactionSafeWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionSafeWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'MPCUserControlledWallet'
-	if jsonDict["type"] == "MPCUserControlledWallet" {
-		// try to unmarshal JSON data into MPCWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.MPCWalletTransactionAddress)
+	// check if the discriminator value is 'TransactionAddressSource'
+	if jsonDict["source_type"] == "TransactionAddressSource" {
+		// try to unmarshal JSON data into TransactionAddressSource
+		err = json.Unmarshal(data, &dst.TransactionAddressSource)
 		if err == nil {
-			return nil // data stored in dst.MPCWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionAddressSource, return on the first match
 		} else {
-			dst.MPCWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as MPCWalletTransactionAddress: %s", err.Error())
+			dst.TransactionAddressSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionAddressSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'SafeContractWallet'
-	if jsonDict["type"] == "SafeContractWallet" {
-		// try to unmarshal JSON data into SafeTransactionAddress
-		err = json.Unmarshal(data, &dst.SafeTransactionAddress)
+	// check if the discriminator value is 'TransactionCustodialWalletSource'
+	if jsonDict["source_type"] == "TransactionCustodialWalletSource" {
+		// try to unmarshal JSON data into TransactionCustodialWalletSource
+		err = json.Unmarshal(data, &dst.TransactionCustodialWalletSource)
 		if err == nil {
-			return nil // data stored in dst.SafeTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionCustodialWalletSource, return on the first match
 		} else {
-			dst.SafeTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as SafeTransactionAddress: %s", err.Error())
+			dst.TransactionCustodialWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionCustodialWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'BaseTransactionAddress'
-	if jsonDict["type"] == "BaseTransactionAddress" {
-		// try to unmarshal JSON data into BaseTransactionAddress
-		err = json.Unmarshal(data, &dst.BaseTransactionAddress)
+	// check if the discriminator value is 'TransactionExchangeWalletSource'
+	if jsonDict["source_type"] == "TransactionExchangeWalletSource" {
+		// try to unmarshal JSON data into TransactionExchangeWalletSource
+		err = json.Unmarshal(data, &dst.TransactionExchangeWalletSource)
 		if err == nil {
-			return nil // data stored in dst.BaseTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionExchangeWalletSource, return on the first match
 		} else {
-			dst.BaseTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as BaseTransactionAddress: %s", err.Error())
+			dst.TransactionExchangeWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionExchangeWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'BaseWalletTransactionAddress'
-	if jsonDict["type"] == "BaseWalletTransactionAddress" {
-		// try to unmarshal JSON data into BaseWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.BaseWalletTransactionAddress)
+	// check if the discriminator value is 'TransactionFeeStationWalletSource'
+	if jsonDict["source_type"] == "TransactionFeeStationWalletSource" {
+		// try to unmarshal JSON data into TransactionFeeStationWalletSource
+		err = json.Unmarshal(data, &dst.TransactionFeeStationWalletSource)
 		if err == nil {
-			return nil // data stored in dst.BaseWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionFeeStationWalletSource, return on the first match
 		} else {
-			dst.BaseWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as BaseWalletTransactionAddress: %s", err.Error())
+			dst.TransactionFeeStationWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionFeeStationWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'ExchangeWalletTransactionAddress'
-	if jsonDict["type"] == "ExchangeWalletTransactionAddress" {
-		// try to unmarshal JSON data into ExchangeWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.ExchangeWalletTransactionAddress)
+	// check if the discriminator value is 'TransactionMPCWalletSource'
+	if jsonDict["source_type"] == "TransactionMPCWalletSource" {
+		// try to unmarshal JSON data into TransactionMPCWalletSource
+		err = json.Unmarshal(data, &dst.TransactionMPCWalletSource)
 		if err == nil {
-			return nil // data stored in dst.ExchangeWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionMPCWalletSource, return on the first match
 		} else {
-			dst.ExchangeWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as ExchangeWalletTransactionAddress: %s", err.Error())
+			dst.TransactionMPCWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionMPCWalletSource: %s", err.Error())
 		}
 	}
 
-	// check if the discriminator value is 'MPCWalletTransactionAddress'
-	if jsonDict["type"] == "MPCWalletTransactionAddress" {
-		// try to unmarshal JSON data into MPCWalletTransactionAddress
-		err = json.Unmarshal(data, &dst.MPCWalletTransactionAddress)
+	// check if the discriminator value is 'TransactionSafeWalletSource'
+	if jsonDict["source_type"] == "TransactionSafeWalletSource" {
+		// try to unmarshal JSON data into TransactionSafeWalletSource
+		err = json.Unmarshal(data, &dst.TransactionSafeWalletSource)
 		if err == nil {
-			return nil // data stored in dst.MPCWalletTransactionAddress, return on the first match
+			return nil // data stored in dst.TransactionSafeWalletSource, return on the first match
 		} else {
-			dst.MPCWalletTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as MPCWalletTransactionAddress: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'SafeTransactionAddress'
-	if jsonDict["type"] == "SafeTransactionAddress" {
-		// try to unmarshal JSON data into SafeTransactionAddress
-		err = json.Unmarshal(data, &dst.SafeTransactionAddress)
-		if err == nil {
-			return nil // data stored in dst.SafeTransactionAddress, return on the first match
-		} else {
-			dst.SafeTransactionAddress = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as SafeTransactionAddress: %s", err.Error())
+			dst.TransactionSafeWalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionSafeWalletSource: %s", err.Error())
 		}
 	}
 
@@ -230,24 +226,28 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src TransactionSource) MarshalJSON() ([]byte, error) {
-	if src.BaseTransactionAddress != nil {
-		return json.Marshal(&src.BaseTransactionAddress)
+	if src.TransactionAddressSource != nil {
+		return json.Marshal(&src.TransactionAddressSource)
 	}
 
-	if src.BaseWalletTransactionAddress != nil {
-		return json.Marshal(&src.BaseWalletTransactionAddress)
+	if src.TransactionCustodialWalletSource != nil {
+		return json.Marshal(&src.TransactionCustodialWalletSource)
 	}
 
-	if src.ExchangeWalletTransactionAddress != nil {
-		return json.Marshal(&src.ExchangeWalletTransactionAddress)
+	if src.TransactionExchangeWalletSource != nil {
+		return json.Marshal(&src.TransactionExchangeWalletSource)
 	}
 
-	if src.MPCWalletTransactionAddress != nil {
-		return json.Marshal(&src.MPCWalletTransactionAddress)
+	if src.TransactionFeeStationWalletSource != nil {
+		return json.Marshal(&src.TransactionFeeStationWalletSource)
 	}
 
-	if src.SafeTransactionAddress != nil {
-		return json.Marshal(&src.SafeTransactionAddress)
+	if src.TransactionMPCWalletSource != nil {
+		return json.Marshal(&src.TransactionMPCWalletSource)
+	}
+
+	if src.TransactionSafeWalletSource != nil {
+		return json.Marshal(&src.TransactionSafeWalletSource)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -258,24 +258,28 @@ func (obj *TransactionSource) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
-	if obj.BaseTransactionAddress != nil {
-		return obj.BaseTransactionAddress
+	if obj.TransactionAddressSource != nil {
+		return obj.TransactionAddressSource
 	}
 
-	if obj.BaseWalletTransactionAddress != nil {
-		return obj.BaseWalletTransactionAddress
+	if obj.TransactionCustodialWalletSource != nil {
+		return obj.TransactionCustodialWalletSource
 	}
 
-	if obj.ExchangeWalletTransactionAddress != nil {
-		return obj.ExchangeWalletTransactionAddress
+	if obj.TransactionExchangeWalletSource != nil {
+		return obj.TransactionExchangeWalletSource
 	}
 
-	if obj.MPCWalletTransactionAddress != nil {
-		return obj.MPCWalletTransactionAddress
+	if obj.TransactionFeeStationWalletSource != nil {
+		return obj.TransactionFeeStationWalletSource
 	}
 
-	if obj.SafeTransactionAddress != nil {
-		return obj.SafeTransactionAddress
+	if obj.TransactionMPCWalletSource != nil {
+		return obj.TransactionMPCWalletSource
+	}
+
+	if obj.TransactionSafeWalletSource != nil {
+		return obj.TransactionSafeWalletSource
 	}
 
 	// all schemas are nil

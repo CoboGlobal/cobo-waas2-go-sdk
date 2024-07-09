@@ -18,10 +18,8 @@ import (
 // checks if the EvmLegacyFeeBasePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmLegacyFeeBasePrice{}
 
-// EvmLegacyFeeBasePrice The base transaction fee when using the legacy method.
+// EvmLegacyFeeBasePrice The transaction fee price based on the legacy fee model, which equals the gas price.
 type EvmLegacyFeeBasePrice struct {
-	// The token ID of the transaction fee.
-	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The gas price, in gwei. The gas price represents the amount of ETH that must be paid to validators for processing transactions.
 	GasPrice string `json:"gas_price"`
 }
@@ -44,38 +42,6 @@ func NewEvmLegacyFeeBasePrice(gasPrice string) *EvmLegacyFeeBasePrice {
 func NewEvmLegacyFeeBasePriceWithDefaults() *EvmLegacyFeeBasePrice {
 	this := EvmLegacyFeeBasePrice{}
 	return &this
-}
-
-// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
-func (o *EvmLegacyFeeBasePrice) GetFeeTokenId() string {
-	if o == nil || IsNil(o.FeeTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.FeeTokenId
-}
-
-// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EvmLegacyFeeBasePrice) GetFeeTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeTokenId) {
-		return nil, false
-	}
-	return o.FeeTokenId, true
-}
-
-// HasFeeTokenId returns a boolean if a field has been set.
-func (o *EvmLegacyFeeBasePrice) HasFeeTokenId() bool {
-	if o != nil && !IsNil(o.FeeTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
-func (o *EvmLegacyFeeBasePrice) SetFeeTokenId(v string) {
-	o.FeeTokenId = &v
 }
 
 // GetGasPrice returns the GasPrice field value
@@ -112,9 +78,6 @@ func (o EvmLegacyFeeBasePrice) MarshalJSON() ([]byte, error) {
 
 func (o EvmLegacyFeeBasePrice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeTokenId) {
-		toSerialize["fee_token_id"] = o.FeeTokenId
-	}
 	toSerialize["gas_price"] = o.GasPrice
 	return toSerialize, nil
 }

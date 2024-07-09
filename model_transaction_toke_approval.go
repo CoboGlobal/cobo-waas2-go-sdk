@@ -20,20 +20,28 @@ var _ MappedNullable = &TransactionTokeApproval{}
 
 // TransactionTokeApproval struct for TransactionTokeApproval
 type TransactionTokeApproval struct {
-	// The token ID.
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 	TokenId string `json:"token_id"`
-	// The blockchain on which the token operates.
+	// The ID of the chain on which the token operates.
 	ChainId string `json:"chain_id"`
-	// The token symbol.
+	// (This concept applies to Exchange Wallets only) The asset ID. An asset is a digital representation of a valuable resource on a blockchain network. Exchange Wallets group your holdings by asset, even if the same asset exists on different blockchains. For example, if your Exchange Wallet has 1 USDT on Ethereum and 1 USDT on TRON, then your asset balance is 2 USDT.
+	AssetId *string `json:"asset_id,omitempty"`
+	// The token symbol, which is the abbreviated name of a token.
 	Symbol *string `json:"symbol,omitempty"`
-	// The token description.
-	Description *string `json:"description,omitempty"`
+	// The token name, which is the full name of a token.
+	Name *string `json:"name,omitempty"`
+	// The token decimal.
+	Decimal *int32 `json:"decimal,omitempty"`
 	// The URL of the token icon.
 	IconUrl *string `json:"icon_url,omitempty"`
 	// The token address, if applicable.
 	TokenAddress *string `json:"token_address,omitempty"`
-	// The asset ID, which is used to group the balances of the correponding tokens. For example, if you have $1,000 worth of ETH_USDT and $2,000 worth of TRON_USDT, the balance of your USDT assets will be $3,000.
-	AssetId *string `json:"asset_id,omitempty"`
+	// The fee token ID. A fee token is the token with which you pay transaction fees.
+	FeeTokenId *string `json:"fee_token_id,omitempty"`
+	// Whether deposits are enabled for this token.
+	CanDeposit *bool `json:"can_deposit,omitempty"`
+	// Whether withdrawals are enabled for this token.
+	CanWithdraw *bool `json:"can_withdraw,omitempty"`
 	// Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5) 
 	Amount *float32 `json:"amount,omitempty"`
 	// Spender address
@@ -109,6 +117,38 @@ func (o *TransactionTokeApproval) SetChainId(v string) {
 	o.ChainId = v
 }
 
+// GetAssetId returns the AssetId field value if set, zero value otherwise.
+func (o *TransactionTokeApproval) GetAssetId() string {
+	if o == nil || IsNil(o.AssetId) {
+		var ret string
+		return ret
+	}
+	return *o.AssetId
+}
+
+// GetAssetIdOk returns a tuple with the AssetId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionTokeApproval) GetAssetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AssetId) {
+		return nil, false
+	}
+	return o.AssetId, true
+}
+
+// HasAssetId returns a boolean if a field has been set.
+func (o *TransactionTokeApproval) HasAssetId() bool {
+	if o != nil && !IsNil(o.AssetId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAssetId gets a reference to the given string and assigns it to the AssetId field.
+func (o *TransactionTokeApproval) SetAssetId(v string) {
+	o.AssetId = &v
+}
+
 // GetSymbol returns the Symbol field value if set, zero value otherwise.
 func (o *TransactionTokeApproval) GetSymbol() string {
 	if o == nil || IsNil(o.Symbol) {
@@ -141,36 +181,68 @@ func (o *TransactionTokeApproval) SetSymbol(v string) {
 	o.Symbol = &v
 }
 
-// GetDescription returns the Description field value if set, zero value otherwise.
-func (o *TransactionTokeApproval) GetDescription() string {
-	if o == nil || IsNil(o.Description) {
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *TransactionTokeApproval) GetName() string {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-	return *o.Description
+	return *o.Name
 }
 
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionTokeApproval) GetDescriptionOk() (*string, bool) {
-	if o == nil || IsNil(o.Description) {
+func (o *TransactionTokeApproval) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return o.Description, true
+	return o.Name, true
 }
 
-// HasDescription returns a boolean if a field has been set.
-func (o *TransactionTokeApproval) HasDescription() bool {
-	if o != nil && !IsNil(o.Description) {
+// HasName returns a boolean if a field has been set.
+func (o *TransactionTokeApproval) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
 	return false
 }
 
-// SetDescription gets a reference to the given string and assigns it to the Description field.
-func (o *TransactionTokeApproval) SetDescription(v string) {
-	o.Description = &v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *TransactionTokeApproval) SetName(v string) {
+	o.Name = &v
+}
+
+// GetDecimal returns the Decimal field value if set, zero value otherwise.
+func (o *TransactionTokeApproval) GetDecimal() int32 {
+	if o == nil || IsNil(o.Decimal) {
+		var ret int32
+		return ret
+	}
+	return *o.Decimal
+}
+
+// GetDecimalOk returns a tuple with the Decimal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionTokeApproval) GetDecimalOk() (*int32, bool) {
+	if o == nil || IsNil(o.Decimal) {
+		return nil, false
+	}
+	return o.Decimal, true
+}
+
+// HasDecimal returns a boolean if a field has been set.
+func (o *TransactionTokeApproval) HasDecimal() bool {
+	if o != nil && !IsNil(o.Decimal) {
+		return true
+	}
+
+	return false
+}
+
+// SetDecimal gets a reference to the given int32 and assigns it to the Decimal field.
+func (o *TransactionTokeApproval) SetDecimal(v int32) {
+	o.Decimal = &v
 }
 
 // GetIconUrl returns the IconUrl field value if set, zero value otherwise.
@@ -237,36 +309,100 @@ func (o *TransactionTokeApproval) SetTokenAddress(v string) {
 	o.TokenAddress = &v
 }
 
-// GetAssetId returns the AssetId field value if set, zero value otherwise.
-func (o *TransactionTokeApproval) GetAssetId() string {
-	if o == nil || IsNil(o.AssetId) {
+// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
+func (o *TransactionTokeApproval) GetFeeTokenId() string {
+	if o == nil || IsNil(o.FeeTokenId) {
 		var ret string
 		return ret
 	}
-	return *o.AssetId
+	return *o.FeeTokenId
 }
 
-// GetAssetIdOk returns a tuple with the AssetId field value if set, nil otherwise
+// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionTokeApproval) GetAssetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.AssetId) {
+func (o *TransactionTokeApproval) GetFeeTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.FeeTokenId) {
 		return nil, false
 	}
-	return o.AssetId, true
+	return o.FeeTokenId, true
 }
 
-// HasAssetId returns a boolean if a field has been set.
-func (o *TransactionTokeApproval) HasAssetId() bool {
-	if o != nil && !IsNil(o.AssetId) {
+// HasFeeTokenId returns a boolean if a field has been set.
+func (o *TransactionTokeApproval) HasFeeTokenId() bool {
+	if o != nil && !IsNil(o.FeeTokenId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAssetId gets a reference to the given string and assigns it to the AssetId field.
-func (o *TransactionTokeApproval) SetAssetId(v string) {
-	o.AssetId = &v
+// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
+func (o *TransactionTokeApproval) SetFeeTokenId(v string) {
+	o.FeeTokenId = &v
+}
+
+// GetCanDeposit returns the CanDeposit field value if set, zero value otherwise.
+func (o *TransactionTokeApproval) GetCanDeposit() bool {
+	if o == nil || IsNil(o.CanDeposit) {
+		var ret bool
+		return ret
+	}
+	return *o.CanDeposit
+}
+
+// GetCanDepositOk returns a tuple with the CanDeposit field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionTokeApproval) GetCanDepositOk() (*bool, bool) {
+	if o == nil || IsNil(o.CanDeposit) {
+		return nil, false
+	}
+	return o.CanDeposit, true
+}
+
+// HasCanDeposit returns a boolean if a field has been set.
+func (o *TransactionTokeApproval) HasCanDeposit() bool {
+	if o != nil && !IsNil(o.CanDeposit) {
+		return true
+	}
+
+	return false
+}
+
+// SetCanDeposit gets a reference to the given bool and assigns it to the CanDeposit field.
+func (o *TransactionTokeApproval) SetCanDeposit(v bool) {
+	o.CanDeposit = &v
+}
+
+// GetCanWithdraw returns the CanWithdraw field value if set, zero value otherwise.
+func (o *TransactionTokeApproval) GetCanWithdraw() bool {
+	if o == nil || IsNil(o.CanWithdraw) {
+		var ret bool
+		return ret
+	}
+	return *o.CanWithdraw
+}
+
+// GetCanWithdrawOk returns a tuple with the CanWithdraw field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionTokeApproval) GetCanWithdrawOk() (*bool, bool) {
+	if o == nil || IsNil(o.CanWithdraw) {
+		return nil, false
+	}
+	return o.CanWithdraw, true
+}
+
+// HasCanWithdraw returns a boolean if a field has been set.
+func (o *TransactionTokeApproval) HasCanWithdraw() bool {
+	if o != nil && !IsNil(o.CanWithdraw) {
+		return true
+	}
+
+	return false
+}
+
+// SetCanWithdraw gets a reference to the given bool and assigns it to the CanWithdraw field.
+func (o *TransactionTokeApproval) SetCanWithdraw(v bool) {
+	o.CanWithdraw = &v
 }
 
 // GetAmount returns the Amount field value if set, zero value otherwise.
@@ -345,11 +481,17 @@ func (o TransactionTokeApproval) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["token_id"] = o.TokenId
 	toSerialize["chain_id"] = o.ChainId
+	if !IsNil(o.AssetId) {
+		toSerialize["asset_id"] = o.AssetId
+	}
 	if !IsNil(o.Symbol) {
 		toSerialize["symbol"] = o.Symbol
 	}
-	if !IsNil(o.Description) {
-		toSerialize["description"] = o.Description
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Decimal) {
+		toSerialize["decimal"] = o.Decimal
 	}
 	if !IsNil(o.IconUrl) {
 		toSerialize["icon_url"] = o.IconUrl
@@ -357,8 +499,14 @@ func (o TransactionTokeApproval) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TokenAddress) {
 		toSerialize["token_address"] = o.TokenAddress
 	}
-	if !IsNil(o.AssetId) {
-		toSerialize["asset_id"] = o.AssetId
+	if !IsNil(o.FeeTokenId) {
+		toSerialize["fee_token_id"] = o.FeeTokenId
+	}
+	if !IsNil(o.CanDeposit) {
+		toSerialize["can_deposit"] = o.CanDeposit
+	}
+	if !IsNil(o.CanWithdraw) {
+		toSerialize["can_withdraw"] = o.CanWithdraw
 	}
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | The name of the mpc project. | 
+**Name** | **string** | The project&#39;s new name. | 
 
 ## Methods
 

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AddressStr** | Pointer to **string** | Destination address | [optional] 
-**Memo** | Pointer to **string** | Destination address memo | [optional] 
-**Amount** | Pointer to **string** | Transaction value (Note that this is an absolute value. If you trade 1.5 ETH, then the value is 1.5)  | [optional] 
+**Address** | Pointer to **string** | The destination address. | [optional] 
+**Memo** | Pointer to **string** | The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON. | [optional] 
+**Amount** | Pointer to **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 
 ## Methods
 
@@ -27,30 +27,30 @@ NewAddressTransferDestinationAccountOutputWithDefaults instantiates a new Addres
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAddressStr
+### GetAddress
 
-`func (o *AddressTransferDestinationAccountOutput) GetAddressStr() string`
+`func (o *AddressTransferDestinationAccountOutput) GetAddress() string`
 
-GetAddressStr returns the AddressStr field if non-nil, zero value otherwise.
+GetAddress returns the Address field if non-nil, zero value otherwise.
 
-### GetAddressStrOk
+### GetAddressOk
 
-`func (o *AddressTransferDestinationAccountOutput) GetAddressStrOk() (*string, bool)`
+`func (o *AddressTransferDestinationAccountOutput) GetAddressOk() (*string, bool)`
 
-GetAddressStrOk returns a tuple with the AddressStr field if it's non-nil, zero value otherwise
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressStr
+### SetAddress
 
-`func (o *AddressTransferDestinationAccountOutput) SetAddressStr(v string)`
+`func (o *AddressTransferDestinationAccountOutput) SetAddress(v string)`
 
-SetAddressStr sets AddressStr field to given value.
+SetAddress sets Address field to given value.
 
-### HasAddressStr
+### HasAddress
 
-`func (o *AddressTransferDestinationAccountOutput) HasAddressStr() bool`
+`func (o *AddressTransferDestinationAccountOutput) HasAddress() bool`
 
-HasAddressStr returns a boolean if a field has been set.
+HasAddress returns a boolean if a field has been set.
 
 ### GetMemo
 

@@ -16,9 +16,9 @@ import (
 // checks if the RootPubkey type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RootPubkey{}
 
-// RootPubkey The data for root pubkey information.
+// RootPubkey The data for MPC Root Extended Public Key information.
 type RootPubkey struct {
-	// the root pubkey of the mpc vault.
+	// The vault's [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key).
 	Pubkey *string `json:"pubkey,omitempty"`
 	Curve *CurveType `json:"curve,omitempty"`
 }

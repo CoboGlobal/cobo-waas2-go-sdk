@@ -22,10 +22,242 @@ import (
 // DevelopersWebhooksAPIService DevelopersWebhooksAPI service
 type DevelopersWebhooksAPIService service
 
+type ApiCreateWebhookEndpointRequest struct {
+	ctx context.Context
+	ApiService *DevelopersWebhooksAPIService
+	createWebhookEndpointRequest *CreateWebhookEndpointRequest
+}
+
+// The request body to register a webhook endpoint.
+func (r ApiCreateWebhookEndpointRequest) CreateWebhookEndpointRequest(createWebhookEndpointRequest CreateWebhookEndpointRequest) ApiCreateWebhookEndpointRequest {
+	r.createWebhookEndpointRequest = &createWebhookEndpointRequest
+	return r
+}
+
+func (r ApiCreateWebhookEndpointRequest) Execute() (*Endpoint, *http.Response, error) {
+	return r.ApiService.CreateWebhookEndpointExecute(r)
+}
+
+/*
+CreateWebhookEndpoint Register webhook endpoint
+
+This operation registers a new webhook endpoint for your organization.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateWebhookEndpointRequest
+*/
+func (a *DevelopersWebhooksAPIService) CreateWebhookEndpoint(ctx context.Context) ApiCreateWebhookEndpointRequest {
+	return ApiCreateWebhookEndpointRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return Endpoint
+func (a *DevelopersWebhooksAPIService) CreateWebhookEndpointExecute(r ApiCreateWebhookEndpointRequest) (*Endpoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Endpoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DevelopersWebhooksAPIService.CreateWebhookEndpoint")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webhooks/endpoints"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createWebhookEndpointRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetWebhookEndpointByIdRequest struct {
+	ctx context.Context
+	ApiService *DevelopersWebhooksAPIService
+	endpointId string
+}
+
+func (r ApiGetWebhookEndpointByIdRequest) Execute() (*Endpoint, *http.Response, error) {
+	return r.ApiService.GetWebhookEndpointByIdExecute(r)
+}
+
+/*
+GetWebhookEndpointById Get webhook endpoint information
+
+This operation retrieves the information of a specified webhook endpoint.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param endpointId The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
+ @return ApiGetWebhookEndpointByIdRequest
+*/
+func (a *DevelopersWebhooksAPIService) GetWebhookEndpointById(ctx context.Context, endpointId string) ApiGetWebhookEndpointByIdRequest {
+	return ApiGetWebhookEndpointByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		endpointId: endpointId,
+	}
+}
+
+// Execute executes the request
+//  @return Endpoint
+func (a *DevelopersWebhooksAPIService) GetWebhookEndpointByIdExecute(r ApiGetWebhookEndpointByIdRequest) (*Endpoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Endpoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DevelopersWebhooksAPIService.GetWebhookEndpointById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webhooks/endpoints/{endpoint_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpoint_id"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetWebhookEventRequest struct {
 	ctx context.Context
 	ApiService *DevelopersWebhooksAPIService
 	eventId string
+	endpointId string
 }
 
 func (r ApiGetWebhookEventRequest) Execute() (*WebhookEvent, *http.Response, error) {
@@ -33,20 +265,22 @@ func (r ApiGetWebhookEventRequest) Execute() (*WebhookEvent, *http.Response, err
 }
 
 /*
-GetWebhookEvent Retrieve event by ID
+GetWebhookEvent Retrieve event information
 
 This operation retrieves the information of a webhook event by the event ID.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param eventId The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events).
+ @param eventId The event ID. You can obtain a list of event IDs by calling [List all events](/v2/api-references/developers--webhooks/list-all-events).
+ @param endpointId The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
  @return ApiGetWebhookEventRequest
 */
-func (a *DevelopersWebhooksAPIService) GetWebhookEvent(ctx context.Context, eventId string) ApiGetWebhookEventRequest {
+func (a *DevelopersWebhooksAPIService) GetWebhookEvent(ctx context.Context, eventId string, endpointId string) ApiGetWebhookEventRequest {
 	return ApiGetWebhookEventRequest{
 		ApiService: a,
 		ctx: ctx,
 		eventId: eventId,
+		endpointId: endpointId,
 	}
 }
 
@@ -65,8 +299,9 @@ func (a *DevelopersWebhooksAPIService) GetWebhookEventExecute(r ApiGetWebhookEve
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webhooks/events/{event_id}"
+	localVarPath := localBasePath + "/webhooks/endpoints/{endpoint_id}/events/{event_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"event_id"+"}", url.PathEscape(parameterValueToString(r.eventId, "eventId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"endpoint_id"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -173,6 +408,7 @@ type ApiGetWebhookEventLogsRequest struct {
 	ctx context.Context
 	ApiService *DevelopersWebhooksAPIService
 	eventId string
+	endpointId string
 }
 
 func (r ApiGetWebhookEventLogsRequest) Execute() ([]WebhookEventLog, *http.Response, error) {
@@ -180,20 +416,22 @@ func (r ApiGetWebhookEventLogsRequest) Execute() ([]WebhookEventLog, *http.Respo
 }
 
 /*
-GetWebhookEventLogs List event logs by ID
+GetWebhookEventLogs List event logs
 
 This operation retrieves a list of webhook event logs by event ID. Each retry will generate a separate event log.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param eventId The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events).
+ @param eventId The event ID. You can obtain a list of event IDs by calling [List all events](/v2/api-references/developers--webhooks/list-all-events).
+ @param endpointId The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
  @return ApiGetWebhookEventLogsRequest
 */
-func (a *DevelopersWebhooksAPIService) GetWebhookEventLogs(ctx context.Context, eventId string) ApiGetWebhookEventLogsRequest {
+func (a *DevelopersWebhooksAPIService) GetWebhookEventLogs(ctx context.Context, eventId string, endpointId string) ApiGetWebhookEventLogsRequest {
 	return ApiGetWebhookEventLogsRequest{
 		ApiService: a,
 		ctx: ctx,
 		eventId: eventId,
+		endpointId: endpointId,
 	}
 }
 
@@ -212,8 +450,9 @@ func (a *DevelopersWebhooksAPIService) GetWebhookEventLogsExecute(r ApiGetWebhoo
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webhooks/events/{event_id}/logs"
+	localVarPath := localBasePath + "/webhooks/endpoints/{endpoint_id}/events/{event_id}/logs"
 	localVarPath = strings.Replace(localVarPath, "{"+"event_id"+"}", url.PathEscape(parameterValueToString(r.eventId, "eventId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"endpoint_id"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -319,6 +558,7 @@ func (a *DevelopersWebhooksAPIService) GetWebhookEventLogsExecute(r ApiGetWebhoo
 type ApiListEventsRequest struct {
 	ctx context.Context
 	ApiService *DevelopersWebhooksAPIService
+	endpointId string
 	status *WebhookEventStatus
 	type_ *WebhookEventType
 	limit *int32
@@ -326,31 +566,29 @@ type ApiListEventsRequest struct {
 	after *string
 }
 
-// The event status. Possible values include: - &#x60;Success&#x60;: The event has been delivered, and the webhook endpoint has responded to the event. - &#x60;Retrying&#x60;: The event has been delivered, but the webhook endpoint has not responded. In this case, the WaaS service will retry delivering the event. - &#x60;Failed&#x60;: The event cannot be delivered and the WaaS service will stop retrying. This may occur if the number of retries reaches 10, or if the event has been delivered but the webhook endpoint responded with an error. 
 func (r ApiListEventsRequest) Status(status WebhookEventStatus) ApiListEventsRequest {
 	r.status = &status
 	return r
 }
 
-// The event type. 
 func (r ApiListEventsRequest) Type_(type_ WebhookEventType) ApiListEventsRequest {
 	r.type_ = &type_
 	return r
 }
 
-// The maximum number of objects to return. The value range is [1, 50].
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
 func (r ApiListEventsRequest) Limit(limit int32) ApiListEventsRequest {
 	r.limit = &limit
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;foo&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;foo&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
 func (r ApiListEventsRequest) Before(before string) ApiListEventsRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;bar&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;bar&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request. If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
 func (r ApiListEventsRequest) After(after string) ApiListEventsRequest {
 	r.after = &after
 	return r
@@ -365,16 +603,18 @@ ListEvents List all events
 
 This operation retrieves a list of webhook events that have occurred within the last 30 days.
 
-Note: The request will only return webhook events that have occurred to the wallets associated with your current API key. For example, if the current API key is only associated with Asset Wallets, any webhook events that have occurred to an MPC Wallet will not be retrieved with the current API key.
+Note: The request will only return webhook events that have occurred to the wallets associated with your current API key. For example, if the current API key is only associated with Custodial Wallets, any webhook events that have occurred to an MPC Wallet will not be retrieved with the current API key.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param endpointId The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
  @return ApiListEventsRequest
 */
-func (a *DevelopersWebhooksAPIService) ListEvents(ctx context.Context) ApiListEventsRequest {
+func (a *DevelopersWebhooksAPIService) ListEvents(ctx context.Context, endpointId string) ApiListEventsRequest {
 	return ApiListEventsRequest{
 		ApiService: a,
 		ctx: ctx,
+		endpointId: endpointId,
 	}
 }
 
@@ -393,7 +633,8 @@ func (a *DevelopersWebhooksAPIService) ListEventsExecute(r ApiListEventsRequest)
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webhooks/events"
+	localVarPath := localBasePath + "/webhooks/endpoints/{endpoint_id}/events"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpoint_id"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -503,10 +744,313 @@ func (a *DevelopersWebhooksAPIService) ListEventsExecute(r ApiListEventsRequest)
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiListWebhookEndpointsRequest struct {
+	ctx context.Context
+	ApiService *DevelopersWebhooksAPIService
+	status *EndpointStatus
+	eventType *WebhookEventType
+	limit *int32
+	before *string
+	after *string
+}
+
+func (r ApiListWebhookEndpointsRequest) Status(status EndpointStatus) ApiListWebhookEndpointsRequest {
+	r.status = &status
+	return r
+}
+
+func (r ApiListWebhookEndpointsRequest) EventType(eventType WebhookEventType) ApiListWebhookEndpointsRequest {
+	r.eventType = &eventType
+	return r
+}
+
+// The maximum number of objects to return. The default value range is [1, 50] and can be set endpoint specified.
+func (r ApiListWebhookEndpointsRequest) Limit(limit int32) ApiListWebhookEndpointsRequest {
+	r.limit = &limit
+	return r
+}
+
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;before&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; and &#x60;after&#x60; are both set to empty, the first slice is returned. 
+func (r ApiListWebhookEndpointsRequest) Before(before string) ApiListWebhookEndpointsRequest {
+	r.before = &before
+	return r
+}
+
+// An object ID which serves as a cursor for pagination. For example, if you specify &#x60;after&#x60; as &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  If you set both &#x60;after&#x60; or &#x60;before&#x60;, only the setting of &#x60;before&#x60; will take effect.  If the &#x60;before&#x60; is set to empty and &#x60;after&#x60; is set to &#x60;last&#x60;, the last slice is returned. 
+func (r ApiListWebhookEndpointsRequest) After(after string) ApiListWebhookEndpointsRequest {
+	r.after = &after
+	return r
+}
+
+func (r ApiListWebhookEndpointsRequest) Execute() (*ListWebhookEndpoints200Response, *http.Response, error) {
+	return r.ApiService.ListWebhookEndpointsExecute(r)
+}
+
+/*
+ListWebhookEndpoints List webhook endpoints
+
+This operation retrieves the information of all webhook endpoints registered under your organization. You can filter the result by endpoint status and the subscribed event type.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListWebhookEndpointsRequest
+*/
+func (a *DevelopersWebhooksAPIService) ListWebhookEndpoints(ctx context.Context) ApiListWebhookEndpointsRequest {
+	return ApiListWebhookEndpointsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListWebhookEndpoints200Response
+func (a *DevelopersWebhooksAPIService) ListWebhookEndpointsExecute(r ApiListWebhookEndpointsRequest) (*ListWebhookEndpoints200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListWebhookEndpoints200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DevelopersWebhooksAPIService.ListWebhookEndpoints")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webhooks/endpoints"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "")
+	}
+	if r.eventType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "event_type", r.eventType, "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListWebhookEventDefinitionsRequest struct {
+	ctx context.Context
+	ApiService *DevelopersWebhooksAPIService
+}
+
+func (r ApiListWebhookEventDefinitionsRequest) Execute() ([]ListWebhookEventDefinitions200ResponseInner, *http.Response, error) {
+	return r.ApiService.ListWebhookEventDefinitionsExecute(r)
+}
+
+/*
+ListWebhookEventDefinitions Get webhook event types
+
+This operation retrieves all supported webhook event types.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListWebhookEventDefinitionsRequest
+*/
+func (a *DevelopersWebhooksAPIService) ListWebhookEventDefinitions(ctx context.Context) ApiListWebhookEventDefinitionsRequest {
+	return ApiListWebhookEventDefinitionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return []ListWebhookEventDefinitions200ResponseInner
+func (a *DevelopersWebhooksAPIService) ListWebhookEventDefinitionsExecute(r ApiListWebhookEventDefinitionsRequest) ([]ListWebhookEventDefinitions200ResponseInner, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ListWebhookEventDefinitions200ResponseInner
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DevelopersWebhooksAPIService.ListWebhookEventDefinitions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webhooks/events/definitions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRetryWebhookEventRequest struct {
 	ctx context.Context
 	ApiService *DevelopersWebhooksAPIService
 	eventId string
+	endpointId string
 }
 
 func (r ApiRetryWebhookEventRequest) Execute() (*RetryWebhookEvent201Response, *http.Response, error) {
@@ -514,20 +1058,22 @@ func (r ApiRetryWebhookEventRequest) Execute() (*RetryWebhookEvent201Response, *
 }
 
 /*
-RetryWebhookEvent Retry event by ID
+RetryWebhookEvent Retry event
 
 This operation retries delivering a webhook event with the specified event ID. You can only retry delivering a webhook event in the `Retrying` or `Failed` status.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param eventId The event ID. You can obtain a list of event IDs by calling [List all events](/api-references/v2/developers--webhooks/list-all-events).
+ @param eventId The event ID. You can obtain a list of event IDs by calling [List all events](/v2/api-references/developers--webhooks/list-all-events).
+ @param endpointId The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
  @return ApiRetryWebhookEventRequest
 */
-func (a *DevelopersWebhooksAPIService) RetryWebhookEvent(ctx context.Context, eventId string) ApiRetryWebhookEventRequest {
+func (a *DevelopersWebhooksAPIService) RetryWebhookEvent(ctx context.Context, eventId string, endpointId string) ApiRetryWebhookEventRequest {
 	return ApiRetryWebhookEventRequest{
 		ApiService: a,
 		ctx: ctx,
 		eventId: eventId,
+		endpointId: endpointId,
 	}
 }
 
@@ -546,8 +1092,9 @@ func (a *DevelopersWebhooksAPIService) RetryWebhookEventExecute(r ApiRetryWebhoo
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webhooks/events/{event_id}/retry"
+	localVarPath := localBasePath + "/webhooks/endpoints/{endpoint_id}/events/{event_id}/retry"
 	localVarPath = strings.Replace(localVarPath, "{"+"event_id"+"}", url.PathEscape(parameterValueToString(r.eventId, "eventId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"endpoint_id"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -615,6 +1162,139 @@ func (a *DevelopersWebhooksAPIService) RetryWebhookEventExecute(r ApiRetryWebhoo
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateWebhookEndpointRequest struct {
+	ctx context.Context
+	ApiService *DevelopersWebhooksAPIService
+	endpointId string
+	updateWebhookEndpointRequest *UpdateWebhookEndpointRequest
+}
+
+// The request body to update a webhook endpoint.
+func (r ApiUpdateWebhookEndpointRequest) UpdateWebhookEndpointRequest(updateWebhookEndpointRequest UpdateWebhookEndpointRequest) ApiUpdateWebhookEndpointRequest {
+	r.updateWebhookEndpointRequest = &updateWebhookEndpointRequest
+	return r
+}
+
+func (r ApiUpdateWebhookEndpointRequest) Execute() (*Endpoint, *http.Response, error) {
+	return r.ApiService.UpdateWebhookEndpointExecute(r)
+}
+
+/*
+UpdateWebhookEndpoint Update webhook endpoint
+
+This operation updates the information of a specified webhook endpoint.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param endpointId The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
+ @return ApiUpdateWebhookEndpointRequest
+*/
+func (a *DevelopersWebhooksAPIService) UpdateWebhookEndpoint(ctx context.Context, endpointId string) ApiUpdateWebhookEndpointRequest {
+	return ApiUpdateWebhookEndpointRequest{
+		ApiService: a,
+		ctx: ctx,
+		endpointId: endpointId,
+	}
+}
+
+// Execute executes the request
+//  @return Endpoint
+func (a *DevelopersWebhooksAPIService) UpdateWebhookEndpointExecute(r ApiUpdateWebhookEndpointRequest) (*Endpoint, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Endpoint
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DevelopersWebhooksAPIService.UpdateWebhookEndpoint")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webhooks/endpoints/{endpoint_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"endpoint_id"+"}", url.PathEscape(parameterValueToString(r.endpointId, "endpointId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateWebhookEndpointRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

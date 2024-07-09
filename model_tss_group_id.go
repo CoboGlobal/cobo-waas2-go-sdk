@@ -16,9 +16,9 @@ import (
 // checks if the TSSGroupId type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TSSGroupId{}
 
-// TSSGroupId The data for tss group id information.
+// TSSGroupId The data for the TSS group ID.
 type TSSGroupId struct {
-	// the group id of the tss group.
+	// The TSS group ID.
 	GroupId *string `json:"group_id,omitempty"`
 	Curve *CurveType `json:"curve,omitempty"`
 }

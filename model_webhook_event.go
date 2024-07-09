@@ -22,14 +22,13 @@ var _ MappedNullable = &WebhookEvent{}
 type WebhookEvent struct {
 	// The event ID.
 	Id string `json:"id"`
-	// The URL of the webhook endpoint.
+	// The webhook endpoint URL.
 	Url string `json:"url"`
 	// The time when the event occurred, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	Type WebhookEventType `json:"type"`
-	// The data of the webhook event, in JSON format.
-	Data map[string]interface{} `json:"data"`
-	Status WebhookEventStatus `json:"status"`
+	Data Transaction `json:"data"`
+	Status *WebhookEventStatus `json:"status,omitempty"`
 	// The timestamp indicating the next scheduled retry to deliver this event, in Unix timestamp format, measured in milliseconds. This field is only present if the event status is `Retrying`. 
 	NextRetryTimestamp *int32 `json:"next_retry_timestamp,omitempty"`
 	// The number of retries left. This field is only present if the event status is `Retrying`.
@@ -42,14 +41,13 @@ type _WebhookEvent WebhookEvent
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWebhookEvent(id string, url string, createdTimestamp int32, type_ WebhookEventType, data map[string]interface{}, status WebhookEventStatus) *WebhookEvent {
+func NewWebhookEvent(id string, url string, createdTimestamp int32, type_ WebhookEventType, data Transaction) *WebhookEvent {
 	this := WebhookEvent{}
 	this.Id = id
 	this.Url = url
 	this.CreatedTimestamp = createdTimestamp
 	this.Type = type_
 	this.Data = data
-	this.Status = status
 	return &this
 }
 
@@ -158,9 +156,9 @@ func (o *WebhookEvent) SetType(v WebhookEventType) {
 }
 
 // GetData returns the Data field value
-func (o *WebhookEvent) GetData() map[string]interface{} {
+func (o *WebhookEvent) GetData() Transaction {
 	if o == nil {
-		var ret map[string]interface{}
+		var ret Transaction
 		return ret
 	}
 
@@ -169,40 +167,48 @@ func (o *WebhookEvent) GetData() map[string]interface{} {
 
 // GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
-func (o *WebhookEvent) GetDataOk() (map[string]interface{}, bool) {
-	if o == nil {
-		return map[string]interface{}{}, false
-	}
-	return o.Data, true
-}
-
-// SetData sets field value
-func (o *WebhookEvent) SetData(v map[string]interface{}) {
-	o.Data = v
-}
-
-// GetStatus returns the Status field value
-func (o *WebhookEvent) GetStatus() WebhookEventStatus {
-	if o == nil {
-		var ret WebhookEventStatus
-		return ret
-	}
-
-	return o.Status
-}
-
-// GetStatusOk returns a tuple with the Status field value
-// and a boolean to check if the value has been set.
-func (o *WebhookEvent) GetStatusOk() (*WebhookEventStatus, bool) {
+func (o *WebhookEvent) GetDataOk() (*Transaction, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Status, true
+	return &o.Data, true
 }
 
-// SetStatus sets field value
+// SetData sets field value
+func (o *WebhookEvent) SetData(v Transaction) {
+	o.Data = v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *WebhookEvent) GetStatus() WebhookEventStatus {
+	if o == nil || IsNil(o.Status) {
+		var ret WebhookEventStatus
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WebhookEvent) GetStatusOk() (*WebhookEventStatus, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *WebhookEvent) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given WebhookEventStatus and assigns it to the Status field.
 func (o *WebhookEvent) SetStatus(v WebhookEventStatus) {
-	o.Status = v
+	o.Status = &v
 }
 
 // GetNextRetryTimestamp returns the NextRetryTimestamp field value if set, zero value otherwise.
@@ -284,7 +290,9 @@ func (o WebhookEvent) ToMap() (map[string]interface{}, error) {
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["type"] = o.Type
 	toSerialize["data"] = o.Data
-	toSerialize["status"] = o.Status
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
 	if !IsNil(o.NextRetryTimestamp) {
 		toSerialize["next_retry_timestamp"] = o.NextRetryTimestamp
 	}
@@ -304,7 +312,6 @@ func (o *WebhookEvent) UnmarshalJSON(data []byte) (err error) {
 		"created_timestamp",
 		"type",
 		"data",
-		"status",
 	}
 
 	allProperties := make(map[string]interface{})

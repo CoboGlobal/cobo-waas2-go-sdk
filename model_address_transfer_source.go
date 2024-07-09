@@ -21,10 +21,10 @@ var _ MappedNullable = &AddressTransferSource{}
 // AddressTransferSource struct for AddressTransferSource
 type AddressTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
-	// Unique id of the wallet to transfer from.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// From address
-	AddressStr string `json:"address_str"`
+	// The wallet address.
+	Address string `json:"address"`
 }
 
 type _AddressTransferSource AddressTransferSource
@@ -33,11 +33,11 @@ type _AddressTransferSource AddressTransferSource
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddressTransferSource(sourceType WalletSubtype, walletId string, addressStr string) *AddressTransferSource {
+func NewAddressTransferSource(sourceType WalletSubtype, walletId string, address string) *AddressTransferSource {
 	this := AddressTransferSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
-	this.AddressStr = addressStr
+	this.Address = address
 	return &this
 }
 
@@ -97,28 +97,28 @@ func (o *AddressTransferSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetAddressStr returns the AddressStr field value
-func (o *AddressTransferSource) GetAddressStr() string {
+// GetAddress returns the Address field value
+func (o *AddressTransferSource) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.AddressStr
+	return o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value
+// GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *AddressTransferSource) GetAddressStrOk() (*string, bool) {
+func (o *AddressTransferSource) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AddressStr, true
+	return &o.Address, true
 }
 
-// SetAddressStr sets field value
-func (o *AddressTransferSource) SetAddressStr(v string) {
-	o.AddressStr = v
+// SetAddress sets field value
+func (o *AddressTransferSource) SetAddress(v string) {
+	o.Address = v
 }
 
 func (o AddressTransferSource) MarshalJSON() ([]byte, error) {
@@ -133,7 +133,7 @@ func (o AddressTransferSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["address_str"] = o.AddressStr
+	toSerialize["address"] = o.Address
 	return toSerialize, nil
 }
 
@@ -144,7 +144,7 @@ func (o *AddressTransferSource) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"source_type",
 		"wallet_id",
-		"address_str",
+		"address",
 	}
 
 	allProperties := make(map[string]interface{})

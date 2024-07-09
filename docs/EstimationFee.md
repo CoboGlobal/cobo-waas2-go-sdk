@@ -5,17 +5,17 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
+**TokenId** | **string** | The token ID of the transaction fee. | 
 **Slow** | Pointer to [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | [optional] 
-**Standard** | [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | 
+**Recommended** | [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | 
 **Fast** | Pointer to [**UtxoFeeSlow**](UtxoFeeSlow.md) |  | [optional] 
-**FeeTokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
-**MaxFeeAmount** | Pointer to **string** | The maximum fee amount in fee_coin. | [optional] 
+**MaxFeeAmount** | **string** | The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee. | 
 
 ## Methods
 
 ### NewEstimationFee
 
-`func NewEstimationFee(feeType FeeType, standard UtxoFeeSlow, ) *EstimationFee`
+`func NewEstimationFee(feeType FeeType, tokenId string, recommended UtxoFeeSlow, maxFeeAmount string, ) *EstimationFee`
 
 NewEstimationFee instantiates a new EstimationFee object
 This constructor will assign default values to properties that have it defined,
@@ -50,6 +50,26 @@ and a boolean to check if the value has been set.
 SetFeeType sets FeeType field to given value.
 
 
+### GetTokenId
+
+`func (o *EstimationFee) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *EstimationFee) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *EstimationFee) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+
 ### GetSlow
 
 `func (o *EstimationFee) GetSlow() UtxoFeeSlow`
@@ -75,24 +95,24 @@ SetSlow sets Slow field to given value.
 
 HasSlow returns a boolean if a field has been set.
 
-### GetStandard
+### GetRecommended
 
-`func (o *EstimationFee) GetStandard() UtxoFeeSlow`
+`func (o *EstimationFee) GetRecommended() UtxoFeeSlow`
 
-GetStandard returns the Standard field if non-nil, zero value otherwise.
+GetRecommended returns the Recommended field if non-nil, zero value otherwise.
 
-### GetStandardOk
+### GetRecommendedOk
 
-`func (o *EstimationFee) GetStandardOk() (*UtxoFeeSlow, bool)`
+`func (o *EstimationFee) GetRecommendedOk() (*UtxoFeeSlow, bool)`
 
-GetStandardOk returns a tuple with the Standard field if it's non-nil, zero value otherwise
+GetRecommendedOk returns a tuple with the Recommended field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStandard
+### SetRecommended
 
-`func (o *EstimationFee) SetStandard(v UtxoFeeSlow)`
+`func (o *EstimationFee) SetRecommended(v UtxoFeeSlow)`
 
-SetStandard sets Standard field to given value.
+SetRecommended sets Recommended field to given value.
 
 
 ### GetFast
@@ -120,31 +140,6 @@ SetFast sets Fast field to given value.
 
 HasFast returns a boolean if a field has been set.
 
-### GetFeeTokenId
-
-`func (o *EstimationFee) GetFeeTokenId() string`
-
-GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
-
-### GetFeeTokenIdOk
-
-`func (o *EstimationFee) GetFeeTokenIdOk() (*string, bool)`
-
-GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeTokenId
-
-`func (o *EstimationFee) SetFeeTokenId(v string)`
-
-SetFeeTokenId sets FeeTokenId field to given value.
-
-### HasFeeTokenId
-
-`func (o *EstimationFee) HasFeeTokenId() bool`
-
-HasFeeTokenId returns a boolean if a field has been set.
-
 ### GetMaxFeeAmount
 
 `func (o *EstimationFee) GetMaxFeeAmount() string`
@@ -164,11 +159,6 @@ and a boolean to check if the value has been set.
 
 SetMaxFeeAmount sets MaxFeeAmount field to given value.
 
-### HasMaxFeeAmount
-
-`func (o *EstimationFee) HasMaxFeeAmount() bool`
-
-HasMaxFeeAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

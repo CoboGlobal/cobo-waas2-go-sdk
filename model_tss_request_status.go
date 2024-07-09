@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TSSRequestStatus the model 'TSSRequestStatus'
+// TSSRequestStatus The TSS request status. Possible values include: - `PendingKeyHolderConfirmation`: The action done to the TSS request is currently pending enough key share holders to approve.  - `KeyHolderConfirmationFailed`: Key share holders failed to approve the the action to be done to the TSS request.  - `KeyGenerating`: The key share is currently being generated for the action to be done to the TSS request.  - `KeyGeneratingFailed`: The key share generation process has failed for the action to be done to the TSS request.  - `Success`: The action done to the TSS request has been completed successfully. 
 type TSSRequestStatus string
 
 // List of TSSRequestStatus
@@ -41,15 +41,8 @@ func (v *TSSRequestStatus) UnmarshalJSON(src []byte) error {
 	if err != nil {
 		return err
 	}
-	enumTypeValue := TSSRequestStatus(value)
-	for _, existing := range AllowedTSSRequestStatusEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
-
-	return fmt.Errorf("%+v is not a valid TSSRequestStatus", value)
+	*v = TSSRequestStatus(value)
+	return nil
 }
 
 // NewTSSRequestStatusFromValue returns a pointer to a valid TSSRequestStatus

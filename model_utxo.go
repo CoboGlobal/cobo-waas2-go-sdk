@@ -23,7 +23,7 @@ type UTXO struct {
 	// The output index of the UTXO.
 	VoutN *int32 `json:"vout_n,omitempty"`
 	// The address of the UTXO.
-	AddressStr *string `json:"address_str,omitempty"`
+	Address *string `json:"address,omitempty"`
 	TokenBalances []TokenBalance `json:"token_balances,omitempty"`
 	// Whether the UTXO comes from a coinbase transaction.
 	IsCoinbase *bool `json:"is_coinbase,omitempty"`
@@ -114,36 +114,36 @@ func (o *UTXO) SetVoutN(v int32) {
 	o.VoutN = &v
 }
 
-// GetAddressStr returns the AddressStr field value if set, zero value otherwise.
-func (o *UTXO) GetAddressStr() string {
-	if o == nil || IsNil(o.AddressStr) {
+// GetAddress returns the Address field value if set, zero value otherwise.
+func (o *UTXO) GetAddress() string {
+	if o == nil || IsNil(o.Address) {
 		var ret string
 		return ret
 	}
-	return *o.AddressStr
+	return *o.Address
 }
 
-// GetAddressStrOk returns a tuple with the AddressStr field value if set, nil otherwise
+// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UTXO) GetAddressStrOk() (*string, bool) {
-	if o == nil || IsNil(o.AddressStr) {
+func (o *UTXO) GetAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.Address) {
 		return nil, false
 	}
-	return o.AddressStr, true
+	return o.Address, true
 }
 
-// HasAddressStr returns a boolean if a field has been set.
-func (o *UTXO) HasAddressStr() bool {
-	if o != nil && !IsNil(o.AddressStr) {
+// HasAddress returns a boolean if a field has been set.
+func (o *UTXO) HasAddress() bool {
+	if o != nil && !IsNil(o.Address) {
 		return true
 	}
 
 	return false
 }
 
-// SetAddressStr gets a reference to the given string and assigns it to the AddressStr field.
-func (o *UTXO) SetAddressStr(v string) {
-	o.AddressStr = &v
+// SetAddress gets a reference to the given string and assigns it to the Address field.
+func (o *UTXO) SetAddress(v string) {
+	o.Address = &v
 }
 
 // GetTokenBalances returns the TokenBalances field value if set, zero value otherwise.
@@ -290,8 +290,8 @@ func (o UTXO) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.VoutN) {
 		toSerialize["vout_n"] = o.VoutN
 	}
-	if !IsNil(o.AddressStr) {
-		toSerialize["address_str"] = o.AddressStr
+	if !IsNil(o.Address) {
+		toSerialize["address"] = o.Address
 	}
 	if !IsNil(o.TokenBalances) {
 		toSerialize["token_balances"] = o.TokenBalances

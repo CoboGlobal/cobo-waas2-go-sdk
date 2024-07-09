@@ -20,7 +20,7 @@ var _ MappedNullable = &TokenBalance{}
 
 // TokenBalance The balance information.
 type TokenBalance struct {
-	// The token ID.
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List organization enabled tokens](/v2/api-references/wallets/list-organization-enabled-tokens).
 	TokenId string `json:"token_id"`
 	Balance TokenBalanceBalance `json:"balance"`
 }
