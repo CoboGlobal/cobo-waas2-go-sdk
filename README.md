@@ -33,7 +33,7 @@ go get golang.org/x/net/context
 Put the package under your project folder and add the following in import:
 
 ```go
-import waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
+import waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
 ```
 
 To use a proxy, set the environment variable `HTTP_PROXY`:

@@ -14,14 +14,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api/waas2"
-	"github.com/CoboGlobal/cobo-waas2-go-api/waas2/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/waas2"
+	"github.com/CoboGlobal/cobo-waas2-go-sdk/waas2/crypto"
 )
 
 func Test_waas2_WalletsAPIService(t *testing.T) {
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.WithValue(context.Background(), waas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
 	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",

@@ -16,7 +16,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/CoboGlobal/cobo-waas2-go-api/waas2/crypto"
+	"github.com/CoboGlobal/cobo-waas2-go-sdk/waas2/crypto"
 	"github.com/google/uuid"
 	"io"
 	"mime/multipart"

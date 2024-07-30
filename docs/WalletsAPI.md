@@ -45,16 +45,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	chainId := "ETH" // string | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
 	address := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" // string | The wallet address.
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -120,16 +120,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The wallet ID.
-	createAddressRequest := *waas2.NewCreateAddressRequest("ETH", int32(1)) // CreateAddressRequest | The request body to generates addresses within a specified wallet. (optional)
+	createAddressRequest := *cobowaas2.NewCreateAddressRequest("ETH", int32(1)) // CreateAddressRequest | The request body to generates addresses within a specified wallet. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -199,15 +199,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	createWalletParams := waas2.CreateWalletParams{CreateCustodialWalletParams: waas2.NewCreateCustodialWalletParams("My WaaS 2.0 Wallet", waas2.WalletType("Custodial"), waas2.WalletSubtype("Asset"))} // CreateWalletParams | The request body to create a wallet (optional)
+	createWalletParams := cobowaas2.CreateWalletParams{CreateCustodialWalletParams: cobowaas2.NewCreateCustodialWalletParams("My WaaS 2.0 Wallet", cobowaas2.WalletType("Custodial"), cobowaas2.WalletSubtype("Asset"))} // CreateWalletParams | The request body to create a wallet (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -272,15 +272,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The wallet ID.
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -349,16 +349,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The wallet ID.
 	address := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" // string | The wallet address.
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -429,15 +429,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	chainId := "ETH" // string | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -506,8 +506,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
@@ -517,8 +517,8 @@ func main() {
 	toAddress := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | The recipient's address.
 	fromAddress := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | The sender's address. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -591,15 +591,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	tokenId := "ETH_USDT" // string | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -668,15 +668,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The wallet ID.
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -745,8 +745,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
@@ -757,8 +757,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -832,19 +832,19 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	walletType := waas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
-	walletSubtype := waas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
+	walletType := cobowaas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
+	walletSubtype := cobowaas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -913,20 +913,20 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	walletType := waas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
-	walletSubtype := waas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
+	walletType := cobowaas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
+	walletSubtype := cobowaas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
 	chainIds := "BTC,ETH" // string | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -996,20 +996,20 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	walletType := waas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
-	walletSubtype := waas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
+	walletType := cobowaas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
+	walletSubtype := cobowaas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
 	chainIds := "BTC,ETH" // string | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1079,21 +1079,21 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	walletType := waas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
-	walletSubtype := waas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
+	walletType := cobowaas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
+	walletSubtype := cobowaas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
 	chainIds := "BTC,ETH" // string | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). (optional)
 	tokenIds := "ETH_USDT,ETH_USDC" // string | A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens). (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1164,8 +1164,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
@@ -1176,8 +1176,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1252,8 +1252,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
@@ -1263,8 +1263,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1337,8 +1337,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
@@ -1349,8 +1349,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1424,21 +1424,21 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	walletType := waas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
-	walletSubtype := waas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
+	walletType := cobowaas2.WalletType("Custodial") // WalletType | The wallet type.  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  (optional)
+	walletSubtype := cobowaas2.WalletSubtype("Asset") // WalletSubtype | The wallet subtype.  - `Asset`: Custodial Wallets (Asset Wallets)  - `Web3`: Custodial Wallets (Web3 Wallets)  - `Main`: Exchange Wallets (Main Account)  - `Sub`: Exchange Wallets (Sub Account)  - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)  - `User-Controlled`: MPC Wallets (User-Controlled Wallets)  - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})  (optional)
 	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).  (optional)
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | (This parameter is applicable to MPC Wallets only) The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallets/list-all-vaults). (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1509,16 +1509,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The wallet ID.
-	lockUtxosRequest := *waas2.NewLockUtxosRequest([]waas2.LockUtxosRequestUtxosInner{*waas2.NewLockUtxosRequestUtxosInner("BTC", "9bdf8e7ae03c237e115f09543fbdb40f8efa600106e78b67ce4d5adfadda2dbb", int32(0))}) // LockUtxosRequest | The request body of the Lock/Unlock UTXOs operation. (optional)
+	lockUtxosRequest := *cobowaas2.NewLockUtxosRequest([]cobowaas2.LockUtxosRequestUtxosInner{*cobowaas2.NewLockUtxosRequestUtxosInner("BTC", "9bdf8e7ae03c237e115f09543fbdb40f8efa600106e78b67ce4d5adfadda2dbb", int32(0))}) // LockUtxosRequest | The request body of the Lock/Unlock UTXOs operation. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1588,16 +1588,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The wallet ID.
-	lockUtxosRequest := *waas2.NewLockUtxosRequest([]waas2.LockUtxosRequestUtxosInner{*waas2.NewLockUtxosRequestUtxosInner("BTC", "9bdf8e7ae03c237e115f09543fbdb40f8efa600106e78b67ce4d5adfadda2dbb", int32(0))}) // LockUtxosRequest | The request body of the Lock/Unlock UTXOs operation. (optional)
+	lockUtxosRequest := *cobowaas2.NewLockUtxosRequest([]cobowaas2.LockUtxosRequestUtxosInner{*cobowaas2.NewLockUtxosRequestUtxosInner("BTC", "9bdf8e7ae03c237e115f09543fbdb40f8efa600106e78b67ce4d5adfadda2dbb", int32(0))}) // LockUtxosRequest | The request body of the Lock/Unlock UTXOs operation. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1667,16 +1667,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-api"
-        "github.com/CoboGlobal/cobo-waas2-go-api/crypto"
+	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The wallet ID.
-	updateWalletParams := waas2.UpdateWalletParams{UpdateCustodialWalletParams: waas2.NewUpdateCustodialWalletParams(waas2.WalletType("Custodial"))} // UpdateWalletParams | The request body. (optional)
+	updateWalletParams := cobowaas2.UpdateWalletParams{UpdateCustodialWalletParams: cobowaas2.NewUpdateCustodialWalletParams(cobowaas2.WalletType("Custodial"))} // UpdateWalletParams | The request body. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := cobowaas2.NewConfiguration()
+	apiClient := cobowaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)

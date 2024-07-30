@@ -1,4 +1,4 @@
-module github.com/CoboGlobal/cobo-waas2-go-api
+module github.com/CoboGlobal/cobo-waas2-go-sdk
 
 go 1.18
 
