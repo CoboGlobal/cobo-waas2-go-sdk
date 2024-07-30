@@ -42,16 +42,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
 	tssRequestId := "20240711114129000132315000003970" // string | The TSS request ID, which you can retrieve by calling [List TSS requests](/v2/api-references/wallets--mpc-wallets/list-tss-requests).
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -122,16 +122,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	createKeyShareHolderGroupRequest := *waas2.NewCreateKeyShareHolderGroupRequest(waas2.KeyShareHolderGroupType("MainGroup"), int32(3), int32(2), []waas2.CreateKeyShareHolder{*waas2.NewCreateKeyShareHolder()}) // CreateKeyShareHolderGroupRequest | The request body to create a key share holder group. (optional)
+	createKeyShareHolderGroupRequest := *coboWaas2.NewCreateKeyShareHolderGroupRequest(coboWaas2.KeyShareHolderGroupType("MainGroup"), int32(3), int32(2), []coboWaas2.CreateKeyShareHolder{*coboWaas2.NewCreateKeyShareHolder()}) // CreateKeyShareHolderGroupRequest | The request body to create a key share holder group. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -201,15 +201,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
-	createMpcProjectRequest := *waas2.NewCreateMpcProjectRequest("Project name", int32(3), int32(2)) // CreateMpcProjectRequest | The request body to create a project. (optional)
+	createMpcProjectRequest := *coboWaas2.NewCreateMpcProjectRequest("Project name", int32(3), int32(2)) // CreateMpcProjectRequest | The request body to create a project. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -274,15 +274,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
-	createMpcVaultRequest := *waas2.NewCreateMpcVaultRequest("My vault", waas2.MPCVaultType("Org-Controlled")) // CreateMpcVaultRequest | The request body to create a vault. (optional)
+	createMpcVaultRequest := *coboWaas2.NewCreateMpcVaultRequest("My vault", coboWaas2.MPCVaultType("Org-Controlled")) // CreateMpcVaultRequest | The request body to create a vault. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -347,16 +347,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	createTssRequestRequest := *waas2.NewCreateTssRequestRequest(waas2.TSSRequestType("KeyGen"), "a1bf161f-8b60-4f61-9c35-6434b8654437") // CreateTssRequestRequest | The request body to create a TSS request. (optional)
+	createTssRequestRequest := *coboWaas2.NewCreateTssRequestRequest(coboWaas2.TSSRequestType("KeyGen"), "a1bf161f-8b60-4f61-9c35-6434b8654437") // CreateTssRequestRequest | The request body to create a TSS request. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -426,16 +426,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
 	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce" // string | The key share holder group ID.
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -506,16 +506,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
 	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce" // string | The key share holder group ID.
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -586,15 +586,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -663,15 +663,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -740,16 +740,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
 	tssRequestId := "20240711114129000132315000003970" // string | The TSS request ID, which you can retrieve by calling [List TSS requests](/v2/api-references/wallets--mpc-wallets/list-tss-requests).
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -820,14 +820,14 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -888,19 +888,19 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	keyShareHolderGroupType := waas2.KeyShareHolderGroupType("MainGroup") // KeyShareHolderGroupType | The key share holder group type. Possible values include: - `MainGroup`: The [Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#main-group).  - `SigningGroup`: The [Signing Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#signing-group).  - `RecoveryGroup`: The [Recovery Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#recovery-group).  **Note**: If this parameter is left empty, all key share holder group types will be retrieved.  (optional)
+	keyShareHolderGroupType := coboWaas2.KeyShareHolderGroupType("MainGroup") // KeyShareHolderGroupType | The key share holder group type. Possible values include: - `MainGroup`: The [Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#main-group).  - `SigningGroup`: The [Signing Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#signing-group).  - `RecoveryGroup`: The [Recovery Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#recovery-group).  **Note**: If this parameter is left empty, all key share holder group types will be retrieved.  (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -973,8 +973,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
@@ -982,8 +982,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1050,19 +1050,19 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
-	vaultType := waas2.MPCVaultType("Org-Controlled") // MPCVaultType | The vault type. Possible values include: - `Org-Controlled`: This vault is a collection of [Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#organization-controlled-wallets).  - `User-Controlled`: This vault is a collection of [User-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#user-controlled-wallets). 
+	vaultType := coboWaas2.MPCVaultType("Org-Controlled") // MPCVaultType | The vault type. Possible values include: - `Org-Controlled`: This vault is a collection of [Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#organization-controlled-wallets).  - `User-Controlled`: This vault is a collection of [User-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#user-controlled-wallets). 
 	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).  (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1131,8 +1131,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
@@ -1142,8 +1142,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1216,17 +1216,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
 	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce" // string | The key share holder group ID.
-	updateKeyShareHolderGroupByIdRequest := *waas2.NewUpdateKeyShareHolderGroupByIdRequest(waas2.UpdateGroupAction("UpgradeToMainGroup")) // UpdateKeyShareHolderGroupByIdRequest |  (optional)
+	updateKeyShareHolderGroupByIdRequest := *coboWaas2.NewUpdateKeyShareHolderGroupByIdRequest(coboWaas2.UpdateGroupAction("UpgradeToMainGroup")) // UpdateKeyShareHolderGroupByIdRequest |  (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1298,16 +1298,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).
-	updateMpcProjectByIdRequest := *waas2.NewUpdateMpcProjectByIdRequest("New project name") // UpdateMpcProjectByIdRequest | The request body to update a project's name. (optional)
+	updateMpcProjectByIdRequest := *coboWaas2.NewUpdateMpcProjectByIdRequest("New project name") // UpdateMpcProjectByIdRequest | The request body to update a project's name. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -1377,16 +1377,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
-        "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
+	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
 func main() {
 	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	updateMpcVaultByIdRequest := *waas2.NewUpdateMpcVaultByIdRequest("The new name of the vault") // UpdateMpcVaultByIdRequest | The request body to update a vault's name. (optional)
+	updateMpcVaultByIdRequest := *coboWaas2.NewUpdateMpcVaultByIdRequest("The new name of the vault") // UpdateMpcVaultByIdRequest | The request body to update a vault's name. (optional)
 
-	configuration := waas2.NewConfiguration()
-	apiClient := waas2.NewAPIClient(configuration)
+	configuration := coboWaas2.NewConfiguration()
+	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)

@@ -1,4 +1,4 @@
-# Go API client for waas2
+# Go API client for cobo_waas2
 
 The Cobo Wallet-as-a-Service (WaaS) 2.0 API is the latest version of Cobo’s WaaS API offering. It enables you to access Cobo’s full suite of crypto wallet technologies with powerful and flexible access controls. By encapsulating complex security protocols and streamlining blockchain interactions, this API allows you to concentrate on your core business activities without worrying about the safety of your assets. The WaaS 2.0 API presents the following key features:
 
@@ -33,7 +33,7 @@ go get golang.org/x/net/context
 Put the package under your project folder and add the following in import:
 
 ```go
-import waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+import cobo_waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
 ```
 
 To use a proxy, set the environment variable `HTTP_PROXY`:
@@ -48,22 +48,22 @@ Default configuration comes with `Servers` field that contains server objects as
 
 ### Select Server Configuration
 
-For using Dev environment set context value `waas2.ContextEnv` of type `int`.
+For using Dev environment set context value `cobo_waas2.ContextEnv` of type `int`.
 
 ```go
-ctx := context.WithValue(context.Background(), waas2.ContextEnv, waas2.DevEnv)
+ctx := context.WithValue(context.Background(), cobo_waas2.ContextEnv, cobo_waas2.DevEnv)
 ```
 
-For using Prod environment set context value `waas2.ContextEnv` of type `int`.
+For using Prod environment set context value `cobo_waas2.ContextEnv` of type `int`.
 
 ```go
-ctx := context.WithValue(context.Background(), waas2.ContextEnv, waas2.ProdEnv)
+ctx := context.WithValue(context.Background(), cobo_waas2.ContextEnv, cobo_waas2.ProdEnv)
 ```
 
-you can also set server URL using context values `waas2.ContextServerHost` of type `string`
+you can also set server URL using context values `cobo_waas2.ContextServerHost` of type `string`
 
 ```go
-ctx := context.WithValue(context.Background(), waas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
+ctx := context.WithValue(context.Background(), cobo_waas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
 ```
 
 ## Set Api Signer
@@ -399,8 +399,8 @@ Example
 ```go
 auth := context.WithValue(
 		context.Background(),
-		waas2.ContextAPIKeys,
-		map[string]waas2.APIKey{
+		cobo_waas2.ContextAPIKeys,
+		map[string]cobo_waas2.APIKey{
 			"BIZ-API-KEY": {Key: "API_KEY_STRING"},
 		},
 	)
@@ -443,7 +443,7 @@ r, err := client.Service.Operation(auth, args)
 Example
 
 ```go
-auth := context.WithValue(context.Background(), waas2.ContextAccessToken, "ACCESSTOKENSTRING")
+auth := context.WithValue(context.Background(), cobo_waas2.ContextAccessToken, "ACCESSTOKENSTRING")
 r, err := client.Service.Operation(auth, args)
 ```
 
@@ -455,7 +455,7 @@ import "golang.org/x/oauth2"
 /* Perform OAuth2 round trip request and obtain a token */
 
 tokenSource := oauth2cfg.TokenSource(createContext(httpClient), &token)
-auth := context.WithValue(oauth2.NoContext, waas2.ContextOAuth2, tokenSource)
+auth := context.WithValue(oauth2.NoContext, cobo_waas2.ContextOAuth2, tokenSource)
 r, err := client.Service.Operation(auth, args)
 ```
 
