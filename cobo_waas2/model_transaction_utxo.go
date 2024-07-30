@@ -18,7 +18,7 @@ var _ MappedNullable = &TransactionUtxo{}
 
 // TransactionUtxo The UTXO information.
 type TransactionUtxo struct {
-	// The transaction hash of UTXO to be consumed in the transaction.
+	// The transaction hash of the UTXO.
 	TxHash *string `json:"tx_hash,omitempty"`
 	// The output index of the UTXO.
 	VoutN *int32 `json:"vout_n,omitempty"`

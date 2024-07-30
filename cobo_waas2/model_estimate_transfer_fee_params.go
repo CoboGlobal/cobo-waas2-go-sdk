@@ -24,7 +24,7 @@ type EstimateTransferFeeParams struct {
 	RequestId string `json:"request_id"`
 	RequestType EstimateFeeRequestType `json:"request_type"`
 	Source TransferSource `json:"source"`
-	// The token ID of the transaction fee. You can retrieve token IDs by using the [Get fee rates](/api-references/v2/transactions/get-fee-rates) operation.
+	// The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
 	Destination TransferDestination `json:"destination"`
 	FeeType *FeeType `json:"fee_type,omitempty"`

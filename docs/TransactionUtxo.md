@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TxHash** | Pointer to **string** | The transaction hash of UTXO to be consumed in the transaction. | [optional] 
+**TxHash** | Pointer to **string** | The transaction hash of the UTXO. | [optional] 
 **VoutN** | Pointer to **int32** | The output index of the UTXO. | [optional] 
 
 ## Methods

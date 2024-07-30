@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TransactionDestinationType The transaction destination type. Possible values include:   - `Address`: An address transfer destination, including an address of Custodial Wallets, MPC Wallets, or Smart Contract Wallets (Safe{Wallet}) and an external address.   - `ExchangeWallet`: An Exchange Wallet transfer destination.   - `EVM_Contract`: An EVM compatible contract.   - `EVM_EIP_191_Signature`: [Signed Data Standard](https://eips.ethereum.org/EIPS/eip-191).   - `EVM_EIP_712_Signature`: [Typed structured data hashing and signing](https://eips.ethereum.org/EIPS/eip-712).   - `DepositToAddress`: An address where the deposit comes to.   - `DepositToWallet`: A WaaS wallet where the deposit comes to. 
+// TransactionDestinationType The transaction destination type. Possible values include:   - `Address`: An address transfer destination, including an address of Custodial Wallets, MPC Wallets, or Smart Contract Wallets (Safe{Wallet}) and an external address.   - `ExchangeWallet`: An Exchange Wallet transfer destination.   - `EVM_Contract`: An EVM compatible contract.   - `EVM_EIP_191_Signature`: An EVM EIP-191 signature. For more details, see [Signed Data Standard](https://eips.ethereum.org/EIPS/eip-191).   - `EVM_EIP_712_Signature`: An EVM EIP-712 signature. For more details, see [Typed structured data hashing and signing](https://eips.ethereum.org/EIPS/eip-712).   - `DepositToAddress`: An address that can be a Cobo's wallet address or an external address.   - `DepositToWallet`: An Exchange Wallet. 
 type TransactionDestinationType string
 
 // List of TransactionDestinationType

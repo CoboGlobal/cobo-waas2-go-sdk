@@ -11,19 +11,20 @@ package cobo_waas2
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"testing"
+
 	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
 	"github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+    "github.com/stretchr/testify/assert"
+    "github.com/stretchr/testify/require"
 )
 
 func Test_cobo_waas2_DevelopersWebhooksAPIService(t *testing.T) {
 
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
-	ctx := context.WithValue(context.Background(), waas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	ctx := context.WithValue(context.Background(), coboWaas2.ContextServerHost, "https://api[.xxxx].cobo.com/v2")
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 

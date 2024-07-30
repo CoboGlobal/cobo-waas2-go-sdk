@@ -718,7 +718,7 @@ func (r ApiEstimateFeeRequest) Execute() (*EstimatedFee, *http.Response, error) 
 /*
 EstimateFee Estimate transaction fee
 
-This operation estimates the transaction fee rates of a token transfer or a contract call for three different transaction speeds (slow, recommended, and fast), based on factors such as network congestion and transaction complexity.
+This operation estimates the transaction fee rates of a token transfer or a contract call based on three different transaction speeds (slow, recommended, and fast), considering factors such as network congestion and transaction complexity.
 
 You need to specify the transaction information, including the request ID, request type, source address, destination address, and token ID of the transaction fee.
 
@@ -1274,9 +1274,7 @@ func (r ApiResendTransactionByIdRequest) Execute() (*CreateTransferTransaction20
 /*
 ResendTransactionById Resend transaction
 
-This operation resends a specified transaction. 
-
-Resending a transaction initiates a new attempt to process the transaction that failed previously. A transaction can be resent if its status is `failed`.
+This operation resends a specified transaction. Resending a transaction initiates a new attempt to process the transaction that failed previously. A transaction can be resent if its status is `failed`.
 
 A transaction request for tracking is returned upon successful operation.
 <Note>This operation only applies to transactions in the SOL token from MPC Wallets.</Note>
@@ -1415,7 +1413,7 @@ SpeedupTransactionById Speed up transaction
 
 This operation accelerates a specified transaction. 
 
-Speeding up a transaction will trigger an Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It shares the same inputs but has a higher transaction fee to incentivize miners to prioritize its confirmation over the previous one. A transaction can be accelerated if its status is either `Broadcasting`.
+Speeding up a transaction will trigger an Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It shares the same inputs but has a higher transaction fee to incentivize miners to prioritize its confirmation over the previous one. A transaction can be accelerated if its status is `Broadcasting`.
 
 A transaction request for tracking is returned upon successful operation.
 <Note>This operation only applies to transactions from MPC Wallets, excluding transactions in the tokens VET, TRON, TVET, SOL, and TON.</Note>

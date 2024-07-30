@@ -23,7 +23,7 @@ type TransferParams struct {
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
 	RequestId string `json:"request_id"`
 	Source TransferSource `json:"source"`
-	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
+	// The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
 	Destination TransferDestination `json:"destination"`
 	// The custom category for you to identify your transactions.

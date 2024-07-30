@@ -14,7 +14,7 @@ import (
 	"fmt"
 )
 
-// TransactionSourceType The transaction source. Possible values include:   - `Asset`: A Custodial Wallet (Asset Wallet).   - `Org-Controlled`: An MPC Wallet (Organization-Controlled Wallet).   - `User-Controlled`: An MPC Wallet (User-Controlled Wallet).   - `Safe{Wallet}`: A Smart Contract Wallet (Safe{Wallet}).   - `Main`: An Exchange Wallet (Main Account).   - `Sub`: An Exchange Wallet (Sub Account).   - `DepositFromAddress`: An address which can include both Cobo's wallet addresses and external addresses.   - `DepositFromWallet`: An Exchange Wallet.   - `DepositFromLoop`: A transfer sender through the Loop transfer network. 
+// TransactionSourceType The transaction source. Possible values include:   - `Asset`: A Custodial Wallet (Asset Wallet).   - `Org-Controlled`: An MPC Wallet (Organization-Controlled Wallet).   - `User-Controlled`: An MPC Wallet (User-Controlled Wallet).   - `Safe{Wallet}`: A Smart Contract Wallet (Safe{Wallet}).   - `Main`: An Exchange Wallet (Main Account).   - `Sub`: An Exchange Wallet (Sub Account).   - `DepositFromAddress`: An address that can be a Cobo's wallet address or an external address.   - `DepositFromWallet`: An Exchange Wallet.   - `DepositFromLoop`: A transfer sender through the Loop transfer network. 
 type TransactionSourceType string
 
 // List of TransactionSourceType

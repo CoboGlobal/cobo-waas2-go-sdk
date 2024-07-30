@@ -2687,7 +2687,7 @@ paths:
   /transactions/estimate_fee:
     post:
       description: |
-        This operation estimates the transaction fee rates of a token transfer or a contract call for three different transaction speeds (slow, recommended, and fast), based on factors such as network congestion and transaction complexity.
+        This operation estimates the transaction fee rates of a token transfer or a contract call based on three different transaction speeds (slow, recommended, and fast), considering factors such as network congestion and transaction complexity.
 
         You need to specify the transaction information, including the request ID, request type, source address, destination address, and token ID of the transaction fee.
 
@@ -3119,12 +3119,11 @@ paths:
       - Transactions
   /transactions/{transaction_id}/resend:
     post:
-      description: "This operation resends a specified transaction. \n\nResending\
-        \ a transaction initiates a new attempt to process the transaction that failed\
-        \ previously. A transaction can be resent if its status is `failed`.\n\nA\
-        \ transaction request for tracking is returned upon successful operation.\n\
-        <Note>This operation only applies to transactions in the SOL token from MPC\
-        \ Wallets.</Note>\n"
+      description: |
+        This operation resends a specified transaction. Resending a transaction initiates a new attempt to process the transaction that failed previously. A transaction can be resent if its status is `failed`.
+
+        A transaction request for tracking is returned upon successful operation.
+        <Note>This operation only applies to transactions in the SOL token from MPC Wallets.</Note>
       operationId: resend_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -3268,10 +3267,10 @@ paths:
         \ is a new version of the original transaction. It shares the same inputs\
         \ but has a higher transaction fee to incentivize miners to prioritize its\
         \ confirmation over the previous one. A transaction can be accelerated if\
-        \ its status is either `Broadcasting`.\n\nA transaction request for tracking\
-        \ is returned upon successful operation.\n<Note>This operation only applies\
-        \ to transactions from MPC Wallets, excluding transactions in the tokens VET,\
-        \ TRON, TVET, SOL, and TON.</Note>\n"
+        \ its status is `Broadcasting`.\n\nA transaction request for tracking is returned\
+        \ upon successful operation.\n<Note>This operation only applies to transactions\
+        \ from MPC Wallets, excluding transactions in the tokens VET, TRON, TVET,\
+        \ SOL, and TON.</Note>\n"
       operationId: speedup_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -6989,8 +6988,11 @@ components:
             type: string
         type: object
       - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
-      description: |
-        In the legacy fee model, the transaction fee is calculated by multiplying the gas price by the gas units used by the transaction. This can be expressed as: Transaction fee =  (gas price * gas units used). If the gas units used exceed the gas limit, the transaction will fail.
+      description: "In the legacy fee model, the transaction fee is calculated by\
+        \ multiplying the gas price by the gas units used by the transaction. This\
+        \ can be expressed as: Transaction fee =  (gas price * gas units used). \n\
+        \nYou can specify the gas limit. If the gas units used exceed the gas limit,\
+        \ the transaction will fail.\n"
       required:
       - fee_type
       - gas_price
@@ -7615,7 +7617,7 @@ components:
           - `Safe{Wallet}`: A Smart Contract Wallet (Safe{Wallet}).
           - `Main`: An Exchange Wallet (Main Account).
           - `Sub`: An Exchange Wallet (Sub Account).
-          - `DepositFromAddress`: An address which can include both Cobo's wallet addresses and external addresses.
+          - `DepositFromAddress`: An address that can be a Cobo's wallet address or an external address.
           - `DepositFromWallet`: An Exchange Wallet.
           - `DepositFromLoop`: A transfer sender through the Loop transfer network.
       enum:
@@ -7635,13 +7637,13 @@ components:
         \ on whether you are the initiator or the receiver of the transaction. \n\n\
         - As the initiator, you will see detailed information about the transaction\
         \ source, and the `source` will be displayed as one of the following wallet\
-        \ types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`,\
-        \ or `Sub`.\n- As the receiver, you will see the `source` as either `DepositFromAddress`,\
-        \ `DepositFromWallet`, or `DepositFromLoop`. If the transaction is from the\
-        \ Loop transfer network, the source will be `DepositFromLoop`. Otherwise,\
-        \ it will be either `DepositFromWallet` (indicating an Exchange Wallet) or\
-        \ `DepositFromAddress` (indicating other wallet type than an Exchange Wallet\
-        \ or an external address).\n"
+        \ sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`,\
+        \ `Main`, or `Sub`.\n- As the receiver, you will see the `source` as either\
+        \ `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the\
+        \ transaction is from the Loop transfer network, the source will be `DepositFromLoop`.\
+        \ Otherwise, it will be either `DepositFromWallet` (indicating an Exchange\
+        \ Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange\
+        \ Wallet or an external address).\n"
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         source_type: ExternalAddress
@@ -7663,13 +7665,13 @@ components:
         \ on whether you are the initiator or the receiver of the transaction. \n\n\
         - As the initiator, you will see detailed information about the transaction\
         \ source, and the `source` will be displayed as one of the following wallet\
-        \ types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`,\
-        \ or `Sub`.\n- As the receiver, you will see the `source` as either `DepositFromAddress`,\
-        \ `DepositFromWallet`, or `DepositFromLoop`. If the transaction is from the\
-        \ Loop transfer network, the source will be `DepositFromLoop`. Otherwise,\
-        \ it will be either `DepositFromWallet` (indicating an Exchange Wallet) or\
-        \ `DepositFromAddress` (indicating other wallet type than an Exchange Wallet\
-        \ or an external address).\n"
+        \ sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`,\
+        \ `Main`, or `Sub`.\n- As the receiver, you will see the `source` as either\
+        \ `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the\
+        \ transaction is from the Loop transfer network, the source will be `DepositFromLoop`.\
+        \ Otherwise, it will be either `DepositFromWallet` (indicating an Exchange\
+        \ Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange\
+        \ Wallet or an external address).\n"
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -7700,13 +7702,13 @@ components:
         \ on whether you are the initiator or the receiver of the transaction. \n\n\
         - As the initiator, you will see detailed information about the transaction\
         \ source, and the `source` will be displayed as one of the following wallet\
-        \ types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`,\
-        \ or `Sub`.\n- As the receiver, you will see the `source` as either `DepositFromAddress`,\
-        \ `DepositFromWallet`, or `DepositFromLoop`. If the transaction is from the\
-        \ Loop transfer network, the source will be `DepositFromLoop`. Otherwise,\
-        \ it will be either `DepositFromWallet` (indicating an Exchange Wallet) or\
-        \ `DepositFromAddress` (indicating other wallet type than an Exchange Wallet\
-        \ or an external address).\n"
+        \ sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`,\
+        \ `Main`, or `Sub`.\n- As the receiver, you will see the `source` as either\
+        \ `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the\
+        \ transaction is from the Loop transfer network, the source will be `DepositFromLoop`.\
+        \ Otherwise, it will be either `DepositFromWallet` (indicating an Exchange\
+        \ Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange\
+        \ Wallet or an external address).\n"
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -7733,13 +7735,13 @@ components:
         \ on whether you are the initiator or the receiver of the transaction. \n\n\
         - As the initiator, you will see detailed information about the transaction\
         \ source, and the `source` will be displayed as one of the following wallet\
-        \ types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`,\
-        \ or `Sub`.\n- As the receiver, you will see the `source` as either `DepositFromAddress`,\
-        \ `DepositFromWallet`, or `DepositFromLoop`. If the transaction is from the\
-        \ Loop transfer network, the source will be `DepositFromLoop`. Otherwise,\
-        \ it will be either `DepositFromWallet` (indicating an Exchange Wallet) or\
-        \ `DepositFromAddress` (indicating other wallet type than an Exchange Wallet\
-        \ or an external address).\n"
+        \ sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`,\
+        \ `Main`, or `Sub`.\n- As the receiver, you will see the `source` as either\
+        \ `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the\
+        \ transaction is from the Loop transfer network, the source will be `DepositFromLoop`.\
+        \ Otherwise, it will be either `DepositFromWallet` (indicating an Exchange\
+        \ Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange\
+        \ Wallet or an external address).\n"
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -7765,13 +7767,13 @@ components:
         \ on whether you are the initiator or the receiver of the transaction. \n\n\
         - As the initiator, you will see detailed information about the transaction\
         \ source, and the `source` will be displayed as one of the following wallet\
-        \ types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`,\
-        \ or `Sub`.\n- As the receiver, you will see the `source` as either `DepositFromAddress`,\
-        \ `DepositFromWallet`, or `DepositFromLoop`. If the transaction is from the\
-        \ Loop transfer network, the source will be `DepositFromLoop`. Otherwise,\
-        \ it will be either `DepositFromWallet` (indicating an Exchange Wallet) or\
-        \ `DepositFromAddress` (indicating other wallet type than an Exchange Wallet\
-        \ or an external address).\n"
+        \ sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`,\
+        \ `Main`, or `Sub`.\n- As the receiver, you will see the `source` as either\
+        \ `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the\
+        \ transaction is from the Loop transfer network, the source will be `DepositFromLoop`.\
+        \ Otherwise, it will be either `DepositFromWallet` (indicating an Exchange\
+        \ Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange\
+        \ Wallet or an external address).\n"
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -7799,7 +7801,7 @@ components:
       description: |
         Information about the transaction source, which varies depending on whether you are the initiator or the receiver of the transaction.
 
-        - As the initiator, you will see detailed information about the transaction source, and the `source` will be displayed as one of the following wallet types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`, or `Sub`.
+        - As the initiator, you will see detailed information about the transaction source, and the `source` will be displayed as one of the following wallet sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`, or `Sub`.
         - As the receiver, you will see the `source` as either `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the transaction is from the Loop transfer network, the source will be `DepositFromLoop`. Otherwise, it will be either `DepositFromWallet` (indicating an Exchange Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange Wallet or an external address).
       properties:
         source_type:
@@ -7829,13 +7831,13 @@ components:
         \ on whether you are the initiator or the receiver of the transaction. \n\n\
         - As the initiator, you will see detailed information about the transaction\
         \ source, and the `source` will be displayed as one of the following wallet\
-        \ types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`, `Main`,\
-        \ or `Sub`.\n- As the receiver, you will see the `source` as either `DepositFromAddress`,\
-        \ `DepositFromWallet`, or `DepositFromLoop`. If the transaction is from the\
-        \ Loop transfer network, the source will be `DepositFromLoop`. Otherwise,\
-        \ it will be either `DepositFromWallet` (indicating an Exchange Wallet) or\
-        \ `DepositFromAddress` (indicating other wallet type than an Exchange Wallet\
-        \ or an external address).\n"
+        \ sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`,\
+        \ `Main`, or `Sub`.\n- As the receiver, you will see the `source` as either\
+        \ `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the\
+        \ transaction is from the Loop transfer network, the source will be `DepositFromLoop`.\
+        \ Otherwise, it will be either `DepositFromWallet` (indicating an Exchange\
+        \ Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange\
+        \ Wallet or an external address).\n"
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -7864,10 +7866,10 @@ components:
           - `Address`: An address transfer destination, including an address of Custodial Wallets, MPC Wallets, or Smart Contract Wallets (Safe{Wallet}) and an external address.
           - `ExchangeWallet`: An Exchange Wallet transfer destination.
           - `EVM_Contract`: An EVM compatible contract.
-          - `EVM_EIP_191_Signature`: [Signed Data Standard](https://eips.ethereum.org/EIPS/eip-191).
-          - `EVM_EIP_712_Signature`: [Typed structured data hashing and signing](https://eips.ethereum.org/EIPS/eip-712).
-          - `DepositToAddress`: An address where the deposit comes to.
-          - `DepositToWallet`: A WaaS wallet where the deposit comes to.
+          - `EVM_EIP_191_Signature`: An EVM EIP-191 signature. For more details, see [Signed Data Standard](https://eips.ethereum.org/EIPS/eip-191).
+          - `EVM_EIP_712_Signature`: An EVM EIP-712 signature. For more details, see [Typed structured data hashing and signing](https://eips.ethereum.org/EIPS/eip-712).
+          - `DepositToAddress`: An address that can be a Cobo's wallet address or an external address.
+          - `DepositToWallet`: An Exchange Wallet.
       enum:
       - Address
       - ExchangeWallet
@@ -8243,7 +8245,7 @@ components:
         tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
       properties:
         tx_hash:
-          description: The transaction hash of UTXO to be consumed in the transaction.
+          description: The transaction hash of the UTXO.
           example: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
           type: string
         vout_n:
@@ -8337,8 +8339,8 @@ components:
       - $ref: '#/components/schemas/FeeGasLimit'
       description: "The transaction fee actually charged by the chain that uses the\
         \ legacy fee model. \nThe transaction fee is calculated by multiplying the\
-        \ gas price by the used gas. This can be expressed as: Transaction fee = (gas\
-        \ price) * used gas.\n"
+        \ gas price by the used gas. This can be expressed as: Transaction fee = gas\
+        \ price * used gas units.\n"
       required:
       - fee_type
       title: Legacy from Receipt
@@ -8760,9 +8762,8 @@ components:
         source:
           $ref: '#/components/schemas/TransferSource'
         token_id:
-          description: "The token ID, which is the unique identifier of a token. You\
-            \ can retrieve the IDs of all the tokens you can use by calling [List\
-            \ enabled tokens](/v2/api-references/wallets/list-enabled-tokens)."
+          description: "The token ID of the transferred token. You can retrieve the\
+            \ IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens)."
           example: ETH_USDT
           type: string
         destination:
@@ -8842,9 +8843,8 @@ components:
         source:
           $ref: '#/components/schemas/TransferSource'
         token_id:
-          description: "The token ID of the transaction fee. You can retrieve token\
-            \ IDs by using the [Get fee rates](/api-references/v2/transactions/get-fee-rates)\
-            \ operation."
+          description: "The token ID of the transferred token. You can retrieve the\
+            \ IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens)."
           example: ETH_USDT
           type: string
         destination:

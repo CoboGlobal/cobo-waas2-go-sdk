@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
 **RequestType** | [**EstimateFeeRequestType**](EstimateFeeRequestType.md) |  | 
 **Source** | [**ContractCallSource**](ContractCallSource.md) |  | 
-**TokenId** | **string** | The token ID of the transaction fee. You can retrieve token IDs by using the [Get fee rates](/api-references/v2/transactions/get-fee-rates) operation. | 
+**TokenId** | **string** | The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens). | 
 **Destination** | [**ContractCallDestination**](ContractCallDestination.md) |  | 
 **FeeType** | Pointer to [**FeeType**](FeeType.md) |  | [optional] [default to FEETYPE_EVM_EIP_1559]
 **ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). | 
