@@ -34,15 +34,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The transaction ID.
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -111,15 +111,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	contractCallParams := *cobowaas2.NewContractCallParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", cobowaas2.ContractCallSource{MpcContractCallSource: cobowaas2.NewMpcContractCallSource(cobowaas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, cobowaas2.ContractCallDestination{EvmContractCallDestination: cobowaas2.NewEvmContractCallDestination(cobowaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@499c4d61))}) // ContractCallParams | The request body for making a contract call. (optional)
+	contractCallParams := *waas2.NewContractCallParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", waas2.ContractCallSource{MpcContractCallSource: waas2.NewMpcContractCallSource(waas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, waas2.ContractCallDestination{EvmContractCallDestination: waas2.NewEvmContractCallDestination(waas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@499c4d61))}) // ContractCallParams | The request body for making a contract call. (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -184,15 +184,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	messageSignParams := *cobowaas2.NewMessageSignParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", cobowaas2.MessageSignSource{MpcMessageSignSource: cobowaas2.NewMpcMessageSignSource(cobowaas2.MessageSignSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}, cobowaas2.MessageSignDestination{EvmEIP191MessageSignDestination: cobowaas2.NewEvmEIP191MessageSignDestination(cobowaas2.MessageSignDestinationType("EVM_EIP_191_Signature"), "YWFhYQ==")}) // MessageSignParams | The request body to create a message sign transaction (optional)
+	messageSignParams := *waas2.NewMessageSignParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", waas2.MessageSignSource{MpcMessageSignSource: waas2.NewMpcMessageSignSource(waas2.MessageSignSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}, waas2.MessageSignDestination{EvmEIP191MessageSignDestination: waas2.NewEvmEIP191MessageSignDestination(waas2.MessageSignDestinationType("EVM_EIP_191_Signature"), "YWFhYQ==")}) // MessageSignParams | The request body to create a message sign transaction (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -257,15 +257,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	transferParams := *cobowaas2.NewTransferParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", cobowaas2.TransferSource{CustodialTransferSource: cobowaas2.NewCustodialTransferSource(cobowaas2.WalletSubtype("Asset"), "f47ac10b-58cc-4372-a567-0e02b2c3d479")}, "ETH_USDT", cobowaas2.TransferDestination{AddressTransferDestination: cobowaas2.NewAddressTransferDestination(cobowaas2.TransferDestinationType("Address"))}) // TransferParams | The request body to create a transfer transaction (optional)
+	transferParams := *waas2.NewTransferParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", waas2.TransferSource{CustodialTransferSource: waas2.NewCustodialTransferSource(waas2.WalletSubtype("Asset"), "f47ac10b-58cc-4372-a567-0e02b2c3d479")}, "ETH_USDT", waas2.TransferDestination{AddressTransferDestination: waas2.NewAddressTransferDestination(waas2.TransferDestinationType("Address"))}) // TransferParams | The request body to create a transfer transaction (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -330,16 +330,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The transaction ID.
-	transactionRbf := *cobowaas2.NewTransactionRbf("f47ac10b-58cc-4372-a567-0e02b2c3d479", cobowaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: cobowaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", cobowaas2.FeeType("Fixed"), "ETH")}) // TransactionRbf | The request body to drop or to speed up transactions (optional)
+	transactionRbf := *waas2.NewTransactionRbf("f47ac10b-58cc-4372-a567-0e02b2c3d479", waas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: waas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", waas2.FeeType("Fixed"), "ETH")}) // TransactionRbf | The request body to drop or to speed up transactions (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -409,15 +409,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	estimateFeeParams := cobowaas2.EstimateFeeParams{EstimateContractCallFeeParams: cobowaas2.NewEstimateContractCallFeeParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", cobowaas2.EstimateFeeRequestType("Transfer"), "ETH", cobowaas2.ContractCallSource{MpcContractCallSource: cobowaas2.NewMpcContractCallSource(cobowaas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, cobowaas2.ContractCallDestination{EvmContractCallDestination: cobowaas2.NewEvmContractCallDestination(cobowaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@499c4d61))})} // EstimateFeeParams | The request body to estimate the transaction fee of a token transfer or a contract call. (optional)
+	estimateFeeParams := waas2.EstimateFeeParams{EstimateContractCallFeeParams: waas2.NewEstimateContractCallFeeParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", waas2.EstimateFeeRequestType("Transfer"), "ETH", waas2.ContractCallSource{MpcContractCallSource: waas2.NewMpcContractCallSource(waas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, waas2.ContractCallDestination{EvmContractCallDestination: waas2.NewEvmContractCallDestination(waas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@499c4d61))})} // EstimateFeeParams | The request body to estimate the transaction fee of a token transfer or a contract call. (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -482,15 +482,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The transaction ID.
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -559,7 +559,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
@@ -582,8 +582,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -664,16 +664,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The transaction ID.
-	transactionResend := *cobowaas2.NewTransactionResend("f47ac10b-58cc-4372-a567-0e02b2c3d479") // TransactionResend | The request body to resend transactions (optional)
+	transactionResend := *waas2.NewTransactionResend("f47ac10b-58cc-4372-a567-0e02b2c3d479") // TransactionResend | The request body to resend transactions (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -743,16 +743,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The transaction ID.
-	transactionRbf := *cobowaas2.NewTransactionRbf("f47ac10b-58cc-4372-a567-0e02b2c3d479", cobowaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: cobowaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", cobowaas2.FeeType("Fixed"), "ETH")}) // TransactionRbf | The request body to drop or to speed up transactions (optional)
+	transactionRbf := *waas2.NewTransactionRbf("f47ac10b-58cc-4372-a567-0e02b2c3d479", waas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: waas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", waas2.FeeType("Fixed"), "ETH")}) // TransactionRbf | The request body to drop or to speed up transactions (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)

@@ -33,15 +33,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	createWebhookEndpointRequest := *cobowaas2.NewCreateWebhookEndpointRequest("https://example.com/webhook", []cobowaas2.WebhookEventType{cobowaas2.WebhookEventType("wallets.transaction.created")}) // CreateWebhookEndpointRequest | The request body to register a webhook endpoint. (optional)
+	createWebhookEndpointRequest := *waas2.NewCreateWebhookEndpointRequest("https://example.com/webhook", []waas2.WebhookEventType{waas2.WebhookEventType("wallets.transaction.created")}) // CreateWebhookEndpointRequest | The request body to register a webhook endpoint. (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -106,15 +106,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	endpointId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -183,7 +183,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
@@ -191,8 +191,8 @@ func main() {
 	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The event ID. You can obtain a list of event IDs by calling [List all events](/v2/api-references/developers--webhooks/list-all-events).
 	endpointId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -263,19 +263,19 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
-	status := cobowaas2.WebhookEndpointStatus("STATUS_ACTIVE") // WebhookEndpointStatus |  (optional)
-	eventType := cobowaas2.WebhookEventType("wallets.transaction.created") // WebhookEventType |  (optional)
+	status := waas2.WebhookEndpointStatus("STATUS_ACTIVE") // WebhookEndpointStatus |  (optional)
+	eventType := waas2.WebhookEventType("wallets.transaction.created") // WebhookEventType |  (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -344,14 +344,14 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -412,7 +412,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
@@ -423,8 +423,8 @@ func main() {
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -498,20 +498,20 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	endpointId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
-	status := cobowaas2.WebhookEventStatus("Success") // WebhookEventStatus |  (optional)
-	type_ := cobowaas2.WebhookEventType("wallets.transaction.created") // WebhookEventType |  (optional)
+	status := waas2.WebhookEventStatus("Success") // WebhookEventStatus |  (optional)
+	type_ := waas2.WebhookEventType("wallets.transaction.created") // WebhookEventType |  (optional)
 	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -585,7 +585,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
@@ -593,8 +593,8 @@ func main() {
 	eventId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The event ID. You can obtain a list of event IDs by calling [List all events](/v2/api-references/developers--webhooks/list-all-events).
 	endpointId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
@@ -665,16 +665,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	cobowaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
+	waas2 "github.com/CoboGlobal/cobo-waas2-go-sdk"
         "github.com/CoboGlobal/cobo-waas2-go-sdk/crypto"
 )
 
 func main() {
 	endpointId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The webhook endpoint ID. You can retrieve a list of webhook endpoint IDs by calling [List webhook endpoints](/v2/api-references/developers--webhooks/list-webhook-endpoints).
-	updateWebhookEndpointByIdRequest := *cobowaas2.NewUpdateWebhookEndpointByIdRequest() // UpdateWebhookEndpointByIdRequest | The request body to update a webhook endpoint. (optional)
+	updateWebhookEndpointByIdRequest := *waas2.NewUpdateWebhookEndpointByIdRequest() // UpdateWebhookEndpointByIdRequest | The request body to update a webhook endpoint. (optional)
 
-	configuration := cobowaas2.NewConfiguration()
-	apiClient := cobowaas2.NewAPIClient(configuration)
+	configuration := waas2.NewConfiguration()
+	apiClient := waas2.NewAPIClient(configuration)
 	ctx := context.Background()
 	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
 	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
