@@ -30,10 +30,10 @@ Register webhook endpoint
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -43,9 +43,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.CreateWebhookEndpoint(ctx).CreateWebhookEndpointRequest(createWebhookEndpointRequest).Execute()
@@ -103,10 +103,10 @@ Get webhook endpoint information
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -116,9 +116,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.GetWebhookEndpointById(ctx, endpointId).Execute()
@@ -180,10 +180,10 @@ Retrieve event information
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -194,9 +194,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.GetWebhookEventById(ctx, eventId, endpointId).Execute()
@@ -260,10 +260,10 @@ List webhook endpoints
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -277,9 +277,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.ListWebhookEndpoints(ctx).Status(status).EventType(eventType).Limit(limit).Before(before).After(after).Execute()
@@ -341,10 +341,10 @@ Get webhook event types
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -353,9 +353,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.ListWebhookEventDefinitions(ctx).Execute()
@@ -409,10 +409,10 @@ List webhook event logs
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -426,9 +426,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.ListWebhookEventLogs(ctx, eventId, endpointId).Limit(limit).Before(before).After(after).Execute()
@@ -495,10 +495,10 @@ List all webhook events
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -513,9 +513,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.ListWebhookEvents(ctx, endpointId).Status(status).Type_(type_).Limit(limit).Before(before).After(after).Execute()
@@ -582,10 +582,10 @@ Retry event
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -596,9 +596,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.RetryWebhookEventById(ctx, eventId, endpointId).Execute()
@@ -662,10 +662,10 @@ Update webhook endpoint
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -676,9 +676,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.DevelopersWebhooksAPI.UpdateWebhookEndpointById(ctx, endpointId).UpdateWebhookEndpointByIdRequest(updateWebhookEndpointByIdRequest).Execute()

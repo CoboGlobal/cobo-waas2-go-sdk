@@ -27,8 +27,8 @@ func (c contextKey) String() string {
 	return "auth " + string(c)
 }
 
-const ProdEnv = 0
-const DevEnv = 1
+const DevEnv = 0
+const ProdEnv = 1
 
 var (
 	ContextOAuth2 = contextKey("token")
@@ -81,7 +81,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "cobo-waas2-go-sdk/1.0.0",
+		UserAgent:        "cobo-waas2-go-sdk/1.0.1",
 		Debug:            false,
 		Log:              &DefaultLogger{},
 		Servers:          ServerConfigurations{

@@ -42,10 +42,10 @@ Check address validity
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -56,9 +56,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.CheckAddressValidity(ctx).ChainId(chainId).Address(address).Execute()
@@ -117,10 +117,10 @@ Create addresses in wallet
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -131,9 +131,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.CreateAddress(ctx, walletId).CreateAddressRequest(createAddressRequest).Execute()
@@ -196,10 +196,10 @@ Create wallet
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -209,9 +209,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.CreateWallet(ctx).CreateWalletParams(createWalletParams).Execute()
@@ -269,10 +269,10 @@ Delete wallet
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -282,9 +282,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.DeleteWalletById(ctx, walletId).Execute()
@@ -346,10 +346,10 @@ Get address information
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -360,9 +360,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.GetAddress(ctx, walletId, address).Execute()
@@ -426,10 +426,10 @@ Get chain information
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -439,9 +439,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.GetChainById(ctx, chainId).Execute()
@@ -503,10 +503,10 @@ Get maximum transferable value
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -520,9 +520,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.GetMaxTransferableValue(ctx, walletId).TokenId(tokenId).FeeRate(feeRate).ToAddress(toAddress).FromAddress(fromAddress).Execute()
@@ -588,10 +588,10 @@ Get token information
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -601,9 +601,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.GetTokenById(ctx, tokenId).Execute()
@@ -665,10 +665,10 @@ Get wallet information
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -678,9 +678,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.GetWalletById(ctx, walletId).Execute()
@@ -742,10 +742,10 @@ List wallet addresses
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -760,9 +760,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListAddresses(ctx, walletId).ChainIds(chainIds).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
@@ -829,10 +829,10 @@ List enabled chains
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -846,9 +846,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListEnabledChains(ctx).WalletType(walletType).WalletSubtype(walletSubtype).Limit(limit).Before(before).After(after).Execute()
@@ -910,10 +910,10 @@ List enabled tokens
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -928,9 +928,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListEnabledTokens(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ChainIds(chainIds).Limit(limit).Before(before).After(after).Execute()
@@ -993,10 +993,10 @@ List supported chains
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1011,9 +1011,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListSupportedChains(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ChainIds(chainIds).Limit(limit).Before(before).After(after).Execute()
@@ -1076,10 +1076,10 @@ List supported tokens
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1095,9 +1095,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListSupportedTokens(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ChainIds(chainIds).TokenIds(tokenIds).Limit(limit).Before(before).After(after).Execute()
@@ -1161,10 +1161,10 @@ List token balances by address
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1179,9 +1179,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListTokenBalancesForAddress(ctx, walletId, address).TokenIds(tokenIds).Limit(limit).Before(before).After(after).Execute()
@@ -1249,10 +1249,10 @@ List token balances by wallet
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1266,9 +1266,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListTokenBalancesForWallet(ctx, walletId).TokenIds(tokenIds).Limit(limit).Before(before).After(after).Execute()
@@ -1334,10 +1334,10 @@ List UTXOs
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1352,9 +1352,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListUtxos(ctx, walletId).TokenId(tokenId).Address(address).Limit(limit).Before(before).After(after).Execute()
@@ -1421,10 +1421,10 @@ List all wallets
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1440,9 +1440,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.ListWallets(ctx).WalletType(walletType).WalletSubtype(walletSubtype).ProjectId(projectId).VaultId(vaultId).Limit(limit).Before(before).After(after).Execute()
@@ -1506,10 +1506,10 @@ Lock UTXOs
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1520,9 +1520,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.LockUtxos(ctx, walletId).LockUtxosRequest(lockUtxosRequest).Execute()
@@ -1585,10 +1585,10 @@ Unlock UTXOs
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1599,9 +1599,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.UnlockUtxos(ctx, walletId).LockUtxosRequest(lockUtxosRequest).Execute()
@@ -1664,10 +1664,10 @@ Update wallet
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-	coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
     "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
 )
 
@@ -1678,9 +1678,9 @@ func main() {
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, waas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, waas2.ContextEnv, waas2.DevEnv)
-	ctx = context.WithValue(ctx, waas2.ContextPortalSigner, crypto.Ed25519Signer{
+	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
+	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 	resp, r, err := apiClient.WalletsAPI.UpdateWalletById(ctx, walletId).UpdateWalletParams(updateWalletParams).Execute()
