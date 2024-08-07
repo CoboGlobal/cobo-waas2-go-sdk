@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **CreatedTimestamp** | **int64** | The time when the log was created, in Unix timestamp format, measured in milliseconds. | 
 **RequestHeaders** | **map[string]interface{}** | The request headers of the webhook event. | 
 **RequestBody** | [**WebhookEvent**](WebhookEvent.md) |  | 
-**ResponseBody** | Pointer to **map[string]interface{}** | The response body of the webhook event. | [optional] 
+**ResponseBody** | Pointer to **string** | The response body of the webhook event. | [optional] 
 **ResponseStatusCode** | Pointer to **int32** | The response status code of the webhook event. | [optional] 
 **ResponseTime** | Pointer to **int32** | The response time of the webhook event, in milliseconds. | [optional] 
 **Success** | **bool** | Whether the webhook event has been successfully delivered. | 
@@ -115,20 +115,20 @@ SetRequestBody sets RequestBody field to given value.
 
 ### GetResponseBody
 
-`func (o *WebhookEventLog) GetResponseBody() map[string]interface{}`
+`func (o *WebhookEventLog) GetResponseBody() string`
 
 GetResponseBody returns the ResponseBody field if non-nil, zero value otherwise.
 
 ### GetResponseBodyOk
 
-`func (o *WebhookEventLog) GetResponseBodyOk() (*map[string]interface{}, bool)`
+`func (o *WebhookEventLog) GetResponseBodyOk() (*string, bool)`
 
 GetResponseBodyOk returns a tuple with the ResponseBody field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetResponseBody
 
-`func (o *WebhookEventLog) SetResponseBody(v map[string]interface{})`
+`func (o *WebhookEventLog) SetResponseBody(v string)`
 
 SetResponseBody sets ResponseBody field to given value.
 

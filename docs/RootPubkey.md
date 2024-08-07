@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Pubkey** | Pointer to **string** | The vault&#39;s [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key). | [optional] 
+**RootPubkey** | Pointer to **string** | The vault&#39;s [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key). | [optional] 
 **Curve** | Pointer to [**CurveType**](CurveType.md) |  | [optional] 
 
 ## Methods
@@ -26,30 +26,30 @@ NewRootPubkeyWithDefaults instantiates a new RootPubkey object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetPubkey
+### GetRootPubkey
 
-`func (o *RootPubkey) GetPubkey() string`
+`func (o *RootPubkey) GetRootPubkey() string`
 
-GetPubkey returns the Pubkey field if non-nil, zero value otherwise.
+GetRootPubkey returns the RootPubkey field if non-nil, zero value otherwise.
 
-### GetPubkeyOk
+### GetRootPubkeyOk
 
-`func (o *RootPubkey) GetPubkeyOk() (*string, bool)`
+`func (o *RootPubkey) GetRootPubkeyOk() (*string, bool)`
 
-GetPubkeyOk returns a tuple with the Pubkey field if it's non-nil, zero value otherwise
+GetRootPubkeyOk returns a tuple with the RootPubkey field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPubkey
+### SetRootPubkey
 
-`func (o *RootPubkey) SetPubkey(v string)`
+`func (o *RootPubkey) SetRootPubkey(v string)`
 
-SetPubkey sets Pubkey field to given value.
+SetRootPubkey sets RootPubkey field to given value.
 
-### HasPubkey
+### HasRootPubkey
 
-`func (o *RootPubkey) HasPubkey() bool`
+`func (o *RootPubkey) HasRootPubkey() bool`
 
-HasPubkey returns a boolean if a field has been set.
+HasRootPubkey returns a boolean if a field has been set.
 
 ### GetCurve
 

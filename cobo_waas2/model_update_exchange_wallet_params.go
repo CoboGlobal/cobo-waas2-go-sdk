@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -23,20 +23,6 @@ type UpdateExchangeWalletParams struct {
 	WalletType WalletType `json:"wallet_type"`
 	// The wallet name.
 	Name *string `json:"name,omitempty"`
-	// The API key of your exchange account. This property is required when updating the information of an Exchange Wallet.
-	Apikey *string `json:"apikey,omitempty"`
-	// The API secret of your exchange account. This property is required when updating the information of an Exchange Wallet.
-	Secret *string `json:"secret,omitempty"`
-	// The passphrase of your exchange account.
-	Passphrase *string `json:"passphrase,omitempty"`
-	// The memo you use when applying for the API key of your exchange account.
-	Memo *string `json:"memo,omitempty"`
-	// The identifier of your exchange account. - For Binance, this is email address of your exchange account. - For OKX, this is the user name of your exchange account. 
-	AccountIdentify *string `json:"account_identify,omitempty"`
-	// The GA code for the exchange.
-	GaCode *string `json:"ga_code,omitempty"`
-	// The ID of the Exchange Wallet (Main Account).
-	MainWalletId *string `json:"main_wallet_id,omitempty"`
 }
 
 type _UpdateExchangeWalletParams UpdateExchangeWalletParams
@@ -115,230 +101,6 @@ func (o *UpdateExchangeWalletParams) SetName(v string) {
 	o.Name = &v
 }
 
-// GetApikey returns the Apikey field value if set, zero value otherwise.
-func (o *UpdateExchangeWalletParams) GetApikey() string {
-	if o == nil || IsNil(o.Apikey) {
-		var ret string
-		return ret
-	}
-	return *o.Apikey
-}
-
-// GetApikeyOk returns a tuple with the Apikey field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateExchangeWalletParams) GetApikeyOk() (*string, bool) {
-	if o == nil || IsNil(o.Apikey) {
-		return nil, false
-	}
-	return o.Apikey, true
-}
-
-// HasApikey returns a boolean if a field has been set.
-func (o *UpdateExchangeWalletParams) HasApikey() bool {
-	if o != nil && !IsNil(o.Apikey) {
-		return true
-	}
-
-	return false
-}
-
-// SetApikey gets a reference to the given string and assigns it to the Apikey field.
-func (o *UpdateExchangeWalletParams) SetApikey(v string) {
-	o.Apikey = &v
-}
-
-// GetSecret returns the Secret field value if set, zero value otherwise.
-func (o *UpdateExchangeWalletParams) GetSecret() string {
-	if o == nil || IsNil(o.Secret) {
-		var ret string
-		return ret
-	}
-	return *o.Secret
-}
-
-// GetSecretOk returns a tuple with the Secret field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateExchangeWalletParams) GetSecretOk() (*string, bool) {
-	if o == nil || IsNil(o.Secret) {
-		return nil, false
-	}
-	return o.Secret, true
-}
-
-// HasSecret returns a boolean if a field has been set.
-func (o *UpdateExchangeWalletParams) HasSecret() bool {
-	if o != nil && !IsNil(o.Secret) {
-		return true
-	}
-
-	return false
-}
-
-// SetSecret gets a reference to the given string and assigns it to the Secret field.
-func (o *UpdateExchangeWalletParams) SetSecret(v string) {
-	o.Secret = &v
-}
-
-// GetPassphrase returns the Passphrase field value if set, zero value otherwise.
-func (o *UpdateExchangeWalletParams) GetPassphrase() string {
-	if o == nil || IsNil(o.Passphrase) {
-		var ret string
-		return ret
-	}
-	return *o.Passphrase
-}
-
-// GetPassphraseOk returns a tuple with the Passphrase field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateExchangeWalletParams) GetPassphraseOk() (*string, bool) {
-	if o == nil || IsNil(o.Passphrase) {
-		return nil, false
-	}
-	return o.Passphrase, true
-}
-
-// HasPassphrase returns a boolean if a field has been set.
-func (o *UpdateExchangeWalletParams) HasPassphrase() bool {
-	if o != nil && !IsNil(o.Passphrase) {
-		return true
-	}
-
-	return false
-}
-
-// SetPassphrase gets a reference to the given string and assigns it to the Passphrase field.
-func (o *UpdateExchangeWalletParams) SetPassphrase(v string) {
-	o.Passphrase = &v
-}
-
-// GetMemo returns the Memo field value if set, zero value otherwise.
-func (o *UpdateExchangeWalletParams) GetMemo() string {
-	if o == nil || IsNil(o.Memo) {
-		var ret string
-		return ret
-	}
-	return *o.Memo
-}
-
-// GetMemoOk returns a tuple with the Memo field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateExchangeWalletParams) GetMemoOk() (*string, bool) {
-	if o == nil || IsNil(o.Memo) {
-		return nil, false
-	}
-	return o.Memo, true
-}
-
-// HasMemo returns a boolean if a field has been set.
-func (o *UpdateExchangeWalletParams) HasMemo() bool {
-	if o != nil && !IsNil(o.Memo) {
-		return true
-	}
-
-	return false
-}
-
-// SetMemo gets a reference to the given string and assigns it to the Memo field.
-func (o *UpdateExchangeWalletParams) SetMemo(v string) {
-	o.Memo = &v
-}
-
-// GetAccountIdentify returns the AccountIdentify field value if set, zero value otherwise.
-func (o *UpdateExchangeWalletParams) GetAccountIdentify() string {
-	if o == nil || IsNil(o.AccountIdentify) {
-		var ret string
-		return ret
-	}
-	return *o.AccountIdentify
-}
-
-// GetAccountIdentifyOk returns a tuple with the AccountIdentify field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateExchangeWalletParams) GetAccountIdentifyOk() (*string, bool) {
-	if o == nil || IsNil(o.AccountIdentify) {
-		return nil, false
-	}
-	return o.AccountIdentify, true
-}
-
-// HasAccountIdentify returns a boolean if a field has been set.
-func (o *UpdateExchangeWalletParams) HasAccountIdentify() bool {
-	if o != nil && !IsNil(o.AccountIdentify) {
-		return true
-	}
-
-	return false
-}
-
-// SetAccountIdentify gets a reference to the given string and assigns it to the AccountIdentify field.
-func (o *UpdateExchangeWalletParams) SetAccountIdentify(v string) {
-	o.AccountIdentify = &v
-}
-
-// GetGaCode returns the GaCode field value if set, zero value otherwise.
-func (o *UpdateExchangeWalletParams) GetGaCode() string {
-	if o == nil || IsNil(o.GaCode) {
-		var ret string
-		return ret
-	}
-	return *o.GaCode
-}
-
-// GetGaCodeOk returns a tuple with the GaCode field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateExchangeWalletParams) GetGaCodeOk() (*string, bool) {
-	if o == nil || IsNil(o.GaCode) {
-		return nil, false
-	}
-	return o.GaCode, true
-}
-
-// HasGaCode returns a boolean if a field has been set.
-func (o *UpdateExchangeWalletParams) HasGaCode() bool {
-	if o != nil && !IsNil(o.GaCode) {
-		return true
-	}
-
-	return false
-}
-
-// SetGaCode gets a reference to the given string and assigns it to the GaCode field.
-func (o *UpdateExchangeWalletParams) SetGaCode(v string) {
-	o.GaCode = &v
-}
-
-// GetMainWalletId returns the MainWalletId field value if set, zero value otherwise.
-func (o *UpdateExchangeWalletParams) GetMainWalletId() string {
-	if o == nil || IsNil(o.MainWalletId) {
-		var ret string
-		return ret
-	}
-	return *o.MainWalletId
-}
-
-// GetMainWalletIdOk returns a tuple with the MainWalletId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateExchangeWalletParams) GetMainWalletIdOk() (*string, bool) {
-	if o == nil || IsNil(o.MainWalletId) {
-		return nil, false
-	}
-	return o.MainWalletId, true
-}
-
-// HasMainWalletId returns a boolean if a field has been set.
-func (o *UpdateExchangeWalletParams) HasMainWalletId() bool {
-	if o != nil && !IsNil(o.MainWalletId) {
-		return true
-	}
-
-	return false
-}
-
-// SetMainWalletId gets a reference to the given string and assigns it to the MainWalletId field.
-func (o *UpdateExchangeWalletParams) SetMainWalletId(v string) {
-	o.MainWalletId = &v
-}
-
 func (o UpdateExchangeWalletParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -352,27 +114,6 @@ func (o UpdateExchangeWalletParams) ToMap() (map[string]interface{}, error) {
 	toSerialize["wallet_type"] = o.WalletType
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.Apikey) {
-		toSerialize["apikey"] = o.Apikey
-	}
-	if !IsNil(o.Secret) {
-		toSerialize["secret"] = o.Secret
-	}
-	if !IsNil(o.Passphrase) {
-		toSerialize["passphrase"] = o.Passphrase
-	}
-	if !IsNil(o.Memo) {
-		toSerialize["memo"] = o.Memo
-	}
-	if !IsNil(o.AccountIdentify) {
-		toSerialize["account_identify"] = o.AccountIdentify
-	}
-	if !IsNil(o.GaCode) {
-		toSerialize["ga_code"] = o.GaCode
-	}
-	if !IsNil(o.MainWalletId) {
-		toSerialize["main_wallet_id"] = o.MainWalletId
 	}
 	return toSerialize, nil
 }

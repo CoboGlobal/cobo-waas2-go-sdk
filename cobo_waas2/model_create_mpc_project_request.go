@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -22,9 +22,9 @@ var _ MappedNullable = &CreateMpcProjectRequest{}
 type CreateMpcProjectRequest struct {
 	// The project name.
 	Name string `json:"name"`
-	// The number of key share holders in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - node count\" format), so you can only set `node_count` to 2 or 3.   2. Threshold must be less than or equal to node count. 
-	NodeCount int32 `json:"node_count"`
-	// The number of key share holders required to sign an operation in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - node count\" format), so you can only set `threshold` to 2 or 3.   2. Threshold must be less than or equal to node count. 
+	// The number of key share holders in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - participants\" format), so you can only set `participants` to 2 or 3.   2. `threshold` must be less than or equal to `participants`. 
+	Participants int32 `json:"participants"`
+	// The number of key share holders required to sign an operation in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - participants\" format), so you can only set `threshold` to 2 or 3.   2. `threshold` must be less than or equal to `participants`. 
 	Threshold int32 `json:"threshold"`
 }
 
@@ -34,10 +34,10 @@ type _CreateMpcProjectRequest CreateMpcProjectRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateMpcProjectRequest(name string, nodeCount int32, threshold int32) *CreateMpcProjectRequest {
+func NewCreateMpcProjectRequest(name string, participants int32, threshold int32) *CreateMpcProjectRequest {
 	this := CreateMpcProjectRequest{}
 	this.Name = name
-	this.NodeCount = nodeCount
+	this.Participants = participants
 	this.Threshold = threshold
 	return &this
 }
@@ -74,28 +74,28 @@ func (o *CreateMpcProjectRequest) SetName(v string) {
 	o.Name = v
 }
 
-// GetNodeCount returns the NodeCount field value
-func (o *CreateMpcProjectRequest) GetNodeCount() int32 {
+// GetParticipants returns the Participants field value
+func (o *CreateMpcProjectRequest) GetParticipants() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.NodeCount
+	return o.Participants
 }
 
-// GetNodeCountOk returns a tuple with the NodeCount field value
+// GetParticipantsOk returns a tuple with the Participants field value
 // and a boolean to check if the value has been set.
-func (o *CreateMpcProjectRequest) GetNodeCountOk() (*int32, bool) {
+func (o *CreateMpcProjectRequest) GetParticipantsOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.NodeCount, true
+	return &o.Participants, true
 }
 
-// SetNodeCount sets field value
-func (o *CreateMpcProjectRequest) SetNodeCount(v int32) {
-	o.NodeCount = v
+// SetParticipants sets field value
+func (o *CreateMpcProjectRequest) SetParticipants(v int32) {
+	o.Participants = v
 }
 
 // GetThreshold returns the Threshold field value
@@ -133,7 +133,7 @@ func (o CreateMpcProjectRequest) MarshalJSON() ([]byte, error) {
 func (o CreateMpcProjectRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
-	toSerialize["node_count"] = o.NodeCount
+	toSerialize["participants"] = o.Participants
 	toSerialize["threshold"] = o.Threshold
 	return toSerialize, nil
 }
@@ -144,7 +144,7 @@ func (o *CreateMpcProjectRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"name",
-		"node_count",
+		"participants",
 		"threshold",
 	}
 

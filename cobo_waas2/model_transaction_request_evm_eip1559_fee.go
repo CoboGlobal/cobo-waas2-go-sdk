@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the TransactionRequestEvmEip1559Fee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionRequestEvmEip1559Fee{}
 
-// TransactionRequestEvmEip1559Fee In the EIP-1559 fee model, the transaction fee is calculated by multiplying the gas price and the gas units used by the transaction. This can be expressed as: Transaction fee = gas price * gas units used.   You can specify the maximum gas fee per gas unit and the maximum priority fee per gas unit to limit the transaction fee amount. You can also specify the gas limit. If the gas units used exceeds the gas limit, the transaction will fail. 
+// TransactionRequestEvmEip1559Fee In the EIP-1559 fee model, the transaction fee is calculated by multiplying the gas price and the gas units used by the transaction. This can be expressed as: Transaction fee = gas price * gas units used.   You can specify the maximum gas fee per gas unit, maximum priority fee per gas unit, and the gas limit to limit the gas price, priority fee per gas unit, gas units used in the transaction. 
 type TransactionRequestEvmEip1559Fee struct {
 	// The maximum gas fee per gas unit used on the chain, in wei.
 	MaxFeePerGas string `json:"max_fee_per_gas"`

@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the SafeContractCallSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SafeContractCallSource{}
 
-// SafeContractCallSource struct for SafeContractCallSource
+// SafeContractCallSource The information about the transaction source type `Safe{Wallet}`.
 type SafeContractCallSource struct {
 	SourceType ContractCallSourceType `json:"source_type"`
 	// The wallet ID.

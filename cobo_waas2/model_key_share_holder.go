@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -25,6 +25,8 @@ type KeyShareHolder struct {
 	TssNodeId *string `json:"tss_node_id,omitempty"`
 	// Whether the key share holder's TSS Node is online. - `true`: The TSS Node is online.  - `false`: The TSS Node is offline. 
 	Online *bool `json:"online,omitempty"`
+	// Whether the key share holder's TSS Node is a designated transaction signer. - `true`: The TSS Node is a designated transaction signer.  - `false`: The TSS Node is not a designated transaction signer. 
+	Signer *bool `json:"signer,omitempty"`
 	Status *KeyShareHolderStatus `json:"status,omitempty"`
 }
 
@@ -173,6 +175,38 @@ func (o *KeyShareHolder) SetOnline(v bool) {
 	o.Online = &v
 }
 
+// GetSigner returns the Signer field value if set, zero value otherwise.
+func (o *KeyShareHolder) GetSigner() bool {
+	if o == nil || IsNil(o.Signer) {
+		var ret bool
+		return ret
+	}
+	return *o.Signer
+}
+
+// GetSignerOk returns a tuple with the Signer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *KeyShareHolder) GetSignerOk() (*bool, bool) {
+	if o == nil || IsNil(o.Signer) {
+		return nil, false
+	}
+	return o.Signer, true
+}
+
+// HasSigner returns a boolean if a field has been set.
+func (o *KeyShareHolder) HasSigner() bool {
+	if o != nil && !IsNil(o.Signer) {
+		return true
+	}
+
+	return false
+}
+
+// SetSigner gets a reference to the given bool and assigns it to the Signer field.
+func (o *KeyShareHolder) SetSigner(v bool) {
+	o.Signer = &v
+}
+
 // GetStatus returns the Status field value if set, zero value otherwise.
 func (o *KeyShareHolder) GetStatus() KeyShareHolderStatus {
 	if o == nil || IsNil(o.Status) {
@@ -226,6 +260,9 @@ func (o KeyShareHolder) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Online) {
 		toSerialize["online"] = o.Online
+	}
+	if !IsNil(o.Signer) {
+		toSerialize["signer"] = o.Signer
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status

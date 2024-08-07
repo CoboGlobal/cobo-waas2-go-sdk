@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the BaseContractCallSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BaseContractCallSource{}
 
-// BaseContractCallSource The information about the transaction source.
+// BaseContractCallSource The information about the transaction source type `Org-Controlled` and `User-Controlled`.
 type BaseContractCallSource struct {
 	SourceType ContractCallSourceType `json:"source_type"`
 	// The wallet ID.

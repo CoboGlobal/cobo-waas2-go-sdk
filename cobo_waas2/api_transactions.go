@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -310,6 +310,8 @@ CreateMessageSignTransaction Sign message
 This operation creates a transaction to sign the provided message using cryptographic techniques.
 
 In some scenarios, you want to sign a message for identity authentication or transaction approval. You need to provide details such as the source address, destination address, and the message to be signed. A transaction request for tracking is returned upon successful operation.
+
+You can get the signature result by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information). 
 
 <Note>Currently, only MPC Wallets support this type of transaction to sign a message.</Note>
 

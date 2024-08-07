@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the EvmEIP191MessageSignDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEIP191MessageSignDestination{}
 
-// EvmEIP191MessageSignDestination struct for EvmEIP191MessageSignDestination
+// EvmEIP191MessageSignDestination The information about the destination `EVM_EIP_191_Signature`.
 type EvmEIP191MessageSignDestination struct {
 	DestinationType MessageSignDestinationType `json:"destination_type"`
 	// The raw data of the message to be signed, encoded in Base64 format.

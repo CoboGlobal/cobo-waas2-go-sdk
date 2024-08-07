@@ -116,7 +116,7 @@ import (
 )
 
 func main() {
-	contractCallParams := *coboWaas2.NewContractCallParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", coboWaas2.ContractCallSource{MpcContractCallSource: coboWaas2.NewMpcContractCallSource(coboWaas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.ContractCallDestination{EvmContractCallDestination: coboWaas2.NewEvmContractCallDestination(coboWaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@499c4d61))}) // ContractCallParams | The request body for making a contract call. (optional)
+	contractCallParams := *coboWaas2.NewContractCallParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", coboWaas2.ContractCallSource{MpcContractCallSource: coboWaas2.NewMpcContractCallSource(coboWaas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.ContractCallDestination{EvmContractCallDestination: coboWaas2.NewEvmContractCallDestination(coboWaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@7028b5cc))}) // ContractCallParams | The request body for making a contract call. (optional)
 
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
@@ -414,7 +414,7 @@ import (
 )
 
 func main() {
-	estimateFeeParams := coboWaas2.EstimateFeeParams{EstimateContractCallFeeParams: coboWaas2.NewEstimateContractCallFeeParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", coboWaas2.EstimateFeeRequestType("Transfer"), "ETH", coboWaas2.ContractCallSource{MpcContractCallSource: coboWaas2.NewMpcContractCallSource(coboWaas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.ContractCallDestination{EvmContractCallDestination: coboWaas2.NewEvmContractCallDestination(coboWaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@499c4d61))})} // EstimateFeeParams | The request body to estimate the transaction fee of a token transfer or a contract call. (optional)
+	estimateFeeParams := coboWaas2.EstimateFeeParams{EstimateContractCallFeeParams: coboWaas2.NewEstimateContractCallFeeParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", coboWaas2.EstimateFeeRequestType("Transfer"), "ETH", coboWaas2.ContractCallSource{MpcContractCallSource: coboWaas2.NewMpcContractCallSource(coboWaas2.ContractCallSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.ContractCallDestination{EvmContractCallDestination: coboWaas2.NewEvmContractCallDestination(coboWaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", string([B@7028b5cc))})} // EstimateFeeParams | The request body to estimate the transaction fee of a token transfer or a contract call. (optional)
 
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)

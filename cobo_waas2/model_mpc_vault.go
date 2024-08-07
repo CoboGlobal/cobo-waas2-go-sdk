@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -27,7 +27,7 @@ type MPCVault struct {
 	Type *MPCVaultType `json:"type,omitempty"`
 	RootPubkeys []RootPubkey `json:"root_pubkeys,omitempty"`
 	// The vault's creation time in Unix timestamp format, measured in milliseconds.
-	CreateTimestamp *int64 `json:"create_timestamp,omitempty"`
+	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 }
 
 // NewMPCVault instantiates a new MPCVault object
@@ -207,36 +207,36 @@ func (o *MPCVault) SetRootPubkeys(v []RootPubkey) {
 	o.RootPubkeys = v
 }
 
-// GetCreateTimestamp returns the CreateTimestamp field value if set, zero value otherwise.
-func (o *MPCVault) GetCreateTimestamp() int64 {
-	if o == nil || IsNil(o.CreateTimestamp) {
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *MPCVault) GetCreatedTimestamp() int64 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.CreateTimestamp
+	return *o.CreatedTimestamp
 }
 
-// GetCreateTimestampOk returns a tuple with the CreateTimestamp field value if set, nil otherwise
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MPCVault) GetCreateTimestampOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreateTimestamp) {
+func (o *MPCVault) GetCreatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		return nil, false
 	}
-	return o.CreateTimestamp, true
+	return o.CreatedTimestamp, true
 }
 
-// HasCreateTimestamp returns a boolean if a field has been set.
-func (o *MPCVault) HasCreateTimestamp() bool {
-	if o != nil && !IsNil(o.CreateTimestamp) {
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *MPCVault) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreateTimestamp gets a reference to the given int64 and assigns it to the CreateTimestamp field.
-func (o *MPCVault) SetCreateTimestamp(v int64) {
-	o.CreateTimestamp = &v
+// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+func (o *MPCVault) SetCreatedTimestamp(v int64) {
+	o.CreatedTimestamp = &v
 }
 
 func (o MPCVault) MarshalJSON() ([]byte, error) {
@@ -264,8 +264,8 @@ func (o MPCVault) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RootPubkeys) {
 		toSerialize["root_pubkeys"] = o.RootPubkeys
 	}
-	if !IsNil(o.CreateTimestamp) {
-		toSerialize["create_timestamp"] = o.CreateTimestamp
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}
 	return toSerialize, nil
 }

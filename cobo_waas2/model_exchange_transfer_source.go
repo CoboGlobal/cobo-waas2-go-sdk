@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the ExchangeTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ExchangeTransferSource{}
 
-// ExchangeTransferSource The information about the transaction source. An Exchange Wallet (Sub Account) as the transaction source can only transfer tokens to another Exchange Wallet.
+// ExchangeTransferSource The information about the transaction source types `Main` and `Sub`.   An Exchange Wallet (Sub Account) as the transaction source can only transfer tokens to another Exchange Wallet. 
 type ExchangeTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.

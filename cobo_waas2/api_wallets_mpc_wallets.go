@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -306,7 +306,7 @@ CreateMpcProject Create project
 
 This operation creates a project.
 
-<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
+<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -952,7 +952,7 @@ func (r ApiGetMpcProjectByIdRequest) Execute() (*MPCProject, *http.Response, err
 GetMpcProjectById Get project information
 
 This operation retrieves detailed information about a project.
-<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
+<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1332,7 +1332,7 @@ ListCoboKeyHolders List all Cobo key share holders
 
 This operation retrieves a list of all Cobo key share holders and their information. 
 
-<Note>When using this operation, `type` will only return `Cobo` and will never return `Mobile` or `API`.</Note>
+<Info>When using this operation, `type` will only return `Cobo` and will never return `Mobile` or `API`.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1644,7 +1644,7 @@ ListMpcProjects List all projects
 
 This operation retrieves a list of all projects.
 
-<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
+<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2272,7 +2272,7 @@ UpdateMpcProjectById Update project name
 
 This operation updates a project's name.
 
-<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
+<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

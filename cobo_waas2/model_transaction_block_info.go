@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -21,7 +21,7 @@ type TransactionBlockInfo struct {
 	// The block number.
 	BlockNumber *int64 `json:"block_number,omitempty"`
 	// The time when the block was created, in Unix timestamp format, measured in milliseconds.
-	BlockTime *int64 `json:"block_time,omitempty"`
+	BlockTimestamp *int64 `json:"block_timestamp,omitempty"`
 	// The block hash.
 	BlockHash *string `json:"block_hash,omitempty"`
 }
@@ -75,36 +75,36 @@ func (o *TransactionBlockInfo) SetBlockNumber(v int64) {
 	o.BlockNumber = &v
 }
 
-// GetBlockTime returns the BlockTime field value if set, zero value otherwise.
-func (o *TransactionBlockInfo) GetBlockTime() int64 {
-	if o == nil || IsNil(o.BlockTime) {
+// GetBlockTimestamp returns the BlockTimestamp field value if set, zero value otherwise.
+func (o *TransactionBlockInfo) GetBlockTimestamp() int64 {
+	if o == nil || IsNil(o.BlockTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.BlockTime
+	return *o.BlockTimestamp
 }
 
-// GetBlockTimeOk returns a tuple with the BlockTime field value if set, nil otherwise
+// GetBlockTimestampOk returns a tuple with the BlockTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionBlockInfo) GetBlockTimeOk() (*int64, bool) {
-	if o == nil || IsNil(o.BlockTime) {
+func (o *TransactionBlockInfo) GetBlockTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.BlockTimestamp) {
 		return nil, false
 	}
-	return o.BlockTime, true
+	return o.BlockTimestamp, true
 }
 
-// HasBlockTime returns a boolean if a field has been set.
-func (o *TransactionBlockInfo) HasBlockTime() bool {
-	if o != nil && !IsNil(o.BlockTime) {
+// HasBlockTimestamp returns a boolean if a field has been set.
+func (o *TransactionBlockInfo) HasBlockTimestamp() bool {
+	if o != nil && !IsNil(o.BlockTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetBlockTime gets a reference to the given int64 and assigns it to the BlockTime field.
-func (o *TransactionBlockInfo) SetBlockTime(v int64) {
-	o.BlockTime = &v
+// SetBlockTimestamp gets a reference to the given int64 and assigns it to the BlockTimestamp field.
+func (o *TransactionBlockInfo) SetBlockTimestamp(v int64) {
+	o.BlockTimestamp = &v
 }
 
 // GetBlockHash returns the BlockHash field value if set, zero value otherwise.
@@ -152,8 +152,8 @@ func (o TransactionBlockInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.BlockNumber) {
 		toSerialize["block_number"] = o.BlockNumber
 	}
-	if !IsNil(o.BlockTime) {
-		toSerialize["block_time"] = o.BlockTime
+	if !IsNil(o.BlockTimestamp) {
+		toSerialize["block_timestamp"] = o.BlockTimestamp
 	}
 	if !IsNil(o.BlockHash) {
 		toSerialize["block_hash"] = o.BlockHash

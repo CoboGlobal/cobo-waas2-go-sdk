@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -16,13 +16,13 @@ import (
 // checks if the TransactionTimeline type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionTimeline{}
 
-// TransactionTimeline The data for transaction timeline information.
+// TransactionTimeline The information about transaction timeline, which lists all statuses that the transaction passes through with timestamps indicating when each status is completed.
 type TransactionTimeline struct {
 	Status *TransactionStatus `json:"status,omitempty"`
-	// Whether the transaction status is completed: - `true`: The transaction status is completed. - `false`: The transaction is currently in the status. 
+	// Whether the transaction status is completed:   - `true`: The transaction status is completed.   - `false`: The transaction is currently in the status. 
 	Finished *bool `json:"finished,omitempty"`
 	// The time when the transaction status is completed in Unix timestamp format, measured in milliseconds.
-	FinishedTime *int64 `json:"finished_time,omitempty"`
+	FinishedTimestamp *int64 `json:"finished_timestamp,omitempty"`
 }
 
 // NewTransactionTimeline instantiates a new TransactionTimeline object
@@ -106,36 +106,36 @@ func (o *TransactionTimeline) SetFinished(v bool) {
 	o.Finished = &v
 }
 
-// GetFinishedTime returns the FinishedTime field value if set, zero value otherwise.
-func (o *TransactionTimeline) GetFinishedTime() int64 {
-	if o == nil || IsNil(o.FinishedTime) {
+// GetFinishedTimestamp returns the FinishedTimestamp field value if set, zero value otherwise.
+func (o *TransactionTimeline) GetFinishedTimestamp() int64 {
+	if o == nil || IsNil(o.FinishedTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.FinishedTime
+	return *o.FinishedTimestamp
 }
 
-// GetFinishedTimeOk returns a tuple with the FinishedTime field value if set, nil otherwise
+// GetFinishedTimestampOk returns a tuple with the FinishedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionTimeline) GetFinishedTimeOk() (*int64, bool) {
-	if o == nil || IsNil(o.FinishedTime) {
+func (o *TransactionTimeline) GetFinishedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.FinishedTimestamp) {
 		return nil, false
 	}
-	return o.FinishedTime, true
+	return o.FinishedTimestamp, true
 }
 
-// HasFinishedTime returns a boolean if a field has been set.
-func (o *TransactionTimeline) HasFinishedTime() bool {
-	if o != nil && !IsNil(o.FinishedTime) {
+// HasFinishedTimestamp returns a boolean if a field has been set.
+func (o *TransactionTimeline) HasFinishedTimestamp() bool {
+	if o != nil && !IsNil(o.FinishedTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetFinishedTime gets a reference to the given int64 and assigns it to the FinishedTime field.
-func (o *TransactionTimeline) SetFinishedTime(v int64) {
-	o.FinishedTime = &v
+// SetFinishedTimestamp gets a reference to the given int64 and assigns it to the FinishedTimestamp field.
+func (o *TransactionTimeline) SetFinishedTimestamp(v int64) {
+	o.FinishedTimestamp = &v
 }
 
 func (o TransactionTimeline) MarshalJSON() ([]byte, error) {
@@ -154,8 +154,8 @@ func (o TransactionTimeline) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Finished) {
 		toSerialize["finished"] = o.Finished
 	}
-	if !IsNil(o.FinishedTime) {
-		toSerialize["finished_time"] = o.FinishedTime
+	if !IsNil(o.FinishedTimestamp) {
+		toSerialize["finished_timestamp"] = o.FinishedTimestamp
 	}
 	return toSerialize, nil
 }

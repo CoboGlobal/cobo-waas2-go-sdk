@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -28,7 +28,7 @@ type WebhookEventLog struct {
 	RequestHeaders map[string]interface{} `json:"request_headers"`
 	RequestBody WebhookEvent `json:"request_body"`
 	// The response body of the webhook event.
-	ResponseBody map[string]interface{} `json:"response_body,omitempty"`
+	ResponseBody *string `json:"response_body,omitempty"`
 	// The response status code of the webhook event.
 	ResponseStatusCode *int32 `json:"response_status_code,omitempty"`
 	// The response time of the webhook event, in milliseconds.
@@ -160,19 +160,19 @@ func (o *WebhookEventLog) SetRequestBody(v WebhookEvent) {
 }
 
 // GetResponseBody returns the ResponseBody field value if set, zero value otherwise.
-func (o *WebhookEventLog) GetResponseBody() map[string]interface{} {
+func (o *WebhookEventLog) GetResponseBody() string {
 	if o == nil || IsNil(o.ResponseBody) {
-		var ret map[string]interface{}
+		var ret string
 		return ret
 	}
-	return o.ResponseBody
+	return *o.ResponseBody
 }
 
 // GetResponseBodyOk returns a tuple with the ResponseBody field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WebhookEventLog) GetResponseBodyOk() (map[string]interface{}, bool) {
+func (o *WebhookEventLog) GetResponseBodyOk() (*string, bool) {
 	if o == nil || IsNil(o.ResponseBody) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
 	return o.ResponseBody, true
 }
@@ -186,9 +186,9 @@ func (o *WebhookEventLog) HasResponseBody() bool {
 	return false
 }
 
-// SetResponseBody gets a reference to the given map[string]interface{} and assigns it to the ResponseBody field.
-func (o *WebhookEventLog) SetResponseBody(v map[string]interface{}) {
-	o.ResponseBody = v
+// SetResponseBody gets a reference to the given string and assigns it to the ResponseBody field.
+func (o *WebhookEventLog) SetResponseBody(v string) {
+	o.ResponseBody = &v
 }
 
 // GetResponseStatusCode returns the ResponseStatusCode field value if set, zero value otherwise.

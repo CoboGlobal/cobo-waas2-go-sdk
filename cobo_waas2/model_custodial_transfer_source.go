@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the CustodialTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CustodialTransferSource{}
 
-// CustodialTransferSource The information about the transaction source.
+// CustodialTransferSource The information about the transaction source types `Asset` and `Web3`.
 type CustodialTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.

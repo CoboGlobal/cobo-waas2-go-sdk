@@ -515,7 +515,7 @@ func main() {
 	tokenId := "ETH_USDT" // string | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
 	feeRate := "10" // string | The fee rate in sats/vByte or gas price in wei.
 	toAddress := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | The recipient's address.
-	fromAddress := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | The sender's address. (optional)
+	fromAddress := "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE" // string | The sender's address. For EVM addresses in MPC Wallets, this parameter is required. (optional)
 
 	configuration := coboWaas2.NewConfiguration()
 	apiClient := coboWaas2.NewAPIClient(configuration)
@@ -554,7 +554,7 @@ Name | Type | Description  | Notes
  **tokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens). | 
  **feeRate** | **string** | The fee rate in sats/vByte or gas price in wei. | 
  **toAddress** | **string** | The recipient&#39;s address. | 
- **fromAddress** | **string** | The sender&#39;s address. | 
+ **fromAddress** | **string** | The sender&#39;s address. For EVM addresses in MPC Wallets, this parameter is required. | 
 
 ### Return type
 

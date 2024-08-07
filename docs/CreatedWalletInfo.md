@@ -13,8 +13,7 @@ Name | Type | Description | Notes
 **VaultId** | **string** | The ID of the owning vault. | 
 **Apikey** | **string** | The API key of your exchange account. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
-**ParentWalletId** | Pointer to **string** | The wallet ID of the Main Account associated with the Sub Account. This property is returned only if you are creating or querying an Exchange Wallet (Sub Account). | [optional] 
-**SubAccounts** | Pointer to [**[]ExchangeWalletInfoAllOfSubAccounts**](ExchangeWalletInfoAllOfSubAccounts.md) |  | [optional] 
+**MainWalletId** | Pointer to **string** | The wallet ID of the Main Account associated with the Sub Account. This property is returned only if you are creating or querying an Exchange Wallet (Sub Account). | [optional] 
 
 ## Methods
 
@@ -220,55 +219,30 @@ and a boolean to check if the value has been set.
 SetExchangeId sets ExchangeId field to given value.
 
 
-### GetParentWalletId
+### GetMainWalletId
 
-`func (o *CreatedWalletInfo) GetParentWalletId() string`
+`func (o *CreatedWalletInfo) GetMainWalletId() string`
 
-GetParentWalletId returns the ParentWalletId field if non-nil, zero value otherwise.
+GetMainWalletId returns the MainWalletId field if non-nil, zero value otherwise.
 
-### GetParentWalletIdOk
+### GetMainWalletIdOk
 
-`func (o *CreatedWalletInfo) GetParentWalletIdOk() (*string, bool)`
+`func (o *CreatedWalletInfo) GetMainWalletIdOk() (*string, bool)`
 
-GetParentWalletIdOk returns a tuple with the ParentWalletId field if it's non-nil, zero value otherwise
+GetMainWalletIdOk returns a tuple with the MainWalletId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetParentWalletId
+### SetMainWalletId
 
-`func (o *CreatedWalletInfo) SetParentWalletId(v string)`
+`func (o *CreatedWalletInfo) SetMainWalletId(v string)`
 
-SetParentWalletId sets ParentWalletId field to given value.
+SetMainWalletId sets MainWalletId field to given value.
 
-### HasParentWalletId
+### HasMainWalletId
 
-`func (o *CreatedWalletInfo) HasParentWalletId() bool`
+`func (o *CreatedWalletInfo) HasMainWalletId() bool`
 
-HasParentWalletId returns a boolean if a field has been set.
-
-### GetSubAccounts
-
-`func (o *CreatedWalletInfo) GetSubAccounts() []ExchangeWalletInfoAllOfSubAccounts`
-
-GetSubAccounts returns the SubAccounts field if non-nil, zero value otherwise.
-
-### GetSubAccountsOk
-
-`func (o *CreatedWalletInfo) GetSubAccountsOk() (*[]ExchangeWalletInfoAllOfSubAccounts, bool)`
-
-GetSubAccountsOk returns a tuple with the SubAccounts field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSubAccounts
-
-`func (o *CreatedWalletInfo) SetSubAccounts(v []ExchangeWalletInfoAllOfSubAccounts)`
-
-SetSubAccounts sets SubAccounts field to given value.
-
-### HasSubAccounts
-
-`func (o *CreatedWalletInfo) HasSubAccounts() bool`
-
-HasSubAccounts returns a boolean if a field has been set.
+HasMainWalletId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

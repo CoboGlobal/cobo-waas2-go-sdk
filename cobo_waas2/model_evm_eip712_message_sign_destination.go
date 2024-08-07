@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +18,7 @@ import (
 // checks if the EvmEIP712MessageSignDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEIP712MessageSignDestination{}
 
-// EvmEIP712MessageSignDestination struct for EvmEIP712MessageSignDestination
+// EvmEIP712MessageSignDestination The information about the destination `EVM_EIP_712_Signature`.
 type EvmEIP712MessageSignDestination struct {
 	DestinationType MessageSignDestinationType `json:"destination_type"`
 	// The structured data to be signed, formatted as a JSON object according to the EIP-712 standard.

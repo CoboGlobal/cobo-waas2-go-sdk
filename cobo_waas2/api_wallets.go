@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -840,7 +840,7 @@ func (r ApiGetMaxTransferableValueRequest) ToAddress(toAddress string) ApiGetMax
 	return r
 }
 
-// The sender&#39;s address.
+// The sender&#39;s address. For EVM addresses in MPC Wallets, this parameter is required.
 func (r ApiGetMaxTransferableValueRequest) FromAddress(fromAddress string) ApiGetMaxTransferableValueRequest {
 	r.fromAddress = &fromAddress
 	return r

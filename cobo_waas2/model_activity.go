@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -44,9 +44,9 @@ type Activity struct {
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
 	Status ActivityStatus `json:"status"`
 	// The time when the activity was created.
-	CreatedTime *int64 `json:"created_time,omitempty"`
+	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 	// The time when the activity was last updated.
-	UpdatedTime *int64 `json:"updated_time,omitempty"`
+	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 }
 
 type _Activity Activity
@@ -456,68 +456,68 @@ func (o *Activity) SetStatus(v ActivityStatus) {
 	o.Status = v
 }
 
-// GetCreatedTime returns the CreatedTime field value if set, zero value otherwise.
-func (o *Activity) GetCreatedTime() int64 {
-	if o == nil || IsNil(o.CreatedTime) {
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *Activity) GetCreatedTimestamp() int64 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedTime
+	return *o.CreatedTimestamp
 }
 
-// GetCreatedTimeOk returns a tuple with the CreatedTime field value if set, nil otherwise
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Activity) GetCreatedTimeOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedTime) {
+func (o *Activity) GetCreatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		return nil, false
 	}
-	return o.CreatedTime, true
+	return o.CreatedTimestamp, true
 }
 
-// HasCreatedTime returns a boolean if a field has been set.
-func (o *Activity) HasCreatedTime() bool {
-	if o != nil && !IsNil(o.CreatedTime) {
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *Activity) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedTime gets a reference to the given int64 and assigns it to the CreatedTime field.
-func (o *Activity) SetCreatedTime(v int64) {
-	o.CreatedTime = &v
+// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+func (o *Activity) SetCreatedTimestamp(v int64) {
+	o.CreatedTimestamp = &v
 }
 
-// GetUpdatedTime returns the UpdatedTime field value if set, zero value otherwise.
-func (o *Activity) GetUpdatedTime() int64 {
-	if o == nil || IsNil(o.UpdatedTime) {
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *Activity) GetUpdatedTimestamp() int64 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedTime
+	return *o.UpdatedTimestamp
 }
 
-// GetUpdatedTimeOk returns a tuple with the UpdatedTime field value if set, nil otherwise
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Activity) GetUpdatedTimeOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedTime) {
+func (o *Activity) GetUpdatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
 		return nil, false
 	}
-	return o.UpdatedTime, true
+	return o.UpdatedTimestamp, true
 }
 
-// HasUpdatedTime returns a boolean if a field has been set.
-func (o *Activity) HasUpdatedTime() bool {
-	if o != nil && !IsNil(o.UpdatedTime) {
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *Activity) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetUpdatedTime gets a reference to the given int64 and assigns it to the UpdatedTime field.
-func (o *Activity) SetUpdatedTime(v int64) {
-	o.UpdatedTime = &v
+// SetUpdatedTimestamp gets a reference to the given int64 and assigns it to the UpdatedTimestamp field.
+func (o *Activity) SetUpdatedTimestamp(v int64) {
+	o.UpdatedTimestamp = &v
 }
 
 func (o Activity) MarshalJSON() ([]byte, error) {
@@ -561,11 +561,11 @@ func (o Activity) ToMap() (map[string]interface{}, error) {
 		toSerialize["fee"] = o.Fee
 	}
 	toSerialize["status"] = o.Status
-	if !IsNil(o.CreatedTime) {
-		toSerialize["created_time"] = o.CreatedTime
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}
-	if !IsNil(o.UpdatedTime) {
-		toSerialize["updated_time"] = o.UpdatedTime
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	}
 	return toSerialize, nil
 }

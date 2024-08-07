@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -43,7 +43,7 @@ var (
 )
 
 
-// APIClient manages communication with the Cobo Wallet as a Service 2.0 API v1.0.0
+// APIClient manages communication with the Cobo Wallet as a Service 2.0 API v1.1.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -52,6 +52,8 @@ type APIClient struct {
 	// API Services
 
 	DevelopersWebhooksAPI *DevelopersWebhooksAPIService
+
+	OAuthAPI *OAuthAPIService
 
 	TransactionsAPI *TransactionsAPIService
 
@@ -77,6 +79,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
+	c.OAuthAPI = (*OAuthAPIService)(&c.common)
 	c.TransactionsAPI = (*TransactionsAPIService)(&c.common)
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)
 	c.WalletsMPCWalletsAPI = (*WalletsMPCWalletsAPIService)(&c.common)

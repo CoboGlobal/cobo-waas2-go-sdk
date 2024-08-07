@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -62,9 +62,9 @@ type TransactionDetails struct {
 	// Whether the transaction is a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).  - `true`: The transaction is a Loop transfer. - `false`: The transaction is not a Loop transfer. 
 	IsLoop *bool `json:"is_loop,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
-	CreatedTime int64 `json:"created_time"`
+	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 	// The time when the transaction was updated, in Unix timestamp format, measured in milliseconds.
-	UpdatedTime int64 `json:"updated_time"`
+	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 	Approvers []TransactionApprover `json:"approvers,omitempty"`
 	Signers []TransactionSigner `json:"signers,omitempty"`
 	// Transaction nonce
@@ -87,7 +87,7 @@ type _TransactionDetails TransactionDetails
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransactionDetails(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTime int64, updatedTime int64) *TransactionDetails {
+func NewTransactionDetails(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType) *TransactionDetails {
 	this := TransactionDetails{}
 	this.TransactionId = transactionId
 	this.WalletId = walletId
@@ -95,8 +95,6 @@ func NewTransactionDetails(transactionId string, walletId string, status Transac
 	this.Source = source
 	this.Destination = destination
 	this.InitiatorType = initiatorType
-	this.CreatedTime = createdTime
-	this.UpdatedTime = updatedTime
 	return &this
 }
 
@@ -892,52 +890,68 @@ func (o *TransactionDetails) SetIsLoop(v bool) {
 	o.IsLoop = &v
 }
 
-// GetCreatedTime returns the CreatedTime field value
-func (o *TransactionDetails) GetCreatedTime() int64 {
-	if o == nil {
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *TransactionDetails) GetCreatedTimestamp() int64 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		var ret int64
 		return ret
 	}
-
-	return o.CreatedTime
+	return *o.CreatedTimestamp
 }
 
-// GetCreatedTimeOk returns a tuple with the CreatedTime field value
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionDetails) GetCreatedTimeOk() (*int64, bool) {
-	if o == nil {
+func (o *TransactionDetails) GetCreatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		return nil, false
 	}
-	return &o.CreatedTime, true
+	return o.CreatedTimestamp, true
 }
 
-// SetCreatedTime sets field value
-func (o *TransactionDetails) SetCreatedTime(v int64) {
-	o.CreatedTime = v
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *TransactionDetails) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
 }
 
-// GetUpdatedTime returns the UpdatedTime field value
-func (o *TransactionDetails) GetUpdatedTime() int64 {
-	if o == nil {
+// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+func (o *TransactionDetails) SetCreatedTimestamp(v int64) {
+	o.CreatedTimestamp = &v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *TransactionDetails) GetUpdatedTimestamp() int64 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
 		var ret int64
 		return ret
 	}
-
-	return o.UpdatedTime
+	return *o.UpdatedTimestamp
 }
 
-// GetUpdatedTimeOk returns a tuple with the UpdatedTime field value
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionDetails) GetUpdatedTimeOk() (*int64, bool) {
-	if o == nil {
+func (o *TransactionDetails) GetUpdatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
 		return nil, false
 	}
-	return &o.UpdatedTime, true
+	return o.UpdatedTimestamp, true
 }
 
-// SetUpdatedTime sets field value
-func (o *TransactionDetails) SetUpdatedTime(v int64) {
-	o.UpdatedTime = v
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *TransactionDetails) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedTimestamp gets a reference to the given int64 and assigns it to the UpdatedTimestamp field.
+func (o *TransactionDetails) SetUpdatedTimestamp(v int64) {
+	o.UpdatedTimestamp = &v
 }
 
 // GetApprovers returns the Approvers field value if set, zero value otherwise.
@@ -1304,8 +1318,12 @@ func (o TransactionDetails) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.IsLoop) {
 		toSerialize["is_loop"] = o.IsLoop
 	}
-	toSerialize["created_time"] = o.CreatedTime
-	toSerialize["updated_time"] = o.UpdatedTime
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
+	}
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
 	if !IsNil(o.Approvers) {
 		toSerialize["approvers"] = o.Approvers
 	}
@@ -1347,8 +1365,6 @@ func (o *TransactionDetails) UnmarshalJSON(data []byte) (err error) {
 		"source",
 		"destination",
 		"initiator_type",
-		"created_time",
-		"updated_time",
 	}
 
 	allProperties := make(map[string]interface{})

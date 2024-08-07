@@ -1,7 +1,7 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
+API version: 1.1.0
 Contact: support@cobo.com
 */
 
@@ -31,7 +31,7 @@ type Stakings struct {
 	// The initiator of the stake.
 	Initiator *string `json:"initiator,omitempty"`
 	// The unlock time.
-	UnlockTime *int64 `json:"unlock_time,omitempty"`
+	UnlockTimestamp *int64 `json:"unlock_timestamp,omitempty"`
 	// The unlock block height.
 	UnlockBlockHeight *int64 `json:"unlock_block_height,omitempty"`
 	// The unique pool id.
@@ -43,9 +43,9 @@ type Stakings struct {
 	// The rewards info of the stake.
 	RewardsInfo map[string]interface{} `json:"rewards_info,omitempty"`
 	// The time when the stake was created.
-	CreatedTime int64 `json:"created_time"`
+	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The time when the stake was last updated.
-	UpdatedTime int64 `json:"updated_time"`
+	UpdatedTimestamp int64 `json:"updated_timestamp"`
 	ValidatorInfo StakingsValidatorInfo `json:"validator_info"`
 }
 
@@ -55,7 +55,7 @@ type _Stakings Stakings
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId string, tokenId string, createdTime int64, updatedTime int64, validatorInfo StakingsValidatorInfo) *Stakings {
+func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId string, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo StakingsValidatorInfo) *Stakings {
 	this := Stakings{}
 	this.Id = id
 	this.WalletId = walletId
@@ -63,8 +63,8 @@ func NewStakings(id string, walletId string, address string, amounts []AmountDet
 	this.Amounts = amounts
 	this.PoolId = poolId
 	this.TokenId = tokenId
-	this.CreatedTime = createdTime
-	this.UpdatedTime = updatedTime
+	this.CreatedTimestamp = createdTimestamp
+	this.UpdatedTimestamp = updatedTimestamp
 	this.ValidatorInfo = validatorInfo
 	return &this
 }
@@ -205,36 +205,36 @@ func (o *Stakings) SetInitiator(v string) {
 	o.Initiator = &v
 }
 
-// GetUnlockTime returns the UnlockTime field value if set, zero value otherwise.
-func (o *Stakings) GetUnlockTime() int64 {
-	if o == nil || IsNil(o.UnlockTime) {
+// GetUnlockTimestamp returns the UnlockTimestamp field value if set, zero value otherwise.
+func (o *Stakings) GetUnlockTimestamp() int64 {
+	if o == nil || IsNil(o.UnlockTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.UnlockTime
+	return *o.UnlockTimestamp
 }
 
-// GetUnlockTimeOk returns a tuple with the UnlockTime field value if set, nil otherwise
+// GetUnlockTimestampOk returns a tuple with the UnlockTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Stakings) GetUnlockTimeOk() (*int64, bool) {
-	if o == nil || IsNil(o.UnlockTime) {
+func (o *Stakings) GetUnlockTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.UnlockTimestamp) {
 		return nil, false
 	}
-	return o.UnlockTime, true
+	return o.UnlockTimestamp, true
 }
 
-// HasUnlockTime returns a boolean if a field has been set.
-func (o *Stakings) HasUnlockTime() bool {
-	if o != nil && !IsNil(o.UnlockTime) {
+// HasUnlockTimestamp returns a boolean if a field has been set.
+func (o *Stakings) HasUnlockTimestamp() bool {
+	if o != nil && !IsNil(o.UnlockTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetUnlockTime gets a reference to the given int64 and assigns it to the UnlockTime field.
-func (o *Stakings) SetUnlockTime(v int64) {
-	o.UnlockTime = &v
+// SetUnlockTimestamp gets a reference to the given int64 and assigns it to the UnlockTimestamp field.
+func (o *Stakings) SetUnlockTimestamp(v int64) {
+	o.UnlockTimestamp = &v
 }
 
 // GetUnlockBlockHeight returns the UnlockBlockHeight field value if set, zero value otherwise.
@@ -381,52 +381,52 @@ func (o *Stakings) SetRewardsInfo(v map[string]interface{}) {
 	o.RewardsInfo = v
 }
 
-// GetCreatedTime returns the CreatedTime field value
-func (o *Stakings) GetCreatedTime() int64 {
+// GetCreatedTimestamp returns the CreatedTimestamp field value
+func (o *Stakings) GetCreatedTimestamp() int64 {
 	if o == nil {
 		var ret int64
 		return ret
 	}
 
-	return o.CreatedTime
+	return o.CreatedTimestamp
 }
 
-// GetCreatedTimeOk returns a tuple with the CreatedTime field value
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value
 // and a boolean to check if the value has been set.
-func (o *Stakings) GetCreatedTimeOk() (*int64, bool) {
+func (o *Stakings) GetCreatedTimestampOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CreatedTime, true
+	return &o.CreatedTimestamp, true
 }
 
-// SetCreatedTime sets field value
-func (o *Stakings) SetCreatedTime(v int64) {
-	o.CreatedTime = v
+// SetCreatedTimestamp sets field value
+func (o *Stakings) SetCreatedTimestamp(v int64) {
+	o.CreatedTimestamp = v
 }
 
-// GetUpdatedTime returns the UpdatedTime field value
-func (o *Stakings) GetUpdatedTime() int64 {
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value
+func (o *Stakings) GetUpdatedTimestamp() int64 {
 	if o == nil {
 		var ret int64
 		return ret
 	}
 
-	return o.UpdatedTime
+	return o.UpdatedTimestamp
 }
 
-// GetUpdatedTimeOk returns a tuple with the UpdatedTime field value
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value
 // and a boolean to check if the value has been set.
-func (o *Stakings) GetUpdatedTimeOk() (*int64, bool) {
+func (o *Stakings) GetUpdatedTimestampOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.UpdatedTime, true
+	return &o.UpdatedTimestamp, true
 }
 
-// SetUpdatedTime sets field value
-func (o *Stakings) SetUpdatedTime(v int64) {
-	o.UpdatedTime = v
+// SetUpdatedTimestamp sets field value
+func (o *Stakings) SetUpdatedTimestamp(v int64) {
+	o.UpdatedTimestamp = v
 }
 
 // GetValidatorInfo returns the ValidatorInfo field value
@@ -470,8 +470,8 @@ func (o Stakings) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
 	}
-	if !IsNil(o.UnlockTime) {
-		toSerialize["unlock_time"] = o.UnlockTime
+	if !IsNil(o.UnlockTimestamp) {
+		toSerialize["unlock_timestamp"] = o.UnlockTimestamp
 	}
 	if !IsNil(o.UnlockBlockHeight) {
 		toSerialize["unlock_block_height"] = o.UnlockBlockHeight
@@ -484,8 +484,8 @@ func (o Stakings) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RewardsInfo) {
 		toSerialize["rewards_info"] = o.RewardsInfo
 	}
-	toSerialize["created_time"] = o.CreatedTime
-	toSerialize["updated_time"] = o.UpdatedTime
+	toSerialize["created_timestamp"] = o.CreatedTimestamp
+	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	toSerialize["validator_info"] = o.ValidatorInfo
 	return toSerialize, nil
 }
@@ -501,8 +501,8 @@ func (o *Stakings) UnmarshalJSON(data []byte) (err error) {
 		"amounts",
 		"pool_id",
 		"token_id",
-		"created_time",
-		"updated_time",
+		"created_timestamp",
+		"updated_timestamp",
 		"validator_info",
 	}
 
