@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +17,7 @@ import (
 // checks if the AddressTransferDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressTransferDestination{}
 
-// AddressTransferDestination The information about the transaction destination. Specify either the `account_output` property or the `utxo_outputs` property. Only MPC Wallets as the transaction source can transfer tokens to multiple addresses by using the `utxo_outputs` property. 
+// AddressTransferDestination The information about the transaction destination type `Address`.   Specify either the `account_output` property or the `utxo_outputs` property. Only MPC Wallets as the transaction source can transfer tokens to multiple addresses by using the `utxo_outputs` property. 
 type AddressTransferDestination struct {
 	DestinationType TransferDestinationType `json:"destination_type"`
 	AccountOutput *AddressTransferDestinationAccountOutput `json:"account_output,omitempty"`

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Type** | Pointer to [**KeyShareHolderType**](KeyShareHolderType.md) |  | [optional] 
 **TssNodeId** | Pointer to **string** | The key share holder&#39;s TSS Node ID. | [optional] 
 **Online** | Pointer to **bool** | Whether the key share holder&#39;s TSS Node is online. - &#x60;true&#x60;: The TSS Node is online.  - &#x60;false&#x60;: The TSS Node is offline.  | [optional] 
+**Signer** | Pointer to **bool** | Whether the key share holder&#39;s TSS Node is a designated transaction signer. - &#x60;true&#x60;: The TSS Node is a designated transaction signer.  - &#x60;false&#x60;: The TSS Node is not a designated transaction signer.  | [optional] 
 **Status** | Pointer to [**KeyShareHolderStatus**](KeyShareHolderStatus.md) |  | [optional] 
 
 ## Methods
@@ -128,6 +129,31 @@ SetOnline sets Online field to given value.
 `func (o *KeyShareHolder) HasOnline() bool`
 
 HasOnline returns a boolean if a field has been set.
+
+### GetSigner
+
+`func (o *KeyShareHolder) GetSigner() bool`
+
+GetSigner returns the Signer field if non-nil, zero value otherwise.
+
+### GetSignerOk
+
+`func (o *KeyShareHolder) GetSignerOk() (*bool, bool)`
+
+GetSignerOk returns a tuple with the Signer field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSigner
+
+`func (o *KeyShareHolder) SetSigner(v bool)`
+
+SetSigner sets Signer field to given value.
+
+### HasSigner
+
+`func (o *KeyShareHolder) HasSigner() bool`
+
+HasSigner returns a boolean if a field has been set.
 
 ### GetStatus
 

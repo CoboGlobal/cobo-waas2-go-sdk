@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -21,9 +20,9 @@ var _ MappedNullable = &CreateKeyShareHolderGroupRequest{}
 // CreateKeyShareHolderGroupRequest struct for CreateKeyShareHolderGroupRequest
 type CreateKeyShareHolderGroupRequest struct {
 	KeyShareHolderGroupType KeyShareHolderGroupType `json:"key_share_holder_group_type"`
-	// The number of key share holders in this key share holder group.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - node count\" format), so you can only set `node_count` to 2 or 3.   2. Threshold must be less than or equal to node count. 
-	NodeCount int32 `json:"node_count"`
-	// The number of key share holders required to sign an operation.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - node count\" format), so you can only set `threshold` to 2 or 3.   2. Threshold must be less than or equal to node count. 
+	// The number of key share holders in this key share holder group.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - participants\" format), so you can only set `participants` to 2 or 3.   2. `threshold` must be less than or equal to `participants`. 
+	Participants int32 `json:"participants"`
+	// The number of key share holders required to sign an operation.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \"threshold - participants\" format), so you can only set `threshold` to 2 or 3.   2. `threshold` must be less than or equal to `participants`. 
 	Threshold int32 `json:"threshold"`
 	KeyShareHolders []CreateKeyShareHolder `json:"key_share_holders"`
 }
@@ -34,10 +33,10 @@ type _CreateKeyShareHolderGroupRequest CreateKeyShareHolderGroupRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateKeyShareHolderGroupRequest(keyShareHolderGroupType KeyShareHolderGroupType, nodeCount int32, threshold int32, keyShareHolders []CreateKeyShareHolder) *CreateKeyShareHolderGroupRequest {
+func NewCreateKeyShareHolderGroupRequest(keyShareHolderGroupType KeyShareHolderGroupType, participants int32, threshold int32, keyShareHolders []CreateKeyShareHolder) *CreateKeyShareHolderGroupRequest {
 	this := CreateKeyShareHolderGroupRequest{}
 	this.KeyShareHolderGroupType = keyShareHolderGroupType
-	this.NodeCount = nodeCount
+	this.Participants = participants
 	this.Threshold = threshold
 	this.KeyShareHolders = keyShareHolders
 	return &this
@@ -75,28 +74,28 @@ func (o *CreateKeyShareHolderGroupRequest) SetKeyShareHolderGroupType(v KeyShare
 	o.KeyShareHolderGroupType = v
 }
 
-// GetNodeCount returns the NodeCount field value
-func (o *CreateKeyShareHolderGroupRequest) GetNodeCount() int32 {
+// GetParticipants returns the Participants field value
+func (o *CreateKeyShareHolderGroupRequest) GetParticipants() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.NodeCount
+	return o.Participants
 }
 
-// GetNodeCountOk returns a tuple with the NodeCount field value
+// GetParticipantsOk returns a tuple with the Participants field value
 // and a boolean to check if the value has been set.
-func (o *CreateKeyShareHolderGroupRequest) GetNodeCountOk() (*int32, bool) {
+func (o *CreateKeyShareHolderGroupRequest) GetParticipantsOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.NodeCount, true
+	return &o.Participants, true
 }
 
-// SetNodeCount sets field value
-func (o *CreateKeyShareHolderGroupRequest) SetNodeCount(v int32) {
-	o.NodeCount = v
+// SetParticipants sets field value
+func (o *CreateKeyShareHolderGroupRequest) SetParticipants(v int32) {
+	o.Participants = v
 }
 
 // GetThreshold returns the Threshold field value
@@ -158,7 +157,7 @@ func (o CreateKeyShareHolderGroupRequest) MarshalJSON() ([]byte, error) {
 func (o CreateKeyShareHolderGroupRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["key_share_holder_group_type"] = o.KeyShareHolderGroupType
-	toSerialize["node_count"] = o.NodeCount
+	toSerialize["participants"] = o.Participants
 	toSerialize["threshold"] = o.Threshold
 	toSerialize["key_share_holders"] = o.KeyShareHolders
 	return toSerialize, nil
@@ -170,7 +169,7 @@ func (o *CreateKeyShareHolderGroupRequest) UnmarshalJSON(data []byte) (err error
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"key_share_holder_group_type",
-		"node_count",
+		"participants",
 		"threshold",
 		"key_share_holders",
 	}

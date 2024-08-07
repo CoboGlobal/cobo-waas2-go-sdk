@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +17,7 @@ import (
 // checks if the AssetBalance type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AssetBalance{}
 
-// AssetBalance The data for token balance information.
+// AssetBalance The data for asset balance information.
 type AssetBalance struct {
 	// (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
 	AssetId string `json:"asset_id"`

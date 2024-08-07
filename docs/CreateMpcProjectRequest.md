@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The project name. | 
-**NodeCount** | **int32** | The number of key share holders in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \&quot;threshold - node count\&quot; format), so you can only set &#x60;node_count&#x60; to 2 or 3.   2. Threshold must be less than or equal to node count.  | 
-**Threshold** | **int32** | The number of key share holders required to sign an operation in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \&quot;threshold - node count\&quot; format), so you can only set &#x60;threshold&#x60; to 2 or 3.   2. Threshold must be less than or equal to node count.  | 
+**Participants** | **int32** | The number of key share holders in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \&quot;threshold - participants\&quot; format), so you can only set &#x60;participants&#x60; to 2 or 3.   2. &#x60;threshold&#x60; must be less than or equal to &#x60;participants&#x60;.  | 
+**Threshold** | **int32** | The number of key share holders required to sign an operation in the project.  **Notes:** 1. Currently, the available [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) are 2-2, 2-3, and 3-3 schemes (in the \&quot;threshold - participants\&quot; format), so you can only set &#x60;threshold&#x60; to 2 or 3.   2. &#x60;threshold&#x60; must be less than or equal to &#x60;participants&#x60;.  | 
 
 ## Methods
 
 ### NewCreateMpcProjectRequest
 
-`func NewCreateMpcProjectRequest(name string, nodeCount int32, threshold int32, ) *CreateMpcProjectRequest`
+`func NewCreateMpcProjectRequest(name string, participants int32, threshold int32, ) *CreateMpcProjectRequest`
 
 NewCreateMpcProjectRequest instantiates a new CreateMpcProjectRequest object
 This constructor will assign default values to properties that have it defined,
@@ -47,24 +47,24 @@ and a boolean to check if the value has been set.
 SetName sets Name field to given value.
 
 
-### GetNodeCount
+### GetParticipants
 
-`func (o *CreateMpcProjectRequest) GetNodeCount() int32`
+`func (o *CreateMpcProjectRequest) GetParticipants() int32`
 
-GetNodeCount returns the NodeCount field if non-nil, zero value otherwise.
+GetParticipants returns the Participants field if non-nil, zero value otherwise.
 
-### GetNodeCountOk
+### GetParticipantsOk
 
-`func (o *CreateMpcProjectRequest) GetNodeCountOk() (*int32, bool)`
+`func (o *CreateMpcProjectRequest) GetParticipantsOk() (*int32, bool)`
 
-GetNodeCountOk returns a tuple with the NodeCount field if it's non-nil, zero value otherwise
+GetParticipantsOk returns a tuple with the Participants field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNodeCount
+### SetParticipants
 
-`func (o *CreateMpcProjectRequest) SetNodeCount(v int32)`
+`func (o *CreateMpcProjectRequest) SetParticipants(v int32)`
 
-SetNodeCount sets NodeCount field to given value.
+SetParticipants sets Participants field to given value.
 
 
 ### GetThreshold

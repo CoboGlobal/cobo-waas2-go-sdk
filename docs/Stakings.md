@@ -9,21 +9,21 @@ Name | Type | Description | Notes
 **Address** | **string** | The staker wallet address. | 
 **Amounts** | [**[]AmountDetailsInner**](AmountDetailsInner.md) | The staking amount details. | 
 **Initiator** | Pointer to **string** | The initiator of the stake. | [optional] 
-**UnlockTime** | Pointer to **int64** | The unlock time. | [optional] 
+**UnlockTimestamp** | Pointer to **int64** | The unlock time. | [optional] 
 **UnlockBlockHeight** | Pointer to **int64** | The unlock block height. | [optional] 
 **PoolId** | **string** | The unique pool id. | 
 **TokenId** | **string** | The token id. | 
 **PosChain** | Pointer to **string** | The pos chain of the stake. | [optional] 
 **RewardsInfo** | Pointer to **map[string]interface{}** | The rewards info of the stake. | [optional] 
-**CreatedTime** | **int64** | The time when the stake was created. | 
-**UpdatedTime** | **int64** | The time when the stake was last updated. | 
+**CreatedTimestamp** | **int64** | The time when the stake was created. | 
+**UpdatedTimestamp** | **int64** | The time when the stake was last updated. | 
 **ValidatorInfo** | [**StakingsValidatorInfo**](StakingsValidatorInfo.md) |  | 
 
 ## Methods
 
 ### NewStakings
 
-`func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId string, tokenId string, createdTime int64, updatedTime int64, validatorInfo StakingsValidatorInfo, ) *Stakings`
+`func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId string, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo StakingsValidatorInfo, ) *Stakings`
 
 NewStakings instantiates a new Stakings object
 This constructor will assign default values to properties that have it defined,
@@ -143,30 +143,30 @@ SetInitiator sets Initiator field to given value.
 
 HasInitiator returns a boolean if a field has been set.
 
-### GetUnlockTime
+### GetUnlockTimestamp
 
-`func (o *Stakings) GetUnlockTime() int64`
+`func (o *Stakings) GetUnlockTimestamp() int64`
 
-GetUnlockTime returns the UnlockTime field if non-nil, zero value otherwise.
+GetUnlockTimestamp returns the UnlockTimestamp field if non-nil, zero value otherwise.
 
-### GetUnlockTimeOk
+### GetUnlockTimestampOk
 
-`func (o *Stakings) GetUnlockTimeOk() (*int64, bool)`
+`func (o *Stakings) GetUnlockTimestampOk() (*int64, bool)`
 
-GetUnlockTimeOk returns a tuple with the UnlockTime field if it's non-nil, zero value otherwise
+GetUnlockTimestampOk returns a tuple with the UnlockTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUnlockTime
+### SetUnlockTimestamp
 
-`func (o *Stakings) SetUnlockTime(v int64)`
+`func (o *Stakings) SetUnlockTimestamp(v int64)`
 
-SetUnlockTime sets UnlockTime field to given value.
+SetUnlockTimestamp sets UnlockTimestamp field to given value.
 
-### HasUnlockTime
+### HasUnlockTimestamp
 
-`func (o *Stakings) HasUnlockTime() bool`
+`func (o *Stakings) HasUnlockTimestamp() bool`
 
-HasUnlockTime returns a boolean if a field has been set.
+HasUnlockTimestamp returns a boolean if a field has been set.
 
 ### GetUnlockBlockHeight
 
@@ -283,44 +283,44 @@ SetRewardsInfo sets RewardsInfo field to given value.
 
 HasRewardsInfo returns a boolean if a field has been set.
 
-### GetCreatedTime
+### GetCreatedTimestamp
 
-`func (o *Stakings) GetCreatedTime() int64`
+`func (o *Stakings) GetCreatedTimestamp() int64`
 
-GetCreatedTime returns the CreatedTime field if non-nil, zero value otherwise.
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
-### GetCreatedTimeOk
+### GetCreatedTimestampOk
 
-`func (o *Stakings) GetCreatedTimeOk() (*int64, bool)`
+`func (o *Stakings) GetCreatedTimestampOk() (*int64, bool)`
 
-GetCreatedTimeOk returns a tuple with the CreatedTime field if it's non-nil, zero value otherwise
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreatedTime
+### SetCreatedTimestamp
 
-`func (o *Stakings) SetCreatedTime(v int64)`
+`func (o *Stakings) SetCreatedTimestamp(v int64)`
 
-SetCreatedTime sets CreatedTime field to given value.
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
 
-### GetUpdatedTime
+### GetUpdatedTimestamp
 
-`func (o *Stakings) GetUpdatedTime() int64`
+`func (o *Stakings) GetUpdatedTimestamp() int64`
 
-GetUpdatedTime returns the UpdatedTime field if non-nil, zero value otherwise.
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
 
-### GetUpdatedTimeOk
+### GetUpdatedTimestampOk
 
-`func (o *Stakings) GetUpdatedTimeOk() (*int64, bool)`
+`func (o *Stakings) GetUpdatedTimestampOk() (*int64, bool)`
 
-GetUpdatedTimeOk returns a tuple with the UpdatedTime field if it's non-nil, zero value otherwise
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUpdatedTime
+### SetUpdatedTimestamp
 
-`func (o *Stakings) SetUpdatedTime(v int64)`
+`func (o *Stakings) SetUpdatedTimestamp(v int64)`
 
-SetUpdatedTime sets UpdatedTime field to given value.
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
 
 ### GetValidatorInfo

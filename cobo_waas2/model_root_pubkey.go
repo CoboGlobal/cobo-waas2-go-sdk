@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -19,7 +18,7 @@ var _ MappedNullable = &RootPubkey{}
 // RootPubkey The data for MPC Root Extended Public Key information.
 type RootPubkey struct {
 	// The vault's [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key).
-	Pubkey *string `json:"pubkey,omitempty"`
+	RootPubkey *string `json:"root_pubkey,omitempty"`
 	Curve *CurveType `json:"curve,omitempty"`
 }
 
@@ -40,36 +39,36 @@ func NewRootPubkeyWithDefaults() *RootPubkey {
 	return &this
 }
 
-// GetPubkey returns the Pubkey field value if set, zero value otherwise.
-func (o *RootPubkey) GetPubkey() string {
-	if o == nil || IsNil(o.Pubkey) {
+// GetRootPubkey returns the RootPubkey field value if set, zero value otherwise.
+func (o *RootPubkey) GetRootPubkey() string {
+	if o == nil || IsNil(o.RootPubkey) {
 		var ret string
 		return ret
 	}
-	return *o.Pubkey
+	return *o.RootPubkey
 }
 
-// GetPubkeyOk returns a tuple with the Pubkey field value if set, nil otherwise
+// GetRootPubkeyOk returns a tuple with the RootPubkey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RootPubkey) GetPubkeyOk() (*string, bool) {
-	if o == nil || IsNil(o.Pubkey) {
+func (o *RootPubkey) GetRootPubkeyOk() (*string, bool) {
+	if o == nil || IsNil(o.RootPubkey) {
 		return nil, false
 	}
-	return o.Pubkey, true
+	return o.RootPubkey, true
 }
 
-// HasPubkey returns a boolean if a field has been set.
-func (o *RootPubkey) HasPubkey() bool {
-	if o != nil && !IsNil(o.Pubkey) {
+// HasRootPubkey returns a boolean if a field has been set.
+func (o *RootPubkey) HasRootPubkey() bool {
+	if o != nil && !IsNil(o.RootPubkey) {
 		return true
 	}
 
 	return false
 }
 
-// SetPubkey gets a reference to the given string and assigns it to the Pubkey field.
-func (o *RootPubkey) SetPubkey(v string) {
-	o.Pubkey = &v
+// SetRootPubkey gets a reference to the given string and assigns it to the RootPubkey field.
+func (o *RootPubkey) SetRootPubkey(v string) {
+	o.RootPubkey = &v
 }
 
 // GetCurve returns the Curve field value if set, zero value otherwise.
@@ -114,8 +113,8 @@ func (o RootPubkey) MarshalJSON() ([]byte, error) {
 
 func (o RootPubkey) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Pubkey) {
-		toSerialize["pubkey"] = o.Pubkey
+	if !IsNil(o.RootPubkey) {
+		toSerialize["root_pubkey"] = o.RootPubkey
 	}
 	if !IsNil(o.Curve) {
 		toSerialize["curve"] = o.Curve

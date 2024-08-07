@@ -17,8 +17,8 @@ Name | Type | Description | Notes
 **Timeline** | Pointer to [**[]ActivityTimeline**](ActivityTimeline.md) | The timeline of the activity. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
 **Status** | [**ActivityStatus**](ActivityStatus.md) |  | 
-**CreatedTime** | Pointer to **int64** | The time when the activity was created. | [optional] 
-**UpdatedTime** | Pointer to **int64** | The time when the activity was last updated. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The time when the activity was created. | [optional] 
+**UpdatedTimestamp** | Pointer to **int64** | The time when the activity was last updated. | [optional] 
 
 ## Methods
 
@@ -344,55 +344,55 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
-### GetCreatedTime
+### GetCreatedTimestamp
 
-`func (o *Activity) GetCreatedTime() int64`
+`func (o *Activity) GetCreatedTimestamp() int64`
 
-GetCreatedTime returns the CreatedTime field if non-nil, zero value otherwise.
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
-### GetCreatedTimeOk
+### GetCreatedTimestampOk
 
-`func (o *Activity) GetCreatedTimeOk() (*int64, bool)`
+`func (o *Activity) GetCreatedTimestampOk() (*int64, bool)`
 
-GetCreatedTimeOk returns a tuple with the CreatedTime field if it's non-nil, zero value otherwise
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreatedTime
+### SetCreatedTimestamp
 
-`func (o *Activity) SetCreatedTime(v int64)`
+`func (o *Activity) SetCreatedTimestamp(v int64)`
 
-SetCreatedTime sets CreatedTime field to given value.
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
-### HasCreatedTime
+### HasCreatedTimestamp
 
-`func (o *Activity) HasCreatedTime() bool`
+`func (o *Activity) HasCreatedTimestamp() bool`
 
-HasCreatedTime returns a boolean if a field has been set.
+HasCreatedTimestamp returns a boolean if a field has been set.
 
-### GetUpdatedTime
+### GetUpdatedTimestamp
 
-`func (o *Activity) GetUpdatedTime() int64`
+`func (o *Activity) GetUpdatedTimestamp() int64`
 
-GetUpdatedTime returns the UpdatedTime field if non-nil, zero value otherwise.
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
 
-### GetUpdatedTimeOk
+### GetUpdatedTimestampOk
 
-`func (o *Activity) GetUpdatedTimeOk() (*int64, bool)`
+`func (o *Activity) GetUpdatedTimestampOk() (*int64, bool)`
 
-GetUpdatedTimeOk returns a tuple with the UpdatedTime field if it's non-nil, zero value otherwise
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUpdatedTime
+### SetUpdatedTimestamp
 
-`func (o *Activity) SetUpdatedTime(v int64)`
+`func (o *Activity) SetUpdatedTimestamp(v int64)`
 
-SetUpdatedTime sets UpdatedTime field to given value.
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
-### HasUpdatedTime
+### HasUpdatedTimestamp
 
-`func (o *Activity) HasUpdatedTime() bool`
+`func (o *Activity) HasUpdatedTimestamp() bool`
 
-HasUpdatedTime returns a boolean if a field has been set.
+HasUpdatedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

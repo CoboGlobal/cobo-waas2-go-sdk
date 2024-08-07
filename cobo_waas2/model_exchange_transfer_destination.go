@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +17,7 @@ import (
 // checks if the ExchangeTransferDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ExchangeTransferDestination{}
 
-// ExchangeTransferDestination The information about the transaction destination. An Exchange Wallet (Sub Account) as the transaction destination can only receives token transfers from another Exchange Wallet.
+// ExchangeTransferDestination The information about the transaction destination type `ExchangeWallet`.   An Exchange Wallet (Sub Account) as the transaction destination can only receives token transfers from another Exchange Wallet. 
 type ExchangeTransferDestination struct {
 	DestinationType TransferDestinationType `json:"destination_type"`
 	// The wallet ID.

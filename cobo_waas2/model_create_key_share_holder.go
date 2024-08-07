@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -21,8 +20,10 @@ type CreateKeyShareHolder struct {
 	// Key share holder's name.
 	Name *string `json:"name,omitempty"`
 	Type *KeyShareHolderType `json:"type,omitempty"`
-	// The TSS Node ID.
+	// Key share holder's TSS Node ID.
 	TssNodeId *string `json:"tss_node_id,omitempty"`
+	// Whether the key share holder's TSS Node is a designated transaction signer. - `true`: The TSS Node is a designated transaction signer.  - `false`: The TSS Node is not a designated transaction signer. 
+	Signer *bool `json:"signer,omitempty"`
 }
 
 // NewCreateKeyShareHolder instantiates a new CreateKeyShareHolder object
@@ -138,6 +139,38 @@ func (o *CreateKeyShareHolder) SetTssNodeId(v string) {
 	o.TssNodeId = &v
 }
 
+// GetSigner returns the Signer field value if set, zero value otherwise.
+func (o *CreateKeyShareHolder) GetSigner() bool {
+	if o == nil || IsNil(o.Signer) {
+		var ret bool
+		return ret
+	}
+	return *o.Signer
+}
+
+// GetSignerOk returns a tuple with the Signer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateKeyShareHolder) GetSignerOk() (*bool, bool) {
+	if o == nil || IsNil(o.Signer) {
+		return nil, false
+	}
+	return o.Signer, true
+}
+
+// HasSigner returns a boolean if a field has been set.
+func (o *CreateKeyShareHolder) HasSigner() bool {
+	if o != nil && !IsNil(o.Signer) {
+		return true
+	}
+
+	return false
+}
+
+// SetSigner gets a reference to the given bool and assigns it to the Signer field.
+func (o *CreateKeyShareHolder) SetSigner(v bool) {
+	o.Signer = &v
+}
+
 func (o CreateKeyShareHolder) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +189,9 @@ func (o CreateKeyShareHolder) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TssNodeId) {
 		toSerialize["tss_node_id"] = o.TssNodeId
+	}
+	if !IsNil(o.Signer) {
+		toSerialize["signer"] = o.Signer
 	}
 	return toSerialize, nil
 }

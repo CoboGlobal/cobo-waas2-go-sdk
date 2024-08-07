@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +17,7 @@ import (
 // checks if the TransactionRequestEvmLegacyFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionRequestEvmLegacyFee{}
 
-// TransactionRequestEvmLegacyFee In the legacy fee model, the transaction fee is calculated by multiplying the gas price by the gas units used by the transaction. This can be expressed as: Transaction fee =  (gas price * gas units used).   You can specify the gas limit. If the gas units used exceed the gas limit, the transaction will fail. 
+// TransactionRequestEvmLegacyFee In the legacy fee model, the transaction fee is calculated by multiplying the gas price by the gas units used by the transaction. This can be expressed as: Transaction fee =  (gas price * gas units used).   You can specify the gas limit to limit the gas units used in the transaction. 
 type TransactionRequestEvmLegacyFee struct {
 	// The gas price, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions per gas unit used.
 	GasPrice string `json:"gas_price"`

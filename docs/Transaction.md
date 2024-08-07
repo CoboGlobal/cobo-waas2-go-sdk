@@ -30,14 +30,14 @@ Name | Type | Description | Notes
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description for your transaction. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction is a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).  - &#x60;true&#x60;: The transaction is a Loop transfer. - &#x60;false&#x60;: The transaction is not a Loop transfer.  | [optional] 
-**CreatedTime** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
-**UpdatedTime** | **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | 
+**CreatedTimestamp** | Pointer to **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 
 ### NewTransaction
 
-`func NewTransaction(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTime int64, updatedTime int64, ) *Transaction`
+`func NewTransaction(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, ) *Transaction`
 
 NewTransaction instantiates a new Transaction object
 This constructor will assign default values to properties that have it defined,
@@ -672,45 +672,55 @@ SetIsLoop sets IsLoop field to given value.
 
 HasIsLoop returns a boolean if a field has been set.
 
-### GetCreatedTime
+### GetCreatedTimestamp
 
-`func (o *Transaction) GetCreatedTime() int64`
+`func (o *Transaction) GetCreatedTimestamp() int64`
 
-GetCreatedTime returns the CreatedTime field if non-nil, zero value otherwise.
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
-### GetCreatedTimeOk
+### GetCreatedTimestampOk
 
-`func (o *Transaction) GetCreatedTimeOk() (*int64, bool)`
+`func (o *Transaction) GetCreatedTimestampOk() (*int64, bool)`
 
-GetCreatedTimeOk returns a tuple with the CreatedTime field if it's non-nil, zero value otherwise
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreatedTime
+### SetCreatedTimestamp
 
-`func (o *Transaction) SetCreatedTime(v int64)`
+`func (o *Transaction) SetCreatedTimestamp(v int64)`
 
-SetCreatedTime sets CreatedTime field to given value.
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
+### HasCreatedTimestamp
 
-### GetUpdatedTime
+`func (o *Transaction) HasCreatedTimestamp() bool`
 
-`func (o *Transaction) GetUpdatedTime() int64`
+HasCreatedTimestamp returns a boolean if a field has been set.
 
-GetUpdatedTime returns the UpdatedTime field if non-nil, zero value otherwise.
+### GetUpdatedTimestamp
 
-### GetUpdatedTimeOk
+`func (o *Transaction) GetUpdatedTimestamp() int64`
 
-`func (o *Transaction) GetUpdatedTimeOk() (*int64, bool)`
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
 
-GetUpdatedTimeOk returns a tuple with the UpdatedTime field if it's non-nil, zero value otherwise
+### GetUpdatedTimestampOk
+
+`func (o *Transaction) GetUpdatedTimestampOk() (*int64, bool)`
+
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUpdatedTime
+### SetUpdatedTimestamp
 
-`func (o *Transaction) SetUpdatedTime(v int64)`
+`func (o *Transaction) SetUpdatedTimestamp(v int64)`
 
-SetUpdatedTime sets UpdatedTime field to given value.
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
+### HasUpdatedTimestamp
+
+`func (o *Transaction) HasUpdatedTimestamp() bool`
+
+HasUpdatedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

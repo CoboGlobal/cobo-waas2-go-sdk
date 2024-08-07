@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -32,8 +31,7 @@ type ExchangeWalletInfo struct {
 	Apikey string `json:"apikey"`
 	ExchangeId ExchangeId `json:"exchange_id"`
 	// The wallet ID of the Main Account associated with the Sub Account. This property is returned only if you are creating or querying an Exchange Wallet (Sub Account).
-	ParentWalletId *string `json:"parent_wallet_id,omitempty"`
-	SubAccounts []ExchangeWalletInfoAllOfSubAccounts `json:"sub_accounts,omitempty"`
+	MainWalletId *string `json:"main_wallet_id,omitempty"`
 }
 
 type _ExchangeWalletInfo ExchangeWalletInfo
@@ -230,68 +228,36 @@ func (o *ExchangeWalletInfo) SetExchangeId(v ExchangeId) {
 	o.ExchangeId = v
 }
 
-// GetParentWalletId returns the ParentWalletId field value if set, zero value otherwise.
-func (o *ExchangeWalletInfo) GetParentWalletId() string {
-	if o == nil || IsNil(o.ParentWalletId) {
+// GetMainWalletId returns the MainWalletId field value if set, zero value otherwise.
+func (o *ExchangeWalletInfo) GetMainWalletId() string {
+	if o == nil || IsNil(o.MainWalletId) {
 		var ret string
 		return ret
 	}
-	return *o.ParentWalletId
+	return *o.MainWalletId
 }
 
-// GetParentWalletIdOk returns a tuple with the ParentWalletId field value if set, nil otherwise
+// GetMainWalletIdOk returns a tuple with the MainWalletId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ExchangeWalletInfo) GetParentWalletIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ParentWalletId) {
+func (o *ExchangeWalletInfo) GetMainWalletIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MainWalletId) {
 		return nil, false
 	}
-	return o.ParentWalletId, true
+	return o.MainWalletId, true
 }
 
-// HasParentWalletId returns a boolean if a field has been set.
-func (o *ExchangeWalletInfo) HasParentWalletId() bool {
-	if o != nil && !IsNil(o.ParentWalletId) {
+// HasMainWalletId returns a boolean if a field has been set.
+func (o *ExchangeWalletInfo) HasMainWalletId() bool {
+	if o != nil && !IsNil(o.MainWalletId) {
 		return true
 	}
 
 	return false
 }
 
-// SetParentWalletId gets a reference to the given string and assigns it to the ParentWalletId field.
-func (o *ExchangeWalletInfo) SetParentWalletId(v string) {
-	o.ParentWalletId = &v
-}
-
-// GetSubAccounts returns the SubAccounts field value if set, zero value otherwise.
-func (o *ExchangeWalletInfo) GetSubAccounts() []ExchangeWalletInfoAllOfSubAccounts {
-	if o == nil || IsNil(o.SubAccounts) {
-		var ret []ExchangeWalletInfoAllOfSubAccounts
-		return ret
-	}
-	return o.SubAccounts
-}
-
-// GetSubAccountsOk returns a tuple with the SubAccounts field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ExchangeWalletInfo) GetSubAccountsOk() ([]ExchangeWalletInfoAllOfSubAccounts, bool) {
-	if o == nil || IsNil(o.SubAccounts) {
-		return nil, false
-	}
-	return o.SubAccounts, true
-}
-
-// HasSubAccounts returns a boolean if a field has been set.
-func (o *ExchangeWalletInfo) HasSubAccounts() bool {
-	if o != nil && !IsNil(o.SubAccounts) {
-		return true
-	}
-
-	return false
-}
-
-// SetSubAccounts gets a reference to the given []ExchangeWalletInfoAllOfSubAccounts and assigns it to the SubAccounts field.
-func (o *ExchangeWalletInfo) SetSubAccounts(v []ExchangeWalletInfoAllOfSubAccounts) {
-	o.SubAccounts = v
+// SetMainWalletId gets a reference to the given string and assigns it to the MainWalletId field.
+func (o *ExchangeWalletInfo) SetMainWalletId(v string) {
+	o.MainWalletId = &v
 }
 
 func (o ExchangeWalletInfo) MarshalJSON() ([]byte, error) {
@@ -311,11 +277,8 @@ func (o ExchangeWalletInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize["org_id"] = o.OrgId
 	toSerialize["apikey"] = o.Apikey
 	toSerialize["exchange_id"] = o.ExchangeId
-	if !IsNil(o.ParentWalletId) {
-		toSerialize["parent_wallet_id"] = o.ParentWalletId
-	}
-	if !IsNil(o.SubAccounts) {
-		toSerialize["sub_accounts"] = o.SubAccounts
+	if !IsNil(o.MainWalletId) {
+		toSerialize["main_wallet_id"] = o.MainWalletId
 	}
 	return toSerialize, nil
 }

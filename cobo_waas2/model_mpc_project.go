@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -25,7 +24,7 @@ type MPCProject struct {
 	// The project name.
 	Name *string `json:"name,omitempty"`
 	// The number of key share holders in the project.
-	NodeCount *int32 `json:"node_count,omitempty"`
+	Participants *int32 `json:"participants,omitempty"`
 	// The number of key share holders required to sign an operation in the project.
 	Threshold *int32 `json:"threshold,omitempty"`
 	// The project's creation time in Unix timestamp format, measured in milliseconds.
@@ -145,36 +144,36 @@ func (o *MPCProject) SetName(v string) {
 	o.Name = &v
 }
 
-// GetNodeCount returns the NodeCount field value if set, zero value otherwise.
-func (o *MPCProject) GetNodeCount() int32 {
-	if o == nil || IsNil(o.NodeCount) {
+// GetParticipants returns the Participants field value if set, zero value otherwise.
+func (o *MPCProject) GetParticipants() int32 {
+	if o == nil || IsNil(o.Participants) {
 		var ret int32
 		return ret
 	}
-	return *o.NodeCount
+	return *o.Participants
 }
 
-// GetNodeCountOk returns a tuple with the NodeCount field value if set, nil otherwise
+// GetParticipantsOk returns a tuple with the Participants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MPCProject) GetNodeCountOk() (*int32, bool) {
-	if o == nil || IsNil(o.NodeCount) {
+func (o *MPCProject) GetParticipantsOk() (*int32, bool) {
+	if o == nil || IsNil(o.Participants) {
 		return nil, false
 	}
-	return o.NodeCount, true
+	return o.Participants, true
 }
 
-// HasNodeCount returns a boolean if a field has been set.
-func (o *MPCProject) HasNodeCount() bool {
-	if o != nil && !IsNil(o.NodeCount) {
+// HasParticipants returns a boolean if a field has been set.
+func (o *MPCProject) HasParticipants() bool {
+	if o != nil && !IsNil(o.Participants) {
 		return true
 	}
 
 	return false
 }
 
-// SetNodeCount gets a reference to the given int32 and assigns it to the NodeCount field.
-func (o *MPCProject) SetNodeCount(v int32) {
-	o.NodeCount = &v
+// SetParticipants gets a reference to the given int32 and assigns it to the Participants field.
+func (o *MPCProject) SetParticipants(v int32) {
+	o.Participants = &v
 }
 
 // GetThreshold returns the Threshold field value if set, zero value otherwise.
@@ -260,8 +259,8 @@ func (o MPCProject) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if !IsNil(o.NodeCount) {
-		toSerialize["node_count"] = o.NodeCount
+	if !IsNil(o.Participants) {
+		toSerialize["participants"] = o.Participants
 	}
 	if !IsNil(o.Threshold) {
 		toSerialize["threshold"] = o.Threshold

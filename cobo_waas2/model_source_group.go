@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -20,9 +19,9 @@ var _ MappedNullable = &SourceGroup{}
 
 // SourceGroup The source key share holder group.  **Note:** `source_key_share_holder_group` is used only when `type` is set to either `KeyGenfromKeyGroup` or `Recovery`. This is to specify the key share holder group to be used as the source key share holder group to create key shares for the `target_key_share_holder_group`. 
 type SourceGroup struct {
-	// The ID of the Source Group.
+	// The source key share holder group ID.
 	KeyShareHolderGroupId string `json:"key_share_holder_group_id"`
-	// The TSS Node IDs participating in creating a new key share holder group when `type` is set to either `KeyGenFromKeyGroup` or `Recovery`.   **Note:** In any [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) such as the 2-2, 2-3, and 3-3 schemes (in the \"threshold - node count\" format), for `tss_node_ids`, you only need to fill in 1 Cobo TSS Node ID and enough non-Cobo TSS Node IDs to satisfy the number of approvers specified in `threshold`. To obtain the Cobo TSS Node ID, run [List all Cobo key share holders](/v2/api-references/wallets--mpc-wallets/list-all-cobo-key-share-holders). 
+	// The TSS Node IDs participating in creating a new key share holder group when `type` is set to either `KeyGenFromKeyGroup` or `Recovery`.   **Note:** In any [Threshold Signature Schemes (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss) such as the 2-2, 2-3, and 3-3 schemes (in the \"threshold - participants\" format), for `tss_node_ids`, you only need to fill in 1 Cobo TSS Node ID and enough non-Cobo TSS Node IDs to satisfy the number of approvers specified in `threshold`. To obtain the Cobo TSS Node ID, run [List all Cobo key share holders](/v2/api-references/wallets--mpc-wallets/list-all-cobo-key-share-holders). 
 	TssNodeIds []string `json:"tss_node_ids,omitempty"`
 }
 

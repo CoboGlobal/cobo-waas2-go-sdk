@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **BlockNumber** | Pointer to **int64** | The block number. | [optional] 
-**BlockTime** | Pointer to **int64** | The time when the block was created, in Unix timestamp format, measured in milliseconds. | [optional] 
+**BlockTimestamp** | Pointer to **int64** | The time when the block was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **BlockHash** | Pointer to **string** | The block hash. | [optional] 
 
 ## Methods
@@ -52,30 +52,30 @@ SetBlockNumber sets BlockNumber field to given value.
 
 HasBlockNumber returns a boolean if a field has been set.
 
-### GetBlockTime
+### GetBlockTimestamp
 
-`func (o *TransactionBlockInfo) GetBlockTime() int64`
+`func (o *TransactionBlockInfo) GetBlockTimestamp() int64`
 
-GetBlockTime returns the BlockTime field if non-nil, zero value otherwise.
+GetBlockTimestamp returns the BlockTimestamp field if non-nil, zero value otherwise.
 
-### GetBlockTimeOk
+### GetBlockTimestampOk
 
-`func (o *TransactionBlockInfo) GetBlockTimeOk() (*int64, bool)`
+`func (o *TransactionBlockInfo) GetBlockTimestampOk() (*int64, bool)`
 
-GetBlockTimeOk returns a tuple with the BlockTime field if it's non-nil, zero value otherwise
+GetBlockTimestampOk returns a tuple with the BlockTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetBlockTime
+### SetBlockTimestamp
 
-`func (o *TransactionBlockInfo) SetBlockTime(v int64)`
+`func (o *TransactionBlockInfo) SetBlockTimestamp(v int64)`
 
-SetBlockTime sets BlockTime field to given value.
+SetBlockTimestamp sets BlockTimestamp field to given value.
 
-### HasBlockTime
+### HasBlockTimestamp
 
-`func (o *TransactionBlockInfo) HasBlockTime() bool`
+`func (o *TransactionBlockInfo) HasBlockTimestamp() bool`
 
-HasBlockTime returns a boolean if a field has been set.
+HasBlockTimestamp returns a boolean if a field has been set.
 
 ### GetBlockHash
 

@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -18,7 +17,7 @@ import (
 // checks if the MpcTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MpcTransferSource{}
 
-// MpcTransferSource The information about the transaction source. If you specify both the `address` or `included_utxos` properties, the specified included UTXOs must belong to the address.
+// MpcTransferSource The information about the transaction source types `Org-Controlled` and `User-Controlled`.   If you specify both the `address` or `included_utxos` properties, the specified included UTXOs must belong to the address. 
 type MpcTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.

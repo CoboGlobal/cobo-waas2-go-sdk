@@ -6,7 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | Key share holder&#39;s name. | [optional] 
 **Type** | Pointer to [**KeyShareHolderType**](KeyShareHolderType.md) |  | [optional] 
-**TssNodeId** | Pointer to **string** | The TSS Node ID. | [optional] 
+**TssNodeId** | Pointer to **string** | Key share holder&#39;s TSS Node ID. | [optional] 
+**Signer** | Pointer to **bool** | Whether the key share holder&#39;s TSS Node is a designated transaction signer. - &#x60;true&#x60;: The TSS Node is a designated transaction signer.  - &#x60;false&#x60;: The TSS Node is not a designated transaction signer.  | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetTssNodeId sets TssNodeId field to given value.
 `func (o *CreateKeyShareHolder) HasTssNodeId() bool`
 
 HasTssNodeId returns a boolean if a field has been set.
+
+### GetSigner
+
+`func (o *CreateKeyShareHolder) GetSigner() bool`
+
+GetSigner returns the Signer field if non-nil, zero value otherwise.
+
+### GetSignerOk
+
+`func (o *CreateKeyShareHolder) GetSignerOk() (*bool, bool)`
+
+GetSignerOk returns a tuple with the Signer field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSigner
+
+`func (o *CreateKeyShareHolder) SetSigner(v bool)`
+
+SetSigner sets Signer field to given value.
+
+### HasSigner
+
+`func (o *CreateKeyShareHolder) HasSigner() bool`
+
+HasSigner returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

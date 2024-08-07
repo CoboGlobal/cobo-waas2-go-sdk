@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | Pointer to **string** | The project ID. | [optional] 
 **OrgId** | Pointer to **string** | The [organization](https://manuals.cobo.com/en/portal/organization/introduction) ID. | [optional] 
 **Name** | Pointer to **string** | The project name. | [optional] 
-**NodeCount** | Pointer to **int32** | The number of key share holders in the project. | [optional] 
+**Participants** | Pointer to **int32** | The number of key share holders in the project. | [optional] 
 **Threshold** | Pointer to **int32** | The number of key share holders required to sign an operation in the project. | [optional] 
 **CreateTimestamp** | Pointer to **int64** | The project&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 
@@ -105,30 +105,30 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
-### GetNodeCount
+### GetParticipants
 
-`func (o *MPCProject) GetNodeCount() int32`
+`func (o *MPCProject) GetParticipants() int32`
 
-GetNodeCount returns the NodeCount field if non-nil, zero value otherwise.
+GetParticipants returns the Participants field if non-nil, zero value otherwise.
 
-### GetNodeCountOk
+### GetParticipantsOk
 
-`func (o *MPCProject) GetNodeCountOk() (*int32, bool)`
+`func (o *MPCProject) GetParticipantsOk() (*int32, bool)`
 
-GetNodeCountOk returns a tuple with the NodeCount field if it's non-nil, zero value otherwise
+GetParticipantsOk returns a tuple with the Participants field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNodeCount
+### SetParticipants
 
-`func (o *MPCProject) SetNodeCount(v int32)`
+`func (o *MPCProject) SetParticipants(v int32)`
 
-SetNodeCount sets NodeCount field to given value.
+SetParticipants sets Participants field to given value.
 
-### HasNodeCount
+### HasParticipants
 
-`func (o *MPCProject) HasNodeCount() bool`
+`func (o *MPCProject) HasParticipants() bool`
 
-HasNodeCount returns a boolean if a field has been set.
+HasParticipants returns a boolean if a field has been set.
 
 ### GetThreshold
 

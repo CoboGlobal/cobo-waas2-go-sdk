@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -24,12 +23,12 @@ type KeyShareHolderGroup struct {
 	TssKeyShareGroups []TSSGroups `json:"tss_key_share_groups,omitempty"`
 	KeyShareHolders []KeyShareHolder `json:"key_share_holders,omitempty"`
 	// The number of key share holders in this key share holder group.
-	NodeCount *int32 `json:"node_count,omitempty"`
+	Participants *int32 `json:"participants,omitempty"`
 	// The number of key share holders required to approve each operation in this key share holder group.
 	Threshold *int32 `json:"threshold,omitempty"`
 	Status *KeyShareHolderGroupStatus `json:"status,omitempty"`
 	// The key share holder group's creation time in Unix timestamp format, measured in milliseconds.
-	CreateTimestamp *int64 `json:"create_timestamp,omitempty"`
+	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 }
 
 // NewKeyShareHolderGroup instantiates a new KeyShareHolderGroup object
@@ -177,36 +176,36 @@ func (o *KeyShareHolderGroup) SetKeyShareHolders(v []KeyShareHolder) {
 	o.KeyShareHolders = v
 }
 
-// GetNodeCount returns the NodeCount field value if set, zero value otherwise.
-func (o *KeyShareHolderGroup) GetNodeCount() int32 {
-	if o == nil || IsNil(o.NodeCount) {
+// GetParticipants returns the Participants field value if set, zero value otherwise.
+func (o *KeyShareHolderGroup) GetParticipants() int32 {
+	if o == nil || IsNil(o.Participants) {
 		var ret int32
 		return ret
 	}
-	return *o.NodeCount
+	return *o.Participants
 }
 
-// GetNodeCountOk returns a tuple with the NodeCount field value if set, nil otherwise
+// GetParticipantsOk returns a tuple with the Participants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *KeyShareHolderGroup) GetNodeCountOk() (*int32, bool) {
-	if o == nil || IsNil(o.NodeCount) {
+func (o *KeyShareHolderGroup) GetParticipantsOk() (*int32, bool) {
+	if o == nil || IsNil(o.Participants) {
 		return nil, false
 	}
-	return o.NodeCount, true
+	return o.Participants, true
 }
 
-// HasNodeCount returns a boolean if a field has been set.
-func (o *KeyShareHolderGroup) HasNodeCount() bool {
-	if o != nil && !IsNil(o.NodeCount) {
+// HasParticipants returns a boolean if a field has been set.
+func (o *KeyShareHolderGroup) HasParticipants() bool {
+	if o != nil && !IsNil(o.Participants) {
 		return true
 	}
 
 	return false
 }
 
-// SetNodeCount gets a reference to the given int32 and assigns it to the NodeCount field.
-func (o *KeyShareHolderGroup) SetNodeCount(v int32) {
-	o.NodeCount = &v
+// SetParticipants gets a reference to the given int32 and assigns it to the Participants field.
+func (o *KeyShareHolderGroup) SetParticipants(v int32) {
+	o.Participants = &v
 }
 
 // GetThreshold returns the Threshold field value if set, zero value otherwise.
@@ -273,36 +272,36 @@ func (o *KeyShareHolderGroup) SetStatus(v KeyShareHolderGroupStatus) {
 	o.Status = &v
 }
 
-// GetCreateTimestamp returns the CreateTimestamp field value if set, zero value otherwise.
-func (o *KeyShareHolderGroup) GetCreateTimestamp() int64 {
-	if o == nil || IsNil(o.CreateTimestamp) {
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *KeyShareHolderGroup) GetCreatedTimestamp() int64 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.CreateTimestamp
+	return *o.CreatedTimestamp
 }
 
-// GetCreateTimestampOk returns a tuple with the CreateTimestamp field value if set, nil otherwise
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *KeyShareHolderGroup) GetCreateTimestampOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreateTimestamp) {
+func (o *KeyShareHolderGroup) GetCreatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		return nil, false
 	}
-	return o.CreateTimestamp, true
+	return o.CreatedTimestamp, true
 }
 
-// HasCreateTimestamp returns a boolean if a field has been set.
-func (o *KeyShareHolderGroup) HasCreateTimestamp() bool {
-	if o != nil && !IsNil(o.CreateTimestamp) {
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *KeyShareHolderGroup) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreateTimestamp gets a reference to the given int64 and assigns it to the CreateTimestamp field.
-func (o *KeyShareHolderGroup) SetCreateTimestamp(v int64) {
-	o.CreateTimestamp = &v
+// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+func (o *KeyShareHolderGroup) SetCreatedTimestamp(v int64) {
+	o.CreatedTimestamp = &v
 }
 
 func (o KeyShareHolderGroup) MarshalJSON() ([]byte, error) {
@@ -327,8 +326,8 @@ func (o KeyShareHolderGroup) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.KeyShareHolders) {
 		toSerialize["key_share_holders"] = o.KeyShareHolders
 	}
-	if !IsNil(o.NodeCount) {
-		toSerialize["node_count"] = o.NodeCount
+	if !IsNil(o.Participants) {
+		toSerialize["participants"] = o.Participants
 	}
 	if !IsNil(o.Threshold) {
 		toSerialize["threshold"] = o.Threshold
@@ -336,8 +335,8 @@ func (o KeyShareHolderGroup) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
-	if !IsNil(o.CreateTimestamp) {
-		toSerialize["create_timestamp"] = o.CreateTimestamp
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}
 	return toSerialize, nil
 }

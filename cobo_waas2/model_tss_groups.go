@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -21,6 +20,8 @@ type TSSGroups struct {
 	// The TSS key share group ID.
 	TssKeyShareGroupId *string `json:"tss_key_share_group_id,omitempty"`
 	Curve *CurveType `json:"curve,omitempty"`
+	// The vault's [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key).
+	RootPubkey *string `json:"root_pubkey,omitempty"`
 }
 
 // NewTSSGroups instantiates a new TSSGroups object
@@ -104,6 +105,38 @@ func (o *TSSGroups) SetCurve(v CurveType) {
 	o.Curve = &v
 }
 
+// GetRootPubkey returns the RootPubkey field value if set, zero value otherwise.
+func (o *TSSGroups) GetRootPubkey() string {
+	if o == nil || IsNil(o.RootPubkey) {
+		var ret string
+		return ret
+	}
+	return *o.RootPubkey
+}
+
+// GetRootPubkeyOk returns a tuple with the RootPubkey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TSSGroups) GetRootPubkeyOk() (*string, bool) {
+	if o == nil || IsNil(o.RootPubkey) {
+		return nil, false
+	}
+	return o.RootPubkey, true
+}
+
+// HasRootPubkey returns a boolean if a field has been set.
+func (o *TSSGroups) HasRootPubkey() bool {
+	if o != nil && !IsNil(o.RootPubkey) {
+		return true
+	}
+
+	return false
+}
+
+// SetRootPubkey gets a reference to the given string and assigns it to the RootPubkey field.
+func (o *TSSGroups) SetRootPubkey(v string) {
+	o.RootPubkey = &v
+}
+
 func (o TSSGroups) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -119,6 +152,9 @@ func (o TSSGroups) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Curve) {
 		toSerialize["curve"] = o.Curve
+	}
+	if !IsNil(o.RootPubkey) {
+		toSerialize["root_pubkey"] = o.RootPubkey
 	}
 	return toSerialize, nil
 }

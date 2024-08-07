@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Status** | Pointer to [**TransactionStatus**](TransactionStatus.md) |  | [optional] 
-**Finished** | Pointer to **bool** | Whether the transaction status is completed: - &#x60;true&#x60;: The transaction status is completed. - &#x60;false&#x60;: The transaction is currently in the status.  | [optional] 
-**FinishedTime** | Pointer to **int64** | The time when the transaction status is completed in Unix timestamp format, measured in milliseconds. | [optional] 
+**Finished** | Pointer to **bool** | Whether the transaction status is completed:   - &#x60;true&#x60;: The transaction status is completed.   - &#x60;false&#x60;: The transaction is currently in the status.  | [optional] 
+**FinishedTimestamp** | Pointer to **int64** | The time when the transaction status is completed in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 
@@ -77,30 +77,30 @@ SetFinished sets Finished field to given value.
 
 HasFinished returns a boolean if a field has been set.
 
-### GetFinishedTime
+### GetFinishedTimestamp
 
-`func (o *TransactionTimeline) GetFinishedTime() int64`
+`func (o *TransactionTimeline) GetFinishedTimestamp() int64`
 
-GetFinishedTime returns the FinishedTime field if non-nil, zero value otherwise.
+GetFinishedTimestamp returns the FinishedTimestamp field if non-nil, zero value otherwise.
 
-### GetFinishedTimeOk
+### GetFinishedTimestampOk
 
-`func (o *TransactionTimeline) GetFinishedTimeOk() (*int64, bool)`
+`func (o *TransactionTimeline) GetFinishedTimestampOk() (*int64, bool)`
 
-GetFinishedTimeOk returns a tuple with the FinishedTime field if it's non-nil, zero value otherwise
+GetFinishedTimestampOk returns a tuple with the FinishedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFinishedTime
+### SetFinishedTimestamp
 
-`func (o *TransactionTimeline) SetFinishedTime(v int64)`
+`func (o *TransactionTimeline) SetFinishedTimestamp(v int64)`
 
-SetFinishedTime sets FinishedTime field to given value.
+SetFinishedTimestamp sets FinishedTimestamp field to given value.
 
-### HasFinishedTime
+### HasFinishedTimestamp
 
-`func (o *TransactionTimeline) HasFinishedTime() bool`
+`func (o *TransactionTimeline) HasFinishedTimestamp() bool`
 
-HasFinishedTime returns a boolean if a field has been set.
+HasFinishedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

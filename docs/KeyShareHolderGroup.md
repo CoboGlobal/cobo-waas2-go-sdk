@@ -8,10 +8,10 @@ Name | Type | Description | Notes
 **Type** | Pointer to [**KeyShareHolderGroupType**](KeyShareHolderGroupType.md) |  | [optional] 
 **TssKeyShareGroups** | Pointer to [**[]TSSGroups**](TSSGroups.md) |  | [optional] 
 **KeyShareHolders** | Pointer to [**[]KeyShareHolder**](KeyShareHolder.md) |  | [optional] 
-**NodeCount** | Pointer to **int32** | The number of key share holders in this key share holder group. | [optional] 
+**Participants** | Pointer to **int32** | The number of key share holders in this key share holder group. | [optional] 
 **Threshold** | Pointer to **int32** | The number of key share holders required to approve each operation in this key share holder group. | [optional] 
 **Status** | Pointer to [**KeyShareHolderGroupStatus**](KeyShareHolderGroupStatus.md) |  | [optional] 
-**CreateTimestamp** | Pointer to **int64** | The key share holder group&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The key share holder group&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 
@@ -132,30 +132,30 @@ SetKeyShareHolders sets KeyShareHolders field to given value.
 
 HasKeyShareHolders returns a boolean if a field has been set.
 
-### GetNodeCount
+### GetParticipants
 
-`func (o *KeyShareHolderGroup) GetNodeCount() int32`
+`func (o *KeyShareHolderGroup) GetParticipants() int32`
 
-GetNodeCount returns the NodeCount field if non-nil, zero value otherwise.
+GetParticipants returns the Participants field if non-nil, zero value otherwise.
 
-### GetNodeCountOk
+### GetParticipantsOk
 
-`func (o *KeyShareHolderGroup) GetNodeCountOk() (*int32, bool)`
+`func (o *KeyShareHolderGroup) GetParticipantsOk() (*int32, bool)`
 
-GetNodeCountOk returns a tuple with the NodeCount field if it's non-nil, zero value otherwise
+GetParticipantsOk returns a tuple with the Participants field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNodeCount
+### SetParticipants
 
-`func (o *KeyShareHolderGroup) SetNodeCount(v int32)`
+`func (o *KeyShareHolderGroup) SetParticipants(v int32)`
 
-SetNodeCount sets NodeCount field to given value.
+SetParticipants sets Participants field to given value.
 
-### HasNodeCount
+### HasParticipants
 
-`func (o *KeyShareHolderGroup) HasNodeCount() bool`
+`func (o *KeyShareHolderGroup) HasParticipants() bool`
 
-HasNodeCount returns a boolean if a field has been set.
+HasParticipants returns a boolean if a field has been set.
 
 ### GetThreshold
 
@@ -207,30 +207,30 @@ SetStatus sets Status field to given value.
 
 HasStatus returns a boolean if a field has been set.
 
-### GetCreateTimestamp
+### GetCreatedTimestamp
 
-`func (o *KeyShareHolderGroup) GetCreateTimestamp() int64`
+`func (o *KeyShareHolderGroup) GetCreatedTimestamp() int64`
 
-GetCreateTimestamp returns the CreateTimestamp field if non-nil, zero value otherwise.
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
-### GetCreateTimestampOk
+### GetCreatedTimestampOk
 
-`func (o *KeyShareHolderGroup) GetCreateTimestampOk() (*int64, bool)`
+`func (o *KeyShareHolderGroup) GetCreatedTimestampOk() (*int64, bool)`
 
-GetCreateTimestampOk returns a tuple with the CreateTimestamp field if it's non-nil, zero value otherwise
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreateTimestamp
+### SetCreatedTimestamp
 
-`func (o *KeyShareHolderGroup) SetCreateTimestamp(v int64)`
+`func (o *KeyShareHolderGroup) SetCreatedTimestamp(v int64)`
 
-SetCreateTimestamp sets CreateTimestamp field to given value.
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
-### HasCreateTimestamp
+### HasCreatedTimestamp
 
-`func (o *KeyShareHolderGroup) HasCreateTimestamp() bool`
+`func (o *KeyShareHolderGroup) HasCreatedTimestamp() bool`
 
-HasCreateTimestamp returns a boolean if a field has been set.
+HasCreatedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

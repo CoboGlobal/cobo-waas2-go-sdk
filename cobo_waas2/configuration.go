@@ -1,7 +1,6 @@
 /*
 Cobo Wallet as a Service 2.0
 
-API version: 1.0.0
 Contact: support@cobo.com
 */
 
@@ -81,7 +80,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "cobo-waas2-go-sdk/1.0.1",
+		UserAgent:        "cobo-waas2-go-sdk/1.1.0",
 		Debug:            false,
 		Log:              &DefaultLogger{},
 		Servers:          ServerConfigurations{

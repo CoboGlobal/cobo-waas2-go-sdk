@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TssKeyShareGroupId** | Pointer to **string** | The TSS key share group ID. | [optional] 
 **Curve** | Pointer to [**CurveType**](CurveType.md) |  | [optional] 
+**RootPubkey** | Pointer to **string** | The vault&#39;s [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key). | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetCurve sets Curve field to given value.
 `func (o *TSSGroups) HasCurve() bool`
 
 HasCurve returns a boolean if a field has been set.
+
+### GetRootPubkey
+
+`func (o *TSSGroups) GetRootPubkey() string`
+
+GetRootPubkey returns the RootPubkey field if non-nil, zero value otherwise.
+
+### GetRootPubkeyOk
+
+`func (o *TSSGroups) GetRootPubkeyOk() (*string, bool)`
+
+GetRootPubkeyOk returns a tuple with the RootPubkey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRootPubkey
+
+`func (o *TSSGroups) SetRootPubkey(v string)`
+
+SetRootPubkey sets RootPubkey field to given value.
+
+### HasRootPubkey
+
+`func (o *TSSGroups) HasRootPubkey() bool`
+
+HasRootPubkey returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
