@@ -5,7 +5,7 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ListAssetBalancesForExchangeWallet**](WalletsExchangeWalletAPI.md#ListAssetBalancesForExchangeWallet) | **Get** /wallets/{wallet_id}/exchanges/assets | List asset balances
-[**ListExchanges**](WalletsExchangeWalletAPI.md#ListExchanges) | **Get** /wallets/exchanges/settings | List supported exchanges
+[**ListExchanges**](WalletsExchangeWalletAPI.md#ListExchanges) | **Get** /wallets/exchanges | List supported exchanges
 [**ListSupportedAssetsForExchange**](WalletsExchangeWalletAPI.md#ListSupportedAssetsForExchange) | **Get** /wallets/exchanges/{exchange_id}/assets | List supported assets
 [**ListSupportedChainsForExchange**](WalletsExchangeWalletAPI.md#ListSupportedChainsForExchange) | **Get** /wallets/exchanges/{exchange_id}/assets/{asset_id}/chains | List supported chains
 

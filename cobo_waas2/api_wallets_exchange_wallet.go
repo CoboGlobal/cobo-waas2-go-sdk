@@ -238,7 +238,7 @@ func (a *WalletsExchangeWalletAPIService) ListExchangesExecute(r ApiListExchange
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/wallets/exchanges/settings"
+	localVarPath := localBasePath + "/wallets/exchanges"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
