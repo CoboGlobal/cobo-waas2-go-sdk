@@ -124,7 +124,7 @@ Class | Method | HTTP request | Description
 *WalletsAPI* | [**UnlockUtxos**](docs/WalletsAPI.md#unlockutxos) | **Post** /wallets/{wallet_id}/utxos/unlock | Unlock UTXOs
 *WalletsAPI* | [**UpdateWalletById**](docs/WalletsAPI.md#updatewalletbyid) | **Put** /wallets/{wallet_id} | Update wallet
 *WalletsExchangeWalletAPI* | [**ListAssetBalancesForExchangeWallet**](docs/WalletsExchangeWalletAPI.md#listassetbalancesforexchangewallet) | **Get** /wallets/{wallet_id}/exchanges/assets | List asset balances
-*WalletsExchangeWalletAPI* | [**ListExchanges**](docs/WalletsExchangeWalletAPI.md#listexchanges) | **Get** /wallets/exchanges/settings | List supported exchanges
+*WalletsExchangeWalletAPI* | [**ListExchanges**](docs/WalletsExchangeWalletAPI.md#listexchanges) | **Get** /wallets/exchanges | List supported exchanges
 *WalletsExchangeWalletAPI* | [**ListSupportedAssetsForExchange**](docs/WalletsExchangeWalletAPI.md#listsupportedassetsforexchange) | **Get** /wallets/exchanges/{exchange_id}/assets | List supported assets
 *WalletsExchangeWalletAPI* | [**ListSupportedChainsForExchange**](docs/WalletsExchangeWalletAPI.md#listsupportedchainsforexchange) | **Get** /wallets/exchanges/{exchange_id}/assets/{asset_id}/chains | List supported chains
 *WalletsMPCWalletsAPI* | [**CancelTssRequestById**](docs/WalletsMPCWalletsAPI.md#canceltssrequestbyid) | **Post** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id}/cancel | Cancel TSS request
