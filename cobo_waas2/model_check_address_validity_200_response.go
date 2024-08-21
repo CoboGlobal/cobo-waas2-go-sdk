@@ -19,7 +19,7 @@ var _ MappedNullable = &CheckAddressValidity200Response{}
 
 // CheckAddressValidity200Response struct for CheckAddressValidity200Response
 type CheckAddressValidity200Response struct {
-	// Whether the address is valid. - `true`: The address is valid. - `false`: the address is invalid. 
+	// Whether the address is valid. - `true`: The address is valid. - `false`: The address is invalid. 
 	Validity bool `json:"validity"`
 }
 

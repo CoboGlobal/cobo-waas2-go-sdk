@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **SourceType** | [**TransactionSourceType**](TransactionSourceType.md) |  | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**SubWalletId** | Pointer to **string** | The exchange trading account or a sub-wallet ID. | [optional] 
+**TradingAccountType** | Pointer to **string** | The exchange trading account or a sub-wallet ID. | [optional] 
 
 ## Methods
 
@@ -88,30 +88,30 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *TransactionExchangeWalletSource) GetSubWalletId() string`
+`func (o *TransactionExchangeWalletSource) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *TransactionExchangeWalletSource) GetSubWalletIdOk() (*string, bool)`
+`func (o *TransactionExchangeWalletSource) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *TransactionExchangeWalletSource) SetSubWalletId(v string)`
+`func (o *TransactionExchangeWalletSource) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
-### HasSubWalletId
+### HasTradingAccountType
 
-`func (o *TransactionExchangeWalletSource) HasSubWalletId() bool`
+`func (o *TransactionExchangeWalletSource) HasTradingAccountType() bool`
 
-HasSubWalletId returns a boolean if a field has been set.
+HasTradingAccountType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

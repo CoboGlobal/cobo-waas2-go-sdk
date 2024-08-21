@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessToken** | Pointer to **string** | The access token, used by Cobo Portal Apps to access specific resources of other organizations. | [optional] 
-**TokenType** | Pointer to **string** | The type of the tokens. | [optional] 
-**Scope** | Pointer to **string** | The scope of the access token. This property value is empty by design. | [optional] 
+**AccessToken** | Pointer to **string** | The access token. | [optional] 
+**TokenType** | Pointer to **string** | The type of the tokens, which is Bearer. | [optional] 
+**Scope** | Pointer to **string** | The scope of the access token to limit the app&#39;s access to the organization&#39;s resources.  **Note**: Currently this property value is empty. The scope of the access token is based on the permissions granted when the app user installs the app.  | [optional] 
 **ExpiresIn** | Pointer to **int32** | The time in seconds in which the access token expires. | [optional] 
-**RefreshToken** | Pointer to **string** | The refresh token, used by Cobo Portal Apps to obtain new access tokens when the access token expires. | [optional] 
+**RefreshToken** | Pointer to **string** | The refresh token, used to obtain a new access token when the current access token expires. | [optional] 
 
 ## Methods
 

@@ -19,9 +19,9 @@ var _ MappedNullable = &RefreshTokenRequest{}
 type RefreshTokenRequest struct {
 	// The App ID, a unique identifier to distinguish Cobo Portal Apps. You can get the App ID by retrieving the Manifest file after receiving the notification of app launch approval.
 	ClientId *string `json:"client_id,omitempty"`
-	// The type of the permission granting. To refresh an access token, you need to set the value as `refresh_token`.
+	// The OAuth grant type. Set the value as `refresh_token`.
 	GrantType *string `json:"grant_type,omitempty"`
-	// The refresh token of the expired or expiring access token.
+	// The refresh token of the current access token.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
 

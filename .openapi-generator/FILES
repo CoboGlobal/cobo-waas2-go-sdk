@@ -7,6 +7,7 @@ api_developers_webhooks.go
 api_o_auth.go
 api_transactions.go
 api_wallets.go
+api_wallets_exchange_wallet.go
 api_wallets_mpc_wallets.go
 client.go
 configuration.go
@@ -36,6 +37,8 @@ docs/BaseEstimateStakingFee.md
 docs/BaseStakeExtra.md
 docs/ChainInfo.md
 docs/CheckAddressValidity200Response.md
+docs/CheckAddressesValidity200ResponseInner.md
+docs/CheckLoopTransfers200ResponseInner.md
 docs/CoboSafeDelegate.md
 docs/CoboSafeDelegateType.md
 docs/ContractCallDestination.md
@@ -113,9 +116,12 @@ docs/KeyShareHolderGroupType.md
 docs/KeyShareHolderStatus.md
 docs/KeyShareHolderType.md
 docs/ListAddresses200Response.md
+docs/ListAssetBalancesForExchangeWallet200Response.md
+docs/ListExchanges200ResponseInner.md
 docs/ListKeyShareHolderGroups200Response.md
 docs/ListMpcProjects200Response.md
 docs/ListMpcVaults200Response.md
+docs/ListSupportedAssetsForExchange200Response.md
 docs/ListSupportedChains200Response.md
 docs/ListSupportedTokens200Response.md
 docs/ListTokenBalancesForAddress200Response.md
@@ -151,6 +157,7 @@ docs/Pagination.md
 docs/PoolDetails.md
 docs/PoolDetailsAllOfValidatorsInfo.md
 docs/PoolSummary.md
+docs/RefreshToken200Response.md
 docs/RefreshTokenRequest.md
 docs/ReplaceType.md
 docs/RetryWebhookEventById201Response.md
@@ -172,6 +179,7 @@ docs/TSSGroups.md
 docs/TSSRequest.md
 docs/TSSRequestStatus.md
 docs/TSSRequestType.md
+docs/TSSRequestWebhookEventData.md
 docs/TokenBalance.md
 docs/TokenBalanceBalance.md
 docs/TokenInfo.md
@@ -251,6 +259,7 @@ docs/WalletInfo.md
 docs/WalletSubtype.md
 docs/WalletType.md
 docs/WalletsAPI.md
+docs/WalletsExchangeWalletAPI.md
 docs/WalletsMPCWalletsAPI.md
 docs/WebhookEndpoint.md
 docs/WebhookEndpointStatus.md
@@ -285,6 +294,8 @@ model_base_estimate_staking_fee.go
 model_base_stake_extra.go
 model_chain_info.go
 model_check_address_validity_200_response.go
+model_check_addresses_validity_200_response_inner.go
+model_check_loop_transfers_200_response_inner.go
 model_cobo_safe_delegate.go
 model_cobo_safe_delegate_type.go
 model_contract_call_destination.go
@@ -361,9 +372,12 @@ model_key_share_holder_group_type.go
 model_key_share_holder_status.go
 model_key_share_holder_type.go
 model_list_addresses_200_response.go
+model_list_asset_balances_for_exchange_wallet_200_response.go
+model_list_exchanges_200_response_inner.go
 model_list_key_share_holder_groups_200_response.go
 model_list_mpc_projects_200_response.go
 model_list_mpc_vaults_200_response.go
+model_list_supported_assets_for_exchange_200_response.go
 model_list_supported_chains_200_response.go
 model_list_supported_tokens_200_response.go
 model_list_token_balances_for_address_200_response.go
@@ -398,6 +412,7 @@ model_pagination.go
 model_pool_details.go
 model_pool_details_all_of_validators_info.go
 model_pool_summary.go
+model_refresh_token_200_response.go
 model_refresh_token_request.go
 model_replace_type.go
 model_retry_webhook_event_by_id_201_response.go
@@ -480,6 +495,7 @@ model_tss_groups.go
 model_tss_request.go
 model_tss_request_status.go
 model_tss_request_type.go
+model_tss_request_webhook_event_data.go
 model_update_custodial_wallet_params.go
 model_update_exchange_wallet_params.go
 model_update_group_action.go
@@ -508,6 +524,7 @@ response.go
 test/api_developers_webhooks_test.go
 test/api_o_auth_test.go
 test/api_transactions_test.go
+test/api_wallets_exchange_wallet_test.go
 test/api_wallets_mpc_wallets_test.go
 test/api_wallets_test.go
 utils.go

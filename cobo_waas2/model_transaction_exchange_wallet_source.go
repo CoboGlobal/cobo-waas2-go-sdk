@@ -24,7 +24,7 @@ type TransactionExchangeWalletSource struct {
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
 	// The exchange trading account or a sub-wallet ID.
-	SubWalletId *string `json:"sub_wallet_id,omitempty"`
+	TradingAccountType *string `json:"trading_account_type,omitempty"`
 }
 
 type _TransactionExchangeWalletSource TransactionExchangeWalletSource
@@ -121,36 +121,36 @@ func (o *TransactionExchangeWalletSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetSubWalletId returns the SubWalletId field value if set, zero value otherwise.
-func (o *TransactionExchangeWalletSource) GetSubWalletId() string {
-	if o == nil || IsNil(o.SubWalletId) {
+// GetTradingAccountType returns the TradingAccountType field value if set, zero value otherwise.
+func (o *TransactionExchangeWalletSource) GetTradingAccountType() string {
+	if o == nil || IsNil(o.TradingAccountType) {
 		var ret string
 		return ret
 	}
-	return *o.SubWalletId
+	return *o.TradingAccountType
 }
 
-// GetSubWalletIdOk returns a tuple with the SubWalletId field value if set, nil otherwise
+// GetTradingAccountTypeOk returns a tuple with the TradingAccountType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionExchangeWalletSource) GetSubWalletIdOk() (*string, bool) {
-	if o == nil || IsNil(o.SubWalletId) {
+func (o *TransactionExchangeWalletSource) GetTradingAccountTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.TradingAccountType) {
 		return nil, false
 	}
-	return o.SubWalletId, true
+	return o.TradingAccountType, true
 }
 
-// HasSubWalletId returns a boolean if a field has been set.
-func (o *TransactionExchangeWalletSource) HasSubWalletId() bool {
-	if o != nil && !IsNil(o.SubWalletId) {
+// HasTradingAccountType returns a boolean if a field has been set.
+func (o *TransactionExchangeWalletSource) HasTradingAccountType() bool {
+	if o != nil && !IsNil(o.TradingAccountType) {
 		return true
 	}
 
 	return false
 }
 
-// SetSubWalletId gets a reference to the given string and assigns it to the SubWalletId field.
-func (o *TransactionExchangeWalletSource) SetSubWalletId(v string) {
-	o.SubWalletId = &v
+// SetTradingAccountType gets a reference to the given string and assigns it to the TradingAccountType field.
+func (o *TransactionExchangeWalletSource) SetTradingAccountType(v string) {
+	o.TradingAccountType = &v
 }
 
 func (o TransactionExchangeWalletSource) MarshalJSON() ([]byte, error) {
@@ -166,8 +166,8 @@ func (o TransactionExchangeWalletSource) ToMap() (map[string]interface{}, error)
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["exchange_id"] = o.ExchangeId
 	toSerialize["wallet_id"] = o.WalletId
-	if !IsNil(o.SubWalletId) {
-		toSerialize["sub_wallet_id"] = o.SubWalletId
+	if !IsNil(o.TradingAccountType) {
+		toSerialize["trading_account_type"] = o.TradingAccountType
 	}
 	return toSerialize, nil
 }

@@ -10,7 +10,9 @@ Name | Type | Description | Notes
 **Name** | **string** | The wallet name. | 
 **OrgId** | **string** | The ID of the owning organization. | 
 **ProjectId** | Pointer to **string** | The project ID. | [optional] 
+**ProjectName** | Pointer to **string** | The project name. | [optional] 
 **VaultId** | **string** | The ID of the owning vault. | 
+**VaultName** | Pointer to **string** | The vault name. | [optional] 
 **Apikey** | **string** | The API key of your exchange account. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **MainWalletId** | Pointer to **string** | The wallet ID of the Main Account associated with the Sub Account. This property is returned only if you are creating or querying an Exchange Wallet (Sub Account). | [optional] 
@@ -159,6 +161,31 @@ SetProjectId sets ProjectId field to given value.
 
 HasProjectId returns a boolean if a field has been set.
 
+### GetProjectName
+
+`func (o *WalletInfo) GetProjectName() string`
+
+GetProjectName returns the ProjectName field if non-nil, zero value otherwise.
+
+### GetProjectNameOk
+
+`func (o *WalletInfo) GetProjectNameOk() (*string, bool)`
+
+GetProjectNameOk returns a tuple with the ProjectName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectName
+
+`func (o *WalletInfo) SetProjectName(v string)`
+
+SetProjectName sets ProjectName field to given value.
+
+### HasProjectName
+
+`func (o *WalletInfo) HasProjectName() bool`
+
+HasProjectName returns a boolean if a field has been set.
+
 ### GetVaultId
 
 `func (o *WalletInfo) GetVaultId() string`
@@ -178,6 +205,31 @@ and a boolean to check if the value has been set.
 
 SetVaultId sets VaultId field to given value.
 
+
+### GetVaultName
+
+`func (o *WalletInfo) GetVaultName() string`
+
+GetVaultName returns the VaultName field if non-nil, zero value otherwise.
+
+### GetVaultNameOk
+
+`func (o *WalletInfo) GetVaultNameOk() (*string, bool)`
+
+GetVaultNameOk returns a tuple with the VaultName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVaultName
+
+`func (o *WalletInfo) SetVaultName(v string)`
+
+SetVaultName sets VaultName field to given value.
+
+### HasVaultName
+
+`func (o *WalletInfo) HasVaultName() bool`
+
+HasVaultName returns a boolean if a field has been set.
 
 ### GetApikey
 

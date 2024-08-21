@@ -47,16 +47,19 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	tssRequestId := "20240711114129000132315000003970" // string | The TSS request ID, which you can retrieve by calling [List TSS requests](/v2/api-references/wallets--mpc-wallets/list-tss-requests).
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	tssRequestId := "20240711114129000132315000003970"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.CancelTssRequestById(ctx, vaultId, tssRequestId).Execute()
 	if err != nil {
@@ -127,16 +130,19 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	createKeyShareHolderGroupRequest := *coboWaas2.NewCreateKeyShareHolderGroupRequest(coboWaas2.KeyShareHolderGroupType("MainGroup"), int32(3), int32(2), []coboWaas2.CreateKeyShareHolder{*coboWaas2.NewCreateKeyShareHolder()}) // CreateKeyShareHolderGroupRequest | The request body to create a key share holder group. (optional)
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	createKeyShareHolderGroupRequest := *coboWaas2.NewCreateKeyShareHolderGroupRequest(coboWaas2.KeyShareHolderGroupType("MainGroup"), int32(3), int32(2), []coboWaas2.CreateKeyShareHolder{*coboWaas2.NewCreateKeyShareHolder()})
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.CreateKeyShareHolderGroup(ctx, vaultId).CreateKeyShareHolderGroupRequest(createKeyShareHolderGroupRequest).Execute()
 	if err != nil {
@@ -206,15 +212,18 @@ import (
 )
 
 func main() {
-	createMpcProjectRequest := *coboWaas2.NewCreateMpcProjectRequest("Project name", int32(3), int32(2)) // CreateMpcProjectRequest | The request body to create a project. (optional)
+	createMpcProjectRequest := *coboWaas2.NewCreateMpcProjectRequest("Project name", int32(3), int32(2))
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.CreateMpcProject(ctx).CreateMpcProjectRequest(createMpcProjectRequest).Execute()
 	if err != nil {
@@ -279,15 +288,18 @@ import (
 )
 
 func main() {
-	createMpcVaultRequest := *coboWaas2.NewCreateMpcVaultRequest("My vault", coboWaas2.MPCVaultType("Org-Controlled")) // CreateMpcVaultRequest | The request body to create a vault. (optional)
+	createMpcVaultRequest := *coboWaas2.NewCreateMpcVaultRequest("My vault", coboWaas2.MPCVaultType("Org-Controlled"))
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.CreateMpcVault(ctx).CreateMpcVaultRequest(createMpcVaultRequest).Execute()
 	if err != nil {
@@ -352,16 +364,19 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	createTssRequestRequest := *coboWaas2.NewCreateTssRequestRequest(coboWaas2.TSSRequestType("KeyGen"), "a1bf161f-8b60-4f61-9c35-6434b8654437") // CreateTssRequestRequest | The request body to create a TSS request. (optional)
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	createTssRequestRequest := *coboWaas2.NewCreateTssRequestRequest(coboWaas2.TSSRequestType("KeyGen"), "a1bf161f-8b60-4f61-9c35-6434b8654437")
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.CreateTssRequest(ctx, vaultId).CreateTssRequestRequest(createTssRequestRequest).Execute()
 	if err != nil {
@@ -431,16 +446,19 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce" // string | The key share holder group ID.
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.DeleteKeyShareHolderGroupById(ctx, vaultId, keyShareHolderGroupId).Execute()
 	if err != nil {
@@ -511,16 +529,19 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce" // string | The key share holder group ID.
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.GetKeyShareHolderGroupById(ctx, vaultId, keyShareHolderGroupId).Execute()
 	if err != nil {
@@ -591,15 +612,18 @@ import (
 )
 
 func main() {
-	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).
+	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.GetMpcProjectById(ctx, projectId).Execute()
 	if err != nil {
@@ -668,15 +692,18 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.GetMpcVaultById(ctx, vaultId).Execute()
 	if err != nil {
@@ -745,16 +772,19 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	tssRequestId := "20240711114129000132315000003970" // string | The TSS request ID, which you can retrieve by calling [List TSS requests](/v2/api-references/wallets--mpc-wallets/list-tss-requests).
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	tssRequestId := "20240711114129000132315000003970"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.GetTssRequestById(ctx, vaultId, tssRequestId).Execute()
 	if err != nil {
@@ -827,12 +857,15 @@ import (
 func main() {
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.ListCoboKeyHolders(ctx).Execute()
 	if err != nil {
@@ -893,19 +926,22 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	keyShareHolderGroupType := coboWaas2.KeyShareHolderGroupType("MainGroup") // KeyShareHolderGroupType | The key share holder group type. Possible values include: - `MainGroup`: The [Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#main-group).  - `SigningGroup`: The [Signing Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#signing-group).  - `RecoveryGroup`: The [Recovery Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#recovery-group).  **Note**: If this parameter is left empty, all key share holder group types will be retrieved.  (optional)
-	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
-	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
-	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	keyShareHolderGroupType := coboWaas2.KeyShareHolderGroupType("MainGroup")
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.ListKeyShareHolderGroups(ctx, vaultId).KeyShareHolderGroupType(keyShareHolderGroupType).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
@@ -978,17 +1014,20 @@ import (
 )
 
 func main() {
-	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
-	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
-	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.ListMpcProjects(ctx).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
@@ -1055,19 +1094,22 @@ import (
 )
 
 func main() {
-	vaultType := coboWaas2.MPCVaultType("Org-Controlled") // MPCVaultType | The vault type. Possible values include: - `Org-Controlled`: This vault is a collection of [Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#organization-controlled-wallets).  - `User-Controlled`: This vault is a collection of [User-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#user-controlled-wallets). 
-	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).  (optional)
-	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
-	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
-	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
+	vaultType := coboWaas2.MPCVaultType("Org-Controlled")
+	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.ListMpcVaults(ctx).VaultType(vaultType).ProjectId(projectId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
@@ -1136,19 +1178,22 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	keyShareHolderGroupId := "a3a45e99-5a12-444f-867a-ffe0ebb1bb30" // string | The key share holder group ID of the TSS request, which you can retrieve by calling [List all key share holder groups](/v2/api-references/wallets--mpc-wallets/list-all-key-share-holder-groups).
-	limit := int32(10) // int32 | The maximum number of objects to return. For most operations, the value range is [1, 50]. (optional) (default to 10)
-	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1" // string | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  - If you set `before` to `infinity`, the last page of data is returned.  (optional)
-	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk" // string | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.  - If you set both `after` and `before`, an error will occur.  - If you leave both `before` and `after` empty, the first page of data is returned.  (optional)
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	keyShareHolderGroupId := "a3a45e99-5a12-444f-867a-ffe0ebb1bb30"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.ListTssRequests(ctx, vaultId).KeyShareHolderGroupId(keyShareHolderGroupId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
@@ -1221,17 +1266,20 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce" // string | The key share holder group ID.
-	updateKeyShareHolderGroupByIdRequest := *coboWaas2.NewUpdateKeyShareHolderGroupByIdRequest(coboWaas2.UpdateGroupAction("UpgradeToMainGroup")) // UpdateKeyShareHolderGroupByIdRequest |  (optional)
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	keyShareHolderGroupId := "e8257ac8-76b8-4d1e-a1f9-eec4cb931dce"
+	updateKeyShareHolderGroupByIdRequest := *coboWaas2.NewUpdateKeyShareHolderGroupByIdRequest(coboWaas2.UpdateGroupAction("UpgradeToMainGroup"))
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.UpdateKeyShareHolderGroupById(ctx, vaultId, keyShareHolderGroupId).UpdateKeyShareHolderGroupByIdRequest(updateKeyShareHolderGroupByIdRequest).Execute()
 	if err != nil {
@@ -1303,16 +1351,19 @@ import (
 )
 
 func main() {
-	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).
-	updateMpcProjectByIdRequest := *coboWaas2.NewUpdateMpcProjectByIdRequest("New project name") // UpdateMpcProjectByIdRequest | The request body to update a project's name. (optional)
+	projectId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	updateMpcProjectByIdRequest := *coboWaas2.NewUpdateMpcProjectByIdRequest("New project name")
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.UpdateMpcProjectById(ctx, projectId).UpdateMpcProjectByIdRequest(updateMpcProjectByIdRequest).Execute()
 	if err != nil {
@@ -1382,16 +1433,19 @@ import (
 )
 
 func main() {
-	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479" // string | The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
-	updateMpcVaultByIdRequest := *coboWaas2.NewUpdateMpcVaultByIdRequest("The new name of the vault") // UpdateMpcVaultByIdRequest | The request body to update a vault's name. (optional)
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	updateMpcVaultByIdRequest := *coboWaas2.NewUpdateMpcVaultByIdRequest("The new name of the vault")
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.WalletsMPCWalletsAPI.UpdateMpcVaultById(ctx, vaultId).UpdateMpcVaultByIdRequest(updateMpcVaultByIdRequest).Execute()
 	if err != nil {

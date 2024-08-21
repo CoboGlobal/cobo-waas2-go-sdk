@@ -305,7 +305,7 @@ CreateMpcProject Create project
 
 This operation creates a project.
 
-<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
+<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -951,7 +951,7 @@ func (r ApiGetMpcProjectByIdRequest) Execute() (*MPCProject, *http.Response, err
 GetMpcProjectById Get project information
 
 This operation retrieves detailed information about a project.
-<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
+<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1643,7 +1643,7 @@ ListMpcProjects List all projects
 
 This operation retrieves a list of all projects.
 
-<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
+<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2271,7 +2271,7 @@ UpdateMpcProjectById Update project name
 
 This operation updates a project's name.
 
-<Info>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Info>
+<Note>This operation applies to MPC Wallets (User-Controlled Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

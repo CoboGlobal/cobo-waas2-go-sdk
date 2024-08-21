@@ -21,7 +21,7 @@ var _ MappedNullable = &AddressTransferDestinationUtxoOutputsInner{}
 type AddressTransferDestinationUtxoOutputsInner struct {
 	// The destination address.
 	Address string `json:"address"`
-	// The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is `1.5`. 
+	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Amount *string `json:"amount,omitempty"`
 	// The script of the output. It is a programmable code fragment that defines the conditions under which the UTXO can be spent.
 	Script *string `json:"script,omitempty"`

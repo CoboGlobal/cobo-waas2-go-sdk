@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** | The data type of the event. When &#x60;data_type&#x60; is &#x60;Transaction&#x60;, it means the event uses the &#x60;transaction&#x60; schema as its data type. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **WalletId** | **string** | For deposit transactions, this property represents the wallet ID of the transaction destination. For transactions of other types, this property represents the wallet ID of the transaction source. | 
-**Type** | Pointer to [**TransactionType**](TransactionType.md) |  | [optional] 
-**Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
+**Type** | Pointer to [**TSSRequestType**](TSSRequestType.md) |  | [optional] 
+**Status** | [**TSSRequestStatus**](TSSRequestStatus.md) |  | 
 **SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
 **FailedReason** | Pointer to **string** | (This property is applicable to approval failures and signature failures only) The reason why the transaction failed. | [optional] 
 **ChainId** | Pointer to **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). | [optional] 
@@ -29,16 +29,19 @@ Name | Type | Description | Notes
 **RawTxInfo** | Pointer to [**TransactionRawTxInfo**](TransactionRawTxInfo.md) |  | [optional] 
 **Replacement** | Pointer to [**TransactionReplacement**](TransactionReplacement.md) |  | [optional] 
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
-**Description** | Pointer to **string** | The description for your transaction. | [optional] 
+**Description** | Pointer to **string** | The description of the TSS request. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction is a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).  - &#x60;true&#x60;: The transaction is a Loop transfer. - &#x60;false&#x60;: The transaction is not a Loop transfer.  | [optional] 
-**CreatedTimestamp** | Pointer to **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The TSS request&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
+**TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
+**SourceKeyShareHolderGroup** | Pointer to [**SourceGroup**](SourceGroup.md) |  | [optional] 
+**TargetKeyShareHolderGroupId** | Pointer to **string** | The target key share holder group ID. | [optional] 
 
 ## Methods
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, walletId string, status TSSRequestStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -165,20 +168,20 @@ SetWalletId sets WalletId field to given value.
 
 ### GetType
 
-`func (o *WebhookEventData) GetType() TransactionType`
+`func (o *WebhookEventData) GetType() TSSRequestType`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *WebhookEventData) GetTypeOk() (*TransactionType, bool)`
+`func (o *WebhookEventData) GetTypeOk() (*TSSRequestType, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *WebhookEventData) SetType(v TransactionType)`
+`func (o *WebhookEventData) SetType(v TSSRequestType)`
 
 SetType sets Type field to given value.
 
@@ -190,20 +193,20 @@ HasType returns a boolean if a field has been set.
 
 ### GetStatus
 
-`func (o *WebhookEventData) GetStatus() TransactionStatus`
+`func (o *WebhookEventData) GetStatus() TSSRequestStatus`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *WebhookEventData) GetStatusOk() (*TransactionStatus, bool)`
+`func (o *WebhookEventData) GetStatusOk() (*TSSRequestStatus, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *WebhookEventData) SetStatus(v TransactionStatus)`
+`func (o *WebhookEventData) SetStatus(v TSSRequestStatus)`
 
 SetStatus sets Status field to given value.
 
@@ -742,6 +745,81 @@ SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 `func (o *WebhookEventData) HasUpdatedTimestamp() bool`
 
 HasUpdatedTimestamp returns a boolean if a field has been set.
+
+### GetTssRequestId
+
+`func (o *WebhookEventData) GetTssRequestId() string`
+
+GetTssRequestId returns the TssRequestId field if non-nil, zero value otherwise.
+
+### GetTssRequestIdOk
+
+`func (o *WebhookEventData) GetTssRequestIdOk() (*string, bool)`
+
+GetTssRequestIdOk returns a tuple with the TssRequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTssRequestId
+
+`func (o *WebhookEventData) SetTssRequestId(v string)`
+
+SetTssRequestId sets TssRequestId field to given value.
+
+### HasTssRequestId
+
+`func (o *WebhookEventData) HasTssRequestId() bool`
+
+HasTssRequestId returns a boolean if a field has been set.
+
+### GetSourceKeyShareHolderGroup
+
+`func (o *WebhookEventData) GetSourceKeyShareHolderGroup() SourceGroup`
+
+GetSourceKeyShareHolderGroup returns the SourceKeyShareHolderGroup field if non-nil, zero value otherwise.
+
+### GetSourceKeyShareHolderGroupOk
+
+`func (o *WebhookEventData) GetSourceKeyShareHolderGroupOk() (*SourceGroup, bool)`
+
+GetSourceKeyShareHolderGroupOk returns a tuple with the SourceKeyShareHolderGroup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceKeyShareHolderGroup
+
+`func (o *WebhookEventData) SetSourceKeyShareHolderGroup(v SourceGroup)`
+
+SetSourceKeyShareHolderGroup sets SourceKeyShareHolderGroup field to given value.
+
+### HasSourceKeyShareHolderGroup
+
+`func (o *WebhookEventData) HasSourceKeyShareHolderGroup() bool`
+
+HasSourceKeyShareHolderGroup returns a boolean if a field has been set.
+
+### GetTargetKeyShareHolderGroupId
+
+`func (o *WebhookEventData) GetTargetKeyShareHolderGroupId() string`
+
+GetTargetKeyShareHolderGroupId returns the TargetKeyShareHolderGroupId field if non-nil, zero value otherwise.
+
+### GetTargetKeyShareHolderGroupIdOk
+
+`func (o *WebhookEventData) GetTargetKeyShareHolderGroupIdOk() (*string, bool)`
+
+GetTargetKeyShareHolderGroupIdOk returns a tuple with the TargetKeyShareHolderGroupId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetKeyShareHolderGroupId
+
+`func (o *WebhookEventData) SetTargetKeyShareHolderGroupId(v string)`
+
+SetTargetKeyShareHolderGroupId sets TargetKeyShareHolderGroupId field to given value.
+
+### HasTargetKeyShareHolderGroupId
+
+`func (o *WebhookEventData) HasTargetKeyShareHolderGroupId() bool`
+
+HasTargetKeyShareHolderGroupId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

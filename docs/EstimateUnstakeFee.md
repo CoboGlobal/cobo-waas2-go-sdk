@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ActivityType** | [**ActivityType**](ActivityType.md) |  | 
+**RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **StakingId** | **string** | The id of the related staking. | 
 **Amount** | Pointer to **string** | The amount to stake | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
@@ -47,6 +48,31 @@ and a boolean to check if the value has been set.
 
 SetActivityType sets ActivityType field to given value.
 
+
+### GetRequestId
+
+`func (o *EstimateUnstakeFee) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *EstimateUnstakeFee) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *EstimateUnstakeFee) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *EstimateUnstakeFee) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetStakingId
 

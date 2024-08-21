@@ -10,7 +10,9 @@ Name | Type | Description | Notes
 **Name** | **string** | The wallet name. | 
 **OrgId** | **string** | The ID of the owning organization. | 
 **ProjectId** | Pointer to **string** | The project ID. | [optional] 
+**ProjectName** | Pointer to **string** | The project name. | [optional] 
 **VaultId** | **string** | The ID of the owning vault. | 
+**VaultName** | Pointer to **string** | The vault name. | [optional] 
 
 ## Methods
 
@@ -156,6 +158,31 @@ SetProjectId sets ProjectId field to given value.
 
 HasProjectId returns a boolean if a field has been set.
 
+### GetProjectName
+
+`func (o *MPCWalletInfo) GetProjectName() string`
+
+GetProjectName returns the ProjectName field if non-nil, zero value otherwise.
+
+### GetProjectNameOk
+
+`func (o *MPCWalletInfo) GetProjectNameOk() (*string, bool)`
+
+GetProjectNameOk returns a tuple with the ProjectName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectName
+
+`func (o *MPCWalletInfo) SetProjectName(v string)`
+
+SetProjectName sets ProjectName field to given value.
+
+### HasProjectName
+
+`func (o *MPCWalletInfo) HasProjectName() bool`
+
+HasProjectName returns a boolean if a field has been set.
+
 ### GetVaultId
 
 `func (o *MPCWalletInfo) GetVaultId() string`
@@ -175,6 +202,31 @@ and a boolean to check if the value has been set.
 
 SetVaultId sets VaultId field to given value.
 
+
+### GetVaultName
+
+`func (o *MPCWalletInfo) GetVaultName() string`
+
+GetVaultName returns the VaultName field if non-nil, zero value otherwise.
+
+### GetVaultNameOk
+
+`func (o *MPCWalletInfo) GetVaultNameOk() (*string, bool)`
+
+GetVaultNameOk returns a tuple with the VaultName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVaultName
+
+`func (o *MPCWalletInfo) SetVaultName(v string)`
+
+SetVaultName sets VaultName field to given value.
+
+### HasVaultName
+
+`func (o *MPCWalletInfo) HasVaultName() bool`
+
+HasVaultName returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

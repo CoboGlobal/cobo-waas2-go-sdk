@@ -19,7 +19,7 @@ var _ MappedNullable = &TransactionWebhookEventData{}
 
 // TransactionWebhookEventData struct for TransactionWebhookEventData
 type TransactionWebhookEventData struct {
-	// The data type of the event. When `data_type` is `Transaction`, it means the event uses the `transaction` schema as its data type.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data.
 	DataType string `json:"data_type"`
 	// The transaction ID.
 	TransactionId string `json:"transaction_id"`

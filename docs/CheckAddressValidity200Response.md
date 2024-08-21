@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Validity** | **bool** | Whether the address is valid. - &#x60;true&#x60;: The address is valid. - &#x60;false&#x60;: the address is invalid.  | 
+**Validity** | **bool** | Whether the address is valid. - &#x60;true&#x60;: The address is valid. - &#x60;false&#x60;: The address is invalid.  | 
 
 ## Methods
 

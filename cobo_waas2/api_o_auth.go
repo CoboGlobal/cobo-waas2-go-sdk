@@ -34,13 +34,13 @@ func (r ApiGetTokenRequest) ClientId(clientId string) ApiGetTokenRequest {
 	return r
 }
 
-// Org ID, a unique identifier to distinguish different organizations. You can get the Org ID by retrieving the Manifest file after receiving the notification of app launch approval.
+// Organization ID, a unique identifier to distinguish different organizations. You can get the Organization ID by retrieving the Manifest file after receiving the notification of app launch approval.
 func (r ApiGetTokenRequest) OrgId(orgId string) ApiGetTokenRequest {
 	r.orgId = &orgId
 	return r
 }
 
-// The type of the permission granting. To get an access token, you need to set the value as &#x60;org_implicit&#x60;.
+// The OAuth grant type. Set the value as &#x60;org_implicit&#x60;.
 func (r ApiGetTokenRequest) GrantType(grantType string) ApiGetTokenRequest {
 	r.grantType = &grantType
 	return r
@@ -51,14 +51,14 @@ func (r ApiGetTokenRequest) Execute() (*GetToken200Response, *http.Response, err
 }
 
 /*
-GetToken Get Access Token
+GetToken Get access token
 
-<Note>This operation is only applicable to Cobo Portal App developers. To call this operation, you need to use the OAuth authentication method that requires an App Key.</Note>
-This operation allows Cobo Portal Apps to get an access token and a refresh token with a specified App ID, Org ID, and grant type. 
+<Note>This operation is only applicable to Cobo Portal App developers. To call this operation, you need to use the OAuth authentication method that requires an app key.</Note>
+This operation allows Cobo Portal Apps to get an access token and a refresh token with a specified App ID, Organization ID, and grant type. 
 
-Access tokens allow the app to signal to the WaaS service that it has received permission from the organization admin to access specific resources. Once the app has been granted permission by an organization admin, it can use this operation to obtain both an access token and a refresh token.
+Access tokens allow the app to signal to the WaaS service that it has received permission to access specific resources of the app user's [organization](https://manuals.cobo.com/en/portal/organization/introduction). Once the app has been granted permission by the organization's admin, it can use this operation to obtain both an access token and a refresh token.
 
-For security purposes, access tokens expire after a certain period. Once they expire, the app need to [Refresh token](/v2/api-references/oauth/refresh-access-token) to get a new access token and a new fresh token.
+For security purposes, access tokens expire after a certain period. Once they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-access-token) to get a new access token and a new refresh token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -191,15 +191,17 @@ func (r ApiRefreshTokenRequest) RefreshTokenRequest(refreshTokenRequest RefreshT
 	return r
 }
 
-func (r ApiRefreshTokenRequest) Execute() (*GetToken200Response, *http.Response, error) {
+func (r ApiRefreshTokenRequest) Execute() (*RefreshToken200Response, *http.Response, error) {
 	return r.ApiService.RefreshTokenExecute(r)
 }
 
 /*
-RefreshToken Refresh Access Token
+RefreshToken Refresh access token
 
-<Note>This operation is only applicable to Cobo Portal Apps developers. To call this operation, you need to use the OAuth authentication method that requires an App Key.</Note>
-This operation allows Cobo Portal Apps to obtain a new access token with a specified App ID, grant type and a refresh token. For security purposes, access tokens expire after a certain period. Once they expire, the app need to use this operation to get a new access token and a new fresh token.
+<Note>This operation is only applicable to Cobo Portal Apps developers. To call this operation, you need to use the OAuth authentication method that requires an app key.</Note>
+This operation allows Cobo Portal Apps to obtain a new access token with a specified App ID, grant type and a refresh token. 
+
+For security purposes, access tokens expire after a certain period. Once they expire, the app needs to call this operation to get a new access token and a new refresh token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -213,13 +215,13 @@ func (a *OAuthAPIService) RefreshToken(ctx context.Context) ApiRefreshTokenReque
 }
 
 // Execute executes the request
-//  @return GetToken200Response
-func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*GetToken200Response, *http.Response, error) {
+//  @return RefreshToken200Response
+func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*RefreshToken200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetToken200Response
+		localVarReturnValue  *RefreshToken200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.RefreshToken")

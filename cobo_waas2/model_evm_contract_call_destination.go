@@ -22,7 +22,7 @@ type EvmContractCallDestination struct {
 	DestinationType ContractCallDestinationType `json:"destination_type"`
 	// The destination address.
 	Address string `json:"address"`
-	// The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is `1.5`. 
+	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Value *string `json:"value,omitempty"`
 	// The data that is used to invoke a specific function or method within the specified contract at the destination address. 
 	Calldata string `json:"calldata"`

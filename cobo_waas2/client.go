@@ -42,7 +42,7 @@ var (
 )
 
 
-// APIClient manages communication with the Cobo Wallet as a Service 2.0 API v1.1.0
+// APIClient manages communication with the Cobo Wallet as a Service 2.0 API v1.2.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -57,6 +57,8 @@ type APIClient struct {
 	TransactionsAPI *TransactionsAPIService
 
 	WalletsAPI *WalletsAPIService
+
+	WalletsExchangeWalletAPI *WalletsExchangeWalletAPIService
 
 	WalletsMPCWalletsAPI *WalletsMPCWalletsAPIService
 }
@@ -81,6 +83,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.OAuthAPI = (*OAuthAPIService)(&c.common)
 	c.TransactionsAPI = (*TransactionsAPIService)(&c.common)
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)
+	c.WalletsExchangeWalletAPI = (*WalletsExchangeWalletAPIService)(&c.common)
 	c.WalletsMPCWalletsAPI = (*WalletsMPCWalletsAPIService)(&c.common)
 
 	return c

@@ -20,6 +20,8 @@ var _ MappedNullable = &EstimateWithdrawFee{}
 // EstimateWithdrawFee struct for EstimateWithdrawFee
 type EstimateWithdrawFee struct {
 	ActivityType ActivityType `json:"activity_type"`
+	// The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization.
+	RequestId *string `json:"request_id,omitempty"`
 	// The id of the related staking.
 	StakingId string `json:"staking_id"`
 	// The amount to stake
@@ -73,6 +75,38 @@ func (o *EstimateWithdrawFee) GetActivityTypeOk() (*ActivityType, bool) {
 // SetActivityType sets field value
 func (o *EstimateWithdrawFee) SetActivityType(v ActivityType) {
 	o.ActivityType = v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *EstimateWithdrawFee) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EstimateWithdrawFee) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *EstimateWithdrawFee) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *EstimateWithdrawFee) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetStakingId returns the StakingId field value
@@ -198,6 +232,9 @@ func (o EstimateWithdrawFee) MarshalJSON() ([]byte, error) {
 func (o EstimateWithdrawFee) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["activity_type"] = o.ActivityType
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	toSerialize["staking_id"] = o.StakingId
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount

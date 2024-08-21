@@ -6,9 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**TransactionDestinationType**](TransactionDestinationType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**SubWalletId** | Pointer to **string** | The exchange trading account or the sub-wallet ID. | [optional] 
+**TradingAccountType** | Pointer to **string** | The trading account type. | [optional] 
 **ExchangeId** | Pointer to [**ExchangeId**](ExchangeId.md) |  | [optional] 
-**Amount** | **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
+**Amount** | **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
 
 ## Methods
 
@@ -69,30 +69,30 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *TransactionTransferToWalletDestination) GetSubWalletId() string`
+`func (o *TransactionTransferToWalletDestination) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *TransactionTransferToWalletDestination) GetSubWalletIdOk() (*string, bool)`
+`func (o *TransactionTransferToWalletDestination) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *TransactionTransferToWalletDestination) SetSubWalletId(v string)`
+`func (o *TransactionTransferToWalletDestination) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
-### HasSubWalletId
+### HasTradingAccountType
 
-`func (o *TransactionTransferToWalletDestination) HasSubWalletId() bool`
+`func (o *TransactionTransferToWalletDestination) HasTradingAccountType() bool`
 
-HasSubWalletId returns a boolean if a field has been set.
+HasTradingAccountType returns a boolean if a field has been set.
 
 ### GetExchangeId
 

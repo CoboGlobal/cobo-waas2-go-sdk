@@ -24,6 +24,8 @@ type BabylonStakeExtra struct {
 	FinalityProviderPublicKey string `json:"finality_provider_public_key"`
 	// The stake block time.
 	StakeBlockTime int64 `json:"stake_block_time"`
+	// Whether to only sign transactions. Default is `false`, if set to `true`,  the transaction will not be submitted to the blockchain automatically. You can call `Broadcast transactions` to submit the transaction to the blockchain,  Or you can find the signed raw_tx by `Get transaction information` and broadcast it yourself. 
+	OnlySign *bool `json:"only_sign,omitempty"`
 }
 
 type _BabylonStakeExtra BabylonStakeExtra
@@ -120,6 +122,38 @@ func (o *BabylonStakeExtra) SetStakeBlockTime(v int64) {
 	o.StakeBlockTime = v
 }
 
+// GetOnlySign returns the OnlySign field value if set, zero value otherwise.
+func (o *BabylonStakeExtra) GetOnlySign() bool {
+	if o == nil || IsNil(o.OnlySign) {
+		var ret bool
+		return ret
+	}
+	return *o.OnlySign
+}
+
+// GetOnlySignOk returns a tuple with the OnlySign field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BabylonStakeExtra) GetOnlySignOk() (*bool, bool) {
+	if o == nil || IsNil(o.OnlySign) {
+		return nil, false
+	}
+	return o.OnlySign, true
+}
+
+// HasOnlySign returns a boolean if a field has been set.
+func (o *BabylonStakeExtra) HasOnlySign() bool {
+	if o != nil && !IsNil(o.OnlySign) {
+		return true
+	}
+
+	return false
+}
+
+// SetOnlySign gets a reference to the given bool and assigns it to the OnlySign field.
+func (o *BabylonStakeExtra) SetOnlySign(v bool) {
+	o.OnlySign = &v
+}
+
 func (o BabylonStakeExtra) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -133,6 +167,9 @@ func (o BabylonStakeExtra) ToMap() (map[string]interface{}, error) {
 	toSerialize["pool_type"] = o.PoolType
 	toSerialize["finality_provider_public_key"] = o.FinalityProviderPublicKey
 	toSerialize["stake_block_time"] = o.StakeBlockTime
+	if !IsNil(o.OnlySign) {
+		toSerialize["only_sign"] = o.OnlySign
+	}
 	return toSerialize, nil
 }
 

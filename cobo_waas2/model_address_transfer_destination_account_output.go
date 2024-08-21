@@ -23,7 +23,7 @@ type AddressTransferDestinationAccountOutput struct {
 	Address string `json:"address"`
 	// The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON.
 	Memo *string `json:"memo,omitempty"`
-	// The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is `1.5`. 
+	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Amount string `json:"amount"`
 }
 

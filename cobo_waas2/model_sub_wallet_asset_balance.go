@@ -17,11 +17,11 @@ import (
 // checks if the SubWalletAssetBalance type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SubWalletAssetBalance{}
 
-// SubWalletAssetBalance The data for sub wallet asset balance information.
+// SubWalletAssetBalance The information about the asset balance of a trading account.
 type SubWalletAssetBalance struct {
-	// The exchange trading account or a sub-wallet ID.
-	SubWalletId *string `json:"sub_wallet_id,omitempty"`
-	// (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
+	// The trading account type.
+	TradingAccountType *string `json:"trading_account_type,omitempty"`
+	// The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
 	AssetId string `json:"asset_id"`
 	Balance TokenBalanceBalance `json:"balance"`
 }
@@ -47,36 +47,36 @@ func NewSubWalletAssetBalanceWithDefaults() *SubWalletAssetBalance {
 	return &this
 }
 
-// GetSubWalletId returns the SubWalletId field value if set, zero value otherwise.
-func (o *SubWalletAssetBalance) GetSubWalletId() string {
-	if o == nil || IsNil(o.SubWalletId) {
+// GetTradingAccountType returns the TradingAccountType field value if set, zero value otherwise.
+func (o *SubWalletAssetBalance) GetTradingAccountType() string {
+	if o == nil || IsNil(o.TradingAccountType) {
 		var ret string
 		return ret
 	}
-	return *o.SubWalletId
+	return *o.TradingAccountType
 }
 
-// GetSubWalletIdOk returns a tuple with the SubWalletId field value if set, nil otherwise
+// GetTradingAccountTypeOk returns a tuple with the TradingAccountType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SubWalletAssetBalance) GetSubWalletIdOk() (*string, bool) {
-	if o == nil || IsNil(o.SubWalletId) {
+func (o *SubWalletAssetBalance) GetTradingAccountTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.TradingAccountType) {
 		return nil, false
 	}
-	return o.SubWalletId, true
+	return o.TradingAccountType, true
 }
 
-// HasSubWalletId returns a boolean if a field has been set.
-func (o *SubWalletAssetBalance) HasSubWalletId() bool {
-	if o != nil && !IsNil(o.SubWalletId) {
+// HasTradingAccountType returns a boolean if a field has been set.
+func (o *SubWalletAssetBalance) HasTradingAccountType() bool {
+	if o != nil && !IsNil(o.TradingAccountType) {
 		return true
 	}
 
 	return false
 }
 
-// SetSubWalletId gets a reference to the given string and assigns it to the SubWalletId field.
-func (o *SubWalletAssetBalance) SetSubWalletId(v string) {
-	o.SubWalletId = &v
+// SetTradingAccountType gets a reference to the given string and assigns it to the TradingAccountType field.
+func (o *SubWalletAssetBalance) SetTradingAccountType(v string) {
+	o.TradingAccountType = &v
 }
 
 // GetAssetId returns the AssetId field value
@@ -137,8 +137,8 @@ func (o SubWalletAssetBalance) MarshalJSON() ([]byte, error) {
 
 func (o SubWalletAssetBalance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.SubWalletId) {
-		toSerialize["sub_wallet_id"] = o.SubWalletId
+	if !IsNil(o.TradingAccountType) {
+		toSerialize["trading_account_type"] = o.TradingAccountType
 	}
 	toSerialize["asset_id"] = o.AssetId
 	toSerialize["balance"] = o.Balance

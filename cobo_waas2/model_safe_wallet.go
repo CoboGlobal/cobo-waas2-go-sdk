@@ -63,7 +63,7 @@ func NewSafeWallet(walletId string, walletType WalletType, walletSubtype WalletS
 // but it doesn't guarantee that properties required by API are set
 func NewSafeWalletWithDefaults() *SafeWallet {
 	this := SafeWallet{}
-	var smartContractWalletType SmartContractWalletType = SMARTCONTRACTWALLETTYPE_SAFE_WALLET
+	var smartContractWalletType SmartContractWalletType = SMARTCONTRACTWALLETTYPE_SAFEWALLET
 	this.SmartContractWalletType = smartContractWalletType
 	return &this
 }

@@ -19,6 +19,8 @@ var _ MappedNullable = &CreateStakeActivity{}
 
 // CreateStakeActivity struct for CreateStakeActivity
 type CreateStakeActivity struct {
+	// The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization.
+	RequestId *string `json:"request_id,omitempty"`
 	Source *StakingSource `json:"source,omitempty"`
 	// The id of the staking pool
 	PoolId string `json:"pool_id"`
@@ -49,6 +51,38 @@ func NewCreateStakeActivity(poolId string, amount string, fee TransactionRequest
 func NewCreateStakeActivityWithDefaults() *CreateStakeActivity {
 	this := CreateStakeActivity{}
 	return &this
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *CreateStakeActivity) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateStakeActivity) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *CreateStakeActivity) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *CreateStakeActivity) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetSource returns the Source field value if set, zero value otherwise.
@@ -189,6 +223,9 @@ func (o CreateStakeActivity) MarshalJSON() ([]byte, error) {
 
 func (o CreateStakeActivity) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	if !IsNil(o.Source) {
 		toSerialize["source"] = o.Source
 	}

@@ -58,7 +58,7 @@ func NewCreateSafeWalletParams(name string, walletType WalletType, walletSubtype
 // but it doesn't guarantee that properties required by API are set
 func NewCreateSafeWalletParamsWithDefaults() *CreateSafeWalletParams {
 	this := CreateSafeWalletParams{}
-	var smartContractWalletType SmartContractWalletType = SMARTCONTRACTWALLETTYPE_SAFE_WALLET
+	var smartContractWalletType SmartContractWalletType = SMARTCONTRACTWALLETTYPE_SAFEWALLET
 	this.SmartContractWalletType = smartContractWalletType
 	return &this
 }

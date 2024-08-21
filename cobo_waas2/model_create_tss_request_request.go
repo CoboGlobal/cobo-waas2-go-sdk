@@ -23,6 +23,8 @@ type CreateTssRequestRequest struct {
 	// The target key share holder group ID.
 	TargetKeyShareHolderGroupId string `json:"target_key_share_holder_group_id"`
 	SourceKeyShareHolderGroup *SourceGroup `json:"source_key_share_holder_group,omitempty"`
+	// The description of the TSS request.
+	Description *string `json:"description,omitempty"`
 }
 
 type _CreateTssRequestRequest CreateTssRequestRequest
@@ -126,6 +128,38 @@ func (o *CreateTssRequestRequest) SetSourceKeyShareHolderGroup(v SourceGroup) {
 	o.SourceKeyShareHolderGroup = &v
 }
 
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *CreateTssRequestRequest) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateTssRequestRequest) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *CreateTssRequestRequest) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *CreateTssRequestRequest) SetDescription(v string) {
+	o.Description = &v
+}
+
 func (o CreateTssRequestRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -140,6 +174,9 @@ func (o CreateTssRequestRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["target_key_share_holder_group_id"] = o.TargetKeyShareHolderGroupId
 	if !IsNil(o.SourceKeyShareHolderGroup) {
 		toSerialize["source_key_share_holder_group"] = o.SourceKeyShareHolderGroup
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	return toSerialize, nil
 }

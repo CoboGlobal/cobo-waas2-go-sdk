@@ -17,14 +17,14 @@ import (
 // checks if the ExchangeTransferDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ExchangeTransferDestination{}
 
-// ExchangeTransferDestination The information about the transaction destination type `ExchangeWallet`.   An Exchange Wallet (Sub Account) as the transaction destination can only receives token transfers from another Exchange Wallet. 
+// ExchangeTransferDestination The information about the transaction destination type `ExchangeWallet`.   An Exchange Wallet (Sub Account) can only receive asset transfers from another Exchange Wallet. 
 type ExchangeTransferDestination struct {
 	DestinationType TransferDestinationType `json:"destination_type"`
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// The exchange trading account or the sub-wallet ID.
-	SubWalletId string `json:"sub_wallet_id"`
-	// The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is `1.5`. 
+	// The trading account type.
+	TradingAccountType string `json:"trading_account_type"`
+	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Amount string `json:"amount"`
 }
 
@@ -34,11 +34,11 @@ type _ExchangeTransferDestination ExchangeTransferDestination
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewExchangeTransferDestination(destinationType TransferDestinationType, walletId string, subWalletId string, amount string) *ExchangeTransferDestination {
+func NewExchangeTransferDestination(destinationType TransferDestinationType, walletId string, tradingAccountType string, amount string) *ExchangeTransferDestination {
 	this := ExchangeTransferDestination{}
 	this.DestinationType = destinationType
 	this.WalletId = walletId
-	this.SubWalletId = subWalletId
+	this.TradingAccountType = tradingAccountType
 	this.Amount = amount
 	return &this
 }
@@ -99,28 +99,28 @@ func (o *ExchangeTransferDestination) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetSubWalletId returns the SubWalletId field value
-func (o *ExchangeTransferDestination) GetSubWalletId() string {
+// GetTradingAccountType returns the TradingAccountType field value
+func (o *ExchangeTransferDestination) GetTradingAccountType() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.SubWalletId
+	return o.TradingAccountType
 }
 
-// GetSubWalletIdOk returns a tuple with the SubWalletId field value
+// GetTradingAccountTypeOk returns a tuple with the TradingAccountType field value
 // and a boolean to check if the value has been set.
-func (o *ExchangeTransferDestination) GetSubWalletIdOk() (*string, bool) {
+func (o *ExchangeTransferDestination) GetTradingAccountTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.SubWalletId, true
+	return &o.TradingAccountType, true
 }
 
-// SetSubWalletId sets field value
-func (o *ExchangeTransferDestination) SetSubWalletId(v string) {
-	o.SubWalletId = v
+// SetTradingAccountType sets field value
+func (o *ExchangeTransferDestination) SetTradingAccountType(v string) {
+	o.TradingAccountType = v
 }
 
 // GetAmount returns the Amount field value
@@ -159,7 +159,7 @@ func (o ExchangeTransferDestination) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["destination_type"] = o.DestinationType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["sub_wallet_id"] = o.SubWalletId
+	toSerialize["trading_account_type"] = o.TradingAccountType
 	toSerialize["amount"] = o.Amount
 	return toSerialize, nil
 }
@@ -171,7 +171,7 @@ func (o *ExchangeTransferDestination) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"destination_type",
 		"wallet_id",
-		"sub_wallet_id",
+		"trading_account_type",
 		"amount",
 	}
 

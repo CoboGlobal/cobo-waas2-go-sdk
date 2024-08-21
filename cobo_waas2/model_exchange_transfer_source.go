@@ -17,13 +17,13 @@ import (
 // checks if the ExchangeTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ExchangeTransferSource{}
 
-// ExchangeTransferSource The information about the transaction source types `Main` and `Sub`.   An Exchange Wallet (Sub Account) as the transaction source can only transfer tokens to another Exchange Wallet. 
+// ExchangeTransferSource The information about the transaction source types `Main` and `Sub`.   Assets in an Exchange Wallet (Sub Account) can only be transferred to another Exchange Wallet. 
 type ExchangeTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// The exchange trading account or the sub-wallet ID.
-	SubWalletId string `json:"sub_wallet_id"`
+	// The trading account type.
+	TradingAccountType string `json:"trading_account_type"`
 }
 
 type _ExchangeTransferSource ExchangeTransferSource
@@ -32,11 +32,11 @@ type _ExchangeTransferSource ExchangeTransferSource
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewExchangeTransferSource(sourceType WalletSubtype, walletId string, subWalletId string) *ExchangeTransferSource {
+func NewExchangeTransferSource(sourceType WalletSubtype, walletId string, tradingAccountType string) *ExchangeTransferSource {
 	this := ExchangeTransferSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
-	this.SubWalletId = subWalletId
+	this.TradingAccountType = tradingAccountType
 	return &this
 }
 
@@ -96,28 +96,28 @@ func (o *ExchangeTransferSource) SetWalletId(v string) {
 	o.WalletId = v
 }
 
-// GetSubWalletId returns the SubWalletId field value
-func (o *ExchangeTransferSource) GetSubWalletId() string {
+// GetTradingAccountType returns the TradingAccountType field value
+func (o *ExchangeTransferSource) GetTradingAccountType() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.SubWalletId
+	return o.TradingAccountType
 }
 
-// GetSubWalletIdOk returns a tuple with the SubWalletId field value
+// GetTradingAccountTypeOk returns a tuple with the TradingAccountType field value
 // and a boolean to check if the value has been set.
-func (o *ExchangeTransferSource) GetSubWalletIdOk() (*string, bool) {
+func (o *ExchangeTransferSource) GetTradingAccountTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.SubWalletId, true
+	return &o.TradingAccountType, true
 }
 
-// SetSubWalletId sets field value
-func (o *ExchangeTransferSource) SetSubWalletId(v string) {
-	o.SubWalletId = v
+// SetTradingAccountType sets field value
+func (o *ExchangeTransferSource) SetTradingAccountType(v string) {
+	o.TradingAccountType = v
 }
 
 func (o ExchangeTransferSource) MarshalJSON() ([]byte, error) {
@@ -132,7 +132,7 @@ func (o ExchangeTransferSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
-	toSerialize["sub_wallet_id"] = o.SubWalletId
+	toSerialize["trading_account_type"] = o.TradingAccountType
 	return toSerialize, nil
 }
 
@@ -143,7 +143,7 @@ func (o *ExchangeTransferSource) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"source_type",
 		"wallet_id",
-		"sub_wallet_id",
+		"trading_account_type",
 	}
 
 	allProperties := make(map[string]interface{})
