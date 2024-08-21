@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ContractCallDestinationType The type of the contract format. Possible values include: - `EVM`: EVM compatible contracts. 
+// ContractCallDestinationType The type of the contract format. Possible values include: - `EVM_Contract`: EVM compatible contracts. 
 type ContractCallDestinationType string
 
 // List of ContractCallDestinationType

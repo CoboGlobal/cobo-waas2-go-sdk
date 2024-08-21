@@ -10,13 +10,13 @@ Name | Type | Description | Notes
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **Delegate** | [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | 
-**SubWalletId** | **string** | The exchange trading account or the sub-wallet ID. | 
+**TradingAccountType** | **string** | The trading account type. | 
 
 ## Methods
 
 ### NewTransferSource
 
-`func NewTransferSource(sourceType WalletSubtype, walletId string, address string, delegate CoboSafeDelegate, subWalletId string, ) *TransferSource`
+`func NewTransferSource(sourceType WalletSubtype, walletId string, address string, delegate CoboSafeDelegate, tradingAccountType string, ) *TransferSource`
 
 NewTransferSource instantiates a new TransferSource object
 This constructor will assign default values to properties that have it defined,
@@ -161,24 +161,24 @@ and a boolean to check if the value has been set.
 SetDelegate sets Delegate field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *TransferSource) GetSubWalletId() string`
+`func (o *TransferSource) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *TransferSource) GetSubWalletIdOk() (*string, bool)`
+`func (o *TransferSource) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *TransferSource) SetSubWalletId(v string)`
+`func (o *TransferSource) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
 
 

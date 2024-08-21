@@ -164,6 +164,305 @@ func (a *WalletsAPIService) CheckAddressValidityExecute(r ApiCheckAddressValidit
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCheckAddressesValidityRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	chainId *string
+	addresses *string
+}
+
+// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
+func (r ApiCheckAddressesValidityRequest) ChainId(chainId string) ApiCheckAddressesValidityRequest {
+	r.chainId = &chainId
+	return r
+}
+
+// A list of wallet addresses, separated by comma. You can specify a maximum of 100 addresses.
+func (r ApiCheckAddressesValidityRequest) Addresses(addresses string) ApiCheckAddressesValidityRequest {
+	r.addresses = &addresses
+	return r
+}
+
+func (r ApiCheckAddressesValidityRequest) Execute() ([]CheckAddressesValidity200ResponseInner, *http.Response, error) {
+	return r.ApiService.CheckAddressesValidityExecute(r)
+}
+
+/*
+CheckAddressesValidity Check addresses validity
+
+This operation verifies if given addresses are valid for a specific chain.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCheckAddressesValidityRequest
+*/
+func (a *WalletsAPIService) CheckAddressesValidity(ctx context.Context) ApiCheckAddressesValidityRequest {
+	return ApiCheckAddressesValidityRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return []CheckAddressesValidity200ResponseInner
+func (a *WalletsAPIService) CheckAddressesValidityExecute(r ApiCheckAddressesValidityRequest) ([]CheckAddressesValidity200ResponseInner, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []CheckAddressesValidity200ResponseInner
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.CheckAddressesValidity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/check_addresses_validity"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.chainId == nil {
+		return localVarReturnValue, nil, reportError("chainId is required and must be specified")
+	}
+	if r.addresses == nil {
+		return localVarReturnValue, nil, reportError("addresses is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "chain_id", r.chainId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "addresses", r.addresses, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCheckLoopTransfersRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	tokenId *string
+	sourceWalletId *string
+	destinationAddresses *string
+}
+
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
+func (r ApiCheckLoopTransfersRequest) TokenId(tokenId string) ApiCheckLoopTransfersRequest {
+	r.tokenId = &tokenId
+	return r
+}
+
+// The source wallet ID.
+func (r ApiCheckLoopTransfersRequest) SourceWalletId(sourceWalletId string) ApiCheckLoopTransfersRequest {
+	r.sourceWalletId = &sourceWalletId
+	return r
+}
+
+// A list of destination wallet addresses, separated by comma.
+func (r ApiCheckLoopTransfersRequest) DestinationAddresses(destinationAddresses string) ApiCheckLoopTransfersRequest {
+	r.destinationAddresses = &destinationAddresses
+	return r
+}
+
+func (r ApiCheckLoopTransfersRequest) Execute() ([]CheckLoopTransfers200ResponseInner, *http.Response, error) {
+	return r.ApiService.CheckLoopTransfersExecute(r)
+}
+
+/*
+CheckLoopTransfers Check Loop transfers
+
+This operation verifies if the transactions from a given source wallet to a list of destination addresses can be executed as Loop transfers. 
+
+For more information about Loop, see [Loop's website](https://loop.top/).
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCheckLoopTransfersRequest
+*/
+func (a *WalletsAPIService) CheckLoopTransfers(ctx context.Context) ApiCheckLoopTransfersRequest {
+	return ApiCheckLoopTransfersRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return []CheckLoopTransfers200ResponseInner
+func (a *WalletsAPIService) CheckLoopTransfersExecute(r ApiCheckLoopTransfersRequest) ([]CheckLoopTransfers200ResponseInner, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []CheckLoopTransfers200ResponseInner
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.CheckLoopTransfers")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/check_loop_transfers"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.tokenId == nil {
+		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
+	}
+	if r.sourceWalletId == nil {
+		return localVarReturnValue, nil, reportError("sourceWalletId is required and must be specified")
+	}
+	if r.destinationAddresses == nil {
+		return localVarReturnValue, nil, reportError("destinationAddresses is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "source_wallet_id", r.sourceWalletId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "destination_addresses", r.destinationAddresses, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateAddressRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
@@ -320,6 +619,8 @@ func (r ApiCreateWalletRequest) Execute() (*CreatedWalletInfo, *http.Response, e
 CreateWallet Create wallet
 
 This operation creates a wallet with the provided information.
+
+<Note>This operation is not applicable to Smart Contract Wallets.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1829,6 +2130,8 @@ This operation retrieves all chains supported by a specific wallet type or subty
 
 It provides details such as the chain ID, chain symbol, and other relevant information. If you do not specify a wallet type, this operation returns a combination of chains supported by each wallet type. You can filter the result by chain IDs. The chain metadata is publicly available without any permission restrictions.
 
+Cobo Portal currently supports over 80 blockchains and more than 3,000 tokens. In addition to this operation, you can also view the full list of supported chains [here](https://www.cobo.com/chains). We regularly update the list with new additions. If you want to request support for a specific chain or token, please [contact us](https://www.cobo.com/contact).
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListSupportedChainsRequest
@@ -2022,6 +2325,8 @@ This operation retrieves all tokens supported by a specific wallet type or subty
 
 It provides details such as token ID, token symbol, and other relevant information. If you do not specify a wallet type, this operation returns a combination of tokens supported by each wallet type. You can filter the result by token IDs or chain IDs. The token metadata is publicly available without any permission restrictions.
 
+Cobo Portal currently supports over 80 blockchains and more than 3,000 tokens. In addition to this operation, you can also view the full list of supported tokens [here](https://www.cobo.com/tokens). We regularly update the list with new additions. If you want to request support for a specific chain or token, please [contact us](https://www.cobo.com/contact).
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListSupportedTokensRequest
@@ -2195,9 +2500,9 @@ func (r ApiListTokenBalancesForAddressRequest) Execute() (*ListTokenBalancesForA
 /*
 ListTokenBalancesForAddress List token balances by address
 
-The operation retrieves a list of token balances for a specified address within an MPC Wallet. 
+The operation retrieves a list of token balances for a specified address within a wallet. 
 
-<Note>This operation is applicable to MPC Wallets only.</Note>
+<Note>This operation is applicable to MPC Wallets and Smart Contract Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2370,7 +2675,7 @@ ListTokenBalancesForWallet List token balances by wallet
 
 The operation retrieves a list of token balances within a specified wallet.
 
-<Note>This operation is applicable to Custodial Wallets and MPC Wallets only.</Note>
+<Note>This operation is not applicable to Exchange Wallets.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2708,7 +3013,7 @@ func (r ApiListWalletsRequest) ProjectId(projectId string) ApiListWalletsRequest
 	return r
 }
 
-// (This parameter is applicable to MPC Wallets only) The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallets/list-all-vaults).
+// The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallets/list-all-vaults).
 func (r ApiListWalletsRequest) VaultId(vaultId string) ApiListWalletsRequest {
 	r.vaultId = &vaultId
 	return r

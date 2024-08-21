@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ExchangeId The ID of the exchange:   - `binance`: Binance.   - `okx`: OKX.   - `deribit`: Deribit.   - `bybit`: Bybit.   - `gate`: Gate.io 
+// ExchangeId The ID of the exchange. Possible values include:   - `binance`: Binance.   - `okx`: OKX.   - `deribit`: Deribit.   - `bybit`: Bybit.   - `gate`: Gate.io   - `bitget`: Bitget 
 type ExchangeId string
 
 // List of ExchangeId
@@ -23,6 +23,7 @@ const (
 	EXCHANGEID_DERIBIT ExchangeId = "deribit"
 	EXCHANGEID_BYBIT ExchangeId = "bybit"
 	EXCHANGEID_GATE ExchangeId = "gate"
+	EXCHANGEID_BITGET ExchangeId = "bitget"
 )
 
 // All allowed values of ExchangeId enum
@@ -32,6 +33,7 @@ var AllowedExchangeIdEnumValues = []ExchangeId{
 	"deribit",
 	"bybit",
 	"gate",
+	"bitget",
 }
 
 func (v *ExchangeId) UnmarshalJSON(src []byte) error {

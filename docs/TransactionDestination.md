@@ -11,11 +11,11 @@ Name | Type | Description | Notes
 **ForceInternal** | Pointer to **bool** | Whether the transaction request must be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request may not be executed as a Loop transfer.  | [optional] 
 **ForceExternal** | Pointer to **bool** | Whether the transaction request must not be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must not be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request can be executed as a Loop transfer.  | [optional] 
 **WalletId** | **string** | The wallet ID. | 
-**SubWalletId** | Pointer to **string** | The exchange trading account or the sub-wallet ID. | [optional] 
+**TradingAccountType** | Pointer to **string** | The trading account type. | [optional] 
 **ExchangeId** | Pointer to [**ExchangeId**](ExchangeId.md) |  | [optional] 
-**Amount** | **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
+**Amount** | **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
 **Address** | **string** | The destination address. | 
-**Value** | Pointer to **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
+**Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **StructuredData** | **map[string]interface{}** | The structured data to be signed, formatted as a JSON object according to the EIP-712 standard. | 
@@ -207,30 +207,30 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *TransactionDestination) GetSubWalletId() string`
+`func (o *TransactionDestination) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *TransactionDestination) GetSubWalletIdOk() (*string, bool)`
+`func (o *TransactionDestination) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *TransactionDestination) SetSubWalletId(v string)`
+`func (o *TransactionDestination) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
-### HasSubWalletId
+### HasTradingAccountType
 
-`func (o *TransactionDestination) HasSubWalletId() bool`
+`func (o *TransactionDestination) HasTradingAccountType() bool`
 
-HasSubWalletId returns a boolean if a field has been set.
+HasTradingAccountType returns a boolean if a field has been set.
 
 ### GetExchangeId
 

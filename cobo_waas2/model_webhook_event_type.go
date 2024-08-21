@@ -13,15 +13,19 @@ import (
 	"fmt"
 )
 
-// WebhookEventType The event type.   - `wallets.transaction.created`: This event occurs when a transaction is created.   - `wallets.transaction.updated`: This event occurs when a transaction is created or when there is an update of the transaction status.   - `wallets.transaction.failed`: This event occurs when a transaction fails.   - `wallets.transaction.succeeded`: This event occurs when a transaction has been successfully completed.
+// WebhookEventType The event type. To learn the trigger condition of each event type, refer to [Webhook event types and event data](/v2/guides/webhooks-callbacks/webhook-event-type).
 type WebhookEventType string
 
 // List of WebhookEventType
 const (
-	WEBHOOKEVENTTYPE_CREATED WebhookEventType = "wallets.transaction.created"
-	WEBHOOKEVENTTYPE_UPDATED WebhookEventType = "wallets.transaction.updated"
-	WEBHOOKEVENTTYPE_FAILED WebhookEventType = "wallets.transaction.failed"
-	WEBHOOKEVENTTYPE_SUCCEEDED WebhookEventType = "wallets.transaction.succeeded"
+	WEBHOOKEVENTTYPE_TRANSACTION_CREATED WebhookEventType = "wallets.transaction.created"
+	WEBHOOKEVENTTYPE_TRANSACTION_UPDATED WebhookEventType = "wallets.transaction.updated"
+	WEBHOOKEVENTTYPE_TRANSACTION_FAILED WebhookEventType = "wallets.transaction.failed"
+	WEBHOOKEVENTTYPE_TRANSACTION_SUCCEEDED WebhookEventType = "wallets.transaction.succeeded"
+	WEBHOOKEVENTTYPE_MPC_TSS_REQUEST_CREATED WebhookEventType = "wallets.mpc.tss_request.created"
+	WEBHOOKEVENTTYPE_MPC_TSS_REQUEST_UPDATED WebhookEventType = "wallets.mpc.tss_request.updated"
+	WEBHOOKEVENTTYPE_MPC_TSS_REQUEST_FAILED WebhookEventType = "wallets.mpc.tss_request.failed"
+	WEBHOOKEVENTTYPE_MPC_TSS_REQUEST_SUCCEEDED WebhookEventType = "wallets.mpc.tss_request.succeeded"
 )
 
 // All allowed values of WebhookEventType enum
@@ -30,6 +34,10 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"wallets.transaction.updated",
 	"wallets.transaction.failed",
 	"wallets.transaction.succeeded",
+	"wallets.mpc.tss_request.created",
+	"wallets.mpc.tss_request.updated",
+	"wallets.mpc.tss_request.failed",
+	"wallets.mpc.tss_request.succeeded",
 }
 
 func (v *WebhookEventType) UnmarshalJSON(src []byte) error {

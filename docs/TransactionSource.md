@@ -9,9 +9,10 @@ Name | Type | Description | Notes
 **Address** | **string** | The wallet address. | 
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
+**SignerKeyShareHolderGroupId** | Pointer to **string** | The ID of the key share holder group that is selected to sign the transaction. | [optional] 
 **Delegate** | [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
-**SubWalletId** | Pointer to **string** | The exchange trading account or a sub-wallet ID. | [optional] 
+**TradingAccountType** | Pointer to **string** | The exchange trading account or a sub-wallet ID. | [optional] 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Addresses** | **[]string** | A list of addresses. | 
@@ -145,6 +146,31 @@ SetExcludedUtxos sets ExcludedUtxos field to given value.
 
 HasExcludedUtxos returns a boolean if a field has been set.
 
+### GetSignerKeyShareHolderGroupId
+
+`func (o *TransactionSource) GetSignerKeyShareHolderGroupId() string`
+
+GetSignerKeyShareHolderGroupId returns the SignerKeyShareHolderGroupId field if non-nil, zero value otherwise.
+
+### GetSignerKeyShareHolderGroupIdOk
+
+`func (o *TransactionSource) GetSignerKeyShareHolderGroupIdOk() (*string, bool)`
+
+GetSignerKeyShareHolderGroupIdOk returns a tuple with the SignerKeyShareHolderGroupId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSignerKeyShareHolderGroupId
+
+`func (o *TransactionSource) SetSignerKeyShareHolderGroupId(v string)`
+
+SetSignerKeyShareHolderGroupId sets SignerKeyShareHolderGroupId field to given value.
+
+### HasSignerKeyShareHolderGroupId
+
+`func (o *TransactionSource) HasSignerKeyShareHolderGroupId() bool`
+
+HasSignerKeyShareHolderGroupId returns a boolean if a field has been set.
+
 ### GetDelegate
 
 `func (o *TransactionSource) GetDelegate() CoboSafeDelegate`
@@ -185,30 +211,30 @@ and a boolean to check if the value has been set.
 SetExchangeId sets ExchangeId field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *TransactionSource) GetSubWalletId() string`
+`func (o *TransactionSource) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *TransactionSource) GetSubWalletIdOk() (*string, bool)`
+`func (o *TransactionSource) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *TransactionSource) SetSubWalletId(v string)`
+`func (o *TransactionSource) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
-### HasSubWalletId
+### HasTradingAccountType
 
-`func (o *TransactionSource) HasSubWalletId() bool`
+`func (o *TransactionSource) HasTradingAccountType() bool`
 
-HasSubWalletId returns a boolean if a field has been set.
+HasTradingAccountType returns a boolean if a field has been set.
 
 ### GetWalletType
 

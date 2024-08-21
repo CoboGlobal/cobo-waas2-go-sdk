@@ -18,12 +18,12 @@ type SmartContractWalletType string
 
 // List of SmartContractWalletType
 const (
-	SMARTCONTRACTWALLETTYPE_SAFE_WALLET SmartContractWalletType = "SafeWallet"
+	SMARTCONTRACTWALLETTYPE_SAFEWALLET SmartContractWalletType = "Safe{Wallet}"
 )
 
 // All allowed values of SmartContractWalletType enum
 var AllowedSmartContractWalletTypeEnumValues = []SmartContractWalletType{
-	"SafeWallet",
+	"Safe{Wallet}",
 }
 
 func (v *SmartContractWalletType) UnmarshalJSON(src []byte) error {

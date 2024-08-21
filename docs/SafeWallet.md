@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **Name** | **string** | The wallet name. | 
 **OrgId** | **string** | The ID of the owning organization. | 
 **ChainId** | Pointer to **string** | The ID of the chain on which the wallet operates. | [optional] 
-**SmartContractWalletType** | [**SmartContractWalletType**](SmartContractWalletType.md) |  | [default to SMARTCONTRACTWALLETTYPE_SAFE_WALLET]
+**SmartContractWalletType** | [**SmartContractWalletType**](SmartContractWalletType.md) |  | [default to SMARTCONTRACTWALLETTYPE_SAFEWALLET]
 **SafeAddress** | Pointer to **string** | The Smart Contract Wallet address. | [optional] 
 **Signers** | Pointer to **[]string** | The signers of the Smart Contract Wallet. | [optional] 
 **Threshold** | Pointer to **int32** | The minimum number of confirmations required for the Smart Contract Wallet.  | [optional] 

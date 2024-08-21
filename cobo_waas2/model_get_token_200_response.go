@@ -17,15 +17,15 @@ var _ MappedNullable = &GetToken200Response{}
 
 // GetToken200Response struct for GetToken200Response
 type GetToken200Response struct {
-	// The access token, used by Cobo Portal Apps to access specific resources of other organizations.
+	// The access token.
 	AccessToken *string `json:"access_token,omitempty"`
-	// The type of the tokens.
+	// The type of the tokens, which is Bearer.
 	TokenType *string `json:"token_type,omitempty"`
-	// The scope of the access token. This property value is empty by design.
+	// The scope of the access token to limit the app's access to the organization's resources.  **Note**: Currently this property value is empty. The scope of the access token is based on the permissions granted when the app user installs the app. 
 	Scope *string `json:"scope,omitempty"`
 	// The time in seconds in which the access token expires.
 	ExpiresIn *int32 `json:"expires_in,omitempty"`
-	// The refresh token, used by Cobo Portal Apps to obtain new access tokens when the access token expires.
+	// The refresh token, used to obtain a new access token when the current access token expires.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
 

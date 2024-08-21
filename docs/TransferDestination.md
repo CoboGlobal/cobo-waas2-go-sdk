@@ -8,17 +8,17 @@ Name | Type | Description | Notes
 **AccountOutput** | Pointer to [**AddressTransferDestinationAccountOutput**](AddressTransferDestinationAccountOutput.md) |  | [optional] 
 **UtxoOutputs** | Pointer to [**[]AddressTransferDestinationUtxoOutputsInner**](AddressTransferDestinationUtxoOutputsInner.md) |  | [optional] 
 **ChangeAddress** | Pointer to **string** | The address used to receive the remaining funds or change from the transaction. | [optional] 
-**ForceInternal** | Pointer to **bool** | Whether the transaction request must be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request may not be executed as a Loop transfer.  | [optional] 
-**ForceExternal** | Pointer to **bool** | Whether the transaction request must not be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must not be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request can be executed as a Loop transfer.  | [optional] 
+**ForceInternal** | Pointer to **bool** | Whether the transaction request must be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request may not be executed as a Loop transfer. &lt;Note&gt;Please do not set both &#x60;force_internal&#x60; and &#x60;force_internal&#x60; as &#x60;true&#x60;.&lt;/Note&gt;  | [optional] 
+**ForceExternal** | Pointer to **bool** | Whether the transaction request must not be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must not be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request can be executed as a Loop transfer. &lt;Note&gt;Please do not set both &#x60;force_internal&#x60; and &#x60;force_internal&#x60; as &#x60;true&#x60;.&lt;/Note&gt;  | [optional] 
 **WalletId** | **string** | The wallet ID. | 
-**SubWalletId** | **string** | The exchange trading account or the sub-wallet ID. | 
-**Amount** | **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
+**TradingAccountType** | **string** | The trading account type. | 
+**Amount** | **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
 
 ## Methods
 
 ### NewTransferDestination
 
-`func NewTransferDestination(destinationType TransferDestinationType, walletId string, subWalletId string, amount string, ) *TransferDestination`
+`func NewTransferDestination(destinationType TransferDestinationType, walletId string, tradingAccountType string, amount string, ) *TransferDestination`
 
 NewTransferDestination instantiates a new TransferDestination object
 This constructor will assign default values to properties that have it defined,
@@ -198,24 +198,24 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *TransferDestination) GetSubWalletId() string`
+`func (o *TransferDestination) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *TransferDestination) GetSubWalletIdOk() (*string, bool)`
+`func (o *TransferDestination) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *TransferDestination) SetSubWalletId(v string)`
+`func (o *TransferDestination) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
 
 ### GetAmount

@@ -29,8 +29,12 @@ type MPCWalletInfo struct {
 	OrgId string `json:"org_id"`
 	// The project ID.
 	ProjectId *string `json:"project_id,omitempty"`
+	// The project name.
+	ProjectName *string `json:"project_name,omitempty"`
 	// The ID of the owning vault.
 	VaultId string `json:"vault_id"`
+	// The vault name.
+	VaultName *string `json:"vault_name,omitempty"`
 }
 
 type _MPCWalletInfo MPCWalletInfo
@@ -210,6 +214,38 @@ func (o *MPCWalletInfo) SetProjectId(v string) {
 	o.ProjectId = &v
 }
 
+// GetProjectName returns the ProjectName field value if set, zero value otherwise.
+func (o *MPCWalletInfo) GetProjectName() string {
+	if o == nil || IsNil(o.ProjectName) {
+		var ret string
+		return ret
+	}
+	return *o.ProjectName
+}
+
+// GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MPCWalletInfo) GetProjectNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ProjectName) {
+		return nil, false
+	}
+	return o.ProjectName, true
+}
+
+// HasProjectName returns a boolean if a field has been set.
+func (o *MPCWalletInfo) HasProjectName() bool {
+	if o != nil && !IsNil(o.ProjectName) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectName gets a reference to the given string and assigns it to the ProjectName field.
+func (o *MPCWalletInfo) SetProjectName(v string) {
+	o.ProjectName = &v
+}
+
 // GetVaultId returns the VaultId field value
 func (o *MPCWalletInfo) GetVaultId() string {
 	if o == nil {
@@ -234,6 +270,38 @@ func (o *MPCWalletInfo) SetVaultId(v string) {
 	o.VaultId = v
 }
 
+// GetVaultName returns the VaultName field value if set, zero value otherwise.
+func (o *MPCWalletInfo) GetVaultName() string {
+	if o == nil || IsNil(o.VaultName) {
+		var ret string
+		return ret
+	}
+	return *o.VaultName
+}
+
+// GetVaultNameOk returns a tuple with the VaultName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MPCWalletInfo) GetVaultNameOk() (*string, bool) {
+	if o == nil || IsNil(o.VaultName) {
+		return nil, false
+	}
+	return o.VaultName, true
+}
+
+// HasVaultName returns a boolean if a field has been set.
+func (o *MPCWalletInfo) HasVaultName() bool {
+	if o != nil && !IsNil(o.VaultName) {
+		return true
+	}
+
+	return false
+}
+
+// SetVaultName gets a reference to the given string and assigns it to the VaultName field.
+func (o *MPCWalletInfo) SetVaultName(v string) {
+	o.VaultName = &v
+}
+
 func (o MPCWalletInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -252,7 +320,13 @@ func (o MPCWalletInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ProjectId) {
 		toSerialize["project_id"] = o.ProjectId
 	}
+	if !IsNil(o.ProjectName) {
+		toSerialize["project_name"] = o.ProjectName
+	}
 	toSerialize["vault_id"] = o.VaultId
+	if !IsNil(o.VaultName) {
+		toSerialize["vault_name"] = o.VaultName
+	}
 	return toSerialize, nil
 }
 

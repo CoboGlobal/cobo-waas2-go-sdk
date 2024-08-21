@@ -15,7 +15,15 @@ import (
 
 // WebhookEventData - struct for WebhookEventData
 type WebhookEventData struct {
+	TSSRequestWebhookEventData *TSSRequestWebhookEventData
 	TransactionWebhookEventData *TransactionWebhookEventData
+}
+
+// TSSRequestWebhookEventDataAsWebhookEventData is a convenience function that returns TSSRequestWebhookEventData wrapped in WebhookEventData
+func TSSRequestWebhookEventDataAsWebhookEventData(v *TSSRequestWebhookEventData) WebhookEventData {
+	return WebhookEventData{
+		TSSRequestWebhookEventData: v,
+	}
 }
 
 // TransactionWebhookEventDataAsWebhookEventData is a convenience function that returns TransactionWebhookEventData wrapped in WebhookEventData
@@ -36,6 +44,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
+	// check if the discriminator value is 'TSSRequest'
+	if jsonDict["data_type"] == "TSSRequest" {
+		// try to unmarshal JSON data into TSSRequestWebhookEventData
+		err = json.Unmarshal(data, &dst.TSSRequestWebhookEventData)
+		if err == nil {
+			return nil // data stored in dst.TSSRequestWebhookEventData, return on the first match
+		} else {
+			dst.TSSRequestWebhookEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as TSSRequestWebhookEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'Transaction'
 	if jsonDict["data_type"] == "Transaction" {
 		// try to unmarshal JSON data into TransactionWebhookEventData
@@ -45,6 +65,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionWebhookEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as TransactionWebhookEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TSSRequestWebhookEventData'
+	if jsonDict["data_type"] == "TSSRequestWebhookEventData" {
+		// try to unmarshal JSON data into TSSRequestWebhookEventData
+		err = json.Unmarshal(data, &dst.TSSRequestWebhookEventData)
+		if err == nil {
+			return nil // data stored in dst.TSSRequestWebhookEventData, return on the first match
+		} else {
+			dst.TSSRequestWebhookEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as TSSRequestWebhookEventData: %s", err.Error())
 		}
 	}
 
@@ -65,6 +97,10 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src WebhookEventData) MarshalJSON() ([]byte, error) {
+	if src.TSSRequestWebhookEventData != nil {
+		return json.Marshal(&src.TSSRequestWebhookEventData)
+	}
+
 	if src.TransactionWebhookEventData != nil {
 		return json.Marshal(&src.TransactionWebhookEventData)
 	}
@@ -77,6 +113,10 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.TSSRequestWebhookEventData != nil {
+		return obj.TSSRequestWebhookEventData
+	}
+
 	if obj.TransactionWebhookEventData != nil {
 		return obj.TransactionWebhookEventData
 	}

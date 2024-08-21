@@ -4,8 +4,8 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetToken**](OAuthAPI.md#GetToken) | **Get** /oauth/token | Get Access Token
-[**RefreshToken**](OAuthAPI.md#RefreshToken) | **Post** /oauth/token | Refresh Access Token
+[**GetToken**](OAuthAPI.md#GetToken) | **Get** /oauth/token | Get access token
+[**RefreshToken**](OAuthAPI.md#RefreshToken) | **Post** /oauth/token | Refresh access token
 
 
 
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 > GetToken200Response GetToken(ctx).ClientId(clientId).OrgId(orgId).GrantType(grantType).Execute()
 
-Get Access Token
+Get access token
 
 
 
@@ -31,17 +31,20 @@ import (
 )
 
 func main() {
-	clientId := "pvSwS8iFrfK0oZrB0ugG54XPDOLEv0Ij" // string | The App ID, a unique identifier to distinguish Cobo Portal Apps. You can get the App ID by retrieving the Manifest file after receiving the notification of app launch approval.
-	orgId := "e3986401-4aec-480a-973d-e775a4518413" // string | Org ID, a unique identifier to distinguish different organizations. You can get the Org ID by retrieving the Manifest file after receiving the notification of app launch approval.
-	grantType := "org_implicit" // string | The type of the permission granting. To get an access token, you need to set the value as `org_implicit`.
+	clientId := "pvSwS8iFrfK0oZrB0ugG54XPDOLEv0Ij"
+	orgId := "e3986401-4aec-480a-973d-e775a4518413"
+	grantType := "org_implicit"
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.OAuthAPI.GetToken(ctx).ClientId(clientId).OrgId(orgId).GrantType(grantType).Execute()
 	if err != nil {
@@ -65,8 +68,8 @@ Other parameters are passed through a pointer to a apiGetTokenRequest struct via
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **clientId** | **string** | The App ID, a unique identifier to distinguish Cobo Portal Apps. You can get the App ID by retrieving the Manifest file after receiving the notification of app launch approval. | 
- **orgId** | **string** | Org ID, a unique identifier to distinguish different organizations. You can get the Org ID by retrieving the Manifest file after receiving the notification of app launch approval. | 
- **grantType** | **string** | The type of the permission granting. To get an access token, you need to set the value as &#x60;org_implicit&#x60;. | 
+ **orgId** | **string** | Organization ID, a unique identifier to distinguish different organizations. You can get the Organization ID by retrieving the Manifest file after receiving the notification of app launch approval. | 
+ **grantType** | **string** | The OAuth grant type. Set the value as &#x60;org_implicit&#x60;. | 
 
 ### Return type
 
@@ -88,9 +91,9 @@ Name | Type | Description  | Notes
 
 ## RefreshToken
 
-> GetToken200Response RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
+> RefreshToken200Response RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
 
-Refresh Access Token
+Refresh access token
 
 
 
@@ -108,22 +111,25 @@ import (
 )
 
 func main() {
-	refreshTokenRequest := *coboWaas2.NewRefreshTokenRequest() // RefreshTokenRequest | The request body for refreshing an access token.
+	refreshTokenRequest := *coboWaas2.NewRefreshTokenRequest()
 
 	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
 	apiClient := coboWaas2.NewAPIClient(configuration)
 	ctx := context.Background()
-	// ctx = context.WithValue(ctx, coboWaas2.ContextServerHost, "https://api[.xxx].cobo.com/v2")
-	// ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
+		Secret: "<YOUR_PRIVATE_KEY>",
 	})
 	resp, r, err := apiClient.OAuthAPI.RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.RefreshToken``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RefreshToken`: GetToken200Response
+	// response from `RefreshToken`: RefreshToken200Response
 	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.RefreshToken`: %v\n", resp)
 }
 ```
@@ -143,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetToken200Response**](GetToken200Response.md)
+[**RefreshToken200Response**](RefreshToken200Response.md)
 
 ### Authorization
 

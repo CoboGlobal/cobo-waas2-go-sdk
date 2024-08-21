@@ -15,7 +15,7 @@ import (
 // checks if the TSSRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TSSRequest{}
 
-// TSSRequest The data for the TSS request information.
+// TSSRequest The information about the TSS request.
 type TSSRequest struct {
 	// The TSS request ID.
 	TssRequestId *string `json:"tss_request_id,omitempty"`
@@ -24,6 +24,10 @@ type TSSRequest struct {
 	TargetKeyShareHolderGroupId *string `json:"target_key_share_holder_group_id,omitempty"`
 	Type *TSSRequestType `json:"type,omitempty"`
 	Status *TSSRequestStatus `json:"status,omitempty"`
+	// The description of the TSS request.
+	Description *string `json:"description,omitempty"`
+	// The TSS request's creation time in Unix timestamp format, measured in milliseconds.
+	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 }
 
 // NewTSSRequest instantiates a new TSSRequest object
@@ -203,6 +207,70 @@ func (o *TSSRequest) SetStatus(v TSSRequestStatus) {
 	o.Status = &v
 }
 
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *TSSRequest) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TSSRequest) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *TSSRequest) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *TSSRequest) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *TSSRequest) GetCreatedTimestamp() int64 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		var ret int64
+		return ret
+	}
+	return *o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TSSRequest) GetCreatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		return nil, false
+	}
+	return o.CreatedTimestamp, true
+}
+
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *TSSRequest) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+func (o *TSSRequest) SetCreatedTimestamp(v int64) {
+	o.CreatedTimestamp = &v
+}
+
 func (o TSSRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -227,6 +295,12 @@ func (o TSSRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}
 	return toSerialize, nil
 }

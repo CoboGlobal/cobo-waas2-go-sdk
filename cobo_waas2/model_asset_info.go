@@ -19,7 +19,7 @@ var _ MappedNullable = &AssetInfo{}
 
 // AssetInfo The asset information.
 type AssetInfo struct {
-	// (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
+	// The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
 	AssetId string `json:"asset_id"`
 	// The asset symbol. You can use the value for display purposes.
 	DisplayCode *string `json:"display_code,omitempty"`

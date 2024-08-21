@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**TransferDestinationType**](TransferDestinationType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**SubWalletId** | **string** | The exchange trading account or the sub-wallet ID. | 
-**Amount** | **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
+**TradingAccountType** | **string** | The trading account type. | 
+**Amount** | **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
 
 ## Methods
 
 ### NewExchangeTransferDestination
 
-`func NewExchangeTransferDestination(destinationType TransferDestinationType, walletId string, subWalletId string, amount string, ) *ExchangeTransferDestination`
+`func NewExchangeTransferDestination(destinationType TransferDestinationType, walletId string, tradingAccountType string, amount string, ) *ExchangeTransferDestination`
 
 NewExchangeTransferDestination instantiates a new ExchangeTransferDestination object
 This constructor will assign default values to properties that have it defined,
@@ -68,24 +68,24 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *ExchangeTransferDestination) GetSubWalletId() string`
+`func (o *ExchangeTransferDestination) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *ExchangeTransferDestination) GetSubWalletIdOk() (*string, bool)`
+`func (o *ExchangeTransferDestination) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *ExchangeTransferDestination) SetSubWalletId(v string)`
+`func (o *ExchangeTransferDestination) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
 
 ### GetAmount

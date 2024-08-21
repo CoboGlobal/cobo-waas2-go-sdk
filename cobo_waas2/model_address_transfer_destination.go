@@ -17,16 +17,16 @@ import (
 // checks if the AddressTransferDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressTransferDestination{}
 
-// AddressTransferDestination The information about the transaction destination type `Address`.   Specify either the `account_output` property or the `utxo_outputs` property. Only MPC Wallets as the transaction source can transfer tokens to multiple addresses by using the `utxo_outputs` property. 
+// AddressTransferDestination The information about the transaction destination type `Address`.   Specify either the `account_output` property or the `utxo_outputs` property. You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. You should use the `utxo_outputs` property to specify the destination addresses. 
 type AddressTransferDestination struct {
 	DestinationType TransferDestinationType `json:"destination_type"`
 	AccountOutput *AddressTransferDestinationAccountOutput `json:"account_output,omitempty"`
 	UtxoOutputs []AddressTransferDestinationUtxoOutputsInner `json:"utxo_outputs,omitempty"`
 	// The address used to receive the remaining funds or change from the transaction.
 	ChangeAddress *string `json:"change_address,omitempty"`
-	// Whether the transaction request must be executed as a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).   - `true`: The transaction request must be executed as a Loop transfer.   - `false`: The transaction request may not be executed as a Loop transfer. 
+	// Whether the transaction request must be executed as a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).   - `true`: The transaction request must be executed as a Loop transfer.   - `false`: The transaction request may not be executed as a Loop transfer. <Note>Please do not set both `force_internal` and `force_internal` as `true`.</Note> 
 	ForceInternal *bool `json:"force_internal,omitempty"`
-	// Whether the transaction request must not be executed as a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).   - `true`: The transaction request must not be executed as a Loop transfer.   - `false`: The transaction request can be executed as a Loop transfer. 
+	// Whether the transaction request must not be executed as a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).   - `true`: The transaction request must not be executed as a Loop transfer.   - `false`: The transaction request can be executed as a Loop transfer. <Note>Please do not set both `force_internal` and `force_internal` as `true`.</Note> 
 	ForceExternal *bool `json:"force_external,omitempty"`
 }
 

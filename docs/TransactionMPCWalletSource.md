@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Address** | Pointer to **string** | The wallet address. | [optional] 
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
+**SignerKeyShareHolderGroupId** | Pointer to **string** | The ID of the key share holder group that is selected to sign the transaction. | [optional] 
 
 ## Methods
 
@@ -143,6 +144,31 @@ SetExcludedUtxos sets ExcludedUtxos field to given value.
 `func (o *TransactionMPCWalletSource) HasExcludedUtxos() bool`
 
 HasExcludedUtxos returns a boolean if a field has been set.
+
+### GetSignerKeyShareHolderGroupId
+
+`func (o *TransactionMPCWalletSource) GetSignerKeyShareHolderGroupId() string`
+
+GetSignerKeyShareHolderGroupId returns the SignerKeyShareHolderGroupId field if non-nil, zero value otherwise.
+
+### GetSignerKeyShareHolderGroupIdOk
+
+`func (o *TransactionMPCWalletSource) GetSignerKeyShareHolderGroupIdOk() (*string, bool)`
+
+GetSignerKeyShareHolderGroupIdOk returns a tuple with the SignerKeyShareHolderGroupId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSignerKeyShareHolderGroupId
+
+`func (o *TransactionMPCWalletSource) SetSignerKeyShareHolderGroupId(v string)`
+
+SetSignerKeyShareHolderGroupId sets SignerKeyShareHolderGroupId field to given value.
+
+### HasSignerKeyShareHolderGroupId
+
+`func (o *TransactionMPCWalletSource) HasSignerKeyShareHolderGroupId() bool`
+
+HasSignerKeyShareHolderGroupId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

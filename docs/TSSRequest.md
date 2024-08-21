@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **TargetKeyShareHolderGroupId** | Pointer to **string** | The target key share holder group ID. | [optional] 
 **Type** | Pointer to [**TSSRequestType**](TSSRequestType.md) |  | [optional] 
 **Status** | Pointer to [**TSSRequestStatus**](TSSRequestStatus.md) |  | [optional] 
+**Description** | Pointer to **string** | The description of the TSS request. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The TSS request&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 
@@ -153,6 +155,56 @@ SetStatus sets Status field to given value.
 `func (o *TSSRequest) HasStatus() bool`
 
 HasStatus returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *TSSRequest) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *TSSRequest) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *TSSRequest) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *TSSRequest) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
+
+### GetCreatedTimestamp
+
+`func (o *TSSRequest) GetCreatedTimestamp() int64`
+
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
+
+### GetCreatedTimestampOk
+
+`func (o *TSSRequest) GetCreatedTimestampOk() (*int64, bool)`
+
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedTimestamp
+
+`func (o *TSSRequest) SetCreatedTimestamp(v int64)`
+
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
+
+### HasCreatedTimestamp
+
+`func (o *TSSRequest) HasCreatedTimestamp() bool`
+
+HasCreatedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**SubWalletId** | **string** | The exchange trading account or the sub-wallet ID. | 
+**TradingAccountType** | **string** | The trading account type. | 
 
 ## Methods
 
 ### NewExchangeTransferSource
 
-`func NewExchangeTransferSource(sourceType WalletSubtype, walletId string, subWalletId string, ) *ExchangeTransferSource`
+`func NewExchangeTransferSource(sourceType WalletSubtype, walletId string, tradingAccountType string, ) *ExchangeTransferSource`
 
 NewExchangeTransferSource instantiates a new ExchangeTransferSource object
 This constructor will assign default values to properties that have it defined,
@@ -67,24 +67,24 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *ExchangeTransferSource) GetSubWalletId() string`
+`func (o *ExchangeTransferSource) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *ExchangeTransferSource) GetSubWalletIdOk() (*string, bool)`
+`func (o *ExchangeTransferSource) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *ExchangeTransferSource) SetSubWalletId(v string)`
+`func (o *ExchangeTransferSource) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
 
 

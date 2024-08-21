@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **WalletSubtype** | Pointer to [**WalletSubtype**](WalletSubtype.md) |  | [optional] 
 **Address** | **string** | The destination address. | 
 **Memo** | Pointer to **string** | The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON. | [optional] 
-**Amount** | **string** | The quantity of the token in the transaction. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
+**Amount** | **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
 
 ## Methods
 

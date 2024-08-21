@@ -26,6 +26,8 @@ type TransactionMPCWalletSource struct {
 	Address *string `json:"address,omitempty"`
 	IncludedUtxos []TransactionUtxo `json:"included_utxos,omitempty"`
 	ExcludedUtxos []TransactionUtxo `json:"excluded_utxos,omitempty"`
+	// The ID of the key share holder group that is selected to sign the transaction.
+	SignerKeyShareHolderGroupId *string `json:"signer_key_share_holder_group_id,omitempty"`
 }
 
 type _TransactionMPCWalletSource TransactionMPCWalletSource
@@ -193,6 +195,38 @@ func (o *TransactionMPCWalletSource) SetExcludedUtxos(v []TransactionUtxo) {
 	o.ExcludedUtxos = v
 }
 
+// GetSignerKeyShareHolderGroupId returns the SignerKeyShareHolderGroupId field value if set, zero value otherwise.
+func (o *TransactionMPCWalletSource) GetSignerKeyShareHolderGroupId() string {
+	if o == nil || IsNil(o.SignerKeyShareHolderGroupId) {
+		var ret string
+		return ret
+	}
+	return *o.SignerKeyShareHolderGroupId
+}
+
+// GetSignerKeyShareHolderGroupIdOk returns a tuple with the SignerKeyShareHolderGroupId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionMPCWalletSource) GetSignerKeyShareHolderGroupIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SignerKeyShareHolderGroupId) {
+		return nil, false
+	}
+	return o.SignerKeyShareHolderGroupId, true
+}
+
+// HasSignerKeyShareHolderGroupId returns a boolean if a field has been set.
+func (o *TransactionMPCWalletSource) HasSignerKeyShareHolderGroupId() bool {
+	if o != nil && !IsNil(o.SignerKeyShareHolderGroupId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignerKeyShareHolderGroupId gets a reference to the given string and assigns it to the SignerKeyShareHolderGroupId field.
+func (o *TransactionMPCWalletSource) SetSignerKeyShareHolderGroupId(v string) {
+	o.SignerKeyShareHolderGroupId = &v
+}
+
 func (o TransactionMPCWalletSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -213,6 +247,9 @@ func (o TransactionMPCWalletSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExcludedUtxos) {
 		toSerialize["excluded_utxos"] = o.ExcludedUtxos
+	}
+	if !IsNil(o.SignerKeyShareHolderGroupId) {
+		toSerialize["signer_key_share_holder_group_id"] = o.SignerKeyShareHolderGroupId
 	}
 	return toSerialize, nil
 }

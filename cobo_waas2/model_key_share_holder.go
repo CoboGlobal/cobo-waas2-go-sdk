@@ -27,6 +27,8 @@ type KeyShareHolder struct {
 	// Whether the key share holder's TSS Node is a designated transaction signer. - `true`: The TSS Node is a designated transaction signer.  - `false`: The TSS Node is not a designated transaction signer. 
 	Signer *bool `json:"signer,omitempty"`
 	Status *KeyShareHolderStatus `json:"status,omitempty"`
+	// The key share holder's Cobo Portal account ID.
+	AccountId *string `json:"account_id,omitempty"`
 }
 
 // NewKeyShareHolder instantiates a new KeyShareHolder object
@@ -238,6 +240,38 @@ func (o *KeyShareHolder) SetStatus(v KeyShareHolderStatus) {
 	o.Status = &v
 }
 
+// GetAccountId returns the AccountId field value if set, zero value otherwise.
+func (o *KeyShareHolder) GetAccountId() string {
+	if o == nil || IsNil(o.AccountId) {
+		var ret string
+		return ret
+	}
+	return *o.AccountId
+}
+
+// GetAccountIdOk returns a tuple with the AccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *KeyShareHolder) GetAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AccountId) {
+		return nil, false
+	}
+	return o.AccountId, true
+}
+
+// HasAccountId returns a boolean if a field has been set.
+func (o *KeyShareHolder) HasAccountId() bool {
+	if o != nil && !IsNil(o.AccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountId gets a reference to the given string and assigns it to the AccountId field.
+func (o *KeyShareHolder) SetAccountId(v string) {
+	o.AccountId = &v
+}
+
 func (o KeyShareHolder) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -265,6 +299,9 @@ func (o KeyShareHolder) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.AccountId) {
+		toSerialize["account_id"] = o.AccountId
 	}
 	return toSerialize, nil
 }

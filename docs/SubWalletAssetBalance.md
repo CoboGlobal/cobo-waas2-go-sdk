@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SubWalletId** | Pointer to **string** | The exchange trading account or a sub-wallet ID. | [optional] 
-**AssetId** | **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | 
+**TradingAccountType** | Pointer to **string** | The trading account type. | [optional] 
+**AssetId** | **string** | The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | 
 **Balance** | [**TokenBalanceBalance**](TokenBalanceBalance.md) |  | 
 
 ## Methods
@@ -27,30 +27,30 @@ NewSubWalletAssetBalanceWithDefaults instantiates a new SubWalletAssetBalance ob
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSubWalletId
+### GetTradingAccountType
 
-`func (o *SubWalletAssetBalance) GetSubWalletId() string`
+`func (o *SubWalletAssetBalance) GetTradingAccountType() string`
 
-GetSubWalletId returns the SubWalletId field if non-nil, zero value otherwise.
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
 
-### GetSubWalletIdOk
+### GetTradingAccountTypeOk
 
-`func (o *SubWalletAssetBalance) GetSubWalletIdOk() (*string, bool)`
+`func (o *SubWalletAssetBalance) GetTradingAccountTypeOk() (*string, bool)`
 
-GetSubWalletIdOk returns a tuple with the SubWalletId field if it's non-nil, zero value otherwise
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubWalletId
+### SetTradingAccountType
 
-`func (o *SubWalletAssetBalance) SetSubWalletId(v string)`
+`func (o *SubWalletAssetBalance) SetTradingAccountType(v string)`
 
-SetSubWalletId sets SubWalletId field to given value.
+SetTradingAccountType sets TradingAccountType field to given value.
 
-### HasSubWalletId
+### HasTradingAccountType
 
-`func (o *SubWalletAssetBalance) HasSubWalletId() bool`
+`func (o *SubWalletAssetBalance) HasTradingAccountType() bool`
 
-HasSubWalletId returns a boolean if a field has been set.
+HasTradingAccountType returns a boolean if a field has been set.
 
 ### GetAssetId
 
