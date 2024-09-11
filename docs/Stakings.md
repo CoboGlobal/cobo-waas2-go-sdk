@@ -4,20 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** | The unique id of the stake. | 
-**WalletId** | **string** | The unique wallet id. | 
-**Address** | **string** | The staker wallet address. | 
-**Amounts** | [**[]AmountDetailsInner**](AmountDetailsInner.md) | The staking amount details. | 
-**Initiator** | Pointer to **string** | The initiator of the stake. | [optional] 
-**UnlockTimestamp** | Pointer to **int64** | The unlock time. | [optional] 
-**UnlockBlockHeight** | Pointer to **int64** | The unlock block height. | [optional] 
-**PoolId** | **string** | The unique pool id. | 
-**TokenId** | **string** | The token id. | 
-**PosChain** | Pointer to **string** | The pos chain of the stake. | [optional] 
-**RewardsInfo** | Pointer to **map[string]interface{}** | The rewards info of the stake. | [optional] 
-**CreatedTimestamp** | **int64** | The time when the stake was created. | 
-**UpdatedTimestamp** | **int64** | The time when the stake was last updated. | 
+**Id** | **string** | The ID of the staking position. | 
+**WalletId** | **string** | The staker&#39;s wallet ID. | 
+**Address** | **string** | The staker&#39;s wallet address. | 
+**Amounts** | [**[]AmountDetailsInner**](AmountDetailsInner.md) | The details about the staking amount. | 
+**PoolId** | **string** | The ID of the staking pool. | 
+**TokenId** | **string** | The token ID. | 
+**RewardsInfo** | Pointer to **map[string]interface{}** | The information about the staking rewards. | [optional] 
+**CreatedTimestamp** | **int64** | The time when the staking position was created. | 
+**UpdatedTimestamp** | **int64** | The time when the staking position was last updated. | 
 **ValidatorInfo** | [**StakingsValidatorInfo**](StakingsValidatorInfo.md) |  | 
+**Extra** | Pointer to [**StakingsExtra**](StakingsExtra.md) |  | [optional] 
 
 ## Methods
 
@@ -118,81 +115,6 @@ and a boolean to check if the value has been set.
 SetAmounts sets Amounts field to given value.
 
 
-### GetInitiator
-
-`func (o *Stakings) GetInitiator() string`
-
-GetInitiator returns the Initiator field if non-nil, zero value otherwise.
-
-### GetInitiatorOk
-
-`func (o *Stakings) GetInitiatorOk() (*string, bool)`
-
-GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInitiator
-
-`func (o *Stakings) SetInitiator(v string)`
-
-SetInitiator sets Initiator field to given value.
-
-### HasInitiator
-
-`func (o *Stakings) HasInitiator() bool`
-
-HasInitiator returns a boolean if a field has been set.
-
-### GetUnlockTimestamp
-
-`func (o *Stakings) GetUnlockTimestamp() int64`
-
-GetUnlockTimestamp returns the UnlockTimestamp field if non-nil, zero value otherwise.
-
-### GetUnlockTimestampOk
-
-`func (o *Stakings) GetUnlockTimestampOk() (*int64, bool)`
-
-GetUnlockTimestampOk returns a tuple with the UnlockTimestamp field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUnlockTimestamp
-
-`func (o *Stakings) SetUnlockTimestamp(v int64)`
-
-SetUnlockTimestamp sets UnlockTimestamp field to given value.
-
-### HasUnlockTimestamp
-
-`func (o *Stakings) HasUnlockTimestamp() bool`
-
-HasUnlockTimestamp returns a boolean if a field has been set.
-
-### GetUnlockBlockHeight
-
-`func (o *Stakings) GetUnlockBlockHeight() int64`
-
-GetUnlockBlockHeight returns the UnlockBlockHeight field if non-nil, zero value otherwise.
-
-### GetUnlockBlockHeightOk
-
-`func (o *Stakings) GetUnlockBlockHeightOk() (*int64, bool)`
-
-GetUnlockBlockHeightOk returns a tuple with the UnlockBlockHeight field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUnlockBlockHeight
-
-`func (o *Stakings) SetUnlockBlockHeight(v int64)`
-
-SetUnlockBlockHeight sets UnlockBlockHeight field to given value.
-
-### HasUnlockBlockHeight
-
-`func (o *Stakings) HasUnlockBlockHeight() bool`
-
-HasUnlockBlockHeight returns a boolean if a field has been set.
-
 ### GetPoolId
 
 `func (o *Stakings) GetPoolId() string`
@@ -232,31 +154,6 @@ and a boolean to check if the value has been set.
 
 SetTokenId sets TokenId field to given value.
 
-
-### GetPosChain
-
-`func (o *Stakings) GetPosChain() string`
-
-GetPosChain returns the PosChain field if non-nil, zero value otherwise.
-
-### GetPosChainOk
-
-`func (o *Stakings) GetPosChainOk() (*string, bool)`
-
-GetPosChainOk returns a tuple with the PosChain field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPosChain
-
-`func (o *Stakings) SetPosChain(v string)`
-
-SetPosChain sets PosChain field to given value.
-
-### HasPosChain
-
-`func (o *Stakings) HasPosChain() bool`
-
-HasPosChain returns a boolean if a field has been set.
 
 ### GetRewardsInfo
 
@@ -342,6 +239,31 @@ and a boolean to check if the value has been set.
 
 SetValidatorInfo sets ValidatorInfo field to given value.
 
+
+### GetExtra
+
+`func (o *Stakings) GetExtra() StakingsExtra`
+
+GetExtra returns the Extra field if non-nil, zero value otherwise.
+
+### GetExtraOk
+
+`func (o *Stakings) GetExtraOk() (*StakingsExtra, bool)`
+
+GetExtraOk returns a tuple with the Extra field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExtra
+
+`func (o *Stakings) SetExtra(v StakingsExtra)`
+
+SetExtra sets Extra field to given value.
+
+### HasExtra
+
+`func (o *Stakings) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

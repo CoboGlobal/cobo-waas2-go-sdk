@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
-**StakingId** | **string** | The id of the related staking. | 
-**Amount** | Pointer to **string** | The amount to stake | [optional] 
+**StakingId** | **string** | The ID of the corresponding staking position. | 
+**Amount** | Pointer to **string** | The amount to unstake. For the Babylon protocol, this property is ignored. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
 
 ## Methods
