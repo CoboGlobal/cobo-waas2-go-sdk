@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   contact:
-    email: support@cobo.com
+    email: help@cobo.com
     name: Cobo WaaS
     url: https://www.cobo.com/waas
   description: |
@@ -10,7 +10,7 @@ info:
     - A unified API for Cobo’s [all four wallet types](https://manuals.cobo.com/en/portal/introduction#an-all-in-one-wallet-platform)
     - Support for 80+ chains and 3000+ tokens
     - A comprehensive selection of webhook events
-    - Flexible usage models for MPC wallets, including [Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction) and [User-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction)
+    - Flexible usage models for MPC Wallets, including [Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction) and [User-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction)
     - Programmatic control of smart contract wallets such as Safe{Wallet} with fine-grained access controls
     - Seamlessly transfer funds across multiple exchanges, including Binance, OKX, Bybit, Deribit, and more
 
@@ -20,7 +20,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: https://cobo.com/waas/tos/
   title: Cobo Wallet as a Service 2.0
-  version: 1.2.0
+  version: 1.0.0
 servers:
 - description: Development environment
   url: https://api.dev.cobo.com/v2
@@ -33,10 +33,14 @@ tags:
   name: Wallets
 - description: Operations related to mpc wallet.
   name: Wallets - MPC Wallets
+- description: Operations related to exchange wallet.
+  name: Wallets - Exchange Wallet
 - description: Operations related to all transactions.
   name: Transactions
 - description: Operations related to webhooks.
   name: Developers - Webhooks
+- description: Operations related to staking.
+  name: Stakings
 - description: Operations related to OAuth.
   name: OAuth
 paths:
@@ -1751,70 +1755,6 @@ paths:
       summary: Check addresses validity
       tags:
       - Wallets
-  /wallets/check_loop_transfers:
-    get:
-      description: "This operation verifies if the transactions from a given source\
-        \ wallet to a list of destination addresses can be executed as Loop transfers.\
-        \ \n\nFor more information about Loop, see [Loop's website](https://loop.top/).\n"
-      operationId: check_loop_transfers
-      parameters:
-      - description: "The token ID, which is the unique identifier of a token. You\
-          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
-          \ tokens](/v2/api-references/wallets/list-enabled-tokens)."
-        example: ETH_USDT
-        explode: true
-        in: query
-        name: token_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: The source wallet ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: true
-        in: query
-        name: source_wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: form
-      - description: "A list of destination wallet addresses, separated by comma."
-        example: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"
-        explode: true
-        in: query
-        name: destination_addresses
-        required: true
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/check_loop_transfers_200_response_inner'
-                type: array
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      summary: Check Loop transfers
-      tags:
-      - Wallets
   /wallets/mpc/cobo_key_share_holders:
     get:
       description: "This operation retrieves a list of all Cobo key share holders\
@@ -2859,7 +2799,7 @@ paths:
             - `deribit`: Deribit.
             - `bybit`: Bybit.
             - `gate`: Gate.io
-            - `bitget'`: Bitget
+            - `bitget`: Bitget
         explode: false
         in: path
         name: exchange_id
@@ -2949,7 +2889,7 @@ paths:
             - `deribit`: Deribit.
             - `bybit`: Bybit.
             - `gate`: Gate.io
-            - `bitget'`: Bitget
+            - `bitget`: Bitget
         explode: false
         in: path
         name: exchange_id
@@ -3102,6 +3042,70 @@ paths:
       summary: List asset balances
       tags:
       - Wallets - Exchange Wallet
+  /transactions/check_loop_transfers:
+    get:
+      description: "This operation verifies if the transactions from a given source\
+        \ wallet to a list of given destinations can be executed as Loop transfers.\
+        \ \n\nFor more information about Loop, see [Loop's website](https://loop.top/).\n"
+      operationId: check_loop_transfers
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token. You\
+          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
+          \ tokens](/v2/api-references/wallets/list-enabled-tokens)."
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The wallet ID of the transaction source.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: source_wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "A list of destination addresses, separated by comma."
+        example: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"
+        explode: true
+        in: query
+        name: destination_addresses
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/check_loop_transfers_200_response_inner'
+                type: array
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      summary: Check Loop transfers
+      tags:
+      - Transactions
   /transactions/estimate_fee:
     post:
       description: |
@@ -3631,11 +3635,50 @@ paths:
       summary: Cancel transaction
       tags:
       - Transactions
+  /transactions/broadcast:
+    post:
+      description: "<Note>This operation is only applicable to the staking scenarios.</Note>\n\
+        This operation broadcasts a list of signed transactions. \n\nIf you set `auto_broadcast`\
+        \ to `false` when [creating a staking activity](/v2/api-references/staking/create-stake-activity),\
+        \ the transaction will not be submitted to the blockchain automatically after\
+        \ being signed. In such cases, you can call this operation to broadcast the\
+        \ transaction to the blockchain.\n\nA transaction can only be broadcast if\
+        \ its status is `Broadcasting`.\n"
+      operationId: broadcast_signed_transactions
+      requestBody:
+        $ref: '#/components/requestBodies/broadcastTransactionsBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/broadcast_signed_transactions_201_response_inner'
+                type: array
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      summary: Broadcast signed transactions
+      tags:
+      - Transactions
   /transactions/{transaction_id}/drop:
     post:
       description: "This operation drops a specified transaction. \n\nDropping a transaction\
-        \ will trigger an Replace-By-Fee (RBF) transaction which is a new version\
-        \ of the original transaction. It has a higher transaction fee to incentivize\
+        \ will trigger a Replace-By-Fee (RBF) transaction which is a new version of\
+        \ the original transaction. It has a higher transaction fee to incentivize\
         \ miners to prioritize its confirmation over the original one. A transaction\
         \ can be dropped if its status is `Broadcasting`.\n\n<ul>\n<li>For EVM chains,\
         \ this RBF transaction has a transfer amount of `0` and the sending address\
@@ -3691,14 +3734,14 @@ paths:
   /transactions/{transaction_id}/speedup:
     post:
       description: "This operation accelerates a specified transaction. \n\nSpeeding\
-        \ up a transaction will trigger an Replace-By-Fee (RBF) transaction which\
-        \ is a new version of the original transaction. It shares the same inputs\
-        \ but has a higher transaction fee to incentivize miners to prioritize its\
-        \ confirmation over the previous one. A transaction can be accelerated if\
-        \ its status is `Broadcasting`.\n\nA transaction request for tracking is returned\
-        \ upon successful operation.\n\n<Note>This operation only applies to transactions\
-        \ from MPC Wallets and Smart Contract Wallets. It does not apply to transactions\
-        \ on the following chains: VET, TRON, TVET, SOL, and TON.</Note>\n\n<Info>If\
+        \ up a transaction will trigger a Replace-By-Fee (RBF) transaction which is\
+        \ a new version of the original transaction. It shares the same inputs but\
+        \ has a higher transaction fee to incentivize miners to prioritize its confirmation\
+        \ over the previous one. A transaction can be accelerated if its status is\
+        \ `Broadcasting`.\n\nA transaction request for tracking is returned upon successful\
+        \ operation.\n\n<Note>This operation only applies to transactions from MPC\
+        \ Wallets and Smart Contract Wallets. It does not apply to transactions on\
+        \ the following chains: VET, TRON, TVET, SOL, and TON.</Note>\n\n<Info>If\
         \ you speed up a transaction from a Smart Contract Wallet, two RBF transactions\
         \ will be triggered, one for the transaction from the Smart Contract Wallet,\
         \ and the other for the transaction from the Delegate.</Info>\n"
@@ -3754,7 +3797,7 @@ paths:
         \ can use this operation to obtain both an access token and a refresh token.\n\
         \nFor security purposes, access tokens expire after a certain period. Once\
         \ they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-access-token)\
-        \ to get a new access token and a new refresh token.\n"
+        \ to get a new access token and a new refresh token. \n"
       operationId: get_token
       parameters:
       - description: "The App ID, a unique identifier to distinguish Cobo Portal Apps.\
@@ -3819,7 +3862,7 @@ paths:
         \ to obtain a new access token with a specified App ID, grant type and a refresh\
         \ token. \n\nFor security purposes, access tokens expire after a certain period.\
         \ Once they expire, the app needs to call this operation to get a new access\
-        \ token and a new refresh token.\n"
+        \ token and a new refresh token. \n"
       operationId: refresh_token
       requestBody:
         $ref: '#/components/requestBodies/tokenEndpointBody'
@@ -4377,6 +4420,692 @@ paths:
       summary: Retry event
       tags:
       - Developers - Webhooks
+  /stakings/pools:
+    get:
+      description: |
+        This operation retrieves a list of staking pools currently supported.
+      operationId: list_staking_pools
+      parameters:
+      - description: "The chain ID, which is the unique identifier of a blockchain.\
+          \ You can retrieve the IDs of all the chains you can use by calling [List\
+          \ enabled chains](/v2/api-references/wallets/list-enabled-chains)."
+        example: ETH
+        explode: true
+        in: query
+        name: chain_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The token ID, which is the unique identifier of a token. You\
+          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
+          \ tokens](/v2/api-references/wallets/list-enabled-tokens)."
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+
+          - If you set `before` to `infinity`, the last page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_staking_pools_200_response'
+          description: A list of staking pools has been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: List staking pools
+      tags:
+      - Stakings
+  /stakings/pools/{pool_id}:
+    get:
+      description: |
+        This operation retrieves the detailed information about a specified staking pool.
+      operationId: get_staking_pool_by_id
+      parameters:
+      - description: "The ID of the staking pool. A staking pool is a pairing of a\
+          \ staking protocol and a specific type of token. You can call [List staking\
+          \ pools](/v2/api-references/stakings/list-staking-pools) to retrieve a list\
+          \ of staking pools."
+        example: babylon_btc
+        explode: false
+        in: path
+        name: pool_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoolDetails'
+          description: A staking pool has been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Requested resources not found.
+      summary: Get staking pool details
+      tags:
+      - Stakings
+  /stakings/estimate_fee:
+    post:
+      description: |
+        This operation calculates the fee required for a staking activity based on factors such as network congestion and transaction complexity.
+
+        For some protocols, you can use the `fee.fee_rate` property in the request body to specify the fee rate you are willing to pay.
+
+        The `fee.max_fee_amount` property in the request body will be ignored.
+
+        <Note>For the Babylon protocol, you can only select UTXO as the fee model.</Note>
+      operationId: get_staking_estimation_fee
+      requestBody:
+        $ref: '#/components/requestBodies/estimateStakeActivityFeeBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_staking_estimation_fee_201_response'
+          description: The request was successful.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+      summary: Estimate staking fees
+      tags:
+      - Stakings
+  /stakings/activities/stake:
+    post:
+      description: "This operation creates a staking request.\n\nFor some protocols,\
+        \ you can use the `fee` property in the request body to specify the maximum\
+        \ fee you are willing to pay. The transaction will fail if the actual fee\
+        \ exceeds the specified maximum fee. \n\n<Note>For the Babylon protocol, you\
+        \ can only select UTXO as the fee model.</Note>\n"
+      operationId: create_stake_activity
+      requestBody:
+        $ref: '#/components/requestBodies/createStakeActivityBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_stake_activity_201_response'
+          description: Successfully created a staking activity.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: Create stake activity
+      tags:
+      - Stakings
+  /stakings:
+    get:
+      description: "This operation retrieves a list of staking positions. \n"
+      operationId: list_stakings
+      parameters:
+      - description: "The ID of the staking pool. A staking pool is a pairing of a\
+          \ staking protocol and a specific type of token. You can call [List staking\
+          \ pools](/v2/api-references/stakings/list-staking-pools) to retrieve a list\
+          \ of staking pools."
+        example: babylon_btc
+        explode: true
+        in: query
+        name: pool_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The statuses of the staking amounts, separated by comma. Possible values include:
+
+          - `StakeInProgress`: The staking request is submitted and is waiting to be confirmed by the staking protocol.
+          - `Active`: The amount has been staked.
+          - `Rejected`: The staking request has been rejected because the signer refuses to sign the transaction.
+          - `LimitExceeded`: The total staking cap of the staking protocol has been reached.
+          - `Invalid`: The staking request is invalid. This is often due to the failure to broadcast the transaction.
+          - `UnstakeInProgress`: The unstaking request is submitted and is waiting to be confirmed by the staking protocol.
+          - `Withdrawable`: The tokens have been unstaked and are ready to be withdrawn.
+          - `WithdrawInProgress`: The withdrawal request is submitted and is waiting to be confirmed on the chain network.
+          - `Closed`: The staking position is closed.
+        example: "Active,StakeInProgress,"
+        explode: true
+        in: query
+        name: statuses
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: wallet_id
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "The token ID, which is the unique identifier of a token. You\
+          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
+          \ tokens](/v2/api-references/wallets/list-enabled-tokens)."
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+
+          - If you set `before` to `infinity`, the last page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_stakings_200_response'
+          description: A list of staking positions has been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: List staking positions
+      tags:
+      - Stakings
+  /stakings/{staking_id}:
+    get:
+      description: |
+        This operation retrieves the detailed information about a specified staking position.
+      operationId: get_staking_by_id
+      parameters:
+      - description: "The ID of the staking position. You can retrieve a list of staking\
+          \ positions by calling [List staking positions](/v2/api-references/stakings/list-all-stakings)."
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: staking_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stakings'
+          description: A staking position has been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Requested resources not found.
+      summary: Get staking position details
+      tags:
+      - Stakings
+  /stakings/activities/unstake:
+    post:
+      description: "This operation creates an unstaking request. \n\nFor some protocols,\
+        \ you can use the `fee` property in the request body to specify the maximum\
+        \ fee you are willing to pay. The transaction will fail if the actual fee\
+        \ exceeds the specified maximum fee. \n\n<Note>For the Babylon protocol, you\
+        \ can only select UTXO as the fee model.</Note>\n"
+      operationId: create_unstake_activity
+      requestBody:
+        $ref: '#/components/requestBodies/createUnstakeActivityBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_stake_activity_201_response'
+          description: Successfully created a staking activity.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: Create unstake activity
+      tags:
+      - Stakings
+  /stakings/activities/withdraw:
+    post:
+      description: "This operation creates a withdrawal request. \n\nFor some protocols,\
+        \ you can use the `fee` property in the request body to specify the maximum\
+        \ fee you are willing to pay. The transaction will fail if the actual fee\
+        \ exceeds the specified maximum fee. \n\n<Note>For the Babylon protocol, you\
+        \ can only select UTXO as the fee model.</Note>\n"
+      operationId: create_withdraw_activity
+      requestBody:
+        $ref: '#/components/requestBodies/createWithdrawActivityBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_stake_activity_201_response'
+          description: Successfully created a staking activity.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: Create withdraw activity
+      tags:
+      - Stakings
+  /stakings/activities:
+    get:
+      description: |
+        This operation retrieves a list of staking activities.
+      operationId: list_staking_activities
+      parameters:
+      - description: "The ID of the staking pool. A staking pool is a pairing of a\
+          \ staking protocol and a specific type of token. You can call [List staking\
+          \ pools](/v2/api-references/stakings/list-staking-pools) to retrieve a list\
+          \ of staking pools."
+        example: babylon_btc
+        explode: true
+        in: query
+        name: pool_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The position ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: staking_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - example: Stake
+        explode: true
+        in: query
+        name: activity_type
+        required: false
+        schema:
+          $ref: '#/components/schemas/ActivityType'
+        style: form
+      - example: Success
+        explode: true
+        in: query
+        name: activity_status
+        required: false
+        schema:
+          $ref: '#/components/schemas/ActivityStatus'
+        style: form
+      - description: "The start time of the query. All staking activities updated\
+          \ after the specified time will be retrieved. The time is in Unix timestamp\
+          \ format, measured in milliseconds."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: min_modified_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The end time of the query. All staking activities updated before\
+          \ the specified time will be retrieved. The time is in Unix timestamp format,\
+          \ measured in milliseconds."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: max_modified_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The activity initiator, which is your API key by default. You\
+          \ can also specify the initiator when creating the activity."
+        example: steve@example.com
+        explode: true
+        in: query
+        name: initiator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+
+          - If you set `before` to `infinity`, the last page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_staking_activities_200_response'
+          description: A list of staking activities have been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: List staking activities
+      tags:
+      - Stakings
+  /stakings/activities/{activity_id}:
+    get:
+      description: |
+        This operation retrieves the details of a specified staking activity.
+      operationId: get_staking_activity_by_id
+      parameters:
+      - description: The activity ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+          description: A staking activity has been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Requested resources not found.
+      summary: Get staking activity details
+      tags:
+      - Stakings
 components:
   parameters:
     sortByParam:
@@ -4805,7 +5534,7 @@ components:
         type: string
       style: form
     requiredSourceWalletIdParam:
-      description: The source wallet ID.
+      description: The wallet ID of the transaction source.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: true
       in: query
@@ -4816,7 +5545,7 @@ components:
         type: string
       style: form
     requiredDestinationAddressesParam:
-      description: "A list of destination wallet addresses, separated by comma."
+      description: "A list of destination addresses, separated by comma."
       example: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"
       explode: true
       in: query
@@ -4959,7 +5688,7 @@ components:
           - `deribit`: Deribit.
           - `bybit`: Bybit.
           - `gate`: Gate.io
-          - `bitget'`: Bitget
+          - `bitget`: Bitget
       explode: false
       in: path
       name: exchange_id
@@ -5228,7 +5957,7 @@ components:
         type: string
       style: simple
     activityIdRequiredParam:
-      description: activity id
+      description: The activity ID.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -5238,7 +5967,9 @@ components:
         type: string
       style: simple
     poolIdRequiredParam:
-      description: staking pool id
+      description: "The ID of the staking pool. A staking pool is a pairing of a staking\
+        \ protocol and a specific type of token. You can call [List staking pools](/v2/api-references/stakings/list-staking-pools)\
+        \ to retrieve a list of staking pools."
       example: babylon_btc
       explode: false
       in: path
@@ -5248,7 +5979,9 @@ components:
         type: string
       style: simple
     poolIdOptionalParam:
-      description: staking pool id
+      description: "The ID of the staking pool. A staking pool is a pairing of a staking\
+        \ protocol and a specific type of token. You can call [List staking pools](/v2/api-references/stakings/list-staking-pools)\
+        \ to retrieve a list of staking pools."
       example: babylon_btc
       explode: true
       in: query
@@ -5258,7 +5991,8 @@ components:
         type: string
       style: form
     stakingIdRequiredParam:
-      description: staking id
+      description: "The ID of the staking position. You can retrieve a list of staking\
+        \ positions by calling [List staking positions](/v2/api-references/stakings/list-all-stakings)."
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -5268,7 +6002,7 @@ components:
         type: string
       style: simple
     stakingIdOptionalParam:
-      description: staking id
+      description: The position ID.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: true
       in: query
@@ -5278,7 +6012,6 @@ components:
         type: string
       style: form
     activityTypeOptionalParam:
-      description: activity type
       example: Stake
       explode: true
       in: query
@@ -5288,7 +6021,6 @@ components:
         $ref: '#/components/schemas/ActivityType'
       style: form
     activityStatusOptionalParam:
-      description: activity status
       example: Success
       explode: true
       in: query
@@ -5298,8 +6030,9 @@ components:
         $ref: '#/components/schemas/ActivityStatus'
       style: form
     activityInitiatorOptionalParam:
-      description: "activity initiator, maybe email or api key."
-      example: vanya@cobo.com
+      description: "The activity initiator, which is your API key by default. You\
+        \ can also specify the initiator when creating the activity."
+      example: steve@example.com
       explode: true
       in: query
       name: initiator
@@ -5308,7 +6041,9 @@ components:
         type: string
       style: form
     maxModifiedTimestampOptionalParam:
-      description: The maximum modified timestamp in Unix epoch seconds
+      description: "The end time of the query. All staking activities updated before\
+        \ the specified time will be retrieved. The time is in Unix timestamp format,\
+        \ measured in milliseconds."
       example: 1635744000000
       explode: true
       in: query
@@ -5319,7 +6054,9 @@ components:
         type: integer
       style: form
     minModifiedTimestampOptionalParam:
-      description: The minimum modified timestamp in Unix epoch seconds
+      description: "The start time of the query. All staking activities updated after\
+        \ the specified time will be retrieved. The time is in Unix timestamp format,\
+        \ measured in milliseconds."
       example: 1635744000000
       explode: true
       in: query
@@ -5362,6 +6099,38 @@ components:
       required: true
       schema:
         type: string
+      style: form
+    snapshotIdParam:
+      description: "The snapshot ID. You can get the ID by calling [List snapshots](/v2/api-references/data/list-snapshots)."
+      example: 1704038400
+      explode: false
+      in: path
+      name: snapshot_id
+      required: true
+      schema:
+        type: integer
+      style: simple
+    requiredStartTimestampParam:
+      description: The start timestamp of bookkeeping item.
+      example: 1635744000000
+      explode: true
+      in: query
+      name: start_timestamp
+      required: true
+      schema:
+        format: int64
+        type: integer
+      style: form
+    requiredEndTimestampParam:
+      description: The end timestamp of bookkeeping item.
+      example: 1635744000000
+      explode: true
+      in: query
+      name: end_timestamp
+      required: true
+      schema:
+        format: int64
+        type: integer
       style: form
   requestBodies:
     createWalletBody:
@@ -5470,54 +6239,32 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              transaction_ids:
-                description: The transaction ids to be broadcast.
-                items:
-                  example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-                  type: string
-                type: array
-            type: object
-      description: The request body to batch broadcast signed transactions.
+            $ref: '#/components/schemas/broadcast_signed_transactions_request'
+      description: The request body to broadcast a list of signed transactions.
     createStakeActivityBody:
       content:
         application/json:
           schema:
-            allOf:
-            - $ref: '#/components/schemas/CreateStakeActivity'
-            - $ref: '#/components/schemas/ActivityInitiator'
-      description: The request body to create a staking activity.
+            $ref: '#/components/schemas/create_stake_activity_request'
+      description: The request body to create a staking request.
     createWithdrawActivityBody:
       content:
         application/json:
           schema:
-            allOf:
-            - $ref: '#/components/schemas/CreateWithdrawActivity'
-            - $ref: '#/components/schemas/ActivityInitiator'
+            $ref: '#/components/schemas/create_withdraw_activity_request'
       description: The request body to create a withdraw activity.
     createUnstakeActivityBody:
       content:
         application/json:
           schema:
-            allOf:
-            - $ref: '#/components/schemas/CreateUnstakeActivity'
-            - $ref: '#/components/schemas/ActivityInitiator'
-      description: The request body to create a unstake activity.
+            $ref: '#/components/schemas/create_unstake_activity_request'
+      description: The request body to create a unstaking request.
     estimateStakeActivityFeeBody:
       content:
         application/json:
           schema:
-            discriminator:
-              mapping:
-                Stake: '#/components/schemas/EstimateStakeFee'
-                Unstake: '#/components/schemas/EstimateUnstakeFee'
-                Withdraw: '#/components/schemas/EstimateWithdrawFee'
-              propertyName: activity_type
-            oneOf:
-            - $ref: '#/components/schemas/EstimateStakeFee'
-            - $ref: '#/components/schemas/EstimateUnstakeFee'
-            - $ref: '#/components/schemas/EstimateWithdrawFee'
-      description: The request body to create a get estimate fee of a staking activity.
+            $ref: '#/components/schemas/get_staking_estimation_fee_request'
+      description: The request body to get the estimated fee of a staking activity.
     createWebhookEndpointBody:
       content:
         application/json:
@@ -5872,21 +6619,7 @@ components:
         application/json:
           schema:
             items:
-              properties:
-                request_id:
-                  description: The request ID that is used to track a transaction
-                    request. The request ID is provided by you and must be unique
-                    within your organization.
-                  example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-                  type: string
-                transaction_id:
-                  description: The transaction ID.
-                  example: c986cb3b-1301-412f-9450-13a52c43a95f
-                  type: string
-              required:
-              - request_id
-              - transaction_id
-              type: object
+              $ref: '#/components/schemas/broadcast_signed_transactions_201_response_inner'
             type: array
       description: The request was successful.
     createWebhookEndpointResponse:
@@ -5949,31 +6682,13 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/PoolSummary'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            type: object
-      description: A list of staking protocols has been successfully retrieved.
+            $ref: '#/components/schemas/list_staking_pools_200_response'
+      description: A list of staking pools has been successfully retrieved.
     createActivityResponse:
       content:
         application/json:
           schema:
-            properties:
-              activity_id:
-                description: The id of the activity
-                example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
-                type: string
-              staking_id:
-                description: The id of the related staking
-                example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
-                type: string
-            required:
-            - activity_id
-            type: object
+            $ref: '#/components/schemas/create_stake_activity_201_response'
       description: Successfully created a staking activity.
     activityDetailsResponse:
       content:
@@ -5986,7 +6701,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Stakings'
-      description: A staking has been successfully retrieved.
+      description: A staking position has been successfully retrieved.
     poolDetailsResponse:
       content:
         application/json:
@@ -5997,44 +6712,19 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/Stakings'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            type: object
-      description: A list of staking has been successfully retrieved.
+            $ref: '#/components/schemas/list_stakings_200_response'
+      description: A list of staking positions has been successfully retrieved.
     listActivitiesResponse:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/Activity'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            type: object
-      description: A list of staking activities has been successfully retrieved.
+            $ref: '#/components/schemas/list_staking_activities_200_response'
+      description: A list of staking activities have been successfully retrieved.
     estimateStakingFeeResponse:
       content:
         application/json:
           schema:
-            properties:
-              fee_type:
-                $ref: '#/components/schemas/FeeType'
-              fee_amount:
-                description: The amount of the estimate transaction fee
-                example: "0.02"
-                type: string
-              token_id:
-                description: The token ID of the transaction fee.
-                example: ETH
-                type: string
-            type: object
+            $ref: '#/components/schemas/get_staking_estimation_fee_201_response'
       description: The request was successful.
     getTokenResponse:
       content:
@@ -6054,6 +6744,51 @@ components:
           schema:
             $ref: '#/components/schemas/get_token_4XX_response'
       description: Unauthorized. Please provide valid credentials.
+    listWalletBalanceSnapshotsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/WalletBalanceSnapshot'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The request was successful.
+    listWalletBalanceRecordsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/WalletBalanceSnapshotRecord'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The request was successful.
+    listBookkeepingRecordsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/BookkeepingRecord'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The request was successful.
+    getBookkeepingSummaryResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BookkeepingSummary'
+      description: The request was successful.
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -6189,6 +6924,16 @@ components:
           description: Whether withdrawals are enabled for this token.
           example: true
           type: boolean
+        dust_threshold:
+          description: "Minimum amount of token that can be transacted, such as 0.00000546\
+            \ for BTC."
+          example: "0.00000546"
+          type: string
+        custodial_minimum_deposit_threshold:
+          description: "Minimum amount of token that can be deposit, such as 0.0001\
+            \ for BTC."
+          example: "0.0001"
+          type: string
       required:
       - chain_id
       - token_id
@@ -6223,15 +6968,17 @@ components:
       example:
         icon_url: https://d.cobo.com/public/logos/USDT.png
         symbol: USDT
-        token_id: ETH_USDT
         chain_id: ETH
-        name: Tether USDT
-        can_withdraw: true
+        custodial_minimum_deposit_threshold: "0.0001"
         token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
         asset_id: USDT
+        dust_threshold: "0.00000546"
         can_deposit: true
-        decimal: 18
         fee_token_id: ETH
+        token_id: ETH_USDT
+        name: Tether USDT
+        can_withdraw: true
+        decimal: 18
       type: object
     ChainInfo:
       description: The chain information.
@@ -6240,6 +6987,7 @@ components:
         symbol: ETH
         chain_id: ETH
         require_memo: false
+        confirming_threshold: 15
         explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
         explorer_address_url: "https://etherscan.io/address/{address}"
       properties:
@@ -6271,12 +7019,18 @@ components:
           description: Whether the chain requires a memo.
           example: false
           type: boolean
+        confirming_threshold:
+          description: "Number of confirmations required for a transaction, such as\
+            \ 64 for ETH chain."
+          example: 15
+          format: int32
+          type: integer
       required:
       - chain_id
       type: object
     WalletType:
       description: |
-        The wallet type.
+        The wallet type. Possible values include:
 
         - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)
 
@@ -6294,14 +7048,7 @@ components:
       type: string
     WalletSubtype:
       description: |
-        The wallet subtype. Possible values include:
-        - `Asset`: Custodial Wallets (Asset Wallets).
-        - `Web3`: Custodial Wallets (Web3  Wallets).
-        - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
-        - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
-        - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}).
-        - `Main`: Exchange Wallets (Main Account).
-        - `Sub`: Exchange Wallets (Sub Account).
+        The wallet subtype of the transaction source. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - Asset
       - Web3
@@ -6641,7 +7388,10 @@ components:
         path: m/44'/60'/0'/0
         address: 0x0000000000000000000000000000000000000000
         chain_id: ETH
+        x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
         memo: "82840924"
+        taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
+        taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
         encoding: ENCODING_P2PKH
         pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
       properties:
@@ -6671,6 +7421,18 @@ components:
           description: The public key of the address. This property applies to MPC
             Wallets only.
           example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          type: string
+        x_only_pubkey:
+          description: The 32-byte x-only public key in hexadecimal format after tweaking.
+          example: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
+          type: string
+        taproot_script_tree_hash:
+          description: The information about a tweaked address.
+          example: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
+          type: string
+        taproot_internal_address:
+          description: The original address that to be tweaked.
+          example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
           type: string
       required:
       - address
@@ -7585,7 +8347,7 @@ components:
       - fee_amount
       - fee_type
       - token_id
-      title: Estimated Fixed
+      title: Fixed (Estimated)
       type: object
     EstimatedEvmEip1559Fee:
       description: The estimated transaction fee based on the EIP-1559 fee model.
@@ -7606,7 +8368,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: Estimated EIP-1559
+      title: EIP-1559 (Estimated)
       type: object
     EstimatedEvmLegacyFee:
       description: The estimated transaction fee based on the legacy fee model.
@@ -7627,7 +8389,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: Estimated Legacy
+      title: Legacy (Estimated)
       type: object
     EstimatedUtxoFee:
       description: The estimated transaction fee for UTXO-based chains.
@@ -7648,7 +8410,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: Estimated UTXO
+      title: UTXO (Estimated)
       type: object
     EstimatedFee:
       discriminator:
@@ -7675,9 +8437,13 @@ components:
         type: object
       - $ref: '#/components/schemas/MaxFeeAmount'
       description: |
+        The preset properties to limit transaction fee.
+
         In the fixed fee model, the transaction fee is a fixed amount within a certain amount of period regardless of the transaction size or network congestion, which can vary between different chains.
 
         You can specify the maximum fee amount to limit the transaction fee. The transaction will fail if the transaction fee exceeds the specified maximum fee amount.
+
+        Switch between the tabs to display the properties for different transaction fee models.
       example:
         max_fee_amount: "0.1"
         token_id: TRON
@@ -7685,7 +8451,7 @@ components:
       required:
       - fee_type
       - token_id
-      title: Fixed in Request
+      title: Fixed (Preset)
       type: object
     TransactionRequestEvmEip1559Fee:
       allOf:
@@ -7706,18 +8472,20 @@ components:
             type: string
         type: object
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
-      description: "In the EIP-1559 fee model, the transaction fee is calculated by\
-        \ multiplying the gas price and the gas units used by the transaction. This\
-        \ can be expressed as: Transaction fee = gas price * gas units used. \n\n\
-        You can specify the maximum gas fee per gas unit, maximum priority fee per\
-        \ gas unit, and the gas limit to limit the gas price, priority fee per gas\
-        \ unit, gas units used in the transaction.\n"
+      description: "The preset properties to limit transaction fee.\n\nIn the EIP-1559\
+        \ fee model, the transaction fee is calculated by multiplying the gas price\
+        \ and the gas units used by the transaction. This can be expressed as: Transaction\
+        \ fee = gas price * gas units used. \n\nYou can specify the maximum gas fee\
+        \ per gas unit, maximum priority fee per gas unit, and the gas limit to limit\
+        \ the gas price, priority fee per gas unit, gas units used in the transaction.\
+        \ \n\nSwitch between the tabs to display the properties for different transaction\
+        \ fee models.\n"
       required:
       - fee_type
       - max_fee_per_gas
       - max_priority_fee_per_gas
       - token_id
-      title: EIP-1559 in Request
+      title: EIP-1559 (Preset)
       type: object
     TransactionRequestEvmLegacyFee:
       allOf:
@@ -7738,15 +8506,17 @@ components:
             type: string
         type: object
       - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
-      description: "In the legacy fee model, the transaction fee is calculated by\
-        \ multiplying the gas price by the gas units used by the transaction. This\
-        \ can be expressed as: Transaction fee =  (gas price * gas units used). \n\
-        \nYou can specify the gas limit to limit the gas units used in the transaction.\n"
+      description: "The preset properties to limit transaction fee.\n\nIn the legacy\
+        \ fee model, the transaction fee is calculated by multiplying the gas price\
+        \ by the gas units used by the transaction. This can be expressed as: Transaction\
+        \ fee =  (gas price * gas units used). \n\nYou can specify the gas limit to\
+        \ limit the gas units used in the transaction.\n\nSwitch between the tabs\
+        \ to display the properties for different transaction fee models.\n"
       required:
       - fee_type
       - gas_price
       - token_id
-      title: Legacy in Request
+      title: Legacy (Preset)
       type: object
     TransactionRequestUtxoFee:
       allOf:
@@ -7765,16 +8535,18 @@ components:
             type: string
         type: object
       - $ref: '#/components/schemas/UtxoFeeBasePrice'
-      description: "In the UTXO fee model, the transaction fee is calculated by multiplying\
-        \ the fee rate by the transaction size. This can be expressed as: Transaction\
-        \ fee = fee rate * transaction size. \n\nYou can specify the maximum fee amount\
-        \ to limit the transaction fee. The transaction will fail if the transaction\
-        \ fee exceeds the specified maximum fee amount.\n"
+      description: "The preset properties to limit transaction fee.\n\nIn the UTXO\
+        \ fee model, the transaction fee is calculated by multiplying the fee rate\
+        \ by the transaction size. This can be expressed as: Transaction fee = fee\
+        \ rate * transaction size. \n\nYou can specify the maximum fee amount to limit\
+        \ the transaction fee. The transaction will fail if the transaction fee exceeds\
+        \ the specified maximum fee amount.\n\nSwitch between the tabs to display\
+        \ the properties for different transaction fee models.\n"
       required:
       - fee_rate
       - fee_type
       - token_id
-      title: UTXO in Request
+      title: UTXO (Preset)
       type: object
     TransactionRequestFee:
       discriminator:
@@ -8245,22 +9017,21 @@ components:
         \ The transaction is pending a double check. \n  - `RejectedDoubleCheck`:\
         \ The transaction is rejected because it failed a double check.\n  - `PendingSpenderCheck`:\
         \ The transaction is pending a spender check.\n  - `RejectedSpenderAuth`:\
-        \ The transaction is rejected because it is rejected by the spender.\n  -\
-        \ `RejectedTravelRule`: The transaction is rejected because it failed to comply\
-        \ with the Travel Rule.\n  - `RejectedKYT`: The transaction is rejected because\
-        \ it did not pass the Know Your Transaction (KYT) compliance checks.\n  -\
-        \ `PendingRiskControlCheck`: The transaction is pending for a Risk Control\
-        \ check.\n  - `RejectedRiskControlCheck`: The transaction is rejected because\
-        \ it failed the Risk Control check.\n  - `PendingApproverCheck`: The transaction\
-        \ is pending approval from the approver.\n  - `RejectedApproverAuth`: The\
-        \ transaction is rejected by the approver.\n  - `RejectedbyMobileCosigner`:\
-        \ The transaction is rejected by a mobile cosigner.\n  - `RejectedCoboCheck`:\
-        \ The transaction is rejected because it failed the internal check by Cobo.\n\
-        \  - `RejectedWhiteList`: The transaction is rejected because the sender or\
-        \ receiver is not included in a whitelist.\n  - `PendingWaitSigner`: The transaction\
-        \ is pending signature.\n  - `PendingApprovalStart`: The transaction approval\
-        \ is waiting to be started.      \n    - For [MPC Wallets (User-Controlled\
-        \ Wallets)](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction),\
+        \ The transaction is rejected by the spender.\n  - `RejectedTravelRule`: The\
+        \ transaction is rejected because it failed to comply with the Travel Rule.\n\
+        \  - `RejectedKYT`: The transaction is rejected because it did not pass the\
+        \ Know Your Transaction (KYT) compliance checks.\n  - `PendingRiskControlCheck`:\
+        \ The transaction is pending for a Risk Control check.\n  - `RejectedRiskControlCheck`:\
+        \ The transaction is rejected because it failed the Risk Control check.\n\
+        \  - `PendingApproverCheck`: The transaction is pending approval from the\
+        \ approver.\n  - `RejectedApproverAuth`: The transaction is rejected by the\
+        \ approver.\n  - `RejectedbyMobileCosigner`: The transaction is rejected by\
+        \ a mobile cosigner.\n  - `RejectedCoboCheck`: The transaction is rejected\
+        \ because it failed the internal check by Cobo.\n  - `RejectedWhiteList`:\
+        \ The transaction is rejected because the sender or receiver is not included\
+        \ in a whitelist.\n  - `PendingWaitSigner`: The transaction is pending signature.\n\
+        \  - `PendingApprovalStart`: The transaction approval is waiting to be started.\
+        \      \n    - For [MPC Wallets (User-Controlled Wallets)](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction),\
         \ you need to use the Client App and call the UCW SDK to start the transaction\
         \ approval process.\n    - For [MPC Wallets (Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction)):\n\
         \      - If you are using the [API co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups),\
@@ -8354,13 +9125,17 @@ components:
         \ `ContractCall`: A transaction that interacts with a smart contract.\n  -\
         \ `MessageSign`: A transaction that signs a message. \n  - `ExternalSafeTx`:\
         \ A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one\
-        \ or multiple signatures to be executed.\n"
+        \ or multiple signatures to be executed.\n  - `Stake`: A transaction that\
+        \ creates a staking request.\n  - `Unstake`: A transaction that creates a\
+        \ unstaking request.\n"
       enum:
       - Deposit
       - Withdrawal
       - ContractCall
       - MessageSign
       - ExternalSafeTx
+      - Stake
+      - Unstake
       example: Deposit
       type: string
     MpcSigningGroup:
@@ -8379,25 +9154,8 @@ components:
           type: array
       type: object
     TransactionSourceType:
-      description: "The transaction source. Possible values include:\n  - `Asset`:\
-        \ A Custodial Wallet (Asset Wallet).\n  - `Org-Controlled`: An MPC Wallet\
-        \ (Organization-Controlled Wallet).\n  - `User-Controlled`: An MPC Wallet\
-        \ (User-Controlled Wallet).\n  - `Safe{Wallet}`: A Smart Contract Wallet (Safe{Wallet}).\n\
-        \  - `Main`: An Exchange Wallet (Main Account).\n  - `Sub`: An Exchange Wallet\
-        \ (Sub Account).\n  - `DepositFromAddress`: An address that can be a Cobo's\
-        \ wallet address or an external address.\n  - `DepositFromWallet`: An Exchange\
-        \ Wallet.\n  - `DepositFromLoop`: A transfer sender through the Loop transfer\
-        \ network.\n\nFor the same transaction, the transaction source varies depending\
-        \ on whether you are the initiator or the receiver of the transaction. \n\n\
-        \  - As the initiator, you will see detailed information about the transaction\
-        \ source, and the `source` will be displayed as one of the following wallet\
-        \ sub-types: `Asset`, `Org-Controlled`, `User-Controlled`, `Safe{Wallet}`,\
-        \ `Main`, or `Sub`.\n  - As the receiver, you will see the `source` as either\
-        \ `DepositFromAddress`, `DepositFromWallet`, or `DepositFromLoop`. If the\
-        \ transaction is from the Loop transfer network, the source will be `DepositFromLoop`.\
-        \ Otherwise, it will be either `DepositFromWallet` (indicating an Exchange\
-        \ Wallet) or `DepositFromAddress` (indicating other wallet type than an Exchange\
-        \ Wallet or an external address).\n"
+      description: |
+        The transaction source. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - Asset
       - Org-Controlled
@@ -8412,7 +9170,7 @@ components:
       type: string
     TransactionCustodialAssetWalletSource:
       description: |
-        Information about the transaction source type `Asset`.
+        Information about the transaction source type `Asset`. Switch between the tabs to display the properties for different transaction sources.
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         source_type: DepositFromAddress
@@ -8431,7 +9189,7 @@ components:
       type: object
     TransactionMPCWalletSource:
       description: |
-        Information about the transaction source type `Org-Controlled` and `User-Controlled`.
+        Information about the transaction source type `Org-Controlled` and `User-Controlled`. Switch between the tabs to display the properties for different transaction sources.
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -8464,7 +9222,7 @@ components:
       type: object
     TransactionSmartContractSafeWalletSource:
       description: |
-        Information about the transaction source type `Safe{Wallet}`.
+        Information about the transaction source type `Safe{Wallet}`. Switch between the tabs to display the properties for different transaction sources.
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -8488,7 +9246,7 @@ components:
       type: object
     TransactionExchangeWalletSource:
       description: |
-        Information about the transaction source types `Main` and `Sub`.
+        Information about the transaction source types `Main` and `Sub`. Switch between the tabs to display the properties for different transaction sources.
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -8511,7 +9269,7 @@ components:
       type: object
     TransactionDepositFromAddressSource:
       description: |
-        Information about the transaction source type `DepositFromAddress`.
+        Information about the transaction source type `DepositFromAddress`. Switch between the tabs to display the properties for different transaction sources.
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -8537,7 +9295,7 @@ components:
       type: object
     TransactionDepositFromWalletSource:
       description: |
-        Information about the transaction source type `DepositFromWallet`.
+        Information about the transaction source type `DepositFromWallet`. Switch between the tabs to display the properties for different transaction sources.
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -8563,7 +9321,7 @@ components:
       type: object
     TransactionDepositFromLoopSource:
       description: |
-        Information about the transaction source type `DepositFromLoop`.
+        Information about the transaction source type `DepositFromLoop`. Switch between the tabs to display the properties for different transaction sources.
       properties:
         source_type:
           $ref: '#/components/schemas/TransactionSourceType'
@@ -8587,27 +9345,8 @@ components:
       title: Fee Station
       type: object
     TransactionDestinationType:
-      description: "The transaction destination type. Possible values include:\n \
-        \ - `Address`: An address transfer destination, including an address of Custodial\
-        \ Wallets, MPC Wallets, or Smart Contract Wallets (Safe{Wallet}) and an external\
-        \ address.\n  - `ExchangeWallet`: An Exchange Wallet transfer destination.\n\
-        \  - `EVM_Contract`: An EVM compatible contract.\n  - `EVM_EIP_191_Signature`:\
-        \ An EVM EIP-191 signature. For more details, see [Signed Data Standard](https://eips.ethereum.org/EIPS/eip-191).\n\
-        \  - `EVM_EIP_712_Signature`: An EVM EIP-712 signature. For more details,\
-        \ see [Typed structured data hashing and signing](https://eips.ethereum.org/EIPS/eip-712).\n\
-        \  - `DepositToAddress`: An address that can be a Cobo's wallet address or\
-        \ an external address.\n  - `DepositToWallet`: An Exchange Wallet.\n\nFor\
-        \ the same transaction, the transaction destination varies depending on whether\
-        \ you are the initiator or the receiver of the transaction. \n\n  - As the\
-        \ initiator, you will see detailed information about the transaction destination,\
-        \ and the `destination` will be displayed as one of the following types: `EVM_Contract`,\
-        \ `EVM_EIP_191_Signature`, `EVM_EIP_712_Signature`, `DepositToAddress`, or\
-        \ `DepositToWallet`. `DepositToWallet` indicates the destination is an Exchange\
-        \ Wallet, while `DepositToAddress` indicates the destination is a wallet of\
-        \ other wallet types or an external address.\n  - As the receiver, you will\
-        \ see the `destination` as the type `Address` or `ExchangeWallet`. `Address`\
-        \ indicates the destination is a wallet of other wallet types than Exchange\
-        \ Wallets or an external address.\n"
+      description: |
+        The transaction destination type. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - Address
       - ExchangeWallet
@@ -8620,7 +9359,7 @@ components:
       type: string
     TransactionDepositToAddressDestination:
       description: |
-        Information about the transaction destination type `DepositToAddress`.
+        Information about the transaction destination type `DepositToAddress`. Switch between the tabs to display the properties for different transaction destinations.
       properties:
         destination_type:
           $ref: '#/components/schemas/TransactionDestinationType'
@@ -8646,7 +9385,7 @@ components:
           type: string
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
       required:
@@ -8659,7 +9398,7 @@ components:
       type: object
     TransactionDepositToWalletDestination:
       description: |
-        Information about the transaction destination type `DepositToWallet`.
+        Information about the transaction destination type `DepositToWallet`. Switch between the tabs to display the properties for different transaction destinations.
       properties:
         destination_type:
           $ref: '#/components/schemas/TransactionDestinationType'
@@ -8680,7 +9419,7 @@ components:
           $ref: '#/components/schemas/ExchangeId'
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
       required:
@@ -8693,7 +9432,7 @@ components:
       type: object
     TransactionEvmContractDestination:
       description: |
-        Information about the transaction destination type `EVM_Contract`.
+        Information about the transaction destination type `EVM_Contract`. Switch between the tabs to display the properties for different transaction destinations.
       properties:
         destination_type:
           $ref: '#/components/schemas/TransactionDestinationType'
@@ -8723,7 +9462,7 @@ components:
       type: object
     TransactionMessageSignEIP191Destination:
       description: |
-        Information about the transaction destination type `EVM_EIP_191_Signature`.
+        Information about the transaction destination type `EVM_EIP_191_Signature`. Switch between the tabs to display the properties for different transaction destinations.
       properties:
         destination_type:
           $ref: '#/components/schemas/TransactionDestinationType'
@@ -8739,7 +9478,7 @@ components:
       type: object
     TransactionMessageSignEIP712Destination:
       description: |
-        Information about the transaction destination type `EVM_EIP_712_Signature`.
+        Information about the transaction destination type `EVM_EIP_712_Signature`. Switch between the tabs to display the properties for different transaction destinations.
       properties:
         destination_type:
           $ref: '#/components/schemas/TransactionDestinationType'
@@ -8757,7 +9496,7 @@ components:
       type: object
     TransactionTransferToAddressDestination:
       description: |
-        Information about the transaction destination type `Address`.
+        Information about the transaction destination type `Address`. Switch between the tabs to display the properties for different transaction destinations.
       example:
         account_output:
           amount: "1.5"
@@ -8808,7 +9547,7 @@ components:
       type: object
     TransactionTransferToWalletDestination:
       description: |
-        Information about the transaction destination type `ExchangeWallet`.
+        Information about the transaction destination type `ExchangeWallet`. Switch between the tabs to display the properties for different transaction destinations.
       properties:
         destination_type:
           $ref: '#/components/schemas/TransactionDestinationType'
@@ -8825,7 +9564,7 @@ components:
           $ref: '#/components/schemas/ExchangeId'
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
       required:
@@ -8943,11 +9682,12 @@ components:
             type: string
         type: object
       - $ref: '#/components/schemas/MaxFeeAmount'
-      description: The transaction fee actually charged by the chain that uses the
-        fixed fee model.
+      description: "The transaction fee actually charged by the chain that uses the\
+        \ fixed fee model. \n\nSwitch between the tabs to display the properties for\
+        \ different transaction fee models.\n"
       required:
       - fee_type
-      title: Fixed from Receipt
+      title: Fixed (Actually Charged)
       type: object
     TransactionEvmEip1559Fee:
       allOf:
@@ -8976,9 +9716,10 @@ components:
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
       - $ref: '#/components/schemas/FeeGasLimit'
       description: "The transaction fee actually charged by the chain that uses the\
-        \ EIP-1559 fee model. \nThe transaction fee is calculated by multiplying the\
-        \ gas price by the used gas units. This can be expressed as: Transaction fee\
-        \ = gas price * used gas units.\n"
+        \ EIP-1559 fee model. \n\nThe transaction fee is calculated by multiplying\
+        \ the gas price by the used gas units. This can be expressed as: Transaction\
+        \ fee = gas price * used gas units.\n\nSwitch between the tabs to display\
+        \ the properties for different transaction fee models.\n"
       example:
         effective_gas_price: "100000000"
         max_priority_fee_per_gas: "1000000000000"
@@ -8990,7 +9731,7 @@ components:
         fee_used: "0.1"
       required:
       - fee_type
-      title: EIP-1559 from Receipt
+      title: EIP-1559 (Actually Charged)
       type: object
     TransactionEvmLegacyFee:
       allOf:
@@ -9013,12 +9754,13 @@ components:
       - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
       - $ref: '#/components/schemas/FeeGasLimit'
       description: "The transaction fee actually charged by the chain that uses the\
-        \ legacy fee model. \nThe transaction fee is calculated by multiplying the\
+        \ legacy fee model. \n\nThe transaction fee is calculated by multiplying the\
         \ gas price by the used gas. This can be expressed as: Transaction fee = gas\
-        \ price * used gas units.\n"
+        \ price * used gas units.\n\nSwitch between the tabs to display the properties\
+        \ for different transaction fee models.\n"
       required:
       - fee_type
-      title: Legacy from Receipt
+      title: Legacy (Actually Charged)
       type: object
     TransactionUtxoFee:
       allOf:
@@ -9043,10 +9785,13 @@ components:
       - $ref: '#/components/schemas/UtxoFeeBasePrice'
       description: |
         The transaction fee actually charged by the chain that uses the UTXO fee model, such as Bitcoin.
+
         The transaction fee is calculated by multiplying the fee rate by the transaction size. This can be expressed as: Transaction fee = fee rate * transaction size.
+
+        Switch between the tabs to display the properties for different transaction fee models.
       required:
       - fee_type
-      title: UTXO from Receipt
+      title: UTXO (Actually Charged)
       type: object
     TransactionFee:
       discriminator:
@@ -9138,7 +9883,8 @@ components:
       type: string
     CustodialTransferSource:
       description: The information about the transaction source types `Asset` and
-        `Web3`.
+        `Web3`. Switch between the tabs to display the properties for different transaction
+        sources.
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         source_type: Asset
@@ -9158,7 +9904,9 @@ components:
     MpcTransferSource:
       description: "The information about the transaction source types `Org-Controlled`\
         \ and `User-Controlled`. \n\nIf you specify both the `address` or `included_utxos`\
-        \ properties, the specified included UTXOs must belong to the address.\n"
+        \ properties, the specified included UTXOs must belong to the address.\n\n\
+        Switch between the tabs to display the properties for different transaction\
+        \ sources.\n"
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         included_utxos:
@@ -9199,7 +9947,9 @@ components:
       title: Transfer from MPC Wallet
       type: object
     SafeTransferSource:
-      description: "The information about the transaction source type `Safe{Wallet}`."
+      description: "The information about the transaction source type `Safe{Wallet}`.\
+        \ Switch between the tabs to display the properties for different transaction\
+        \ sources."
       properties:
         source_type:
           $ref: '#/components/schemas/WalletSubtype'
@@ -9265,7 +10015,8 @@ components:
     ExchangeTransferSource:
       description: "The information about the transaction source types `Main` and\
         \ `Sub`. \n\nAssets in an Exchange Wallet (Sub Account) can only be transferred\
-        \ to another Exchange Wallet.\n"
+        \ to another Exchange Wallet.\n\nSwitch between the tabs to display the properties\
+        \ for different transaction sources.\n"
       properties:
         source_type:
           $ref: '#/components/schemas/WalletSubtype'
@@ -9304,7 +10055,8 @@ components:
         \ \n\nSpecify either the `account_output` property or the `utxo_outputs` property.\
         \ You can transfer tokens to multiple addresses only if you use MPC Wallets\
         \ as the transaction source. You should use the `utxo_outputs` property to\
-        \ specify the destination addresses.\n"
+        \ specify the destination addresses.\n\nSwitch between the tabs to display\
+        \ the properties for different transaction destinations.\n"
       example:
         account_output:
           amount: "1.5"
@@ -9358,7 +10110,8 @@ components:
     ExchangeTransferDestination:
       description: "The information about the transaction destination type `ExchangeWallet`.\
         \ \n\nAn Exchange Wallet (Sub Account) can only receive asset transfers from\
-        \ another Exchange Wallet.\n"
+        \ another Exchange Wallet.\n\nSwitch between the tabs to display the properties\
+        \ for different transaction destinations.\n"
       properties:
         destination_type:
           $ref: '#/components/schemas/TransferDestinationType'
@@ -9373,7 +10126,7 @@ components:
           type: string
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
       required:
@@ -9385,9 +10138,7 @@ components:
       type: object
     TransferDestinationType:
       description: |
-        The transaction destination type. Possible values include:
-        - `Address`: An address, including an address of Custodial Wallets, MPC Wallets, or Smart Contract Wallets (Safe{Wallet}) and an external address.
-        - `ExchangeWallet`: An Exchange Wallet.
+        The transaction destination type. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - Address
       - ExchangeWallet
@@ -9575,7 +10326,8 @@ components:
       type: object
     BaseContractCallSource:
       description: The information about the transaction source type `Org-Controlled`
-        and `User-Controlled`.
+        and `User-Controlled`. Switch between the tabs to display the properties for
+        different transaction sources.
       properties:
         source_type:
           $ref: '#/components/schemas/ContractCallSourceType'
@@ -9617,14 +10369,13 @@ components:
         required:
         - delegate
         type: object
-      description: "The information about the transaction source type `Safe{Wallet}`."
+      description: "The information about the transaction source type `Safe{Wallet}`.\
+        \ Switch between the tabs to display the properties for different transaction\
+        \ sources."
       title: Contract Call from Smart Contract Wallet
     ContractCallSourceType:
       description: |
-        The type of the wallet. Possible values include:
-        - `Org-Controlled`: MPC Wallets (Organization-Controlled).
-        - `User-Controlled`: MPC Wallets (User-Controlled).
-        - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}).
+        The type of the source. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - Org-Controlled
       - User-Controlled
@@ -9643,8 +10394,7 @@ components:
       - $ref: '#/components/schemas/SafeContractCallSource'
     ContractCallDestinationType:
       description: |
-        The type of the contract format. Possible values include:
-        - `EVM_Contract`: EVM compatible contracts.
+        The type of the contract format. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - EVM_Contract
       example: EVM_Contract
@@ -9781,9 +10531,7 @@ components:
       type: object
     MessageSignSourceType:
       description: |
-        The wallet subtype. Possible values include:
-        - `Org-Controlled`: MPC Wallets (Organization-Controlled).
-        - `User-Controlled`: MPC Wallets (User-Controlled).
+        The wallet subtype of the transaction source. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - Org-Controlled
       - User-Controlled
@@ -9832,14 +10580,26 @@ components:
       - structured_data
       title: EIP-712 Signature
       type: object
+    RawMessageSignDestination:
+      description: The information about the destination `Raw_Message_Signature`.
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/MessageSignDestinationType'
+        msg_hash:
+          description: "Message hash to be signed, in hexadecimal format."
+          type: string
+      required:
+      - destination_type
+      - msg_hash
+      title: Raw Message Signature
+      type: object
     MessageSignDestinationType:
       description: |
-        The type of the signature format. Possible values include:
-        - `EVM_EIP_191`: [EIP-191: Signed Data Standard](https://eips.ethereum.org/EIPS/eip-191).
-        - `EVM_EIP_712`: [EIP-712: Typed structured data hashing and signing](https://eips.ethereum.org/EIPS/eip-712).
+        The type of the signature format. Refer to [Transaction sources and destinations](/v2/guides/sources-and-destinations) for details.
       enum:
       - EVM_EIP_191_Signature
       - EVM_EIP_712_Signature
+      - Raw_Message_Signature
       example: EVM_EIP_191_Signature
       type: string
     MessageSignDestination:
@@ -9847,10 +10607,12 @@ components:
         mapping:
           EVM_EIP_191: '#/components/schemas/EvmEIP191MessageSignDestination'
           EVM_EIP_712: '#/components/schemas/EvmEIP712MessageSignDestination'
+          RAW_MESSAGE: '#/components/schemas/RawMessageSignDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/EvmEIP191MessageSignDestination'
       - $ref: '#/components/schemas/EvmEIP712MessageSignDestination'
+      - $ref: '#/components/schemas/RawMessageSignDestination'
     MessageSignParams:
       description: The information about a transaction that signs a message. You can
         provide the message either as raw data or as structured data.
@@ -10372,15 +11134,43 @@ components:
     StakingSource:
       discriminator:
         mapping:
-          Org-Controlled: '#/components/schemas/MpcContractCallSource'
-          User-Controlled: '#/components/schemas/MpcContractCallSource'
-          Safe{Wallet}: '#/components/schemas/SafeContractCallSource'
+          Org-Controlled: '#/components/schemas/MpcStakeSource'
         propertyName: source_type
       oneOf:
-      - $ref: '#/components/schemas/MpcContractCallSource'
-      - $ref: '#/components/schemas/SafeContractCallSource'
+      - $ref: '#/components/schemas/MpcStakeSource'
+    MpcStakeSource:
+      allOf:
+      - $ref: '#/components/schemas/BaseStakeSource'
+      title: Stake from MPC Wallets
+    BaseStakeSource:
+      description: The information about the staking source.
+      properties:
+        source_type:
+          $ref: '#/components/schemas/StakeSourceType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address.
+          example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          type: string
+      required:
+      - address
+      - source_type
+      - wallet_id
+      type: object
+    StakeSourceType:
+      description: |
+        The staking source type. Possible values include:
+          - `Org-Controlled`: An MPC Wallet (Organization-Controlled Wallet).
+      enum:
+      - Org-Controlled
+      example: Org-Controlled
+      type: string
     BaseStakeExtra:
-      description: Base stake extra.
+      description: The base information about a staking protocol.
       properties:
         pool_type:
           $ref: '#/components/schemas/StakingPoolType'
@@ -10390,37 +11180,77 @@ components:
     BabylonStakeExtra:
       allOf:
       - $ref: '#/components/schemas/BaseStakeExtra'
-      - description: The stake extra for babylon.
+      - description: The staking information specific to the Babylon protocol.
         properties:
           finality_provider_public_key:
-            description: The public key of finality provider.
-            example: "0000000000000000000000000000000000000000000000000000000000000000"
+            description: The public key of the finality provider.
+            example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
             pattern: "^[0-9a-fA-F]{64}$"
             type: string
           stake_block_time:
-            description: The stake block time.
+            description: The number of blocks that need to be processed before the
+              locked tokens are unlocked and become accessible.
             example: 2000
             format: int64
             type: integer
-          only_sign:
-            description: "Whether to only sign transactions. Default is `false`, if\
-              \ set to `true`, \nthe transaction will not be submitted to the blockchain\
-              \ automatically.\nYou can call `Broadcast transactions` to submit the\
-              \ transaction to the blockchain, \nOr you can find the signed raw_tx\
-              \ by `Get transaction information` and broadcast it yourself.\n"
-            example: true
+          auto_broadcast:
+            description: |
+              Whether to automatically broadcast the transaction. The default value is `true`.
+
+              - `true`: Automatically broadcast the transaction.
+              - `false`: The transaction will not be submitted to the blockchain automatically. You can call `Broadcast transactions` to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.
+            example: false
             type: boolean
         required:
         - finality_provider_public_key
         - stake_block_time
         type: object
+      title: Babylon
+    BabylonStakingExtra:
+      allOf:
+      - $ref: '#/components/schemas/BaseStakeExtra'
+      - description: The information about the Babylon protocol.
+        properties:
+          pos_chain:
+            description: The Proof-of-Stake (PoS) chain.
+            example: Babylon Chain
+            type: string
+          unlock_timestamp:
+            description: "The estimated time when the bitcoins will be unlocked, in\
+              \ Unix timestamp format, measured in milliseconds."
+            example: 1640995200000
+            format: int64
+            type: integer
+          unlock_block_height:
+            description: The block height at which the bitcoins will be unlocked.
+            example: 871234
+            format: int64
+            type: integer
+          stake_address:
+            description: The address receiving the staked bitcoins.
+            example: tb1pgmpawe2rkrzuuflu8yw564lerfalhw8td36dha49yz4l99xvm3psteh393
+            type: string
+          unbond_address:
+            description: The address receiving the unlocked bitcoins.
+            example: tb1pzcn4hmsfq32vyfnckvrtyjhdh0cf2hsm2nr6m8034x4lnrx3ry4q2nyzqv
+            type: string
+        required:
+        - pos_chain
+        type: object
+      example:
+        unlock_block_height: 871234
+        stake_address: tb1pgmpawe2rkrzuuflu8yw564lerfalhw8td36dha49yz4l99xvm3psteh393
+        unbond_address: tb1pzcn4hmsfq32vyfnckvrtyjhdh0cf2hsm2nr6m8034x4lnrx3ry4q2nyzqv
+        pos_chain: Babylon Chain
+        unlock_timestamp: 1640995200000
+        pool_type: Babylon
     EigenLayerLstStakeExtra:
       allOf:
       - $ref: '#/components/schemas/BaseStakeExtra'
-      - description: The stake extra of eigen layer lst token.
+      - description: The stake extra of LST on Eigenlayer.
         properties:
           operator:
-            description: The operator address.
+            description: The operator's address.
             example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
             type: string
         required:
@@ -10440,43 +11270,75 @@ components:
         type: object
     Activity:
       description: The staking activity.
+      example:
+        amount: "100.00"
+        address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+        initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        created_timestamp: 1640995200000
+        type: Stake
+        pool_id: babylon_btc
+        initiator_type: API
+        wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+        token_id: BTC
+        updated_timestamp: 1640995200000
+        timeline:
+        - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          action: Submitted
+          status: success
+          timestamp: 1640995200000
+        - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          action: Submitted
+          status: success
+          timestamp: 1640995200000
+        id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        staking_id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        transaction_ids:
+        - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        status: Success
       properties:
         id:
-          description: The unique id of the activity.
+          description: The activity ID.
           example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
         initiator:
           description: The initiator of the activity.
-          example: vanya@cobo.com
+          example: steve@example.com
           type: string
+        initiator_type:
+          $ref: '#/components/schemas/TransactionInitiatorType'
         type:
           $ref: '#/components/schemas/ActivityType'
         wallet_id:
-          description: The id of the wallet to stake.
+          description: The staker's wallet ID.
           example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
         address:
-          description: The staker wallet address.
-          example: 0x0000000000000000000000000000000000000000
+          description: The staker's wallet address.
+          example: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
           type: string
         pool_id:
-          description: The id of the staking pool.
+          description: The ID of the staking pool.
           example: babylon_btc
           type: string
         token_id:
-          description: The id of the token.
+          description: The token ID.
           example: BTC
           type: string
         staking_id:
-          description: The id of the related staking.
+          description: The ID of the corresponding staking position.
           example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
         amount:
-          description: The amount of the activity.
+          description: The staking amount.
           example: "100.00"
           type: string
         transaction_ids:
-          description: The related txs of the activity.
+          description: The IDs of the corresponding transactions of the activity.
           items:
             example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
             type: string
@@ -10510,7 +11372,11 @@ components:
       - updated_at
       type: object
     ActivityAction:
-      description: The status of activity.
+      description: |
+        The specific action taken within an activity. Possible values include:
+        - `Submitted`: Submit the staking, unstaking, or withdrawal request.
+        - `BTCConfirmation`: The Bitcoin chain confirms the request.
+        - `BabylonConfirmation`: The Babylon protocol confirms the request.
       enum:
       - Submitted
       - BTCConfirmation
@@ -10519,18 +11385,36 @@ components:
       type: string
     ActivityTimeline:
       description: The timeline of the staking activity.
+      example:
+        transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        action: Submitted
+        status: success
+        timestamp: 1640995200000
       properties:
         action:
           $ref: '#/components/schemas/ActivityAction'
         status:
+          description: |
+            The status of the action. Possible values include:
+              - `Success`: The action is successfully completed.
+              - `Processing`: The action is being processed.
+              - `Failed`: The action has failed.
           example: success
           type: string
         timestamp:
+          description: "The time when the action took place, in Unix timestamp format,\
+            \ measured in milliseconds. \n- For the `Submitted` action, `timestamp`\
+            \ represents the time the staking, unstaking, or withdrawal request was\
+            \ created. \n- For the `BTCConfirmation` action, `timestamp` represents\
+            \ the time when the request was confirmed on the Bitcoin chain, or when\
+            \ the confirmation failed.\n- For the `BabylonConfirmation` action, `timestamp`\
+            \ represents the time when the request was confirmed by the Babylon protocol,\
+            \ or when the confirmation failed.\n"
           example: 1640995200000
           format: int64
           type: integer
         transaction_id:
-          description: The transaction ID.
+          description: The ID of the corresponding transaction.
           example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           type: string
       required:
@@ -10538,9 +11422,11 @@ components:
       type: object
     ActivityInitiator:
       properties:
-        initiator:
-          description: The initiator of the staking activity.
-          example: vanya@cobo.com
+        app_initiator:
+          description: "The initiator of the staking activity. If you do not specify\
+            \ this property, the WaaS service will automatically designate the API\
+            \ key as the initiator."
+          example: steve@example.com
           type: string
       type: object
     CreateStakeActivity:
@@ -10553,11 +11439,11 @@ components:
         source:
           $ref: '#/components/schemas/StakingSource'
         pool_id:
-          description: The id of the staking pool
+          description: The ID of the staking pool.
           example: babylon_btc
           type: string
         amount:
-          description: The amount to stake
+          description: The amount to stake.
           example: "100.00"
           type: string
         fee:
@@ -10580,15 +11466,15 @@ components:
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         staking_id:
-          description: The id of the related staking.
+          description: The ID of the corresponding staking position.
           example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
         amount:
-          description: The amount to stake
+          description: The amount to withdraw.
           example: "100.00"
           type: string
         address:
-          description: The withdraw to address.
+          description: The withdrawal address.
           example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           type: string
         fee:
@@ -10605,11 +11491,12 @@ components:
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         staking_id:
-          description: The id of the related staking.
+          description: The ID of the corresponding staking position.
           example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
         amount:
-          description: The amount to stake
+          description: "The amount to unstake. For the Babylon protocol, this property\
+            \ is ignored."
           example: "100.00"
           type: string
         fee:
@@ -10618,7 +11505,11 @@ components:
       - staking_id
       type: object
     ActivityStatus:
-      description: The status of activity.
+      description: |
+        The status of the staking activity. Possible values include:
+        - `Success`: The activity is successfully completed.
+        - `Processing`: The activity is being processed.
+        - `Failed`: The activity has failed.
       enum:
       - Success
       - Processing
@@ -10626,18 +11517,30 @@ components:
       example: Success
       type: string
     ActivityType:
-      description: The type of activity.
+      description: |
+        The type of the staking activity. Possible values include:
+        - `Stake`: Stake tokens.
+        - `Unstake`: Unstake tokens. Unstaked tokens are still in the staking protocol.
+        - `Withdraw`: Withdraw tokens from the staking protocol to your wallet.
       enum:
       - Stake
       - Unstake
       - Withdraw
-      - Claim
-      - Delegate
-      - Undelegate
       example: Stake
       type: string
     AmountStatus:
-      description: The status of staking amount.
+      description: |
+        The status of the staking amount. Possible values include:
+
+        - `StakeInProgress`: The staking request is submitted and is waiting to be confirmed by the staking protocol.
+        - `Active`: The amount has been staked.
+        - `Rejected`: The staking request has been rejected because the signer refuses to sign the transaction.
+        - `LimitExceeded`: The total staking cap of the staking protocol has been reached.
+        - `Invalid`: The staking request is invalid. This is often due to the failure to broadcast the transaction.
+        - `UnstakeInProgress`: The unstaking request is submitted and is waiting to be confirmed by the staking protocol.
+        - `Withdrawable`: The tokens have been unstaked and are ready to be withdrawn.
+        - `WithdrawInProgress`: The withdrawal request is submitted and is waiting to be confirmed on the chain network.
+        - `Closed`: The staking position is closed.
       enum:
       - StakeInProgress
       - Active
@@ -10651,53 +11554,65 @@ components:
       example: Active
       type: string
     AmountDetails:
-      description: The staking amount details.
+      description: The details about the staking amount.
       items:
         $ref: '#/components/schemas/AmountDetails_inner'
       type: array
     BabylonValidator:
-      description: The babylon validator information.
-      properties:
-        icon_url:
-          description: The URL of the validator's icon.
-          example: https://example.com/icon.png
-          format: url
-          type: string
-        name:
-          description: The name of validator.
-          example: Cobo
-          type: string
-        priority:
-          description: The priority of validator.
-          example: 0
-          type: integer
-        public_key:
-          description: The public key of validator.
-          example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
-          type: string
-        commission_rate:
-          description: The commission rate of validator.
-          example: 0.1
-          format: float
-          type: number
-        supported_pos_chains:
-          description: The list of supported pos chains.
-          example:
-          - Babylon
-          - Cosmos
-          items:
-            enum:
+      allOf:
+      - $ref: '#/components/schemas/BaseStakeExtra'
+      - description: The information about the Babylon validator.
+        properties:
+          icon_url:
+            description: The URL of the validator's icon.
+            example: https://example.com/icon.png
+            format: url
+            type: string
+          name:
+            description: The validator's name.
+            example: Cobo
+            type: string
+          priority:
+            description: This property can be ignored.
+            example: 0
+            type: integer
+          public_key:
+            description: The public key of the validator.
+            example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            type: string
+          commission_rate:
+            description: The commission rate of the validator.
+            example: 0.1
+            format: float
+            type: number
+          supported_pos_chains:
+            description: A list of supported Proof-of-Stake (PoS) chains.
+            example:
             - Babylon
             - Cosmos
-            type: string
-          type: array
-      required:
-      - commission_rate
-      - icon_url
-      - name
-      - public_key
-      - supported_pos_chains
-      type: object
+            items:
+              enum:
+              - Babylon
+              - Cosmos
+              type: string
+            type: array
+        required:
+        - commission_rate
+        - icon_url
+        - name
+        - public_key
+        - supported_pos_chains
+        type: object
+      example:
+        icon_url: https://example.com/icon.png
+        public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+        supported_pos_chains:
+        - Babylon
+        - Cosmos
+        name: Cobo
+        commission_rate: 0.1
+        priority: 0
+        pool_type: Babylon
     EigenlayerValidator:
       description: The EigenLayer validator info.
       properties:
@@ -10731,55 +11646,108 @@ components:
     PoolDetails:
       allOf:
       - $ref: '#/components/schemas/PoolSummary'
-      - description: The detail of the staking protocol.
+      - description: The detailed information about the staking protocol.
         properties:
           pool_type:
             $ref: '#/components/schemas/StakingPoolType'
           min_amount:
-            description: The minimum amount to stake.
+            description: The minimum amount that can be staked in one staking request.
             example: "0.01"
             type: string
           max_amount:
-            description: The maximum amount to stake.
+            description: The maximum amount that can be staked in one staking request.
             example: "100.00"
             type: string
           min_stake_period:
-            description: The minimum staking period in days.
+            description: "The minimum staking period, in days."
             example: 30
             format: int32
             type: integer
           max_stake_period:
-            description: The maximum staking period in days.
+            description: "The maximum staking period, in days."
             example: 1000
             format: int32
             type: integer
           min_stake_blocks:
-            description: The minimum staking blocks.
+            description: The minimum block number. A block number indicates the number
+              of blocks that need to be processed before the locked tokens are unlocked
+              and become accessible.
             example: 100
             format: int64
             type: integer
           max_stake_blocks:
-            description: The maximum staking blocks.
+            description: The maximum block number. A block number indicates the number
+              of blocks that need to be processed before the locked tokens are unlocked
+              and become accessible.
             example: 1000
             format: int64
             type: integer
           validators_info:
-            description: The list of validators.
+            description: A list of available validators.
             items:
               $ref: '#/components/schemas/PoolDetails_allOf_validators_info'
             type: array
         required:
         - validators_info
         type: object
+      example:
+        validators_info:
+        - icon_url: https://example.com/icon.png
+          public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+          supported_pos_chains:
+          - Babylon
+          - Cosmos
+          name: Cobo
+          commission_rate: 0.1
+          priority: 0
+          pool_type: Babylon
+        - icon_url: https://example.com/icon.png
+          public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+          supported_pos_chains:
+          - Babylon
+          - Cosmos
+          name: Cobo
+          commission_rate: 0.1
+          priority: 0
+          pool_type: Babylon
+        chain_id: Bitcoin
+        min_amount: "0.01"
+        est_apr: 0.05
+        protocol_icon_url: https://example.com/icon.png
+        protocol: Babylon
+        min_stake_blocks: 100
+        supported_wallet_subtypes:
+        - Org-Controlled
+        token_id: BTC
+        supported_wallet_types:
+        - MPC
+        max_amount: "100.00"
+        max_stake_period: 1000
+        id: babylon_btc
+        pool_type: Babylon
+        max_stake_blocks: 1000
+        min_stake_period: 30
     PoolSummary:
-      description: The summary of the staking pool.
+      description: The basic information of the staking pool.
+      example:
+        protocol: Babylon
+        supported_wallet_subtypes:
+        - Org-Controlled
+        chain_id: Bitcoin
+        token_id: BTC
+        supported_wallet_types:
+        - MPC
+        id: babylon_btc
+        est_apr: 0.05
+        protocol_icon_url: https://example.com/icon.png
       properties:
         id:
-          description: The unique protocol id.
+          description: The ID of the staking pool. A staking pool is a pairing of
+            a staking protocol and a specific type of token.
           example: babylon_btc
           type: string
         chain_id:
-          description: The unique chain id.
+          description: The chain ID.
           example: Bitcoin
           type: string
         protocol:
@@ -10792,25 +11760,42 @@ components:
           format: url
           type: string
         supported_wallet_types:
-          description: The list of available wallet types.
+          description: |
+            The wallet type. Possible values include:
+
+            - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)
+
+            - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
+
+            - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
+
+            - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
           example:
           - MPC
           items:
             $ref: '#/components/schemas/WalletType'
           type: array
         supported_wallet_subtypes:
-          description: The list of available wallet types.
+          description: |
+            The wallet subtype. Possible values include:
+            - `Asset`: Custodial Wallets (Asset Wallets).
+            - `Web3`: Custodial Wallets (Web3  Wallets).
+            - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
+            - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
+            - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}).
+            - `Main`: Exchange Wallets (Main Account).
+            - `Sub`: Exchange Wallets (Sub Account).
           example:
           - Org-Controlled
           items:
             $ref: '#/components/schemas/WalletSubtype'
           type: array
         token_id:
-          description: The unique token id.
+          description: The token ID.
           example: BTC
           type: string
         est_apr:
-          description: The estimated APR.
+          description: The estimated annual percentage rate (APR).
           example: 0.05
           format: float
           type: number
@@ -10825,90 +11810,95 @@ components:
       - token_id
       type: object
     Stakings:
-      description: The staking info.
+      description: The information about a staking position.
+      example:
+        wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+        address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+        amounts:
+        - amount: "100.00"
+          status: Active
+        - amount: "100.00"
+          status: Active
+        token_id: BTC
+        updated_timestamp: 1640995200000
+        validator_info:
+          icon_url: https://example.com/logo.png
+          public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+          address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+          name: Cobo
+          commission_rate: "0.1"
+        extra:
+          unlock_block_height: 871234
+          stake_address: tb1pgmpawe2rkrzuuflu8yw564lerfalhw8td36dha49yz4l99xvm3psteh393
+          unbond_address: tb1pzcn4hmsfq32vyfnckvrtyjhdh0cf2hsm2nr6m8034x4lnrx3ry4q2nyzqv
+          pos_chain: Babylon Chain
+          unlock_timestamp: 1640995200000
+          pool_type: Babylon
+        created_timestamp: 1640995200000
+        id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        pool_id: babylon_btc
+        rewards_info: {}
       properties:
         id:
-          description: The unique id of the stake.
+          description: The ID of the staking position.
           example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
         wallet_id:
-          description: The unique wallet id.
+          description: The staker's wallet ID.
           example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
         address:
-          description: The staker wallet address.
-          example: 0x0000000000000000000000000000000000000000
+          description: The staker's wallet address.
+          example: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
           type: string
         amounts:
-          description: The staking amount details.
+          description: The details about the staking amount.
           items:
             $ref: '#/components/schemas/AmountDetails_inner'
           type: array
-        initiator:
-          description: The initiator of the stake.
-          example: Vanya@cobo.com
-          type: string
-        unlock_timestamp:
-          description: The unlock time.
-          example: 1640995200000
-          format: int64
-          type: integer
-        unlock_block_height:
-          description: The unlock block height.
-          example: 871234
-          format: int64
-          type: integer
         pool_id:
-          description: The unique pool id.
+          description: The ID of the staking pool.
           example: babylon_btc
           type: string
         token_id:
-          description: The token id.
+          description: The token ID.
           example: BTC
           type: string
-        pos_chain:
-          description: The pos chain of the stake.
-          example: Babylon Chain
-          type: string
         rewards_info:
-          description: The rewards info of the stake.
+          description: The information about the staking rewards.
           example: {}
           type: object
         created_timestamp:
-          description: The time when the stake was created.
+          description: The time when the staking position was created.
           example: 1640995200000
           format: int64
           type: integer
         updated_timestamp:
-          description: The time when the stake was last updated.
+          description: The time when the staking position was last updated.
           example: 1640995200000
           format: int64
           type: integer
         validator_info:
           $ref: '#/components/schemas/Stakings_validator_info'
+        extra:
+          $ref: '#/components/schemas/Stakings_extra'
       required:
       - address
       - amounts
       - created_timestamp
       - id
       - pool_id
-      - status
       - token_id
       - updated_timestamp
       - validator_info
       - wallet_id
       type: object
     StakingPoolType:
+      description: The type of the staking pool.
       enum:
       - Babylon
-      - EigenLayerNativeETH
-      - EigenLayerLst
       example: Babylon
       type: string
-      x-enumDescriptions:
-        Babylon: The Babylon staking protocol.
-        EigenLayerNativeETH: The Eigen Layer staking pool for native ETH.
-        EigenLayerLst: The Eigen Layer staking pool for lst token.
     BaseEstimateStakingFee:
       properties:
         activity_type:
@@ -10920,14 +11910,144 @@ components:
       allOf:
       - $ref: '#/components/schemas/BaseEstimateStakingFee'
       - $ref: '#/components/schemas/CreateStakeActivity'
+      title: Staking fee
     EstimateUnstakeFee:
       allOf:
       - $ref: '#/components/schemas/BaseEstimateStakingFee'
       - $ref: '#/components/schemas/CreateUnstakeActivity'
+      title: Unstaking fee
     EstimateWithdrawFee:
       allOf:
       - $ref: '#/components/schemas/BaseEstimateStakingFee'
       - $ref: '#/components/schemas/CreateWithdrawActivity'
+      title: Withdrawal fee
+    WalletBalanceSnapshot:
+      description: The snapshot information.
+      properties:
+        snapshot_id:
+          description: The snapshot ID.
+          example: 1704038400
+          type: integer
+        snapshot_name:
+          description: The snapshot name.
+          example: Demo snapshot
+          type: string
+      required:
+      - balance
+      - snapshot_id
+      - token_id
+      type: object
+    WalletBalanceSnapshotRecord:
+      description: The token snapshot detail information.
+      properties:
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        wallet_type:
+          $ref: '#/components/schemas/WalletType'
+        wallet_name:
+          description: The wallet name.
+          example: Example Wallet
+          type: string
+        token_id:
+          description: "The token ID, which is the unique identifier of a token. You\
+            \ can retrieve the IDs of all the tokens you can use by calling [List\
+            \ enabled tokens](/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH_USDT
+          type: string
+        balance:
+          description: The balance of the token.
+          example: "10.5"
+          type: string
+      required:
+      - balance
+      - token_id
+      - wallet_id
+      type: object
+    BookkeepingRecord:
+      description: The bookkeeping item information.
+      properties:
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        wallet_type:
+          $ref: '#/components/schemas/WalletType'
+        wallet_name:
+          description: The wallet name.
+          example: Example Wallet
+          type: string
+        transaction_timestamp:
+          description: "The time when the bookkeeping was created, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+        token_id:
+          description: "The token ID, which is the unique identifier of a token. You\
+            \ can retrieve the IDs of all the tokens you can use by calling [List\
+            \ enabled tokens](/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH_USDT
+          type: string
+        type:
+          description: The bookkeeping type.
+          example: Deposit
+          type: string
+        amount:
+          description: The amount of the bookkeeping.
+          example: "10.5"
+          type: string
+        balance:
+          description: The post-balance of the tx.
+          example: "10.5"
+          type: string
+        from_address:
+          description: The from address.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+          type: string
+        to_address:
+          description: The to address.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEM)
+          type: string
+        transaction_hash:
+          description: The transaction hash.
+          example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          type: string
+      required:
+      - amount
+      - balance
+      - token_id
+      - transaction_timestamp
+      - type
+      - wallet_id
+      type: object
+    BookkeepingSummary:
+      description: The bookkeeping item information.
+      properties:
+        total_transaction_count:
+          description: Total transaction count.
+          example: 10000
+          type: integer
+        total_inflow_value:
+          description: The USD value of the inflow.
+          example: "10.5"
+          type: string
+        total_outflow_value:
+          description: The USD value of the outflow.
+          example: "1.5"
+          type: string
+        total_fee_value:
+          description: The USD value of the fee.
+          example: "0.5"
+          type: string
+      required:
+      - total_inflow_value
+      - total_outflow_value
+      - total_transaction_count
+      type: object
     list_supported_chains_200_response:
       example:
         pagination:
@@ -10939,12 +12059,14 @@ components:
           symbol: ETH
           chain_id: ETH
           require_memo: false
+          confirming_threshold: 15
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
           explorer_address_url: "https://etherscan.io/address/{address}"
         - icon_url: https://d.cobo.com/public/logos/ETH.png
           symbol: ETH
           chain_id: ETH
           require_memo: false
+          confirming_threshold: 15
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
           explorer_address_url: "https://etherscan.io/address/{address}"
       properties:
@@ -10964,26 +12086,30 @@ components:
         data:
         - icon_url: https://d.cobo.com/public/logos/USDT.png
           symbol: USDT
-          token_id: ETH_USDT
           chain_id: ETH
-          name: Tether USDT
-          can_withdraw: true
+          custodial_minimum_deposit_threshold: "0.0001"
           token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           asset_id: USDT
+          dust_threshold: "0.00000546"
           can_deposit: true
-          decimal: 18
           fee_token_id: ETH
+          token_id: ETH_USDT
+          name: Tether USDT
+          can_withdraw: true
+          decimal: 18
         - icon_url: https://d.cobo.com/public/logos/USDT.png
           symbol: USDT
-          token_id: ETH_USDT
           chain_id: ETH
-          name: Tether USDT
-          can_withdraw: true
+          custodial_minimum_deposit_threshold: "0.0001"
           token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           asset_id: USDT
+          dust_threshold: "0.00000546"
           can_deposit: true
-          decimal: 18
           fee_token_id: ETH
+          token_id: ETH_USDT
+          name: Tether USDT
+          can_withdraw: true
+          decimal: 18
       properties:
         data:
           items:
@@ -11114,13 +12240,19 @@ components:
         - path: m/44'/60'/0'/0
           address: 0x0000000000000000000000000000000000000000
           chain_id: ETH
+          x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
           memo: "82840924"
+          taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
+          taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
           encoding: ENCODING_P2PKH
           pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
         - path: m/44'/60'/0'/0
           address: 0x0000000000000000000000000000000000000000
           chain_id: ETH
+          x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
           memo: "82840924"
+          taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
+          taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
           encoding: ENCODING_P2PKH
           pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
       properties:
@@ -11141,11 +12273,22 @@ components:
           type: string
         count:
           default: 1
-          description: The number of addresses to create.
+          description: "The number of addresses to create. If you want to generate\
+            \ a tweaked address, `count` can only be `1`."
           example: 1
           maximum: 50
           minimum: 1
           type: integer
+        taproot_script_tree_hash:
+          description: The information about the new address. This parameter is required
+            only if you want to generate a tweaked address.
+          example: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
+          type: string
+        taproot_internal_address:
+          description: The address you want to tweak. This parameter is required only
+            if you want to generate a tweaked address.
+          example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
+          type: string
         encoding:
           $ref: '#/components/schemas/AddressEncoding'
       required:
@@ -11211,26 +12354,6 @@ components:
           type: boolean
       required:
       - address
-      - validity
-      type: object
-    check_loop_transfers_200_response_inner:
-      example:
-        is_loop: false
-        address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
-      properties:
-        address:
-          description: The wallet address.
-          example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
-          type: string
-        is_loop:
-          description: |
-            Whether the transaction from the given source wallet to the destination address can be executed as a Loop transfer.
-
-            - `true`: The transaction can be executed as a Loop transfer.
-            - `false`: The transaction cannot be executed as a Loop transfer.
-          example: false
-          type: boolean
-      required:
       - validity
       type: object
     list_mpc_projects_200_response:
@@ -11613,6 +12736,26 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
+    check_loop_transfers_200_response_inner:
+      example:
+        is_loop: false
+        address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+      properties:
+        address:
+          description: The wallet address.
+          example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          type: string
+        is_loop:
+          description: |
+            Whether the transaction from the given source to the given destination address can be executed as a Loop transfer.
+
+            - `true`: The transaction can be executed as a Loop transfer.
+            - `false`: The transaction cannot be executed as a Loop transfer.
+          example: false
+          type: boolean
+      required:
+      - validity
+      type: object
     create_transfer_transaction_201_response:
       example:
         transaction_id: c986cb3b-1301-412f-9450-13a52c43a95f
@@ -11795,6 +12938,34 @@ components:
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
+      type: object
+    broadcast_signed_transactions_request:
+      properties:
+        transaction_ids:
+          description: "The transaction IDs of the signed transactions to be broadcast.\
+            \ You can retrieve the transactions corresponding to a staking activity\
+            \ by calling [Get staking activity details](/v2/api-references/stakings/get-staking-activity-details)."
+          items:
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
+          type: array
+      type: object
+    broadcast_signed_transactions_201_response_inner:
+      example:
+        transaction_id: c986cb3b-1301-412f-9450-13a52c43a95f
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      properties:
+        request_id:
+          description: The request ID that is used to track a transaction request.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        transaction_id:
+          description: The transaction ID of this broadcast transaction.
+          example: c986cb3b-1301-412f-9450-13a52c43a95f
+          type: string
+      required:
+      - request_id
+      - transaction_id
       type: object
     get_token_200_response:
       example:
@@ -12365,6 +13536,237 @@ components:
           example: true
           type: boolean
       type: object
+    list_staking_pools_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - protocol: Babylon
+          supported_wallet_subtypes:
+          - Org-Controlled
+          chain_id: Bitcoin
+          token_id: BTC
+          supported_wallet_types:
+          - MPC
+          id: babylon_btc
+          est_apr: 0.05
+          protocol_icon_url: https://example.com/icon.png
+        - protocol: Babylon
+          supported_wallet_subtypes:
+          - Org-Controlled
+          chain_id: Bitcoin
+          token_id: BTC
+          supported_wallet_types:
+          - MPC
+          id: babylon_btc
+          est_apr: 0.05
+          protocol_icon_url: https://example.com/icon.png
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PoolSummary'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    get_staking_estimation_fee_request:
+      discriminator:
+        mapping:
+          Stake: '#/components/schemas/EstimateStakeFee'
+          Unstake: '#/components/schemas/EstimateUnstakeFee'
+          Withdraw: '#/components/schemas/EstimateWithdrawFee'
+        propertyName: activity_type
+      oneOf:
+      - $ref: '#/components/schemas/EstimateStakeFee'
+      - $ref: '#/components/schemas/EstimateUnstakeFee'
+      - $ref: '#/components/schemas/EstimateWithdrawFee'
+    get_staking_estimation_fee_201_response:
+      example:
+        fee_amount: "0.02"
+        token_id: ETH
+        fee_type: EVM_EIP_1559
+      properties:
+        fee_type:
+          $ref: '#/components/schemas/FeeType'
+        fee_amount:
+          description: The amount of the estimated fee.
+          example: "0.02"
+          type: string
+        token_id:
+          description: The token ID of the staking fee.
+          example: ETH
+          type: string
+      type: object
+    create_stake_activity_request:
+      allOf:
+      - $ref: '#/components/schemas/CreateStakeActivity'
+      - $ref: '#/components/schemas/ActivityInitiator'
+    create_stake_activity_201_response:
+      example:
+        activity_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+        staking_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+      properties:
+        activity_id:
+          description: The activity ID.
+          example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          type: string
+        staking_id:
+          description: The ID of the staking position.
+          example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          type: string
+      required:
+      - activity_id
+      type: object
+    list_stakings_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+          amounts:
+          - amount: "100.00"
+            status: Active
+          - amount: "100.00"
+            status: Active
+          token_id: BTC
+          updated_timestamp: 1640995200000
+          validator_info:
+            icon_url: https://example.com/logo.png
+            public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+            name: Cobo
+            commission_rate: "0.1"
+          extra:
+            unlock_block_height: 871234
+            stake_address: tb1pgmpawe2rkrzuuflu8yw564lerfalhw8td36dha49yz4l99xvm3psteh393
+            unbond_address: tb1pzcn4hmsfq32vyfnckvrtyjhdh0cf2hsm2nr6m8034x4lnrx3ry4q2nyzqv
+            pos_chain: Babylon Chain
+            unlock_timestamp: 1640995200000
+            pool_type: Babylon
+          created_timestamp: 1640995200000
+          id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          pool_id: babylon_btc
+          rewards_info: {}
+        - wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+          amounts:
+          - amount: "100.00"
+            status: Active
+          - amount: "100.00"
+            status: Active
+          token_id: BTC
+          updated_timestamp: 1640995200000
+          validator_info:
+            icon_url: https://example.com/logo.png
+            public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+            name: Cobo
+            commission_rate: "0.1"
+          extra:
+            unlock_block_height: 871234
+            stake_address: tb1pgmpawe2rkrzuuflu8yw564lerfalhw8td36dha49yz4l99xvm3psteh393
+            unbond_address: tb1pzcn4hmsfq32vyfnckvrtyjhdh0cf2hsm2nr6m8034x4lnrx3ry4q2nyzqv
+            pos_chain: Babylon Chain
+            unlock_timestamp: 1640995200000
+            pool_type: Babylon
+          created_timestamp: 1640995200000
+          id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          pool_id: babylon_btc
+          rewards_info: {}
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Stakings'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    create_unstake_activity_request:
+      allOf:
+      - $ref: '#/components/schemas/CreateUnstakeActivity'
+      - $ref: '#/components/schemas/ActivityInitiator'
+    create_withdraw_activity_request:
+      allOf:
+      - $ref: '#/components/schemas/CreateWithdrawActivity'
+      - $ref: '#/components/schemas/ActivityInitiator'
+    list_staking_activities_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - amount: "100.00"
+          address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+          initiator: steve@example.com
+          fee:
+            max_fee_amount: "0.1"
+            token_id: TRON
+            fee_type: EVM_EIP_1559
+          created_timestamp: 1640995200000
+          type: Stake
+          pool_id: babylon_btc
+          initiator_type: API
+          wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          token_id: BTC
+          updated_timestamp: 1640995200000
+          timeline:
+          - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            action: Submitted
+            status: success
+            timestamp: 1640995200000
+          - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            action: Submitted
+            status: success
+            timestamp: 1640995200000
+          id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          staking_id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          transaction_ids:
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          status: Success
+        - amount: "100.00"
+          address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+          initiator: steve@example.com
+          fee:
+            max_fee_amount: "0.1"
+            token_id: TRON
+            fee_type: EVM_EIP_1559
+          created_timestamp: 1640995200000
+          type: Stake
+          pool_id: babylon_btc
+          initiator_type: API
+          wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          token_id: BTC
+          updated_timestamp: 1640995200000
+          timeline:
+          - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            action: Submitted
+            status: success
+            timestamp: 1640995200000
+          - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            action: Submitted
+            status: success
+            timestamp: 1640995200000
+          id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          staking_id: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          transaction_ids:
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          status: Success
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Activity'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
     TokenBalance_balance:
       description: The balance details.
       example:
@@ -12511,7 +13913,7 @@ components:
           type: string
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
       type: object
@@ -12527,7 +13929,7 @@ components:
           type: string
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
         script:
@@ -12563,7 +13965,7 @@ components:
           type: string
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
       required:
@@ -12582,7 +13984,7 @@ components:
           type: string
         amount:
           description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
         script:
@@ -12597,14 +13999,13 @@ components:
       discriminator:
         mapping:
           Babylon: '#/components/schemas/BabylonStakeExtra'
-          EigenLayerNativeETH: '#/components/schemas/EigenLayerLstStakeExtra'
-          EigenLayerLST: '#/components/schemas/EigenLayerNativeStakeExtra'
         propertyName: pool_type
       oneOf:
       - $ref: '#/components/schemas/BabylonStakeExtra'
-      - $ref: '#/components/schemas/EigenLayerLstStakeExtra'
-      - $ref: '#/components/schemas/EigenLayerNativeStakeExtra'
     AmountDetails_inner:
+      example:
+        amount: "100.00"
+        status: Active
       properties:
         status:
           $ref: '#/components/schemas/AmountStatus'
@@ -12612,37 +14013,54 @@ components:
           description: The staking amount.
           example: "100.00"
           type: string
-        activity_id:
-          description: The related staking activity ID.
-          example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
-          type: string
       required:
       - amount
       - status
       type: object
     PoolDetails_allOf_validators_info:
+      discriminator:
+        mapping:
+          Babylon: '#/components/schemas/BabylonValidator'
+        propertyName: pool_type
       oneOf:
       - $ref: '#/components/schemas/BabylonValidator'
-      - $ref: '#/components/schemas/EigenlayerValidator'
     Stakings_validator_info:
-      description: The validator info of the stake.
+      description: The information about the validator.
+      example:
+        icon_url: https://example.com/logo.png
+        public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+        address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
+        name: Cobo
+        commission_rate: "0.1"
       properties:
         icon_url:
+          description: The URL of the validator's icon.
           example: https://example.com/logo.png
           type: string
         public_key:
-          example: "0000000000000000000000000000000000000000000000000000000000000000"
+          description: The validator's public key.
+          example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
           type: string
         name:
+          description: The validator's name.
           example: Cobo
           type: string
         address:
-          example: 0x0000000000000000000000000000000000000000
+          description: The wallet address of the validator.
+          example: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
           type: string
         commission_rate:
+          description: The commission rate of the validator.
           example: "0.1"
           type: string
       type: object
+    Stakings_extra:
+      discriminator:
+        mapping:
+          Babylon: '#/components/schemas/BabylonStakingExtra'
+        propertyName: pool_type
+      oneOf:
+      - $ref: '#/components/schemas/BabylonStakingExtra'
   securitySchemes:
     CoboAuth:
       description: The API key.

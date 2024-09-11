@@ -52,18 +52,6 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test WalletsAPIService CheckLoopTransfers", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.WalletsAPI.CheckLoopTransfers(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test WalletsAPIService CreateAddress", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

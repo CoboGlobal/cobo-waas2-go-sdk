@@ -4,19 +4,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
 **IconUrl** | **string** | The URL of the validator&#39;s icon. | 
-**Name** | **string** | The name of validator. | 
-**Priority** | Pointer to **int32** | The priority of validator. | [optional] 
-**PublicKey** | **string** | The public key of validator. | 
-**CommissionRate** | **float32** | The commission of validator. | 
-**SupportedPosChains** | **[]string** | The list of supported pos chains. | 
-**Address** | **string** | The address of validator. | 
+**Name** | **string** | The validator&#39;s name. | 
+**Priority** | Pointer to **int32** | This property can be ignored. | [optional] 
+**PublicKey** | **string** | The public key of the validator. | 
+**CommissionRate** | **float32** | The commission rate of the validator. | 
+**SupportedPosChains** | **[]string** | A list of supported Proof-of-Stake (PoS) chains. | 
 
 ## Methods
 
 ### NewPoolDetailsAllOfValidatorsInfo
 
-`func NewPoolDetailsAllOfValidatorsInfo(iconUrl string, name string, publicKey string, commissionRate float32, supportedPosChains []string, address string, ) *PoolDetailsAllOfValidatorsInfo`
+`func NewPoolDetailsAllOfValidatorsInfo(poolType StakingPoolType, iconUrl string, name string, publicKey string, commissionRate float32, supportedPosChains []string, ) *PoolDetailsAllOfValidatorsInfo`
 
 NewPoolDetailsAllOfValidatorsInfo instantiates a new PoolDetailsAllOfValidatorsInfo object
 This constructor will assign default values to properties that have it defined,
@@ -30,6 +30,26 @@ will change when the set of required properties is changed
 NewPoolDetailsAllOfValidatorsInfoWithDefaults instantiates a new PoolDetailsAllOfValidatorsInfo object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetPoolType
+
+`func (o *PoolDetailsAllOfValidatorsInfo) GetPoolType() StakingPoolType`
+
+GetPoolType returns the PoolType field if non-nil, zero value otherwise.
+
+### GetPoolTypeOk
+
+`func (o *PoolDetailsAllOfValidatorsInfo) GetPoolTypeOk() (*StakingPoolType, bool)`
+
+GetPoolTypeOk returns a tuple with the PoolType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPoolType
+
+`func (o *PoolDetailsAllOfValidatorsInfo) SetPoolType(v StakingPoolType)`
+
+SetPoolType sets PoolType field to given value.
+
 
 ### GetIconUrl
 
@@ -154,26 +174,6 @@ and a boolean to check if the value has been set.
 `func (o *PoolDetailsAllOfValidatorsInfo) SetSupportedPosChains(v []string)`
 
 SetSupportedPosChains sets SupportedPosChains field to given value.
-
-
-### GetAddress
-
-`func (o *PoolDetailsAllOfValidatorsInfo) GetAddress() string`
-
-GetAddress returns the Address field if non-nil, zero value otherwise.
-
-### GetAddressOk
-
-`func (o *PoolDetailsAllOfValidatorsInfo) GetAddressOk() (*string, bool)`
-
-GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAddress
-
-`func (o *PoolDetailsAllOfValidatorsInfo) SetAddress(v string)`
-
-SetAddress sets Address field to given value.
 
 
 

@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Status** | [**AmountStatus**](AmountStatus.md) |  | 
 **Amount** | **string** | The staking amount. | 
-**ActivityId** | Pointer to **string** | The related staking activity ID. | [optional] 
 
 ## Methods
 
@@ -66,31 +65,6 @@ and a boolean to check if the value has been set.
 
 SetAmount sets Amount field to given value.
 
-
-### GetActivityId
-
-`func (o *AmountDetailsInner) GetActivityId() string`
-
-GetActivityId returns the ActivityId field if non-nil, zero value otherwise.
-
-### GetActivityIdOk
-
-`func (o *AmountDetailsInner) GetActivityIdOk() (*string, bool)`
-
-GetActivityIdOk returns a tuple with the ActivityId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetActivityId
-
-`func (o *AmountDetailsInner) SetActivityId(v string)`
-
-SetActivityId sets ActivityId field to given value.
-
-### HasActivityId
-
-`func (o *AmountDetailsInner) HasActivityId() bool`
-
-HasActivityId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

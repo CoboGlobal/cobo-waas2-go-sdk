@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **FeeTokenId** | Pointer to **string** | The fee token ID. A fee token is the token with which you pay transaction fees. | [optional] 
 **CanDeposit** | Pointer to **bool** | Whether deposits are enabled for this token. | [optional] 
 **CanWithdraw** | Pointer to **bool** | Whether withdrawals are enabled for this token. | [optional] 
+**DustThreshold** | Pointer to **string** | Minimum amount of token that can be transacted, such as 0.00000546 for BTC. | [optional] 
+**CustodialMinimumDepositThreshold** | Pointer to **string** | Minimum amount of token that can be deposit, such as 0.0001 for BTC. | [optional] 
 
 ## Methods
 
@@ -299,6 +301,56 @@ SetCanWithdraw sets CanWithdraw field to given value.
 `func (o *TokenInfo) HasCanWithdraw() bool`
 
 HasCanWithdraw returns a boolean if a field has been set.
+
+### GetDustThreshold
+
+`func (o *TokenInfo) GetDustThreshold() string`
+
+GetDustThreshold returns the DustThreshold field if non-nil, zero value otherwise.
+
+### GetDustThresholdOk
+
+`func (o *TokenInfo) GetDustThresholdOk() (*string, bool)`
+
+GetDustThresholdOk returns a tuple with the DustThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDustThreshold
+
+`func (o *TokenInfo) SetDustThreshold(v string)`
+
+SetDustThreshold sets DustThreshold field to given value.
+
+### HasDustThreshold
+
+`func (o *TokenInfo) HasDustThreshold() bool`
+
+HasDustThreshold returns a boolean if a field has been set.
+
+### GetCustodialMinimumDepositThreshold
+
+`func (o *TokenInfo) GetCustodialMinimumDepositThreshold() string`
+
+GetCustodialMinimumDepositThreshold returns the CustodialMinimumDepositThreshold field if non-nil, zero value otherwise.
+
+### GetCustodialMinimumDepositThresholdOk
+
+`func (o *TokenInfo) GetCustodialMinimumDepositThresholdOk() (*string, bool)`
+
+GetCustodialMinimumDepositThresholdOk returns a tuple with the CustodialMinimumDepositThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustodialMinimumDepositThreshold
+
+`func (o *TokenInfo) SetCustodialMinimumDepositThreshold(v string)`
+
+SetCustodialMinimumDepositThreshold sets CustodialMinimumDepositThreshold field to given value.
+
+### HasCustodialMinimumDepositThreshold
+
+`func (o *TokenInfo) HasCustodialMinimumDepositThreshold() bool`
+
+HasCustodialMinimumDepositThreshold returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

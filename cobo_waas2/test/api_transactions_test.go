@@ -28,6 +28,18 @@ func Test_cobo_waas2_TransactionsAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test TransactionsAPIService BroadcastSignedTransactions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TransactionsAPI.BroadcastSignedTransactions(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test TransactionsAPIService CancelTransactionById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -35,6 +47,18 @@ func Test_cobo_waas2_TransactionsAPIService(t *testing.T) {
 		var transactionId string
 
 		resp, httpRes, err := apiClient.TransactionsAPI.CancelTransactionById(ctx, transactionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TransactionsAPIService CheckLoopTransfers", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TransactionsAPI.CheckLoopTransfers(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
