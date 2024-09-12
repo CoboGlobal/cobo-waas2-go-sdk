@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
-**Operator** | Pointer to **string** | The operator address. | [optional] 
+**Operator** | Pointer to **string** | The operator&#39;s address. | [optional] 
 
 ## Methods
 

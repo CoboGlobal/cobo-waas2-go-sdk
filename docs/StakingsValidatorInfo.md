@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IconUrl** | Pointer to **string** |  | [optional] 
-**PublicKey** | Pointer to **string** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**Address** | Pointer to **string** |  | [optional] 
-**CommissionRate** | Pointer to **string** |  | [optional] 
+**IconUrl** | Pointer to **string** | The URL of the validator&#39;s icon. | [optional] 
+**PublicKey** | Pointer to **string** | The validator&#39;s public key. | [optional] 
+**Name** | Pointer to **string** | The validator&#39;s name. | [optional] 
+**Address** | Pointer to **string** | The wallet address of the validator. | [optional] 
+**CommissionRate** | Pointer to **string** | The commission rate of the validator. | [optional] 
 
 ## Methods
 

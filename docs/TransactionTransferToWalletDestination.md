@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **WalletId** | **string** | The wallet ID. | 
 **TradingAccountType** | Pointer to **string** | The trading account type. | [optional] 
 **ExchangeId** | Pointer to [**ExchangeId**](ExchangeId.md) |  | [optional] 
-**Amount** | **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | 
+**Amount** | **string** | The transfer amount. For example, if you trade 1.5 BTC, then the value is &#x60;1.5&#x60;.  | 
 
 ## Methods
 

@@ -6,7 +6,6 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CheckAddressValidity**](WalletsAPI.md#CheckAddressValidity) | **Get** /wallets/check_address_validity | Check address validity
 [**CheckAddressesValidity**](WalletsAPI.md#CheckAddressesValidity) | **Get** /wallets/check_addresses_validity | Check addresses validity
-[**CheckLoopTransfers**](WalletsAPI.md#CheckLoopTransfers) | **Get** /wallets/check_loop_transfers | Check Loop transfers
 [**CreateAddress**](WalletsAPI.md#CreateAddress) | **Post** /wallets/{wallet_id}/addresses | Create addresses in wallet
 [**CreateWallet**](WalletsAPI.md#CreateWallet) | **Post** /wallets | Create wallet
 [**DeleteWalletById**](WalletsAPI.md#DeleteWalletById) | **Post** /wallets/{wallet_id}/delete | Delete wallet
@@ -171,86 +170,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]CheckAddressesValidity200ResponseInner**](CheckAddressesValidity200ResponseInner.md)
-
-### Authorization
-
-[CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## CheckLoopTransfers
-
-> []CheckLoopTransfers200ResponseInner CheckLoopTransfers(ctx).TokenId(tokenId).SourceWalletId(sourceWalletId).DestinationAddresses(destinationAddresses).Execute()
-
-Check Loop transfers
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
-    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
-)
-
-func main() {
-	tokenId := "ETH_USDT"
-	sourceWalletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-	destinationAddresses := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"
-
-	configuration := coboWaas2.NewConfiguration()
-	// Initialize the API client
-	apiClient := coboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-
-    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
-	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
-    // Replace `<YOUR_PRIVATE_KEY>` with your private key
-	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_PRIVATE_KEY>",
-	})
-	resp, r, err := apiClient.WalletsAPI.CheckLoopTransfers(ctx).TokenId(tokenId).SourceWalletId(sourceWalletId).DestinationAddresses(destinationAddresses).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.CheckLoopTransfers``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `CheckLoopTransfers`: []CheckLoopTransfers200ResponseInner
-	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.CheckLoopTransfers`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiCheckLoopTransfersRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens). | 
- **sourceWalletId** | **string** | The source wallet ID. | 
- **destinationAddresses** | **string** | A list of destination wallet addresses, separated by comma. | 
-
-### Return type
-
-[**[]CheckLoopTransfers200ResponseInner**](CheckLoopTransfers200ResponseInner.md)
 
 ### Authorization
 

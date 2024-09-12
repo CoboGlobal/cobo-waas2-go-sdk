@@ -6,9 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ActivityType** | [**ActivityType**](ActivityType.md) |  | 
 **RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
-**StakingId** | **string** | The id of the related staking. | 
-**Amount** | Pointer to **string** | The amount to stake | [optional] 
-**Address** | Pointer to **string** | The withdraw to address. | [optional] 
+**StakingId** | **string** | The ID of the corresponding staking position. | 
+**Amount** | Pointer to **string** | The amount to withdraw. | [optional] 
+**Address** | Pointer to **string** | The withdrawal address. | [optional] 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
 
 ## Methods

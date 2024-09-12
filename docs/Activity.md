@@ -4,16 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | The unique id of the activity. | [optional] 
+**Id** | Pointer to **string** | The activity ID. | [optional] 
 **Initiator** | Pointer to **string** | The initiator of the activity. | [optional] 
+**InitiatorType** | Pointer to [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | [optional] 
 **Type** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
-**WalletId** | Pointer to **string** | The id of the wallet to stake. | [optional] 
-**Address** | Pointer to **string** | The staker wallet address. | [optional] 
-**PoolId** | **string** | The id of the staking pool. | 
-**TokenId** | **string** | The id of the token. | 
-**StakingId** | Pointer to **string** | The id of the related staking. | [optional] 
-**Amount** | **string** | The amount of the activity. | 
-**TransactionIds** | Pointer to **[]string** | The related txs of the activity. | [optional] 
+**WalletId** | Pointer to **string** | The staker&#39;s wallet ID. | [optional] 
+**Address** | Pointer to **string** | The staker&#39;s wallet address. | [optional] 
+**PoolId** | **string** | The ID of the staking pool. | 
+**TokenId** | **string** | The token ID. | 
+**StakingId** | Pointer to **string** | The ID of the corresponding staking position. | [optional] 
+**Amount** | **string** | The staking amount. | 
+**TransactionIds** | Pointer to **[]string** | The IDs of the corresponding transactions of the activity. | [optional] 
 **Timeline** | Pointer to [**[]ActivityTimeline**](ActivityTimeline.md) | The timeline of the activity. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
 **Status** | [**ActivityStatus**](ActivityStatus.md) |  | 
@@ -88,6 +89,31 @@ SetInitiator sets Initiator field to given value.
 `func (o *Activity) HasInitiator() bool`
 
 HasInitiator returns a boolean if a field has been set.
+
+### GetInitiatorType
+
+`func (o *Activity) GetInitiatorType() TransactionInitiatorType`
+
+GetInitiatorType returns the InitiatorType field if non-nil, zero value otherwise.
+
+### GetInitiatorTypeOk
+
+`func (o *Activity) GetInitiatorTypeOk() (*TransactionInitiatorType, bool)`
+
+GetInitiatorTypeOk returns a tuple with the InitiatorType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitiatorType
+
+`func (o *Activity) SetInitiatorType(v TransactionInitiatorType)`
+
+SetInitiatorType sets InitiatorType field to given value.
+
+### HasInitiatorType
+
+`func (o *Activity) HasInitiatorType() bool`
+
+HasInitiatorType returns a boolean if a field has been set.
 
 ### GetType
 

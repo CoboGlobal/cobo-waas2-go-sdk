@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Initiator** | Pointer to **string** | The initiator of the staking activity. | [optional] 
+**AppInitiator** | Pointer to **string** | The initiator of the staking activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator. | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewActivityInitiatorWithDefaults instantiates a new ActivityInitiator object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetInitiator
+### GetAppInitiator
 
-`func (o *ActivityInitiator) GetInitiator() string`
+`func (o *ActivityInitiator) GetAppInitiator() string`
 
-GetInitiator returns the Initiator field if non-nil, zero value otherwise.
+GetAppInitiator returns the AppInitiator field if non-nil, zero value otherwise.
 
-### GetInitiatorOk
+### GetAppInitiatorOk
 
-`func (o *ActivityInitiator) GetInitiatorOk() (*string, bool)`
+`func (o *ActivityInitiator) GetAppInitiatorOk() (*string, bool)`
 
-GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
+GetAppInitiatorOk returns a tuple with the AppInitiator field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInitiator
+### SetAppInitiator
 
-`func (o *ActivityInitiator) SetInitiator(v string)`
+`func (o *ActivityInitiator) SetAppInitiator(v string)`
 
-SetInitiator sets Initiator field to given value.
+SetAppInitiator sets AppInitiator field to given value.
 
-### HasInitiator
+### HasAppInitiator
 
-`func (o *ActivityInitiator) HasInitiator() bool`
+`func (o *ActivityInitiator) HasAppInitiator() bool`
 
-HasInitiator returns a boolean if a field has been set.
+HasAppInitiator returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

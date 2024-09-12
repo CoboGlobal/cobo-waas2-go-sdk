@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **Source** | Pointer to [**StakingSource**](StakingSource.md) |  | [optional] 
-**PoolId** | **string** | The id of the staking pool | 
-**Amount** | **string** | The amount to stake | 
+**PoolId** | **string** | The ID of the staking pool. | 
+**Amount** | **string** | The amount to stake. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
 **Extra** | [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | 
 

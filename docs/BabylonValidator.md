@@ -4,18 +4,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
 **IconUrl** | **string** | The URL of the validator&#39;s icon. | 
-**Name** | **string** | The name of validator. | 
-**Priority** | Pointer to **int32** | The priority of validator. | [optional] 
-**PublicKey** | **string** | The public key of validator. | 
-**CommissionRate** | **float32** | The commission rate of validator. | 
-**SupportedPosChains** | **[]string** | The list of supported pos chains. | 
+**Name** | **string** | The validator&#39;s name. | 
+**Priority** | Pointer to **int32** | This property can be ignored. | [optional] 
+**PublicKey** | **string** | The public key of the validator. | 
+**CommissionRate** | **float32** | The commission rate of the validator. | 
+**SupportedPosChains** | **[]string** | A list of supported Proof-of-Stake (PoS) chains. | 
 
 ## Methods
 
 ### NewBabylonValidator
 
-`func NewBabylonValidator(iconUrl string, name string, publicKey string, commissionRate float32, supportedPosChains []string, ) *BabylonValidator`
+`func NewBabylonValidator(poolType StakingPoolType, iconUrl string, name string, publicKey string, commissionRate float32, supportedPosChains []string, ) *BabylonValidator`
 
 NewBabylonValidator instantiates a new BabylonValidator object
 This constructor will assign default values to properties that have it defined,
@@ -29,6 +30,26 @@ will change when the set of required properties is changed
 NewBabylonValidatorWithDefaults instantiates a new BabylonValidator object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetPoolType
+
+`func (o *BabylonValidator) GetPoolType() StakingPoolType`
+
+GetPoolType returns the PoolType field if non-nil, zero value otherwise.
+
+### GetPoolTypeOk
+
+`func (o *BabylonValidator) GetPoolTypeOk() (*StakingPoolType, bool)`
+
+GetPoolTypeOk returns a tuple with the PoolType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPoolType
+
+`func (o *BabylonValidator) SetPoolType(v StakingPoolType)`
+
+SetPoolType sets PoolType field to given value.
+
 
 ### GetIconUrl
 

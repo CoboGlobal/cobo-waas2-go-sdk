@@ -5,11 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
-**FinalityProviderPublicKey** | **string** | The public key of finality provider. | 
-**StakeBlockTime** | **int64** | The stake block time. | 
-**OnlySign** | Pointer to **bool** | Whether to only sign transactions. Default is &#x60;false&#x60;, if set to &#x60;true&#x60;,  the transaction will not be submitted to the blockchain automatically. You can call &#x60;Broadcast transactions&#x60; to submit the transaction to the blockchain,  Or you can find the signed raw_tx by &#x60;Get transaction information&#x60; and broadcast it yourself.  | [optional] 
-**Operator** | Pointer to **string** | The operator address. | [optional] 
-**FeeRecipient** | Pointer to **float32** | The fee recipient address, if not provided the staker address will be used. | [optional] 
+**FinalityProviderPublicKey** | **string** | The public key of the finality provider. | 
+**StakeBlockTime** | **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | 
+**AutoBroadcast** | Pointer to **bool** | Whether to automatically broadcast the transaction. The default value is &#x60;true&#x60;.  - &#x60;true&#x60;: Automatically broadcast the transaction. - &#x60;false&#x60;: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data &#x60;raw_tx&#x60; by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.  | [optional] 
 
 ## Methods
 
@@ -90,80 +88,30 @@ and a boolean to check if the value has been set.
 SetStakeBlockTime sets StakeBlockTime field to given value.
 
 
-### GetOnlySign
+### GetAutoBroadcast
 
-`func (o *CreateStakeActivityExtra) GetOnlySign() bool`
+`func (o *CreateStakeActivityExtra) GetAutoBroadcast() bool`
 
-GetOnlySign returns the OnlySign field if non-nil, zero value otherwise.
+GetAutoBroadcast returns the AutoBroadcast field if non-nil, zero value otherwise.
 
-### GetOnlySignOk
+### GetAutoBroadcastOk
 
-`func (o *CreateStakeActivityExtra) GetOnlySignOk() (*bool, bool)`
+`func (o *CreateStakeActivityExtra) GetAutoBroadcastOk() (*bool, bool)`
 
-GetOnlySignOk returns a tuple with the OnlySign field if it's non-nil, zero value otherwise
+GetAutoBroadcastOk returns a tuple with the AutoBroadcast field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOnlySign
+### SetAutoBroadcast
 
-`func (o *CreateStakeActivityExtra) SetOnlySign(v bool)`
+`func (o *CreateStakeActivityExtra) SetAutoBroadcast(v bool)`
 
-SetOnlySign sets OnlySign field to given value.
+SetAutoBroadcast sets AutoBroadcast field to given value.
 
-### HasOnlySign
+### HasAutoBroadcast
 
-`func (o *CreateStakeActivityExtra) HasOnlySign() bool`
+`func (o *CreateStakeActivityExtra) HasAutoBroadcast() bool`
 
-HasOnlySign returns a boolean if a field has been set.
-
-### GetOperator
-
-`func (o *CreateStakeActivityExtra) GetOperator() string`
-
-GetOperator returns the Operator field if non-nil, zero value otherwise.
-
-### GetOperatorOk
-
-`func (o *CreateStakeActivityExtra) GetOperatorOk() (*string, bool)`
-
-GetOperatorOk returns a tuple with the Operator field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOperator
-
-`func (o *CreateStakeActivityExtra) SetOperator(v string)`
-
-SetOperator sets Operator field to given value.
-
-### HasOperator
-
-`func (o *CreateStakeActivityExtra) HasOperator() bool`
-
-HasOperator returns a boolean if a field has been set.
-
-### GetFeeRecipient
-
-`func (o *CreateStakeActivityExtra) GetFeeRecipient() float32`
-
-GetFeeRecipient returns the FeeRecipient field if non-nil, zero value otherwise.
-
-### GetFeeRecipientOk
-
-`func (o *CreateStakeActivityExtra) GetFeeRecipientOk() (*float32, bool)`
-
-GetFeeRecipientOk returns a tuple with the FeeRecipient field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeRecipient
-
-`func (o *CreateStakeActivityExtra) SetFeeRecipient(v float32)`
-
-SetFeeRecipient sets FeeRecipient field to given value.
-
-### HasFeeRecipient
-
-`func (o *CreateStakeActivityExtra) HasFeeRecipient() bool`
-
-HasFeeRecipient returns a boolean if a field has been set.
+HasAutoBroadcast returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
