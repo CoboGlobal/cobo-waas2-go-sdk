@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **ExplorerTxUrl** | Pointer to **string** | The transaction URL pattern on the blockchain explorer. You can use it to concatenate the transaction URLs. | [optional] 
 **ExplorerAddressUrl** | Pointer to **string** | The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs. | [optional] 
 **RequireMemo** | Pointer to **bool** | Whether the chain requires a memo. | [optional] 
+**ConfirmingThreshold** | Pointer to **int32** | The number of confirmations required for an on-chain transaction, such as 64 for Ethereum. | [optional] 
 
 ## Methods
 
@@ -174,6 +175,31 @@ SetRequireMemo sets RequireMemo field to given value.
 `func (o *ChainInfo) HasRequireMemo() bool`
 
 HasRequireMemo returns a boolean if a field has been set.
+
+### GetConfirmingThreshold
+
+`func (o *ChainInfo) GetConfirmingThreshold() int32`
+
+GetConfirmingThreshold returns the ConfirmingThreshold field if non-nil, zero value otherwise.
+
+### GetConfirmingThresholdOk
+
+`func (o *ChainInfo) GetConfirmingThresholdOk() (*int32, bool)`
+
+GetConfirmingThresholdOk returns a tuple with the ConfirmingThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfirmingThreshold
+
+`func (o *ChainInfo) SetConfirmingThreshold(v int32)`
+
+SetConfirmingThreshold sets ConfirmingThreshold field to given value.
+
+### HasConfirmingThreshold
+
+`func (o *ChainInfo) HasConfirmingThreshold() bool`
+
+HasConfirmingThreshold returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

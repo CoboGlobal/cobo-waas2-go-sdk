@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **FeeTokenId** | Pointer to **string** | The fee token ID. A fee token is the token with which you pay transaction fees. | [optional] 
 **CanDeposit** | Pointer to **bool** | Whether deposits are enabled for this token. | [optional] 
 **CanWithdraw** | Pointer to **bool** | Whether withdrawals are enabled for this token. | [optional] 
+**DustThreshold** | Pointer to **string** | The minimum withdrawal amount for Custodial Wallets. If your withdrawal amount is smaller than this threshold, the withdrawal request will receive an error.  Note: [Loop transfers](https://loop.top/) do not have this limitation.  | [optional] 
+**CustodialMinimumDepositThreshold** | Pointer to **string** | The minimum deposit amount for Custodial Wallets. If the amount you deposit to a Custodial Wallet is smaller than this threshold, the deposit will not show up on Cobo Portal or trigger any webhook events.  Note: [Loop transfers](https://loop.top/) do not have this limitation.  | [optional] 
 **Amount** | Pointer to **float32** | Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5)  | [optional] 
 **Spender** | Pointer to **string** | Spender address | [optional] 
 
@@ -301,6 +303,56 @@ SetCanWithdraw sets CanWithdraw field to given value.
 `func (o *TransactionTokeApproval) HasCanWithdraw() bool`
 
 HasCanWithdraw returns a boolean if a field has been set.
+
+### GetDustThreshold
+
+`func (o *TransactionTokeApproval) GetDustThreshold() string`
+
+GetDustThreshold returns the DustThreshold field if non-nil, zero value otherwise.
+
+### GetDustThresholdOk
+
+`func (o *TransactionTokeApproval) GetDustThresholdOk() (*string, bool)`
+
+GetDustThresholdOk returns a tuple with the DustThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDustThreshold
+
+`func (o *TransactionTokeApproval) SetDustThreshold(v string)`
+
+SetDustThreshold sets DustThreshold field to given value.
+
+### HasDustThreshold
+
+`func (o *TransactionTokeApproval) HasDustThreshold() bool`
+
+HasDustThreshold returns a boolean if a field has been set.
+
+### GetCustodialMinimumDepositThreshold
+
+`func (o *TransactionTokeApproval) GetCustodialMinimumDepositThreshold() string`
+
+GetCustodialMinimumDepositThreshold returns the CustodialMinimumDepositThreshold field if non-nil, zero value otherwise.
+
+### GetCustodialMinimumDepositThresholdOk
+
+`func (o *TransactionTokeApproval) GetCustodialMinimumDepositThresholdOk() (*string, bool)`
+
+GetCustodialMinimumDepositThresholdOk returns a tuple with the CustodialMinimumDepositThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustodialMinimumDepositThreshold
+
+`func (o *TransactionTokeApproval) SetCustodialMinimumDepositThreshold(v string)`
+
+SetCustodialMinimumDepositThreshold sets CustodialMinimumDepositThreshold field to given value.
+
+### HasCustodialMinimumDepositThreshold
+
+`func (o *TransactionTokeApproval) HasCustodialMinimumDepositThreshold() bool`
+
+HasCustodialMinimumDepositThreshold returns a boolean if a field has been set.
 
 ### GetAmount
 

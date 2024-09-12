@@ -4,22 +4,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** | The unique protocol id. | 
-**ChainId** | **string** | The unique chain id. | 
+**Id** | **string** | The ID of the staking pool. A staking pool is a pairing of a staking protocol and a specific type of token. | 
+**ChainId** | **string** | The chain ID. | 
 **Protocol** | **string** | The name of the protocol. | 
 **ProtocolIconUrl** | **string** | The URL of the protocol&#39;s icon. | 
-**SupportedWalletTypes** | [**[]WalletType**](WalletType.md) | The list of available wallet types. | 
-**SupportedWalletSubtypes** | [**[]WalletSubtype**](WalletSubtype.md) | The list of available wallet types. | 
-**TokenId** | **string** | The unique token id. | 
-**EstApr** | **float32** | The estimated APR. | 
+**SupportedWalletTypes** | [**[]WalletType**](WalletType.md) | The wallet type. Possible values include:  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  | 
+**SupportedWalletSubtypes** | [**[]WalletSubtype**](WalletSubtype.md) | The wallet subtype. Possible values include: - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets). - &#x60;Web3&#x60;: Custodial Wallets (Web3  Wallets). - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets). - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets). - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}). - &#x60;Main&#x60;: Exchange Wallets (Main Account). - &#x60;Sub&#x60;: Exchange Wallets (Sub Account).  | 
+**TokenId** | **string** | The token ID. | 
+**EstApr** | **float32** | The estimated annual percentage rate (APR). | 
 **PoolType** | Pointer to [**StakingPoolType**](StakingPoolType.md) |  | [optional] 
-**MinAmount** | Pointer to **string** | The minimum amount to stake. | [optional] 
-**MaxAmount** | Pointer to **string** | The maximum amount to stake. | [optional] 
-**MinStakePeriod** | Pointer to **int32** | The minimum staking period in days. | [optional] 
-**MaxStakePeriod** | Pointer to **int32** | The maximum staking period in days. | [optional] 
-**MinStakeBlocks** | Pointer to **int64** | The minimum staking blocks. | [optional] 
-**MaxStakeBlocks** | Pointer to **int64** | The maximum staking blocks. | [optional] 
-**ValidatorsInfo** | [**[]PoolDetailsAllOfValidatorsInfo**](PoolDetailsAllOfValidatorsInfo.md) | The list of validators. | 
+**MinAmount** | Pointer to **string** | The minimum amount that can be staked in one staking request. | [optional] 
+**MaxAmount** | Pointer to **string** | The maximum amount that can be staked in one staking request. | [optional] 
+**MinStakePeriod** | Pointer to **int32** | The minimum staking period, in days. | [optional] 
+**MaxStakePeriod** | Pointer to **int32** | The maximum staking period, in days. | [optional] 
+**MinStakeBlocks** | Pointer to **int64** | The minimum block number. A block number indicates the number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | [optional] 
+**MaxStakeBlocks** | Pointer to **int64** | The maximum block number. A block number indicates the number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | [optional] 
+**ValidatorsInfo** | [**[]PoolDetailsAllOfValidatorsInfo**](PoolDetailsAllOfValidatorsInfo.md) | A list of available validators. | 
 
 ## Methods
 

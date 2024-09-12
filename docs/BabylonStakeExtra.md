@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
-**FinalityProviderPublicKey** | **string** | The public key of finality provider. | 
-**StakeBlockTime** | **int64** | The stake block time. | 
-**OnlySign** | Pointer to **bool** | Whether to only sign transactions. Default is &#x60;false&#x60;, if set to &#x60;true&#x60;,  the transaction will not be submitted to the blockchain automatically. You can call &#x60;Broadcast transactions&#x60; to submit the transaction to the blockchain,  Or you can find the signed raw_tx by &#x60;Get transaction information&#x60; and broadcast it yourself.  | [optional] 
+**FinalityProviderPublicKey** | **string** | The public key of the finality provider. | 
+**StakeBlockTime** | **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | 
+**AutoBroadcast** | Pointer to **bool** | Whether to automatically broadcast the transaction. The default value is &#x60;true&#x60;.  - &#x60;true&#x60;: Automatically broadcast the transaction. - &#x60;false&#x60;: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data &#x60;raw_tx&#x60; by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.  | [optional] 
 
 ## Methods
 
@@ -88,30 +88,30 @@ and a boolean to check if the value has been set.
 SetStakeBlockTime sets StakeBlockTime field to given value.
 
 
-### GetOnlySign
+### GetAutoBroadcast
 
-`func (o *BabylonStakeExtra) GetOnlySign() bool`
+`func (o *BabylonStakeExtra) GetAutoBroadcast() bool`
 
-GetOnlySign returns the OnlySign field if non-nil, zero value otherwise.
+GetAutoBroadcast returns the AutoBroadcast field if non-nil, zero value otherwise.
 
-### GetOnlySignOk
+### GetAutoBroadcastOk
 
-`func (o *BabylonStakeExtra) GetOnlySignOk() (*bool, bool)`
+`func (o *BabylonStakeExtra) GetAutoBroadcastOk() (*bool, bool)`
 
-GetOnlySignOk returns a tuple with the OnlySign field if it's non-nil, zero value otherwise
+GetAutoBroadcastOk returns a tuple with the AutoBroadcast field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOnlySign
+### SetAutoBroadcast
 
-`func (o *BabylonStakeExtra) SetOnlySign(v bool)`
+`func (o *BabylonStakeExtra) SetAutoBroadcast(v bool)`
 
-SetOnlySign sets OnlySign field to given value.
+SetAutoBroadcast sets AutoBroadcast field to given value.
 
-### HasOnlySign
+### HasAutoBroadcast
 
-`func (o *BabylonStakeExtra) HasOnlySign() bool`
+`func (o *BabylonStakeExtra) HasAutoBroadcast() bool`
 
-HasOnlySign returns a boolean if a field has been set.
+HasAutoBroadcast returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
