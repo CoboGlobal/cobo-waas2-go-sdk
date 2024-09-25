@@ -4,8 +4,8 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetToken**](OAuthAPI.md#GetToken) | **Get** /oauth/token | Get access token
-[**RefreshToken**](OAuthAPI.md#RefreshToken) | **Post** /oauth/token | Refresh access token
+[**GetToken**](OAuthAPI.md#GetToken) | **Get** /oauth/token | Get Org Access Token
+[**RefreshToken**](OAuthAPI.md#RefreshToken) | **Post** /oauth/token | Refresh Org Access Token
 
 
 
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 > GetToken200Response GetToken(ctx).ClientId(clientId).OrgId(orgId).GrantType(grantType).Execute()
 
-Get access token
+Get Org Access Token
 
 
 
@@ -67,8 +67,8 @@ Other parameters are passed through a pointer to a apiGetTokenRequest struct via
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **clientId** | **string** | The App ID, a unique identifier to distinguish Cobo Portal Apps. You can get the App ID by retrieving the Manifest file after receiving the notification of app launch approval. | 
- **orgId** | **string** | Organization ID, a unique identifier to distinguish different organizations. You can get the Organization ID by retrieving the Manifest file after receiving the notification of app launch approval. | 
+ **clientId** | **string** | The client ID, a unique identifier to distinguish Cobo Portal Apps. You can get the client ID by retrieving the manifest file after publishing the app. | 
+ **orgId** | **string** | Organization ID, a unique identifier to distinguish different organizations. You can get the organization ID from the callback message sent to the URL that was configured in the manifest file. | 
  **grantType** | **string** | The OAuth grant type. Set the value as &#x60;org_implicit&#x60;. | 
 
 ### Return type
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 > RefreshToken200Response RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
 
-Refresh access token
+Refresh Org Access Token
 
 
 
@@ -145,7 +145,7 @@ Other parameters are passed through a pointer to a apiRefreshTokenRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **refreshTokenRequest** | [**RefreshTokenRequest**](RefreshTokenRequest.md) | The request body for refreshing an access token. | 
+ **refreshTokenRequest** | [**RefreshTokenRequest**](RefreshTokenRequest.md) | The request body for refreshing an Org Access Token. | 
 
 ### Return type
 

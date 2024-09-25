@@ -387,7 +387,7 @@ Other parameters are passed through a pointer to a apiCreateMessageSignTransacti
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **messageSignParams** | [**MessageSignParams**](MessageSignParams.md) | The request body to create a message sign transaction | 
+ **messageSignParams** | [**MessageSignParams**](MessageSignParams.md) | The request body to create a message signing transaction | 
 
 ### Return type
 

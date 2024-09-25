@@ -5,8 +5,6 @@
 
 * `REJECTED_KYT` (value: `"RejectedKYT"`)
 
-* `REJECTED_TRAVEL_RULE` (value: `"RejectedTravelRule"`)
-
 * `PENDING_DOUBLE_CHECK` (value: `"PendingDoubleCheck"`)
 
 * `PENDING_SPENDER_CHECK` (value: `"PendingSpenderCheck"`)
@@ -39,6 +37,8 @@
 
 * `FAILED_ON_CHAIN` (value: `"FailedOnChain"`)
 
+* `REVERTING` (value: `"Reverting"`)
+
 * `QUEUE` (value: `"Queue"`)
 
 * `PENDING_BLOCK_CONFIRMATIONS` (value: `"PendingBlockConfirmations"`)
@@ -50,6 +50,20 @@
 * `CANCELED_BY_API` (value: `"CanceledByAPI"`)
 
 * `ONCHAIN_REJECTION` (value: `"OnchainRejection"`)
+
+* `REJECTED_TRAVEL_RULE` (value: `"RejectedTravelRule"`)
+
+* `REJECTED_TRAVEL_RULE_DUE_TO_COMPLIANCE` (value: `"RejectedTravelRuleDueToCompliance"`)
+
+* `PENDING_TRAVEL_RULE_INFO` (value: `"PendingTravelRuleInfo"`)
+
+* `PENDING_TRAVEL_RULE_CHECK` (value: `"PendingTravelRuleCheck"`)
+
+* `REJECTED_TRAVEL_RULE_DUE_TO_UNSUPPORTED_TOKEN` (value: `"RejectedTravelRuleDueToUnsupportedToken"`)
+
+* `SIGNATURE_VERIFICATION_SUCCESS` (value: `"SignatureVerificationSuccess"`)
+
+* `SIGNATURE_VERIFICATION_FAILED` (value: `"SignatureVerificationFailed"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

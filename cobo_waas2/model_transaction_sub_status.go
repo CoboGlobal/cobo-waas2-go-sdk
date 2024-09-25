@@ -13,13 +13,12 @@ import (
 	"fmt"
 )
 
-// TransactionSubStatus The transaction sub-status. Possible values include:    - `PendingDoubleCheck`: The transaction is pending a double check.    - `RejectedDoubleCheck`: The transaction is rejected because it failed a double check.   - `PendingSpenderCheck`: The transaction is pending a spender check.   - `RejectedSpenderAuth`: The transaction is rejected by the spender.   - `RejectedTravelRule`: The transaction is rejected because it failed to comply with the Travel Rule.   - `RejectedKYT`: The transaction is rejected because it did not pass the Know Your Transaction (KYT) compliance checks.   - `PendingRiskControlCheck`: The transaction is pending for a Risk Control check.   - `RejectedRiskControlCheck`: The transaction is rejected because it failed the Risk Control check.   - `PendingApproverCheck`: The transaction is pending approval from the approver.   - `RejectedApproverAuth`: The transaction is rejected by the approver.   - `RejectedbyMobileCosigner`: The transaction is rejected by a mobile cosigner.   - `RejectedCoboCheck`: The transaction is rejected because it failed the internal check by Cobo.   - `RejectedWhiteList`: The transaction is rejected because the sender or receiver is not included in a whitelist.   - `PendingWaitSigner`: The transaction is pending signature.   - `PendingApprovalStart`: The transaction approval is waiting to be started.           - For [MPC Wallets (User-Controlled Wallets)](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction), you need to use the Client App and call the UCW SDK to start the transaction approval process.     - For [MPC Wallets (Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction)):       - If you are using the [API co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups), this status indicates that the TSS Node will soon request the callback server to start the [risk controls](https://manuals.cobo.com/en/portal/risk-controls/introduction) check. No further action is required from you at this stage.       - If you are using the [mobile co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups), key share holders need to use their [Cobo Guard](https://manuals.cobo.com/en/guard/introduction) to approve the transaction and participate in the signing process.   - `FailedBySigner`: The transaction failed during the signing process.   - `FailedBroadcasting`: The transaction failed to be broadcast to the blockchain network.   - `CanceledBySpender`: The transaction is canceled by a Spender.   - `CanceledByAPI`: The transaction is canceled by a [Cancel transaction](/v2/api-references/transactions/cancel-transaction) operation.   - `Queue`: The transaction is queued to be processed by Cobo Portal.   - `OnchainRejection`: The transaction is rejected from being added to the blockchain.   - `FailedOnChain`: The transaction failed on the blockchain.   - `PendingBlockConfirmations`: The transaction is awaiting the required number of confirmations.   - `ReplacedByNewTransaction`: The transaction has been replaced by a new transaction. 
+// TransactionSubStatus The transaction sub-status. Possible values include:    - `PendingDoubleCheck`: The transaction is pending a double check.    - `RejectedDoubleCheck`: The transaction is rejected because it failed a double check.   - `PendingSpenderCheck`: The transaction is pending a spender check.   - `RejectedSpenderAuth`: The transaction is rejected by the spender.   - `PendingTravelRuleCheck`: The transaction is undergoing a Travel Rule check.   - `PendingTravelRuleInfo`: The transaction is awaiting users to provide information related to the Travel Rule.   - `RejectedTravelRule`: The transaction is rejected because it failed to comply with the Travel Rule.   - `RejectedTravelRuleDueToCompliance`: The transaction is rejected because it did not meet the compliance requirements of the Travel Rule.   - `RejectedTravelRuleDueToUnsupportedToken`: The transaction is rejected because the token is not supported by the Travel Rule.   - `RejectedKYT`: The transaction is rejected because it did not pass the Know Your Transaction (KYT) compliance checks.   - `PendingRiskControlCheck`: The transaction is pending for a Risk Control check.   - `RejectedRiskControlCheck`: The transaction is rejected because it failed the Risk Control check.   - `PendingApproverCheck`: The transaction is pending approval from the approver.   - `RejectedApproverAuth`: The transaction is rejected by the approver.   - `RejectedbyMobileCosigner`: The transaction is rejected by a mobile cosigner.   - `RejectedCoboCheck`: The transaction is rejected because it failed the internal check by Cobo.   - `RejectedWhiteList`: The transaction is rejected because the sender or receiver is not included in a whitelist.   - `PendingWaitSigner`: The transaction is pending signature.   - `PendingApprovalStart`: The transaction approval is waiting to be started.           - For [MPC Wallets (User-Controlled Wallets)](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction), you need to use the Client App and call the UCW SDK to start the transaction approval process.     - For [MPC Wallets (Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction)):       - If you are using the [API co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups), this status indicates that the TSS Node will soon request the callback server to start the [risk controls](https://manuals.cobo.com/en/portal/risk-controls/introduction) check. No further action is required from you at this stage.       - If you are using the [mobile co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups), key share holders need to use their [Cobo Guard](https://manuals.cobo.com/en/guard/introduction) to approve the transaction and participate in the signing process.   - `FailedBySigner`: The transaction failed during the signing process.   - `SignatureVerificationSuccess`: The transaction's signature has been successfully verified.   - `SignatureVerificationFailed`: The transaction's signature failed verification.   - `FailedBroadcasting`: The transaction failed to be broadcast to the blockchain network.   - `CanceledBySpender`: The transaction is canceled by a Spender.   - `CanceledByAPI`: The transaction is canceled by a [Cancel transaction](/v2/api-references/transactions/cancel-transaction) operation.   - `Queue`: The transaction is queued to be processed by Cobo Portal.   - `Reverting`: The transaction is being reverted due to failure on the blockchain.   - `OnchainRejection`: The transaction is rejected from being added to the blockchain.   - `FailedOnChain`: The transaction failed on the blockchain.   - `PendingBlockConfirmations`: The transaction is awaiting the required number of confirmations.   - `ReplacedByNewTransaction`: The transaction has been replaced by a new transaction. 
 type TransactionSubStatus string
 
 // List of TransactionSubStatus
 const (
 	TRANSACTIONSUBSTATUS_REJECTED_KYT TransactionSubStatus = "RejectedKYT"
-	TRANSACTIONSUBSTATUS_REJECTED_TRAVEL_RULE TransactionSubStatus = "RejectedTravelRule"
 	TRANSACTIONSUBSTATUS_PENDING_DOUBLE_CHECK TransactionSubStatus = "PendingDoubleCheck"
 	TRANSACTIONSUBSTATUS_PENDING_SPENDER_CHECK TransactionSubStatus = "PendingSpenderCheck"
 	TRANSACTIONSUBSTATUS_PENDING_RISK_CONTROL_CHECK TransactionSubStatus = "PendingRiskControlCheck"
@@ -36,18 +35,25 @@ const (
 	TRANSACTIONSUBSTATUS_FAILED_BY_SIGNER TransactionSubStatus = "FailedBySigner"
 	TRANSACTIONSUBSTATUS_FAILED_BROADCASTING TransactionSubStatus = "FailedBroadcasting"
 	TRANSACTIONSUBSTATUS_FAILED_ON_CHAIN TransactionSubStatus = "FailedOnChain"
+	TRANSACTIONSUBSTATUS_REVERTING TransactionSubStatus = "Reverting"
 	TRANSACTIONSUBSTATUS_QUEUE TransactionSubStatus = "Queue"
 	TRANSACTIONSUBSTATUS_PENDING_BLOCK_CONFIRMATIONS TransactionSubStatus = "PendingBlockConfirmations"
 	TRANSACTIONSUBSTATUS_REPLACED_BY_NEW_TRANSACTION TransactionSubStatus = "ReplacedByNewTransaction"
 	TRANSACTIONSUBSTATUS_CANCELED_BY_SPENDER TransactionSubStatus = "CanceledBySpender"
 	TRANSACTIONSUBSTATUS_CANCELED_BY_API TransactionSubStatus = "CanceledByAPI"
 	TRANSACTIONSUBSTATUS_ONCHAIN_REJECTION TransactionSubStatus = "OnchainRejection"
+	TRANSACTIONSUBSTATUS_REJECTED_TRAVEL_RULE TransactionSubStatus = "RejectedTravelRule"
+	TRANSACTIONSUBSTATUS_REJECTED_TRAVEL_RULE_DUE_TO_COMPLIANCE TransactionSubStatus = "RejectedTravelRuleDueToCompliance"
+	TRANSACTIONSUBSTATUS_PENDING_TRAVEL_RULE_INFO TransactionSubStatus = "PendingTravelRuleInfo"
+	TRANSACTIONSUBSTATUS_PENDING_TRAVEL_RULE_CHECK TransactionSubStatus = "PendingTravelRuleCheck"
+	TRANSACTIONSUBSTATUS_REJECTED_TRAVEL_RULE_DUE_TO_UNSUPPORTED_TOKEN TransactionSubStatus = "RejectedTravelRuleDueToUnsupportedToken"
+	TRANSACTIONSUBSTATUS_SIGNATURE_VERIFICATION_SUCCESS TransactionSubStatus = "SignatureVerificationSuccess"
+	TRANSACTIONSUBSTATUS_SIGNATURE_VERIFICATION_FAILED TransactionSubStatus = "SignatureVerificationFailed"
 )
 
 // All allowed values of TransactionSubStatus enum
 var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"RejectedKYT",
-	"RejectedTravelRule",
 	"PendingDoubleCheck",
 	"PendingSpenderCheck",
 	"PendingRiskControlCheck",
@@ -64,12 +70,20 @@ var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"FailedBySigner",
 	"FailedBroadcasting",
 	"FailedOnChain",
+	"Reverting",
 	"Queue",
 	"PendingBlockConfirmations",
 	"ReplacedByNewTransaction",
 	"CanceledBySpender",
 	"CanceledByAPI",
 	"OnchainRejection",
+	"RejectedTravelRule",
+	"RejectedTravelRuleDueToCompliance",
+	"PendingTravelRuleInfo",
+	"PendingTravelRuleCheck",
+	"RejectedTravelRuleDueToUnsupportedToken",
+	"SignatureVerificationSuccess",
+	"SignatureVerificationFailed",
 }
 
 func (v *TransactionSubStatus) UnmarshalJSON(src []byte) error {

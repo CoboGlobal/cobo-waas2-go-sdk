@@ -170,7 +170,7 @@ func (r ApiCreateKeyShareHolderGroupRequest) Execute() (*KeyShareHolderGroup, *h
 /*
 CreateKeyShareHolderGroup Create key share holder group
 
-This operation creates a key share holder group for a specified vault.
+This operation creates a key share holder group for a specified vault. <Note>This operation will not return the `tss_key_share_groups` property until key shares have been created using the [Create TSS request](/v2/api-references/wallets--mpc-wallets/create-tss-request) operation. Creating a wallet with the [Create wallet](/v2/api-references/wallets/create-wallet) operation is only possible after you've completed the previous actions.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

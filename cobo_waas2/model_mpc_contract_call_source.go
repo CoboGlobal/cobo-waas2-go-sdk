@@ -24,8 +24,6 @@ type MpcContractCallSource struct {
 	WalletId string `json:"wallet_id"`
 	// The wallet address.
 	Address string `json:"address"`
-	// The transaction nonce.
-	Nonce *int32 `json:"nonce,omitempty"`
 }
 
 type _MpcContractCallSource MpcContractCallSource
@@ -122,38 +120,6 @@ func (o *MpcContractCallSource) SetAddress(v string) {
 	o.Address = v
 }
 
-// GetNonce returns the Nonce field value if set, zero value otherwise.
-func (o *MpcContractCallSource) GetNonce() int32 {
-	if o == nil || IsNil(o.Nonce) {
-		var ret int32
-		return ret
-	}
-	return *o.Nonce
-}
-
-// GetNonceOk returns a tuple with the Nonce field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MpcContractCallSource) GetNonceOk() (*int32, bool) {
-	if o == nil || IsNil(o.Nonce) {
-		return nil, false
-	}
-	return o.Nonce, true
-}
-
-// HasNonce returns a boolean if a field has been set.
-func (o *MpcContractCallSource) HasNonce() bool {
-	if o != nil && !IsNil(o.Nonce) {
-		return true
-	}
-
-	return false
-}
-
-// SetNonce gets a reference to the given int32 and assigns it to the Nonce field.
-func (o *MpcContractCallSource) SetNonce(v int32) {
-	o.Nonce = &v
-}
-
 func (o MpcContractCallSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -167,9 +133,6 @@ func (o MpcContractCallSource) ToMap() (map[string]interface{}, error) {
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
 	toSerialize["address"] = o.Address
-	if !IsNil(o.Nonce) {
-		toSerialize["nonce"] = o.Nonce
-	}
 	return toSerialize, nil
 }
 

@@ -17,11 +17,11 @@ var _ MappedNullable = &RefreshTokenRequest{}
 
 // RefreshTokenRequest struct for RefreshTokenRequest
 type RefreshTokenRequest struct {
-	// The App ID, a unique identifier to distinguish Cobo Portal Apps. You can get the App ID by retrieving the Manifest file after receiving the notification of app launch approval.
+	// The client ID, a unique identifier to distinguish Cobo Portal Apps. You can get the client ID by retrieving the manifest file after publishing the app.
 	ClientId *string `json:"client_id,omitempty"`
 	// The OAuth grant type. Set the value as `refresh_token`.
 	GrantType *string `json:"grant_type,omitempty"`
-	// The refresh token of the current access token.
+	// The Refresh Token of the current Org Access Token.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
 

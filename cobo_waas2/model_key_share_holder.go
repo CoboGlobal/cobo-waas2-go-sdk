@@ -24,7 +24,7 @@ type KeyShareHolder struct {
 	TssNodeId *string `json:"tss_node_id,omitempty"`
 	// Whether the key share holder's TSS Node is online. - `true`: The TSS Node is online.  - `false`: The TSS Node is offline. 
 	Online *bool `json:"online,omitempty"`
-	// Whether the key share holder's TSS Node is a designated transaction signer. - `true`: The TSS Node is a designated transaction signer.  - `false`: The TSS Node is not a designated transaction signer. 
+	// Whether the key share holder has been selected as the designated transaction signer. For example, in a 2-3 [Threshold Signature Scheme (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss), Cobo will serve as one signer, and you can choose one of the other two key share holders to act as the second transaction signer. - `true`: The key share holder is a designated transaction signer.  - `false`: The key share holder is not a designated transaction signer. 
 	Signer *bool `json:"signer,omitempty"`
 	Status *KeyShareHolderStatus `json:"status,omitempty"`
 	// The key share holder's Cobo Portal account ID.

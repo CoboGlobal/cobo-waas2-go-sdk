@@ -17,15 +17,15 @@ var _ MappedNullable = &GetToken200Response{}
 
 // GetToken200Response struct for GetToken200Response
 type GetToken200Response struct {
-	// The access token.
+	// The Org Access Token.
 	AccessToken *string `json:"access_token,omitempty"`
 	// The type of the tokens, which is Bearer.
 	TokenType *string `json:"token_type,omitempty"`
-	// The scope of the access token to limit the app's access to the organization's resources.  **Note**: Currently this property value is empty. The scope of the access token is based on the permissions granted when the app user installs the app. 
+	// The scope of the Org Access Token to limit the app's access to the organization's resources.  **Note**: Currently this property value is empty. The scope of the Org Access Token is based on the permissions granted when the app user installs the app. 
 	Scope *string `json:"scope,omitempty"`
-	// The time in seconds in which the access token expires.
+	// The time in seconds in which the Org Access Token expires.
 	ExpiresIn *int32 `json:"expires_in,omitempty"`
-	// The refresh token, used to obtain a new access token when the current access token expires.
+	// The Refresh Token, used to obtain a new Org Access Token when the current Org Access Token expires. The expiration time for Refresh Tokens is currently set to 30 days and is subject to change.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
 

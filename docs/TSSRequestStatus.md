@@ -9,6 +9,8 @@
 
 * `KEY_GENERATING` (value: `"KeyGenerating"`)
 
+* `MPC_PROCESSING` (value: `"MPCProcessing"`)
+
 * `KEY_GENERATING_FAILED` (value: `"KeyGeneratingFailed"`)
 
 * `SUCCESS` (value: `"Success"`)

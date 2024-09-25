@@ -653,8 +653,6 @@ paths:
     get:
       description: |
         This operation retrieves the information of all wallets under your organization. You can filter the result by wallet type and subtype. For MPC Wallets, you can also filter by project ID and vault ID.
-
-        <Note>You must specify either the wallet type or subtype, or both.</Note>
       operationId: list_wallets
       parameters:
       - description: |
@@ -2309,7 +2307,7 @@ paths:
       - Wallets - MPC Wallets
     post:
       description: |
-        This operation creates a key share holder group for a specified vault.
+        This operation creates a key share holder group for a specified vault. <Note>This operation will not return the `tss_key_share_groups` property until key shares have been created using the [Create TSS request](/v2/api-references/wallets--mpc-wallets/create-tss-request) operation. Creating a wallet with the [Create wallet](/v2/api-references/wallets/create-wallet) operation is only possible after you've completed the previous actions.</Note>
       operationId: create_key_share_holder_group
       parameters:
       - description: "The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
@@ -3301,7 +3299,6 @@ paths:
         name: transaction_ids
         required: false
         schema:
-          format: uuid
           type: string
         style: form
       - description: "A list of transaction hashes, separated by comma."
@@ -3787,22 +3784,22 @@ paths:
   /oauth/token:
     get:
       description: "<Note>This operation is only applicable to Cobo Portal App developers.\
-        \ To call this operation, you need to use the OAuth authentication method\
+        \ To call this operation, you need to use the Cobo OAuth authentication method\
         \ that requires an app key.</Note>\nThis operation allows Cobo Portal Apps\
-        \ to get an access token and a refresh token with a specified App ID, Organization\
-        \ ID, and grant type. \n\nAccess tokens allow the app to signal to the WaaS\
-        \ service that it has received permission to access specific resources of\
-        \ the app user's [organization](https://manuals.cobo.com/en/portal/organization/introduction).\
+        \ to get an Org Access Token and a Refresh Token with a specified client ID,\
+        \ organization ID, and grant type. \n\nAccess tokens allow the app to signal\
+        \ to the WaaS service that it has received permission to access specific resources\
+        \ of the app user's [organization](https://manuals.cobo.com/en/portal/organization/introduction).\
         \ Once the app has been granted permission by the organization's admin, it\
-        \ can use this operation to obtain both an access token and a refresh token.\n\
-        \nFor security purposes, access tokens expire after a certain period. Once\
-        \ they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-access-token)\
-        \ to get a new access token and a new refresh token. \n"
+        \ can use this operation to obtain both an Org Access Token and a Refresh\
+        \ Token.\n\nFor security purposes, Org Access Tokens expire after a certain\
+        \ period. Once they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-access-token)\
+        \ to get a new Org Access Token and a new Refresh Token. \n"
       operationId: get_token
       parameters:
-      - description: "The App ID, a unique identifier to distinguish Cobo Portal Apps.\
-          \ You can get the App ID by retrieving the Manifest file after receiving\
-          \ the notification of app launch approval."
+      - description: "The client ID, a unique identifier to distinguish Cobo Portal\
+          \ Apps. You can get the client ID by retrieving the manifest file after\
+          \ publishing the app."
         example: pvSwS8iFrfK0oZrB0ugG54XPDOLEv0Ij
         explode: true
         in: query
@@ -3812,8 +3809,8 @@ paths:
           type: string
         style: form
       - description: "Organization ID, a unique identifier to distinguish different\
-          \ organizations. You can get the Organization ID by retrieving the Manifest\
-          \ file after receiving the notification of app launch approval."
+          \ organizations. You can get the organization ID from the callback message\
+          \ sent to the URL that was configured in the manifest file."
         example: e3986401-4aec-480a-973d-e775a4518413
         explode: true
         in: query
@@ -3852,17 +3849,17 @@ paths:
           description: Internal server error.
       security:
       - CoboAuth: []
-      summary: Get access token
+      summary: Get Org Access Token
       tags:
       - OAuth
     post:
       description: "<Note>This operation is only applicable to Cobo Portal Apps developers.\
-        \ To call this operation, you need to use the OAuth authentication method\
+        \ To call this operation, you need to use the Cobo OAuth authentication method\
         \ that requires an app key.</Note>\nThis operation allows Cobo Portal Apps\
-        \ to obtain a new access token with a specified App ID, grant type and a refresh\
-        \ token. \n\nFor security purposes, access tokens expire after a certain period.\
-        \ Once they expire, the app needs to call this operation to get a new access\
-        \ token and a new refresh token. \n"
+        \ to obtain a new Org Access Token with a specified client ID, grant type\
+        \ and a Refresh Token. \n\nFor security purposes, Org Access Tokens expire\
+        \ after a certain period. Once they expire, the app needs to call this operation\
+        \ to get a new Org Access Token and a new Refresh Token. \n"
       operationId: refresh_token
       requestBody:
         $ref: '#/components/requestBodies/tokenEndpointBody'
@@ -3887,7 +3884,7 @@ paths:
           description: Internal server error.
       security:
       - CoboAuth: []
-      summary: Refresh access token
+      summary: Refresh Org Access Token
       tags:
       - OAuth
   /webhooks/endpoints:
@@ -5614,7 +5611,6 @@ components:
       name: project_ids
       required: false
       schema:
-        format: uuid
         type: string
       style: form
     requiredKeyShareHolderGroupIdParam:
@@ -5669,7 +5665,6 @@ components:
       name: vault_ids
       required: false
       schema:
-        format: uuid
         type: string
       style: form
     optionalVaultNameParam:
@@ -5874,7 +5869,6 @@ components:
       name: source_wallet_ids
       required: false
       schema:
-        format: uuid
         type: string
       style: form
     optionalTransactionSourceWalletIdListParam:
@@ -5910,7 +5904,6 @@ components:
       name: destination_wallet_ids
       required: false
       schema:
-        format: uuid
         type: string
       style: form
     optionalTransactionDestinationWalletIdListParam:
@@ -6069,9 +6062,9 @@ components:
         type: integer
       style: form
     ClientIdRequiredParam:
-      description: "The App ID, a unique identifier to distinguish Cobo Portal Apps.\
-        \ You can get the App ID by retrieving the Manifest file after receiving the\
-        \ notification of app launch approval."
+      description: "The client ID, a unique identifier to distinguish Cobo Portal\
+        \ Apps. You can get the client ID by retrieving the manifest file after publishing\
+        \ the app."
       example: pvSwS8iFrfK0oZrB0ugG54XPDOLEv0Ij
       explode: true
       in: query
@@ -6082,8 +6075,8 @@ components:
       style: form
     OrgIdRequiredParam:
       description: "Organization ID, a unique identifier to distinguish different\
-        \ organizations. You can get the Organization ID by retrieving the Manifest\
-        \ file after receiving the notification of app launch approval."
+        \ organizations. You can get the organization ID from the callback message\
+        \ sent to the URL that was configured in the manifest file."
       example: e3986401-4aec-480a-973d-e775a4518413
       explode: true
       in: query
@@ -6133,6 +6126,17 @@ components:
       schema:
         format: int64
         type: integer
+      style: form
+    optionalAddressBookLabelParam:
+      description: The address book label.
+      example: test
+      explode: true
+      in: query
+      name: label
+      required: false
+      schema:
+        description: The address book label.
+        type: string
       style: form
   requestBodies:
     createWalletBody:
@@ -6217,7 +6221,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MessageSignParams'
-      description: The request body to create a message sign transaction
+      description: The request body to create a message signing transaction
     estimateFeeBody:
       content:
         application/json:
@@ -6284,7 +6288,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/refresh_token_request'
-      description: The request body for refreshing an access token.
+      description: The request body for refreshing an Org Access Token.
       required: true
   responses:
     badRequestError:
@@ -6791,6 +6795,19 @@ components:
           schema:
             $ref: '#/components/schemas/BookkeepingSummary'
       description: The request was successful.
+    listAddressBooksResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/AddressBook'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The information about the address books.
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -7054,7 +7071,13 @@ components:
       type: string
     WalletSubtype:
       description: |
-        The wallet subtype of the transaction source. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+        The wallet subtype. Possible values include:
+        - `Asset`: Custodial Wallets (Asset Wallets).
+        - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
+        - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
+        - `Safe{Wallet}`: Smart Contract Wallets (Safe).
+        - `Main``: Exchange Wallets (Main Account).
+        - `Sub`: Exchange Wallets (Sub Account).
       enum:
       - Asset
       - Web3
@@ -7801,15 +7824,17 @@ components:
         type:
           $ref: '#/components/schemas/KeyShareHolderType'
         tss_node_id:
-          description: Key share holder's TSS Node ID.
+          description: "Key share holder's TSS Node ID. You can obtain the TSS Node\
+            \ ID using either mobile co-signer or API co-signer. See the \"Primary\
+            \ Purposes\" row on the table in [Create a Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#create-a-main-group)."
           example: coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi
           type: string
         signer:
           description: |
-            Whether the key share holder's TSS Node is a designated transaction signer.
-            - `true`: The TSS Node is a designated transaction signer.
+            Whether the key share holder has been selected as the designated transaction signer. For example, in a 2-3 [Threshold Signature Scheme (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss), Cobo will serve as one signer, and you can choose one of the other two key share holders to act as the second transaction signer.
+            - `true`: The key share holder is a designated transaction signer.
 
-            - `false`: The TSS Node is not a designated transaction signer.
+            - `false`: The key share holder is not a designated transaction signer.
           example: true
           type: boolean
       type: object
@@ -7843,10 +7868,10 @@ components:
           type: boolean
         signer:
           description: |
-            Whether the key share holder's TSS Node is a designated transaction signer.
-            - `true`: The TSS Node is a designated transaction signer.
+            Whether the key share holder has been selected as the designated transaction signer. For example, in a 2-3 [Threshold Signature Scheme (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss), Cobo will serve as one signer, and you can choose one of the other two key share holders to act as the second transaction signer.
+            - `true`: The key share holder is a designated transaction signer.
 
-            - `false`: The TSS Node is not a designated transaction signer.
+            - `false`: The key share holder is not a designated transaction signer.
           example: true
           type: boolean
         status:
@@ -8053,21 +8078,22 @@ components:
           type: integer
       type: object
     TSSRequestStatus:
-      description: |
-        The TSS request status. Possible values include:
-        - `PendingKeyHolderConfirmation`: The action done to the TSS request is currently pending enough key share holders to approve.
-
-        - `KeyHolderConfirmationFailed`: Key share holders failed to approve the the action to be done to the TSS request.
-
-        - `KeyGenerating`: The key share is currently being generated for the action to be done to the TSS request.
-
-        - `KeyGeneratingFailed`: The key share generation process has failed for the action to be done to the TSS request.
-
-        - `Success`: The action done to the TSS request has been completed successfully. If you see this status while running [Cancel TSS request](/v2/api-references/wallets--mpc-wallets/cancel-tss-request), this mean the specified TSS request has been successfully canceled.
+      description: "The TSS request status. Possible values include:\n- `PendingKeyHolderConfirmation`:\
+        \ The action done to the TSS request is currently pending enough key share\
+        \ holders to approve.\n\n- `KeyHolderConfirmationFailed`: Key share holders\
+        \ failed to approve the the action to be done to the TSS request.\n\n- `KeyGenerating`:\
+        \ The key share is currently being generated for the action to be done to\
+        \ the TSS request.\n\n- `MPCProcessing`: The TSS request approval is waiting\
+        \ to be started. \n\n- `KeyGeneratingFailed`: The key share generation process\
+        \ has failed for the action to be done to the TSS request.\n\n- `Success`:\
+        \ The action done to the TSS request has been completed successfully. If you\
+        \ see this status while running [Cancel TSS request](/v2/api-references/wallets--mpc-wallets/cancel-tss-request),\
+        \ this mean the specified TSS request has been successfully canceled.\n"
       enum:
       - PendingKeyHolderConfirmation
       - KeyHolderConfirmationFailed
       - KeyGenerating
+      - MPCProcessing
       - KeyGeneratingFailed
       - Success
       example: Success
@@ -9008,7 +9034,6 @@ components:
       - Submitted
       - PendingScreening
       - PendingAuthorization
-      - Queued
       - PendingSignature
       - Broadcasting
       - Confirming
@@ -9023,10 +9048,16 @@ components:
         \ The transaction is pending a double check. \n  - `RejectedDoubleCheck`:\
         \ The transaction is rejected because it failed a double check.\n  - `PendingSpenderCheck`:\
         \ The transaction is pending a spender check.\n  - `RejectedSpenderAuth`:\
-        \ The transaction is rejected by the spender.\n  - `RejectedTravelRule`: The\
-        \ transaction is rejected because it failed to comply with the Travel Rule.\n\
-        \  - `RejectedKYT`: The transaction is rejected because it did not pass the\
-        \ Know Your Transaction (KYT) compliance checks.\n  - `PendingRiskControlCheck`:\
+        \ The transaction is rejected by the spender.\n  - `PendingTravelRuleCheck`:\
+        \ The transaction is undergoing a Travel Rule check.\n  - `PendingTravelRuleInfo`:\
+        \ The transaction is awaiting users to provide information related to the\
+        \ Travel Rule.\n  - `RejectedTravelRule`: The transaction is rejected because\
+        \ it failed to comply with the Travel Rule.\n  - `RejectedTravelRuleDueToCompliance`:\
+        \ The transaction is rejected because it did not meet the compliance requirements\
+        \ of the Travel Rule.\n  - `RejectedTravelRuleDueToUnsupportedToken`: The\
+        \ transaction is rejected because the token is not supported by the Travel\
+        \ Rule.\n  - `RejectedKYT`: The transaction is rejected because it did not\
+        \ pass the Know Your Transaction (KYT) compliance checks.\n  - `PendingRiskControlCheck`:\
         \ The transaction is pending for a Risk Control check.\n  - `RejectedRiskControlCheck`:\
         \ The transaction is rejected because it failed the Risk Control check.\n\
         \  - `PendingApproverCheck`: The transaction is pending approval from the\
@@ -9048,18 +9079,21 @@ components:
         \ key share holders need to use their [Cobo Guard](https://manuals.cobo.com/en/guard/introduction)\
         \ to approve the transaction and participate in the signing process.\n  -\
         \ `FailedBySigner`: The transaction failed during the signing process.\n \
-        \ - `FailedBroadcasting`: The transaction failed to be broadcast to the blockchain\
-        \ network.\n  - `CanceledBySpender`: The transaction is canceled by a Spender.\n\
-        \  - `CanceledByAPI`: The transaction is canceled by a [Cancel transaction](/v2/api-references/transactions/cancel-transaction)\
+        \ - `SignatureVerificationSuccess`: The transaction's signature has been successfully\
+        \ verified.\n  - `SignatureVerificationFailed`: The transaction's signature\
+        \ failed verification.\n  - `FailedBroadcasting`: The transaction failed to\
+        \ be broadcast to the blockchain network.\n  - `CanceledBySpender`: The transaction\
+        \ is canceled by a Spender.\n  - `CanceledByAPI`: The transaction is canceled\
+        \ by a [Cancel transaction](/v2/api-references/transactions/cancel-transaction)\
         \ operation.\n  - `Queue`: The transaction is queued to be processed by Cobo\
-        \ Portal.\n  - `OnchainRejection`: The transaction is rejected from being\
-        \ added to the blockchain.\n  - `FailedOnChain`: The transaction failed on\
-        \ the blockchain.\n  - `PendingBlockConfirmations`: The transaction is awaiting\
-        \ the required number of confirmations.\n  - `ReplacedByNewTransaction`: The\
-        \ transaction has been replaced by a new transaction.\n"
+        \ Portal.\n  - `Reverting`: The transaction is being reverted due to failure\
+        \ on the blockchain.\n  - `OnchainRejection`: The transaction is rejected\
+        \ from being added to the blockchain.\n  - `FailedOnChain`: The transaction\
+        \ failed on the blockchain.\n  - `PendingBlockConfirmations`: The transaction\
+        \ is awaiting the required number of confirmations.\n  - `ReplacedByNewTransaction`:\
+        \ The transaction has been replaced by a new transaction.\n"
       enum:
       - RejectedKYT
-      - RejectedTravelRule
       - PendingDoubleCheck
       - PendingSpenderCheck
       - PendingRiskControlCheck
@@ -9076,12 +9110,20 @@ components:
       - FailedBySigner
       - FailedBroadcasting
       - FailedOnChain
+      - Reverting
       - Queue
       - PendingBlockConfirmations
       - ReplacedByNewTransaction
       - CanceledBySpender
       - CanceledByAPI
       - OnchainRejection
+      - RejectedTravelRule
+      - RejectedTravelRuleDueToCompliance
+      - PendingTravelRuleInfo
+      - PendingTravelRuleCheck
+      - RejectedTravelRuleDueToUnsupportedToken
+      - SignatureVerificationSuccess
+      - SignatureVerificationFailed
       example: PendingDoubleCheck
       type: string
     TransactionTimeline:
@@ -9612,7 +9654,7 @@ components:
       example: Address
       type: string
     TransactionSignatureResult:
-      description: The result of a message sign transaction.
+      description: The result of a message signing transaction.
       example:
         result_type: Address
         signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
@@ -10123,11 +10165,11 @@ components:
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
           type: string
         force_internal:
-          description: |
-            Whether the transaction request must be executed as a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).
-              - `true`: The transaction request must be executed as a Loop transfer.
-              - `false`: The transaction request may not be executed as a Loop transfer.
-            <Note>Please do not set both `force_internal` and `force_internal` as `true`.</Note>
+          description: "Whether the transaction request must be executed as a Loop\
+            \ transfer. For more information about Loop, see [Loop's website](https://loop.top/).\n\
+            \  - `true`: The transaction request must be executed as a Loop transfer.\n\
+            \  - `false`: The transaction request may not be executed as a Loop transfer.\n\
+            \  \nPlease do not set both `force_internal` and `force_internal` as `true`.\n"
           example: false
           type: boolean
         force_external:
@@ -10135,7 +10177,8 @@ components:
             Whether the transaction request must not be executed as a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).
               - `true`: The transaction request must not be executed as a Loop transfer.
               - `false`: The transaction request can be executed as a Loop transfer.
-            <Note>Please do not set both `force_internal` and `force_internal` as `true`.</Note>
+
+            Please do not set both `force_internal` and `force_internal` as `true`.
           example: false
           type: boolean
       required:
@@ -10272,7 +10315,7 @@ components:
       discriminator:
         mapping:
           Transfer: '#/components/schemas/EstimateTransferFeeParams:'
-          Call: '#/components/schemas/EstimateContractCallFeeParams:'
+          ContractCall: '#/components/schemas/EstimateContractCallFeeParams:'
         propertyName: request_type
       oneOf:
       - $ref: '#/components/schemas/EstimateTransferFeeParams'
@@ -10386,17 +10429,10 @@ components:
     MpcContractCallSource:
       allOf:
       - $ref: '#/components/schemas/BaseContractCallSource'
-      - properties:
-          nonce:
-            description: The transaction nonce.
-            example: 9
-            type: integer
-        type: object
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
         source_type: Org-Controlled
-        nonce: 9
       title: Contract Call from MPC Wallet
     SafeContractCallSource:
       allOf:
@@ -10497,7 +10533,6 @@ components:
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
           source_type: Org-Controlled
-          nonce: 9
         category_names:
         - Trading
         - Trading
@@ -10559,7 +10594,7 @@ components:
       - address
       - source_type
       - wallet_id
-      title: Message Sign from MPC Wallet
+      title: Message Signing from MPC Wallet
       type: object
     MessageSignSourceType:
       description: |
@@ -10685,7 +10720,7 @@ components:
         destination:
           $ref: '#/components/schemas/MessageSignDestination'
         description:
-          description: The description of the message sign transaction.
+          description: The description of the message signing transaction.
           example: Transaction to sign a message initiated from a wallet
           type: string
         category_names:
@@ -12086,6 +12121,45 @@ components:
       - total_outflow_value
       - total_transaction_count
       type: object
+    AddressBook:
+      description: The data for address book entry information.
+      properties:
+        org_id:
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        entry_id:
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: address.
+          example: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+          type: string
+        memo:
+          description: memo.
+          example: 9d4773eb
+          type: string
+        wallet_name:
+          description: wallet name.
+          example: Example Wallet
+          type: string
+        wallet_type:
+          $ref: '#/components/schemas/WalletType'
+        label:
+          description: The label to address.
+          example: test
+          type: string
+        email:
+          description: email.
+          example: help@cobo.com
+          type: string
+      required:
+      - address
+      - entry_id
+      - label
+      - org_id
+      type: object
     list_supported_chains_200_response:
       example:
         pagination:
@@ -13003,7 +13077,7 @@ components:
         expires_in: 43199
       properties:
         access_token:
-          description: The access token.
+          description: The Org Access Token.
           example: AnCEPEp5Q8qjAOA1Lb6kVd2OlkCyJnMTeMPdLbPOM8cz176Eb5y7EJoUjJJ0vkzz
           type: string
         token_type:
@@ -13011,19 +13085,20 @@ components:
           example: Bearer
           type: string
         scope:
-          description: "The scope of the access token to limit the app's access to\
-            \ the organization's resources. \n**Note**: Currently this property value\
-            \ is empty. The scope of the access token is based on the permissions\
+          description: "The scope of the Org Access Token to limit the app's access\
+            \ to the organization's resources. \n**Note**: Currently this property\
+            \ value is empty. The scope of the Org Access Token is based on the permissions\
             \ granted when the app user installs the app.\n"
           example: ""
           type: string
         expires_in:
-          description: The time in seconds in which the access token expires.
+          description: The time in seconds in which the Org Access Token expires.
           example: 43199
           type: integer
         refresh_token:
-          description: "The refresh token, used to obtain a new access token when\
-            \ the current access token expires."
+          description: "The Refresh Token, used to obtain a new Org Access Token when\
+            \ the current Org Access Token expires. The expiration time for Refresh\
+            \ Tokens is currently set to 30 days and is subject to change."
           example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
           type: string
       type: object
@@ -13046,9 +13121,9 @@ components:
     refresh_token_request:
       properties:
         client_id:
-          description: "The App ID, a unique identifier to distinguish Cobo Portal\
-            \ Apps. You can get the App ID by retrieving the Manifest file after receiving\
-            \ the notification of app launch approval."
+          description: "The client ID, a unique identifier to distinguish Cobo Portal\
+            \ Apps. You can get the client ID by retrieving the manifest file after\
+            \ publishing the app."
           example: AnCEPEp5Q8qjAOA1Lb6kVd2OlkCyJnMTeMPdLbPOM8cz176Eb5y7EJoUjJJ0vkzz
           type: string
         grant_type:
@@ -13056,7 +13131,7 @@ components:
           example: refresh_token
           type: string
         refresh_token:
-          description: The refresh token of the current access token.
+          description: The Refresh Token of the current Org Access Token.
           example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
           type: string
       type: object
@@ -13069,7 +13144,7 @@ components:
         expires_in: 43199
       properties:
         access_token:
-          description: The new access token.
+          description: The new Org Access Token.
           example: AnCEPEp5Q8qjAOA1Lb6kVd2OlkCyJnMTeMPdLbPOM8cz176Eb5y7EJoUjJJ0vkzz
           type: string
         token_type:
@@ -13078,17 +13153,18 @@ components:
           type: string
         scope:
           description: |
-            The scope of the access token to limit the app's access to the organization's resources.
-            **Note**: Currently this property value is empty. The scope of the access token is based on the permissions granted when the app user installs the app.
+            The scope of the Org Access Token to limit the app's access to the organization's resources.
+            **Note**: Currently this property value is empty. The scope of the Org Access Token is based on the permissions granted when the app user installs the app.
           example: ""
           type: string
         expires_in:
-          description: The time in seconds in which the new access token expires.
+          description: The time in seconds in which the new Org Access Token expires.
           example: 43199
           type: integer
         refresh_token:
-          description: "The refresh token, used to obtain another access token when\
-            \ the new access token expires."
+          description: "The Refresh Token, used to obtain another Org Access Token\
+            \ when the new Org Access Token expires. The expiration time for Refresh\
+            \ Tokens is currently set to 30 days and is subject to change."
           example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
           type: string
       type: object
