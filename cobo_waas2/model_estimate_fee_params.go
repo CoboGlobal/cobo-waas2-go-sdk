@@ -44,8 +44,8 @@ func (dst *EstimateFeeParams) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
-	// check if the discriminator value is 'Call'
-	if jsonDict["request_type"] == "Call" {
+	// check if the discriminator value is 'ContractCall'
+	if jsonDict["request_type"] == "ContractCall" {
 		// try to unmarshal JSON data into EstimateContractCallFeeParams
 		err = json.Unmarshal(data, &dst.EstimateContractCallFeeParams)
 		if err == nil {

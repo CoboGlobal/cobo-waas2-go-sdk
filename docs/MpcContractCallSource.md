@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **SourceType** | [**ContractCallSourceType**](ContractCallSourceType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
 **Address** | **string** | The wallet address. | 
-**Nonce** | Pointer to **int32** | The transaction nonce. | [optional] 
 
 ## Methods
 
@@ -87,31 +86,6 @@ and a boolean to check if the value has been set.
 
 SetAddress sets Address field to given value.
 
-
-### GetNonce
-
-`func (o *MpcContractCallSource) GetNonce() int32`
-
-GetNonce returns the Nonce field if non-nil, zero value otherwise.
-
-### GetNonceOk
-
-`func (o *MpcContractCallSource) GetNonceOk() (*int32, bool)`
-
-GetNonceOk returns a tuple with the Nonce field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNonce
-
-`func (o *MpcContractCallSource) SetNonce(v int32)`
-
-SetNonce sets Nonce field to given value.
-
-### HasNonce
-
-`func (o *MpcContractCallSource) HasNonce() bool`
-
-HasNonce returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

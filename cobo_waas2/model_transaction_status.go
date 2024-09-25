@@ -21,7 +21,6 @@ const (
 	TRANSACTIONSTATUS_SUBMITTED TransactionStatus = "Submitted"
 	TRANSACTIONSTATUS_PENDING_SCREENING TransactionStatus = "PendingScreening"
 	TRANSACTIONSTATUS_PENDING_AUTHORIZATION TransactionStatus = "PendingAuthorization"
-	TRANSACTIONSTATUS_QUEUED TransactionStatus = "Queued"
 	TRANSACTIONSTATUS_PENDING_SIGNATURE TransactionStatus = "PendingSignature"
 	TRANSACTIONSTATUS_BROADCASTING TransactionStatus = "Broadcasting"
 	TRANSACTIONSTATUS_CONFIRMING TransactionStatus = "Confirming"
@@ -36,7 +35,6 @@ var AllowedTransactionStatusEnumValues = []TransactionStatus{
 	"Submitted",
 	"PendingScreening",
 	"PendingAuthorization",
-	"Queued",
 	"PendingSignature",
 	"Broadcasting",
 	"Confirming",

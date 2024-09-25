@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessToken** | Pointer to **string** | The access token. | [optional] 
+**AccessToken** | Pointer to **string** | The Org Access Token. | [optional] 
 **TokenType** | Pointer to **string** | The type of the tokens, which is Bearer. | [optional] 
-**Scope** | Pointer to **string** | The scope of the access token to limit the app&#39;s access to the organization&#39;s resources.  **Note**: Currently this property value is empty. The scope of the access token is based on the permissions granted when the app user installs the app.  | [optional] 
-**ExpiresIn** | Pointer to **int32** | The time in seconds in which the access token expires. | [optional] 
-**RefreshToken** | Pointer to **string** | The refresh token, used to obtain a new access token when the current access token expires. | [optional] 
+**Scope** | Pointer to **string** | The scope of the Org Access Token to limit the app&#39;s access to the organization&#39;s resources.  **Note**: Currently this property value is empty. The scope of the Org Access Token is based on the permissions granted when the app user installs the app.  | [optional] 
+**ExpiresIn** | Pointer to **int32** | The time in seconds in which the Org Access Token expires. | [optional] 
+**RefreshToken** | Pointer to **string** | The Refresh Token, used to obtain a new Org Access Token when the current Org Access Token expires. The expiration time for Refresh Tokens is currently set to 30 days and is subject to change. | [optional] 
 
 ## Methods
 

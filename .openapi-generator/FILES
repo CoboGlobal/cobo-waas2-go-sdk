@@ -23,6 +23,7 @@ docs/ActivityInitiator.md
 docs/ActivityStatus.md
 docs/ActivityTimeline.md
 docs/ActivityType.md
+docs/AddressBook.md
 docs/AddressEncoding.md
 docs/AddressInfo.md
 docs/AddressTransferDestination.md
@@ -302,6 +303,7 @@ model_activity_initiator.go
 model_activity_status.go
 model_activity_timeline.go
 model_activity_type.go
+model_address_book.go
 model_address_encoding.go
 model_address_info.go
 model_address_transfer_destination.go

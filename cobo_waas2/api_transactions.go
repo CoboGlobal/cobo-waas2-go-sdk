@@ -586,7 +586,7 @@ type ApiCreateMessageSignTransactionRequest struct {
 	messageSignParams *MessageSignParams
 }
 
-// The request body to create a message sign transaction
+// The request body to create a message signing transaction
 func (r ApiCreateMessageSignTransactionRequest) MessageSignParams(messageSignParams MessageSignParams) ApiCreateMessageSignTransactionRequest {
 	r.messageSignParams = &messageSignParams
 	return r

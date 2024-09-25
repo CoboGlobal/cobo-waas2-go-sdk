@@ -28,13 +28,13 @@ type ApiGetTokenRequest struct {
 	grantType *string
 }
 
-// The App ID, a unique identifier to distinguish Cobo Portal Apps. You can get the App ID by retrieving the Manifest file after receiving the notification of app launch approval.
+// The client ID, a unique identifier to distinguish Cobo Portal Apps. You can get the client ID by retrieving the manifest file after publishing the app.
 func (r ApiGetTokenRequest) ClientId(clientId string) ApiGetTokenRequest {
 	r.clientId = &clientId
 	return r
 }
 
-// Organization ID, a unique identifier to distinguish different organizations. You can get the Organization ID by retrieving the Manifest file after receiving the notification of app launch approval.
+// Organization ID, a unique identifier to distinguish different organizations. You can get the organization ID from the callback message sent to the URL that was configured in the manifest file.
 func (r ApiGetTokenRequest) OrgId(orgId string) ApiGetTokenRequest {
 	r.orgId = &orgId
 	return r
@@ -51,14 +51,14 @@ func (r ApiGetTokenRequest) Execute() (*GetToken200Response, *http.Response, err
 }
 
 /*
-GetToken Get access token
+GetToken Get Org Access Token
 
-<Note>This operation is only applicable to Cobo Portal App developers. To call this operation, you need to use the OAuth authentication method that requires an app key.</Note>
-This operation allows Cobo Portal Apps to get an access token and a refresh token with a specified App ID, Organization ID, and grant type. 
+<Note>This operation is only applicable to Cobo Portal App developers. To call this operation, you need to use the Cobo OAuth authentication method that requires an app key.</Note>
+This operation allows Cobo Portal Apps to get an Org Access Token and a Refresh Token with a specified client ID, organization ID, and grant type. 
 
-Access tokens allow the app to signal to the WaaS service that it has received permission to access specific resources of the app user's [organization](https://manuals.cobo.com/en/portal/organization/introduction). Once the app has been granted permission by the organization's admin, it can use this operation to obtain both an access token and a refresh token.
+Access tokens allow the app to signal to the WaaS service that it has received permission to access specific resources of the app user's [organization](https://manuals.cobo.com/en/portal/organization/introduction). Once the app has been granted permission by the organization's admin, it can use this operation to obtain both an Org Access Token and a Refresh Token.
 
-For security purposes, access tokens expire after a certain period. Once they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-access-token) to get a new access token and a new refresh token. 
+For security purposes, Org Access Tokens expire after a certain period. Once they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-access-token) to get a new Org Access Token and a new Refresh Token. 
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -185,7 +185,7 @@ type ApiRefreshTokenRequest struct {
 	refreshTokenRequest *RefreshTokenRequest
 }
 
-// The request body for refreshing an access token.
+// The request body for refreshing an Org Access Token.
 func (r ApiRefreshTokenRequest) RefreshTokenRequest(refreshTokenRequest RefreshTokenRequest) ApiRefreshTokenRequest {
 	r.refreshTokenRequest = &refreshTokenRequest
 	return r
@@ -196,12 +196,12 @@ func (r ApiRefreshTokenRequest) Execute() (*RefreshToken200Response, *http.Respo
 }
 
 /*
-RefreshToken Refresh access token
+RefreshToken Refresh Org Access Token
 
-<Note>This operation is only applicable to Cobo Portal Apps developers. To call this operation, you need to use the OAuth authentication method that requires an app key.</Note>
-This operation allows Cobo Portal Apps to obtain a new access token with a specified App ID, grant type and a refresh token. 
+<Note>This operation is only applicable to Cobo Portal Apps developers. To call this operation, you need to use the Cobo OAuth authentication method that requires an app key.</Note>
+This operation allows Cobo Portal Apps to obtain a new Org Access Token with a specified client ID, grant type and a Refresh Token. 
 
-For security purposes, access tokens expire after a certain period. Once they expire, the app needs to call this operation to get a new access token and a new refresh token. 
+For security purposes, Org Access Tokens expire after a certain period. Once they expire, the app needs to call this operation to get a new Org Access Token and a new Refresh Token. 
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

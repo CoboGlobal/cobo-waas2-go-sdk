@@ -17,7 +17,7 @@ import (
 // checks if the TransactionSignatureResult type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionSignatureResult{}
 
-// TransactionSignatureResult The result of a message sign transaction.
+// TransactionSignatureResult The result of a message signing transaction.
 type TransactionSignatureResult struct {
 	ResultType *TransactionResultType `json:"result_type,omitempty"`
 	// The raw data of the signature.

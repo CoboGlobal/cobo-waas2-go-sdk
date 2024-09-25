@@ -25,7 +25,7 @@ type MessageSignParams struct {
 	ChainId string `json:"chain_id"`
 	Source MessageSignSource `json:"source"`
 	Destination MessageSignDestination `json:"destination"`
-	// The description of the message sign transaction.
+	// The description of the message signing transaction.
 	Description *string `json:"description,omitempty"`
 	// The custom category for you to identify your transactions.
 	CategoryNames []string `json:"category_names,omitempty"`
