@@ -4,6 +4,7 @@
 .travis.yml
 README.md
 api/openapi.yaml
+api_address_books.go
 api_developers_webhooks.go
 api_o_auth.go
 api_stakings.go
@@ -11,6 +12,7 @@ api_transactions.go
 api_wallets.go
 api_wallets_exchange_wallet.go
 api_wallets_mpc_wallets.go
+api_wallets_smart_contract_wallets.go
 client.go
 configuration.go
 crypto/ed25519.go
@@ -24,6 +26,7 @@ docs/ActivityStatus.md
 docs/ActivityTimeline.md
 docs/ActivityType.md
 docs/AddressBook.md
+docs/AddressBooksAPI.md
 docs/AddressEncoding.md
 docs/AddressInfo.md
 docs/AddressTransferDestination.md
@@ -31,6 +34,8 @@ docs/AddressTransferDestinationAccountOutput.md
 docs/AddressTransferDestinationUtxoOutputsInner.md
 docs/AmountDetailsInner.md
 docs/AmountStatus.md
+docs/ApiLogDetails.md
+docs/ApiLogSummary.md
 docs/AssetBalance.md
 docs/AssetInfo.md
 docs/BabylonStakeExtra.md
@@ -40,8 +45,6 @@ docs/BaseContractCallSource.md
 docs/BaseEstimateStakingFee.md
 docs/BaseStakeExtra.md
 docs/BaseStakeSource.md
-docs/BookkeepingRecord.md
-docs/BookkeepingSummary.md
 docs/BroadcastSignedTransactions201ResponseInner.md
 docs/BroadcastSignedTransactionsRequest.md
 docs/ChainInfo.md
@@ -130,6 +133,7 @@ docs/KeyShareHolderGroupStatus.md
 docs/KeyShareHolderGroupType.md
 docs/KeyShareHolderStatus.md
 docs/KeyShareHolderType.md
+docs/ListAddressBooks200Response.md
 docs/ListAddresses200Response.md
 docs/ListAssetBalancesForExchangeWallet200Response.md
 docs/ListExchanges200ResponseInner.md
@@ -177,7 +181,7 @@ docs/PoolDetails.md
 docs/PoolDetailsAllOfValidatorsInfo.md
 docs/PoolSummary.md
 docs/RawMessageSignDestination.md
-docs/RefreshToken200Response.md
+docs/RefreshToken201Response.md
 docs/RefreshTokenRequest.md
 docs/ReplaceType.md
 docs/RetryWebhookEventById201Response.md
@@ -185,6 +189,9 @@ docs/RootPubkey.md
 docs/SafeContractCallSource.md
 docs/SafeTransferSource.md
 docs/SafeWallet.md
+docs/SafeWalletDelegates.md
+docs/SafeWalletDelegatesContractCall.md
+docs/SafeWalletDelegatesTransfer.md
 docs/SmartContractInitiator.md
 docs/SmartContractWalletInfo.md
 docs/SmartContractWalletOperationType.md
@@ -203,6 +210,7 @@ docs/TSSRequest.md
 docs/TSSRequestStatus.md
 docs/TSSRequestType.md
 docs/TSSRequestWebhookEventData.md
+docs/TokenAssetModelType.md
 docs/TokenBalance.md
 docs/TokenBalanceBalance.md
 docs/TokenInfo.md
@@ -219,7 +227,9 @@ docs/TransactionDestination.md
 docs/TransactionDestinationType.md
 docs/TransactionDetail.md
 docs/TransactionDetails.md
+docs/TransactionEvmCalldataInfo.md
 docs/TransactionEvmContractDestination.md
+docs/TransactionEvmContractMethod.md
 docs/TransactionEvmEip1559Fee.md
 docs/TransactionEvmLegacyFee.md
 docs/TransactionExchangeWalletSource.md
@@ -230,6 +240,7 @@ docs/TransactionInitiatorType.md
 docs/TransactionMPCWalletSource.md
 docs/TransactionMessageSignEIP191Destination.md
 docs/TransactionMessageSignEIP712Destination.md
+docs/TransactionRawMessageSignDestination.md
 docs/TransactionRawTxInfo.md
 docs/TransactionRbf.md
 docs/TransactionRbfSource.md
@@ -265,6 +276,8 @@ docs/TransferDestination.md
 docs/TransferDestinationType.md
 docs/TransferParams.md
 docs/TransferSource.md
+docs/TriggerTestWebhookEvent201Response.md
+docs/TriggerTestWebhookEventRequest.md
 docs/UTXO.md
 docs/UpdateCustodialWalletParams.md
 docs/UpdateExchangeWalletParams.md
@@ -278,14 +291,13 @@ docs/UpdateWalletParams.md
 docs/UpdateWebhookEndpointByIdRequest.md
 docs/UtxoFeeBasePrice.md
 docs/UtxoFeeRate.md
-docs/WalletBalanceSnapshot.md
-docs/WalletBalanceSnapshotRecord.md
 docs/WalletInfo.md
 docs/WalletSubtype.md
 docs/WalletType.md
 docs/WalletsAPI.md
 docs/WalletsExchangeWalletAPI.md
 docs/WalletsMPCWalletsAPI.md
+docs/WalletsSmartContractWalletsAPI.md
 docs/WebhookEndpoint.md
 docs/WebhookEndpointStatus.md
 docs/WebhookEvent.md
@@ -311,6 +323,8 @@ model_address_transfer_destination_account_output.go
 model_address_transfer_destination_utxo_outputs_inner.go
 model_amount_details_inner.go
 model_amount_status.go
+model_api_log_details.go
+model_api_log_summary.go
 model_asset_balance.go
 model_asset_info.go
 model_babylon_stake_extra.go
@@ -320,8 +334,6 @@ model_base_contract_call_source.go
 model_base_estimate_staking_fee.go
 model_base_stake_extra.go
 model_base_stake_source.go
-model_bookkeeping_record.go
-model_bookkeeping_summary.go
 model_broadcast_signed_transactions_201_response_inner.go
 model_broadcast_signed_transactions_request.go
 model_chain_info.go
@@ -409,6 +421,7 @@ model_key_share_holder_group_status.go
 model_key_share_holder_group_type.go
 model_key_share_holder_status.go
 model_key_share_holder_type.go
+model_list_address_books_200_response.go
 model_list_addresses_200_response.go
 model_list_asset_balances_for_exchange_wallet_200_response.go
 model_list_exchanges_200_response_inner.go
@@ -455,7 +468,7 @@ model_pool_details.go
 model_pool_details_all_of_validators_info.go
 model_pool_summary.go
 model_raw_message_sign_destination.go
-model_refresh_token_200_response.go
+model_refresh_token_201_response.go
 model_refresh_token_request.go
 model_replace_type.go
 model_retry_webhook_event_by_id_201_response.go
@@ -463,6 +476,9 @@ model_root_pubkey.go
 model_safe_contract_call_source.go
 model_safe_transfer_source.go
 model_safe_wallet.go
+model_safe_wallet_delegates.go
+model_safe_wallet_delegates_contract_call.go
+model_safe_wallet_delegates_transfer.go
 model_smart_contract_initiator.go
 model_smart_contract_wallet_info.go
 model_smart_contract_wallet_operation_type.go
@@ -475,6 +491,7 @@ model_stakings.go
 model_stakings_extra.go
 model_stakings_validator_info.go
 model_sub_wallet_asset_balance.go
+model_token_asset_model_type.go
 model_token_balance.go
 model_token_balance_balance.go
 model_token_info.go
@@ -491,7 +508,9 @@ model_transaction_destination.go
 model_transaction_destination_type.go
 model_transaction_detail.go
 model_transaction_details.go
+model_transaction_evm_calldata_info.go
 model_transaction_evm_contract_destination.go
+model_transaction_evm_contract_method.go
 model_transaction_evm_eip1559_fee.go
 model_transaction_evm_legacy_fee.go
 model_transaction_exchange_wallet_source.go
@@ -502,6 +521,7 @@ model_transaction_initiator_type.go
 model_transaction_message_sign_eip191_destination.go
 model_transaction_message_sign_eip712_destination.go
 model_transaction_mpc_wallet_source.go
+model_transaction_raw_message_sign_destination.go
 model_transaction_raw_tx_info.go
 model_transaction_rbf.go
 model_transaction_rbf_source.go
@@ -536,6 +556,8 @@ model_transfer_destination.go
 model_transfer_destination_type.go
 model_transfer_params.go
 model_transfer_source.go
+model_trigger_test_webhook_event_201_response.go
+model_trigger_test_webhook_event_request.go
 model_tss_groups.go
 model_tss_request.go
 model_tss_request_status.go
@@ -554,8 +576,6 @@ model_update_webhook_endpoint_by_id_request.go
 model_utxo.go
 model_utxo_fee_base_price.go
 model_utxo_fee_rate.go
-model_wallet_balance_snapshot.go
-model_wallet_balance_snapshot_record.go
 model_wallet_info.go
 model_wallet_subtype.go
 model_wallet_type.go
@@ -568,11 +588,13 @@ model_webhook_event_log.go
 model_webhook_event_status.go
 model_webhook_event_type.go
 response.go
+test/api_address_books_test.go
 test/api_developers_webhooks_test.go
 test/api_o_auth_test.go
 test/api_stakings_test.go
 test/api_transactions_test.go
 test/api_wallets_exchange_wallet_test.go
 test/api_wallets_mpc_wallets_test.go
+test/api_wallets_smart_contract_wallets_test.go
 test/api_wallets_test.go
 utils.go

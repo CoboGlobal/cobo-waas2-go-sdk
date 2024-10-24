@@ -7,13 +7,13 @@ Name | Type | Description | Notes
 **SourceType** | [**TransactionSourceType**](TransactionSourceType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
 **Address** | **string** | The wallet address. | 
-**Delegate** | [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | 
+**Delegate** | Pointer to [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | [optional] 
 
 ## Methods
 
 ### NewTransactionSmartContractSafeWalletSource
 
-`func NewTransactionSmartContractSafeWalletSource(sourceType TransactionSourceType, walletId string, address string, delegate CoboSafeDelegate, ) *TransactionSmartContractSafeWalletSource`
+`func NewTransactionSmartContractSafeWalletSource(sourceType TransactionSourceType, walletId string, address string, ) *TransactionSmartContractSafeWalletSource`
 
 NewTransactionSmartContractSafeWalletSource instantiates a new TransactionSmartContractSafeWalletSource object
 This constructor will assign default values to properties that have it defined,
@@ -107,6 +107,11 @@ and a boolean to check if the value has been set.
 
 SetDelegate sets Delegate field to given value.
 
+### HasDelegate
+
+`func (o *TransactionSmartContractSafeWalletSource) HasDelegate() bool`
+
+HasDelegate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

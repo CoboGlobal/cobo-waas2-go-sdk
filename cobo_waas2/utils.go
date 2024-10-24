@@ -386,3 +386,24 @@ func Divide(a, b decimal.Decimal, scale int32) (decimal.Decimal, error) {
     }
     return a.DivRound(b, scale), nil
 }
+
+// ExtractErrorResponse attempts to extract an ErrorResponse from a given error.
+// It first checks if the error is of type *GenericOpenAPIError. If it is, the function
+// will attempt to cast the Model() of the error into an ErrorResponse.
+// The function returns the extracted ErrorResponse and a boolean indicating whether
+// the extraction was successful.
+//
+// Parameters:
+//   - origin: The error to be parsed.
+//
+// Returns:
+//   - err: The extracted ErrorResponse, or a zero value if extraction fails.
+//   - ok: A boolean indicating whether the extraction was successful.
+func ExtractErrorResponse(origin error) (err ErrorResponse, ok bool) {
+    apiErr, ok := origin.(*GenericOpenAPIError)
+    if !ok {
+        return err, ok
+    }
+    err, ok = apiErr.Model().(ErrorResponse)
+    return
+}

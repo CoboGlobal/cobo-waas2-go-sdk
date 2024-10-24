@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DelegateType** | [**CoboSafeDelegateType**](CoboSafeDelegateType.md) |  | [default to COBOSAFEDELEGATETYPE_ORG_CONTROLLED]
-**WalletId** | **string** | The wallet ID of the Delegate. This is required when initiating a transfer from Smart Contract Wallets (Safe{Wallet}). | 
-**Address** | **string** | The wallet address of the Delegate. This is required when initiating a transfer from Smart Contract Wallets (Safe{Wallet}). | 
+**WalletId** | **string** | The wallet ID of the Delegate. This is required when initiating a transfer or contract call from Smart Contract Wallets (Safe{Wallet}). | 
+**Address** | **string** | The wallet address of the Delegate. This is required when initiating a transfer or contract call from Smart Contract Wallets (Safe{Wallet}). | 
 
 ## Methods
 

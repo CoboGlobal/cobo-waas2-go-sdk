@@ -24,7 +24,7 @@ type TransactionSmartContractSafeWalletSource struct {
 	WalletId string `json:"wallet_id"`
 	// The wallet address.
 	Address string `json:"address"`
-	Delegate CoboSafeDelegate `json:"delegate"`
+	Delegate *CoboSafeDelegate `json:"delegate,omitempty"`
 }
 
 type _TransactionSmartContractSafeWalletSource TransactionSmartContractSafeWalletSource
@@ -33,12 +33,11 @@ type _TransactionSmartContractSafeWalletSource TransactionSmartContractSafeWalle
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransactionSmartContractSafeWalletSource(sourceType TransactionSourceType, walletId string, address string, delegate CoboSafeDelegate) *TransactionSmartContractSafeWalletSource {
+func NewTransactionSmartContractSafeWalletSource(sourceType TransactionSourceType, walletId string, address string) *TransactionSmartContractSafeWalletSource {
 	this := TransactionSmartContractSafeWalletSource{}
 	this.SourceType = sourceType
 	this.WalletId = walletId
 	this.Address = address
-	this.Delegate = delegate
 	return &this
 }
 
@@ -122,28 +121,36 @@ func (o *TransactionSmartContractSafeWalletSource) SetAddress(v string) {
 	o.Address = v
 }
 
-// GetDelegate returns the Delegate field value
+// GetDelegate returns the Delegate field value if set, zero value otherwise.
 func (o *TransactionSmartContractSafeWalletSource) GetDelegate() CoboSafeDelegate {
-	if o == nil {
+	if o == nil || IsNil(o.Delegate) {
 		var ret CoboSafeDelegate
 		return ret
 	}
-
-	return o.Delegate
+	return *o.Delegate
 }
 
-// GetDelegateOk returns a tuple with the Delegate field value
+// GetDelegateOk returns a tuple with the Delegate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TransactionSmartContractSafeWalletSource) GetDelegateOk() (*CoboSafeDelegate, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Delegate) {
 		return nil, false
 	}
-	return &o.Delegate, true
+	return o.Delegate, true
 }
 
-// SetDelegate sets field value
+// HasDelegate returns a boolean if a field has been set.
+func (o *TransactionSmartContractSafeWalletSource) HasDelegate() bool {
+	if o != nil && !IsNil(o.Delegate) {
+		return true
+	}
+
+	return false
+}
+
+// SetDelegate gets a reference to the given CoboSafeDelegate and assigns it to the Delegate field.
 func (o *TransactionSmartContractSafeWalletSource) SetDelegate(v CoboSafeDelegate) {
-	o.Delegate = v
+	o.Delegate = &v
 }
 
 func (o TransactionSmartContractSafeWalletSource) MarshalJSON() ([]byte, error) {
@@ -159,7 +166,9 @@ func (o TransactionSmartContractSafeWalletSource) ToMap() (map[string]interface{
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
 	toSerialize["address"] = o.Address
-	toSerialize["delegate"] = o.Delegate
+	if !IsNil(o.Delegate) {
+		toSerialize["delegate"] = o.Delegate
+	}
 	return toSerialize, nil
 }
 
@@ -171,7 +180,6 @@ func (o *TransactionSmartContractSafeWalletSource) UnmarshalJSON(data []byte) (e
 		"source_type",
 		"wallet_id",
 		"address",
-		"delegate",
 	}
 
 	allProperties := make(map[string]interface{})

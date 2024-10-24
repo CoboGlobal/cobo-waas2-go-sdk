@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**ListWebhookEventLogs**](DevelopersWebhooksAPI.md#ListWebhookEventLogs) | **Get** /webhooks/endpoints/{endpoint_id}/events/{event_id}/logs | List webhook event logs
 [**ListWebhookEvents**](DevelopersWebhooksAPI.md#ListWebhookEvents) | **Get** /webhooks/endpoints/{endpoint_id}/events | List all webhook events
 [**RetryWebhookEventById**](DevelopersWebhooksAPI.md#RetryWebhookEventById) | **Post** /webhooks/endpoints/{endpoint_id}/events/{event_id}/retry | Retry event
+[**TriggerTestWebhookEvent**](DevelopersWebhooksAPI.md#TriggerTestWebhookEvent) | **Post** /webhooks/events/trigger | Trigger test event
 [**UpdateWebhookEndpointById**](DevelopersWebhooksAPI.md#UpdateWebhookEndpointById) | **Put** /webhooks/endpoints/{endpoint_id} | Update webhook endpoint
 
 
@@ -665,6 +666,82 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TriggerTestWebhookEvent
+
+> TriggerTestWebhookEvent201Response TriggerTestWebhookEvent(ctx).TriggerTestWebhookEventRequest(triggerTestWebhookEventRequest).Execute()
+
+Trigger test event
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	triggerTestWebhookEventRequest := *coboWaas2.NewTriggerTestWebhookEventRequest(coboWaas2.WebhookEventType("wallets.transaction.created"))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.DevelopersWebhooksAPI.TriggerTestWebhookEvent(ctx).TriggerTestWebhookEventRequest(triggerTestWebhookEventRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DevelopersWebhooksAPI.TriggerTestWebhookEvent``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TriggerTestWebhookEvent`: TriggerTestWebhookEvent201Response
+	fmt.Fprintf(os.Stdout, "Response from `DevelopersWebhooksAPI.TriggerTestWebhookEvent`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTriggerTestWebhookEventRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **triggerTestWebhookEventRequest** | [**TriggerTestWebhookEventRequest**](TriggerTestWebhookEventRequest.md) | The request body used to trigger a test webhook event.  | 
+
+### Return type
+
+[**TriggerTestWebhookEvent201Response**](TriggerTestWebhookEvent201Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

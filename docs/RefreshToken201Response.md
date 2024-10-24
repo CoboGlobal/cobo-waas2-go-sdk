@@ -1,4 +1,4 @@
-# RefreshToken200Response
+# RefreshToken201Response
 
 ## Properties
 
@@ -12,145 +12,145 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewRefreshToken200Response
+### NewRefreshToken201Response
 
-`func NewRefreshToken200Response() *RefreshToken200Response`
+`func NewRefreshToken201Response() *RefreshToken201Response`
 
-NewRefreshToken200Response instantiates a new RefreshToken200Response object
+NewRefreshToken201Response instantiates a new RefreshToken201Response object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewRefreshToken200ResponseWithDefaults
+### NewRefreshToken201ResponseWithDefaults
 
-`func NewRefreshToken200ResponseWithDefaults() *RefreshToken200Response`
+`func NewRefreshToken201ResponseWithDefaults() *RefreshToken201Response`
 
-NewRefreshToken200ResponseWithDefaults instantiates a new RefreshToken200Response object
+NewRefreshToken201ResponseWithDefaults instantiates a new RefreshToken201Response object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetAccessToken
 
-`func (o *RefreshToken200Response) GetAccessToken() string`
+`func (o *RefreshToken201Response) GetAccessToken() string`
 
 GetAccessToken returns the AccessToken field if non-nil, zero value otherwise.
 
 ### GetAccessTokenOk
 
-`func (o *RefreshToken200Response) GetAccessTokenOk() (*string, bool)`
+`func (o *RefreshToken201Response) GetAccessTokenOk() (*string, bool)`
 
 GetAccessTokenOk returns a tuple with the AccessToken field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAccessToken
 
-`func (o *RefreshToken200Response) SetAccessToken(v string)`
+`func (o *RefreshToken201Response) SetAccessToken(v string)`
 
 SetAccessToken sets AccessToken field to given value.
 
 ### HasAccessToken
 
-`func (o *RefreshToken200Response) HasAccessToken() bool`
+`func (o *RefreshToken201Response) HasAccessToken() bool`
 
 HasAccessToken returns a boolean if a field has been set.
 
 ### GetTokenType
 
-`func (o *RefreshToken200Response) GetTokenType() string`
+`func (o *RefreshToken201Response) GetTokenType() string`
 
 GetTokenType returns the TokenType field if non-nil, zero value otherwise.
 
 ### GetTokenTypeOk
 
-`func (o *RefreshToken200Response) GetTokenTypeOk() (*string, bool)`
+`func (o *RefreshToken201Response) GetTokenTypeOk() (*string, bool)`
 
 GetTokenTypeOk returns a tuple with the TokenType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTokenType
 
-`func (o *RefreshToken200Response) SetTokenType(v string)`
+`func (o *RefreshToken201Response) SetTokenType(v string)`
 
 SetTokenType sets TokenType field to given value.
 
 ### HasTokenType
 
-`func (o *RefreshToken200Response) HasTokenType() bool`
+`func (o *RefreshToken201Response) HasTokenType() bool`
 
 HasTokenType returns a boolean if a field has been set.
 
 ### GetScope
 
-`func (o *RefreshToken200Response) GetScope() string`
+`func (o *RefreshToken201Response) GetScope() string`
 
 GetScope returns the Scope field if non-nil, zero value otherwise.
 
 ### GetScopeOk
 
-`func (o *RefreshToken200Response) GetScopeOk() (*string, bool)`
+`func (o *RefreshToken201Response) GetScopeOk() (*string, bool)`
 
 GetScopeOk returns a tuple with the Scope field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetScope
 
-`func (o *RefreshToken200Response) SetScope(v string)`
+`func (o *RefreshToken201Response) SetScope(v string)`
 
 SetScope sets Scope field to given value.
 
 ### HasScope
 
-`func (o *RefreshToken200Response) HasScope() bool`
+`func (o *RefreshToken201Response) HasScope() bool`
 
 HasScope returns a boolean if a field has been set.
 
 ### GetExpiresIn
 
-`func (o *RefreshToken200Response) GetExpiresIn() int32`
+`func (o *RefreshToken201Response) GetExpiresIn() int32`
 
 GetExpiresIn returns the ExpiresIn field if non-nil, zero value otherwise.
 
 ### GetExpiresInOk
 
-`func (o *RefreshToken200Response) GetExpiresInOk() (*int32, bool)`
+`func (o *RefreshToken201Response) GetExpiresInOk() (*int32, bool)`
 
 GetExpiresInOk returns a tuple with the ExpiresIn field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExpiresIn
 
-`func (o *RefreshToken200Response) SetExpiresIn(v int32)`
+`func (o *RefreshToken201Response) SetExpiresIn(v int32)`
 
 SetExpiresIn sets ExpiresIn field to given value.
 
 ### HasExpiresIn
 
-`func (o *RefreshToken200Response) HasExpiresIn() bool`
+`func (o *RefreshToken201Response) HasExpiresIn() bool`
 
 HasExpiresIn returns a boolean if a field has been set.
 
 ### GetRefreshToken
 
-`func (o *RefreshToken200Response) GetRefreshToken() string`
+`func (o *RefreshToken201Response) GetRefreshToken() string`
 
 GetRefreshToken returns the RefreshToken field if non-nil, zero value otherwise.
 
 ### GetRefreshTokenOk
 
-`func (o *RefreshToken200Response) GetRefreshTokenOk() (*string, bool)`
+`func (o *RefreshToken201Response) GetRefreshTokenOk() (*string, bool)`
 
 GetRefreshTokenOk returns a tuple with the RefreshToken field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRefreshToken
 
-`func (o *RefreshToken200Response) SetRefreshToken(v string)`
+`func (o *RefreshToken201Response) SetRefreshToken(v string)`
 
 SetRefreshToken sets RefreshToken field to given value.
 
 ### HasRefreshToken
 
-`func (o *RefreshToken200Response) HasRefreshToken() bool`
+`func (o *RefreshToken201Response) HasRefreshToken() bool`
 
 HasRefreshToken returns a boolean if a field has been set.
 

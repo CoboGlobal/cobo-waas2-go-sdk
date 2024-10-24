@@ -4,14 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **string** |  | 
-**EntryId** | **string** |  | 
-**Address** | **string** | address. | 
-**Memo** | Pointer to **string** | memo. | [optional] 
-**WalletName** | Pointer to **string** | wallet name. | [optional] 
+**OrgId** | **string** | The organization ID. | 
+**EntryId** | **string** | The entry ID. | 
+**Address** | **string** | The wallet address. | 
+**Memo** | Pointer to **string** | The memo. | [optional] 
+**WalletName** | Pointer to **string** | The wallet name. | [optional] 
 **WalletType** | Pointer to [**WalletType**](WalletType.md) |  | [optional] 
-**Label** | **string** | The label to address. | 
-**Email** | Pointer to **string** | email. | [optional] 
+**Label** | **string** | The address label. | 
+**ChainIds** | Pointer to **[]string** | A list of chain IDs. | [optional] 
+**Email** | Pointer to **string** | The email of the address owner. | [optional] 
 
 ## Methods
 
@@ -186,6 +187,31 @@ and a boolean to check if the value has been set.
 
 SetLabel sets Label field to given value.
 
+
+### GetChainIds
+
+`func (o *AddressBook) GetChainIds() []string`
+
+GetChainIds returns the ChainIds field if non-nil, zero value otherwise.
+
+### GetChainIdsOk
+
+`func (o *AddressBook) GetChainIdsOk() (*[]string, bool)`
+
+GetChainIdsOk returns a tuple with the ChainIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChainIds
+
+`func (o *AddressBook) SetChainIds(v []string)`
+
+SetChainIds sets ChainIds field to given value.
+
+### HasChainIds
+
+`func (o *AddressBook) HasChainIds() bool`
+
+HasChainIds returns a boolean if a field has been set.
 
 ### GetEmail
 

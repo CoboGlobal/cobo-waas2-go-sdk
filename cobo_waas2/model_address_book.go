@@ -17,20 +17,24 @@ import (
 // checks if the AddressBook type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressBook{}
 
-// AddressBook The data for address book entry information.
+// AddressBook The information of an address book entry.
 type AddressBook struct {
+	// The organization ID.
 	OrgId string `json:"org_id"`
+	// The entry ID.
 	EntryId string `json:"entry_id"`
-	// address.
+	// The wallet address.
 	Address string `json:"address"`
-	// memo.
+	// The memo.
 	Memo *string `json:"memo,omitempty"`
-	// wallet name.
+	// The wallet name.
 	WalletName *string `json:"wallet_name,omitempty"`
 	WalletType *WalletType `json:"wallet_type,omitempty"`
-	// The label to address.
+	// The address label.
 	Label string `json:"label"`
-	// email.
+	// A list of chain IDs.
+	ChainIds []string `json:"chain_ids,omitempty"`
+	// The email of the address owner.
 	Email *string `json:"email,omitempty"`
 }
 
@@ -249,6 +253,38 @@ func (o *AddressBook) SetLabel(v string) {
 	o.Label = v
 }
 
+// GetChainIds returns the ChainIds field value if set, zero value otherwise.
+func (o *AddressBook) GetChainIds() []string {
+	if o == nil || IsNil(o.ChainIds) {
+		var ret []string
+		return ret
+	}
+	return o.ChainIds
+}
+
+// GetChainIdsOk returns a tuple with the ChainIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressBook) GetChainIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.ChainIds) {
+		return nil, false
+	}
+	return o.ChainIds, true
+}
+
+// HasChainIds returns a boolean if a field has been set.
+func (o *AddressBook) HasChainIds() bool {
+	if o != nil && !IsNil(o.ChainIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetChainIds gets a reference to the given []string and assigns it to the ChainIds field.
+func (o *AddressBook) SetChainIds(v []string) {
+	o.ChainIds = v
+}
+
 // GetEmail returns the Email field value if set, zero value otherwise.
 func (o *AddressBook) GetEmail() string {
 	if o == nil || IsNil(o.Email) {
@@ -304,6 +340,9 @@ func (o AddressBook) ToMap() (map[string]interface{}, error) {
 		toSerialize["wallet_type"] = o.WalletType
 	}
 	toSerialize["label"] = o.Label
+	if !IsNil(o.ChainIds) {
+		toSerialize["chain_ids"] = o.ChainIds
+	}
 	if !IsNil(o.Email) {
 		toSerialize["email"] = o.Email
 	}

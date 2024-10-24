@@ -58,7 +58,7 @@ This operation allows Cobo Portal Apps to get an Org Access Token and a Refresh 
 
 Access tokens allow the app to signal to the WaaS service that it has received permission to access specific resources of the app user's [organization](https://manuals.cobo.com/en/portal/organization/introduction). Once the app has been granted permission by the organization's admin, it can use this operation to obtain both an Org Access Token and a Refresh Token.
 
-For security purposes, Org Access Tokens expire after a certain period. Once they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-access-token) to get a new Org Access Token and a new Refresh Token. 
+For security purposes, Org Access Tokens expire after a certain period. Once they expire, the app needs to call [Refresh token](/v2/api-references/oauth/refresh-org-access-token) to get a new Org Access Token and a new Refresh Token. 
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -150,8 +150,8 @@ func (a *OAuthAPIService) GetTokenExecute(r ApiGetTokenRequest) (*GetToken200Res
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -161,8 +161,8 @@ func (a *OAuthAPIService) GetTokenExecute(r ApiGetTokenRequest) (*GetToken200Res
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -191,7 +191,7 @@ func (r ApiRefreshTokenRequest) RefreshTokenRequest(refreshTokenRequest RefreshT
 	return r
 }
 
-func (r ApiRefreshTokenRequest) Execute() (*RefreshToken200Response, *http.Response, error) {
+func (r ApiRefreshTokenRequest) Execute() (*RefreshToken201Response, *http.Response, error) {
 	return r.ApiService.RefreshTokenExecute(r)
 }
 
@@ -215,13 +215,13 @@ func (a *OAuthAPIService) RefreshToken(ctx context.Context) ApiRefreshTokenReque
 }
 
 // Execute executes the request
-//  @return RefreshToken200Response
-func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*RefreshToken200Response, *http.Response, error) {
+//  @return RefreshToken201Response
+func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*RefreshToken201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *RefreshToken200Response
+		localVarReturnValue  *RefreshToken201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.RefreshToken")
@@ -286,8 +286,8 @@ func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*Refres
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -297,8 +297,8 @@ func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*Refres
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
