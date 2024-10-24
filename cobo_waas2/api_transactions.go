@@ -127,8 +127,8 @@ func (a *TransactionsAPIService) BroadcastSignedTransactionsExecute(r ApiBroadca
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -138,8 +138,8 @@ func (a *TransactionsAPIService) BroadcastSignedTransactionsExecute(r ApiBroadca
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -259,8 +259,8 @@ func (a *TransactionsAPIService) CancelTransactionByIdExecute(r ApiCancelTransac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -270,8 +270,8 @@ func (a *TransactionsAPIService) CancelTransactionByIdExecute(r ApiCancelTransac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -319,11 +319,11 @@ func (r ApiCheckLoopTransfersRequest) Execute() ([]CheckLoopTransfers200Response
 }
 
 /*
-CheckLoopTransfers Check Loop transfers
+CheckLoopTransfers Check Cobo Loop transfers
 
-This operation verifies if the transactions from a given source wallet to a list of given destinations can be executed as Loop transfers. 
+This operation verifies if the transactions from a given source wallet to a list of given destinations can be executed as Cobo Loop transfers. 
 
-For more information about Loop, see [Loop's website](https://loop.top/).
+For more information about Cobo Loop, see [Cobo Loop's product manuals](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -415,8 +415,8 @@ func (a *TransactionsAPIService) CheckLoopTransfersExecute(r ApiCheckLoopTransfe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -426,8 +426,8 @@ func (a *TransactionsAPIService) CheckLoopTransfersExecute(r ApiCheckLoopTransfe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -551,8 +551,8 @@ func (a *TransactionsAPIService) CreateContractCallTransactionExecute(r ApiCreat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -562,8 +562,8 @@ func (a *TransactionsAPIService) CreateContractCallTransactionExecute(r ApiCreat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -687,8 +687,8 @@ func (a *TransactionsAPIService) CreateMessageSignTransactionExecute(r ApiCreate
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -698,8 +698,8 @@ func (a *TransactionsAPIService) CreateMessageSignTransactionExecute(r ApiCreate
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -738,6 +738,8 @@ CreateTransferTransaction Transfer token
 The operation transfers your assets from a wallet created on Cobo Protal to another address.
 
 You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
+
+<Note>If you make transfers from Custodial Wallets, do not set the fee-related properties. Otherwise, the transaction will fail.</Note>
 
 <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. You should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
 
@@ -823,8 +825,8 @@ func (a *TransactionsAPIService) CreateTransferTransactionExecute(r ApiCreateTra
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -834,8 +836,8 @@ func (a *TransactionsAPIService) CreateTransferTransactionExecute(r ApiCreateTra
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -874,14 +876,18 @@ DropTransactionById Drop transaction
 
 This operation drops a specified transaction. 
 
-Dropping a transaction will trigger a Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It has a higher transaction fee to incentivize miners to prioritize its confirmation over the original one. A transaction can be dropped if its status is `Broadcasting`.
+Dropping a transaction will trigger a Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It must have a higher transaction fee to incentivize miners to prioritize its confirmation over the original one. A transaction can be dropped if its status is `Broadcasting`.
 
 <ul>
 <li>For EVM chains, this RBF transaction has a transfer amount of `0` and the sending address is the same as the receiving address.</li>
 <li>For UTXO chains, this RBF transaction has a transfer amount of `0` and the destination address is the same as the change address in the original transaction.</li>
 </ul>
 
+You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
+
 A transaction request for tracking is returned upon successful operation.
+
+When a transaction is being dropped, any subsequent drop or speed up operations will still apply to the original transaction. For example, if a user creates Transaction A and later performs a drop operation on Transaction A using Transaction B, followed by a speed up operation on Transaction B using Transaction C, the speed up operation will still apply to Transaction A, not Transaction B.
 
 <Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
@@ -970,8 +976,8 @@ func (a *TransactionsAPIService) DropTransactionByIdExecute(r ApiDropTransaction
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -981,8 +987,8 @@ func (a *TransactionsAPIService) DropTransactionByIdExecute(r ApiDropTransaction
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1104,8 +1110,8 @@ func (a *TransactionsAPIService) EstimateFeeExecute(r ApiEstimateFeeRequest) (*E
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -1115,8 +1121,8 @@ func (a *TransactionsAPIService) EstimateFeeExecute(r ApiEstimateFeeRequest) (*E
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1229,8 +1235,8 @@ func (a *TransactionsAPIService) GetTransactionByIdExecute(r ApiGetTransactionBy
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -1240,8 +1246,8 @@ func (a *TransactionsAPIService) GetTransactionByIdExecute(r ApiGetTransactionBy
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1304,7 +1310,7 @@ func (r ApiListTransactionsRequest) TransactionHashes(transactionHashes string) 
 	return r
 }
 
-// A list of transaction types, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.   - &#x60;ContractCall&#x60;: A transaction that interacts with a smart contract.   - &#x60;MessageSign&#x60;: A transaction that signs a message.    - &#x60;ExternalSafeTx&#x60;: A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one or multiple signatures to be executed. 
+// A list of transaction types, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.   - &#x60;ContractCall&#x60;: A transaction that interacts with a smart contract.   - &#x60;MessageSign&#x60;: A transaction that signs a message.    - &#x60;ExternalSafeTx&#x60;: A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one or multiple signatures to be executed.   - &#x60;Stake&#x60;: A transaction that creates a staking request.   - &#x60;Unstake&#x60;: A transaction that creates a unstaking request. 
 func (r ApiListTransactionsRequest) Types(types string) ApiListTransactionsRequest {
 	r.types = &types
 	return r
@@ -1525,8 +1531,8 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -1536,8 +1542,8 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1662,8 +1668,8 @@ func (a *TransactionsAPIService) ResendTransactionByIdExecute(r ApiResendTransac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -1673,8 +1679,8 @@ func (a *TransactionsAPIService) ResendTransactionByIdExecute(r ApiResendTransac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1713,7 +1719,9 @@ SpeedupTransactionById Speed up transaction
 
 This operation accelerates a specified transaction. 
 
-Speeding up a transaction will trigger a Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It shares the same inputs but has a higher transaction fee to incentivize miners to prioritize its confirmation over the previous one. A transaction can be accelerated if its status is `Broadcasting`.
+Speeding up a transaction will trigger a Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It shares the same inputs but must have a higher transaction fee to incentivize miners to prioritize its confirmation over the previous one. A transaction can be accelerated if its status is `Broadcasting`.
+
+You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
 
 A transaction request for tracking is returned upon successful operation.
 
@@ -1804,8 +1812,8 @@ func (a *TransactionsAPIService) SpeedupTransactionByIdExecute(r ApiSpeedupTrans
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 500 {
@@ -1815,8 +1823,8 @@ func (a *TransactionsAPIService) SpeedupTransactionByIdExecute(r ApiSpeedupTrans
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

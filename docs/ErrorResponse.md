@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ErrorCode** | **int32** | The error code. | 
+**ErrorCode** | **int32** | The error code. Refer to [Error codes and status codes](/v2/api-references/error-codes) for more details. | 
 **ErrorMessage** | **string** | The error description. | 
 **ErrorId** | **string** | The error log ID. You can provide the error ID when submitting a ticket to help Cobo to locate the issue. | 
 

@@ -29,7 +29,7 @@ Name | Type | Description | Notes
 **Replacement** | Pointer to [**TransactionReplacement**](TransactionReplacement.md) |  | [optional] 
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description for your transaction. | [optional] 
-**IsLoop** | Pointer to **bool** | Whether the transaction is a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).  - &#x60;true&#x60;: The transaction is a Loop transfer. - &#x60;false&#x60;: The transaction is not a Loop transfer.  | [optional] 
+**IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **Approvers** | Pointer to [**[]TransactionApprover**](TransactionApprover.md) |  | [optional] 

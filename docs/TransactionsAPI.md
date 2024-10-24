@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**BroadcastSignedTransactions**](TransactionsAPI.md#BroadcastSignedTransactions) | **Post** /transactions/broadcast | Broadcast signed transactions
 [**CancelTransactionById**](TransactionsAPI.md#CancelTransactionById) | **Post** /transactions/{transaction_id}/cancel | Cancel transaction
-[**CheckLoopTransfers**](TransactionsAPI.md#CheckLoopTransfers) | **Get** /transactions/check_loop_transfers | Check Loop transfers
+[**CheckLoopTransfers**](TransactionsAPI.md#CheckLoopTransfers) | **Get** /transactions/check_loop_transfers | Check Cobo Loop transfers
 [**CreateContractCallTransaction**](TransactionsAPI.md#CreateContractCallTransaction) | **Post** /transactions/contract_call | Call smart contract
 [**CreateMessageSignTransaction**](TransactionsAPI.md#CreateMessageSignTransaction) | **Post** /transactions/message_sign | Sign message
 [**CreateTransferTransaction**](TransactionsAPI.md#CreateTransferTransaction) | **Post** /transactions/transfer | Transfer token
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 
 > []CheckLoopTransfers200ResponseInner CheckLoopTransfers(ctx).TokenId(tokenId).SourceWalletId(sourceWalletId).DestinationAddresses(destinationAddresses).Execute()
 
-Check Loop transfers
+Check Cobo Loop transfers
 
 
 
@@ -797,7 +797,7 @@ Name | Type | Description  | Notes
  **coboIds** | **string** | A list of Cobo IDs, separated by comma. A Cobo ID can be used to track a transaction. | 
  **transactionIds** | **string** | A list of transaction IDs, separated by comma. | 
  **transactionHashes** | **string** | A list of transaction hashes, separated by comma. | 
- **types** | **string** | A list of transaction types, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.   - &#x60;ContractCall&#x60;: A transaction that interacts with a smart contract.   - &#x60;MessageSign&#x60;: A transaction that signs a message.    - &#x60;ExternalSafeTx&#x60;: A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one or multiple signatures to be executed.  | 
+ **types** | **string** | A list of transaction types, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.   - &#x60;ContractCall&#x60;: A transaction that interacts with a smart contract.   - &#x60;MessageSign&#x60;: A transaction that signs a message.    - &#x60;ExternalSafeTx&#x60;: A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one or multiple signatures to be executed.   - &#x60;Stake&#x60;: A transaction that creates a staking request.   - &#x60;Unstake&#x60;: A transaction that creates a unstaking request.  | 
  **statuses** | **string** | A list of transaction statuses, separated by comma. Possible values include:    - &#x60;Submitted&#x60;: The transaction is submitted.   - &#x60;PendingScreening&#x60;: The transaction is pending screening by Risk Control.    - &#x60;PendingAuthorization&#x60;: The transaction is pending approvals.   - &#x60;PendingSignature&#x60;: The transaction is pending signature.    - &#x60;Broadcasting&#x60;: The transaction is being broadcast.   - &#x60;Confirming&#x60;: The transaction is waiting for the required number of confirmations.   - &#x60;Completed&#x60;: The transaction is completed.   - &#x60;Failed&#x60;: The transaction failed.   - &#x60;Rejected&#x60;: The transaction is rejected.   - &#x60;Pending&#x60;: The transaction is waiting to be included in the next block of the blockchain.  | 
  **walletIds** | **string** | A list of wallet IDs, separated by comma. | 
  **chainIds** | **string** | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). | 

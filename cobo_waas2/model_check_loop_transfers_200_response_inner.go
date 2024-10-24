@@ -19,7 +19,7 @@ var _ MappedNullable = &CheckLoopTransfers200ResponseInner{}
 type CheckLoopTransfers200ResponseInner struct {
 	// The wallet address.
 	Address *string `json:"address,omitempty"`
-	// Whether the transaction from the given source to the given destination address can be executed as a Loop transfer.  - `true`: The transaction can be executed as a Loop transfer. - `false`: The transaction cannot be executed as a Loop transfer. 
+	// Whether the transaction from the given source to the given destination address can be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.  - `true`: The transaction can be executed as a Cobo Loop transfer. - `false`: The transaction cannot be executed as a Cobo Loop transfer. 
 	IsLoop *bool `json:"is_loop,omitempty"`
 }
 

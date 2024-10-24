@@ -20,9 +20,9 @@ var _ MappedNullable = &MPCDelegate{}
 // MPCDelegate The information about the MPC Wallet as the Delegate.
 type MPCDelegate struct {
 	DelegateType CoboSafeDelegateType `json:"delegate_type"`
-	// The wallet ID of the Delegate. This is required when initiating a transfer from Smart Contract Wallets (Safe{Wallet}).
+	// The wallet ID of the Delegate. This is required when initiating a transfer or contract call from Smart Contract Wallets (Safe{Wallet}).
 	WalletId string `json:"wallet_id"`
-	// The wallet address of the Delegate. This is required when initiating a transfer from Smart Contract Wallets (Safe{Wallet}).
+	// The wallet address of the Delegate. This is required when initiating a transfer or contract call from Smart Contract Wallets (Safe{Wallet}).
 	Address string `json:"address"`
 }
 

@@ -15,8 +15,9 @@ Name | Type | Description | Notes
 **FeeTokenId** | Pointer to **string** | The fee token ID. A fee token is the token with which you pay transaction fees. | [optional] 
 **CanDeposit** | Pointer to **bool** | Whether the token can be deposited.  - &#x60;true&#x60;: The token can be deposited.  - &#x60;false&#x60;: The token cannot be deposited.  | [optional] [default to false]
 **CanWithdraw** | Pointer to **bool** | Whether the token can be withdrawn.  - &#x60;true&#x60;: The token can be withdrawn.  - &#x60;false&#x60;: The token cannot be withdrawn.  | [optional] [default to false]
-**DustThreshold** | Pointer to **string** | The minimum withdrawal amount for Custodial Wallets. If your withdrawal amount is smaller than this threshold, the withdrawal request will receive an error.  Note: [Loop transfers](https://loop.top/) do not have this limitation.  | [optional] 
-**CustodialMinimumDepositThreshold** | Pointer to **string** | The minimum deposit amount for Custodial Wallets. If the amount you deposit to a Custodial Wallet is smaller than this threshold, the deposit will not show up on Cobo Portal or trigger any webhook events.  Note: [Loop transfers](https://loop.top/) do not have this limitation.  | [optional] 
+**DustThreshold** | Pointer to **string** | The minimum withdrawal amount for Custodial Wallets. If your withdrawal amount is smaller than this threshold, the withdrawal request will receive an error.  Note: [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfers do not have this limitation.  | [optional] 
+**CustodialMinimumDepositThreshold** | Pointer to **string** | The minimum deposit amount for Custodial Wallets. If the amount you deposit to a Custodial Wallet is smaller than this threshold, the deposit will not show up on Cobo Portal or trigger any webhook events.  Note: [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop)transfers do not have this limitation.  | [optional] 
+**AssetModelType** | Pointer to [**TokenAssetModelType**](TokenAssetModelType.md) |  | [optional] 
 
 ## Methods
 
@@ -351,6 +352,31 @@ SetCustodialMinimumDepositThreshold sets CustodialMinimumDepositThreshold field 
 `func (o *ExtendedTokenInfo) HasCustodialMinimumDepositThreshold() bool`
 
 HasCustodialMinimumDepositThreshold returns a boolean if a field has been set.
+
+### GetAssetModelType
+
+`func (o *ExtendedTokenInfo) GetAssetModelType() TokenAssetModelType`
+
+GetAssetModelType returns the AssetModelType field if non-nil, zero value otherwise.
+
+### GetAssetModelTypeOk
+
+`func (o *ExtendedTokenInfo) GetAssetModelTypeOk() (*TokenAssetModelType, bool)`
+
+GetAssetModelTypeOk returns a tuple with the AssetModelType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssetModelType
+
+`func (o *ExtendedTokenInfo) SetAssetModelType(v TokenAssetModelType)`
+
+SetAssetModelType sets AssetModelType field to given value.
+
+### HasAssetModelType
+
+`func (o *ExtendedTokenInfo) HasAssetModelType() bool`
+
+HasAssetModelType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

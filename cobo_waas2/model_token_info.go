@@ -41,10 +41,11 @@ type TokenInfo struct {
 	CanDeposit *bool `json:"can_deposit,omitempty"`
 	// Whether withdrawals are enabled for this token.
 	CanWithdraw *bool `json:"can_withdraw,omitempty"`
-	// The minimum withdrawal amount for Custodial Wallets. If your withdrawal amount is smaller than this threshold, the withdrawal request will receive an error.  Note: [Loop transfers](https://loop.top/) do not have this limitation. 
+	// The minimum withdrawal amount for Custodial Wallets. If your withdrawal amount is smaller than this threshold, the withdrawal request will receive an error.  Note: [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfers do not have this limitation. 
 	DustThreshold *string `json:"dust_threshold,omitempty"`
-	// The minimum deposit amount for Custodial Wallets. If the amount you deposit to a Custodial Wallet is smaller than this threshold, the deposit will not show up on Cobo Portal or trigger any webhook events.  Note: [Loop transfers](https://loop.top/) do not have this limitation. 
+	// The minimum deposit amount for Custodial Wallets. If the amount you deposit to a Custodial Wallet is smaller than this threshold, the deposit will not show up on Cobo Portal or trigger any webhook events.  Note: [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop)transfers do not have this limitation. 
 	CustodialMinimumDepositThreshold *string `json:"custodial_minimum_deposit_threshold,omitempty"`
+	AssetModelType *TokenAssetModelType `json:"asset_model_type,omitempty"`
 }
 
 type _TokenInfo TokenInfo
@@ -468,6 +469,38 @@ func (o *TokenInfo) SetCustodialMinimumDepositThreshold(v string) {
 	o.CustodialMinimumDepositThreshold = &v
 }
 
+// GetAssetModelType returns the AssetModelType field value if set, zero value otherwise.
+func (o *TokenInfo) GetAssetModelType() TokenAssetModelType {
+	if o == nil || IsNil(o.AssetModelType) {
+		var ret TokenAssetModelType
+		return ret
+	}
+	return *o.AssetModelType
+}
+
+// GetAssetModelTypeOk returns a tuple with the AssetModelType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenInfo) GetAssetModelTypeOk() (*TokenAssetModelType, bool) {
+	if o == nil || IsNil(o.AssetModelType) {
+		return nil, false
+	}
+	return o.AssetModelType, true
+}
+
+// HasAssetModelType returns a boolean if a field has been set.
+func (o *TokenInfo) HasAssetModelType() bool {
+	if o != nil && !IsNil(o.AssetModelType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAssetModelType gets a reference to the given TokenAssetModelType and assigns it to the AssetModelType field.
+func (o *TokenInfo) SetAssetModelType(v TokenAssetModelType) {
+	o.AssetModelType = &v
+}
+
 func (o TokenInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -512,6 +545,9 @@ func (o TokenInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CustodialMinimumDepositThreshold) {
 		toSerialize["custodial_minimum_deposit_threshold"] = o.CustodialMinimumDepositThreshold
+	}
+	if !IsNil(o.AssetModelType) {
+		toSerialize["asset_model_type"] = o.AssetModelType
 	}
 	return toSerialize, nil
 }

@@ -26,6 +26,7 @@ type TransactionEvmContractDestination struct {
 	Value *string `json:"value,omitempty"`
 	// The data that is used to invoke a specific function or method within the specified contract at the destination address. 
 	Calldata string `json:"calldata"`
+	CalldataInfo *TransactionEvmCalldataInfo `json:"calldata_info,omitempty"`
 }
 
 type _TransactionEvmContractDestination TransactionEvmContractDestination
@@ -154,6 +155,38 @@ func (o *TransactionEvmContractDestination) SetCalldata(v string) {
 	o.Calldata = v
 }
 
+// GetCalldataInfo returns the CalldataInfo field value if set, zero value otherwise.
+func (o *TransactionEvmContractDestination) GetCalldataInfo() TransactionEvmCalldataInfo {
+	if o == nil || IsNil(o.CalldataInfo) {
+		var ret TransactionEvmCalldataInfo
+		return ret
+	}
+	return *o.CalldataInfo
+}
+
+// GetCalldataInfoOk returns a tuple with the CalldataInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionEvmContractDestination) GetCalldataInfoOk() (*TransactionEvmCalldataInfo, bool) {
+	if o == nil || IsNil(o.CalldataInfo) {
+		return nil, false
+	}
+	return o.CalldataInfo, true
+}
+
+// HasCalldataInfo returns a boolean if a field has been set.
+func (o *TransactionEvmContractDestination) HasCalldataInfo() bool {
+	if o != nil && !IsNil(o.CalldataInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetCalldataInfo gets a reference to the given TransactionEvmCalldataInfo and assigns it to the CalldataInfo field.
+func (o *TransactionEvmContractDestination) SetCalldataInfo(v TransactionEvmCalldataInfo) {
+	o.CalldataInfo = &v
+}
+
 func (o TransactionEvmContractDestination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -170,6 +203,9 @@ func (o TransactionEvmContractDestination) ToMap() (map[string]interface{}, erro
 		toSerialize["value"] = o.Value
 	}
 	toSerialize["calldata"] = o.Calldata
+	if !IsNil(o.CalldataInfo) {
+		toSerialize["calldata_info"] = o.CalldataInfo
+	}
 	return toSerialize, nil
 }
 

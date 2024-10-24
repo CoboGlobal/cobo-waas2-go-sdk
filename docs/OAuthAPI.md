@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 ## RefreshToken
 
-> RefreshToken200Response RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
+> RefreshToken201Response RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
 
 Refresh Org Access Token
 
@@ -129,7 +129,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.RefreshToken``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RefreshToken`: RefreshToken200Response
+	// response from `RefreshToken`: RefreshToken201Response
 	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.RefreshToken`: %v\n", resp)
 }
 ```
@@ -149,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**RefreshToken200Response**](RefreshToken200Response.md)
+[**RefreshToken201Response**](RefreshToken201Response.md)
 
 ### Authorization
 

@@ -58,7 +58,7 @@ type TransactionDetail struct {
 	Category []string `json:"category,omitempty"`
 	// The description for your transaction.
 	Description *string `json:"description,omitempty"`
-	// Whether the transaction is a Loop transfer. For more information about Loop, see [Loop's website](https://loop.top/).  - `true`: The transaction is a Loop transfer. - `false`: The transaction is not a Loop transfer. 
+	// Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - `true`: The transaction was executed as a Cobo Loop transfer. - `false`: The transaction was not executed as a Cobo Loop transfer. 
 	IsLoop *bool `json:"is_loop,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`

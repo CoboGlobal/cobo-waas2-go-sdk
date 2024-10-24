@@ -50,6 +50,8 @@ type APIClient struct {
 
 	// API Services
 
+	AddressBooksAPI *AddressBooksAPIService
+
 	DevelopersWebhooksAPI *DevelopersWebhooksAPIService
 
 	OAuthAPI *OAuthAPIService
@@ -63,6 +65,8 @@ type APIClient struct {
 	WalletsExchangeWalletAPI *WalletsExchangeWalletAPIService
 
 	WalletsMPCWalletsAPI *WalletsMPCWalletsAPIService
+
+	WalletsSmartContractWalletsAPI *WalletsSmartContractWalletsAPIService
 }
 
 type service struct {
@@ -81,6 +85,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.AddressBooksAPI = (*AddressBooksAPIService)(&c.common)
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
 	c.OAuthAPI = (*OAuthAPIService)(&c.common)
 	c.StakingsAPI = (*StakingsAPIService)(&c.common)
@@ -88,6 +93,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)
 	c.WalletsExchangeWalletAPI = (*WalletsExchangeWalletAPIService)(&c.common)
 	c.WalletsMPCWalletsAPI = (*WalletsMPCWalletsAPIService)(&c.common)
+	c.WalletsSmartContractWalletsAPI = (*WalletsSmartContractWalletsAPIService)(&c.common)
 
 	return c
 }
@@ -684,7 +690,7 @@ type GenericOpenAPIError struct {
 
 // Error returns non-empty string if there was an error.
 func (e GenericOpenAPIError) Error() string {
-	return e.error
+	return e.error + " " + string(e.body)
 }
 
 // Body returns the raw bytes of the response

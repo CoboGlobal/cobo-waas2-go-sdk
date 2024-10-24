@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **AccountOutput** | Pointer to [**TransactionTransferToAddressDestinationAccountOutput**](TransactionTransferToAddressDestinationAccountOutput.md) |  | [optional] 
 **UtxoOutputs** | Pointer to [**[]TransactionTransferToAddressDestinationUtxoOutputsInner**](TransactionTransferToAddressDestinationUtxoOutputsInner.md) |  | [optional] 
 **ChangeAddress** | Pointer to **string** | The address used to receive the remaining funds or change from the transaction. | [optional] 
-**ForceInternal** | Pointer to **bool** | Whether the transaction request must be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request may not be executed as a Loop transfer.  | [optional] 
-**ForceExternal** | Pointer to **bool** | Whether the transaction request must not be executed as a Loop transfer. For more information about Loop, see [Loop&#39;s website](https://loop.top/).   - &#x60;true&#x60;: The transaction request must not be executed as a Loop transfer.   - &#x60;false&#x60;: The transaction request can be executed as a Loop transfer.  | [optional] 
+**ForceInternal** | Pointer to **bool** | Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - &#x60;true&#x60;: The transaction request must be executed as a Cobo Loop transfer.   - &#x60;false&#x60;: The transaction request may not be executed as a Cobo Loop transfer.  | [optional] 
+**ForceExternal** | Pointer to **bool** | Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - &#x60;true&#x60;: The transaction request must not be executed as a Cobo Loop transfer.   - &#x60;false&#x60;: The transaction request can be executed as a Cobo Loop transfer.  | [optional] 
 **WalletId** | **string** | The wallet ID. | 
 **TradingAccountType** | Pointer to **string** | The trading account type. | [optional] 
 **ExchangeId** | Pointer to [**ExchangeId**](ExchangeId.md) |  | [optional] 
@@ -17,8 +17,10 @@ Name | Type | Description | Notes
 **Address** | **string** | The destination address. | 
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
+**CalldataInfo** | Pointer to [**TransactionEvmCalldataInfo**](TransactionEvmCalldataInfo.md) |  | [optional] 
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **StructuredData** | **map[string]interface{}** | The structured data to be signed, formatted as a JSON object according to the EIP-712 standard. | 
+**MsgHash** | Pointer to **string** | Message hash to be signed, in hexadecimal format. | [optional] 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Memo** | Pointer to **string** | The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON. | [optional] 
@@ -342,6 +344,31 @@ and a boolean to check if the value has been set.
 SetCalldata sets Calldata field to given value.
 
 
+### GetCalldataInfo
+
+`func (o *TransactionDestination) GetCalldataInfo() TransactionEvmCalldataInfo`
+
+GetCalldataInfo returns the CalldataInfo field if non-nil, zero value otherwise.
+
+### GetCalldataInfoOk
+
+`func (o *TransactionDestination) GetCalldataInfoOk() (*TransactionEvmCalldataInfo, bool)`
+
+GetCalldataInfoOk returns a tuple with the CalldataInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCalldataInfo
+
+`func (o *TransactionDestination) SetCalldataInfo(v TransactionEvmCalldataInfo)`
+
+SetCalldataInfo sets CalldataInfo field to given value.
+
+### HasCalldataInfo
+
+`func (o *TransactionDestination) HasCalldataInfo() bool`
+
+HasCalldataInfo returns a boolean if a field has been set.
+
 ### GetMessage
 
 `func (o *TransactionDestination) GetMessage() string`
@@ -381,6 +408,31 @@ and a boolean to check if the value has been set.
 
 SetStructuredData sets StructuredData field to given value.
 
+
+### GetMsgHash
+
+`func (o *TransactionDestination) GetMsgHash() string`
+
+GetMsgHash returns the MsgHash field if non-nil, zero value otherwise.
+
+### GetMsgHashOk
+
+`func (o *TransactionDestination) GetMsgHashOk() (*string, bool)`
+
+GetMsgHashOk returns a tuple with the MsgHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMsgHash
+
+`func (o *TransactionDestination) SetMsgHash(v string)`
+
+SetMsgHash sets MsgHash field to given value.
+
+### HasMsgHash
+
+`func (o *TransactionDestination) HasMsgHash() bool`
+
+HasMsgHash returns a boolean if a field has been set.
 
 ### GetWalletType
 

@@ -19,7 +19,7 @@ var _ MappedNullable = &ErrorResponse{}
 
 // ErrorResponse The response of a failed request.
 type ErrorResponse struct {
-	// The error code.
+	// The error code. Refer to [Error codes and status codes](/v2/api-references/error-codes) for more details.
 	ErrorCode int32 `json:"error_code"`
 	// The error description.
 	ErrorMessage string `json:"error_message"`

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **SignerKeyShareHolderGroupId** | Pointer to **string** | The ID of the key share holder group that is selected to sign the transaction. | [optional] 
-**Delegate** | [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | 
+**Delegate** | Pointer to [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | [optional] 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **TradingAccountType** | Pointer to **string** | The exchange trading account or a sub-wallet ID. | [optional] 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewTransactionSource
 
-`func NewTransactionSource(sourceType TransactionSourceType, walletId string, address string, delegate CoboSafeDelegate, exchangeId ExchangeId, walletType WalletType, walletSubtype WalletSubtype, addresses []string, ) *TransactionSource`
+`func NewTransactionSource(sourceType TransactionSourceType, walletId string, address string, exchangeId ExchangeId, walletType WalletType, walletSubtype WalletSubtype, addresses []string, ) *TransactionSource`
 
 NewTransactionSource instantiates a new TransactionSource object
 This constructor will assign default values to properties that have it defined,
@@ -190,6 +190,11 @@ and a boolean to check if the value has been set.
 
 SetDelegate sets Delegate field to given value.
 
+### HasDelegate
+
+`func (o *TransactionSource) HasDelegate() bool`
+
+HasDelegate returns a boolean if a field has been set.
 
 ### GetExchangeId
 

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Address** | **string** | The destination address. | 
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
+**CalldataInfo** | Pointer to [**TransactionEvmCalldataInfo**](TransactionEvmCalldataInfo.md) |  | [optional] 
 
 ## Methods
 
@@ -112,6 +113,31 @@ and a boolean to check if the value has been set.
 
 SetCalldata sets Calldata field to given value.
 
+
+### GetCalldataInfo
+
+`func (o *TransactionEvmContractDestination) GetCalldataInfo() TransactionEvmCalldataInfo`
+
+GetCalldataInfo returns the CalldataInfo field if non-nil, zero value otherwise.
+
+### GetCalldataInfoOk
+
+`func (o *TransactionEvmContractDestination) GetCalldataInfoOk() (*TransactionEvmCalldataInfo, bool)`
+
+GetCalldataInfoOk returns a tuple with the CalldataInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCalldataInfo
+
+`func (o *TransactionEvmContractDestination) SetCalldataInfo(v TransactionEvmCalldataInfo)`
+
+SetCalldataInfo sets CalldataInfo field to given value.
+
+### HasCalldataInfo
+
+`func (o *TransactionEvmContractDestination) HasCalldataInfo() bool`
+
+HasCalldataInfo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

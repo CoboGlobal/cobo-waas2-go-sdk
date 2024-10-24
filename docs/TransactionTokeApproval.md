@@ -15,8 +15,9 @@ Name | Type | Description | Notes
 **FeeTokenId** | Pointer to **string** | The fee token ID. A fee token is the token with which you pay transaction fees. | [optional] 
 **CanDeposit** | Pointer to **bool** | Whether deposits are enabled for this token. | [optional] 
 **CanWithdraw** | Pointer to **bool** | Whether withdrawals are enabled for this token. | [optional] 
-**DustThreshold** | Pointer to **string** | The minimum withdrawal amount for Custodial Wallets. If your withdrawal amount is smaller than this threshold, the withdrawal request will receive an error.  Note: [Loop transfers](https://loop.top/) do not have this limitation.  | [optional] 
-**CustodialMinimumDepositThreshold** | Pointer to **string** | The minimum deposit amount for Custodial Wallets. If the amount you deposit to a Custodial Wallet is smaller than this threshold, the deposit will not show up on Cobo Portal or trigger any webhook events.  Note: [Loop transfers](https://loop.top/) do not have this limitation.  | [optional] 
+**DustThreshold** | Pointer to **string** | The minimum withdrawal amount for Custodial Wallets. If your withdrawal amount is smaller than this threshold, the withdrawal request will receive an error.  Note: [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfers do not have this limitation.  | [optional] 
+**CustodialMinimumDepositThreshold** | Pointer to **string** | The minimum deposit amount for Custodial Wallets. If the amount you deposit to a Custodial Wallet is smaller than this threshold, the deposit will not show up on Cobo Portal or trigger any webhook events.  Note: [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop)transfers do not have this limitation.  | [optional] 
+**AssetModelType** | Pointer to [**TokenAssetModelType**](TokenAssetModelType.md) |  | [optional] 
 **Amount** | Pointer to **float32** | Transaction value (Note that this is an absolute value. If you trade 1.5 BTC, then the value is 1.5)  | [optional] 
 **Spender** | Pointer to **string** | Spender address | [optional] 
 
@@ -353,6 +354,31 @@ SetCustodialMinimumDepositThreshold sets CustodialMinimumDepositThreshold field 
 `func (o *TransactionTokeApproval) HasCustodialMinimumDepositThreshold() bool`
 
 HasCustodialMinimumDepositThreshold returns a boolean if a field has been set.
+
+### GetAssetModelType
+
+`func (o *TransactionTokeApproval) GetAssetModelType() TokenAssetModelType`
+
+GetAssetModelType returns the AssetModelType field if non-nil, zero value otherwise.
+
+### GetAssetModelTypeOk
+
+`func (o *TransactionTokeApproval) GetAssetModelTypeOk() (*TokenAssetModelType, bool)`
+
+GetAssetModelTypeOk returns a tuple with the AssetModelType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAssetModelType
+
+`func (o *TransactionTokeApproval) SetAssetModelType(v TokenAssetModelType)`
+
+SetAssetModelType sets AssetModelType field to given value.
+
+### HasAssetModelType
+
+`func (o *TransactionTokeApproval) HasAssetModelType() bool`
+
+HasAssetModelType returns a boolean if a field has been set.
 
 ### GetAmount
 
