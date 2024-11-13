@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee. | 
+**RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee. | [optional] 
 **RequestType** | [**EstimateFeeRequestType**](EstimateFeeRequestType.md) |  | 
 **Source** | [**TransferSource**](TransferSource.md) |  | 
 **TokenId** | **string** | The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens). | 
-**Destination** | [**TransferDestination**](TransferDestination.md) |  | 
+**Destination** | Pointer to [**TransferDestination**](TransferDestination.md) |  | [optional] 
 **FeeType** | Pointer to [**FeeType**](FeeType.md) |  | [optional] [default to FEETYPE_EVM_EIP_1559]
 
 ## Methods
 
 ### NewEstimateTransferFeeParams
 
-`func NewEstimateTransferFeeParams(requestId string, requestType EstimateFeeRequestType, source TransferSource, tokenId string, destination TransferDestination, ) *EstimateTransferFeeParams`
+`func NewEstimateTransferFeeParams(requestType EstimateFeeRequestType, source TransferSource, tokenId string, ) *EstimateTransferFeeParams`
 
 NewEstimateTransferFeeParams instantiates a new EstimateTransferFeeParams object
 This constructor will assign default values to properties that have it defined,
@@ -49,6 +49,11 @@ and a boolean to check if the value has been set.
 
 SetRequestId sets RequestId field to given value.
 
+### HasRequestId
+
+`func (o *EstimateTransferFeeParams) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetRequestType
 
@@ -129,6 +134,11 @@ and a boolean to check if the value has been set.
 
 SetDestination sets Destination field to given value.
 
+### HasDestination
+
+`func (o *EstimateTransferFeeParams) HasDestination() bool`
+
+HasDestination returns a boolean if a field has been set.
 
 ### GetFeeType
 

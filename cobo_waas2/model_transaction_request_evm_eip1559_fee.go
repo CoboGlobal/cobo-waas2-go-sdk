@@ -42,8 +42,6 @@ func NewTransactionRequestEvmEip1559Fee(maxFeePerGas string, maxPriorityFeePerGa
 	this.MaxPriorityFeePerGas = maxPriorityFeePerGas
 	this.FeeType = feeType
 	this.TokenId = tokenId
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	return &this
 }
 
@@ -54,8 +52,6 @@ func NewTransactionRequestEvmEip1559FeeWithDefaults() *TransactionRequestEvmEip1
 	this := TransactionRequestEvmEip1559Fee{}
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	return &this
 }
 

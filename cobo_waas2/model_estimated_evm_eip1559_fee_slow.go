@@ -46,8 +46,6 @@ func NewEstimatedEvmEip1559FeeSlow(maxFeePerGas string, maxPriorityFeePerGas str
 // but it doesn't guarantee that properties required by API are set
 func NewEstimatedEvmEip1559FeeSlowWithDefaults() *EstimatedEvmEip1559FeeSlow {
 	this := EstimatedEvmEip1559FeeSlow{}
-	var gasLimit string = "21000"
-	this.GasLimit = gasLimit
 	return &this
 }
 

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **StakingId** | **string** | The ID of the corresponding staking position. | 
 **Amount** | Pointer to **string** | The amount to unstake. For the Babylon protocol, this property is ignored. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+**Extra** | Pointer to [**CreateUnstakeActivityExtra**](CreateUnstakeActivityExtra.md) |  | [optional] 
 **AppInitiator** | Pointer to **string** | The initiator of the staking activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator. | [optional] 
 
 ## Methods
@@ -123,6 +124,31 @@ SetFee sets Fee field to given value.
 `func (o *CreateUnstakeActivityRequest) HasFee() bool`
 
 HasFee returns a boolean if a field has been set.
+
+### GetExtra
+
+`func (o *CreateUnstakeActivityRequest) GetExtra() CreateUnstakeActivityExtra`
+
+GetExtra returns the Extra field if non-nil, zero value otherwise.
+
+### GetExtraOk
+
+`func (o *CreateUnstakeActivityRequest) GetExtraOk() (*CreateUnstakeActivityExtra, bool)`
+
+GetExtraOk returns a tuple with the Extra field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExtra
+
+`func (o *CreateUnstakeActivityRequest) SetExtra(v CreateUnstakeActivityExtra)`
+
+SetExtra sets Extra field to given value.
+
+### HasExtra
+
+`func (o *CreateUnstakeActivityRequest) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
 
 ### GetAppInitiator
 

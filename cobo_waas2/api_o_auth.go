@@ -46,7 +46,7 @@ func (r ApiGetTokenRequest) GrantType(grantType string) ApiGetTokenRequest {
 	return r
 }
 
-func (r ApiGetTokenRequest) Execute() (*GetToken200Response, *http.Response, error) {
+func (r ApiGetTokenRequest) Execute() (*GetToken2XXResponse, *http.Response, error) {
 	return r.ApiService.GetTokenExecute(r)
 }
 
@@ -72,13 +72,13 @@ func (a *OAuthAPIService) GetToken(ctx context.Context) ApiGetTokenRequest {
 }
 
 // Execute executes the request
-//  @return GetToken200Response
-func (a *OAuthAPIService) GetTokenExecute(r ApiGetTokenRequest) (*GetToken200Response, *http.Response, error) {
+//  @return GetToken2XXResponse
+func (a *OAuthAPIService) GetTokenExecute(r ApiGetTokenRequest) (*GetToken2XXResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetToken200Response
+		localVarReturnValue  *GetToken2XXResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.GetToken")
@@ -191,7 +191,7 @@ func (r ApiRefreshTokenRequest) RefreshTokenRequest(refreshTokenRequest RefreshT
 	return r
 }
 
-func (r ApiRefreshTokenRequest) Execute() (*RefreshToken201Response, *http.Response, error) {
+func (r ApiRefreshTokenRequest) Execute() (*RefreshToken2XXResponse, *http.Response, error) {
 	return r.ApiService.RefreshTokenExecute(r)
 }
 
@@ -215,13 +215,13 @@ func (a *OAuthAPIService) RefreshToken(ctx context.Context) ApiRefreshTokenReque
 }
 
 // Execute executes the request
-//  @return RefreshToken201Response
-func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*RefreshToken201Response, *http.Response, error) {
+//  @return RefreshToken2XXResponse
+func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*RefreshToken2XXResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *RefreshToken201Response
+		localVarReturnValue  *RefreshToken2XXResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.RefreshToken")

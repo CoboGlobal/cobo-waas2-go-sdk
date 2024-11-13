@@ -40,8 +40,6 @@ type _TransactionEvmLegacyFee TransactionEvmLegacyFee
 // will change when the set of required properties is changed
 func NewTransactionEvmLegacyFee(feeType FeeType) *TransactionEvmLegacyFee {
 	this := TransactionEvmLegacyFee{}
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	this.FeeType = feeType
 	return &this
 }
@@ -51,8 +49,6 @@ func NewTransactionEvmLegacyFee(feeType FeeType) *TransactionEvmLegacyFee {
 // but it doesn't guarantee that properties required by API are set
 func NewTransactionEvmLegacyFeeWithDefaults() *TransactionEvmLegacyFee {
 	this := TransactionEvmLegacyFee{}
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
 	return &this

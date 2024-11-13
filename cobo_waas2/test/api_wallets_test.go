@@ -28,6 +28,18 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test WalletsAPIService CheckAddressChainsValidity", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.WalletsAPI.CheckAddressChainsValidity(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test WalletsAPIService CheckAddressValidity", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -85,21 +97,6 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 		var walletId string
 
 		resp, httpRes, err := apiClient.WalletsAPI.DeleteWalletById(ctx, walletId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test WalletsAPIService GetAddress", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var walletId string
-		var address string
-
-		resp, httpRes, err := apiClient.WalletsAPI.GetAddress(ctx, walletId, address).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

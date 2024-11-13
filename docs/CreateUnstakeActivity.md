@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **StakingId** | **string** | The ID of the corresponding staking position. | 
 **Amount** | Pointer to **string** | The amount to unstake. For the Babylon protocol, this property is ignored. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+**Extra** | Pointer to [**CreateUnstakeActivityExtra**](CreateUnstakeActivityExtra.md) |  | [optional] 
 
 ## Methods
 
@@ -122,6 +123,31 @@ SetFee sets Fee field to given value.
 `func (o *CreateUnstakeActivity) HasFee() bool`
 
 HasFee returns a boolean if a field has been set.
+
+### GetExtra
+
+`func (o *CreateUnstakeActivity) GetExtra() CreateUnstakeActivityExtra`
+
+GetExtra returns the Extra field if non-nil, zero value otherwise.
+
+### GetExtraOk
+
+`func (o *CreateUnstakeActivity) GetExtraOk() (*CreateUnstakeActivityExtra, bool)`
+
+GetExtraOk returns a tuple with the Extra field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExtra
+
+`func (o *CreateUnstakeActivity) SetExtra(v CreateUnstakeActivityExtra)`
+
+SetExtra sets Extra field to given value.
+
+### HasExtra
+
+`func (o *CreateUnstakeActivity) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

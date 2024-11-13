@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## GetToken
 
-> GetToken200Response GetToken(ctx).ClientId(clientId).OrgId(orgId).GrantType(grantType).Execute()
+> GetToken2XXResponse GetToken(ctx).ClientId(clientId).OrgId(orgId).GrantType(grantType).Execute()
 
 Get Org Access Token
 
@@ -51,7 +51,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.GetToken``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetToken`: GetToken200Response
+	// response from `GetToken`: GetToken2XXResponse
 	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.GetToken`: %v\n", resp)
 }
 ```
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetToken200Response**](GetToken200Response.md)
+[**GetToken2XXResponse**](GetToken2XXResponse.md)
 
 ### Authorization
 
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 ## RefreshToken
 
-> RefreshToken201Response RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
+> RefreshToken2XXResponse RefreshToken(ctx).RefreshTokenRequest(refreshTokenRequest).Execute()
 
 Refresh Org Access Token
 
@@ -129,7 +129,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.RefreshToken``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RefreshToken`: RefreshToken201Response
+	// response from `RefreshToken`: RefreshToken2XXResponse
 	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.RefreshToken`: %v\n", resp)
 }
 ```
@@ -149,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**RefreshToken201Response**](RefreshToken201Response.md)
+[**RefreshToken2XXResponse**](RefreshToken2XXResponse.md)
 
 ### Authorization
 

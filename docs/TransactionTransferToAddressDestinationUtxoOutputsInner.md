@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Address** | Pointer to **string** | The destination address. | [optional] 
 **Amount** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 BTC, then the value is &#x60;1.5&#x60;.  | [optional] 
-**Script** | Pointer to **string** | The script of the output. It is a programmable code fragment that defines the conditions under which the UTXO can be spent. | [optional] 
 
 ## Methods
 
@@ -76,31 +75,6 @@ SetAmount sets Amount field to given value.
 `func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) HasAmount() bool`
 
 HasAmount returns a boolean if a field has been set.
-
-### GetScript
-
-`func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) GetScript() string`
-
-GetScript returns the Script field if non-nil, zero value otherwise.
-
-### GetScriptOk
-
-`func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) GetScriptOk() (*string, bool)`
-
-GetScriptOk returns a tuple with the Script field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetScript
-
-`func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) SetScript(v string)`
-
-SetScript sets Script field to given value.
-
-### HasScript
-
-`func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) HasScript() bool`
-
-HasScript returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

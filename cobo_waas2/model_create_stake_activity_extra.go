@@ -16,12 +16,20 @@ import (
 // CreateStakeActivityExtra - struct for CreateStakeActivityExtra
 type CreateStakeActivityExtra struct {
 	BabylonStakeExtra *BabylonStakeExtra
+	EthStakeExtra *EthStakeExtra
 }
 
 // BabylonStakeExtraAsCreateStakeActivityExtra is a convenience function that returns BabylonStakeExtra wrapped in CreateStakeActivityExtra
 func BabylonStakeExtraAsCreateStakeActivityExtra(v *BabylonStakeExtra) CreateStakeActivityExtra {
 	return CreateStakeActivityExtra{
 		BabylonStakeExtra: v,
+	}
+}
+
+// EthStakeExtraAsCreateStakeActivityExtra is a convenience function that returns EthStakeExtra wrapped in CreateStakeActivityExtra
+func EthStakeExtraAsCreateStakeActivityExtra(v *EthStakeExtra) CreateStakeActivityExtra {
+	return CreateStakeActivityExtra{
+		EthStakeExtra: v,
 	}
 }
 
@@ -48,6 +56,18 @@ func (dst *CreateStakeActivityExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'ETHBeacon'
+	if jsonDict["pool_type"] == "ETHBeacon" {
+		// try to unmarshal JSON data into EthStakeExtra
+		err = json.Unmarshal(data, &dst.EthStakeExtra)
+		if err == nil {
+			return nil // data stored in dst.EthStakeExtra, return on the first match
+		} else {
+			dst.EthStakeExtra = nil
+			return fmt.Errorf("failed to unmarshal CreateStakeActivityExtra as EthStakeExtra: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'BabylonStakeExtra'
 	if jsonDict["pool_type"] == "BabylonStakeExtra" {
 		// try to unmarshal JSON data into BabylonStakeExtra
@@ -60,6 +80,18 @@ func (dst *CreateStakeActivityExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'EthStakeExtra'
+	if jsonDict["pool_type"] == "EthStakeExtra" {
+		// try to unmarshal JSON data into EthStakeExtra
+		err = json.Unmarshal(data, &dst.EthStakeExtra)
+		if err == nil {
+			return nil // data stored in dst.EthStakeExtra, return on the first match
+		} else {
+			dst.EthStakeExtra = nil
+			return fmt.Errorf("failed to unmarshal CreateStakeActivityExtra as EthStakeExtra: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
@@ -67,6 +99,10 @@ func (dst *CreateStakeActivityExtra) UnmarshalJSON(data []byte) error {
 func (src CreateStakeActivityExtra) MarshalJSON() ([]byte, error) {
 	if src.BabylonStakeExtra != nil {
 		return json.Marshal(&src.BabylonStakeExtra)
+	}
+
+	if src.EthStakeExtra != nil {
+		return json.Marshal(&src.EthStakeExtra)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -79,6 +115,10 @@ func (obj *CreateStakeActivityExtra) GetActualInstance() (interface{}) {
 	}
 	if obj.BabylonStakeExtra != nil {
 		return obj.BabylonStakeExtra
+	}
+
+	if obj.EthStakeExtra != nil {
+		return obj.EthStakeExtra
 	}
 
 	// all schemas are nil

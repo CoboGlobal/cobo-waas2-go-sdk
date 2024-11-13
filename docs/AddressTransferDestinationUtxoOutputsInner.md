@@ -5,14 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Address** | **string** | The destination address. | 
-**Amount** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 BTC, then the value is &#x60;1.5&#x60;.  | [optional] 
-**Script** | Pointer to **string** | The script of the output. It is a programmable code fragment that defines the conditions under which the UTXO can be spent. | [optional] 
+**Amount** | **string** | The transfer amount. For example, if you trade 1.5 BTC, then the value is &#x60;1.5&#x60;.  | 
 
 ## Methods
 
 ### NewAddressTransferDestinationUtxoOutputsInner
 
-`func NewAddressTransferDestinationUtxoOutputsInner(address string, ) *AddressTransferDestinationUtxoOutputsInner`
+`func NewAddressTransferDestinationUtxoOutputsInner(address string, amount string, ) *AddressTransferDestinationUtxoOutputsInner`
 
 NewAddressTransferDestinationUtxoOutputsInner instantiates a new AddressTransferDestinationUtxoOutputsInner object
 This constructor will assign default values to properties that have it defined,
@@ -66,36 +65,6 @@ and a boolean to check if the value has been set.
 
 SetAmount sets Amount field to given value.
 
-### HasAmount
-
-`func (o *AddressTransferDestinationUtxoOutputsInner) HasAmount() bool`
-
-HasAmount returns a boolean if a field has been set.
-
-### GetScript
-
-`func (o *AddressTransferDestinationUtxoOutputsInner) GetScript() string`
-
-GetScript returns the Script field if non-nil, zero value otherwise.
-
-### GetScriptOk
-
-`func (o *AddressTransferDestinationUtxoOutputsInner) GetScriptOk() (*string, bool)`
-
-GetScriptOk returns a tuple with the Script field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetScript
-
-`func (o *AddressTransferDestinationUtxoOutputsInner) SetScript(v string)`
-
-SetScript sets Script field to given value.
-
-### HasScript
-
-`func (o *AddressTransferDestinationUtxoOutputsInner) HasScript() bool`
-
-HasScript returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

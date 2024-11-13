@@ -19,11 +19,13 @@ type StakingPoolType string
 // List of StakingPoolType
 const (
 	STAKINGPOOLTYPE_BABYLON StakingPoolType = "Babylon"
+	STAKINGPOOLTYPE_ETH_BEACON StakingPoolType = "ETHBeacon"
 )
 
 // All allowed values of StakingPoolType enum
 var AllowedStakingPoolTypeEnumValues = []StakingPoolType{
 	"Babylon",
+	"ETHBeacon",
 }
 
 func (v *StakingPoolType) UnmarshalJSON(src []byte) error {

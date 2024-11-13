@@ -44,8 +44,6 @@ type _TransactionEvmEip1559Fee TransactionEvmEip1559Fee
 // will change when the set of required properties is changed
 func NewTransactionEvmEip1559Fee(feeType FeeType) *TransactionEvmEip1559Fee {
 	this := TransactionEvmEip1559Fee{}
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	this.FeeType = feeType
 	return &this
 }
@@ -55,8 +53,6 @@ func NewTransactionEvmEip1559Fee(feeType FeeType) *TransactionEvmEip1559Fee {
 // but it doesn't guarantee that properties required by API are set
 func NewTransactionEvmEip1559FeeWithDefaults() *TransactionEvmEip1559Fee {
 	this := TransactionEvmEip1559Fee{}
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
 	return &this

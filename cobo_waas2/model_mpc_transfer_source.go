@@ -17,12 +17,12 @@ import (
 // checks if the MpcTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MpcTransferSource{}
 
-// MpcTransferSource The information about the transaction source types `Org-Controlled` and `User-Controlled`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  If you specify both the `address` or `included_utxos` properties, the specified included UTXOs must belong to the address.  Switch between the tabs to display the properties for different transaction sources. 
+// MpcTransferSource The information about the transaction source types `Org-Controlled` and `User-Controlled`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.  Switch between the tabs to display the properties for different transaction sources. 
 type MpcTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// The wallet address.
+	// The wallet address. If you want to specify the UTXOs to be used, please provide the `included_utxos` property. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address.  You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail. 
 	Address *string `json:"address,omitempty"`
 	IncludedUtxos []TransactionUtxo `json:"included_utxos,omitempty"`
 	ExcludedUtxos []TransactionUtxo `json:"excluded_utxos,omitempty"`

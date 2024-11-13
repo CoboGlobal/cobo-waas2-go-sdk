@@ -22,7 +22,7 @@ type GetToken4XXResponse struct {
 	// The error name.
 	Error string `json:"error"`
 	// The error description.
-	ErrorMessage *string `json:"error_message,omitempty"`
+	ErrorDescription string `json:"error_description"`
 }
 
 type _GetToken4XXResponse GetToken4XXResponse
@@ -31,9 +31,10 @@ type _GetToken4XXResponse GetToken4XXResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetToken4XXResponse(error_ string) *GetToken4XXResponse {
+func NewGetToken4XXResponse(error_ string, errorDescription string) *GetToken4XXResponse {
 	this := GetToken4XXResponse{}
 	this.Error = error_
+	this.ErrorDescription = errorDescription
 	return &this
 }
 
@@ -69,36 +70,28 @@ func (o *GetToken4XXResponse) SetError(v string) {
 	o.Error = v
 }
 
-// GetErrorMessage returns the ErrorMessage field value if set, zero value otherwise.
-func (o *GetToken4XXResponse) GetErrorMessage() string {
-	if o == nil || IsNil(o.ErrorMessage) {
+// GetErrorDescription returns the ErrorDescription field value
+func (o *GetToken4XXResponse) GetErrorDescription() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.ErrorMessage
+
+	return o.ErrorDescription
 }
 
-// GetErrorMessageOk returns a tuple with the ErrorMessage field value if set, nil otherwise
+// GetErrorDescriptionOk returns a tuple with the ErrorDescription field value
 // and a boolean to check if the value has been set.
-func (o *GetToken4XXResponse) GetErrorMessageOk() (*string, bool) {
-	if o == nil || IsNil(o.ErrorMessage) {
+func (o *GetToken4XXResponse) GetErrorDescriptionOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ErrorMessage, true
+	return &o.ErrorDescription, true
 }
 
-// HasErrorMessage returns a boolean if a field has been set.
-func (o *GetToken4XXResponse) HasErrorMessage() bool {
-	if o != nil && !IsNil(o.ErrorMessage) {
-		return true
-	}
-
-	return false
-}
-
-// SetErrorMessage gets a reference to the given string and assigns it to the ErrorMessage field.
-func (o *GetToken4XXResponse) SetErrorMessage(v string) {
-	o.ErrorMessage = &v
+// SetErrorDescription sets field value
+func (o *GetToken4XXResponse) SetErrorDescription(v string) {
+	o.ErrorDescription = v
 }
 
 func (o GetToken4XXResponse) MarshalJSON() ([]byte, error) {
@@ -112,9 +105,7 @@ func (o GetToken4XXResponse) MarshalJSON() ([]byte, error) {
 func (o GetToken4XXResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["error"] = o.Error
-	if !IsNil(o.ErrorMessage) {
-		toSerialize["error_message"] = o.ErrorMessage
-	}
+	toSerialize["error_description"] = o.ErrorDescription
 	return toSerialize, nil
 }
 
@@ -124,6 +115,7 @@ func (o *GetToken4XXResponse) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"error",
+		"error_description",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -21,8 +21,6 @@ type TransactionTransferToAddressDestinationUtxoOutputsInner struct {
 	Address *string `json:"address,omitempty"`
 	// The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`. 
 	Amount *string `json:"amount,omitempty"`
-	// The script of the output. It is a programmable code fragment that defines the conditions under which the UTXO can be spent.
-	Script *string `json:"script,omitempty"`
 }
 
 // NewTransactionTransferToAddressDestinationUtxoOutputsInner instantiates a new TransactionTransferToAddressDestinationUtxoOutputsInner object
@@ -106,38 +104,6 @@ func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) SetAmount(v st
 	o.Amount = &v
 }
 
-// GetScript returns the Script field value if set, zero value otherwise.
-func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) GetScript() string {
-	if o == nil || IsNil(o.Script) {
-		var ret string
-		return ret
-	}
-	return *o.Script
-}
-
-// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) GetScriptOk() (*string, bool) {
-	if o == nil || IsNil(o.Script) {
-		return nil, false
-	}
-	return o.Script, true
-}
-
-// HasScript returns a boolean if a field has been set.
-func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) HasScript() bool {
-	if o != nil && !IsNil(o.Script) {
-		return true
-	}
-
-	return false
-}
-
-// SetScript gets a reference to the given string and assigns it to the Script field.
-func (o *TransactionTransferToAddressDestinationUtxoOutputsInner) SetScript(v string) {
-	o.Script = &v
-}
-
 func (o TransactionTransferToAddressDestinationUtxoOutputsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -153,9 +119,6 @@ func (o TransactionTransferToAddressDestinationUtxoOutputsInner) ToMap() (map[st
 	}
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount
-	}
-	if !IsNil(o.Script) {
-		toSerialize["script"] = o.Script
 	}
 	return toSerialize, nil
 }
