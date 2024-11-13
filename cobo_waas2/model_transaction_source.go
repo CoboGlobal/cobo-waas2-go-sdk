@@ -156,8 +156,8 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'SafeWallet'
-	if jsonDict["source_type"] == "SafeWallet" {
+	// check if the discriminator value is 'Safe{Wallet}'
+	if jsonDict["source_type"] == "Safe{Wallet}" {
 		// try to unmarshal JSON data into TransactionSmartContractSafeWalletSource
 		err = json.Unmarshal(data, &dst.TransactionSmartContractSafeWalletSource)
 		if err == nil {

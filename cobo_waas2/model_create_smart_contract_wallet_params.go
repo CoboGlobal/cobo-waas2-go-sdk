@@ -36,8 +36,8 @@ func (dst *CreateSmartContractWalletParams) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
-	// check if the discriminator value is 'Safe'
-	if jsonDict["smart_contract_wallet_type"] == "Safe" {
+	// check if the discriminator value is 'Safe{Wallet}'
+	if jsonDict["smart_contract_wallet_type"] == "Safe{Wallet}" {
 		// try to unmarshal JSON data into CreateSafeWalletParams
 		err = json.Unmarshal(data, &dst.CreateSafeWalletParams)
 		if err == nil {

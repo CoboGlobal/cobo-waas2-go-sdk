@@ -16,12 +16,20 @@ import (
 // StakingsExtra - struct for StakingsExtra
 type StakingsExtra struct {
 	BabylonStakingExtra *BabylonStakingExtra
+	EthStakingExtra *EthStakingExtra
 }
 
 // BabylonStakingExtraAsStakingsExtra is a convenience function that returns BabylonStakingExtra wrapped in StakingsExtra
 func BabylonStakingExtraAsStakingsExtra(v *BabylonStakingExtra) StakingsExtra {
 	return StakingsExtra{
 		BabylonStakingExtra: v,
+	}
+}
+
+// EthStakingExtraAsStakingsExtra is a convenience function that returns EthStakingExtra wrapped in StakingsExtra
+func EthStakingExtraAsStakingsExtra(v *EthStakingExtra) StakingsExtra {
+	return StakingsExtra{
+		EthStakingExtra: v,
 	}
 }
 
@@ -48,6 +56,18 @@ func (dst *StakingsExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'ETHBeacon'
+	if jsonDict["pool_type"] == "ETHBeacon" {
+		// try to unmarshal JSON data into EthStakingExtra
+		err = json.Unmarshal(data, &dst.EthStakingExtra)
+		if err == nil {
+			return nil // data stored in dst.EthStakingExtra, return on the first match
+		} else {
+			dst.EthStakingExtra = nil
+			return fmt.Errorf("failed to unmarshal StakingsExtra as EthStakingExtra: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'BabylonStakingExtra'
 	if jsonDict["pool_type"] == "BabylonStakingExtra" {
 		// try to unmarshal JSON data into BabylonStakingExtra
@@ -60,6 +80,18 @@ func (dst *StakingsExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'EthStakingExtra'
+	if jsonDict["pool_type"] == "EthStakingExtra" {
+		// try to unmarshal JSON data into EthStakingExtra
+		err = json.Unmarshal(data, &dst.EthStakingExtra)
+		if err == nil {
+			return nil // data stored in dst.EthStakingExtra, return on the first match
+		} else {
+			dst.EthStakingExtra = nil
+			return fmt.Errorf("failed to unmarshal StakingsExtra as EthStakingExtra: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
@@ -67,6 +99,10 @@ func (dst *StakingsExtra) UnmarshalJSON(data []byte) error {
 func (src StakingsExtra) MarshalJSON() ([]byte, error) {
 	if src.BabylonStakingExtra != nil {
 		return json.Marshal(&src.BabylonStakingExtra)
+	}
+
+	if src.EthStakingExtra != nil {
+		return json.Marshal(&src.EthStakingExtra)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -79,6 +115,10 @@ func (obj *StakingsExtra) GetActualInstance() (interface{}) {
 	}
 	if obj.BabylonStakingExtra != nil {
 		return obj.BabylonStakingExtra
+	}
+
+	if obj.EthStakingExtra != nil {
+		return obj.EthStakingExtra
 	}
 
 	// all schemas are nil

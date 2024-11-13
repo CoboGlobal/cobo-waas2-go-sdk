@@ -20,12 +20,12 @@ var _ MappedNullable = &EstimateTransferFeeParams{}
 // EstimateTransferFeeParams The information about a token transfer.
 type EstimateTransferFeeParams struct {
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee.
-	RequestId string `json:"request_id"`
+	RequestId *string `json:"request_id,omitempty"`
 	RequestType EstimateFeeRequestType `json:"request_type"`
 	Source TransferSource `json:"source"`
 	// The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
-	Destination TransferDestination `json:"destination"`
+	Destination *TransferDestination `json:"destination,omitempty"`
 	FeeType *FeeType `json:"fee_type,omitempty"`
 }
 
@@ -35,13 +35,11 @@ type _EstimateTransferFeeParams EstimateTransferFeeParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEstimateTransferFeeParams(requestId string, requestType EstimateFeeRequestType, source TransferSource, tokenId string, destination TransferDestination) *EstimateTransferFeeParams {
+func NewEstimateTransferFeeParams(requestType EstimateFeeRequestType, source TransferSource, tokenId string) *EstimateTransferFeeParams {
 	this := EstimateTransferFeeParams{}
-	this.RequestId = requestId
 	this.RequestType = requestType
 	this.Source = source
 	this.TokenId = tokenId
-	this.Destination = destination
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = &feeType
 	return &this
@@ -57,28 +55,36 @@ func NewEstimateTransferFeeParamsWithDefaults() *EstimateTransferFeeParams {
 	return &this
 }
 
-// GetRequestId returns the RequestId field value
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
 func (o *EstimateTransferFeeParams) GetRequestId() string {
-	if o == nil {
+	if o == nil || IsNil(o.RequestId) {
 		var ret string
 		return ret
 	}
-
-	return o.RequestId
+	return *o.RequestId
 }
 
-// GetRequestIdOk returns a tuple with the RequestId field value
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EstimateTransferFeeParams) GetRequestIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RequestId) {
 		return nil, false
 	}
-	return &o.RequestId, true
+	return o.RequestId, true
 }
 
-// SetRequestId sets field value
+// HasRequestId returns a boolean if a field has been set.
+func (o *EstimateTransferFeeParams) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
 func (o *EstimateTransferFeeParams) SetRequestId(v string) {
-	o.RequestId = v
+	o.RequestId = &v
 }
 
 // GetRequestType returns the RequestType field value
@@ -153,28 +159,36 @@ func (o *EstimateTransferFeeParams) SetTokenId(v string) {
 	o.TokenId = v
 }
 
-// GetDestination returns the Destination field value
+// GetDestination returns the Destination field value if set, zero value otherwise.
 func (o *EstimateTransferFeeParams) GetDestination() TransferDestination {
-	if o == nil {
+	if o == nil || IsNil(o.Destination) {
 		var ret TransferDestination
 		return ret
 	}
-
-	return o.Destination
+	return *o.Destination
 }
 
-// GetDestinationOk returns a tuple with the Destination field value
+// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EstimateTransferFeeParams) GetDestinationOk() (*TransferDestination, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Destination) {
 		return nil, false
 	}
-	return &o.Destination, true
+	return o.Destination, true
 }
 
-// SetDestination sets field value
+// HasDestination returns a boolean if a field has been set.
+func (o *EstimateTransferFeeParams) HasDestination() bool {
+	if o != nil && !IsNil(o.Destination) {
+		return true
+	}
+
+	return false
+}
+
+// SetDestination gets a reference to the given TransferDestination and assigns it to the Destination field.
 func (o *EstimateTransferFeeParams) SetDestination(v TransferDestination) {
-	o.Destination = v
+	o.Destination = &v
 }
 
 // GetFeeType returns the FeeType field value if set, zero value otherwise.
@@ -219,11 +233,15 @@ func (o EstimateTransferFeeParams) MarshalJSON() ([]byte, error) {
 
 func (o EstimateTransferFeeParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["request_id"] = o.RequestId
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	toSerialize["request_type"] = o.RequestType
 	toSerialize["source"] = o.Source
 	toSerialize["token_id"] = o.TokenId
-	toSerialize["destination"] = o.Destination
+	if !IsNil(o.Destination) {
+		toSerialize["destination"] = o.Destination
+	}
 	if !IsNil(o.FeeType) {
 		toSerialize["fee_type"] = o.FeeType
 	}
@@ -235,11 +253,9 @@ func (o *EstimateTransferFeeParams) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"request_id",
 		"request_type",
 		"source",
 		"token_id",
-		"destination",
 	}
 
 	allProperties := make(map[string]interface{})

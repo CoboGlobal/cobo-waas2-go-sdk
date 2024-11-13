@@ -39,8 +39,6 @@ func NewTransactionRequestEvmLegacyFee(gasPrice string, feeType FeeType, tokenId
 	this.GasPrice = gasPrice
 	this.FeeType = feeType
 	this.TokenId = tokenId
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	return &this
 }
 
@@ -51,8 +49,6 @@ func NewTransactionRequestEvmLegacyFeeWithDefaults() *TransactionRequestEvmLegac
 	this := TransactionRequestEvmLegacyFee{}
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = feeType
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	return &this
 }
 

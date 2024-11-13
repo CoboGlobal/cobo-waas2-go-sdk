@@ -43,8 +43,6 @@ func NewEstimatedEvmLegacyFeeSlow(gasPrice string, gasLimit string) *EstimatedEv
 // but it doesn't guarantee that properties required by API are set
 func NewEstimatedEvmLegacyFeeSlowWithDefaults() *EstimatedEvmLegacyFeeSlow {
 	this := EstimatedEvmLegacyFeeSlow{}
-	var gasLimit string = "21000"
-	this.GasLimit = gasLimit
 	return &this
 }
 

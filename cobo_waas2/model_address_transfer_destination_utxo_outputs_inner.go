@@ -22,9 +22,7 @@ type AddressTransferDestinationUtxoOutputsInner struct {
 	// The destination address.
 	Address string `json:"address"`
 	// The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`. 
-	Amount *string `json:"amount,omitempty"`
-	// The script of the output. It is a programmable code fragment that defines the conditions under which the UTXO can be spent.
-	Script *string `json:"script,omitempty"`
+	Amount string `json:"amount"`
 }
 
 type _AddressTransferDestinationUtxoOutputsInner AddressTransferDestinationUtxoOutputsInner
@@ -33,9 +31,10 @@ type _AddressTransferDestinationUtxoOutputsInner AddressTransferDestinationUtxoO
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddressTransferDestinationUtxoOutputsInner(address string) *AddressTransferDestinationUtxoOutputsInner {
+func NewAddressTransferDestinationUtxoOutputsInner(address string, amount string) *AddressTransferDestinationUtxoOutputsInner {
 	this := AddressTransferDestinationUtxoOutputsInner{}
 	this.Address = address
+	this.Amount = amount
 	return &this
 }
 
@@ -71,68 +70,28 @@ func (o *AddressTransferDestinationUtxoOutputsInner) SetAddress(v string) {
 	o.Address = v
 }
 
-// GetAmount returns the Amount field value if set, zero value otherwise.
+// GetAmount returns the Amount field value
 func (o *AddressTransferDestinationUtxoOutputsInner) GetAmount() string {
-	if o == nil || IsNil(o.Amount) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Amount
+
+	return o.Amount
 }
 
-// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
+// GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
 func (o *AddressTransferDestinationUtxoOutputsInner) GetAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.Amount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Amount, true
+	return &o.Amount, true
 }
 
-// HasAmount returns a boolean if a field has been set.
-func (o *AddressTransferDestinationUtxoOutputsInner) HasAmount() bool {
-	if o != nil && !IsNil(o.Amount) {
-		return true
-	}
-
-	return false
-}
-
-// SetAmount gets a reference to the given string and assigns it to the Amount field.
+// SetAmount sets field value
 func (o *AddressTransferDestinationUtxoOutputsInner) SetAmount(v string) {
-	o.Amount = &v
-}
-
-// GetScript returns the Script field value if set, zero value otherwise.
-func (o *AddressTransferDestinationUtxoOutputsInner) GetScript() string {
-	if o == nil || IsNil(o.Script) {
-		var ret string
-		return ret
-	}
-	return *o.Script
-}
-
-// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AddressTransferDestinationUtxoOutputsInner) GetScriptOk() (*string, bool) {
-	if o == nil || IsNil(o.Script) {
-		return nil, false
-	}
-	return o.Script, true
-}
-
-// HasScript returns a boolean if a field has been set.
-func (o *AddressTransferDestinationUtxoOutputsInner) HasScript() bool {
-	if o != nil && !IsNil(o.Script) {
-		return true
-	}
-
-	return false
-}
-
-// SetScript gets a reference to the given string and assigns it to the Script field.
-func (o *AddressTransferDestinationUtxoOutputsInner) SetScript(v string) {
-	o.Script = &v
+	o.Amount = v
 }
 
 func (o AddressTransferDestinationUtxoOutputsInner) MarshalJSON() ([]byte, error) {
@@ -146,12 +105,7 @@ func (o AddressTransferDestinationUtxoOutputsInner) MarshalJSON() ([]byte, error
 func (o AddressTransferDestinationUtxoOutputsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["address"] = o.Address
-	if !IsNil(o.Amount) {
-		toSerialize["amount"] = o.Amount
-	}
-	if !IsNil(o.Script) {
-		toSerialize["script"] = o.Script
-	}
+	toSerialize["amount"] = o.Amount
 	return toSerialize, nil
 }
 
@@ -161,6 +115,7 @@ func (o *AddressTransferDestinationUtxoOutputsInner) UnmarshalJSON(data []byte) 
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"address",
+		"amount",
 	}
 
 	allProperties := make(map[string]interface{})

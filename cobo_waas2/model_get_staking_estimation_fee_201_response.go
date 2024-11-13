@@ -10,157 +10,119 @@ package cobo_waas2
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
-// checks if the GetStakingEstimationFee201Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &GetStakingEstimationFee201Response{}
-
-// GetStakingEstimationFee201Response struct for GetStakingEstimationFee201Response
+// GetStakingEstimationFee201Response - struct for GetStakingEstimationFee201Response
 type GetStakingEstimationFee201Response struct {
-	FeeType *FeeType `json:"fee_type,omitempty"`
-	// The amount of the estimated fee.
-	FeeAmount *string `json:"fee_amount,omitempty"`
-	// The token ID of the staking fee.
-	TokenId *string `json:"token_id,omitempty"`
+	BabylonStakeEstimatedFee *BabylonStakeEstimatedFee
+	EthStakeEstimatedFee *EthStakeEstimatedFee
 }
 
-// NewGetStakingEstimationFee201Response instantiates a new GetStakingEstimationFee201Response object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewGetStakingEstimationFee201Response() *GetStakingEstimationFee201Response {
-	this := GetStakingEstimationFee201Response{}
-	var feeType FeeType = FEETYPE_EVM_EIP_1559
-	this.FeeType = &feeType
-	return &this
-}
-
-// NewGetStakingEstimationFee201ResponseWithDefaults instantiates a new GetStakingEstimationFee201Response object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewGetStakingEstimationFee201ResponseWithDefaults() *GetStakingEstimationFee201Response {
-	this := GetStakingEstimationFee201Response{}
-	var feeType FeeType = FEETYPE_EVM_EIP_1559
-	this.FeeType = &feeType
-	return &this
-}
-
-// GetFeeType returns the FeeType field value if set, zero value otherwise.
-func (o *GetStakingEstimationFee201Response) GetFeeType() FeeType {
-	if o == nil || IsNil(o.FeeType) {
-		var ret FeeType
-		return ret
+// BabylonStakeEstimatedFeeAsGetStakingEstimationFee201Response is a convenience function that returns BabylonStakeEstimatedFee wrapped in GetStakingEstimationFee201Response
+func BabylonStakeEstimatedFeeAsGetStakingEstimationFee201Response(v *BabylonStakeEstimatedFee) GetStakingEstimationFee201Response {
+	return GetStakingEstimationFee201Response{
+		BabylonStakeEstimatedFee: v,
 	}
-	return *o.FeeType
 }
 
-// GetFeeTypeOk returns a tuple with the FeeType field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetStakingEstimationFee201Response) GetFeeTypeOk() (*FeeType, bool) {
-	if o == nil || IsNil(o.FeeType) {
-		return nil, false
+// EthStakeEstimatedFeeAsGetStakingEstimationFee201Response is a convenience function that returns EthStakeEstimatedFee wrapped in GetStakingEstimationFee201Response
+func EthStakeEstimatedFeeAsGetStakingEstimationFee201Response(v *EthStakeEstimatedFee) GetStakingEstimationFee201Response {
+	return GetStakingEstimationFee201Response{
+		EthStakeEstimatedFee: v,
 	}
-	return o.FeeType, true
 }
 
-// HasFeeType returns a boolean if a field has been set.
-func (o *GetStakingEstimationFee201Response) HasFeeType() bool {
-	if o != nil && !IsNil(o.FeeType) {
-		return true
-	}
 
-	return false
-}
-
-// SetFeeType gets a reference to the given FeeType and assigns it to the FeeType field.
-func (o *GetStakingEstimationFee201Response) SetFeeType(v FeeType) {
-	o.FeeType = &v
-}
-
-// GetFeeAmount returns the FeeAmount field value if set, zero value otherwise.
-func (o *GetStakingEstimationFee201Response) GetFeeAmount() string {
-	if o == nil || IsNil(o.FeeAmount) {
-		var ret string
-		return ret
-	}
-	return *o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetStakingEstimationFee201Response) GetFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.FeeAmount) {
-		return nil, false
-	}
-	return o.FeeAmount, true
-}
-
-// HasFeeAmount returns a boolean if a field has been set.
-func (o *GetStakingEstimationFee201Response) HasFeeAmount() bool {
-	if o != nil && !IsNil(o.FeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetFeeAmount gets a reference to the given string and assigns it to the FeeAmount field.
-func (o *GetStakingEstimationFee201Response) SetFeeAmount(v string) {
-	o.FeeAmount = &v
-}
-
-// GetTokenId returns the TokenId field value if set, zero value otherwise.
-func (o *GetStakingEstimationFee201Response) GetTokenId() string {
-	if o == nil || IsNil(o.TokenId) {
-		var ret string
-		return ret
-	}
-	return *o.TokenId
-}
-
-// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetStakingEstimationFee201Response) GetTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.TokenId) {
-		return nil, false
-	}
-	return o.TokenId, true
-}
-
-// HasTokenId returns a boolean if a field has been set.
-func (o *GetStakingEstimationFee201Response) HasTokenId() bool {
-	if o != nil && !IsNil(o.TokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
-func (o *GetStakingEstimationFee201Response) SetTokenId(v string) {
-	o.TokenId = &v
-}
-
-func (o GetStakingEstimationFee201Response) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *GetStakingEstimationFee201Response) UnmarshalJSON(data []byte) error {
+	var err error
+	// use discriminator value to speed up the lookup
+	var jsonDict map[string]interface{}
+	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
-		return []byte{}, err
+		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
-	return json.Marshal(toSerialize)
+
+	// check if the discriminator value is 'Babylon'
+	if jsonDict["pool_type"] == "Babylon" {
+		// try to unmarshal JSON data into BabylonStakeEstimatedFee
+		err = json.Unmarshal(data, &dst.BabylonStakeEstimatedFee)
+		if err == nil {
+			return nil // data stored in dst.BabylonStakeEstimatedFee, return on the first match
+		} else {
+			dst.BabylonStakeEstimatedFee = nil
+			return fmt.Errorf("failed to unmarshal GetStakingEstimationFee201Response as BabylonStakeEstimatedFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'ETHBeacon'
+	if jsonDict["pool_type"] == "ETHBeacon" {
+		// try to unmarshal JSON data into EthStakeEstimatedFee
+		err = json.Unmarshal(data, &dst.EthStakeEstimatedFee)
+		if err == nil {
+			return nil // data stored in dst.EthStakeEstimatedFee, return on the first match
+		} else {
+			dst.EthStakeEstimatedFee = nil
+			return fmt.Errorf("failed to unmarshal GetStakingEstimationFee201Response as EthStakeEstimatedFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BabylonStakeEstimatedFee'
+	if jsonDict["pool_type"] == "BabylonStakeEstimatedFee" {
+		// try to unmarshal JSON data into BabylonStakeEstimatedFee
+		err = json.Unmarshal(data, &dst.BabylonStakeEstimatedFee)
+		if err == nil {
+			return nil // data stored in dst.BabylonStakeEstimatedFee, return on the first match
+		} else {
+			dst.BabylonStakeEstimatedFee = nil
+			return fmt.Errorf("failed to unmarshal GetStakingEstimationFee201Response as BabylonStakeEstimatedFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'EthStakeEstimatedFee'
+	if jsonDict["pool_type"] == "EthStakeEstimatedFee" {
+		// try to unmarshal JSON data into EthStakeEstimatedFee
+		err = json.Unmarshal(data, &dst.EthStakeEstimatedFee)
+		if err == nil {
+			return nil // data stored in dst.EthStakeEstimatedFee, return on the first match
+		} else {
+			dst.EthStakeEstimatedFee = nil
+			return fmt.Errorf("failed to unmarshal GetStakingEstimationFee201Response as EthStakeEstimatedFee: %s", err.Error())
+		}
+	}
+
+	return nil
 }
 
-func (o GetStakingEstimationFee201Response) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	if !IsNil(o.FeeType) {
-		toSerialize["fee_type"] = o.FeeType
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src GetStakingEstimationFee201Response) MarshalJSON() ([]byte, error) {
+	if src.BabylonStakeEstimatedFee != nil {
+		return json.Marshal(&src.BabylonStakeEstimatedFee)
 	}
-	if !IsNil(o.FeeAmount) {
-		toSerialize["fee_amount"] = o.FeeAmount
+
+	if src.EthStakeEstimatedFee != nil {
+		return json.Marshal(&src.EthStakeEstimatedFee)
 	}
-	if !IsNil(o.TokenId) {
-		toSerialize["token_id"] = o.TokenId
+
+	return nil, nil // no data in oneOf schemas
+}
+
+// Get the actual instance
+func (obj *GetStakingEstimationFee201Response) GetActualInstance() (interface{}) {
+	if obj == nil {
+		return nil
 	}
-	return toSerialize, nil
+	if obj.BabylonStakeEstimatedFee != nil {
+		return obj.BabylonStakeEstimatedFee
+	}
+
+	if obj.EthStakeEstimatedFee != nil {
+		return obj.EthStakeEstimatedFee
+	}
+
+	// all schemas are nil
+	return nil
 }
 
 type NullableGetStakingEstimationFee201Response struct {

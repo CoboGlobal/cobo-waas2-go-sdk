@@ -4,12 +4,12 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CheckAddressChainsValidity**](WalletsAPI.md#CheckAddressChainsValidity) | **Get** /wallets/check_address_chains_validity | Check address validity across chains
 [**CheckAddressValidity**](WalletsAPI.md#CheckAddressValidity) | **Get** /wallets/check_address_validity | Check address validity
 [**CheckAddressesValidity**](WalletsAPI.md#CheckAddressesValidity) | **Get** /wallets/check_addresses_validity | Check addresses validity
 [**CreateAddress**](WalletsAPI.md#CreateAddress) | **Post** /wallets/{wallet_id}/addresses | Create addresses in wallet
 [**CreateWallet**](WalletsAPI.md#CreateWallet) | **Post** /wallets | Create wallet
 [**DeleteWalletById**](WalletsAPI.md#DeleteWalletById) | **Post** /wallets/{wallet_id}/delete | Delete wallet
-[**GetAddress**](WalletsAPI.md#GetAddress) | **Get** /wallets/{wallet_id}/addresses/{address} | Get address information
 [**GetChainById**](WalletsAPI.md#GetChainById) | **Get** /wallets/chains/{chain_id} | Get chain information
 [**GetMaxTransferableValue**](WalletsAPI.md#GetMaxTransferableValue) | **Get** /wallets/{wallet_id}/max_transferable_value | Get maximum transferable value
 [**GetTokenById**](WalletsAPI.md#GetTokenById) | **Get** /wallets/tokens/{token_id} | Get token information
@@ -27,6 +27,84 @@ Method | HTTP request | Description
 [**UnlockUtxos**](WalletsAPI.md#UnlockUtxos) | **Post** /wallets/{wallet_id}/utxos/unlock | Unlock UTXOs
 [**UpdateWalletById**](WalletsAPI.md#UpdateWalletById) | **Put** /wallets/{wallet_id} | Update wallet
 
+
+
+## CheckAddressChainsValidity
+
+> []CheckAddressChainsValidity200ResponseInner CheckAddressChainsValidity(ctx).Address(address).ChainIds(chainIds).Execute()
+
+Check address validity across chains
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	address := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+	chainIds := "BTC,ETH"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.WalletsAPI.CheckAddressChainsValidity(ctx).Address(address).ChainIds(chainIds).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.CheckAddressChainsValidity``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CheckAddressChainsValidity`: []CheckAddressChainsValidity200ResponseInner
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.CheckAddressChainsValidity`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCheckAddressChainsValidityRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **address** | **string** | The wallet address. | 
+ **chainIds** | **string** | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). | 
+
+### Return type
+
+[**[]CheckAddressChainsValidity200ResponseInner**](CheckAddressChainsValidity200ResponseInner.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CheckAddressValidity
@@ -408,89 +486,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DeleteWalletById201Response**](DeleteWalletById201Response.md)
-
-### Authorization
-
-[CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetAddress
-
-> []AddressInfo GetAddress(ctx, walletId, address).Execute()
-
-Get address information
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
-    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
-)
-
-func main() {
-	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-	address := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-
-	configuration := coboWaas2.NewConfiguration()
-	// Initialize the API client
-	apiClient := coboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-
-    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
-	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
-    // Replace `<YOUR_PRIVATE_KEY>` with your private key
-	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_PRIVATE_KEY>",
-	})
-	resp, r, err := apiClient.WalletsAPI.GetAddress(ctx, walletId, address).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetAddress``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetAddress`: []AddressInfo
-	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetAddress`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**walletId** | **string** | The wallet ID. | 
-**address** | **string** | The wallet address. | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetAddressRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-
-### Return type
-
-[**[]AddressInfo**](AddressInfo.md)
 
 ### Authorization
 
@@ -901,7 +896,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **chainIds** | **string** | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). | 
- **addresses** | **string** | A list of wallet addresses, separated by comma. | 
+ **addresses** | **string** | A list of wallet addresses, separated by comma. For addresses requiring a memo, append the memo after the address using the &#39;|&#39; separator (e.g., \&quot;address|memo\&quot;). | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
  **before** | **string** | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify &#x60;before&#x60; as &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur.  - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  - If you set &#x60;before&#x60; to &#x60;infinity&#x60;, the last page of data is returned.  | 
  **after** | **string** | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify &#x60;after&#x60; as &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur.  - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 

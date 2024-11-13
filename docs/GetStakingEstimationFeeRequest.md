@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **PoolId** | **string** | The ID of the staking pool. | 
 **Amount** | **string** | The amount to withdraw. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
-**Extra** | [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | 
+**Extra** | [**CreateUnstakeActivityExtra**](CreateUnstakeActivityExtra.md) |  | 
 **StakingId** | **string** | The ID of the corresponding staking position. | 
 **Address** | **string** | The withdrawal address. | 
 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewGetStakingEstimationFeeRequest
 
-`func NewGetStakingEstimationFeeRequest(activityType ActivityType, poolId string, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra, stakingId string, address string, ) *GetStakingEstimationFeeRequest`
+`func NewGetStakingEstimationFeeRequest(activityType ActivityType, poolId string, amount string, fee TransactionRequestFee, extra CreateUnstakeActivityExtra, stakingId string, address string, ) *GetStakingEstimationFeeRequest`
 
 NewGetStakingEstimationFeeRequest instantiates a new GetStakingEstimationFeeRequest object
 This constructor will assign default values to properties that have it defined,
@@ -165,20 +165,20 @@ SetFee sets Fee field to given value.
 
 ### GetExtra
 
-`func (o *GetStakingEstimationFeeRequest) GetExtra() CreateStakeActivityExtra`
+`func (o *GetStakingEstimationFeeRequest) GetExtra() CreateUnstakeActivityExtra`
 
 GetExtra returns the Extra field if non-nil, zero value otherwise.
 
 ### GetExtraOk
 
-`func (o *GetStakingEstimationFeeRequest) GetExtraOk() (*CreateStakeActivityExtra, bool)`
+`func (o *GetStakingEstimationFeeRequest) GetExtraOk() (*CreateUnstakeActivityExtra, bool)`
 
 GetExtraOk returns a tuple with the Extra field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExtra
 
-`func (o *GetStakingEstimationFeeRequest) SetExtra(v CreateStakeActivityExtra)`
+`func (o *GetStakingEstimationFeeRequest) SetExtra(v CreateUnstakeActivityExtra)`
 
 SetExtra sets Extra field to given value.
 

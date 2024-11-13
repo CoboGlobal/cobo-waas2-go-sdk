@@ -27,6 +27,7 @@ type EstimateUnstakeFee struct {
 	// The amount to unstake. For the Babylon protocol, this property is ignored.
 	Amount *string `json:"amount,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
+	Extra *CreateUnstakeActivityExtra `json:"extra,omitempty"`
 }
 
 type _EstimateUnstakeFee EstimateUnstakeFee
@@ -194,6 +195,38 @@ func (o *EstimateUnstakeFee) SetFee(v TransactionRequestFee) {
 	o.Fee = &v
 }
 
+// GetExtra returns the Extra field value if set, zero value otherwise.
+func (o *EstimateUnstakeFee) GetExtra() CreateUnstakeActivityExtra {
+	if o == nil || IsNil(o.Extra) {
+		var ret CreateUnstakeActivityExtra
+		return ret
+	}
+	return *o.Extra
+}
+
+// GetExtraOk returns a tuple with the Extra field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EstimateUnstakeFee) GetExtraOk() (*CreateUnstakeActivityExtra, bool) {
+	if o == nil || IsNil(o.Extra) {
+		return nil, false
+	}
+	return o.Extra, true
+}
+
+// HasExtra returns a boolean if a field has been set.
+func (o *EstimateUnstakeFee) HasExtra() bool {
+	if o != nil && !IsNil(o.Extra) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtra gets a reference to the given CreateUnstakeActivityExtra and assigns it to the Extra field.
+func (o *EstimateUnstakeFee) SetExtra(v CreateUnstakeActivityExtra) {
+	o.Extra = &v
+}
+
 func (o EstimateUnstakeFee) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -214,6 +247,9 @@ func (o EstimateUnstakeFee) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee
+	}
+	if !IsNil(o.Extra) {
+		toSerialize["extra"] = o.Extra
 	}
 	return toSerialize, nil
 }

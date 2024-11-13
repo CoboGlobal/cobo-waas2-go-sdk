@@ -12,11 +12,11 @@ import (
 	"encoding/json"
 )
 
-// checks if the GetToken200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &GetToken200Response{}
+// checks if the GetToken2XXResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetToken2XXResponse{}
 
-// GetToken200Response struct for GetToken200Response
-type GetToken200Response struct {
+// GetToken2XXResponse struct for GetToken2XXResponse
+type GetToken2XXResponse struct {
 	// The Org Access Token.
 	AccessToken *string `json:"access_token,omitempty"`
 	// The type of the tokens, which is Bearer.
@@ -29,25 +29,25 @@ type GetToken200Response struct {
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
 
-// NewGetToken200Response instantiates a new GetToken200Response object
+// NewGetToken2XXResponse instantiates a new GetToken2XXResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetToken200Response() *GetToken200Response {
-	this := GetToken200Response{}
+func NewGetToken2XXResponse() *GetToken2XXResponse {
+	this := GetToken2XXResponse{}
 	return &this
 }
 
-// NewGetToken200ResponseWithDefaults instantiates a new GetToken200Response object
+// NewGetToken2XXResponseWithDefaults instantiates a new GetToken2XXResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewGetToken200ResponseWithDefaults() *GetToken200Response {
-	this := GetToken200Response{}
+func NewGetToken2XXResponseWithDefaults() *GetToken2XXResponse {
+	this := GetToken2XXResponse{}
 	return &this
 }
 
 // GetAccessToken returns the AccessToken field value if set, zero value otherwise.
-func (o *GetToken200Response) GetAccessToken() string {
+func (o *GetToken2XXResponse) GetAccessToken() string {
 	if o == nil || IsNil(o.AccessToken) {
 		var ret string
 		return ret
@@ -57,7 +57,7 @@ func (o *GetToken200Response) GetAccessToken() string {
 
 // GetAccessTokenOk returns a tuple with the AccessToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetToken200Response) GetAccessTokenOk() (*string, bool) {
+func (o *GetToken2XXResponse) GetAccessTokenOk() (*string, bool) {
 	if o == nil || IsNil(o.AccessToken) {
 		return nil, false
 	}
@@ -65,7 +65,7 @@ func (o *GetToken200Response) GetAccessTokenOk() (*string, bool) {
 }
 
 // HasAccessToken returns a boolean if a field has been set.
-func (o *GetToken200Response) HasAccessToken() bool {
+func (o *GetToken2XXResponse) HasAccessToken() bool {
 	if o != nil && !IsNil(o.AccessToken) {
 		return true
 	}
@@ -74,12 +74,12 @@ func (o *GetToken200Response) HasAccessToken() bool {
 }
 
 // SetAccessToken gets a reference to the given string and assigns it to the AccessToken field.
-func (o *GetToken200Response) SetAccessToken(v string) {
+func (o *GetToken2XXResponse) SetAccessToken(v string) {
 	o.AccessToken = &v
 }
 
 // GetTokenType returns the TokenType field value if set, zero value otherwise.
-func (o *GetToken200Response) GetTokenType() string {
+func (o *GetToken2XXResponse) GetTokenType() string {
 	if o == nil || IsNil(o.TokenType) {
 		var ret string
 		return ret
@@ -89,7 +89,7 @@ func (o *GetToken200Response) GetTokenType() string {
 
 // GetTokenTypeOk returns a tuple with the TokenType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetToken200Response) GetTokenTypeOk() (*string, bool) {
+func (o *GetToken2XXResponse) GetTokenTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.TokenType) {
 		return nil, false
 	}
@@ -97,7 +97,7 @@ func (o *GetToken200Response) GetTokenTypeOk() (*string, bool) {
 }
 
 // HasTokenType returns a boolean if a field has been set.
-func (o *GetToken200Response) HasTokenType() bool {
+func (o *GetToken2XXResponse) HasTokenType() bool {
 	if o != nil && !IsNil(o.TokenType) {
 		return true
 	}
@@ -106,12 +106,12 @@ func (o *GetToken200Response) HasTokenType() bool {
 }
 
 // SetTokenType gets a reference to the given string and assigns it to the TokenType field.
-func (o *GetToken200Response) SetTokenType(v string) {
+func (o *GetToken2XXResponse) SetTokenType(v string) {
 	o.TokenType = &v
 }
 
 // GetScope returns the Scope field value if set, zero value otherwise.
-func (o *GetToken200Response) GetScope() string {
+func (o *GetToken2XXResponse) GetScope() string {
 	if o == nil || IsNil(o.Scope) {
 		var ret string
 		return ret
@@ -121,7 +121,7 @@ func (o *GetToken200Response) GetScope() string {
 
 // GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetToken200Response) GetScopeOk() (*string, bool) {
+func (o *GetToken2XXResponse) GetScopeOk() (*string, bool) {
 	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
@@ -129,7 +129,7 @@ func (o *GetToken200Response) GetScopeOk() (*string, bool) {
 }
 
 // HasScope returns a boolean if a field has been set.
-func (o *GetToken200Response) HasScope() bool {
+func (o *GetToken2XXResponse) HasScope() bool {
 	if o != nil && !IsNil(o.Scope) {
 		return true
 	}
@@ -138,12 +138,12 @@ func (o *GetToken200Response) HasScope() bool {
 }
 
 // SetScope gets a reference to the given string and assigns it to the Scope field.
-func (o *GetToken200Response) SetScope(v string) {
+func (o *GetToken2XXResponse) SetScope(v string) {
 	o.Scope = &v
 }
 
 // GetExpiresIn returns the ExpiresIn field value if set, zero value otherwise.
-func (o *GetToken200Response) GetExpiresIn() int32 {
+func (o *GetToken2XXResponse) GetExpiresIn() int32 {
 	if o == nil || IsNil(o.ExpiresIn) {
 		var ret int32
 		return ret
@@ -153,7 +153,7 @@ func (o *GetToken200Response) GetExpiresIn() int32 {
 
 // GetExpiresInOk returns a tuple with the ExpiresIn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetToken200Response) GetExpiresInOk() (*int32, bool) {
+func (o *GetToken2XXResponse) GetExpiresInOk() (*int32, bool) {
 	if o == nil || IsNil(o.ExpiresIn) {
 		return nil, false
 	}
@@ -161,7 +161,7 @@ func (o *GetToken200Response) GetExpiresInOk() (*int32, bool) {
 }
 
 // HasExpiresIn returns a boolean if a field has been set.
-func (o *GetToken200Response) HasExpiresIn() bool {
+func (o *GetToken2XXResponse) HasExpiresIn() bool {
 	if o != nil && !IsNil(o.ExpiresIn) {
 		return true
 	}
@@ -170,12 +170,12 @@ func (o *GetToken200Response) HasExpiresIn() bool {
 }
 
 // SetExpiresIn gets a reference to the given int32 and assigns it to the ExpiresIn field.
-func (o *GetToken200Response) SetExpiresIn(v int32) {
+func (o *GetToken2XXResponse) SetExpiresIn(v int32) {
 	o.ExpiresIn = &v
 }
 
 // GetRefreshToken returns the RefreshToken field value if set, zero value otherwise.
-func (o *GetToken200Response) GetRefreshToken() string {
+func (o *GetToken2XXResponse) GetRefreshToken() string {
 	if o == nil || IsNil(o.RefreshToken) {
 		var ret string
 		return ret
@@ -185,7 +185,7 @@ func (o *GetToken200Response) GetRefreshToken() string {
 
 // GetRefreshTokenOk returns a tuple with the RefreshToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetToken200Response) GetRefreshTokenOk() (*string, bool) {
+func (o *GetToken2XXResponse) GetRefreshTokenOk() (*string, bool) {
 	if o == nil || IsNil(o.RefreshToken) {
 		return nil, false
 	}
@@ -193,7 +193,7 @@ func (o *GetToken200Response) GetRefreshTokenOk() (*string, bool) {
 }
 
 // HasRefreshToken returns a boolean if a field has been set.
-func (o *GetToken200Response) HasRefreshToken() bool {
+func (o *GetToken2XXResponse) HasRefreshToken() bool {
 	if o != nil && !IsNil(o.RefreshToken) {
 		return true
 	}
@@ -202,11 +202,11 @@ func (o *GetToken200Response) HasRefreshToken() bool {
 }
 
 // SetRefreshToken gets a reference to the given string and assigns it to the RefreshToken field.
-func (o *GetToken200Response) SetRefreshToken(v string) {
+func (o *GetToken2XXResponse) SetRefreshToken(v string) {
 	o.RefreshToken = &v
 }
 
-func (o GetToken200Response) MarshalJSON() ([]byte, error) {
+func (o GetToken2XXResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -214,7 +214,7 @@ func (o GetToken200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o GetToken200Response) ToMap() (map[string]interface{}, error) {
+func (o GetToken2XXResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AccessToken) {
 		toSerialize["access_token"] = o.AccessToken
@@ -234,38 +234,38 @@ func (o GetToken200Response) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableGetToken200Response struct {
-	value *GetToken200Response
+type NullableGetToken2XXResponse struct {
+	value *GetToken2XXResponse
 	isSet bool
 }
 
-func (v NullableGetToken200Response) Get() *GetToken200Response {
+func (v NullableGetToken2XXResponse) Get() *GetToken2XXResponse {
 	return v.value
 }
 
-func (v *NullableGetToken200Response) Set(val *GetToken200Response) {
+func (v *NullableGetToken2XXResponse) Set(val *GetToken2XXResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableGetToken200Response) IsSet() bool {
+func (v NullableGetToken2XXResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableGetToken200Response) Unset() {
+func (v *NullableGetToken2XXResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableGetToken200Response(val *GetToken200Response) *NullableGetToken200Response {
-	return &NullableGetToken200Response{value: val, isSet: true}
+func NewNullableGetToken2XXResponse(val *GetToken2XXResponse) *NullableGetToken2XXResponse {
+	return &NullableGetToken2XXResponse{value: val, isSet: true}
 }
 
-func (v NullableGetToken200Response) MarshalJSON() ([]byte, error) {
+func (v NullableGetToken2XXResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableGetToken200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableGetToken2XXResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

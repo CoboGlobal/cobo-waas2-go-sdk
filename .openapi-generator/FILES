@@ -5,6 +5,7 @@
 README.md
 api/openapi.yaml
 api_address_books.go
+api_developers.go
 api_developers_webhooks.go
 api_o_auth.go
 api_stakings.go
@@ -19,6 +20,7 @@ crypto/ed25519.go
 crypto/helper.go
 crypto/helper_test.go
 crypto/signer.go
+demo/server_demo.go
 docs/Activity.md
 docs/ActivityAction.md
 docs/ActivityInitiator.md
@@ -38,6 +40,7 @@ docs/ApiLogDetails.md
 docs/ApiLogSummary.md
 docs/AssetBalance.md
 docs/AssetInfo.md
+docs/BabylonStakeEstimatedFee.md
 docs/BabylonStakeExtra.md
 docs/BabylonStakingExtra.md
 docs/BabylonValidator.md
@@ -48,6 +51,7 @@ docs/BaseStakeSource.md
 docs/BroadcastSignedTransactions201ResponseInner.md
 docs/BroadcastSignedTransactionsRequest.md
 docs/ChainInfo.md
+docs/CheckAddressChainsValidity200ResponseInner.md
 docs/CheckAddressValidity200Response.md
 docs/CheckAddressesValidity200ResponseInner.md
 docs/CheckLoopTransfers200ResponseInner.md
@@ -75,6 +79,7 @@ docs/CreateStakeActivityRequest.md
 docs/CreateTransferTransaction201Response.md
 docs/CreateTssRequestRequest.md
 docs/CreateUnstakeActivity.md
+docs/CreateUnstakeActivityExtra.md
 docs/CreateUnstakeActivityRequest.md
 docs/CreateWalletParams.md
 docs/CreateWebhookEndpointRequest.md
@@ -86,6 +91,7 @@ docs/CustodialTransferSource.md
 docs/CustodialWalletInfo.md
 docs/DeleteKeyShareHolderGroupById201Response.md
 docs/DeleteWalletById201Response.md
+docs/DevelopersAPI.md
 docs/DevelopersWebhooksAPI.md
 docs/EigenLayerLstStakeExtra.md
 docs/EigenLayerNativeStakeExtra.md
@@ -106,6 +112,10 @@ docs/EstimatedFee.md
 docs/EstimatedFixedFee.md
 docs/EstimatedUtxoFee.md
 docs/EstimatedUtxoFeeSlow.md
+docs/EthStakeEstimatedFee.md
+docs/EthStakeExtra.md
+docs/EthStakingExtra.md
+docs/EthUnstakeExtra.md
 docs/EvmContractCallDestination.md
 docs/EvmEIP191MessageSignDestination.md
 docs/EvmEIP712MessageSignDestination.md
@@ -123,9 +133,10 @@ docs/FeeGasLimit.md
 docs/FeeRate.md
 docs/FeeType.md
 docs/FixedFeeRate.md
+docs/GetApiKeyInfo200Response.md
 docs/GetStakingEstimationFee201Response.md
 docs/GetStakingEstimationFeeRequest.md
-docs/GetToken200Response.md
+docs/GetToken2XXResponse.md
 docs/GetToken4XXResponse.md
 docs/KeyShareHolder.md
 docs/KeyShareHolderGroup.md
@@ -181,10 +192,11 @@ docs/PoolDetails.md
 docs/PoolDetailsAllOfValidatorsInfo.md
 docs/PoolSummary.md
 docs/RawMessageSignDestination.md
-docs/RefreshToken201Response.md
+docs/RefreshToken2XXResponse.md
 docs/RefreshTokenRequest.md
 docs/ReplaceType.md
 docs/RetryWebhookEventById201Response.md
+docs/RoleScopes.md
 docs/RootPubkey.md
 docs/SafeContractCallSource.md
 docs/SafeTransferSource.md
@@ -192,6 +204,7 @@ docs/SafeWallet.md
 docs/SafeWalletDelegates.md
 docs/SafeWalletDelegatesContractCall.md
 docs/SafeWalletDelegatesTransfer.md
+docs/Scopes.md
 docs/SmartContractInitiator.md
 docs/SmartContractWalletInfo.md
 docs/SmartContractWalletOperationType.md
@@ -327,6 +340,7 @@ model_api_log_details.go
 model_api_log_summary.go
 model_asset_balance.go
 model_asset_info.go
+model_babylon_stake_estimated_fee.go
 model_babylon_stake_extra.go
 model_babylon_staking_extra.go
 model_babylon_validator.go
@@ -337,6 +351,7 @@ model_base_stake_source.go
 model_broadcast_signed_transactions_201_response_inner.go
 model_broadcast_signed_transactions_request.go
 model_chain_info.go
+model_check_address_chains_validity_200_response_inner.go
 model_check_address_validity_200_response.go
 model_check_addresses_validity_200_response_inner.go
 model_check_loop_transfers_200_response_inner.go
@@ -364,6 +379,7 @@ model_create_stake_activity_request.go
 model_create_transfer_transaction_201_response.go
 model_create_tss_request_request.go
 model_create_unstake_activity.go
+model_create_unstake_activity_extra.go
 model_create_unstake_activity_request.go
 model_create_wallet_params.go
 model_create_webhook_endpoint_request.go
@@ -394,6 +410,10 @@ model_estimated_fee.go
 model_estimated_fixed_fee.go
 model_estimated_utxo_fee.go
 model_estimated_utxo_fee_slow.go
+model_eth_stake_estimated_fee.go
+model_eth_stake_extra.go
+model_eth_staking_extra.go
+model_eth_unstake_extra.go
 model_evm_contract_call_destination.go
 model_evm_eip1559_fee_base_price.go
 model_evm_eip1559_fee_rate.go
@@ -411,9 +431,10 @@ model_fee_gas_limit.go
 model_fee_rate.go
 model_fee_type.go
 model_fixed_fee_rate.go
+model_get_api_key_info_200_response.go
 model_get_staking_estimation_fee_201_response.go
 model_get_staking_estimation_fee_request.go
-model_get_token_200_response.go
+model_get_token_2_xx_response.go
 model_get_token_4_xx_response.go
 model_key_share_holder.go
 model_key_share_holder_group.go
@@ -468,10 +489,11 @@ model_pool_details.go
 model_pool_details_all_of_validators_info.go
 model_pool_summary.go
 model_raw_message_sign_destination.go
-model_refresh_token_201_response.go
+model_refresh_token_2_xx_response.go
 model_refresh_token_request.go
 model_replace_type.go
 model_retry_webhook_event_by_id_201_response.go
+model_role_scopes.go
 model_root_pubkey.go
 model_safe_contract_call_source.go
 model_safe_transfer_source.go
@@ -479,6 +501,7 @@ model_safe_wallet.go
 model_safe_wallet_delegates.go
 model_safe_wallet_delegates_contract_call.go
 model_safe_wallet_delegates_transfer.go
+model_scopes.go
 model_smart_contract_initiator.go
 model_smart_contract_wallet_info.go
 model_smart_contract_wallet_operation_type.go
@@ -589,6 +612,7 @@ model_webhook_event_status.go
 model_webhook_event_type.go
 response.go
 test/api_address_books_test.go
+test/api_developers_test.go
 test/api_developers_webhooks_test.go
 test/api_o_auth_test.go
 test/api_stakings_test.go

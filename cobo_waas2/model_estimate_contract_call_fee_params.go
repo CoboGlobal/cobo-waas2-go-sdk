@@ -20,7 +20,7 @@ var _ MappedNullable = &EstimateContractCallFeeParams{}
 // EstimateContractCallFeeParams The information about a transaction that interacts with a smart contract
 type EstimateContractCallFeeParams struct {
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee.
-	RequestId string `json:"request_id"`
+	RequestId *string `json:"request_id,omitempty"`
 	RequestType EstimateFeeRequestType `json:"request_type"`
 	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
 	ChainId string `json:"chain_id"`
@@ -35,9 +35,8 @@ type _EstimateContractCallFeeParams EstimateContractCallFeeParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEstimateContractCallFeeParams(requestId string, requestType EstimateFeeRequestType, chainId string, source ContractCallSource, destination ContractCallDestination) *EstimateContractCallFeeParams {
+func NewEstimateContractCallFeeParams(requestType EstimateFeeRequestType, chainId string, source ContractCallSource, destination ContractCallDestination) *EstimateContractCallFeeParams {
 	this := EstimateContractCallFeeParams{}
-	this.RequestId = requestId
 	this.RequestType = requestType
 	this.ChainId = chainId
 	this.Source = source
@@ -57,28 +56,36 @@ func NewEstimateContractCallFeeParamsWithDefaults() *EstimateContractCallFeePara
 	return &this
 }
 
-// GetRequestId returns the RequestId field value
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
 func (o *EstimateContractCallFeeParams) GetRequestId() string {
-	if o == nil {
+	if o == nil || IsNil(o.RequestId) {
 		var ret string
 		return ret
 	}
-
-	return o.RequestId
+	return *o.RequestId
 }
 
-// GetRequestIdOk returns a tuple with the RequestId field value
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EstimateContractCallFeeParams) GetRequestIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RequestId) {
 		return nil, false
 	}
-	return &o.RequestId, true
+	return o.RequestId, true
 }
 
-// SetRequestId sets field value
+// HasRequestId returns a boolean if a field has been set.
+func (o *EstimateContractCallFeeParams) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
 func (o *EstimateContractCallFeeParams) SetRequestId(v string) {
-	o.RequestId = v
+	o.RequestId = &v
 }
 
 // GetRequestType returns the RequestType field value
@@ -219,7 +226,9 @@ func (o EstimateContractCallFeeParams) MarshalJSON() ([]byte, error) {
 
 func (o EstimateContractCallFeeParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["request_id"] = o.RequestId
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	toSerialize["request_type"] = o.RequestType
 	toSerialize["chain_id"] = o.ChainId
 	toSerialize["source"] = o.Source
@@ -235,7 +244,6 @@ func (o *EstimateContractCallFeeParams) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"request_id",
 		"request_type",
 		"chain_id",
 		"source",

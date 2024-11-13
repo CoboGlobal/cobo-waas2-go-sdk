@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee. | 
+**RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee. | [optional] 
 **RequestType** | [**EstimateFeeRequestType**](EstimateFeeRequestType.md) |  | 
 **Source** | [**ContractCallSource**](ContractCallSource.md) |  | 
 **TokenId** | **string** | The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens). | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewEstimateFeeParams
 
-`func NewEstimateFeeParams(requestId string, requestType EstimateFeeRequestType, source ContractCallSource, tokenId string, destination ContractCallDestination, chainId string, ) *EstimateFeeParams`
+`func NewEstimateFeeParams(requestType EstimateFeeRequestType, source ContractCallSource, tokenId string, destination ContractCallDestination, chainId string, ) *EstimateFeeParams`
 
 NewEstimateFeeParams instantiates a new EstimateFeeParams object
 This constructor will assign default values to properties that have it defined,
@@ -50,6 +50,11 @@ and a boolean to check if the value has been set.
 
 SetRequestId sets RequestId field to given value.
 
+### HasRequestId
+
+`func (o *EstimateFeeParams) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetRequestType
 

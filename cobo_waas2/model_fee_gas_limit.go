@@ -27,8 +27,6 @@ type FeeGasLimit struct {
 // will change when the set of required properties is changed
 func NewFeeGasLimit() *FeeGasLimit {
 	this := FeeGasLimit{}
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	return &this
 }
 
@@ -37,8 +35,6 @@ func NewFeeGasLimit() *FeeGasLimit {
 // but it doesn't guarantee that properties required by API are set
 func NewFeeGasLimitWithDefaults() *FeeGasLimit {
 	this := FeeGasLimit{}
-	var gasLimit string = "21000"
-	this.GasLimit = &gasLimit
 	return &this
 }
 
