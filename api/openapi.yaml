@@ -3211,7 +3211,7 @@ paths:
   /transactions/transfer:
     post:
       description: |
-        The operation transfers your assets from a wallet created on Cobo Protal to another address.
+        The operation transfers your assets from a wallet created on Cobo Portal to another address.
 
         You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
@@ -4206,11 +4206,10 @@ paths:
       - Developers - Webhooks
   /webhooks/events/trigger:
     post:
-      description: "This operation tests the functionality of your webhook endpoint\
-        \ by triggering a test webhook event. \n\nYou only need to provide the event\
-        \ type. By default, the payload contains dummy data with no impact on your\
-        \ real business transactions or activities. You can optionally provide the\
-        \ `override_data` property to customize the payload.\n"
+      description: |
+        This operation tests the functionality of your webhook endpoint by triggering a test webhook event. The test event will be sent to all the endpoints you have registered on Cobo Portal.
+
+        You only need to provide the event type. By default, the payload contains dummy data with no impact on your real business transactions or activities. You can optionally provide the `override_data` property to customize the payload.
       operationId: trigger_test_webhook_event
       requestBody:
         $ref: '#/components/requestBodies/triggerTestEventBody'

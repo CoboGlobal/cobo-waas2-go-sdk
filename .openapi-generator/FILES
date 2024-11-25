@@ -18,7 +18,7 @@ client.go
 configuration.go
 crypto/ed25519.go
 crypto/helper.go
-crypto/helper_test.go
+crypto/secp256k1.go
 crypto/signer.go
 demo/server_demo.go
 docs/Activity.md
