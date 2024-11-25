@@ -735,7 +735,7 @@ func (r ApiCreateTransferTransactionRequest) Execute() (*CreateTransferTransacti
 /*
 CreateTransferTransaction Transfer token
 
-The operation transfers your assets from a wallet created on Cobo Protal to another address.
+The operation transfers your assets from a wallet created on Cobo Portal to another address.
 
 You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 

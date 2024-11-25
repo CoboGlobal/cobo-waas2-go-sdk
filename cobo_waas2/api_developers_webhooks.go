@@ -1182,7 +1182,7 @@ func (r ApiTriggerTestWebhookEventRequest) Execute() (*TriggerTestWebhookEvent20
 /*
 TriggerTestWebhookEvent Trigger test event
 
-This operation tests the functionality of your webhook endpoint by triggering a test webhook event. 
+This operation tests the functionality of your webhook endpoint by triggering a test webhook event. The test event will be sent to all the endpoints you have registered on Cobo Portal.
 
 You only need to provide the event type. By default, the payload contains dummy data with no impact on your real business transactions or activities. You can optionally provide the `override_data` property to customize the payload.
 

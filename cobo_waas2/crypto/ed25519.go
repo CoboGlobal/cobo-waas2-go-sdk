@@ -32,3 +32,7 @@ func GenerateApiKey() (apiKey, apiSecret string, err error) {
 	apiKey = hex.EncodeToString(pk)
 	return
 }
+
+func GenerateEddsaApiKey() (apiKey, apiSecret string, err error) {
+	return GenerateApiKey()
+}
