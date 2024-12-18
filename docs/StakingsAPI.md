@@ -4,17 +4,95 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateClaimActivity**](StakingsAPI.md#CreateClaimActivity) | **Post** /stakings/activities/claim | Create claim activity
 [**CreateStakeActivity**](StakingsAPI.md#CreateStakeActivity) | **Post** /stakings/activities/stake | Create stake activity
 [**CreateUnstakeActivity**](StakingsAPI.md#CreateUnstakeActivity) | **Post** /stakings/activities/unstake | Create unstake activity
 [**CreateWithdrawActivity**](StakingsAPI.md#CreateWithdrawActivity) | **Post** /stakings/activities/withdraw | Create withdraw activity
 [**GetStakingActivityById**](StakingsAPI.md#GetStakingActivityById) | **Get** /stakings/activities/{activity_id} | Get staking activity details
 [**GetStakingById**](StakingsAPI.md#GetStakingById) | **Get** /stakings/{staking_id} | Get staking position details
 [**GetStakingEstimationFee**](StakingsAPI.md#GetStakingEstimationFee) | **Post** /stakings/estimate_fee | Estimate staking fees
+[**GetStakingEstimationFeeV2**](StakingsAPI.md#GetStakingEstimationFeeV2) | **Post** /stakings/estimate_fee_v2 | Estimate staking fees
 [**GetStakingPoolById**](StakingsAPI.md#GetStakingPoolById) | **Get** /stakings/pools/{pool_id} | Get staking pool details
 [**ListStakingActivities**](StakingsAPI.md#ListStakingActivities) | **Get** /stakings/activities | List staking activities
 [**ListStakingPools**](StakingsAPI.md#ListStakingPools) | **Get** /stakings/pools | List staking pools
 [**ListStakings**](StakingsAPI.md#ListStakings) | **Get** /stakings | List staking positions
 
+
+
+## CreateClaimActivity
+
+> CreateStakeActivity201Response CreateClaimActivity(ctx).CreateClaimActivityRequest(createClaimActivityRequest).Execute()
+
+Create claim activity
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createClaimActivityRequest := *coboWaas2.NewCreateClaimActivityRequest("f47ac10b-58cc-4372-a567-0e02b2c3d479")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.CreateClaimActivity(ctx).CreateClaimActivityRequest(createClaimActivityRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.CreateClaimActivity``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateClaimActivity`: CreateStakeActivity201Response
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.CreateClaimActivity`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateClaimActivityRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createClaimActivityRequest** | [**CreateClaimActivityRequest**](CreateClaimActivityRequest.md) | The request body to create a staking request. | 
+
+### Return type
+
+[**CreateStakeActivity201Response**](CreateStakeActivity201Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateStakeActivity
@@ -39,7 +117,7 @@ import (
 )
 
 func main() {
-	createStakeActivityRequest := *coboWaas2.NewCreateStakeActivityRequest("babylon_btc", "100.00", coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")}, coboWaas2.CreateStakeActivity_extra{BabylonStakeExtra: coboWaas2.NewBabylonStakeExtra(coboWaas2.StakingPoolType("Babylon"), "eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0", int64(2000))})
+	createStakeActivityRequest := *coboWaas2.NewCreateStakeActivityRequest(coboWaas2.StakingPoolId("babylon_btc_signet"), "100.00", coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")}, coboWaas2.CreateStakeActivity_extra{BabylonStakeExtra: coboWaas2.NewBabylonStakeExtra(coboWaas2.StakingPoolType("Babylon"), "eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0", int64(2000))})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -376,7 +454,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**stakingId** | **string** | The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](/v2/api-references/stakings/list-all-stakings). | 
+**stakingId** | **string** | The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](/v2/api-references/stakings/list-staking-positions). | 
 
 ### Other Parameters
 
@@ -427,7 +505,7 @@ import (
 )
 
 func main() {
-	getStakingEstimationFeeRequest := coboWaas2.get_staking_estimation_fee_request{EstimateStakeFee: coboWaas2.NewEstimateStakeFee(coboWaas2.ActivityType("Stake"), "babylon_btc", "100.00", coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")}, coboWaas2.CreateStakeActivity_extra{BabylonStakeExtra: coboWaas2.NewBabylonStakeExtra(coboWaas2.StakingPoolType("Babylon"), "eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0", int64(2000))})}
+	getStakingEstimationFeeRequest := coboWaas2.get_staking_estimation_fee_request{EstimateClaimFee: coboWaas2.NewEstimateClaimFee(coboWaas2.ActivityType("Stake"))}
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -466,6 +544,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetStakingEstimationFee201Response**](GetStakingEstimationFee201Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetStakingEstimationFeeV2
+
+> EthStakeEstimatedFee GetStakingEstimationFeeV2(ctx).GetStakingEstimationFeeRequest(getStakingEstimationFeeRequest).Execute()
+
+Estimate staking fees
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	getStakingEstimationFeeRequest := coboWaas2.get_staking_estimation_fee_request{EstimateClaimFee: coboWaas2.NewEstimateClaimFee(coboWaas2.ActivityType("Stake"))}
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.GetStakingEstimationFeeV2(ctx).GetStakingEstimationFeeRequest(getStakingEstimationFeeRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.GetStakingEstimationFeeV2``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetStakingEstimationFeeV2`: EthStakeEstimatedFee
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.GetStakingEstimationFeeV2`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetStakingEstimationFeeV2Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getStakingEstimationFeeRequest** | [**GetStakingEstimationFeeRequest**](GetStakingEstimationFeeRequest.md) | The request body to get the estimated fee of a staking activity. | 
+
+### Return type
+
+[**EthStakeEstimatedFee**](EthStakeEstimatedFee.md)
 
 ### Authorization
 

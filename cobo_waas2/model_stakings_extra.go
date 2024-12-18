@@ -16,6 +16,7 @@ import (
 // StakingsExtra - struct for StakingsExtra
 type StakingsExtra struct {
 	BabylonStakingExtra *BabylonStakingExtra
+	CoreStakingExtra *CoreStakingExtra
 	EthStakingExtra *EthStakingExtra
 }
 
@@ -23,6 +24,13 @@ type StakingsExtra struct {
 func BabylonStakingExtraAsStakingsExtra(v *BabylonStakingExtra) StakingsExtra {
 	return StakingsExtra{
 		BabylonStakingExtra: v,
+	}
+}
+
+// CoreStakingExtraAsStakingsExtra is a convenience function that returns CoreStakingExtra wrapped in StakingsExtra
+func CoreStakingExtraAsStakingsExtra(v *CoreStakingExtra) StakingsExtra {
+	return StakingsExtra{
+		CoreStakingExtra: v,
 	}
 }
 
@@ -56,6 +64,18 @@ func (dst *StakingsExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'CoreBTC'
+	if jsonDict["pool_type"] == "CoreBTC" {
+		// try to unmarshal JSON data into CoreStakingExtra
+		err = json.Unmarshal(data, &dst.CoreStakingExtra)
+		if err == nil {
+			return nil // data stored in dst.CoreStakingExtra, return on the first match
+		} else {
+			dst.CoreStakingExtra = nil
+			return fmt.Errorf("failed to unmarshal StakingsExtra as CoreStakingExtra: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ETHBeacon'
 	if jsonDict["pool_type"] == "ETHBeacon" {
 		// try to unmarshal JSON data into EthStakingExtra
@@ -80,6 +100,18 @@ func (dst *StakingsExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'CoreStakingExtra'
+	if jsonDict["pool_type"] == "CoreStakingExtra" {
+		// try to unmarshal JSON data into CoreStakingExtra
+		err = json.Unmarshal(data, &dst.CoreStakingExtra)
+		if err == nil {
+			return nil // data stored in dst.CoreStakingExtra, return on the first match
+		} else {
+			dst.CoreStakingExtra = nil
+			return fmt.Errorf("failed to unmarshal StakingsExtra as CoreStakingExtra: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'EthStakingExtra'
 	if jsonDict["pool_type"] == "EthStakingExtra" {
 		// try to unmarshal JSON data into EthStakingExtra
@@ -101,6 +133,10 @@ func (src StakingsExtra) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.BabylonStakingExtra)
 	}
 
+	if src.CoreStakingExtra != nil {
+		return json.Marshal(&src.CoreStakingExtra)
+	}
+
 	if src.EthStakingExtra != nil {
 		return json.Marshal(&src.EthStakingExtra)
 	}
@@ -115,6 +151,10 @@ func (obj *StakingsExtra) GetActualInstance() (interface{}) {
 	}
 	if obj.BabylonStakingExtra != nil {
 		return obj.BabylonStakingExtra
+	}
+
+	if obj.CoreStakingExtra != nil {
+		return obj.CoreStakingExtra
 	}
 
 	if obj.EthStakingExtra != nil {

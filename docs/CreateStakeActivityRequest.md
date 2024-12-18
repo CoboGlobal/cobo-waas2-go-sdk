@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **Source** | Pointer to [**StakingSource**](StakingSource.md) |  | [optional] 
-**PoolId** | **string** | The ID of the staking pool. | 
+**PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **Amount** | **string** | The amount to stake. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
 **Extra** | [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewCreateStakeActivityRequest
 
-`func NewCreateStakeActivityRequest(poolId string, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra, ) *CreateStakeActivityRequest`
+`func NewCreateStakeActivityRequest(poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra, ) *CreateStakeActivityRequest`
 
 NewCreateStakeActivityRequest instantiates a new CreateStakeActivityRequest object
 This constructor will assign default values to properties that have it defined,
@@ -83,20 +83,20 @@ HasSource returns a boolean if a field has been set.
 
 ### GetPoolId
 
-`func (o *CreateStakeActivityRequest) GetPoolId() string`
+`func (o *CreateStakeActivityRequest) GetPoolId() StakingPoolId`
 
 GetPoolId returns the PoolId field if non-nil, zero value otherwise.
 
 ### GetPoolIdOk
 
-`func (o *CreateStakeActivityRequest) GetPoolIdOk() (*string, bool)`
+`func (o *CreateStakeActivityRequest) GetPoolIdOk() (*StakingPoolId, bool)`
 
 GetPoolIdOk returns a tuple with the PoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPoolId
 
-`func (o *CreateStakeActivityRequest) SetPoolId(v string)`
+`func (o *CreateStakeActivityRequest) SetPoolId(v StakingPoolId)`
 
 SetPoolId sets PoolId field to given value.
 

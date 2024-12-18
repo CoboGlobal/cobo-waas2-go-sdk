@@ -21,7 +21,7 @@ var _ MappedNullable = &EstimatedUtxoFeeSlow{}
 type EstimatedUtxoFeeSlow struct {
 	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
-	// The fee that you need to pay for the transaction.
+	// The transaction fee that you need to pay for the transaction.
 	FeeAmount string `json:"fee_amount"`
 }
 

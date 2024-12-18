@@ -21,6 +21,151 @@ import (
 // StakingsAPIService StakingsAPI service
 type StakingsAPIService service
 
+type ApiCreateClaimActivityRequest struct {
+	ctx context.Context
+	ApiService *StakingsAPIService
+	createClaimActivityRequest *CreateClaimActivityRequest
+}
+
+// The request body to create a staking request.
+func (r ApiCreateClaimActivityRequest) CreateClaimActivityRequest(createClaimActivityRequest CreateClaimActivityRequest) ApiCreateClaimActivityRequest {
+	r.createClaimActivityRequest = &createClaimActivityRequest
+	return r
+}
+
+func (r ApiCreateClaimActivityRequest) Execute() (*CreateStakeActivity201Response, *http.Response, error) {
+	return r.ApiService.CreateClaimActivityExecute(r)
+}
+
+/*
+CreateClaimActivity Create claim activity
+
+This operation creates a claim request.
+
+<Note>Currently, only the Ethereum Beacon protocol supports this operation.</Note>
+
+For some protocols, you can use the `fee` property in the request body to specify the maximum fee you are willing to pay. The transaction will fail if the actual fee exceeds the specified maximum fee. 
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateClaimActivityRequest
+*/
+func (a *StakingsAPIService) CreateClaimActivity(ctx context.Context) ApiCreateClaimActivityRequest {
+	return ApiCreateClaimActivityRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CreateStakeActivity201Response
+func (a *StakingsAPIService) CreateClaimActivityExecute(r ApiCreateClaimActivityRequest) (*CreateStakeActivity201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateStakeActivity201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StakingsAPIService.CreateClaimActivity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/stakings/activities/claim"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createClaimActivityRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateStakeActivityRequest struct {
 	ctx context.Context
 	ApiService *StakingsAPIService
@@ -620,7 +765,7 @@ This operation retrieves the detailed information about a specified staking posi
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param stakingId The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](/v2/api-references/stakings/list-all-stakings).
+ @param stakingId The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](/v2/api-references/stakings/list-staking-positions).
  @return ApiGetStakingByIdRequest
 */
 func (a *StakingsAPIService) GetStakingById(ctx context.Context, stakingId string) ApiGetStakingByIdRequest {
@@ -769,6 +914,7 @@ func (r ApiGetStakingEstimationFeeRequest) Execute() (*GetStakingEstimationFee20
 /*
 GetStakingEstimationFee Estimate staking fees
 
+<Note>This operation is deprecated. Please use the [updated version](/v2/api-references/stakings/estimate-staking-fees-1) instead.</Note> 
 This operation calculates the fee required for a staking activity based on factors such as network congestion and transaction complexity.
 
 For some protocols, you can use the `fee.fee_rate` property in the request body to specify the fee rate you are willing to pay.
@@ -804,6 +950,127 @@ func (a *StakingsAPIService) GetStakingEstimationFeeExecute(r ApiGetStakingEstim
 	}
 
 	localVarPath := localBasePath + "/stakings/estimate_fee"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.getStakingEstimationFeeRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetStakingEstimationFeeV2Request struct {
+	ctx context.Context
+	ApiService *StakingsAPIService
+	getStakingEstimationFeeRequest *GetStakingEstimationFeeRequest
+}
+
+// The request body to get the estimated fee of a staking activity.
+func (r ApiGetStakingEstimationFeeV2Request) GetStakingEstimationFeeRequest(getStakingEstimationFeeRequest GetStakingEstimationFeeRequest) ApiGetStakingEstimationFeeV2Request {
+	r.getStakingEstimationFeeRequest = &getStakingEstimationFeeRequest
+	return r
+}
+
+func (r ApiGetStakingEstimationFeeV2Request) Execute() (*EthStakeEstimatedFee, *http.Response, error) {
+	return r.ApiService.GetStakingEstimationFeeV2Execute(r)
+}
+
+/*
+GetStakingEstimationFeeV2 Estimate staking fees
+
+This operation calculates the fee required for a staking activity based on factors such as network congestion and transaction complexity.
+
+<Note>For the Babylon protocol, you can only select UTXO as the fee model.</Note>
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetStakingEstimationFeeV2Request
+*/
+func (a *StakingsAPIService) GetStakingEstimationFeeV2(ctx context.Context) ApiGetStakingEstimationFeeV2Request {
+	return ApiGetStakingEstimationFeeV2Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return EthStakeEstimatedFee
+func (a *StakingsAPIService) GetStakingEstimationFeeV2Execute(r ApiGetStakingEstimationFeeV2Request) (*EthStakeEstimatedFee, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *EthStakeEstimatedFee
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "StakingsAPIService.GetStakingEstimationFeeV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/stakings/estimate_fee_v2"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

@@ -23,8 +23,7 @@ type EstimateStakeFee struct {
 	// The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization.
 	RequestId *string `json:"request_id,omitempty"`
 	Source *StakingSource `json:"source,omitempty"`
-	// The ID of the staking pool.
-	PoolId string `json:"pool_id"`
+	PoolId StakingPoolId `json:"pool_id"`
 	// The amount to stake.
 	Amount string `json:"amount"`
 	Fee TransactionRequestFee `json:"fee"`
@@ -37,7 +36,7 @@ type _EstimateStakeFee EstimateStakeFee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEstimateStakeFee(activityType ActivityType, poolId string, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra) *EstimateStakeFee {
+func NewEstimateStakeFee(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra) *EstimateStakeFee {
 	this := EstimateStakeFee{}
 	this.ActivityType = activityType
 	this.PoolId = poolId
@@ -144,9 +143,9 @@ func (o *EstimateStakeFee) SetSource(v StakingSource) {
 }
 
 // GetPoolId returns the PoolId field value
-func (o *EstimateStakeFee) GetPoolId() string {
+func (o *EstimateStakeFee) GetPoolId() StakingPoolId {
 	if o == nil {
-		var ret string
+		var ret StakingPoolId
 		return ret
 	}
 
@@ -155,7 +154,7 @@ func (o *EstimateStakeFee) GetPoolId() string {
 
 // GetPoolIdOk returns a tuple with the PoolId field value
 // and a boolean to check if the value has been set.
-func (o *EstimateStakeFee) GetPoolIdOk() (*string, bool) {
+func (o *EstimateStakeFee) GetPoolIdOk() (*StakingPoolId, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -163,7 +162,7 @@ func (o *EstimateStakeFee) GetPoolIdOk() (*string, bool) {
 }
 
 // SetPoolId sets field value
-func (o *EstimateStakeFee) SetPoolId(v string) {
+func (o *EstimateStakeFee) SetPoolId(v StakingPoolId) {
 	o.PoolId = v
 }
 

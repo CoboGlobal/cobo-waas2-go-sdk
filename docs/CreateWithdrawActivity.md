@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **StakingId** | **string** | The ID of the corresponding staking position. | 
 **Amount** | Pointer to **string** | The amount to withdraw. | [optional] 
-**Address** | Pointer to **string** | The withdrawal address. | [optional] 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
 
 ## Methods
@@ -98,31 +97,6 @@ SetAmount sets Amount field to given value.
 `func (o *CreateWithdrawActivity) HasAmount() bool`
 
 HasAmount returns a boolean if a field has been set.
-
-### GetAddress
-
-`func (o *CreateWithdrawActivity) GetAddress() string`
-
-GetAddress returns the Address field if non-nil, zero value otherwise.
-
-### GetAddressOk
-
-`func (o *CreateWithdrawActivity) GetAddressOk() (*string, bool)`
-
-GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAddress
-
-`func (o *CreateWithdrawActivity) SetAddress(v string)`
-
-SetAddress sets Address field to given value.
-
-### HasAddress
-
-`func (o *CreateWithdrawActivity) HasAddress() bool`
-
-HasAddress returns a boolean if a field has been set.
 
 ### GetFee
 

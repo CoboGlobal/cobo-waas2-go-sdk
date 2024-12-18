@@ -27,8 +27,7 @@ type Stakings struct {
 	Address string `json:"address"`
 	// The details about the staking amount.
 	Amounts []AmountDetailsInner `json:"amounts"`
-	// The ID of the staking pool.
-	PoolId string `json:"pool_id"`
+	PoolId StakingPoolId `json:"pool_id"`
 	// The token ID.
 	TokenId string `json:"token_id"`
 	// The information about the staking rewards.
@@ -37,7 +36,7 @@ type Stakings struct {
 	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The time when the staking position was last updated.
 	UpdatedTimestamp int64 `json:"updated_timestamp"`
-	ValidatorInfo StakingsValidatorInfo `json:"validator_info"`
+	ValidatorInfo BabylonValidator `json:"validator_info"`
 	Extra *StakingsExtra `json:"extra,omitempty"`
 }
 
@@ -47,7 +46,7 @@ type _Stakings Stakings
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId string, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo StakingsValidatorInfo) *Stakings {
+func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId StakingPoolId, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo BabylonValidator) *Stakings {
 	this := Stakings{}
 	this.Id = id
 	this.WalletId = walletId
@@ -166,9 +165,9 @@ func (o *Stakings) SetAmounts(v []AmountDetailsInner) {
 }
 
 // GetPoolId returns the PoolId field value
-func (o *Stakings) GetPoolId() string {
+func (o *Stakings) GetPoolId() StakingPoolId {
 	if o == nil {
-		var ret string
+		var ret StakingPoolId
 		return ret
 	}
 
@@ -177,7 +176,7 @@ func (o *Stakings) GetPoolId() string {
 
 // GetPoolIdOk returns a tuple with the PoolId field value
 // and a boolean to check if the value has been set.
-func (o *Stakings) GetPoolIdOk() (*string, bool) {
+func (o *Stakings) GetPoolIdOk() (*StakingPoolId, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -185,7 +184,7 @@ func (o *Stakings) GetPoolIdOk() (*string, bool) {
 }
 
 // SetPoolId sets field value
-func (o *Stakings) SetPoolId(v string) {
+func (o *Stakings) SetPoolId(v StakingPoolId) {
 	o.PoolId = v
 }
 
@@ -294,9 +293,9 @@ func (o *Stakings) SetUpdatedTimestamp(v int64) {
 }
 
 // GetValidatorInfo returns the ValidatorInfo field value
-func (o *Stakings) GetValidatorInfo() StakingsValidatorInfo {
+func (o *Stakings) GetValidatorInfo() BabylonValidator {
 	if o == nil {
-		var ret StakingsValidatorInfo
+		var ret BabylonValidator
 		return ret
 	}
 
@@ -305,7 +304,7 @@ func (o *Stakings) GetValidatorInfo() StakingsValidatorInfo {
 
 // GetValidatorInfoOk returns a tuple with the ValidatorInfo field value
 // and a boolean to check if the value has been set.
-func (o *Stakings) GetValidatorInfoOk() (*StakingsValidatorInfo, bool) {
+func (o *Stakings) GetValidatorInfoOk() (*BabylonValidator, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -313,7 +312,7 @@ func (o *Stakings) GetValidatorInfoOk() (*StakingsValidatorInfo, bool) {
 }
 
 // SetValidatorInfo sets field value
-func (o *Stakings) SetValidatorInfo(v StakingsValidatorInfo) {
+func (o *Stakings) SetValidatorInfo(v BabylonValidator) {
 	o.ValidatorInfo = v
 }
 

@@ -19,7 +19,7 @@ var _ MappedNullable = &FixedFeeRate{}
 
 // FixedFeeRate The transaction fee that you need to pay based on the fixed fee model for some blockchains. The fee can vary between different chains.
 type FixedFeeRate struct {
-	// The fee that you need to pay for the transaction.
+	// The transaction fee that you need to pay for the transaction.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 	FeeType FeeType `json:"fee_type"`
 	// The token ID of the transaction fee.

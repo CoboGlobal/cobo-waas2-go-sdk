@@ -28,6 +28,18 @@ func Test_cobo_waas2_StakingsAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test StakingsAPIService CreateClaimActivity", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.CreateClaimActivity(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test StakingsAPIService CreateStakeActivity", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -97,6 +109,18 @@ func Test_cobo_waas2_StakingsAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.StakingsAPI.GetStakingEstimationFee(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService GetStakingEstimationFeeV2", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.GetStakingEstimationFeeV2(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

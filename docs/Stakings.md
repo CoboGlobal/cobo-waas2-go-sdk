@@ -8,19 +8,19 @@ Name | Type | Description | Notes
 **WalletId** | **string** | The staker&#39;s wallet ID. | 
 **Address** | **string** | The staker&#39;s wallet address. | 
 **Amounts** | [**[]AmountDetailsInner**](AmountDetailsInner.md) | The details about the staking amount. | 
-**PoolId** | **string** | The ID of the staking pool. | 
+**PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **TokenId** | **string** | The token ID. | 
 **RewardsInfo** | Pointer to **map[string]interface{}** | The information about the staking rewards. | [optional] 
 **CreatedTimestamp** | **int64** | The time when the staking position was created. | 
 **UpdatedTimestamp** | **int64** | The time when the staking position was last updated. | 
-**ValidatorInfo** | [**StakingsValidatorInfo**](StakingsValidatorInfo.md) |  | 
+**ValidatorInfo** | [**BabylonValidator**](BabylonValidator.md) |  | 
 **Extra** | Pointer to [**StakingsExtra**](StakingsExtra.md) |  | [optional] 
 
 ## Methods
 
 ### NewStakings
 
-`func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId string, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo StakingsValidatorInfo, ) *Stakings`
+`func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId StakingPoolId, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo BabylonValidator, ) *Stakings`
 
 NewStakings instantiates a new Stakings object
 This constructor will assign default values to properties that have it defined,
@@ -117,20 +117,20 @@ SetAmounts sets Amounts field to given value.
 
 ### GetPoolId
 
-`func (o *Stakings) GetPoolId() string`
+`func (o *Stakings) GetPoolId() StakingPoolId`
 
 GetPoolId returns the PoolId field if non-nil, zero value otherwise.
 
 ### GetPoolIdOk
 
-`func (o *Stakings) GetPoolIdOk() (*string, bool)`
+`func (o *Stakings) GetPoolIdOk() (*StakingPoolId, bool)`
 
 GetPoolIdOk returns a tuple with the PoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPoolId
 
-`func (o *Stakings) SetPoolId(v string)`
+`func (o *Stakings) SetPoolId(v StakingPoolId)`
 
 SetPoolId sets PoolId field to given value.
 
@@ -222,20 +222,20 @@ SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
 ### GetValidatorInfo
 
-`func (o *Stakings) GetValidatorInfo() StakingsValidatorInfo`
+`func (o *Stakings) GetValidatorInfo() BabylonValidator`
 
 GetValidatorInfo returns the ValidatorInfo field if non-nil, zero value otherwise.
 
 ### GetValidatorInfoOk
 
-`func (o *Stakings) GetValidatorInfoOk() (*StakingsValidatorInfo, bool)`
+`func (o *Stakings) GetValidatorInfoOk() (*BabylonValidator, bool)`
 
 GetValidatorInfoOk returns a tuple with the ValidatorInfo field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValidatorInfo
 
-`func (o *Stakings) SetValidatorInfo(v StakingsValidatorInfo)`
+`func (o *Stakings) SetValidatorInfo(v BabylonValidator)`
 
 SetValidatorInfo sets ValidatorInfo field to given value.
 

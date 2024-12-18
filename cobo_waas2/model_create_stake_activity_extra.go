@@ -16,6 +16,7 @@ import (
 // CreateStakeActivityExtra - struct for CreateStakeActivityExtra
 type CreateStakeActivityExtra struct {
 	BabylonStakeExtra *BabylonStakeExtra
+	CoreStakeExtra *CoreStakeExtra
 	EthStakeExtra *EthStakeExtra
 }
 
@@ -23,6 +24,13 @@ type CreateStakeActivityExtra struct {
 func BabylonStakeExtraAsCreateStakeActivityExtra(v *BabylonStakeExtra) CreateStakeActivityExtra {
 	return CreateStakeActivityExtra{
 		BabylonStakeExtra: v,
+	}
+}
+
+// CoreStakeExtraAsCreateStakeActivityExtra is a convenience function that returns CoreStakeExtra wrapped in CreateStakeActivityExtra
+func CoreStakeExtraAsCreateStakeActivityExtra(v *CoreStakeExtra) CreateStakeActivityExtra {
+	return CreateStakeActivityExtra{
+		CoreStakeExtra: v,
 	}
 }
 
@@ -56,6 +64,18 @@ func (dst *CreateStakeActivityExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'CoreBTC'
+	if jsonDict["pool_type"] == "CoreBTC" {
+		// try to unmarshal JSON data into CoreStakeExtra
+		err = json.Unmarshal(data, &dst.CoreStakeExtra)
+		if err == nil {
+			return nil // data stored in dst.CoreStakeExtra, return on the first match
+		} else {
+			dst.CoreStakeExtra = nil
+			return fmt.Errorf("failed to unmarshal CreateStakeActivityExtra as CoreStakeExtra: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ETHBeacon'
 	if jsonDict["pool_type"] == "ETHBeacon" {
 		// try to unmarshal JSON data into EthStakeExtra
@@ -80,6 +100,18 @@ func (dst *CreateStakeActivityExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'CoreStakeExtra'
+	if jsonDict["pool_type"] == "CoreStakeExtra" {
+		// try to unmarshal JSON data into CoreStakeExtra
+		err = json.Unmarshal(data, &dst.CoreStakeExtra)
+		if err == nil {
+			return nil // data stored in dst.CoreStakeExtra, return on the first match
+		} else {
+			dst.CoreStakeExtra = nil
+			return fmt.Errorf("failed to unmarshal CreateStakeActivityExtra as CoreStakeExtra: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'EthStakeExtra'
 	if jsonDict["pool_type"] == "EthStakeExtra" {
 		// try to unmarshal JSON data into EthStakeExtra
@@ -101,6 +133,10 @@ func (src CreateStakeActivityExtra) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.BabylonStakeExtra)
 	}
 
+	if src.CoreStakeExtra != nil {
+		return json.Marshal(&src.CoreStakeExtra)
+	}
+
 	if src.EthStakeExtra != nil {
 		return json.Marshal(&src.EthStakeExtra)
 	}
@@ -115,6 +151,10 @@ func (obj *CreateStakeActivityExtra) GetActualInstance() (interface{}) {
 	}
 	if obj.BabylonStakeExtra != nil {
 		return obj.BabylonStakeExtra
+	}
+
+	if obj.CoreStakeExtra != nil {
+		return obj.CoreStakeExtra
 	}
 
 	if obj.EthStakeExtra != nil {

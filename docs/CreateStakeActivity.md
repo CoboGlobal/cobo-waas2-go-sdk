@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **Source** | Pointer to [**StakingSource**](StakingSource.md) |  | [optional] 
-**PoolId** | **string** | The ID of the staking pool. | 
+**PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **Amount** | **string** | The amount to stake. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
 **Extra** | [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewCreateStakeActivity
 
-`func NewCreateStakeActivity(poolId string, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra, ) *CreateStakeActivity`
+`func NewCreateStakeActivity(poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra, ) *CreateStakeActivity`
 
 NewCreateStakeActivity instantiates a new CreateStakeActivity object
 This constructor will assign default values to properties that have it defined,
@@ -82,20 +82,20 @@ HasSource returns a boolean if a field has been set.
 
 ### GetPoolId
 
-`func (o *CreateStakeActivity) GetPoolId() string`
+`func (o *CreateStakeActivity) GetPoolId() StakingPoolId`
 
 GetPoolId returns the PoolId field if non-nil, zero value otherwise.
 
 ### GetPoolIdOk
 
-`func (o *CreateStakeActivity) GetPoolIdOk() (*string, bool)`
+`func (o *CreateStakeActivity) GetPoolIdOk() (*StakingPoolId, bool)`
 
 GetPoolIdOk returns a tuple with the PoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPoolId
 
-`func (o *CreateStakeActivity) SetPoolId(v string)`
+`func (o *CreateStakeActivity) SetPoolId(v StakingPoolId)`
 
 SetPoolId sets PoolId field to given value.
 

@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ActivityType The type of the staking activity. Possible values include: - `Stake`: Stake tokens. - `Unstake`: Unstake tokens. Unstaked tokens are still in the staking protocol. - `Withdraw`: Withdraw tokens from the staking protocol to your wallet. 
+// ActivityType The type of the staking activity. Possible values include: - `Stake`: Stake tokens. - `Unstake`: Unstake tokens. Unstaked tokens are still in the staking protocol. - `Withdraw`: Withdraw tokens from the staking protocol to your wallet. - `Claim`: Claim rewards from the staking protocol. 
 type ActivityType string
 
 // List of ActivityType
@@ -21,6 +21,7 @@ const (
 	ACTIVITYTYPE_STAKE ActivityType = "Stake"
 	ACTIVITYTYPE_UNSTAKE ActivityType = "Unstake"
 	ACTIVITYTYPE_WITHDRAW ActivityType = "Withdraw"
+	ACTIVITYTYPE_CLAIM ActivityType = "Claim"
 )
 
 // All allowed values of ActivityType enum
@@ -28,6 +29,7 @@ var AllowedActivityTypeEnumValues = []ActivityType{
 	"Stake",
 	"Unstake",
 	"Withdraw",
+	"Claim",
 }
 
 func (v *ActivityType) UnmarshalJSON(src []byte) error {
