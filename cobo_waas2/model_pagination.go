@@ -23,7 +23,7 @@ type Pagination struct {
 	Before string `json:"before"`
 	// An object ID that acts as a starting point for retrieving data in chronological order for the next request.  If this property is empty, it means that you have reached the end of the data records. 
 	After string `json:"after"`
-	// The total number of records that match the query, across all pages.
+	// The total number of records that match the query criteria, unaffected by the pagination parameters (`before` , `after`, and `limit`).
 	TotalCount int32 `json:"total_count"`
 }
 

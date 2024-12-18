@@ -22,8 +22,7 @@ type CreateStakeActivityRequest struct {
 	// The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization.
 	RequestId *string `json:"request_id,omitempty"`
 	Source *StakingSource `json:"source,omitempty"`
-	// The ID of the staking pool.
-	PoolId string `json:"pool_id"`
+	PoolId StakingPoolId `json:"pool_id"`
 	// The amount to stake.
 	Amount string `json:"amount"`
 	Fee TransactionRequestFee `json:"fee"`
@@ -38,7 +37,7 @@ type _CreateStakeActivityRequest CreateStakeActivityRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateStakeActivityRequest(poolId string, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra) *CreateStakeActivityRequest {
+func NewCreateStakeActivityRequest(poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra) *CreateStakeActivityRequest {
 	this := CreateStakeActivityRequest{}
 	this.PoolId = poolId
 	this.Amount = amount
@@ -120,9 +119,9 @@ func (o *CreateStakeActivityRequest) SetSource(v StakingSource) {
 }
 
 // GetPoolId returns the PoolId field value
-func (o *CreateStakeActivityRequest) GetPoolId() string {
+func (o *CreateStakeActivityRequest) GetPoolId() StakingPoolId {
 	if o == nil {
-		var ret string
+		var ret StakingPoolId
 		return ret
 	}
 
@@ -131,7 +130,7 @@ func (o *CreateStakeActivityRequest) GetPoolId() string {
 
 // GetPoolIdOk returns a tuple with the PoolId field value
 // and a boolean to check if the value has been set.
-func (o *CreateStakeActivityRequest) GetPoolIdOk() (*string, bool) {
+func (o *CreateStakeActivityRequest) GetPoolIdOk() (*StakingPoolId, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -139,7 +138,7 @@ func (o *CreateStakeActivityRequest) GetPoolIdOk() (*string, bool) {
 }
 
 // SetPoolId sets field value
-func (o *CreateStakeActivityRequest) SetPoolId(v string) {
+func (o *CreateStakeActivityRequest) SetPoolId(v StakingPoolId) {
 	o.PoolId = v
 }
 

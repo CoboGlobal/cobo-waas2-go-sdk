@@ -17,7 +17,7 @@ var _ MappedNullable = &FeeAmount{}
 
 // FeeAmount The transaction fee.
 type FeeAmount struct {
-	// The fee that you need to pay for the transaction.
+	// The transaction fee that you need to pay for the transaction.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 }
 

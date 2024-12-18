@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **Type** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
 **WalletId** | Pointer to **string** | The staker&#39;s wallet ID. | [optional] 
 **Address** | Pointer to **string** | The staker&#39;s wallet address. | [optional] 
-**PoolId** | **string** | The ID of the staking pool. | 
+**PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **TokenId** | **string** | The token ID. | 
 **StakingId** | Pointer to **string** | The ID of the corresponding staking position. | [optional] 
 **Amount** | **string** | The staking amount. | 
@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 
 ### NewActivity
 
-`func NewActivity(poolId string, tokenId string, amount string, status ActivityStatus, ) *Activity`
+`func NewActivity(poolId StakingPoolId, tokenId string, amount string, status ActivityStatus, ) *Activity`
 
 NewActivity instantiates a new Activity object
 This constructor will assign default values to properties that have it defined,
@@ -192,20 +192,20 @@ HasAddress returns a boolean if a field has been set.
 
 ### GetPoolId
 
-`func (o *Activity) GetPoolId() string`
+`func (o *Activity) GetPoolId() StakingPoolId`
 
 GetPoolId returns the PoolId field if non-nil, zero value otherwise.
 
 ### GetPoolIdOk
 
-`func (o *Activity) GetPoolIdOk() (*string, bool)`
+`func (o *Activity) GetPoolIdOk() (*StakingPoolId, bool)`
 
 GetPoolIdOk returns a tuple with the PoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPoolId
 
-`func (o *Activity) SetPoolId(v string)`
+`func (o *Activity) SetPoolId(v StakingPoolId)`
 
 SetPoolId sets PoolId field to given value.
 

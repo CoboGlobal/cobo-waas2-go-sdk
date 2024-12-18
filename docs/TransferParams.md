@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **CategoryNames** | Pointer to **[]string** | The custom category for you to identify your transactions. | [optional] 
 **Description** | Pointer to **string** | The description of the transfer. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+**AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 
 
 ## Methods
 
@@ -185,6 +186,31 @@ SetFee sets Fee field to given value.
 `func (o *TransferParams) HasFee() bool`
 
 HasFee returns a boolean if a field has been set.
+
+### GetAutoFuel
+
+`func (o *TransferParams) GetAutoFuel() AutoFuelType`
+
+GetAutoFuel returns the AutoFuel field if non-nil, zero value otherwise.
+
+### GetAutoFuelOk
+
+`func (o *TransferParams) GetAutoFuelOk() (*AutoFuelType, bool)`
+
+GetAutoFuelOk returns a tuple with the AutoFuel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoFuel
+
+`func (o *TransferParams) SetAutoFuel(v AutoFuelType)`
+
+SetAutoFuel sets AutoFuel field to given value.
+
+### HasAutoFuel
+
+`func (o *TransferParams) HasAutoFuel() bool`
+
+HasAutoFuel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -5,18 +5,18 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
-**IconUrl** | **string** | The URL of the validator&#39;s icon. | 
+**IconUrl** | Pointer to **string** | The URL of the validator&#39;s icon. | [optional] 
 **Name** | **string** | The validator&#39;s name. | 
 **Priority** | Pointer to **int32** | This property can be ignored. | [optional] 
-**PublicKey** | **string** | The public key of the validator. | 
-**CommissionRate** | **float32** | The commission rate of the validator. | 
-**SupportedPosChains** | **[]string** | A list of supported Proof-of-Stake (PoS) chains. | 
+**PublicKey** | Pointer to **string** | The public key of the validator. | [optional] 
+**CommissionRate** | Pointer to **float32** | The commission rate of the validator. | [optional] 
+**SupportedPosChains** | Pointer to **[]string** | A list of supported Proof-of-Stake (PoS) chains. | [optional] 
 
 ## Methods
 
 ### NewPoolDetailsAllOfValidatorsInfo
 
-`func NewPoolDetailsAllOfValidatorsInfo(poolType StakingPoolType, iconUrl string, name string, publicKey string, commissionRate float32, supportedPosChains []string, ) *PoolDetailsAllOfValidatorsInfo`
+`func NewPoolDetailsAllOfValidatorsInfo(poolType StakingPoolType, name string, ) *PoolDetailsAllOfValidatorsInfo`
 
 NewPoolDetailsAllOfValidatorsInfo instantiates a new PoolDetailsAllOfValidatorsInfo object
 This constructor will assign default values to properties that have it defined,
@@ -70,6 +70,11 @@ and a boolean to check if the value has been set.
 
 SetIconUrl sets IconUrl field to given value.
 
+### HasIconUrl
+
+`func (o *PoolDetailsAllOfValidatorsInfo) HasIconUrl() bool`
+
+HasIconUrl returns a boolean if a field has been set.
 
 ### GetName
 
@@ -135,6 +140,11 @@ and a boolean to check if the value has been set.
 
 SetPublicKey sets PublicKey field to given value.
 
+### HasPublicKey
+
+`func (o *PoolDetailsAllOfValidatorsInfo) HasPublicKey() bool`
+
+HasPublicKey returns a boolean if a field has been set.
 
 ### GetCommissionRate
 
@@ -155,6 +165,11 @@ and a boolean to check if the value has been set.
 
 SetCommissionRate sets CommissionRate field to given value.
 
+### HasCommissionRate
+
+`func (o *PoolDetailsAllOfValidatorsInfo) HasCommissionRate() bool`
+
+HasCommissionRate returns a boolean if a field has been set.
 
 ### GetSupportedPosChains
 
@@ -175,6 +190,11 @@ and a boolean to check if the value has been set.
 
 SetSupportedPosChains sets SupportedPosChains field to given value.
 
+### HasSupportedPosChains
+
+`func (o *PoolDetailsAllOfValidatorsInfo) HasSupportedPosChains() bool`
+
+HasSupportedPosChains returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -29,8 +29,7 @@ type Activity struct {
 	WalletId *string `json:"wallet_id,omitempty"`
 	// The staker's wallet address.
 	Address *string `json:"address,omitempty"`
-	// The ID of the staking pool.
-	PoolId string `json:"pool_id"`
+	PoolId StakingPoolId `json:"pool_id"`
 	// The token ID.
 	TokenId string `json:"token_id"`
 	// The ID of the corresponding staking position.
@@ -55,7 +54,7 @@ type _Activity Activity
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewActivity(poolId string, tokenId string, amount string, status ActivityStatus) *Activity {
+func NewActivity(poolId StakingPoolId, tokenId string, amount string, status ActivityStatus) *Activity {
 	this := Activity{}
 	this.PoolId = poolId
 	this.TokenId = tokenId
@@ -265,9 +264,9 @@ func (o *Activity) SetAddress(v string) {
 }
 
 // GetPoolId returns the PoolId field value
-func (o *Activity) GetPoolId() string {
+func (o *Activity) GetPoolId() StakingPoolId {
 	if o == nil {
-		var ret string
+		var ret StakingPoolId
 		return ret
 	}
 
@@ -276,7 +275,7 @@ func (o *Activity) GetPoolId() string {
 
 // GetPoolIdOk returns a tuple with the PoolId field value
 // and a boolean to check if the value has been set.
-func (o *Activity) GetPoolIdOk() (*string, bool) {
+func (o *Activity) GetPoolIdOk() (*StakingPoolId, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -284,7 +283,7 @@ func (o *Activity) GetPoolIdOk() (*string, bool) {
 }
 
 // SetPoolId sets field value
-func (o *Activity) SetPoolId(v string) {
+func (o *Activity) SetPoolId(v StakingPoolId) {
 	o.PoolId = v
 }
 

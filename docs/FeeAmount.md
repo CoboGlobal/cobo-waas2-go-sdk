@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeAmount** | Pointer to **string** | The fee that you need to pay for the transaction. | [optional] 
+**FeeAmount** | Pointer to **string** | The transaction fee that you need to pay for the transaction. | [optional] 
 
 ## Methods
 

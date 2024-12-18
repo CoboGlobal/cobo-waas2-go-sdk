@@ -30,6 +30,7 @@ type TransferParams struct {
 	// The description of the transfer.
 	Description *string `json:"description,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
+	AutoFuel *AutoFuelType `json:"auto_fuel,omitempty"`
 }
 
 type _TransferParams TransferParams
@@ -247,6 +248,38 @@ func (o *TransferParams) SetFee(v TransactionRequestFee) {
 	o.Fee = &v
 }
 
+// GetAutoFuel returns the AutoFuel field value if set, zero value otherwise.
+func (o *TransferParams) GetAutoFuel() AutoFuelType {
+	if o == nil || IsNil(o.AutoFuel) {
+		var ret AutoFuelType
+		return ret
+	}
+	return *o.AutoFuel
+}
+
+// GetAutoFuelOk returns a tuple with the AutoFuel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransferParams) GetAutoFuelOk() (*AutoFuelType, bool) {
+	if o == nil || IsNil(o.AutoFuel) {
+		return nil, false
+	}
+	return o.AutoFuel, true
+}
+
+// HasAutoFuel returns a boolean if a field has been set.
+func (o *TransferParams) HasAutoFuel() bool {
+	if o != nil && !IsNil(o.AutoFuel) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoFuel gets a reference to the given AutoFuelType and assigns it to the AutoFuel field.
+func (o *TransferParams) SetAutoFuel(v AutoFuelType) {
+	o.AutoFuel = &v
+}
+
 func (o TransferParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -269,6 +302,9 @@ func (o TransferParams) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee
+	}
+	if !IsNil(o.AutoFuel) {
+		toSerialize["auto_fuel"] = o.AutoFuel
 	}
 	return toSerialize, nil
 }

@@ -21,17 +21,17 @@ var _ MappedNullable = &BabylonValidator{}
 type BabylonValidator struct {
 	PoolType StakingPoolType `json:"pool_type"`
 	// The URL of the validator's icon.
-	IconUrl string `json:"icon_url"`
+	IconUrl *string `json:"icon_url,omitempty"`
 	// The validator's name.
 	Name string `json:"name"`
 	// This property can be ignored.
 	Priority *int32 `json:"priority,omitempty"`
 	// The public key of the validator.
-	PublicKey string `json:"public_key"`
+	PublicKey *string `json:"public_key,omitempty"`
 	// The commission rate of the validator.
-	CommissionRate float32 `json:"commission_rate"`
+	CommissionRate *float32 `json:"commission_rate,omitempty"`
 	// A list of supported Proof-of-Stake (PoS) chains.
-	SupportedPosChains []string `json:"supported_pos_chains"`
+	SupportedPosChains []string `json:"supported_pos_chains,omitempty"`
 }
 
 type _BabylonValidator BabylonValidator
@@ -40,14 +40,10 @@ type _BabylonValidator BabylonValidator
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBabylonValidator(poolType StakingPoolType, iconUrl string, name string, publicKey string, commissionRate float32, supportedPosChains []string) *BabylonValidator {
+func NewBabylonValidator(poolType StakingPoolType, name string) *BabylonValidator {
 	this := BabylonValidator{}
 	this.PoolType = poolType
-	this.IconUrl = iconUrl
 	this.Name = name
-	this.PublicKey = publicKey
-	this.CommissionRate = commissionRate
-	this.SupportedPosChains = supportedPosChains
 	return &this
 }
 
@@ -83,28 +79,36 @@ func (o *BabylonValidator) SetPoolType(v StakingPoolType) {
 	o.PoolType = v
 }
 
-// GetIconUrl returns the IconUrl field value
+// GetIconUrl returns the IconUrl field value if set, zero value otherwise.
 func (o *BabylonValidator) GetIconUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.IconUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.IconUrl
+	return *o.IconUrl
 }
 
-// GetIconUrlOk returns a tuple with the IconUrl field value
+// GetIconUrlOk returns a tuple with the IconUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BabylonValidator) GetIconUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IconUrl) {
 		return nil, false
 	}
-	return &o.IconUrl, true
+	return o.IconUrl, true
 }
 
-// SetIconUrl sets field value
+// HasIconUrl returns a boolean if a field has been set.
+func (o *BabylonValidator) HasIconUrl() bool {
+	if o != nil && !IsNil(o.IconUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetIconUrl gets a reference to the given string and assigns it to the IconUrl field.
 func (o *BabylonValidator) SetIconUrl(v string) {
-	o.IconUrl = v
+	o.IconUrl = &v
 }
 
 // GetName returns the Name field value
@@ -163,74 +167,98 @@ func (o *BabylonValidator) SetPriority(v int32) {
 	o.Priority = &v
 }
 
-// GetPublicKey returns the PublicKey field value
+// GetPublicKey returns the PublicKey field value if set, zero value otherwise.
 func (o *BabylonValidator) GetPublicKey() string {
-	if o == nil {
+	if o == nil || IsNil(o.PublicKey) {
 		var ret string
 		return ret
 	}
-
-	return o.PublicKey
+	return *o.PublicKey
 }
 
-// GetPublicKeyOk returns a tuple with the PublicKey field value
+// GetPublicKeyOk returns a tuple with the PublicKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BabylonValidator) GetPublicKeyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PublicKey) {
 		return nil, false
 	}
-	return &o.PublicKey, true
+	return o.PublicKey, true
 }
 
-// SetPublicKey sets field value
+// HasPublicKey returns a boolean if a field has been set.
+func (o *BabylonValidator) HasPublicKey() bool {
+	if o != nil && !IsNil(o.PublicKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetPublicKey gets a reference to the given string and assigns it to the PublicKey field.
 func (o *BabylonValidator) SetPublicKey(v string) {
-	o.PublicKey = v
+	o.PublicKey = &v
 }
 
-// GetCommissionRate returns the CommissionRate field value
+// GetCommissionRate returns the CommissionRate field value if set, zero value otherwise.
 func (o *BabylonValidator) GetCommissionRate() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.CommissionRate) {
 		var ret float32
 		return ret
 	}
-
-	return o.CommissionRate
+	return *o.CommissionRate
 }
 
-// GetCommissionRateOk returns a tuple with the CommissionRate field value
+// GetCommissionRateOk returns a tuple with the CommissionRate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BabylonValidator) GetCommissionRateOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CommissionRate) {
 		return nil, false
 	}
-	return &o.CommissionRate, true
+	return o.CommissionRate, true
 }
 
-// SetCommissionRate sets field value
+// HasCommissionRate returns a boolean if a field has been set.
+func (o *BabylonValidator) HasCommissionRate() bool {
+	if o != nil && !IsNil(o.CommissionRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommissionRate gets a reference to the given float32 and assigns it to the CommissionRate field.
 func (o *BabylonValidator) SetCommissionRate(v float32) {
-	o.CommissionRate = v
+	o.CommissionRate = &v
 }
 
-// GetSupportedPosChains returns the SupportedPosChains field value
+// GetSupportedPosChains returns the SupportedPosChains field value if set, zero value otherwise.
 func (o *BabylonValidator) GetSupportedPosChains() []string {
-	if o == nil {
+	if o == nil || IsNil(o.SupportedPosChains) {
 		var ret []string
 		return ret
 	}
-
 	return o.SupportedPosChains
 }
 
-// GetSupportedPosChainsOk returns a tuple with the SupportedPosChains field value
+// GetSupportedPosChainsOk returns a tuple with the SupportedPosChains field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BabylonValidator) GetSupportedPosChainsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SupportedPosChains) {
 		return nil, false
 	}
 	return o.SupportedPosChains, true
 }
 
-// SetSupportedPosChains sets field value
+// HasSupportedPosChains returns a boolean if a field has been set.
+func (o *BabylonValidator) HasSupportedPosChains() bool {
+	if o != nil && !IsNil(o.SupportedPosChains) {
+		return true
+	}
+
+	return false
+}
+
+// SetSupportedPosChains gets a reference to the given []string and assigns it to the SupportedPosChains field.
 func (o *BabylonValidator) SetSupportedPosChains(v []string) {
 	o.SupportedPosChains = v
 }
@@ -246,14 +274,22 @@ func (o BabylonValidator) MarshalJSON() ([]byte, error) {
 func (o BabylonValidator) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["pool_type"] = o.PoolType
-	toSerialize["icon_url"] = o.IconUrl
+	if !IsNil(o.IconUrl) {
+		toSerialize["icon_url"] = o.IconUrl
+	}
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Priority) {
 		toSerialize["priority"] = o.Priority
 	}
-	toSerialize["public_key"] = o.PublicKey
-	toSerialize["commission_rate"] = o.CommissionRate
-	toSerialize["supported_pos_chains"] = o.SupportedPosChains
+	if !IsNil(o.PublicKey) {
+		toSerialize["public_key"] = o.PublicKey
+	}
+	if !IsNil(o.CommissionRate) {
+		toSerialize["commission_rate"] = o.CommissionRate
+	}
+	if !IsNil(o.SupportedPosChains) {
+		toSerialize["supported_pos_chains"] = o.SupportedPosChains
+	}
 	return toSerialize, nil
 }
 
@@ -263,11 +299,7 @@ func (o *BabylonValidator) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"pool_type",
-		"icon_url",
 		"name",
-		"public_key",
-		"commission_rate",
-		"supported_pos_chains",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -27,6 +27,7 @@ type TransactionRbf struct {
 	CategoryNames []string `json:"category_names,omitempty"`
 	// The description of the RBF transaction.
 	Description *string `json:"description,omitempty"`
+	AutoFuel *AutoFuelType `json:"auto_fuel,omitempty"`
 }
 
 type _TransactionRbf TransactionRbf
@@ -194,6 +195,38 @@ func (o *TransactionRbf) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetAutoFuel returns the AutoFuel field value if set, zero value otherwise.
+func (o *TransactionRbf) GetAutoFuel() AutoFuelType {
+	if o == nil || IsNil(o.AutoFuel) {
+		var ret AutoFuelType
+		return ret
+	}
+	return *o.AutoFuel
+}
+
+// GetAutoFuelOk returns a tuple with the AutoFuel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionRbf) GetAutoFuelOk() (*AutoFuelType, bool) {
+	if o == nil || IsNil(o.AutoFuel) {
+		return nil, false
+	}
+	return o.AutoFuel, true
+}
+
+// HasAutoFuel returns a boolean if a field has been set.
+func (o *TransactionRbf) HasAutoFuel() bool {
+	if o != nil && !IsNil(o.AutoFuel) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoFuel gets a reference to the given AutoFuelType and assigns it to the AutoFuel field.
+func (o *TransactionRbf) SetAutoFuel(v AutoFuelType) {
+	o.AutoFuel = &v
+}
+
 func (o TransactionRbf) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -214,6 +247,9 @@ func (o TransactionRbf) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.AutoFuel) {
+		toSerialize["auto_fuel"] = o.AutoFuel
 	}
 	return toSerialize, nil
 }

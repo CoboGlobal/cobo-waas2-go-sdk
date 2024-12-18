@@ -22,6 +22,8 @@ type EthStakingExtra struct {
 	PoolType StakingPoolType `json:"pool_type"`
 	// The Proof-of-Stake (PoS) chain.
 	PosChain string `json:"pos_chain"`
+	// The list of validator information.
+	BeaconValidators []EthStakingExtraAllOfBeaconValidators `json:"beacon_validators,omitempty"`
 }
 
 type _EthStakingExtra EthStakingExtra
@@ -93,6 +95,38 @@ func (o *EthStakingExtra) SetPosChain(v string) {
 	o.PosChain = v
 }
 
+// GetBeaconValidators returns the BeaconValidators field value if set, zero value otherwise.
+func (o *EthStakingExtra) GetBeaconValidators() []EthStakingExtraAllOfBeaconValidators {
+	if o == nil || IsNil(o.BeaconValidators) {
+		var ret []EthStakingExtraAllOfBeaconValidators
+		return ret
+	}
+	return o.BeaconValidators
+}
+
+// GetBeaconValidatorsOk returns a tuple with the BeaconValidators field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EthStakingExtra) GetBeaconValidatorsOk() ([]EthStakingExtraAllOfBeaconValidators, bool) {
+	if o == nil || IsNil(o.BeaconValidators) {
+		return nil, false
+	}
+	return o.BeaconValidators, true
+}
+
+// HasBeaconValidators returns a boolean if a field has been set.
+func (o *EthStakingExtra) HasBeaconValidators() bool {
+	if o != nil && !IsNil(o.BeaconValidators) {
+		return true
+	}
+
+	return false
+}
+
+// SetBeaconValidators gets a reference to the given []EthStakingExtraAllOfBeaconValidators and assigns it to the BeaconValidators field.
+func (o *EthStakingExtra) SetBeaconValidators(v []EthStakingExtraAllOfBeaconValidators) {
+	o.BeaconValidators = v
+}
+
 func (o EthStakingExtra) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -105,6 +139,9 @@ func (o EthStakingExtra) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["pool_type"] = o.PoolType
 	toSerialize["pos_chain"] = o.PosChain
+	if !IsNil(o.BeaconValidators) {
+		toSerialize["beacon_validators"] = o.BeaconValidators
+	}
 	return toSerialize, nil
 }
 

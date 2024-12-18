@@ -15,9 +15,17 @@ import (
 
 // GetStakingEstimationFeeRequest - struct for GetStakingEstimationFeeRequest
 type GetStakingEstimationFeeRequest struct {
+	EstimateClaimFee *EstimateClaimFee
 	EstimateStakeFee *EstimateStakeFee
 	EstimateUnstakeFee *EstimateUnstakeFee
 	EstimateWithdrawFee *EstimateWithdrawFee
+}
+
+// EstimateClaimFeeAsGetStakingEstimationFeeRequest is a convenience function that returns EstimateClaimFee wrapped in GetStakingEstimationFeeRequest
+func EstimateClaimFeeAsGetStakingEstimationFeeRequest(v *EstimateClaimFee) GetStakingEstimationFeeRequest {
+	return GetStakingEstimationFeeRequest{
+		EstimateClaimFee: v,
+	}
 }
 
 // EstimateStakeFeeAsGetStakingEstimationFeeRequest is a convenience function that returns EstimateStakeFee wrapped in GetStakingEstimationFeeRequest
@@ -50,6 +58,18 @@ func (dst *GetStakingEstimationFeeRequest) UnmarshalJSON(data []byte) error {
 	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
+	}
+
+	// check if the discriminator value is 'Claim'
+	if jsonDict["activity_type"] == "Claim" {
+		// try to unmarshal JSON data into EstimateClaimFee
+		err = json.Unmarshal(data, &dst.EstimateClaimFee)
+		if err == nil {
+			return nil // data stored in dst.EstimateClaimFee, return on the first match
+		} else {
+			dst.EstimateClaimFee = nil
+			return fmt.Errorf("failed to unmarshal GetStakingEstimationFeeRequest as EstimateClaimFee: %s", err.Error())
+		}
 	}
 
 	// check if the discriminator value is 'Stake'
@@ -85,6 +105,18 @@ func (dst *GetStakingEstimationFeeRequest) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.EstimateWithdrawFee = nil
 			return fmt.Errorf("failed to unmarshal GetStakingEstimationFeeRequest as EstimateWithdrawFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'EstimateClaimFee'
+	if jsonDict["activity_type"] == "EstimateClaimFee" {
+		// try to unmarshal JSON data into EstimateClaimFee
+		err = json.Unmarshal(data, &dst.EstimateClaimFee)
+		if err == nil {
+			return nil // data stored in dst.EstimateClaimFee, return on the first match
+		} else {
+			dst.EstimateClaimFee = nil
+			return fmt.Errorf("failed to unmarshal GetStakingEstimationFeeRequest as EstimateClaimFee: %s", err.Error())
 		}
 	}
 
@@ -129,6 +161,10 @@ func (dst *GetStakingEstimationFeeRequest) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src GetStakingEstimationFeeRequest) MarshalJSON() ([]byte, error) {
+	if src.EstimateClaimFee != nil {
+		return json.Marshal(&src.EstimateClaimFee)
+	}
+
 	if src.EstimateStakeFee != nil {
 		return json.Marshal(&src.EstimateStakeFee)
 	}
@@ -149,6 +185,10 @@ func (obj *GetStakingEstimationFeeRequest) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.EstimateClaimFee != nil {
+		return obj.EstimateClaimFee
+	}
+
 	if obj.EstimateStakeFee != nil {
 		return obj.EstimateStakeFee
 	}

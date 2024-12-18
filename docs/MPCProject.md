@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** | The project name. | [optional] 
 **Participants** | Pointer to **int32** | The number of key share holders in the project. | [optional] 
 **Threshold** | Pointer to **int32** | The number of key share holders required to sign an operation in the project. | [optional] 
-**CreateTimestamp** | Pointer to **int64** | The project&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The project&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 
@@ -155,30 +155,30 @@ SetThreshold sets Threshold field to given value.
 
 HasThreshold returns a boolean if a field has been set.
 
-### GetCreateTimestamp
+### GetCreatedTimestamp
 
-`func (o *MPCProject) GetCreateTimestamp() int64`
+`func (o *MPCProject) GetCreatedTimestamp() int64`
 
-GetCreateTimestamp returns the CreateTimestamp field if non-nil, zero value otherwise.
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
-### GetCreateTimestampOk
+### GetCreatedTimestampOk
 
-`func (o *MPCProject) GetCreateTimestampOk() (*int64, bool)`
+`func (o *MPCProject) GetCreatedTimestampOk() (*int64, bool)`
 
-GetCreateTimestampOk returns a tuple with the CreateTimestamp field if it's non-nil, zero value otherwise
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreateTimestamp
+### SetCreatedTimestamp
 
-`func (o *MPCProject) SetCreateTimestamp(v int64)`
+`func (o *MPCProject) SetCreatedTimestamp(v int64)`
 
-SetCreateTimestamp sets CreateTimestamp field to given value.
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
-### HasCreateTimestamp
+### HasCreatedTimestamp
 
-`func (o *MPCProject) HasCreateTimestamp() bool`
+`func (o *MPCProject) HasCreatedTimestamp() bool`
 
-HasCreateTimestamp returns a boolean if a field has been set.
+HasCreatedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

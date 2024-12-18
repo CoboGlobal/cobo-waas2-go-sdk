@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ActivityAction The specific action taken within an activity. Possible values include: - `Submitted`: Submit the staking, unstaking, or withdrawal request. - `BTCConfirmation`: The Bitcoin chain confirms the request. - `BabylonConfirmation`: The Babylon protocol confirms the request. 
+// ActivityAction The specific action taken within an activity. Possible values include: - `Submitted`: Submit the staking, unstaking, or withdrawal request. - `BTCConfirmation`: The Bitcoin chain confirms the request. - `BabylonConfirmation`: The Babylon protocol confirms the request. - `DepositETH`: Deposit ETH to the validator to start staking. - `ClaimRewards`: Claim the rewards from the validator. - `ActivateValidator`: Activate the validator to start staking. - `UnstakeETH`: Unstake ETH from the validator. 
 type ActivityAction string
 
 // List of ActivityAction
@@ -21,6 +21,10 @@ const (
 	ACTIVITYACTION_SUBMITTED ActivityAction = "Submitted"
 	ACTIVITYACTION_BTC_CONFIRMATION ActivityAction = "BTCConfirmation"
 	ACTIVITYACTION_BABYLON_CONFIRMATION ActivityAction = "BabylonConfirmation"
+	ACTIVITYACTION_DEPOSIT_ETH ActivityAction = "DepositETH"
+	ACTIVITYACTION_CLAIM_REWARDS ActivityAction = "ClaimRewards"
+	ACTIVITYACTION_ACTIVATE_VALIDATOR ActivityAction = "ActivateValidator"
+	ACTIVITYACTION_UNSTAKE_ETH ActivityAction = "UnstakeETH"
 )
 
 // All allowed values of ActivityAction enum
@@ -28,6 +32,10 @@ var AllowedActivityActionEnumValues = []ActivityAction{
 	"Submitted",
 	"BTCConfirmation",
 	"BabylonConfirmation",
+	"DepositETH",
+	"ClaimRewards",
+	"ActivateValidator",
+	"UnstakeETH",
 }
 
 func (v *ActivityAction) UnmarshalJSON(src []byte) error {

@@ -40,6 +40,7 @@ docs/ApiLogDetails.md
 docs/ApiLogSummary.md
 docs/AssetBalance.md
 docs/AssetInfo.md
+docs/AutoFuelType.md
 docs/BabylonStakeEstimatedFee.md
 docs/BabylonStakeExtra.md
 docs/BabylonStakingExtra.md
@@ -62,7 +63,11 @@ docs/ContractCallDestinationType.md
 docs/ContractCallParams.md
 docs/ContractCallSource.md
 docs/ContractCallSourceType.md
+docs/CoreStakeExtra.md
+docs/CoreStakingExtra.md
 docs/CreateAddressRequest.md
+docs/CreateClaimActivity.md
+docs/CreateClaimActivityRequest.md
 docs/CreateCustodialWalletParams.md
 docs/CreateExchangeWalletParams.md
 docs/CreateKeyShareHolder.md
@@ -97,6 +102,7 @@ docs/EigenLayerLstStakeExtra.md
 docs/EigenLayerNativeStakeExtra.md
 docs/EigenlayerValidator.md
 docs/ErrorResponse.md
+docs/EstimateClaimFee.md
 docs/EstimateContractCallFeeParams.md
 docs/EstimateFeeParams.md
 docs/EstimateFeeRequestType.md
@@ -115,6 +121,7 @@ docs/EstimatedUtxoFeeSlow.md
 docs/EthStakeEstimatedFee.md
 docs/EthStakeExtra.md
 docs/EthStakingExtra.md
+docs/EthStakingExtraAllOfBeaconValidators.md
 docs/EthUnstakeExtra.md
 docs/EvmContractCallDestination.md
 docs/EvmEIP191MessageSignDestination.md
@@ -211,12 +218,12 @@ docs/SmartContractWalletOperationType.md
 docs/SmartContractWalletType.md
 docs/SourceGroup.md
 docs/StakeSourceType.md
+docs/StakingPoolId.md
 docs/StakingPoolType.md
 docs/StakingSource.md
 docs/Stakings.md
 docs/StakingsAPI.md
 docs/StakingsExtra.md
-docs/StakingsValidatorInfo.md
 docs/SubWalletAssetBalance.md
 docs/TSSGroups.md
 docs/TSSRequest.md
@@ -340,6 +347,7 @@ model_api_log_details.go
 model_api_log_summary.go
 model_asset_balance.go
 model_asset_info.go
+model_auto_fuel_type.go
 model_babylon_stake_estimated_fee.go
 model_babylon_stake_extra.go
 model_babylon_staking_extra.go
@@ -362,7 +370,11 @@ model_contract_call_destination_type.go
 model_contract_call_params.go
 model_contract_call_source.go
 model_contract_call_source_type.go
+model_core_stake_extra.go
+model_core_staking_extra.go
 model_create_address_request.go
+model_create_claim_activity.go
+model_create_claim_activity_request.go
 model_create_custodial_wallet_params.go
 model_create_exchange_wallet_params.go
 model_create_key_share_holder.go
@@ -395,6 +407,7 @@ model_eigen_layer_lst_stake_extra.go
 model_eigen_layer_native_stake_extra.go
 model_eigenlayer_validator.go
 model_error_response.go
+model_estimate_claim_fee.go
 model_estimate_contract_call_fee_params.go
 model_estimate_fee_params.go
 model_estimate_fee_request_type.go
@@ -413,6 +426,7 @@ model_estimated_utxo_fee_slow.go
 model_eth_stake_estimated_fee.go
 model_eth_stake_extra.go
 model_eth_staking_extra.go
+model_eth_staking_extra_all_of_beacon_validators.go
 model_eth_unstake_extra.go
 model_evm_contract_call_destination.go
 model_evm_eip1559_fee_base_price.go
@@ -508,11 +522,11 @@ model_smart_contract_wallet_operation_type.go
 model_smart_contract_wallet_type.go
 model_source_group.go
 model_stake_source_type.go
+model_staking_pool_id.go
 model_staking_pool_type.go
 model_staking_source.go
 model_stakings.go
 model_stakings_extra.go
-model_stakings_validator_info.go
 model_sub_wallet_asset_balance.go
 model_token_asset_model_type.go
 model_token_balance.go

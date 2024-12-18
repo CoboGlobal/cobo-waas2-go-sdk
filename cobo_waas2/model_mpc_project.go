@@ -28,7 +28,7 @@ type MPCProject struct {
 	// The number of key share holders required to sign an operation in the project.
 	Threshold *int32 `json:"threshold,omitempty"`
 	// The project's creation time in Unix timestamp format, measured in milliseconds.
-	CreateTimestamp *int64 `json:"create_timestamp,omitempty"`
+	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 }
 
 // NewMPCProject instantiates a new MPCProject object
@@ -208,36 +208,36 @@ func (o *MPCProject) SetThreshold(v int32) {
 	o.Threshold = &v
 }
 
-// GetCreateTimestamp returns the CreateTimestamp field value if set, zero value otherwise.
-func (o *MPCProject) GetCreateTimestamp() int64 {
-	if o == nil || IsNil(o.CreateTimestamp) {
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *MPCProject) GetCreatedTimestamp() int64 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		var ret int64
 		return ret
 	}
-	return *o.CreateTimestamp
+	return *o.CreatedTimestamp
 }
 
-// GetCreateTimestampOk returns a tuple with the CreateTimestamp field value if set, nil otherwise
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *MPCProject) GetCreateTimestampOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreateTimestamp) {
+func (o *MPCProject) GetCreatedTimestampOk() (*int64, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
 		return nil, false
 	}
-	return o.CreateTimestamp, true
+	return o.CreatedTimestamp, true
 }
 
-// HasCreateTimestamp returns a boolean if a field has been set.
-func (o *MPCProject) HasCreateTimestamp() bool {
-	if o != nil && !IsNil(o.CreateTimestamp) {
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *MPCProject) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreateTimestamp gets a reference to the given int64 and assigns it to the CreateTimestamp field.
-func (o *MPCProject) SetCreateTimestamp(v int64) {
-	o.CreateTimestamp = &v
+// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+func (o *MPCProject) SetCreatedTimestamp(v int64) {
+	o.CreatedTimestamp = &v
 }
 
 func (o MPCProject) MarshalJSON() ([]byte, error) {
@@ -265,8 +265,8 @@ func (o MPCProject) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Threshold) {
 		toSerialize["threshold"] = o.Threshold
 	}
-	if !IsNil(o.CreateTimestamp) {
-		toSerialize["create_timestamp"] = o.CreateTimestamp
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}
 	return toSerialize, nil
 }

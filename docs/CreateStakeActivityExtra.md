@@ -9,12 +9,16 @@ Name | Type | Description | Notes
 **StakeBlockTime** | **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | 
 **AutoBroadcast** | Pointer to **bool** | Whether to automatically broadcast the transaction. The default value is &#x60;true&#x60;.  - &#x60;true&#x60;: Automatically broadcast the transaction. - &#x60;false&#x60;: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data &#x60;raw_tx&#x60; by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.  | [optional] 
 **ProviderName** | **string** | The name of the provider. | 
+**Timelock** | **int32** | The Unix timestamp (in seconds) when the staking position will be unlocked and available for withdrawal. | 
+**ChangeAddress** | Pointer to **string** | The change address on the Bitcoin chain. If not provided, the source wallet&#39;s address will be used as the change address. | [optional] 
+**ValidatorAddress** | **string** | The validator&#39;s EVM address. | 
+**RewardAddress** | **string** | The EVM address to receive staking rewards. | 
 
 ## Methods
 
 ### NewCreateStakeActivityExtra
 
-`func NewCreateStakeActivityExtra(poolType StakingPoolType, finalityProviderPublicKey string, stakeBlockTime int64, providerName string, ) *CreateStakeActivityExtra`
+`func NewCreateStakeActivityExtra(poolType StakingPoolType, finalityProviderPublicKey string, stakeBlockTime int64, providerName string, timelock int32, validatorAddress string, rewardAddress string, ) *CreateStakeActivityExtra`
 
 NewCreateStakeActivityExtra instantiates a new CreateStakeActivityExtra object
 This constructor will assign default values to properties that have it defined,
@@ -132,6 +136,91 @@ and a boolean to check if the value has been set.
 `func (o *CreateStakeActivityExtra) SetProviderName(v string)`
 
 SetProviderName sets ProviderName field to given value.
+
+
+### GetTimelock
+
+`func (o *CreateStakeActivityExtra) GetTimelock() int32`
+
+GetTimelock returns the Timelock field if non-nil, zero value otherwise.
+
+### GetTimelockOk
+
+`func (o *CreateStakeActivityExtra) GetTimelockOk() (*int32, bool)`
+
+GetTimelockOk returns a tuple with the Timelock field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimelock
+
+`func (o *CreateStakeActivityExtra) SetTimelock(v int32)`
+
+SetTimelock sets Timelock field to given value.
+
+
+### GetChangeAddress
+
+`func (o *CreateStakeActivityExtra) GetChangeAddress() string`
+
+GetChangeAddress returns the ChangeAddress field if non-nil, zero value otherwise.
+
+### GetChangeAddressOk
+
+`func (o *CreateStakeActivityExtra) GetChangeAddressOk() (*string, bool)`
+
+GetChangeAddressOk returns a tuple with the ChangeAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChangeAddress
+
+`func (o *CreateStakeActivityExtra) SetChangeAddress(v string)`
+
+SetChangeAddress sets ChangeAddress field to given value.
+
+### HasChangeAddress
+
+`func (o *CreateStakeActivityExtra) HasChangeAddress() bool`
+
+HasChangeAddress returns a boolean if a field has been set.
+
+### GetValidatorAddress
+
+`func (o *CreateStakeActivityExtra) GetValidatorAddress() string`
+
+GetValidatorAddress returns the ValidatorAddress field if non-nil, zero value otherwise.
+
+### GetValidatorAddressOk
+
+`func (o *CreateStakeActivityExtra) GetValidatorAddressOk() (*string, bool)`
+
+GetValidatorAddressOk returns a tuple with the ValidatorAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetValidatorAddress
+
+`func (o *CreateStakeActivityExtra) SetValidatorAddress(v string)`
+
+SetValidatorAddress sets ValidatorAddress field to given value.
+
+
+### GetRewardAddress
+
+`func (o *CreateStakeActivityExtra) GetRewardAddress() string`
+
+GetRewardAddress returns the RewardAddress field if non-nil, zero value otherwise.
+
+### GetRewardAddressOk
+
+`func (o *CreateStakeActivityExtra) GetRewardAddressOk() (*string, bool)`
+
+GetRewardAddressOk returns a tuple with the RewardAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRewardAddress
+
+`func (o *CreateStakeActivityExtra) SetRewardAddress(v string)`
+
+SetRewardAddress sets RewardAddress field to given value.
 
 
 

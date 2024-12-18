@@ -25,8 +25,6 @@ type CreateWithdrawActivityRequest struct {
 	StakingId string `json:"staking_id"`
 	// The amount to withdraw.
 	Amount *string `json:"amount,omitempty"`
-	// The withdrawal address.
-	Address *string `json:"address,omitempty"`
 	Fee TransactionRequestFee `json:"fee"`
 	// The initiator of the staking activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator.
 	AppInitiator *string `json:"app_initiator,omitempty"`
@@ -141,38 +139,6 @@ func (o *CreateWithdrawActivityRequest) SetAmount(v string) {
 	o.Amount = &v
 }
 
-// GetAddress returns the Address field value if set, zero value otherwise.
-func (o *CreateWithdrawActivityRequest) GetAddress() string {
-	if o == nil || IsNil(o.Address) {
-		var ret string
-		return ret
-	}
-	return *o.Address
-}
-
-// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateWithdrawActivityRequest) GetAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.Address) {
-		return nil, false
-	}
-	return o.Address, true
-}
-
-// HasAddress returns a boolean if a field has been set.
-func (o *CreateWithdrawActivityRequest) HasAddress() bool {
-	if o != nil && !IsNil(o.Address) {
-		return true
-	}
-
-	return false
-}
-
-// SetAddress gets a reference to the given string and assigns it to the Address field.
-func (o *CreateWithdrawActivityRequest) SetAddress(v string) {
-	o.Address = &v
-}
-
 // GetFee returns the Fee field value
 func (o *CreateWithdrawActivityRequest) GetFee() TransactionRequestFee {
 	if o == nil {
@@ -245,9 +211,6 @@ func (o CreateWithdrawActivityRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["staking_id"] = o.StakingId
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount
-	}
-	if !IsNil(o.Address) {
-		toSerialize["address"] = o.Address
 	}
 	toSerialize["fee"] = o.Fee
 	if !IsNil(o.AppInitiator) {

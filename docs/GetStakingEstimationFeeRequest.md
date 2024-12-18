@@ -7,18 +7,17 @@ Name | Type | Description | Notes
 **ActivityType** | [**ActivityType**](ActivityType.md) |  | 
 **RequestId** | Pointer to **string** | The request ID that is used to track a request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **Source** | Pointer to [**StakingSource**](StakingSource.md) |  | [optional] 
-**PoolId** | **string** | The ID of the staking pool. | 
+**PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **Amount** | **string** | The amount to withdraw. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
 **Extra** | [**CreateUnstakeActivityExtra**](CreateUnstakeActivityExtra.md) |  | 
-**StakingId** | **string** | The ID of the corresponding staking position. | 
-**Address** | **string** | The withdrawal address. | 
+**StakingId** | **string** | The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](/v2/api-references/stakings/list-staking-positions). | 
 
 ## Methods
 
 ### NewGetStakingEstimationFeeRequest
 
-`func NewGetStakingEstimationFeeRequest(activityType ActivityType, poolId string, amount string, fee TransactionRequestFee, extra CreateUnstakeActivityExtra, stakingId string, address string, ) *GetStakingEstimationFeeRequest`
+`func NewGetStakingEstimationFeeRequest(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateUnstakeActivityExtra, stakingId string, ) *GetStakingEstimationFeeRequest`
 
 NewGetStakingEstimationFeeRequest instantiates a new GetStakingEstimationFeeRequest object
 This constructor will assign default values to properties that have it defined,
@@ -105,20 +104,20 @@ HasSource returns a boolean if a field has been set.
 
 ### GetPoolId
 
-`func (o *GetStakingEstimationFeeRequest) GetPoolId() string`
+`func (o *GetStakingEstimationFeeRequest) GetPoolId() StakingPoolId`
 
 GetPoolId returns the PoolId field if non-nil, zero value otherwise.
 
 ### GetPoolIdOk
 
-`func (o *GetStakingEstimationFeeRequest) GetPoolIdOk() (*string, bool)`
+`func (o *GetStakingEstimationFeeRequest) GetPoolIdOk() (*StakingPoolId, bool)`
 
 GetPoolIdOk returns a tuple with the PoolId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPoolId
 
-`func (o *GetStakingEstimationFeeRequest) SetPoolId(v string)`
+`func (o *GetStakingEstimationFeeRequest) SetPoolId(v StakingPoolId)`
 
 SetPoolId sets PoolId field to given value.
 
@@ -201,26 +200,6 @@ and a boolean to check if the value has been set.
 `func (o *GetStakingEstimationFeeRequest) SetStakingId(v string)`
 
 SetStakingId sets StakingId field to given value.
-
-
-### GetAddress
-
-`func (o *GetStakingEstimationFeeRequest) GetAddress() string`
-
-GetAddress returns the Address field if non-nil, zero value otherwise.
-
-### GetAddressOk
-
-`func (o *GetStakingEstimationFeeRequest) GetAddressOk() (*string, bool)`
-
-GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAddress
-
-`func (o *GetStakingEstimationFeeRequest) SetAddress(v string)`
-
-SetAddress sets Address field to given value.
 
 
 

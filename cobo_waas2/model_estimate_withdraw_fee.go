@@ -26,8 +26,6 @@ type EstimateWithdrawFee struct {
 	StakingId string `json:"staking_id"`
 	// The amount to withdraw.
 	Amount *string `json:"amount,omitempty"`
-	// The withdrawal address.
-	Address *string `json:"address,omitempty"`
 	Fee TransactionRequestFee `json:"fee"`
 }
 
@@ -165,38 +163,6 @@ func (o *EstimateWithdrawFee) SetAmount(v string) {
 	o.Amount = &v
 }
 
-// GetAddress returns the Address field value if set, zero value otherwise.
-func (o *EstimateWithdrawFee) GetAddress() string {
-	if o == nil || IsNil(o.Address) {
-		var ret string
-		return ret
-	}
-	return *o.Address
-}
-
-// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EstimateWithdrawFee) GetAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.Address) {
-		return nil, false
-	}
-	return o.Address, true
-}
-
-// HasAddress returns a boolean if a field has been set.
-func (o *EstimateWithdrawFee) HasAddress() bool {
-	if o != nil && !IsNil(o.Address) {
-		return true
-	}
-
-	return false
-}
-
-// SetAddress gets a reference to the given string and assigns it to the Address field.
-func (o *EstimateWithdrawFee) SetAddress(v string) {
-	o.Address = &v
-}
-
 // GetFee returns the Fee field value
 func (o *EstimateWithdrawFee) GetFee() TransactionRequestFee {
 	if o == nil {
@@ -238,9 +204,6 @@ func (o EstimateWithdrawFee) ToMap() (map[string]interface{}, error) {
 	toSerialize["staking_id"] = o.StakingId
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount
-	}
-	if !IsNil(o.Address) {
-		toSerialize["address"] = o.Address
 	}
 	toSerialize["fee"] = o.Fee
 	return toSerialize, nil
