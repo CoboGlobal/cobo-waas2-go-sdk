@@ -16,6 +16,7 @@ import (
 // TransferSource - struct for TransferSource
 type TransferSource struct {
 	CustodialTransferSource *CustodialTransferSource
+	CustodialWeb3TransferSource *CustodialWeb3TransferSource
 	ExchangeTransferSource *ExchangeTransferSource
 	MpcTransferSource *MpcTransferSource
 	SafeTransferSource *SafeTransferSource
@@ -25,6 +26,13 @@ type TransferSource struct {
 func CustodialTransferSourceAsTransferSource(v *CustodialTransferSource) TransferSource {
 	return TransferSource{
 		CustodialTransferSource: v,
+	}
+}
+
+// CustodialWeb3TransferSourceAsTransferSource is a convenience function that returns CustodialWeb3TransferSource wrapped in TransferSource
+func CustodialWeb3TransferSourceAsTransferSource(v *CustodialWeb3TransferSource) TransferSource {
+	return TransferSource{
+		CustodialWeb3TransferSource: v,
 	}
 }
 
@@ -132,6 +140,18 @@ func (dst *TransferSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'Web3'
+	if jsonDict["source_type"] == "Web3" {
+		// try to unmarshal JSON data into CustodialWeb3TransferSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3TransferSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3TransferSource, return on the first match
+		} else {
+			dst.CustodialWeb3TransferSource = nil
+			return fmt.Errorf("failed to unmarshal TransferSource as CustodialWeb3TransferSource: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'CustodialTransferSource'
 	if jsonDict["source_type"] == "CustodialTransferSource" {
 		// try to unmarshal JSON data into CustodialTransferSource
@@ -141,6 +161,18 @@ func (dst *TransferSource) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.CustodialTransferSource = nil
 			return fmt.Errorf("failed to unmarshal TransferSource as CustodialTransferSource: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'CustodialWeb3TransferSource'
+	if jsonDict["source_type"] == "CustodialWeb3TransferSource" {
+		// try to unmarshal JSON data into CustodialWeb3TransferSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3TransferSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3TransferSource, return on the first match
+		} else {
+			dst.CustodialWeb3TransferSource = nil
+			return fmt.Errorf("failed to unmarshal TransferSource as CustodialWeb3TransferSource: %s", err.Error())
 		}
 	}
 
@@ -189,6 +221,10 @@ func (src TransferSource) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.CustodialTransferSource)
 	}
 
+	if src.CustodialWeb3TransferSource != nil {
+		return json.Marshal(&src.CustodialWeb3TransferSource)
+	}
+
 	if src.ExchangeTransferSource != nil {
 		return json.Marshal(&src.ExchangeTransferSource)
 	}
@@ -211,6 +247,10 @@ func (obj *TransferSource) GetActualInstance() (interface{}) {
 	}
 	if obj.CustodialTransferSource != nil {
 		return obj.CustodialTransferSource
+	}
+
+	if obj.CustodialWeb3TransferSource != nil {
+		return obj.CustodialWeb3TransferSource
 	}
 
 	if obj.ExchangeTransferSource != nil {

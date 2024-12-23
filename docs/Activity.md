@@ -13,11 +13,13 @@ Name | Type | Description | Notes
 **PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **TokenId** | **string** | The token ID. | 
 **StakingId** | Pointer to **string** | The ID of the corresponding staking position. | [optional] 
+**RequestId** | Pointer to **string** | The request ID that is used to track a request. | [optional] 
 **Amount** | **string** | The staking amount. | 
 **TransactionIds** | Pointer to **[]string** | The IDs of the corresponding transactions of the activity. | [optional] 
 **Timeline** | Pointer to [**[]ActivityTimeline**](ActivityTimeline.md) | The timeline of the activity. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
 **Status** | [**ActivityStatus**](ActivityStatus.md) |  | 
+**Extra** | Pointer to [**ActivityExtra**](ActivityExtra.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The time when the activity was created. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the activity was last updated. | [optional] 
 
@@ -255,6 +257,31 @@ SetStakingId sets StakingId field to given value.
 
 HasStakingId returns a boolean if a field has been set.
 
+### GetRequestId
+
+`func (o *Activity) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *Activity) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *Activity) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *Activity) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
+
 ### GetAmount
 
 `func (o *Activity) GetAmount() string`
@@ -369,6 +396,31 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetExtra
+
+`func (o *Activity) GetExtra() ActivityExtra`
+
+GetExtra returns the Extra field if non-nil, zero value otherwise.
+
+### GetExtraOk
+
+`func (o *Activity) GetExtraOk() (*ActivityExtra, bool)`
+
+GetExtraOk returns a tuple with the Extra field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExtra
+
+`func (o *Activity) SetExtra(v ActivityExtra)`
+
+SetExtra sets Extra field to given value.
+
+### HasExtra
+
+`func (o *Activity) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

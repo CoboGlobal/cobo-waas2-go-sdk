@@ -9,6 +9,7 @@ api_developers.go
 api_developers_webhooks.go
 api_o_auth.go
 api_stakings.go
+api_swaps.go
 api_transactions.go
 api_wallets.go
 api_wallets_exchange_wallet.go
@@ -23,6 +24,7 @@ crypto/signer.go
 demo/server_demo.go
 docs/Activity.md
 docs/ActivityAction.md
+docs/ActivityExtra.md
 docs/ActivityInitiator.md
 docs/ActivityStatus.md
 docs/ActivityTimeline.md
@@ -43,6 +45,7 @@ docs/AssetInfo.md
 docs/AutoFuelType.md
 docs/BabylonStakeEstimatedFee.md
 docs/BabylonStakeExtra.md
+docs/BabylonStakingActivityDetailExtra.md
 docs/BabylonStakingExtra.md
 docs/BabylonValidator.md
 docs/BaseContractCallSource.md
@@ -51,6 +54,7 @@ docs/BaseStakeExtra.md
 docs/BaseStakeSource.md
 docs/BroadcastSignedTransactions201ResponseInner.md
 docs/BroadcastSignedTransactionsRequest.md
+docs/CallbackMessage.md
 docs/ChainInfo.md
 docs/CheckAddressChainsValidity200ResponseInner.md
 docs/CheckAddressValidity200Response.md
@@ -64,6 +68,7 @@ docs/ContractCallParams.md
 docs/ContractCallSource.md
 docs/ContractCallSourceType.md
 docs/CoreStakeExtra.md
+docs/CoreStakingActivityDetailExtra.md
 docs/CoreStakingExtra.md
 docs/CreateAddressRequest.md
 docs/CreateClaimActivity.md
@@ -75,12 +80,15 @@ docs/CreateKeyShareHolderGroupRequest.md
 docs/CreateMpcProjectRequest.md
 docs/CreateMpcVaultRequest.md
 docs/CreateMpcWalletParams.md
+docs/CreateQuote201Response.md
+docs/CreateQuoteRequest.md
 docs/CreateSafeWalletParams.md
 docs/CreateSmartContractWalletParams.md
 docs/CreateStakeActivity.md
 docs/CreateStakeActivity201Response.md
 docs/CreateStakeActivityExtra.md
 docs/CreateStakeActivityRequest.md
+docs/CreateSwapActivityRequest.md
 docs/CreateTransferTransaction201Response.md
 docs/CreateTssRequestRequest.md
 docs/CreateUnstakeActivity.md
@@ -94,6 +102,9 @@ docs/CreatedWalletInfo.md
 docs/CurveType.md
 docs/CustodialTransferSource.md
 docs/CustodialWalletInfo.md
+docs/CustodialWeb3ContractCallSource.md
+docs/CustodialWeb3MessageSignSource.md
+docs/CustodialWeb3TransferSource.md
 docs/DeleteKeyShareHolderGroupById201Response.md
 docs/DeleteWalletById201Response.md
 docs/DevelopersAPI.md
@@ -120,6 +131,7 @@ docs/EstimatedUtxoFee.md
 docs/EstimatedUtxoFeeSlow.md
 docs/EthStakeEstimatedFee.md
 docs/EthStakeExtra.md
+docs/EthStakingActivityDetailExtra.md
 docs/EthStakingExtra.md
 docs/EthStakingExtraAllOfBeaconValidators.md
 docs/EthUnstakeExtra.md
@@ -154,6 +166,8 @@ docs/KeyShareHolderType.md
 docs/ListAddressBooks200Response.md
 docs/ListAddresses200Response.md
 docs/ListAssetBalancesForExchangeWallet200Response.md
+docs/ListCallbackMessages200Response.md
+docs/ListEnableTokenPairs200Response.md
 docs/ListExchanges200ResponseInner.md
 docs/ListKeyShareHolderGroups200Response.md
 docs/ListMpcProjects200Response.md
@@ -164,6 +178,7 @@ docs/ListStakings200Response.md
 docs/ListSupportedAssetsForExchange200Response.md
 docs/ListSupportedChains200Response.md
 docs/ListSupportedTokens200Response.md
+docs/ListSwapActivities200Response.md
 docs/ListTokenBalancesForAddress200Response.md
 docs/ListTransactions200Response.md
 docs/ListTssRequests200Response.md
@@ -194,6 +209,7 @@ docs/MpcSigningGroup.md
 docs/MpcStakeSource.md
 docs/MpcTransferSource.md
 docs/OAuthAPI.md
+docs/OrgInfo.md
 docs/Pagination.md
 docs/PoolDetails.md
 docs/PoolDetailsAllOfValidatorsInfo.md
@@ -225,6 +241,10 @@ docs/Stakings.md
 docs/StakingsAPI.md
 docs/StakingsExtra.md
 docs/SubWalletAssetBalance.md
+docs/SwapActivity.md
+docs/SwapSummary.md
+docs/SwapTokenPair.md
+docs/SwapsAPI.md
 docs/TSSGroups.md
 docs/TSSRequest.md
 docs/TSSRequestStatus.md
@@ -238,6 +258,7 @@ docs/Transaction.md
 docs/TransactionApprover.md
 docs/TransactionBlockInfo.md
 docs/TransactionCustodialAssetWalletSource.md
+docs/TransactionCustodialWeb3WalletSource.md
 docs/TransactionDepositFromAddressSource.md
 docs/TransactionDepositFromLoopSource.md
 docs/TransactionDepositFromWalletSource.md
@@ -273,6 +294,7 @@ docs/TransactionRequestUtxoFee.md
 docs/TransactionResend.md
 docs/TransactionResult.md
 docs/TransactionResultType.md
+docs/TransactionSelectedUtxo.md
 docs/TransactionSignatureResult.md
 docs/TransactionSigner.md
 docs/TransactionSmartContractSafeWalletSource.md
@@ -331,6 +353,7 @@ go.mod
 go.sum
 model_activity.go
 model_activity_action.go
+model_activity_extra.go
 model_activity_initiator.go
 model_activity_status.go
 model_activity_timeline.go
@@ -350,6 +373,7 @@ model_asset_info.go
 model_auto_fuel_type.go
 model_babylon_stake_estimated_fee.go
 model_babylon_stake_extra.go
+model_babylon_staking_activity_detail_extra.go
 model_babylon_staking_extra.go
 model_babylon_validator.go
 model_base_contract_call_source.go
@@ -358,6 +382,7 @@ model_base_stake_extra.go
 model_base_stake_source.go
 model_broadcast_signed_transactions_201_response_inner.go
 model_broadcast_signed_transactions_request.go
+model_callback_message.go
 model_chain_info.go
 model_check_address_chains_validity_200_response_inner.go
 model_check_address_validity_200_response.go
@@ -371,6 +396,7 @@ model_contract_call_params.go
 model_contract_call_source.go
 model_contract_call_source_type.go
 model_core_stake_extra.go
+model_core_staking_activity_detail_extra.go
 model_core_staking_extra.go
 model_create_address_request.go
 model_create_claim_activity.go
@@ -382,12 +408,15 @@ model_create_key_share_holder_group_request.go
 model_create_mpc_project_request.go
 model_create_mpc_vault_request.go
 model_create_mpc_wallet_params.go
+model_create_quote_201_response.go
+model_create_quote_request.go
 model_create_safe_wallet_params.go
 model_create_smart_contract_wallet_params.go
 model_create_stake_activity.go
 model_create_stake_activity_201_response.go
 model_create_stake_activity_extra.go
 model_create_stake_activity_request.go
+model_create_swap_activity_request.go
 model_create_transfer_transaction_201_response.go
 model_create_tss_request_request.go
 model_create_unstake_activity.go
@@ -401,6 +430,9 @@ model_created_wallet_info.go
 model_curve_type.go
 model_custodial_transfer_source.go
 model_custodial_wallet_info.go
+model_custodial_web3_contract_call_source.go
+model_custodial_web3_message_sign_source.go
+model_custodial_web3_transfer_source.go
 model_delete_key_share_holder_group_by_id_201_response.go
 model_delete_wallet_by_id_201_response.go
 model_eigen_layer_lst_stake_extra.go
@@ -425,6 +457,7 @@ model_estimated_utxo_fee.go
 model_estimated_utxo_fee_slow.go
 model_eth_stake_estimated_fee.go
 model_eth_stake_extra.go
+model_eth_staking_activity_detail_extra.go
 model_eth_staking_extra.go
 model_eth_staking_extra_all_of_beacon_validators.go
 model_eth_unstake_extra.go
@@ -459,6 +492,8 @@ model_key_share_holder_type.go
 model_list_address_books_200_response.go
 model_list_addresses_200_response.go
 model_list_asset_balances_for_exchange_wallet_200_response.go
+model_list_callback_messages_200_response.go
+model_list_enable_token_pairs_200_response.go
 model_list_exchanges_200_response_inner.go
 model_list_key_share_holder_groups_200_response.go
 model_list_mpc_projects_200_response.go
@@ -469,6 +504,7 @@ model_list_stakings_200_response.go
 model_list_supported_assets_for_exchange_200_response.go
 model_list_supported_chains_200_response.go
 model_list_supported_tokens_200_response.go
+model_list_swap_activities_200_response.go
 model_list_token_balances_for_address_200_response.go
 model_list_transactions_200_response.go
 model_list_tss_requests_200_response.go
@@ -498,6 +534,7 @@ model_mpc_transfer_source.go
 model_mpc_vault.go
 model_mpc_vault_type.go
 model_mpc_wallet_info.go
+model_org_info.go
 model_pagination.go
 model_pool_details.go
 model_pool_details_all_of_validators_info.go
@@ -528,6 +565,9 @@ model_staking_source.go
 model_stakings.go
 model_stakings_extra.go
 model_sub_wallet_asset_balance.go
+model_swap_activity.go
+model_swap_summary.go
+model_swap_token_pair.go
 model_token_asset_model_type.go
 model_token_balance.go
 model_token_balance_balance.go
@@ -536,6 +576,7 @@ model_transaction.go
 model_transaction_approver.go
 model_transaction_block_info.go
 model_transaction_custodial_asset_wallet_source.go
+model_transaction_custodial_web3_wallet_source.go
 model_transaction_deposit_from_address_source.go
 model_transaction_deposit_from_loop_source.go
 model_transaction_deposit_from_wallet_source.go
@@ -571,6 +612,7 @@ model_transaction_request_utxo_fee.go
 model_transaction_resend.go
 model_transaction_result.go
 model_transaction_result_type.go
+model_transaction_selected_utxo.go
 model_transaction_signature_result.go
 model_transaction_signer.go
 model_transaction_smart_contract_safe_wallet_source.go
@@ -630,6 +672,7 @@ test/api_developers_test.go
 test/api_developers_webhooks_test.go
 test/api_o_auth_test.go
 test/api_stakings_test.go
+test/api_swaps_test.go
 test/api_transactions_test.go
 test/api_wallets_exchange_wallet_test.go
 test/api_wallets_mpc_wallets_test.go

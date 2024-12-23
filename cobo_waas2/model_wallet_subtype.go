@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// WalletSubtype The wallet sub-type. Possible values include: - `Asset`: Custodial Wallets (Asset Wallets). - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets). - `User-Controlled`: MPC Wallets (User-Controlled Wallets). - `Safe{Wallet}`: Smart Contract Wallets (Safe). - `Main`: Exchange Wallets (Main Account). - `Sub`: Exchange Wallets (Sub Account).  Each wallet sub-type requires a different set of properties. Switch between the above tabs for details. 
+// WalletSubtype The wallet sub-type. Possible values include: - `Asset`: Custodial Wallets (Asset Wallets). - `Web3`: Custodial Wallets (Web3 Wallets). - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets). - `User-Controlled`: MPC Wallets (User-Controlled Wallets). - `Safe{Wallet}`: Smart Contract Wallets (Safe). - `Main`: Exchange Wallets (Main Account). - `Sub`: Exchange Wallets (Sub Account).  Each wallet sub-type requires a different set of properties. Switch between the above tabs for details. 
 type WalletSubtype string
 
 // List of WalletSubtype

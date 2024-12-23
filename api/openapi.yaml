@@ -49,6 +49,8 @@ tags:
   name: Developers
 - description: Operations related to address books.
   name: AddressBooks
+- description: Operations related to swap.
+  name: Swaps
 paths:
   /wallets/chains:
     get:
@@ -5318,6 +5320,169 @@ paths:
       summary: Get API key information
       tags:
       - Developers
+  /developers/callback_messages:
+    get:
+      description: |
+        This operation retrieves all the callback messages.
+      operationId: list_callback_messages
+      parameters:
+      - description: The IDs of the callback messages. Comma separated.
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        explode: true
+        in: query
+        name: callback_message_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The request_ids. Comma separated.
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        explode: true
+        in: query
+        name: request_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The IDs of the transactions. Comma separated.
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        explode: true
+        in: query
+        name: transaction_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The wallet ids of the transactions. Comma separated.
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479, f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        explode: true
+        in: query
+        name: wallet_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The callback status. Possible values are `Approved`, `Denied`\
+          \ and `Failed`."
+        example: Approved
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - Denied
+          - Approved
+          - Failed
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+
+          - If you set `before` to `infinity`, the last page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_callback_messages_200_response'
+          description: The information about callback messages.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CookieAuth: []
+      summary: List all callback messages
+      tags:
+      - Developers
+  /developers/callback_message/{message_id}/retry:
+    post:
+      description: |
+        This operation retry a failed callback message.
+      operationId: retry_callback_message
+      parameters:
+      - description: The ID of the callback message.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: message_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/retry_webhook_event_by_id_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CookieAuth: []
+      summary: Retry callback message
+      tags:
+      - Developers
   /address_books:
     get:
       description: |
@@ -5420,6 +5585,399 @@ paths:
       summary: List address book entries
       tags:
       - AddressBooks
+  /swaps/summary:
+    get:
+      description: |
+        This operation retrieves a summary of swap activities.
+      operationId: get_swap_summary
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapSummary'
+          description: The summary information of swap activities.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: Retrieve Swap Summary
+      tags:
+      - Swaps
+  /swaps/activities:
+    get:
+      description: |
+        This operation retrieves a list of swap activities.
+      operationId: list_swap_activities
+      parameters:
+      - example: Success
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          description: |
+            The status of the swap activity. Possible values include:
+            - `Success`: The activity is successfully completed.
+            - `Processing`: The activity is being processed.
+            - `Failed`: The activity has failed.
+          enum:
+          - Success
+          - Processing
+          - Failed
+          example: Success
+          type: string
+        style: form
+      - description: "The start time of the query. All staking activities updated\
+          \ after the specified time will be retrieved. The time is in Unix timestamp\
+          \ format, measured in milliseconds."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: min_updated_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The end time of the query. All staking activities updated before\
+          \ the specified time will be retrieved. The time is in Unix timestamp format,\
+          \ measured in milliseconds."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: max_updated_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The activity initiator, which is your API key by default. You\
+          \ can also specify the initiator when creating the activity."
+        example: steve@example.com
+        explode: true
+        in: query
+        name: initiator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+
+          - If you set `before` to `infinity`, the last page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The field used for sorting.
+        example: timestamp
+        explode: true
+        in: query
+        name: sort_by
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ""
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_swap_activities_200_response'
+          description: A list of staking activities have been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: List Swap Activities
+      tags:
+      - Swaps
+  /swaps/activities/{activity_id}:
+    get:
+      description: |
+        This operation retrieves the details of a swap activity.
+      operationId: get_swap_activity
+      parameters:
+      - description: The unique id of the activity.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapActivity'
+          description: The swap activity details have been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: Get Swap Activity Details
+      tags:
+      - Swaps
+  /swaps/enabled_pairs:
+    get:
+      description: |
+        This operation retrieves all supported token pairs for swaps in a specified wallet.
+      operationId: list_enable_token_pairs
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify `before` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`, the request will retrieve a list of data objects that end before the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1`. You can set this parameter to the value of `pagination.before` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+
+          - If you set `before` to `infinity`, the last page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify `after` as `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`, the request will retrieve a list of data objects that start after the object with the object ID `RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`. You can set this parameter to the value of `pagination.after` in the response of the previous request.
+
+          - If you set both `after` and `before`, an error will occur.
+
+          - If you leave both `before` and `after` empty, the first page of data is returned.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_enable_token_pairs_200_response'
+          description: The supported token pairs have been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: List Supported Token Pairs
+      tags:
+      - Swaps
+  /swaps/quote:
+    post:
+      description: |
+        This operation retrieves a quote for swapping between two tokens. Either pay_amount or receive_amount must be provided.
+      operationId: create_quote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_quote_request'
+        description: The request body for creating a swap activity.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_quote_201_response'
+          description: The swap quote has been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: Create Quote
+      tags:
+      - Swaps
+  /swaps/swap:
+    post:
+      description: |
+        This operation to create a swap activity.
+      operationId: create_swap_activity
+      requestBody:
+        $ref: '#/components/requestBodies/createSwapActivityBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapActivity'
+          description: The swap activity details have been successfully retrieved.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: Create Swap Activity
+      tags:
+      - Swaps
 components:
   parameters:
     sortByParam:
@@ -5737,6 +6295,17 @@ components:
       in: query
       name: wallet_id
       required: false
+      schema:
+        format: uuid
+        type: string
+      style: form
+    requiredWalletIdParam:
+      description: The wallet ID.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: true
+      in: query
+      name: wallet_id
+      required: true
       schema:
         format: uuid
         type: string
@@ -6570,6 +7139,197 @@ components:
       schema:
         type: string
       style: form
+    optionalCallbackMessageIdsParam:
+      description: The IDs of the callback messages. Comma separated.
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d479"
+      explode: true
+      in: query
+      name: callback_message_ids
+      required: false
+      schema:
+        type: string
+      style: form
+    optionalTransactionIdsParam:
+      description: The IDs of the transactions. Comma separated.
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d479"
+      explode: true
+      in: query
+      name: transaction_ids
+      required: false
+      schema:
+        type: string
+      style: form
+    optionalWalletIdsParam:
+      description: The wallet ids of the transactions. Comma separated.
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479, f47ac10b-58cc-4372-a567-0e02b2c3d479"
+      explode: true
+      in: query
+      name: wallet_ids
+      required: false
+      schema:
+        type: string
+      style: form
+    optionalRequestIdsParam:
+      description: The request_ids. Comma separated.
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d479"
+      explode: true
+      in: query
+      name: request_ids
+      required: false
+      schema:
+        type: string
+      style: form
+    optionalCallbackStatusParam:
+      description: "The callback status. Possible values are `Approved`, `Denied`\
+        \ and `Failed`."
+      example: Approved
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        enum:
+        - Denied
+        - Approved
+        - Failed
+        type: string
+      style: form
+    callbackMessageIdParam:
+      description: The ID of the callback message.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: false
+      in: path
+      name: message_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    activityIdParam:
+      description: The unique id of the activity.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: false
+      in: path
+      name: activity_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    initiatorOptionalParam:
+      description: "The activity initiator, which is your API key by default. You\
+        \ can also specify the initiator when creating the activity."
+      example: steve@example.com
+      explode: true
+      in: query
+      name: initiator
+      required: false
+      schema:
+        type: string
+      style: form
+    payAmountRequiredParam:
+      description: The amount of pay token to swap.
+      example: "1.5"
+      explode: true
+      in: query
+      name: pay_amount
+      required: true
+      schema:
+        type: string
+      style: form
+    payAmountOptionalParam:
+      description: The amount of pay token to swap.
+      example: "1.5"
+      explode: true
+      in: query
+      name: pay_amount
+      required: false
+      schema:
+        type: string
+      style: form
+    receiveAmountRequiredParam:
+      description: The amount of token to receive.
+      example: "2000"
+      explode: true
+      in: query
+      name: receive_amount
+      required: true
+      schema:
+        type: string
+      style: form
+    receiveAmountOptionalParam:
+      description: The amount of token to receive.
+      example: "2000"
+      explode: true
+      in: query
+      name: receive_amount
+      required: false
+      schema:
+        type: string
+      style: form
+    payTokenIdRequiredParam:
+      description: Unique id of the token to pay.
+      example: ETH
+      explode: true
+      in: query
+      name: pay_token_id
+      required: true
+      schema:
+        type: string
+      style: form
+    receiveTokenIdRequiredParam:
+      description: Unique id of the token to receive.
+      example: USDT
+      explode: true
+      in: query
+      name: receive_token_id
+      required: true
+      schema:
+        type: string
+      style: form
+    swapActivityStatusOptionalParam:
+      example: Success
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        description: |
+          The status of the swap activity. Possible values include:
+          - `Success`: The activity is successfully completed.
+          - `Processing`: The activity is being processed.
+          - `Failed`: The activity has failed.
+        enum:
+        - Success
+        - Processing
+        - Failed
+        example: Success
+        type: string
+      style: form
+    swapActivityMinUpdatedTimestampOptionalParam:
+      description: "The start time of the query. All staking activities updated after\
+        \ the specified time will be retrieved. The time is in Unix timestamp format,\
+        \ measured in milliseconds."
+      example: 1635744000000
+      explode: true
+      in: query
+      name: min_updated_timestamp
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
+    swapActivityMaxUpdatedTimestampOptionalParam:
+      description: "The end time of the query. All staking activities updated before\
+        \ the specified time will be retrieved. The time is in Unix timestamp format,\
+        \ measured in milliseconds."
+      example: 1635744000000
+      explode: true
+      in: query
+      name: max_updated_timestamp
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
   requestBodies:
     createWalletBody:
       content:
@@ -6739,6 +7499,13 @@ components:
           schema:
             $ref: '#/components/schemas/refresh_token_request'
       description: The request body for refreshing an Org Access Token.
+      required: true
+    createSwapActivityBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_swap_activity_request'
+      description: The request body for creating a swap activity.
       required: true
   responses:
     badRequestError:
@@ -7168,12 +7935,6 @@ components:
           schema:
             $ref: '#/components/schemas/create_stake_activity_201_response'
       description: Successfully created a staking activity.
-    activityDetailsResponse:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Activity'
-      description: A staking activity has been successfully retrieved.
     stakingsDetailsResponse:
       content:
         application/json:
@@ -7262,6 +8023,48 @@ components:
           schema:
             $ref: '#/components/schemas/get_api_key_info_200_response'
       description: The API key information.
+    listCallbackMessagesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_callback_messages_200_response'
+      description: The information about callback messages.
+    retryCallbackMessageResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/retry_webhook_event_by_id_201_response'
+      description: The request was successful.
+    getSwapSummaryResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SwapSummary'
+      description: The summary information of swap activities.
+    getSwapActivityResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SwapActivity'
+      description: The swap activity details have been successfully retrieved.
+    listSwapActivitiesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_swap_activities_200_response'
+      description: A list of staking activities have been successfully retrieved.
+    listSwapTokenPairsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_enable_token_pairs_200_response'
+      description: The supported token pairs have been successfully retrieved.
+    getSwapQuoteResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_quote_201_response'
+      description: The swap quote has been successfully retrieved.
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -7543,6 +8346,7 @@ components:
       description: |
         The wallet sub-type. Possible values include:
         - `Asset`: Custodial Wallets (Asset Wallets).
+        - `Web3`: Custodial Wallets (Web3 Wallets).
         - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
         - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
         - `Safe{Wallet}`: Smart Contract Wallets (Safe).
@@ -7890,7 +8694,7 @@ components:
     AddressInfo:
       description: The address information.
       example:
-        path: m/44'/60'/0'/0
+        path: m/44/0/2/0/0
         address: 0x0000000000000000000000000000000000000000
         chain_id: ETH
         x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
@@ -7898,7 +8702,8 @@ components:
         taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
         taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
         encoding: ENCODING_P2PKH
-        pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+        root_pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+        pubkey: xpub6HFaEKt4XdwgEQrQmWr8AEAZ7XBSGh7QYFspwdE86sJn6PjkqsPwVQc2poriBdizqXnTB3UWurJJAZpFnD2DAp9vFTmM2gQ264AArYtFWLH
       properties:
         address:
           description: The wallet address.
@@ -7918,18 +8723,23 @@ components:
           description: "The derivation path of the address. This property applies\
             \ to MPC Wallets only. To learn the meaning of each level in the path,\
             \ see [Path levels](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#path-levels)."
-          example: m/44'/60'/0'/0
+          example: m/44/0/2/0/0
           type: string
         encoding:
           $ref: '#/components/schemas/AddressEncoding'
         pubkey:
           description: The public key of the address. This property applies to MPC
             Wallets only.
-          example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          example: xpub6HFaEKt4XdwgEQrQmWr8AEAZ7XBSGh7QYFspwdE86sJn6PjkqsPwVQc2poriBdizqXnTB3UWurJJAZpFnD2DAp9vFTmM2gQ264AArYtFWLH
           type: string
         x_only_pubkey:
           description: The 32-byte x-only public key in hexadecimal format after tweaking.
           example: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
+          type: string
+        root_pubkey:
+          description: The root public key of the address. This property applies to
+            MPC Wallets only.
+          example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
           type: string
         taproot_script_tree_hash:
           description: The information about the new address.
@@ -8240,6 +9050,27 @@ components:
       oneOf:
       - $ref: '#/components/schemas/SafeWalletDelegatesContractCall'
       - $ref: '#/components/schemas/SafeWalletDelegatesTransfer'
+    OrgInfo:
+      description: |
+        [organization](https://manuals.cobo.com/en/portal/organization/introduction).
+      properties:
+        org_id:
+          description: The ID of the owning organization.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        name:
+          description: The organization name.
+          example: Org name
+          type: string
+        created_timestamp:
+          description: "The organization's creation time in Unix timestamp format,\
+            \ measured in milliseconds."
+          example: 1718619403933
+          format: int64
+          type: integer
+      required:
+      - org_id
+      type: object
     CurveType:
       description: |
         The elliptic curve type of the [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key). Possible values include:
@@ -9197,10 +10028,14 @@ components:
         request_id: web_send_by_user_327_1610444045047
         raw_tx_info:
           selected_utxos:
-          - vout_n: 0
+          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-          - vout_n: 0
+            value: "0.5"
+          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
         replacement:
@@ -9410,10 +10245,14 @@ components:
         request_id: web_send_by_user_327_1610444045047
         raw_tx_info:
           selected_utxos:
-          - vout_n: 0
+          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-          - vout_n: 0
+            value: "0.5"
+          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
         replacement:
@@ -9773,6 +10612,36 @@ components:
       - source_type
       - wallet_id
       title: Custodial Wallet (Asset)
+      type: object
+    TransactionCustodialWeb3WalletSource:
+      description: |
+        Information about the transaction source type `Web3`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        Switch between the tabs to display the properties for different transaction sources.
+      properties:
+        source_type:
+          $ref: '#/components/schemas/TransactionSourceType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        included_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+        excluded_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+      required:
+      - source_type
+      - wallet_id
+      title: Custodial Wallet (Web3)
       type: object
     TransactionMPCWalletSource:
       description: |
@@ -10337,10 +11206,14 @@ components:
       description: The raw transaction information.
       example:
         selected_utxos:
-        - vout_n: 0
+        - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          vout_n: 0
           tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-        - vout_n: 0
+          value: "0.5"
+        - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          vout_n: 0
           tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+          value: "0.5"
         raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
         used_nonce: 9
       properties:
@@ -10351,11 +11224,36 @@ components:
         selected_utxos:
           description: The selected UTXOs to be consumed in the transaction.
           items:
-            $ref: '#/components/schemas/TransactionUtxo'
+            $ref: '#/components/schemas/TransactionSelectedUtxo'
           type: array
         raw_tx:
           description: The raw transaction data.
           example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+          type: string
+      type: object
+    TransactionSelectedUtxo:
+      description: The selected UTXO information.
+      example:
+        address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+        vout_n: 0
+        tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+        value: "0.5"
+      properties:
+        tx_hash:
+          description: The transaction hash of the UTXO.
+          example: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+          type: string
+        vout_n:
+          description: The output index of the UTXO.
+          example: 0
+          type: integer
+        address:
+          description: The address of the UTXO.
+          example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          type: string
+        value:
+          description: The value of the UTXO.
+          example: "0.5"
           type: string
       type: object
     TransactionUtxo:
@@ -10623,6 +11521,42 @@ components:
       - wallet_id
       title: Transfer from Custodial Wallet
       type: object
+    CustodialWeb3TransferSource:
+      description: |
+        The information about the transaction source types `Web3`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+
+        Switch between the tabs to display the properties for different transaction sources.
+      properties:
+        source_type:
+          $ref: '#/components/schemas/WalletSubtype'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: |
+            The wallet address.
+            If you want to specify the UTXOs to be used, please provide the `included_utxos` property. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.
+
+            You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        included_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+        excluded_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+      required:
+      - source_type
+      - wallet_id
+      title: Transfer from Custodial Wallet (Web3)
+      type: object
     MpcTransferSource:
       description: |
         The information about the transaction source types `Org-Controlled` and `User-Controlled`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -10775,6 +11709,7 @@ components:
       discriminator:
         mapping:
           Asset: '#/components/schemas/CustodialTransferSource'
+          Web3: '#/components/schemas/CustodialWeb3TransferSource'
           Org-Controlled: '#/components/schemas/MpcTransferSource'
           User-Controlled: '#/components/schemas/MpcTransferSource'
           Safe{Wallet}: '#/components/schemas/SafeTransferSource'
@@ -10783,6 +11718,7 @@ components:
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/CustodialTransferSource'
+      - $ref: '#/components/schemas/CustodialWeb3TransferSource'
       - $ref: '#/components/schemas/MpcTransferSource'
       - $ref: '#/components/schemas/SafeTransferSource'
       - $ref: '#/components/schemas/ExchangeTransferSource'
@@ -11094,6 +12030,10 @@ components:
         address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
         source_type: Org-Controlled
       title: Contract Call from MPC Wallet
+    CustodialWeb3ContractCallSource:
+      allOf:
+      - $ref: '#/components/schemas/BaseContractCallSource'
+      title: Contract Call from Custodial Web3 Wallet
     SafeContractCallSource:
       allOf:
       - $ref: '#/components/schemas/BaseContractCallSource'
@@ -11125,10 +12065,12 @@ components:
           Org-Controlled: '#/components/schemas/MpcContractCallSource'
           User-Controlled: '#/components/schemas/MpcContractCallSource'
           Safe{Wallet}: '#/components/schemas/SafeContractCallSource'
+          Web3: '#/components/schemas/CustodialWeb3ContractCallSource'
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/MpcContractCallSource'
       - $ref: '#/components/schemas/SafeContractCallSource'
+      - $ref: '#/components/schemas/CustodialWeb3ContractCallSource'
     ContractCallDestinationType:
       description: |
         The type of the contract format. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -11261,6 +12203,25 @@ components:
       - wallet_id
       title: Message Signing from MPC Wallet
       type: object
+    CustodialWeb3MessageSignSource:
+      properties:
+        source_type:
+          $ref: '#/components/schemas/MessageSignSourceType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+      required:
+      - address
+      - source_type
+      - wallet_id
+      title: Message Signing from Custodial Web3 Wallet
+      type: object
     MessageSignSourceType:
       description: |
         The wallet subtype of the transaction source. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -11274,9 +12235,11 @@ components:
         mapping:
           Org-Controlled: '#/components/schemas/MpcMessageSignSource'
           User-Controlled: '#/components/schemas/MpcMessageSignSource'
+          Web3: '#/components/schemas/CustodialWeb3MessageSignSource'
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/MpcMessageSignSource'
+      - $ref: '#/components/schemas/CustodialWeb3MessageSignSource'
     EvmEIP191MessageSignDestination:
       description: "The information about the destination `EVM_EIP_191_Signature`.\
         \ Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations)\
@@ -11467,10 +12430,14 @@ components:
           request_id: web_send_by_user_327_1610444045047
           raw_tx_info:
             selected_utxos:
-            - vout_n: 0
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-            - vout_n: 0
+              value: "0.5"
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
           replacement:
@@ -11616,10 +12583,14 @@ components:
         request_id: web_send_by_user_327_1610444045047
         raw_tx_info:
           selected_utxos:
-          - vout_n: 0
+          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-          - vout_n: 0
+            value: "0.5"
+          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
         replacement:
@@ -11728,10 +12699,14 @@ components:
             request_id: web_send_by_user_327_1610444045047
             raw_tx_info:
               selected_utxos:
-              - vout_n: 0
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-              - vout_n: 0
+                value: "0.5"
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
             replacement:
@@ -11994,6 +12969,7 @@ components:
           fee_amount: "0.1"
           token_id: TRON
           fee_type: EVM_EIP_1559
+        core_btc_staking_address: bc1qcqj9k34vrvgmmvt85ym2ua79k2d22vcfxmuratakfm78chdqksnq5agezk
         pool_type: Babylon
       properties:
         pool_type:
@@ -12008,6 +12984,11 @@ components:
           items:
             type: string
           type: array
+        core_btc_staking_address:
+          description: P2WSH address generated for this staking operation(If the estimated
+            fee is for core BTC staking).
+          example: bc1qcqj9k34vrvgmmvt85ym2ua79k2d22vcfxmuratakfm78chdqksnq5agezk
+          type: string
       title: Ethereum Staking Fee
       type: object
     EthStakeExtra:
@@ -12080,6 +13061,7 @@ components:
         pos_chain: Babylon Chain
         unlock_timestamp: 1640995200000
         pool_type: Babylon
+      title: Babylon
     EthStakingExtra:
       allOf:
       - $ref: '#/components/schemas/BaseStakeExtra'
@@ -12097,6 +13079,7 @@ components:
         required:
         - pos_chain
         type: object
+      title: Ethereum Beacon Chain
     CoreStakingExtra:
       allOf:
       - $ref: '#/components/schemas/BaseStakeExtra'
@@ -12130,6 +13113,7 @@ components:
         - timelock
         - validator_address
         type: object
+      title: CoreBTC
     EigenLayerLstStakeExtra:
       allOf:
       - $ref: '#/components/schemas/BaseStakeExtra'
@@ -12154,6 +13138,91 @@ components:
             format: int32
             type: number
         type: object
+    BabylonStakingActivityDetailExtra:
+      allOf:
+      - $ref: '#/components/schemas/BaseStakeExtra'
+      - description: The staking information specific to the Babylon protocol.
+        properties:
+          finality_provider_public_key:
+            description: The public key of the finality provider.
+            example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            pattern: "^[0-9a-fA-F]{64}$"
+            type: string
+          stake_block_time:
+            description: The number of blocks that need to be processed before the
+              locked tokens are unlocked and become accessible.
+            example: 2000
+            format: int64
+            type: integer
+          auto_broadcast:
+            description: |
+              Whether to automatically broadcast the transaction.
+
+              - `true`: Automatically broadcast the transaction.
+              - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.
+            example: false
+            type: boolean
+          param_version:
+            description: The version of babylon global parameters.
+            example: 2
+            format: int64
+            type: integer
+          withdraw_from_type:
+            $ref: '#/components/schemas/ActivityType'
+        type: object
+      example:
+        param_version: 2
+        finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+        stake_block_time: 2000
+        auto_broadcast: false
+        withdraw_from_type: Stake
+        pool_type: Babylon
+      title: Babylon
+    EthStakingActivityDetailExtra:
+      allOf:
+      - $ref: '#/components/schemas/BaseStakeExtra'
+      - description: The staking information specific to the Ethereum Beacon Chain.
+        properties:
+          provider_name:
+            description: The name of the provider.
+            example: Stakefish
+            type: string
+          validator_pubkeys:
+            description: A list of public keys identifying the validators to unstake
+              from the Ethereum Beacon Chain.
+            example:
+            - 0x1234567890987654321012345678909876543210
+            - 0x1234567890987654321012345678909876543210
+            items:
+              type: string
+            type: array
+        type: object
+      title: Ethereum Beacon Chain
+    CoreStakingActivityDetailExtra:
+      allOf:
+      - $ref: '#/components/schemas/BaseStakeExtra'
+      - description: The staking information specific to the CoreBTC staking protocol.
+        properties:
+          timelock:
+            description: The Unix timestamp (in seconds) when the staking position
+              will be unlocked and available for withdrawal.
+            example: 1704067200
+            type: integer
+          change_address:
+            description: "The change bitcoin address. If not provided, the source\
+              \ wallet's address will be used as the change address."
+            example: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh
+            type: string
+          validator_address:
+            description: The validator evm address.
+            example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            type: string
+          reward_address:
+            description: The reward evm address.
+            example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            type: string
+        type: object
+      title: CoreBTC
     Activity:
       description: The staking activity.
       example:
@@ -12171,6 +13240,13 @@ components:
         wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
         token_id: BTC
         updated_timestamp: 1640995200000
+        extra:
+          param_version: 2
+          finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+          stake_block_time: 2000
+          auto_broadcast: false
+          withdraw_from_type: Stake
+          pool_type: Babylon
         timeline:
         - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           action: Submitted
@@ -12185,6 +13261,7 @@ components:
         transaction_ids:
         - 0011039d-27fb-49ba-b172-6e0aa80e37ec
         - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         status: Success
       properties:
         id:
@@ -12217,6 +13294,10 @@ components:
           description: The ID of the corresponding staking position.
           example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
+        request_id:
+          description: The request ID that is used to track a request.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
         amount:
           description: The staking amount.
           example: "100.00"
@@ -12236,6 +13317,8 @@ components:
           $ref: '#/components/schemas/TransactionRequestFee'
         status:
           $ref: '#/components/schemas/ActivityStatus'
+        extra:
+          $ref: '#/components/schemas/Activity_extra'
         created_timestamp:
           description: The time when the activity was created.
           example: 1640995200000
@@ -12265,6 +13348,12 @@ components:
         - `ClaimRewards`: Claim the rewards from the validator.
         - `ActivateValidator`: Activate the validator to start staking.
         - `UnstakeETH`: Unstake ETH from the validator.
+        - `ApproveUSDC`: Approve the USDC token to be used for staking.
+        - `ConvertToUSDS`: Convert the USDC token to the USDS token.
+        - `ApproveUSDS`: Approve the USDS token to be used for staking.
+        - `DepositUSDS`: Deposit the USDS token to the validator.
+        - `WithdrawUSDS`: Withdraw the USDS token from the validator.
+        - `ConvertToUSDC`: Convert the USDS token to the USDC token.
       enum:
       - Submitted
       - BTCConfirmation
@@ -12273,6 +13362,12 @@ components:
       - ClaimRewards
       - ActivateValidator
       - UnstakeETH
+      - ApproveUSDC
+      - ConvertToUSDS
+      - ApproveUSDS
+      - DepositUSDS
+      - WithdrawUSDS
+      - ConvertToUSDC
       example: Submitted
       type: string
     ActivityTimeline:
@@ -12810,6 +13905,7 @@ components:
       - Babylon
       - ETHBeacon
       - CoreBTC
+      - SkyFarm
       example: Babylon
       type: string
     StakingPoolId:
@@ -12823,6 +13919,7 @@ components:
       - beacon_eth_holesky
       - core_btc
       - core_xtn
+      - sky_farm_eth_usdc
       example: babylon_btc_signet
       type: string
     BaseEstimateStakingFee:
@@ -13101,6 +14198,254 @@ components:
             type: string
           type: array
       type: object
+    CallbackMessage:
+      description: The information about a callback message.
+      example:
+        transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        result: ok
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        data:
+          is_loop: false
+          chain_id: ETH
+          confirmed_num: 12
+          fee:
+            effective_gas_price: "100000000"
+            max_priority_fee_per_gas: "1000000000000"
+            gas_limit: "21000"
+            token_id: ETH
+            gas_used: "100000000"
+            max_fee_per_gas: "9000000000000"
+            fee_type: EVM_EIP_1559
+            fee_used: "0.1"
+          initiator: "API Prod Key #1"
+          destination:
+            account_output:
+              amount: "1.5"
+              address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+              memo: "82840924"
+            destination_type: Address
+            change_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+            utxo_outputs:
+            - amount: "1.5"
+              address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+            - amount: "1.5"
+              address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+            force_internal: false
+            force_external: false
+          description: withdrawal to exchange trading account
+          block_info:
+            block_timestamp: 1717740319
+            block_number: 123
+            block_hash: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+          asset_id: USDT
+          source:
+            wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            source_type: DepositFromAddress
+          confirming_threshold: 15
+          type: Deposit
+          result:
+            result_type: Address
+            signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          sub_status: PendingDoubleCheck
+          cobo_id: "20231213122855000000000000000000"
+          created_timestamp: 1610445878970
+          initiator_type: API
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          category:
+          - Payment
+          - Payment
+          request_id: web_send_by_user_327_1610444045047
+          raw_tx_info:
+            selected_utxos:
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
+              tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              value: "0.5"
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
+              tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              value: "0.5"
+            raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+            used_nonce: 9
+          replacement:
+            replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+            replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            replaced_by_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            replaced_by_type: Resend
+            replaced_by_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+            replaced_type: Resend
+          failed_reason: Rejected by signer Cobo TSS
+          status: Submitted
+        updated_timestamp: 1640918000000
+        created_timestamp: 1640918000000
+        id: 00000000-0000-0000-0000-000000000000
+        request_id: "1734602498819"
+        url: https://example.com/withdraw_callback
+        status: Approved
+      properties:
+        id:
+          description: The callback message ID.
+          example: 00000000-0000-0000-0000-000000000000
+          format: uuid
+          type: string
+        created_timestamp:
+          description: "The time when the callback message was created, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1640918000000
+          format: int64
+          type: integer
+        updated_timestamp:
+          description: "The time when the callback message was updated, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1640918000000
+          format: int64
+          type: integer
+        request_id:
+          description: The request ID of the transaction.
+          example: "1734602498819"
+          type: string
+        transaction_id:
+          description: The transaction ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        url:
+          description: The callback endpoint URL.
+          example: https://example.com/withdraw_callback
+          type: string
+        data:
+          $ref: '#/components/schemas/Transaction'
+        status:
+          description: The callback message status.
+          enum:
+          - Denied
+          - Approved
+          - Failed
+          example: Approved
+          type: string
+        result:
+          description: The callback message result.
+          enum:
+          - ok
+          - deny
+          example: ok
+          type: string
+      required:
+      - created_timestamp
+      - data
+      - id
+      - request_id
+      - status
+      - transaction_id
+      - updated_timestamp
+      - url
+      type: object
+    SwapActivity:
+      example:
+        wallet_id: 123e4567-e89b-12d3-a456-426614174001
+        fee_amount: "0.005"
+        updated_timestamp: 1677587393000
+        pay_amount: "1.5"
+        initiator: John Doe
+        activity_id: 123e4567-e89b-12d3-a456-426614174000
+        pay_token_id: ETH
+        receive_token_id: USDT
+        receive_amount: "2000"
+        created_timestamp: 1677587333000
+        status: Success
+        initiator_type: API
+      properties:
+        activity_id:
+          description: The unique identifier of the swap activity.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+        status:
+          description: The status of the swap activity.
+          example: Success
+          type: string
+        wallet_id:
+          description: The unique identifier of the wallet.
+          example: 123e4567-e89b-12d3-a456-426614174001
+          format: uuid
+          type: string
+        pay_token_id:
+          description: The token symbol to swap from.
+          example: ETH
+          type: string
+        receive_token_id:
+          description: The token symbol to swap to.
+          example: USDT
+          type: string
+        pay_amount:
+          description: The amount of tokens to bridge.
+          example: "1.5"
+          type: string
+        receive_amount:
+          description: The amount of tokens to receive.
+          example: "2000"
+          type: string
+        fee_amount:
+          description: The amount of fee.
+          example: "0.005"
+          type: string
+        initiator:
+          description: The initiator of the swap activity.
+          example: John Doe
+          nullable: true
+          type: string
+        initiator_type:
+          $ref: '#/components/schemas/TransactionInitiatorType'
+        created_timestamp:
+          description: "The time when the swap activity was created, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1677587333000
+          type: integer
+        updated_timestamp:
+          description: "The time when the swap activity was last updated, in Unix\
+            \ timestamp format, measured in milliseconds."
+          example: 1677587393000
+          type: integer
+      type: object
+    SwapTokenPair:
+      example:
+        pay_token_id: ETH
+        receive_token_id: USDT
+      properties:
+        pay_token_id:
+          description: The source token symbol.
+          example: ETH
+          type: string
+        receive_token_id:
+          description: The target token symbol.
+          example: USDT
+          type: string
+      type: object
+    SwapSummary:
+      example:
+        activity_count: 100
+        total_usd_value: "12345.67"
+      properties:
+        total_usd_value:
+          description: "The total USD value of the swap activities, represented as\
+            \ a string."
+          example: "12345.67"
+          type: string
+        activity_count:
+          description: The total number of swap activities.
+          example: 100
+          type: integer
+      required:
+      - activity_count
+      - total_usd_value
+      type: object
     list_supported_chains_200_response:
       example:
         pagination:
@@ -13292,7 +14637,7 @@ components:
           total_count: 10000
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
-        - path: m/44'/60'/0'/0
+        - path: m/44/0/2/0/0
           address: 0x0000000000000000000000000000000000000000
           chain_id: ETH
           x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
@@ -13300,8 +14645,9 @@ components:
           taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
           taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
           encoding: ENCODING_P2PKH
-          pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
-        - path: m/44'/60'/0'/0
+          root_pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          pubkey: xpub6HFaEKt4XdwgEQrQmWr8AEAZ7XBSGh7QYFspwdE86sJn6PjkqsPwVQc2poriBdizqXnTB3UWurJJAZpFnD2DAp9vFTmM2gQ264AArYtFWLH
+        - path: m/44/0/2/0/0
           address: 0x0000000000000000000000000000000000000000
           chain_id: ETH
           x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
@@ -13309,7 +14655,8 @@ components:
           taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
           taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
           encoding: ENCODING_P2PKH
-          pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          root_pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          pubkey: xpub6HFaEKt4XdwgEQrQmWr8AEAZ7XBSGh7QYFspwdE86sJn6PjkqsPwVQc2poriBdizqXnTB3UWurJJAZpFnD2DAp9vFTmM2gQ264AArYtFWLH
       properties:
         data:
           items:
@@ -13905,10 +15252,14 @@ components:
           request_id: web_send_by_user_327_1610444045047
           raw_tx_info:
             selected_utxos:
-            - vout_n: 0
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-            - vout_n: 0
+              value: "0.5"
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
           replacement:
@@ -13976,10 +15327,14 @@ components:
           request_id: web_send_by_user_327_1610444045047
           raw_tx_info:
             selected_utxos:
-            - vout_n: 0
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-            - vout_n: 0
+              value: "0.5"
+            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
           replacement:
@@ -14312,10 +15667,14 @@ components:
             request_id: web_send_by_user_327_1610444045047
             raw_tx_info:
               selected_utxos:
-              - vout_n: 0
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-              - vout_n: 0
+                value: "0.5"
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
             replacement:
@@ -14392,10 +15751,14 @@ components:
             request_id: web_send_by_user_327_1610444045047
             raw_tx_info:
               selected_utxos:
-              - vout_n: 0
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-              - vout_n: 0
+                value: "0.5"
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
             replacement:
@@ -14488,10 +15851,14 @@ components:
               request_id: web_send_by_user_327_1610444045047
               raw_tx_info:
                 selected_utxos:
-                - vout_n: 0
+                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                  vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-                - vout_n: 0
+                  value: "0.5"
+                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                  vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                  value: "0.5"
                 raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
                 used_nonce: 9
               replacement:
@@ -14577,10 +15944,14 @@ components:
               request_id: web_send_by_user_327_1610444045047
               raw_tx_info:
                 selected_utxos:
-                - vout_n: 0
+                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                  vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
-                - vout_n: 0
+                  value: "0.5"
+                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                  vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                  value: "0.5"
                 raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
                 used_nonce: 9
               replacement:
@@ -14808,6 +16179,13 @@ components:
           wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
           token_id: BTC
           updated_timestamp: 1640995200000
+          extra:
+            param_version: 2
+            finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            stake_block_time: 2000
+            auto_broadcast: false
+            withdraw_from_type: Stake
+            pool_type: Babylon
           timeline:
           - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             action: Submitted
@@ -14822,6 +16200,7 @@ components:
           transaction_ids:
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           status: Success
         - amount: "100.00"
           address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
@@ -14837,6 +16216,13 @@ components:
           wallet_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
           token_id: BTC
           updated_timestamp: 1640995200000
+          extra:
+            param_version: 2
+            finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            stake_block_time: 2000
+            auto_broadcast: false
+            withdraw_from_type: Stake
+            pool_type: Babylon
           timeline:
           - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             action: Submitted
@@ -14851,6 +16237,7 @@ components:
           transaction_ids:
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           status: Success
       properties:
         data:
@@ -14970,6 +16357,194 @@ components:
       - name
       - updated_timestamp
       type: object
+    list_callback_messages_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          result: ok
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          data:
+            is_loop: false
+            chain_id: ETH
+            confirmed_num: 12
+            fee:
+              effective_gas_price: "100000000"
+              max_priority_fee_per_gas: "1000000000000"
+              gas_limit: "21000"
+              token_id: ETH
+              gas_used: "100000000"
+              max_fee_per_gas: "9000000000000"
+              fee_type: EVM_EIP_1559
+              fee_used: "0.1"
+            initiator: "API Prod Key #1"
+            destination:
+              account_output:
+                amount: "1.5"
+                address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+                memo: "82840924"
+              destination_type: Address
+              change_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              utxo_outputs:
+              - amount: "1.5"
+                address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              - amount: "1.5"
+                address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              force_internal: false
+              force_external: false
+            description: withdrawal to exchange trading account
+            block_info:
+              block_timestamp: 1717740319
+              block_number: 123
+              block_hash: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+            asset_id: USDT
+            source:
+              wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+              source_type: DepositFromAddress
+            confirming_threshold: 15
+            type: Deposit
+            result:
+              result_type: Address
+              signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+            transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            sub_status: PendingDoubleCheck
+            cobo_id: "20231213122855000000000000000000"
+            created_timestamp: 1610445878970
+            initiator_type: API
+            wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            category:
+            - Payment
+            - Payment
+            request_id: web_send_by_user_327_1610444045047
+            raw_tx_info:
+              selected_utxos:
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
+                tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                value: "0.5"
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
+                tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                value: "0.5"
+              raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+              used_nonce: 9
+            replacement:
+              replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+              replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+              replaced_by_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+              replaced_by_type: Resend
+              replaced_by_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+              replaced_type: Resend
+            failed_reason: Rejected by signer Cobo TSS
+            status: Submitted
+          updated_timestamp: 1640918000000
+          created_timestamp: 1640918000000
+          id: 00000000-0000-0000-0000-000000000000
+          request_id: "1734602498819"
+          url: https://example.com/withdraw_callback
+          status: Approved
+        - transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          result: ok
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          data:
+            is_loop: false
+            chain_id: ETH
+            confirmed_num: 12
+            fee:
+              effective_gas_price: "100000000"
+              max_priority_fee_per_gas: "1000000000000"
+              gas_limit: "21000"
+              token_id: ETH
+              gas_used: "100000000"
+              max_fee_per_gas: "9000000000000"
+              fee_type: EVM_EIP_1559
+              fee_used: "0.1"
+            initiator: "API Prod Key #1"
+            destination:
+              account_output:
+                amount: "1.5"
+                address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+                memo: "82840924"
+              destination_type: Address
+              change_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              utxo_outputs:
+              - amount: "1.5"
+                address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              - amount: "1.5"
+                address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+              force_internal: false
+              force_external: false
+            description: withdrawal to exchange trading account
+            block_info:
+              block_timestamp: 1717740319
+              block_number: 123
+              block_hash: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+            asset_id: USDT
+            source:
+              wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+              source_type: DepositFromAddress
+            confirming_threshold: 15
+            type: Deposit
+            result:
+              result_type: Address
+              signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+            transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            sub_status: PendingDoubleCheck
+            cobo_id: "20231213122855000000000000000000"
+            created_timestamp: 1610445878970
+            initiator_type: API
+            wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            category:
+            - Payment
+            - Payment
+            request_id: web_send_by_user_327_1610444045047
+            raw_tx_info:
+              selected_utxos:
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
+                tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                value: "0.5"
+              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                vout_n: 0
+                tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                value: "0.5"
+              raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+              used_nonce: 9
+            replacement:
+              replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+              replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+              replaced_by_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+              replaced_by_type: Resend
+              replaced_by_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+              replaced_type: Resend
+            failed_reason: Rejected by signer Cobo TSS
+            status: Submitted
+          updated_timestamp: 1640918000000
+          created_timestamp: 1640918000000
+          id: 00000000-0000-0000-0000-000000000000
+          request_id: "1734602498819"
+          url: https://example.com/withdraw_callback
+          status: Approved
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CallbackMessage'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      type: object
     list_address_books_200_response:
       example:
         pagination:
@@ -15006,6 +16581,187 @@ components:
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
+      type: object
+    list_swap_activities_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - wallet_id: 123e4567-e89b-12d3-a456-426614174001
+          fee_amount: "0.005"
+          updated_timestamp: 1677587393000
+          pay_amount: "1.5"
+          initiator: John Doe
+          activity_id: 123e4567-e89b-12d3-a456-426614174000
+          pay_token_id: ETH
+          receive_token_id: USDT
+          receive_amount: "2000"
+          created_timestamp: 1677587333000
+          status: Success
+          initiator_type: API
+        - wallet_id: 123e4567-e89b-12d3-a456-426614174001
+          fee_amount: "0.005"
+          updated_timestamp: 1677587393000
+          pay_amount: "1.5"
+          initiator: John Doe
+          activity_id: 123e4567-e89b-12d3-a456-426614174000
+          pay_token_id: ETH
+          receive_token_id: USDT
+          receive_amount: "2000"
+          created_timestamp: 1677587333000
+          status: Success
+          initiator_type: API
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SwapActivity'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    list_enable_token_pairs_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - pay_token_id: ETH
+          receive_token_id: USDT
+        - pay_token_id: ETH
+          receive_token_id: USDT
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SwapTokenPair'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    create_quote_request:
+      properties:
+        pay_token_id:
+          description: Unique id of the token to pay.
+          example: ETH
+          type: string
+        receive_token_id:
+          description: Unique id of the token to receive.
+          example: ETH
+          type: string
+        pay_amount:
+          description: The amount of token to swap.
+          example: "1.5"
+          type: string
+        receive_amount:
+          description: The amount of token to receive.
+          example: "2000"
+          type: string
+      required:
+      - pay_token_id
+      - receive_token_id
+      type: object
+    create_quote_201_response:
+      example:
+        pay_usd_value: "2850.75"
+        quote_id: 550e8400-e29b-41d4-a716-446655440000
+        pay_amount: "1.5"
+        max_pay_amount: "1000"
+        quote_expired_time: 1677587393000
+        fee_token_id: "1.5"
+        min_receive_amount: "0"
+        receive_usd_value: "2000"
+        fee_amount: "2000"
+        fee_usd_value: "2850.75"
+        receive_amount: "2000"
+        max_receive_amount: "0"
+        min_pay_amount: "0"
+        quote_created_time: 1677587333000
+      properties:
+        quote_id:
+          description: The unique identifier of this quote.
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
+        pay_amount:
+          description: The amount of tokens to pay.
+          example: "1.5"
+          type: string
+        pay_usd_value:
+          description: The USD value of pay_amount.
+          example: "2850.75"
+          type: string
+        receive_amount:
+          description: The amount of tokens to receive.
+          example: "2000"
+          type: string
+        receive_usd_value:
+          description: The USD value of receive_amount.
+          example: "2000"
+          type: string
+        fee_token_id:
+          description: The token to pay for fee.
+          example: "1.5"
+          type: string
+        fee_amount:
+          description: The amount of tokens to pay for fee.
+          example: "2000"
+          type: string
+        fee_usd_value:
+          description: The USD value of fee_amount.
+          example: "2850.75"
+          type: string
+        min_pay_amount:
+          description: The minimum amount of tokens to pay.
+          example: "0"
+          type: string
+        max_pay_amount:
+          description: The maximum amount of tokens to pay.
+          example: "1000"
+          type: string
+        min_receive_amount:
+          description: The minimum amount of tokens to receive.
+          example: "0"
+          type: string
+        max_receive_amount:
+          description: The maximum amount of tokens to receive.
+          example: "0"
+          type: string
+        quote_created_time:
+          description: "The time when the quote was created, in Unix timestamp format,\
+            \ measured in milliseconds."
+          example: 1677587333000
+          type: integer
+        quote_expired_time:
+          description: "The time when the quote will expire, in Unix timestamp format,\
+            \ measured in milliseconds."
+          example: 1677587393000
+          type: integer
+      required:
+      - activity_id
+      - pay_amount
+      - pay_usd_value
+      - quote_created_time
+      - quote_expired_time
+      - quote_id
+      - receive_amount
+      - receive_usd_value
+      type: object
+    create_swap_activity_request:
+      properties:
+        wallet_id:
+          description: The unique identifier of the wallet.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+        quote_id:
+          description: The unique identifier of the quote.
+          example: 123e4567-e89b-12d3-a456-426614174001
+          format: uuid
+          type: string
+      required:
+      - quote_id
+      - wallet_id
       type: object
     TokenBalance_balance:
       description: The balance details.
@@ -15074,6 +16830,7 @@ components:
       discriminator:
         mapping:
           Asset: '#/components/schemas/TransactionCustodialAssetWalletSource'
+          Web3: '#/components/schemas/TransactionCustodialWeb3WalletSource'
           Org-Controlled: '#/components/schemas/TransactionMPCWalletSource'
           User-Controlled: '#/components/schemas/TransactionMPCWalletSource'
           Safe{Wallet}: '#/components/schemas/TransactionSmartContractSafeWalletSource'
@@ -15085,6 +16842,7 @@ components:
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/TransactionCustodialAssetWalletSource'
+      - $ref: '#/components/schemas/TransactionCustodialWeb3WalletSource'
       - $ref: '#/components/schemas/TransactionMPCWalletSource'
       - $ref: '#/components/schemas/TransactionSmartContractSafeWalletSource'
       - $ref: '#/components/schemas/TransactionExchangeWalletSource'
@@ -15263,6 +17021,17 @@ components:
           format: int64
           type: integer
       type: object
+    Activity_extra:
+      discriminator:
+        mapping:
+          Babylon: '#/components/schemas/BabylonStakingActivityDetailExtra'
+          ETHBeacon: '#/components/schemas/EthStakingActivityDetailExtra'
+          CoreBTC: '#/components/schemas/CoreStakingActivityDetailExtra'
+        propertyName: pool_type
+      oneOf:
+      - $ref: '#/components/schemas/BabylonStakingActivityDetailExtra'
+      - $ref: '#/components/schemas/EthStakingActivityDetailExtra'
+      - $ref: '#/components/schemas/CoreStakingActivityDetailExtra'
     CreateStakeActivity_extra:
       discriminator:
         mapping:
