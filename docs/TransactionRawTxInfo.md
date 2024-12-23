@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **UsedNonce** | Pointer to **int32** | The transaction nonce. | [optional] 
-**SelectedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) | The selected UTXOs to be consumed in the transaction. | [optional] 
+**SelectedUtxos** | Pointer to [**[]TransactionSelectedUtxo**](TransactionSelectedUtxo.md) | The selected UTXOs to be consumed in the transaction. | [optional] 
 **RawTx** | Pointer to **string** | The raw transaction data. | [optional] 
 
 ## Methods
@@ -54,20 +54,20 @@ HasUsedNonce returns a boolean if a field has been set.
 
 ### GetSelectedUtxos
 
-`func (o *TransactionRawTxInfo) GetSelectedUtxos() []TransactionUtxo`
+`func (o *TransactionRawTxInfo) GetSelectedUtxos() []TransactionSelectedUtxo`
 
 GetSelectedUtxos returns the SelectedUtxos field if non-nil, zero value otherwise.
 
 ### GetSelectedUtxosOk
 
-`func (o *TransactionRawTxInfo) GetSelectedUtxosOk() (*[]TransactionUtxo, bool)`
+`func (o *TransactionRawTxInfo) GetSelectedUtxosOk() (*[]TransactionSelectedUtxo, bool)`
 
 GetSelectedUtxosOk returns a tuple with the SelectedUtxos field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSelectedUtxos
 
-`func (o *TransactionRawTxInfo) SetSelectedUtxos(v []TransactionUtxo)`
+`func (o *TransactionRawTxInfo) SetSelectedUtxos(v []TransactionSelectedUtxo)`
 
 SetSelectedUtxos sets SelectedUtxos field to given value.
 

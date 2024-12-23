@@ -32,6 +32,8 @@ type AddressInfo struct {
 	Pubkey *string `json:"pubkey,omitempty"`
 	// The 32-byte x-only public key in hexadecimal format after tweaking.
 	XOnlyPubkey *string `json:"x_only_pubkey,omitempty"`
+	// The root public key of the address. This property applies to MPC Wallets only.
+	RootPubkey *string `json:"root_pubkey,omitempty"`
 	// The information about the new address.
 	TaprootScriptTreeHash *string `json:"taproot_script_tree_hash,omitempty"`
 	// The Taproot address before tweaking.
@@ -267,6 +269,38 @@ func (o *AddressInfo) SetXOnlyPubkey(v string) {
 	o.XOnlyPubkey = &v
 }
 
+// GetRootPubkey returns the RootPubkey field value if set, zero value otherwise.
+func (o *AddressInfo) GetRootPubkey() string {
+	if o == nil || IsNil(o.RootPubkey) {
+		var ret string
+		return ret
+	}
+	return *o.RootPubkey
+}
+
+// GetRootPubkeyOk returns a tuple with the RootPubkey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressInfo) GetRootPubkeyOk() (*string, bool) {
+	if o == nil || IsNil(o.RootPubkey) {
+		return nil, false
+	}
+	return o.RootPubkey, true
+}
+
+// HasRootPubkey returns a boolean if a field has been set.
+func (o *AddressInfo) HasRootPubkey() bool {
+	if o != nil && !IsNil(o.RootPubkey) {
+		return true
+	}
+
+	return false
+}
+
+// SetRootPubkey gets a reference to the given string and assigns it to the RootPubkey field.
+func (o *AddressInfo) SetRootPubkey(v string) {
+	o.RootPubkey = &v
+}
+
 // GetTaprootScriptTreeHash returns the TaprootScriptTreeHash field value if set, zero value otherwise.
 func (o *AddressInfo) GetTaprootScriptTreeHash() string {
 	if o == nil || IsNil(o.TaprootScriptTreeHash) {
@@ -357,6 +391,9 @@ func (o AddressInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.XOnlyPubkey) {
 		toSerialize["x_only_pubkey"] = o.XOnlyPubkey
+	}
+	if !IsNil(o.RootPubkey) {
+		toSerialize["root_pubkey"] = o.RootPubkey
 	}
 	if !IsNil(o.TaprootScriptTreeHash) {
 		toSerialize["taproot_script_tree_hash"] = o.TaprootScriptTreeHash

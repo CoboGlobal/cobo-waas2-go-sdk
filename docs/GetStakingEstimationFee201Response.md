@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **PoolType** | Pointer to [**StakingPoolType**](StakingPoolType.md) |  | [optional] 
 **Fee** | Pointer to [**EstimatedFee**](EstimatedFee.md) |  | [optional] 
 **ValidatorPubkeys** | Pointer to **[]string** | A list of public keys associated with the Ethereum validators for this staking operation. | [optional] 
+**CoreBtcStakingAddress** | Pointer to **string** | P2WSH address generated for this staking operation(If the estimated fee is for core BTC staking). | [optional] 
 **FeeType** | Pointer to [**FeeType**](FeeType.md) |  | [optional] [default to FEETYPE_EVM_EIP_1559]
 **FeeAmount** | Pointer to **string** | The amount of the estimated fee. | [optional] 
 **TokenId** | Pointer to **string** | The token ID of the staking fee. | [optional] 
@@ -104,6 +105,31 @@ SetValidatorPubkeys sets ValidatorPubkeys field to given value.
 `func (o *GetStakingEstimationFee201Response) HasValidatorPubkeys() bool`
 
 HasValidatorPubkeys returns a boolean if a field has been set.
+
+### GetCoreBtcStakingAddress
+
+`func (o *GetStakingEstimationFee201Response) GetCoreBtcStakingAddress() string`
+
+GetCoreBtcStakingAddress returns the CoreBtcStakingAddress field if non-nil, zero value otherwise.
+
+### GetCoreBtcStakingAddressOk
+
+`func (o *GetStakingEstimationFee201Response) GetCoreBtcStakingAddressOk() (*string, bool)`
+
+GetCoreBtcStakingAddressOk returns a tuple with the CoreBtcStakingAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCoreBtcStakingAddress
+
+`func (o *GetStakingEstimationFee201Response) SetCoreBtcStakingAddress(v string)`
+
+SetCoreBtcStakingAddress sets CoreBtcStakingAddress field to given value.
+
+### HasCoreBtcStakingAddress
+
+`func (o *GetStakingEstimationFee201Response) HasCoreBtcStakingAddress() bool`
+
+HasCoreBtcStakingAddress returns a boolean if a field has been set.
 
 ### GetFeeType
 

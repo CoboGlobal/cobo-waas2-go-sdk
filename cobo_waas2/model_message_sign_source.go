@@ -15,7 +15,15 @@ import (
 
 // MessageSignSource - struct for MessageSignSource
 type MessageSignSource struct {
+	CustodialWeb3MessageSignSource *CustodialWeb3MessageSignSource
 	MpcMessageSignSource *MpcMessageSignSource
+}
+
+// CustodialWeb3MessageSignSourceAsMessageSignSource is a convenience function that returns CustodialWeb3MessageSignSource wrapped in MessageSignSource
+func CustodialWeb3MessageSignSourceAsMessageSignSource(v *CustodialWeb3MessageSignSource) MessageSignSource {
+	return MessageSignSource{
+		CustodialWeb3MessageSignSource: v,
+	}
 }
 
 // MpcMessageSignSourceAsMessageSignSource is a convenience function that returns MpcMessageSignSource wrapped in MessageSignSource
@@ -60,6 +68,30 @@ func (dst *MessageSignSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'Web3'
+	if jsonDict["source_type"] == "Web3" {
+		// try to unmarshal JSON data into CustodialWeb3MessageSignSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3MessageSignSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3MessageSignSource, return on the first match
+		} else {
+			dst.CustodialWeb3MessageSignSource = nil
+			return fmt.Errorf("failed to unmarshal MessageSignSource as CustodialWeb3MessageSignSource: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'CustodialWeb3MessageSignSource'
+	if jsonDict["source_type"] == "CustodialWeb3MessageSignSource" {
+		// try to unmarshal JSON data into CustodialWeb3MessageSignSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3MessageSignSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3MessageSignSource, return on the first match
+		} else {
+			dst.CustodialWeb3MessageSignSource = nil
+			return fmt.Errorf("failed to unmarshal MessageSignSource as CustodialWeb3MessageSignSource: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MpcMessageSignSource'
 	if jsonDict["source_type"] == "MpcMessageSignSource" {
 		// try to unmarshal JSON data into MpcMessageSignSource
@@ -77,6 +109,10 @@ func (dst *MessageSignSource) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src MessageSignSource) MarshalJSON() ([]byte, error) {
+	if src.CustodialWeb3MessageSignSource != nil {
+		return json.Marshal(&src.CustodialWeb3MessageSignSource)
+	}
+
 	if src.MpcMessageSignSource != nil {
 		return json.Marshal(&src.MpcMessageSignSource)
 	}
@@ -89,6 +125,10 @@ func (obj *MessageSignSource) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.CustodialWeb3MessageSignSource != nil {
+		return obj.CustodialWeb3MessageSignSource
+	}
+
 	if obj.MpcMessageSignSource != nil {
 		return obj.MpcMessageSignSource
 	}

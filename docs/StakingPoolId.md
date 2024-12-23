@@ -15,6 +15,8 @@
 
 * `CORE_XTN` (value: `"core_xtn"`)
 
+* `SKY_FARM_ETH_USDC` (value: `"sky_farm_eth_usdc"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
