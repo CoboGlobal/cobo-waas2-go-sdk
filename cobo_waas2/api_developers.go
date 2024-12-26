@@ -388,7 +388,7 @@ func (a *DevelopersAPIService) RetryCallbackMessageExecute(r ApiRetryCallbackMes
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/developers/callback_message/{message_id}/retry"
+	localVarPath := localBasePath + "/developers/callback_messages/{message_id}/retry"
 	localVarPath = strings.Replace(localVarPath, "{"+"message_id"+"}", url.PathEscape(parameterValueToString(r.messageId, "messageId")), -1)
 
 	localVarHeaderParams := make(map[string]string)

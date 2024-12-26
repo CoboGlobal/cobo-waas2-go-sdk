@@ -1299,6 +1299,7 @@ type ApiListStakingActivitiesRequest struct {
 	minModifiedTimestamp *int64
 	maxModifiedTimestamp *int64
 	initiator *string
+	requestId *string
 	limit *int32
 	before *string
 	after *string
@@ -1341,6 +1342,12 @@ func (r ApiListStakingActivitiesRequest) MaxModifiedTimestamp(maxModifiedTimesta
 // The activity initiator, which is your API key by default. You can also specify the initiator when creating the activity.
 func (r ApiListStakingActivitiesRequest) Initiator(initiator string) ApiListStakingActivitiesRequest {
 	r.initiator = &initiator
+	return r
+}
+
+// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
+func (r ApiListStakingActivitiesRequest) RequestId(requestId string) ApiListStakingActivitiesRequest {
+	r.requestId = &requestId
 	return r
 }
 
@@ -1423,6 +1430,9 @@ func (a *StakingsAPIService) ListStakingActivitiesExecute(r ApiListStakingActivi
 	}
 	if r.initiator != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "initiator", r.initiator, "")
+	}
+	if r.requestId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

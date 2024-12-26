@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**GetApiKeyInfo**](DevelopersAPI.md#GetApiKeyInfo) | **Get** /developers/api_key_info | Get API key information
 [**ListCallbackMessages**](DevelopersAPI.md#ListCallbackMessages) | **Get** /developers/callback_messages | List all callback messages
-[**RetryCallbackMessage**](DevelopersAPI.md#RetryCallbackMessage) | **Post** /developers/callback_message/{message_id}/retry | Retry callback message
+[**RetryCallbackMessage**](DevelopersAPI.md#RetryCallbackMessage) | **Post** /developers/callback_messages/{message_id}/retry | Retry callback message
 
 
 

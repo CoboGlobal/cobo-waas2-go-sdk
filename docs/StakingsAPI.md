@@ -117,7 +117,7 @@ import (
 )
 
 func main() {
-	createStakeActivityRequest := *coboWaas2.NewCreateStakeActivityRequest(coboWaas2.StakingPoolId("babylon_btc_signet"), "100.00", coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")}, coboWaas2.CreateStakeActivity_extra{BabylonStakeExtra: coboWaas2.NewBabylonStakeExtra(coboWaas2.StakingPoolType("Babylon"), "eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0", int64(2000))})
+	createStakeActivityRequest := *coboWaas2.NewCreateStakeActivityRequest(coboWaas2.StakingPoolId("babylon_btc_signet"), "100.00", coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -717,7 +717,7 @@ Name | Type | Description  | Notes
 
 ## ListStakingActivities
 
-> ListStakingActivities200Response ListStakingActivities(ctx).PoolId(poolId).StakingId(stakingId).ActivityType(activityType).ActivityStatus(activityStatus).MinModifiedTimestamp(minModifiedTimestamp).MaxModifiedTimestamp(maxModifiedTimestamp).Initiator(initiator).Limit(limit).Before(before).After(after).Execute()
+> ListStakingActivities200Response ListStakingActivities(ctx).PoolId(poolId).StakingId(stakingId).ActivityType(activityType).ActivityStatus(activityStatus).MinModifiedTimestamp(minModifiedTimestamp).MaxModifiedTimestamp(maxModifiedTimestamp).Initiator(initiator).RequestId(requestId).Limit(limit).Before(before).After(after).Execute()
 
 List staking activities
 
@@ -744,6 +744,7 @@ func main() {
 	minModifiedTimestamp := int64(1635744000000)
 	maxModifiedTimestamp := int64(1635744000000)
 	initiator := "steve@example.com"
+	requestId := "web_send_by_user_327_1610444045047"
 	limit := int32(10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
@@ -759,7 +760,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.StakingsAPI.ListStakingActivities(ctx).PoolId(poolId).StakingId(stakingId).ActivityType(activityType).ActivityStatus(activityStatus).MinModifiedTimestamp(minModifiedTimestamp).MaxModifiedTimestamp(maxModifiedTimestamp).Initiator(initiator).Limit(limit).Before(before).After(after).Execute()
+	resp, r, err := apiClient.StakingsAPI.ListStakingActivities(ctx).PoolId(poolId).StakingId(stakingId).ActivityType(activityType).ActivityStatus(activityStatus).MinModifiedTimestamp(minModifiedTimestamp).MaxModifiedTimestamp(maxModifiedTimestamp).Initiator(initiator).RequestId(requestId).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.ListStakingActivities``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -787,6 +788,7 @@ Name | Type | Description  | Notes
  **minModifiedTimestamp** | **int64** | The start time of the query. All staking activities updated after the specified time will be retrieved. The time is in Unix timestamp format, measured in milliseconds. | 
  **maxModifiedTimestamp** | **int64** | The end time of the query. All staking activities updated before the specified time will be retrieved. The time is in Unix timestamp format, measured in milliseconds. | 
  **initiator** | **string** | The activity initiator, which is your API key by default. You can also specify the initiator when creating the activity. | 
+ **requestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
  **before** | **string** | An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify &#x60;before&#x60; as &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur.  - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  - If you set &#x60;before&#x60; to &#x60;infinity&#x60;, the last page of data is returned.  | 
  **after** | **string** | An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify &#x60;after&#x60; as &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur.  - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 

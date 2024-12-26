@@ -27,7 +27,7 @@ type EstimateStakeFee struct {
 	// The amount to stake.
 	Amount string `json:"amount"`
 	Fee TransactionRequestFee `json:"fee"`
-	Extra CreateStakeActivityExtra `json:"extra"`
+	Extra *CreateStakeActivityExtra `json:"extra,omitempty"`
 }
 
 type _EstimateStakeFee EstimateStakeFee
@@ -36,13 +36,12 @@ type _EstimateStakeFee EstimateStakeFee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEstimateStakeFee(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra) *EstimateStakeFee {
+func NewEstimateStakeFee(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee) *EstimateStakeFee {
 	this := EstimateStakeFee{}
 	this.ActivityType = activityType
 	this.PoolId = poolId
 	this.Amount = amount
 	this.Fee = fee
-	this.Extra = extra
 	return &this
 }
 
@@ -214,28 +213,36 @@ func (o *EstimateStakeFee) SetFee(v TransactionRequestFee) {
 	o.Fee = v
 }
 
-// GetExtra returns the Extra field value
+// GetExtra returns the Extra field value if set, zero value otherwise.
 func (o *EstimateStakeFee) GetExtra() CreateStakeActivityExtra {
-	if o == nil {
+	if o == nil || IsNil(o.Extra) {
 		var ret CreateStakeActivityExtra
 		return ret
 	}
-
-	return o.Extra
+	return *o.Extra
 }
 
-// GetExtraOk returns a tuple with the Extra field value
+// GetExtraOk returns a tuple with the Extra field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EstimateStakeFee) GetExtraOk() (*CreateStakeActivityExtra, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Extra) {
 		return nil, false
 	}
-	return &o.Extra, true
+	return o.Extra, true
 }
 
-// SetExtra sets field value
+// HasExtra returns a boolean if a field has been set.
+func (o *EstimateStakeFee) HasExtra() bool {
+	if o != nil && !IsNil(o.Extra) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtra gets a reference to the given CreateStakeActivityExtra and assigns it to the Extra field.
 func (o *EstimateStakeFee) SetExtra(v CreateStakeActivityExtra) {
-	o.Extra = v
+	o.Extra = &v
 }
 
 func (o EstimateStakeFee) MarshalJSON() ([]byte, error) {
@@ -258,7 +265,9 @@ func (o EstimateStakeFee) ToMap() (map[string]interface{}, error) {
 	toSerialize["pool_id"] = o.PoolId
 	toSerialize["amount"] = o.Amount
 	toSerialize["fee"] = o.Fee
-	toSerialize["extra"] = o.Extra
+	if !IsNil(o.Extra) {
+		toSerialize["extra"] = o.Extra
+	}
 	return toSerialize, nil
 }
 
@@ -271,7 +280,6 @@ func (o *EstimateStakeFee) UnmarshalJSON(data []byte) (err error) {
 		"pool_id",
 		"amount",
 		"fee",
-		"extra",
 	}
 
 	allProperties := make(map[string]interface{})

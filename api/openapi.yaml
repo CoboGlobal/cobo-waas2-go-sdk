@@ -3388,7 +3388,7 @@ paths:
           \ with a smart contract.\n  - `MessageSign`: A transaction that signs a\
           \ message. \n  - `ExternalSafeTx`: A transaction to a Smart Contract Wallet\
           \ (Safe{Wallet}) that requires one or multiple signatures to be executed.\n\
-          \  - `Stake`: A transaction that creates a staking request.\n  - `Unstake`:\
+          \  - `Stake`: A transaction that creates a staking request.\n  - `UnStake`:\
           \ A transaction that creates a unstaking request.\n"
         example: "Deposit,Withdrawal"
         explode: true
@@ -5167,6 +5167,16 @@ paths:
         schema:
           type: string
         style: form
+      - description: The request ID that is used to track a transaction request. The
+          request ID is provided by you and must be unique within your organization.
+        example: web_send_by_user_327_1610444045047
+        explode: true
+        in: query
+        name: request_id
+        required: false
+        schema:
+          type: string
+        style: form
       - description: "The maximum number of objects to return. For most operations,\
           \ the value range is [1, 50]."
         example: 10
@@ -5443,7 +5453,7 @@ paths:
       summary: List all callback messages
       tags:
       - Developers
-  /developers/callback_message/{message_id}/retry:
+  /developers/callback_messages/{message_id}/retry:
     post:
       description: |
         This operation retry a failed callback message.
@@ -6689,7 +6699,7 @@ components:
         \ contract.\n  - `MessageSign`: A transaction that signs a message. \n  -\
         \ `ExternalSafeTx`: A transaction to a Smart Contract Wallet (Safe{Wallet})\
         \ that requires one or multiple signatures to be executed.\n  - `Stake`: A\
-        \ transaction that creates a staking request.\n  - `Unstake`: A transaction\
+        \ transaction that creates a staking request.\n  - `UnStake`: A transaction\
         \ that creates a unstaking request.\n"
       example: "Deposit,Withdrawal"
       explode: true
@@ -10550,7 +10560,7 @@ components:
         \ `MessageSign`: A transaction that signs a message. \n  - `ExternalSafeTx`:\
         \ A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one\
         \ or multiple signatures to be executed.\n  - `Stake`: A transaction that\
-        \ creates a staking request.\n  - `Unstake`: A transaction that creates a\
+        \ creates a staking request.\n  - `UnStake`: A transaction that creates a\
         \ unstaking request.\n"
       enum:
       - Deposit
@@ -10559,7 +10569,7 @@ components:
       - MessageSign
       - ExternalSafeTx
       - Stake
-      - Unstake
+      - UnStake
       example: Deposit
       type: string
     MpcSigningGroup:
@@ -13247,6 +13257,9 @@ components:
           auto_broadcast: false
           withdraw_from_type: Stake
           pool_type: Babylon
+        request_ids:
+        - f47ac10b-58cc-4372-a567-0e02b2c3d479
+        - f47ac10b-58cc-4372-a567-0e02b2c3d479
         timeline:
         - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           action: Submitted
@@ -13261,7 +13274,6 @@ components:
         transaction_ids:
         - 0011039d-27fb-49ba-b172-6e0aa80e37ec
         - 0011039d-27fb-49ba-b172-6e0aa80e37ec
-        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         status: Success
       properties:
         id:
@@ -13294,10 +13306,12 @@ components:
           description: The ID of the corresponding staking position.
           example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
           type: string
-        request_id:
-          description: The request ID that is used to track a request.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          type: string
+        request_ids:
+          description: The request IDs of the corresponding transactions of the activity.
+          items:
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
+          type: array
         amount:
           description: The staking amount.
           example: "100.00"
@@ -13438,7 +13452,6 @@ components:
       required:
       - address
       - amount
-      - extra
       - fee
       - pool_id
       - wallet_id
@@ -16186,6 +16199,9 @@ components:
             auto_broadcast: false
             withdraw_from_type: Stake
             pool_type: Babylon
+          request_ids:
+          - f47ac10b-58cc-4372-a567-0e02b2c3d479
+          - f47ac10b-58cc-4372-a567-0e02b2c3d479
           timeline:
           - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             action: Submitted
@@ -16200,7 +16216,6 @@ components:
           transaction_ids:
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
-          request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           status: Success
         - amount: "100.00"
           address: 0xAbCdE123456789aBcDeF123456789aBcDeF12345
@@ -16223,6 +16238,9 @@ components:
             auto_broadcast: false
             withdraw_from_type: Stake
             pool_type: Babylon
+          request_ids:
+          - f47ac10b-58cc-4372-a567-0e02b2c3d479
+          - f47ac10b-58cc-4372-a567-0e02b2c3d479
           timeline:
           - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             action: Submitted
@@ -16237,7 +16255,6 @@ components:
           transaction_ids:
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
           - 0011039d-27fb-49ba-b172-6e0aa80e37ec
-          request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           status: Success
       properties:
         data:

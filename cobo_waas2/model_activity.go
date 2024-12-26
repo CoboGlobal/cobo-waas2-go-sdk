@@ -34,8 +34,8 @@ type Activity struct {
 	TokenId string `json:"token_id"`
 	// The ID of the corresponding staking position.
 	StakingId *string `json:"staking_id,omitempty"`
-	// The request ID that is used to track a request.
-	RequestId *string `json:"request_id,omitempty"`
+	// The request IDs of the corresponding transactions of the activity.
+	RequestIds []string `json:"request_ids,omitempty"`
 	// The staking amount.
 	Amount string `json:"amount"`
 	// The IDs of the corresponding transactions of the activity.
@@ -346,36 +346,36 @@ func (o *Activity) SetStakingId(v string) {
 	o.StakingId = &v
 }
 
-// GetRequestId returns the RequestId field value if set, zero value otherwise.
-func (o *Activity) GetRequestId() string {
-	if o == nil || IsNil(o.RequestId) {
-		var ret string
+// GetRequestIds returns the RequestIds field value if set, zero value otherwise.
+func (o *Activity) GetRequestIds() []string {
+	if o == nil || IsNil(o.RequestIds) {
+		var ret []string
 		return ret
 	}
-	return *o.RequestId
+	return o.RequestIds
 }
 
-// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// GetRequestIdsOk returns a tuple with the RequestIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Activity) GetRequestIdOk() (*string, bool) {
-	if o == nil || IsNil(o.RequestId) {
+func (o *Activity) GetRequestIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.RequestIds) {
 		return nil, false
 	}
-	return o.RequestId, true
+	return o.RequestIds, true
 }
 
-// HasRequestId returns a boolean if a field has been set.
-func (o *Activity) HasRequestId() bool {
-	if o != nil && !IsNil(o.RequestId) {
+// HasRequestIds returns a boolean if a field has been set.
+func (o *Activity) HasRequestIds() bool {
+	if o != nil && !IsNil(o.RequestIds) {
 		return true
 	}
 
 	return false
 }
 
-// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
-func (o *Activity) SetRequestId(v string) {
-	o.RequestId = &v
+// SetRequestIds gets a reference to the given []string and assigns it to the RequestIds field.
+func (o *Activity) SetRequestIds(v []string) {
+	o.RequestIds = v
 }
 
 // GetAmount returns the Amount field value
@@ -651,8 +651,8 @@ func (o Activity) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.StakingId) {
 		toSerialize["staking_id"] = o.StakingId
 	}
-	if !IsNil(o.RequestId) {
-		toSerialize["request_id"] = o.RequestId
+	if !IsNil(o.RequestIds) {
+		toSerialize["request_ids"] = o.RequestIds
 	}
 	toSerialize["amount"] = o.Amount
 	if !IsNil(o.TransactionIds) {
