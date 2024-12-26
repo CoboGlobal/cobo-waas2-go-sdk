@@ -9,14 +9,14 @@ Name | Type | Description | Notes
 **PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **Amount** | **string** | The amount to stake. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
-**Extra** | [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | 
+**Extra** | Pointer to [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | [optional] 
 **AppInitiator** | Pointer to **string** | The initiator of the staking activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator. | [optional] 
 
 ## Methods
 
 ### NewCreateStakeActivityRequest
 
-`func NewCreateStakeActivityRequest(poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra, ) *CreateStakeActivityRequest`
+`func NewCreateStakeActivityRequest(poolId StakingPoolId, amount string, fee TransactionRequestFee, ) *CreateStakeActivityRequest`
 
 NewCreateStakeActivityRequest instantiates a new CreateStakeActivityRequest object
 This constructor will assign default values to properties that have it defined,
@@ -160,6 +160,11 @@ and a boolean to check if the value has been set.
 
 SetExtra sets Extra field to given value.
 
+### HasExtra
+
+`func (o *CreateStakeActivityRequest) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
 
 ### GetAppInitiator
 

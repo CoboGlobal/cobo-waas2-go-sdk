@@ -26,7 +26,7 @@ type CreateStakeActivityRequest struct {
 	// The amount to stake.
 	Amount string `json:"amount"`
 	Fee TransactionRequestFee `json:"fee"`
-	Extra CreateStakeActivityExtra `json:"extra"`
+	Extra *CreateStakeActivityExtra `json:"extra,omitempty"`
 	// The initiator of the staking activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator.
 	AppInitiator *string `json:"app_initiator,omitempty"`
 }
@@ -37,12 +37,11 @@ type _CreateStakeActivityRequest CreateStakeActivityRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateStakeActivityRequest(poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra) *CreateStakeActivityRequest {
+func NewCreateStakeActivityRequest(poolId StakingPoolId, amount string, fee TransactionRequestFee) *CreateStakeActivityRequest {
 	this := CreateStakeActivityRequest{}
 	this.PoolId = poolId
 	this.Amount = amount
 	this.Fee = fee
-	this.Extra = extra
 	return &this
 }
 
@@ -190,28 +189,36 @@ func (o *CreateStakeActivityRequest) SetFee(v TransactionRequestFee) {
 	o.Fee = v
 }
 
-// GetExtra returns the Extra field value
+// GetExtra returns the Extra field value if set, zero value otherwise.
 func (o *CreateStakeActivityRequest) GetExtra() CreateStakeActivityExtra {
-	if o == nil {
+	if o == nil || IsNil(o.Extra) {
 		var ret CreateStakeActivityExtra
 		return ret
 	}
-
-	return o.Extra
+	return *o.Extra
 }
 
-// GetExtraOk returns a tuple with the Extra field value
+// GetExtraOk returns a tuple with the Extra field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateStakeActivityRequest) GetExtraOk() (*CreateStakeActivityExtra, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Extra) {
 		return nil, false
 	}
-	return &o.Extra, true
+	return o.Extra, true
 }
 
-// SetExtra sets field value
+// HasExtra returns a boolean if a field has been set.
+func (o *CreateStakeActivityRequest) HasExtra() bool {
+	if o != nil && !IsNil(o.Extra) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtra gets a reference to the given CreateStakeActivityExtra and assigns it to the Extra field.
 func (o *CreateStakeActivityRequest) SetExtra(v CreateStakeActivityExtra) {
-	o.Extra = v
+	o.Extra = &v
 }
 
 // GetAppInitiator returns the AppInitiator field value if set, zero value otherwise.
@@ -265,7 +272,9 @@ func (o CreateStakeActivityRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["pool_id"] = o.PoolId
 	toSerialize["amount"] = o.Amount
 	toSerialize["fee"] = o.Fee
-	toSerialize["extra"] = o.Extra
+	if !IsNil(o.Extra) {
+		toSerialize["extra"] = o.Extra
+	}
 	if !IsNil(o.AppInitiator) {
 		toSerialize["app_initiator"] = o.AppInitiator
 	}
@@ -280,7 +289,6 @@ func (o *CreateStakeActivityRequest) UnmarshalJSON(data []byte) (err error) {
 		"pool_id",
 		"amount",
 		"fee",
-		"extra",
 	}
 
 	allProperties := make(map[string]interface{})

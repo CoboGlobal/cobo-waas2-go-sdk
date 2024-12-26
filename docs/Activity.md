@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **TokenId** | **string** | The token ID. | 
 **StakingId** | Pointer to **string** | The ID of the corresponding staking position. | [optional] 
-**RequestId** | Pointer to **string** | The request ID that is used to track a request. | [optional] 
+**RequestIds** | Pointer to **[]string** | The request IDs of the corresponding transactions of the activity. | [optional] 
 **Amount** | **string** | The staking amount. | 
 **TransactionIds** | Pointer to **[]string** | The IDs of the corresponding transactions of the activity. | [optional] 
 **Timeline** | Pointer to [**[]ActivityTimeline**](ActivityTimeline.md) | The timeline of the activity. | [optional] 
@@ -257,30 +257,30 @@ SetStakingId sets StakingId field to given value.
 
 HasStakingId returns a boolean if a field has been set.
 
-### GetRequestId
+### GetRequestIds
 
-`func (o *Activity) GetRequestId() string`
+`func (o *Activity) GetRequestIds() []string`
 
-GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+GetRequestIds returns the RequestIds field if non-nil, zero value otherwise.
 
-### GetRequestIdOk
+### GetRequestIdsOk
 
-`func (o *Activity) GetRequestIdOk() (*string, bool)`
+`func (o *Activity) GetRequestIdsOk() (*[]string, bool)`
 
-GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+GetRequestIdsOk returns a tuple with the RequestIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRequestId
+### SetRequestIds
 
-`func (o *Activity) SetRequestId(v string)`
+`func (o *Activity) SetRequestIds(v []string)`
 
-SetRequestId sets RequestId field to given value.
+SetRequestIds sets RequestIds field to given value.
 
-### HasRequestId
+### HasRequestIds
 
-`func (o *Activity) HasRequestId() bool`
+`func (o *Activity) HasRequestIds() bool`
 
-HasRequestId returns a boolean if a field has been set.
+HasRequestIds returns a boolean if a field has been set.
 
 ### GetAmount
 
