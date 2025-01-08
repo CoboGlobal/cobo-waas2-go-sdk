@@ -24,6 +24,7 @@ const (
 	STAKINGPOOLID_BEACON_ETH_HOLESKY StakingPoolId = "beacon_eth_holesky"
 	STAKINGPOOLID_CORE_BTC StakingPoolId = "core_btc"
 	STAKINGPOOLID_CORE_XTN StakingPoolId = "core_xtn"
+	STAKINGPOOLID_SKY_FARM_ETH_USDC StakingPoolId = "sky_farm_eth_usdc"
 )
 
 // All allowed values of StakingPoolId enum
@@ -34,6 +35,7 @@ var AllowedStakingPoolIdEnumValues = []StakingPoolId{
 	"beacon_eth_holesky",
 	"core_btc",
 	"core_xtn",
+	"sky_farm_eth_usdc",
 }
 
 func (v *StakingPoolId) UnmarshalJSON(src []byte) error {

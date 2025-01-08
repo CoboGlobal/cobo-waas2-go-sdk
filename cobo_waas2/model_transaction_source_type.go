@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionSourceType The transaction source. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type. 
+// TransactionSourceType The transaction source. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type. 
 type TransactionSourceType string
 
 // List of TransactionSourceType

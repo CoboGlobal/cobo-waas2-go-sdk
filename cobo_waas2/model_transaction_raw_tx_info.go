@@ -20,7 +20,7 @@ type TransactionRawTxInfo struct {
 	// The transaction nonce.
 	UsedNonce *int32 `json:"used_nonce,omitempty"`
 	// The selected UTXOs to be consumed in the transaction.
-	SelectedUtxos []TransactionUtxo `json:"selected_utxos,omitempty"`
+	SelectedUtxos []TransactionSelectedUtxo `json:"selected_utxos,omitempty"`
 	// The raw transaction data.
 	RawTx *string `json:"raw_tx,omitempty"`
 }
@@ -75,9 +75,9 @@ func (o *TransactionRawTxInfo) SetUsedNonce(v int32) {
 }
 
 // GetSelectedUtxos returns the SelectedUtxos field value if set, zero value otherwise.
-func (o *TransactionRawTxInfo) GetSelectedUtxos() []TransactionUtxo {
+func (o *TransactionRawTxInfo) GetSelectedUtxos() []TransactionSelectedUtxo {
 	if o == nil || IsNil(o.SelectedUtxos) {
-		var ret []TransactionUtxo
+		var ret []TransactionSelectedUtxo
 		return ret
 	}
 	return o.SelectedUtxos
@@ -85,7 +85,7 @@ func (o *TransactionRawTxInfo) GetSelectedUtxos() []TransactionUtxo {
 
 // GetSelectedUtxosOk returns a tuple with the SelectedUtxos field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionRawTxInfo) GetSelectedUtxosOk() ([]TransactionUtxo, bool) {
+func (o *TransactionRawTxInfo) GetSelectedUtxosOk() ([]TransactionSelectedUtxo, bool) {
 	if o == nil || IsNil(o.SelectedUtxos) {
 		return nil, false
 	}
@@ -101,8 +101,8 @@ func (o *TransactionRawTxInfo) HasSelectedUtxos() bool {
 	return false
 }
 
-// SetSelectedUtxos gets a reference to the given []TransactionUtxo and assigns it to the SelectedUtxos field.
-func (o *TransactionRawTxInfo) SetSelectedUtxos(v []TransactionUtxo) {
+// SetSelectedUtxos gets a reference to the given []TransactionSelectedUtxo and assigns it to the SelectedUtxos field.
+func (o *TransactionRawTxInfo) SetSelectedUtxos(v []TransactionSelectedUtxo) {
 	o.SelectedUtxos = v
 }
 

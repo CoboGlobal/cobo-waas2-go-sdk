@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ContractCallDestinationType The type of the contract format. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type. 
+// ContractCallDestinationType The type of the contract format. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type. 
 type ContractCallDestinationType string
 
 // List of ContractCallDestinationType

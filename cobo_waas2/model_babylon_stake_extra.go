@@ -24,7 +24,7 @@ type BabylonStakeExtra struct {
 	FinalityProviderPublicKey string `json:"finality_provider_public_key"`
 	// The number of blocks that need to be processed before the locked tokens are unlocked and become accessible.
 	StakeBlockTime int64 `json:"stake_block_time"`
-	// Whether to automatically broadcast the transaction. The default value is `true`.  - `true`: Automatically broadcast the transaction. - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information) and broadcast it yourself. 
+	// Whether to automatically broadcast the transaction. The default value is `true`.  - `true`: Automatically broadcast the transaction. - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself. 
 	AutoBroadcast *bool `json:"auto_broadcast,omitempty"`
 }
 

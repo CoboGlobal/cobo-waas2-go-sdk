@@ -23,7 +23,7 @@ type EstimateTransferFeeParams struct {
 	RequestId *string `json:"request_id,omitempty"`
 	RequestType EstimateFeeRequestType `json:"request_type"`
 	Source TransferSource `json:"source"`
-	// The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
+	// The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
 	Destination *TransferDestination `json:"destination,omitempty"`
 	FeeType *FeeType `json:"fee_type,omitempty"`

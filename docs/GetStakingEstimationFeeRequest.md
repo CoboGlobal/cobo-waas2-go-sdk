@@ -10,14 +10,14 @@ Name | Type | Description | Notes
 **PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **Amount** | **string** | The amount to withdraw. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
-**Extra** | [**CreateUnstakeActivityExtra**](CreateUnstakeActivityExtra.md) |  | 
-**StakingId** | **string** | The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](/v2/api-references/stakings/list-staking-positions). | 
+**Extra** | Pointer to [**CreateUnstakeActivityExtra**](CreateUnstakeActivityExtra.md) |  | [optional] 
+**StakingId** | **string** | The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](https://www.cobo.com/developers/v2/api-references/stakings/list-staking-positions). | 
 
 ## Methods
 
 ### NewGetStakingEstimationFeeRequest
 
-`func NewGetStakingEstimationFeeRequest(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateUnstakeActivityExtra, stakingId string, ) *GetStakingEstimationFeeRequest`
+`func NewGetStakingEstimationFeeRequest(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee, stakingId string, ) *GetStakingEstimationFeeRequest`
 
 NewGetStakingEstimationFeeRequest instantiates a new GetStakingEstimationFeeRequest object
 This constructor will assign default values to properties that have it defined,
@@ -181,6 +181,11 @@ and a boolean to check if the value has been set.
 
 SetExtra sets Extra field to given value.
 
+### HasExtra
+
+`func (o *GetStakingEstimationFeeRequest) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
 
 ### GetStakingId
 

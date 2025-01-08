@@ -17,7 +17,7 @@ import (
 // checks if the MpcTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MpcTransferSource{}
 
-// MpcTransferSource The information about the transaction source types `Org-Controlled` and `User-Controlled`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.  Switch between the tabs to display the properties for different transaction sources. 
+// MpcTransferSource The information about the transaction source types `Org-Controlled` and `User-Controlled`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.  Switch between the tabs to display the properties for different transaction sources. 
 type MpcTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.

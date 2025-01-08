@@ -17,7 +17,7 @@ import (
 // checks if the TransactionDepositFromAddressSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionDepositFromAddressSource{}
 
-// TransactionDepositFromAddressSource Information about the transaction source type `DepositFromAddress`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction sources. 
+// TransactionDepositFromAddressSource Information about the transaction source type `DepositFromAddress`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction sources. 
 type TransactionDepositFromAddressSource struct {
 	SourceType TransactionSourceType `json:"source_type"`
 	// The wallet ID.

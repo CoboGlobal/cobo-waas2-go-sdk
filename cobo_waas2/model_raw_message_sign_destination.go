@@ -17,7 +17,7 @@ import (
 // checks if the RawMessageSignDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RawMessageSignDestination{}
 
-// RawMessageSignDestination The information about the destination `Raw_Message_Signature`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+// RawMessageSignDestination The information about the destination `Raw_Message_Signature`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 type RawMessageSignDestination struct {
 	DestinationType MessageSignDestinationType `json:"destination_type"`
 	// Message hash to be signed, in hexadecimal format.

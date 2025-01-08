@@ -4,17 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
 **WalletId** | **string** | For deposit transactions, this property represents the wallet ID of the transaction destination. For transactions of other types, this property represents the wallet ID of the transaction source. | 
-**Type** | Pointer to [**TSSRequestType**](TSSRequestType.md) |  | [optional] 
+**Type** | Pointer to [**MPCVaultType**](MPCVaultType.md) |  | [optional] 
 **Status** | [**TSSRequestStatus**](TSSRequestStatus.md) |  | 
 **SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
 **FailedReason** | Pointer to **string** | (This property is applicable to approval failures and signature failures only) The reason why the transaction failed. | [optional] 
-**ChainId** | Pointer to **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). | [optional] 
-**TokenId** | Pointer to **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens). | [optional] 
+**ChainId** | Pointer to **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | [optional] 
+**TokenId** | Pointer to **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | [optional] 
 **AssetId** | Pointer to **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | [optional] 
 **Source** | [**TransactionSource**](TransactionSource.md) |  | 
 **Destination** | [**TransactionDestination**](TransactionDestination.md) |  | 
@@ -31,11 +31,17 @@ Name | Type | Description | Notes
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description of the TSS request. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
-**CreatedTimestamp** | Pointer to **int64** | The TSS request&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The vault&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
 **SourceKeyShareHolderGroup** | Pointer to [**SourceGroup**](SourceGroup.md) |  | [optional] 
 **TargetKeyShareHolderGroupId** | Pointer to **string** | The target key share holder group ID. | [optional] 
+**Addresses** | Pointer to [**[]AddressInfo**](AddressInfo.md) | A list of addresses. | [optional] 
+**Wallet** | Pointer to [**WalletInfo**](WalletInfo.md) |  | [optional] 
+**VaultId** | Pointer to **string** | The vault ID. | [optional] 
+**ProjectId** | Pointer to **string** | The project ID. | [optional] 
+**Name** | Pointer to **string** | The vault name. | [optional] 
+**RootPubkeys** | Pointer to [**[]RootPubkey**](RootPubkey.md) |  | [optional] 
 
 ## Methods
 
@@ -168,20 +174,20 @@ SetWalletId sets WalletId field to given value.
 
 ### GetType
 
-`func (o *WebhookEventData) GetType() TSSRequestType`
+`func (o *WebhookEventData) GetType() MPCVaultType`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *WebhookEventData) GetTypeOk() (*TSSRequestType, bool)`
+`func (o *WebhookEventData) GetTypeOk() (*MPCVaultType, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *WebhookEventData) SetType(v TSSRequestType)`
+`func (o *WebhookEventData) SetType(v MPCVaultType)`
 
 SetType sets Type field to given value.
 
@@ -820,6 +826,156 @@ SetTargetKeyShareHolderGroupId sets TargetKeyShareHolderGroupId field to given v
 `func (o *WebhookEventData) HasTargetKeyShareHolderGroupId() bool`
 
 HasTargetKeyShareHolderGroupId returns a boolean if a field has been set.
+
+### GetAddresses
+
+`func (o *WebhookEventData) GetAddresses() []AddressInfo`
+
+GetAddresses returns the Addresses field if non-nil, zero value otherwise.
+
+### GetAddressesOk
+
+`func (o *WebhookEventData) GetAddressesOk() (*[]AddressInfo, bool)`
+
+GetAddressesOk returns a tuple with the Addresses field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddresses
+
+`func (o *WebhookEventData) SetAddresses(v []AddressInfo)`
+
+SetAddresses sets Addresses field to given value.
+
+### HasAddresses
+
+`func (o *WebhookEventData) HasAddresses() bool`
+
+HasAddresses returns a boolean if a field has been set.
+
+### GetWallet
+
+`func (o *WebhookEventData) GetWallet() WalletInfo`
+
+GetWallet returns the Wallet field if non-nil, zero value otherwise.
+
+### GetWalletOk
+
+`func (o *WebhookEventData) GetWalletOk() (*WalletInfo, bool)`
+
+GetWalletOk returns a tuple with the Wallet field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWallet
+
+`func (o *WebhookEventData) SetWallet(v WalletInfo)`
+
+SetWallet sets Wallet field to given value.
+
+### HasWallet
+
+`func (o *WebhookEventData) HasWallet() bool`
+
+HasWallet returns a boolean if a field has been set.
+
+### GetVaultId
+
+`func (o *WebhookEventData) GetVaultId() string`
+
+GetVaultId returns the VaultId field if non-nil, zero value otherwise.
+
+### GetVaultIdOk
+
+`func (o *WebhookEventData) GetVaultIdOk() (*string, bool)`
+
+GetVaultIdOk returns a tuple with the VaultId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVaultId
+
+`func (o *WebhookEventData) SetVaultId(v string)`
+
+SetVaultId sets VaultId field to given value.
+
+### HasVaultId
+
+`func (o *WebhookEventData) HasVaultId() bool`
+
+HasVaultId returns a boolean if a field has been set.
+
+### GetProjectId
+
+`func (o *WebhookEventData) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *WebhookEventData) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *WebhookEventData) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
+### HasProjectId
+
+`func (o *WebhookEventData) HasProjectId() bool`
+
+HasProjectId returns a boolean if a field has been set.
+
+### GetName
+
+`func (o *WebhookEventData) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *WebhookEventData) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *WebhookEventData) SetName(v string)`
+
+SetName sets Name field to given value.
+
+### HasName
+
+`func (o *WebhookEventData) HasName() bool`
+
+HasName returns a boolean if a field has been set.
+
+### GetRootPubkeys
+
+`func (o *WebhookEventData) GetRootPubkeys() []RootPubkey`
+
+GetRootPubkeys returns the RootPubkeys field if non-nil, zero value otherwise.
+
+### GetRootPubkeysOk
+
+`func (o *WebhookEventData) GetRootPubkeysOk() (*[]RootPubkey, bool)`
+
+GetRootPubkeysOk returns a tuple with the RootPubkeys field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRootPubkeys
+
+`func (o *WebhookEventData) SetRootPubkeys(v []RootPubkey)`
+
+SetRootPubkeys sets RootPubkeys field to given value.
+
+### HasRootPubkeys
+
+`func (o *WebhookEventData) HasRootPubkeys() bool`
+
+HasRootPubkeys returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

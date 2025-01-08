@@ -17,7 +17,7 @@ import (
 // checks if the SafeTransferSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SafeTransferSource{}
 
-// SafeTransferSource The information about the transaction source type `Safe{Wallet}`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction sources. 
+// SafeTransferSource The information about the transaction source type `Safe{Wallet}`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction sources. 
 type SafeTransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.

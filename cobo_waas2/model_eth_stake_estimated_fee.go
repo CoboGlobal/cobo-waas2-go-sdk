@@ -21,6 +21,8 @@ type EthStakeEstimatedFee struct {
 	Fee *EstimatedFee `json:"fee,omitempty"`
 	// A list of public keys associated with the Ethereum validators for this staking operation.
 	ValidatorPubkeys []string `json:"validator_pubkeys,omitempty"`
+	// P2WSH address generated for this staking operation(If the estimated fee is for core BTC staking).
+	CoreBtcStakingAddress *string `json:"core_btc_staking_address,omitempty"`
 }
 
 // NewEthStakeEstimatedFee instantiates a new EthStakeEstimatedFee object
@@ -136,6 +138,38 @@ func (o *EthStakeEstimatedFee) SetValidatorPubkeys(v []string) {
 	o.ValidatorPubkeys = v
 }
 
+// GetCoreBtcStakingAddress returns the CoreBtcStakingAddress field value if set, zero value otherwise.
+func (o *EthStakeEstimatedFee) GetCoreBtcStakingAddress() string {
+	if o == nil || IsNil(o.CoreBtcStakingAddress) {
+		var ret string
+		return ret
+	}
+	return *o.CoreBtcStakingAddress
+}
+
+// GetCoreBtcStakingAddressOk returns a tuple with the CoreBtcStakingAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EthStakeEstimatedFee) GetCoreBtcStakingAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.CoreBtcStakingAddress) {
+		return nil, false
+	}
+	return o.CoreBtcStakingAddress, true
+}
+
+// HasCoreBtcStakingAddress returns a boolean if a field has been set.
+func (o *EthStakeEstimatedFee) HasCoreBtcStakingAddress() bool {
+	if o != nil && !IsNil(o.CoreBtcStakingAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetCoreBtcStakingAddress gets a reference to the given string and assigns it to the CoreBtcStakingAddress field.
+func (o *EthStakeEstimatedFee) SetCoreBtcStakingAddress(v string) {
+	o.CoreBtcStakingAddress = &v
+}
+
 func (o EthStakeEstimatedFee) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -154,6 +188,9 @@ func (o EthStakeEstimatedFee) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ValidatorPubkeys) {
 		toSerialize["validator_pubkeys"] = o.ValidatorPubkeys
+	}
+	if !IsNil(o.CoreBtcStakingAddress) {
+		toSerialize["core_btc_staking_address"] = o.CoreBtcStakingAddress
 	}
 	return toSerialize, nil
 }

@@ -10,13 +10,13 @@ Name | Type | Description | Notes
 **PoolId** | [**StakingPoolId**](StakingPoolId.md) |  | 
 **Amount** | **string** | The amount to stake. | 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
-**Extra** | [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | 
+**Extra** | Pointer to [**CreateStakeActivityExtra**](CreateStakeActivityExtra.md) |  | [optional] 
 
 ## Methods
 
 ### NewEstimateStakeFee
 
-`func NewEstimateStakeFee(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra, ) *EstimateStakeFee`
+`func NewEstimateStakeFee(activityType ActivityType, poolId StakingPoolId, amount string, fee TransactionRequestFee, ) *EstimateStakeFee`
 
 NewEstimateStakeFee instantiates a new EstimateStakeFee object
 This constructor will assign default values to properties that have it defined,
@@ -180,6 +180,11 @@ and a boolean to check if the value has been set.
 
 SetExtra sets Extra field to given value.
 
+### HasExtra
+
+`func (o *EstimateStakeFee) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

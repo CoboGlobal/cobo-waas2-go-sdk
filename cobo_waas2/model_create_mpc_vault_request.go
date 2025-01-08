@@ -19,7 +19,7 @@ var _ MappedNullable = &CreateMpcVaultRequest{}
 
 // CreateMpcVaultRequest struct for CreateMpcVaultRequest
 type CreateMpcVaultRequest struct {
-	// The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects).  **Notes:** 1. If you set `vault_type` to `OrgControlled`, the value of `project_id` will be ignored. 2. If you set `vault_type` to `UserControlled`, then `project_id` is required. 
+	// The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).  **Notes:** 1. If you set `vault_type` to `OrgControlled`, the value of `project_id` will be ignored. 2. If you set `vault_type` to `UserControlled`, then `project_id` is required. 
 	ProjectId *string `json:"project_id,omitempty"`
 	// The vault name.
 	Name string `json:"name"`

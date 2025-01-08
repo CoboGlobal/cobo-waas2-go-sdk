@@ -21,7 +21,7 @@ var _ MappedNullable = &MessageSignParams{}
 type MessageSignParams struct {
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
 	RequestId string `json:"request_id"`
-	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
+	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 	ChainId string `json:"chain_id"`
 	Source MessageSignSource `json:"source"`
 	Destination MessageSignDestination `json:"destination"`

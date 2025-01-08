@@ -31,7 +31,7 @@ type ApiLogDetails struct {
 	IpAddress string `json:"ip_address"`
 	// The time when the API request was created, in Unix timestamp format, measured in milliseconds.
 	RequestTimestamp int64 `json:"request_timestamp"`
-	// The API key used to call the API. For more details, refer to [API key](/v2/guides/overview/cobo-auth#api-key).
+	// The API key used to call the API. For more details, refer to [API key](https://www.cobo.com/developers/v2/guides/overview/cobo-auth#api-key).
 	ApiKey string `json:"api_key"`
 	// The response body of the API request.
 	ResponseBody string `json:"response_body"`

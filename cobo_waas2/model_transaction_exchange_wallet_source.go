@@ -17,7 +17,7 @@ import (
 // checks if the TransactionExchangeWalletSource type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionExchangeWalletSource{}
 
-// TransactionExchangeWalletSource Information about the transaction source types `Main` and `Sub`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction sources. 
+// TransactionExchangeWalletSource Information about the transaction source types `Main` and `Sub`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction sources. 
 type TransactionExchangeWalletSource struct {
 	SourceType TransactionSourceType `json:"source_type"`
 	ExchangeId ExchangeId `json:"exchange_id"`

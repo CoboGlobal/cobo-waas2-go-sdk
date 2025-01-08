@@ -17,7 +17,7 @@ import (
 // checks if the TransactionDepositToWalletDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionDepositToWalletDestination{}
 
-// TransactionDepositToWalletDestination Information about the transaction destination type `DepositToWallet`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
+// TransactionDepositToWalletDestination Information about the transaction destination type `DepositToWallet`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
 type TransactionDepositToWalletDestination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
 	// The wallet ID.

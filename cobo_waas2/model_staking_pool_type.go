@@ -21,6 +21,7 @@ const (
 	STAKINGPOOLTYPE_BABYLON StakingPoolType = "Babylon"
 	STAKINGPOOLTYPE_ETH_BEACON StakingPoolType = "ETHBeacon"
 	STAKINGPOOLTYPE_CORE_BTC StakingPoolType = "CoreBTC"
+	STAKINGPOOLTYPE_SKY_FARM StakingPoolType = "SkyFarm"
 )
 
 // All allowed values of StakingPoolType enum
@@ -28,6 +29,7 @@ var AllowedStakingPoolTypeEnumValues = []StakingPoolType{
 	"Babylon",
 	"ETHBeacon",
 	"CoreBTC",
+	"SkyFarm",
 }
 
 func (v *StakingPoolType) UnmarshalJSON(src []byte) error {
