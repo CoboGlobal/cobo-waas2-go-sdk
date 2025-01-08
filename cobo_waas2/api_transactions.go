@@ -43,7 +43,7 @@ BroadcastSignedTransactions Broadcast signed transactions
 <Note>This operation is only applicable to the staking scenarios.</Note>
 This operation broadcasts a list of signed transactions. 
 
-If you set `auto_broadcast` to `false` when [creating a staking activity](/v2/api-references/staking/create-stake-activity), the transaction will not be submitted to the blockchain automatically after being signed. In such cases, you can call this operation to broadcast the transaction to the blockchain.
+If you set `auto_broadcast` to `false` when [creating a staking activity](https://www.cobo.com/developers/v2/api-references/staking/create-stake-activity), the transaction will not be submitted to the blockchain automatically after being signed. In such cases, you can call this operation to broadcast the transaction to the blockchain.
 
 A transaction can only be broadcast if its status is `Broadcasting`.
 
@@ -169,14 +169,15 @@ func (r ApiCancelTransactionByIdRequest) Execute() (*CreateTransferTransaction20
 /*
 CancelTransactionById Cancel transaction
 
-This operation cancels a specified transaction. A transaction can be cancelled if its status is either of the following:
+This operation cancels a specified transaction. Canceling a transaction stops it while it is still pending. For more information, see [Cancel a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#cancel-a-transaction).
+
+<Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets.</Note>
+
+A transaction can be cancelled if its status is either of the following:
 - `Submitted`
 - `PendingScreening`
 - `PendingAuthorization`
 - `PendingSignature` 
-
-A transaction request for tracking is returned upon successful operation.
-<Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -296,7 +297,7 @@ type ApiCheckLoopTransfersRequest struct {
 	destinationAddresses *string
 }
 
-// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
+// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 func (r ApiCheckLoopTransfersRequest) TokenId(tokenId string) ApiCheckLoopTransfersRequest {
 	r.tokenId = &tokenId
 	return r
@@ -603,7 +604,7 @@ This operation creates a transaction to sign the provided message using cryptogr
 
 In some scenarios, you want to sign a message for identity authentication or transaction approval. You need to provide details such as the source address, destination address, and the message to be signed. A transaction request for tracking is returned upon successful operation.
 
-You can get the signature result by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information). 
+You can get the signature result by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information). 
 
 <Note>This operation only applies to transactions from MPC Wallets.</Note>
 
@@ -874,24 +875,13 @@ func (r ApiDropTransactionByIdRequest) Execute() (*CreateTransferTransaction201R
 /*
 DropTransactionById Drop transaction
 
-This operation drops a specified transaction. 
+This operation drops a specified transaction. Dropping a transaction leverages RBF to replace the original transaction with a version that effectively cancels it. For more details about dropping a transaction, refer to [Drop a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#drop-a-transaction).
 
-Dropping a transaction will trigger a Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It must have a higher transaction fee to incentivize miners to prioritize its confirmation over the original one. A transaction can be dropped if its status is `Broadcasting`.
-
-<ul>
-<li>For EVM chains, this RBF transaction has a transfer amount of `0` and the sending address is the same as the receiving address.</li>
-<li>For UTXO chains, this RBF transaction has a transfer amount of `0` and the destination address is the same as the change address in the original transaction.</li>
-</ul>
-
-You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
-
-A transaction request for tracking is returned upon successful operation.
-
-When a transaction is being dropped, any subsequent drop or speed up operations will still apply to the original transaction. For example, if a user creates Transaction A and later performs a drop operation on Transaction A using Transaction B, followed by a speed up operation on Transaction B using Transaction C, the speed up operation will still apply to Transaction A, not Transaction B.
+A transaction can be sped up only if its status is `Broadcasting`.
 
 <Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
-<Info>If you drop a transaction from a Smart Contract Wallet, two RBF transactions will be triggered, one for the transaction from the Smart Contract Wallet, and the other for the transaction from the Delegate.</Info>
+You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1028,7 +1018,7 @@ This operation estimates the transaction fee of a token transfer or a contract c
 
 You need to specify the transaction information, including the request ID, request type, source address, destination address, token ID (only applicable to token transfers), and chain ID (only applicable to contract calls).
 
-The response can contain different properties based on the transaction fee model used by the chain. For the legacy, EIP-1559, and UTXO fee models, Cobo also supports three different transaction speed levels: slow, recommended, and fast. For more information about estimating transaction fees, refer to [Estimate transaction fee](/v2/guides/transactions/estimate-fees).
+The response can contain different properties based on the transaction fee model used by the chain. For the legacy, EIP-1559, and UTXO fee models, Cobo also supports three different transaction speed levels: slow, recommended, and fast. For more information about estimating transaction fees, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1081,6 +1071,131 @@ func (a *TransactionsAPIService) EstimateFeeExecute(r ApiEstimateFeeRequest) (*E
 	}
 	// body params
 	localVarPostBody = r.estimateFeeParams
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetTransactionApprovalDetailRequest struct {
+	ctx context.Context
+	ApiService *TransactionsAPIService
+	transactionId string
+}
+
+func (r ApiGetTransactionApprovalDetailRequest) Execute() (*TransactionApprovalDetail, *http.Response, error) {
+	return r.ApiService.GetTransactionApprovalDetailExecute(r)
+}
+
+/*
+GetTransactionApprovalDetail Get transaction approval information
+
+This operation retrieves approval detailed information about a specified transaction.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param transactionId The transaction ID.
+ @return ApiGetTransactionApprovalDetailRequest
+*/
+func (a *TransactionsAPIService) GetTransactionApprovalDetail(ctx context.Context, transactionId string) ApiGetTransactionApprovalDetailRequest {
+	return ApiGetTransactionApprovalDetailRequest{
+		ApiService: a,
+		ctx: ctx,
+		transactionId: transactionId,
+	}
+}
+
+// Execute executes the request
+//  @return TransactionApprovalDetail
+func (a *TransactionsAPIService) GetTransactionApprovalDetailExecute(r ApiGetTransactionApprovalDetailRequest) (*TransactionApprovalDetail, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TransactionApprovalDetail
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.GetTransactionApprovalDetail")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/transactions/{transaction_id}/approval_detail"
+	localVarPath = strings.Replace(localVarPath, "{"+"transaction_id"+"}", url.PathEscape(parameterValueToString(r.transactionId, "transactionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1328,13 +1443,13 @@ func (r ApiListTransactionsRequest) WalletIds(walletIds string) ApiListTransacti
 	return r
 }
 
-// A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
+// A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 func (r ApiListTransactionsRequest) ChainIds(chainIds string) ApiListTransactionsRequest {
 	r.chainIds = &chainIds
 	return r
 }
 
-// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
+// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 func (r ApiListTransactionsRequest) TokenIds(tokenIds string) ApiListTransactionsRequest {
 	r.tokenIds = &tokenIds
 	return r
@@ -1346,13 +1461,13 @@ func (r ApiListTransactionsRequest) AssetIds(assetIds string) ApiListTransaction
 	return r
 }
 
-// The vault ID, which you can retrieve by calling [List all vaults](/v2/api-references/wallets--mpc-wallets/list-all-vaults).
+// The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
 func (r ApiListTransactionsRequest) VaultId(vaultId string) ApiListTransactionsRequest {
 	r.vaultId = &vaultId
 	return r
 }
 
-// The project ID, which you can retrieve by calling [List all projects](/v2/api-references/wallets--mpc-wallets/list-all-projects). 
+// The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
 func (r ApiListTransactionsRequest) ProjectId(projectId string) ApiListTransactionsRequest {
 	r.projectId = &projectId
 	return r
@@ -1376,13 +1491,13 @@ func (r ApiListTransactionsRequest) Limit(limit int32) ApiListTransactionsReques
 	return r
 }
 
-// An object ID that serves as a starting point for retrieving data in reverse chronological order. For example, if you specify &#x60;before&#x60; as &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1&#x60;, the request will retrieve a list of data objects that end before the object with the object ID &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1&#x60;. You can set this parameter to the value of &#x60;pagination.before&#x60; in the response of the previous request.  - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur.  - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  - If you set &#x60;before&#x60; to &#x60;infinity&#x60;, the last page of data is returned. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListTransactionsRequest) Before(before string) ApiListTransactionsRequest {
 	r.before = &before
 	return r
 }
 
-// An object ID that acts as a starting point for retrieving data in chronological order. For example, if you specify &#x60;after&#x60; as &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;, the request will retrieve a list of data objects that start after the object with the object ID &#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;. You can set this parameter to the value of &#x60;pagination.after&#x60; in the response of the previous request.  - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur.  - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListTransactionsRequest) After(after string) ApiListTransactionsRequest {
 	r.after = &after
 	return r
@@ -1580,9 +1695,10 @@ func (r ApiResendTransactionByIdRequest) Execute() (*CreateTransferTransaction20
 /*
 ResendTransactionById Resend transaction
 
-This operation resends a specified transaction. Resending a transaction initiates a new attempt to process the transaction that failed previously. A transaction can be resent if its status is `failed`.
+This operation resends a specified transaction. Resending a transaction means retrying a previously failed transaction. For more details about resending a transaction, see [Resend a transaction](/v2/guides/transactions/manage-transactions#resend-a-transaction).
 
-A transaction request for tracking is returned upon successful operation.
+A transaction can be resent if its status is `failed`.
+
 <Note>This operation only applies to transactions from MPC Wallets in the SOL token.</Note>
 
 
@@ -1717,13 +1833,11 @@ func (r ApiSpeedupTransactionByIdRequest) Execute() (*CreateTransferTransaction2
 /*
 SpeedupTransactionById Speed up transaction
 
-This operation accelerates a specified transaction. 
-
-Speeding up a transaction will trigger a Replace-By-Fee (RBF) transaction which is a new version of the original transaction. It shares the same inputs but must have a higher transaction fee to incentivize miners to prioritize its confirmation over the previous one. A transaction can be accelerated if its status is `Broadcasting`.
+This operation accelerates a specified transaction. Speeding up a transaction will trigger a Replace-By-Fee (RBF) transaction which is a new version of the original transaction. For more details about speeding up a transaction, refer to [Speed up a transaction](/v2/guides/transactions/manage-transactions#speed-up-a-transaction).
 
 You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
 
-A transaction request for tracking is returned upon successful operation.
+A transaction can be sped up only if its status is `Broadcasting`.
 
 <Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 

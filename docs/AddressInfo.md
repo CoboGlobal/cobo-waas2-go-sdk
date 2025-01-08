@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Address** | **string** | The wallet address. | 
-**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains). | 
+**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
 **Memo** | Pointer to **string** | The memo code. | [optional] 
 **Path** | Pointer to **string** | The derivation path of the address. This property applies to MPC Wallets only. To learn the meaning of each level in the path, see [Path levels](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#path-levels). | [optional] 
 **Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
 **Pubkey** | Pointer to **string** | The public key of the address. This property applies to MPC Wallets only. | [optional] 
 **XOnlyPubkey** | Pointer to **string** | The 32-byte x-only public key in hexadecimal format after tweaking. | [optional] 
+**RootPubkey** | Pointer to **string** | The root public key of the address. This property applies to MPC Wallets only. | [optional] 
 **TaprootScriptTreeHash** | Pointer to **string** | The information about the new address. | [optional] 
 **TaprootInternalAddress** | Pointer to **string** | The Taproot address before tweaking. | [optional] 
 
@@ -197,6 +198,31 @@ SetXOnlyPubkey sets XOnlyPubkey field to given value.
 `func (o *AddressInfo) HasXOnlyPubkey() bool`
 
 HasXOnlyPubkey returns a boolean if a field has been set.
+
+### GetRootPubkey
+
+`func (o *AddressInfo) GetRootPubkey() string`
+
+GetRootPubkey returns the RootPubkey field if non-nil, zero value otherwise.
+
+### GetRootPubkeyOk
+
+`func (o *AddressInfo) GetRootPubkeyOk() (*string, bool)`
+
+GetRootPubkeyOk returns a tuple with the RootPubkey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRootPubkey
+
+`func (o *AddressInfo) SetRootPubkey(v string)`
+
+SetRootPubkey sets RootPubkey field to given value.
+
+### HasRootPubkey
+
+`func (o *AddressInfo) HasRootPubkey() bool`
+
+HasRootPubkey returns a boolean if a field has been set.
 
 ### GetTaprootScriptTreeHash
 

@@ -17,7 +17,7 @@ import (
 // checks if the TransactionTransferToAddressDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionTransferToAddressDestination{}
 
-// TransactionTransferToAddressDestination Information about the transaction destination type `Address`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
+// TransactionTransferToAddressDestination Information about the transaction destination type `Address`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
 type TransactionTransferToAddressDestination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
 	AccountOutput *TransactionTransferToAddressDestinationAccountOutput `json:"account_output,omitempty"`

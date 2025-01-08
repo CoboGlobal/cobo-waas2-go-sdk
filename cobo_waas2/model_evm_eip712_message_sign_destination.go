@@ -17,7 +17,7 @@ import (
 // checks if the EvmEIP712MessageSignDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEIP712MessageSignDestination{}
 
-// EvmEIP712MessageSignDestination The information about the destination `EVM_EIP_712_Signature`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+// EvmEIP712MessageSignDestination The information about the destination `EVM_EIP_712_Signature`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 type EvmEIP712MessageSignDestination struct {
 	DestinationType MessageSignDestinationType `json:"destination_type"`
 	// The structured data to be signed, formatted as a JSON object according to the EIP-712 standard.

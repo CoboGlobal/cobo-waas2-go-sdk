@@ -17,7 +17,7 @@ import (
 // checks if the TransactionMessageSignEIP191Destination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionMessageSignEIP191Destination{}
 
-// TransactionMessageSignEIP191Destination Information about the transaction destination type `EVM_EIP_191_Signature`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
+// TransactionMessageSignEIP191Destination Information about the transaction destination type `EVM_EIP_191_Signature`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
 type TransactionMessageSignEIP191Destination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
 	// The raw data of the message to be signed, encoded in Base64 format.

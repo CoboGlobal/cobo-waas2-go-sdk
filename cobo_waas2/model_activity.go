@@ -34,6 +34,8 @@ type Activity struct {
 	TokenId string `json:"token_id"`
 	// The ID of the corresponding staking position.
 	StakingId *string `json:"staking_id,omitempty"`
+	// The request IDs of the corresponding transactions of the activity.
+	RequestIds []string `json:"request_ids,omitempty"`
 	// The staking amount.
 	Amount string `json:"amount"`
 	// The IDs of the corresponding transactions of the activity.
@@ -42,6 +44,7 @@ type Activity struct {
 	Timeline []ActivityTimeline `json:"timeline,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
 	Status ActivityStatus `json:"status"`
+	Extra *ActivityExtra `json:"extra,omitempty"`
 	// The time when the activity was created.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 	// The time when the activity was last updated.
@@ -343,6 +346,38 @@ func (o *Activity) SetStakingId(v string) {
 	o.StakingId = &v
 }
 
+// GetRequestIds returns the RequestIds field value if set, zero value otherwise.
+func (o *Activity) GetRequestIds() []string {
+	if o == nil || IsNil(o.RequestIds) {
+		var ret []string
+		return ret
+	}
+	return o.RequestIds
+}
+
+// GetRequestIdsOk returns a tuple with the RequestIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Activity) GetRequestIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.RequestIds) {
+		return nil, false
+	}
+	return o.RequestIds, true
+}
+
+// HasRequestIds returns a boolean if a field has been set.
+func (o *Activity) HasRequestIds() bool {
+	if o != nil && !IsNil(o.RequestIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestIds gets a reference to the given []string and assigns it to the RequestIds field.
+func (o *Activity) SetRequestIds(v []string) {
+	o.RequestIds = v
+}
+
 // GetAmount returns the Amount field value
 func (o *Activity) GetAmount() string {
 	if o == nil {
@@ -487,6 +522,38 @@ func (o *Activity) SetStatus(v ActivityStatus) {
 	o.Status = v
 }
 
+// GetExtra returns the Extra field value if set, zero value otherwise.
+func (o *Activity) GetExtra() ActivityExtra {
+	if o == nil || IsNil(o.Extra) {
+		var ret ActivityExtra
+		return ret
+	}
+	return *o.Extra
+}
+
+// GetExtraOk returns a tuple with the Extra field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Activity) GetExtraOk() (*ActivityExtra, bool) {
+	if o == nil || IsNil(o.Extra) {
+		return nil, false
+	}
+	return o.Extra, true
+}
+
+// HasExtra returns a boolean if a field has been set.
+func (o *Activity) HasExtra() bool {
+	if o != nil && !IsNil(o.Extra) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtra gets a reference to the given ActivityExtra and assigns it to the Extra field.
+func (o *Activity) SetExtra(v ActivityExtra) {
+	o.Extra = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *Activity) GetCreatedTimestamp() int64 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -584,6 +651,9 @@ func (o Activity) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.StakingId) {
 		toSerialize["staking_id"] = o.StakingId
 	}
+	if !IsNil(o.RequestIds) {
+		toSerialize["request_ids"] = o.RequestIds
+	}
 	toSerialize["amount"] = o.Amount
 	if !IsNil(o.TransactionIds) {
 		toSerialize["transaction_ids"] = o.TransactionIds
@@ -595,6 +665,9 @@ func (o Activity) ToMap() (map[string]interface{}, error) {
 		toSerialize["fee"] = o.Fee
 	}
 	toSerialize["status"] = o.Status
+	if !IsNil(o.Extra) {
+		toSerialize["extra"] = o.Extra
+	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}

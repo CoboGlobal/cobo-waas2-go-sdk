@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ActivityAction The specific action taken within an activity. Possible values include: - `Submitted`: Submit the staking, unstaking, or withdrawal request. - `BTCConfirmation`: The Bitcoin chain confirms the request. - `BabylonConfirmation`: The Babylon protocol confirms the request. - `DepositETH`: Deposit ETH to the validator to start staking. - `ClaimRewards`: Claim the rewards from the validator. - `ActivateValidator`: Activate the validator to start staking. - `UnstakeETH`: Unstake ETH from the validator. 
+// ActivityAction The specific action taken within an activity. Possible values include: - `Submitted`: Submit the staking, unstaking, or withdrawal request. - `BTCConfirmation`: The Bitcoin chain confirms the request. - `BabylonConfirmation`: The Babylon protocol confirms the request. - `DepositETH`: Deposit ETH to the validator to start staking. - `ClaimRewards`: Claim the rewards from the validator. - `ActivateValidator`: Activate the validator to start staking. - `UnstakeETH`: Unstake ETH from the validator. - `ApproveUSDC`: Approve the USDC token to be used for staking. - `ConvertToUSDS`: Convert the USDC token to the USDS token. - `ApproveUSDS`: Approve the USDS token to be used for staking. - `DepositUSDS`: Deposit the USDS token to the validator. - `WithdrawUSDS`: Withdraw the USDS token from the validator. - `ConvertToUSDC`: Convert the USDS token to the USDC token. 
 type ActivityAction string
 
 // List of ActivityAction
@@ -25,6 +25,12 @@ const (
 	ACTIVITYACTION_CLAIM_REWARDS ActivityAction = "ClaimRewards"
 	ACTIVITYACTION_ACTIVATE_VALIDATOR ActivityAction = "ActivateValidator"
 	ACTIVITYACTION_UNSTAKE_ETH ActivityAction = "UnstakeETH"
+	ACTIVITYACTION_APPROVE_USDC ActivityAction = "ApproveUSDC"
+	ACTIVITYACTION_CONVERT_TO_USDS ActivityAction = "ConvertToUSDS"
+	ACTIVITYACTION_APPROVE_USDS ActivityAction = "ApproveUSDS"
+	ACTIVITYACTION_DEPOSIT_USDS ActivityAction = "DepositUSDS"
+	ACTIVITYACTION_WITHDRAW_USDS ActivityAction = "WithdrawUSDS"
+	ACTIVITYACTION_CONVERT_TO_USDC ActivityAction = "ConvertToUSDC"
 )
 
 // All allowed values of ActivityAction enum
@@ -36,6 +42,12 @@ var AllowedActivityActionEnumValues = []ActivityAction{
 	"ClaimRewards",
 	"ActivateValidator",
 	"UnstakeETH",
+	"ApproveUSDC",
+	"ConvertToUSDS",
+	"ApproveUSDS",
+	"DepositUSDS",
+	"WithdrawUSDS",
+	"ConvertToUSDC",
 }
 
 func (v *ActivityAction) UnmarshalJSON(src []byte) error {

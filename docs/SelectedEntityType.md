@@ -1,0 +1,13 @@
+# SelectedEntityType
+
+## Enum
+
+
+* `LEGAL` (value: `"LEGAL"`)
+
+* `NATURAL` (value: `"NATURAL"`)
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

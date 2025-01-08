@@ -19,7 +19,7 @@ var _ MappedNullable = &TransactionWebhookEventData{}
 
 // TransactionWebhookEventData struct for TransactionWebhookEventData
 type TransactionWebhookEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data.
 	DataType string `json:"data_type"`
 	// The transaction ID.
 	TransactionId string `json:"transaction_id"`
@@ -34,9 +34,9 @@ type TransactionWebhookEventData struct {
 	SubStatus *TransactionSubStatus `json:"sub_status,omitempty"`
 	// (This property is applicable to approval failures and signature failures only) The reason why the transaction failed.
 	FailedReason *string `json:"failed_reason,omitempty"`
-	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
+	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 	ChainId *string `json:"chain_id,omitempty"`
-	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId *string `json:"token_id,omitempty"`
 	// (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
 	AssetId *string `json:"asset_id,omitempty"`

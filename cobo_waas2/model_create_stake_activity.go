@@ -26,7 +26,7 @@ type CreateStakeActivity struct {
 	// The amount to stake.
 	Amount string `json:"amount"`
 	Fee TransactionRequestFee `json:"fee"`
-	Extra CreateStakeActivityExtra `json:"extra"`
+	Extra *CreateStakeActivityExtra `json:"extra,omitempty"`
 }
 
 type _CreateStakeActivity CreateStakeActivity
@@ -35,12 +35,11 @@ type _CreateStakeActivity CreateStakeActivity
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateStakeActivity(poolId StakingPoolId, amount string, fee TransactionRequestFee, extra CreateStakeActivityExtra) *CreateStakeActivity {
+func NewCreateStakeActivity(poolId StakingPoolId, amount string, fee TransactionRequestFee) *CreateStakeActivity {
 	this := CreateStakeActivity{}
 	this.PoolId = poolId
 	this.Amount = amount
 	this.Fee = fee
-	this.Extra = extra
 	return &this
 }
 
@@ -188,28 +187,36 @@ func (o *CreateStakeActivity) SetFee(v TransactionRequestFee) {
 	o.Fee = v
 }
 
-// GetExtra returns the Extra field value
+// GetExtra returns the Extra field value if set, zero value otherwise.
 func (o *CreateStakeActivity) GetExtra() CreateStakeActivityExtra {
-	if o == nil {
+	if o == nil || IsNil(o.Extra) {
 		var ret CreateStakeActivityExtra
 		return ret
 	}
-
-	return o.Extra
+	return *o.Extra
 }
 
-// GetExtraOk returns a tuple with the Extra field value
+// GetExtraOk returns a tuple with the Extra field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateStakeActivity) GetExtraOk() (*CreateStakeActivityExtra, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Extra) {
 		return nil, false
 	}
-	return &o.Extra, true
+	return o.Extra, true
 }
 
-// SetExtra sets field value
+// HasExtra returns a boolean if a field has been set.
+func (o *CreateStakeActivity) HasExtra() bool {
+	if o != nil && !IsNil(o.Extra) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtra gets a reference to the given CreateStakeActivityExtra and assigns it to the Extra field.
 func (o *CreateStakeActivity) SetExtra(v CreateStakeActivityExtra) {
-	o.Extra = v
+	o.Extra = &v
 }
 
 func (o CreateStakeActivity) MarshalJSON() ([]byte, error) {
@@ -231,7 +238,9 @@ func (o CreateStakeActivity) ToMap() (map[string]interface{}, error) {
 	toSerialize["pool_id"] = o.PoolId
 	toSerialize["amount"] = o.Amount
 	toSerialize["fee"] = o.Fee
-	toSerialize["extra"] = o.Extra
+	if !IsNil(o.Extra) {
+		toSerialize["extra"] = o.Extra
+	}
 	return toSerialize, nil
 }
 
@@ -243,7 +252,6 @@ func (o *CreateStakeActivity) UnmarshalJSON(data []byte) (err error) {
 		"pool_id",
 		"amount",
 		"fee",
-		"extra",
 	}
 
 	allProperties := make(map[string]interface{})

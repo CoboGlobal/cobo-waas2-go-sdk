@@ -19,7 +19,7 @@ var _ MappedNullable = &LockUtxosRequestUtxosInner{}
 
 // LockUtxosRequestUtxosInner struct for LockUtxosRequestUtxosInner
 type LockUtxosRequestUtxosInner struct {
-	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](/v2/api-references/wallets/list-enabled-tokens).
+	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
 	// The transaction hash.
 	TxHash string `json:"tx_hash"`

@@ -22,7 +22,7 @@ type EstimateContractCallFeeParams struct {
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee.
 	RequestId *string `json:"request_id,omitempty"`
 	RequestType EstimateFeeRequestType `json:"request_type"`
-	// The chain ID of the chain on which the smart contract is deployed. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](/v2/api-references/wallets/list-enabled-chains).
+	// The chain ID of the chain on which the smart contract is deployed. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 	ChainId string `json:"chain_id"`
 	Source ContractCallSource `json:"source"`
 	Destination ContractCallDestination `json:"destination"`

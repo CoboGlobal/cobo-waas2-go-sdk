@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// KeyShareHolderType The key share holder's TSS Node type. Possible values include:  - `Cobo`: The TSS Node is generated and held by Cobo.  - `Mobile`: The TSS Node is generated and held by a [mobile co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#create-a-main-group) using [Cobo Guard](https://manuals.cobo.com/en/guard/introduction).  - `API`: The TSS Node is generated and held by an [API co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#create-a-main-group) using the [TSS Node software package](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment). 
+// KeyShareHolderType The key share holder's TSS Node type. Possible values include:  - `Cobo`: The TSS Node is generated and held by Cobo.  - `Mobile`: The TSS Node is generated and held by a [mobile co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#create-a-main-group) using [Cobo Guard](https://manuals.cobo.com/en/guard/introduction).  - `API`: The TSS Node is generated and held by a [server co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#create-a-main-group) using the [TSS Node software package](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment). 
 type KeyShareHolderType string
 
 // List of KeyShareHolderType

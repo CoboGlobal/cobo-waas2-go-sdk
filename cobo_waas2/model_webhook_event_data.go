@@ -15,8 +15,25 @@ import (
 
 // WebhookEventData - struct for WebhookEventData
 type WebhookEventData struct {
+	AddressesEventData *AddressesEventData
+	MPCVaultEventData *MPCVaultEventData
 	TSSRequestWebhookEventData *TSSRequestWebhookEventData
 	TransactionWebhookEventData *TransactionWebhookEventData
+	WalletInfoEventData *WalletInfoEventData
+}
+
+// AddressesEventDataAsWebhookEventData is a convenience function that returns AddressesEventData wrapped in WebhookEventData
+func AddressesEventDataAsWebhookEventData(v *AddressesEventData) WebhookEventData {
+	return WebhookEventData{
+		AddressesEventData: v,
+	}
+}
+
+// MPCVaultEventDataAsWebhookEventData is a convenience function that returns MPCVaultEventData wrapped in WebhookEventData
+func MPCVaultEventDataAsWebhookEventData(v *MPCVaultEventData) WebhookEventData {
+	return WebhookEventData{
+		MPCVaultEventData: v,
+	}
 }
 
 // TSSRequestWebhookEventDataAsWebhookEventData is a convenience function that returns TSSRequestWebhookEventData wrapped in WebhookEventData
@@ -33,6 +50,13 @@ func TransactionWebhookEventDataAsWebhookEventData(v *TransactionWebhookEventDat
 	}
 }
 
+// WalletInfoEventDataAsWebhookEventData is a convenience function that returns WalletInfoEventData wrapped in WebhookEventData
+func WalletInfoEventDataAsWebhookEventData(v *WalletInfoEventData) WebhookEventData {
+	return WebhookEventData{
+		WalletInfoEventData: v,
+	}
+}
+
 
 // Unmarshal JSON data into one of the pointers in the struct
 func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
@@ -42,6 +66,30 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
+	}
+
+	// check if the discriminator value is 'Addresses'
+	if jsonDict["data_type"] == "Addresses" {
+		// try to unmarshal JSON data into AddressesEventData
+		err = json.Unmarshal(data, &dst.AddressesEventData)
+		if err == nil {
+			return nil // data stored in dst.AddressesEventData, return on the first match
+		} else {
+			dst.AddressesEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as AddressesEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'MPCVault'
+	if jsonDict["data_type"] == "MPCVault" {
+		// try to unmarshal JSON data into MPCVaultEventData
+		err = json.Unmarshal(data, &dst.MPCVaultEventData)
+		if err == nil {
+			return nil // data stored in dst.MPCVaultEventData, return on the first match
+		} else {
+			dst.MPCVaultEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as MPCVaultEventData: %s", err.Error())
+		}
 	}
 
 	// check if the discriminator value is 'TSSRequest'
@@ -65,6 +113,42 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionWebhookEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as TransactionWebhookEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'WalletInfo'
+	if jsonDict["data_type"] == "WalletInfo" {
+		// try to unmarshal JSON data into WalletInfoEventData
+		err = json.Unmarshal(data, &dst.WalletInfoEventData)
+		if err == nil {
+			return nil // data stored in dst.WalletInfoEventData, return on the first match
+		} else {
+			dst.WalletInfoEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as WalletInfoEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'AddressesEventData'
+	if jsonDict["data_type"] == "AddressesEventData" {
+		// try to unmarshal JSON data into AddressesEventData
+		err = json.Unmarshal(data, &dst.AddressesEventData)
+		if err == nil {
+			return nil // data stored in dst.AddressesEventData, return on the first match
+		} else {
+			dst.AddressesEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as AddressesEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'MPCVaultEventData'
+	if jsonDict["data_type"] == "MPCVaultEventData" {
+		// try to unmarshal JSON data into MPCVaultEventData
+		err = json.Unmarshal(data, &dst.MPCVaultEventData)
+		if err == nil {
+			return nil // data stored in dst.MPCVaultEventData, return on the first match
+		} else {
+			dst.MPCVaultEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as MPCVaultEventData: %s", err.Error())
 		}
 	}
 
@@ -92,17 +176,41 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'WalletInfoEventData'
+	if jsonDict["data_type"] == "WalletInfoEventData" {
+		// try to unmarshal JSON data into WalletInfoEventData
+		err = json.Unmarshal(data, &dst.WalletInfoEventData)
+		if err == nil {
+			return nil // data stored in dst.WalletInfoEventData, return on the first match
+		} else {
+			dst.WalletInfoEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as WalletInfoEventData: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src WebhookEventData) MarshalJSON() ([]byte, error) {
+	if src.AddressesEventData != nil {
+		return json.Marshal(&src.AddressesEventData)
+	}
+
+	if src.MPCVaultEventData != nil {
+		return json.Marshal(&src.MPCVaultEventData)
+	}
+
 	if src.TSSRequestWebhookEventData != nil {
 		return json.Marshal(&src.TSSRequestWebhookEventData)
 	}
 
 	if src.TransactionWebhookEventData != nil {
 		return json.Marshal(&src.TransactionWebhookEventData)
+	}
+
+	if src.WalletInfoEventData != nil {
+		return json.Marshal(&src.WalletInfoEventData)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -113,12 +221,24 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.AddressesEventData != nil {
+		return obj.AddressesEventData
+	}
+
+	if obj.MPCVaultEventData != nil {
+		return obj.MPCVaultEventData
+	}
+
 	if obj.TSSRequestWebhookEventData != nil {
 		return obj.TSSRequestWebhookEventData
 	}
 
 	if obj.TransactionWebhookEventData != nil {
 		return obj.TransactionWebhookEventData
+	}
+
+	if obj.WalletInfoEventData != nil {
+		return obj.WalletInfoEventData
 	}
 
 	// all schemas are nil

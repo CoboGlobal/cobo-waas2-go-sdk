@@ -20,7 +20,7 @@ var _ MappedNullable = &EstimateClaimFee{}
 // EstimateClaimFee struct for EstimateClaimFee
 type EstimateClaimFee struct {
 	ActivityType ActivityType `json:"activity_type"`
-	// The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](/v2/api-references/stakings/list-staking-positions).
+	// The ID of the staking position. You can retrieve a list of staking positions by calling [List staking positions](https://www.cobo.com/developers/v2/api-references/stakings/list-staking-positions).
 	StakingId *string `json:"staking_id,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
 }
