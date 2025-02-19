@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
-**Balance** | [**TokenBalanceBalance**](TokenBalanceBalance.md) |  | 
+**Balance** | [**Balance**](Balance.md) |  | 
 
 ## Methods
 
 ### NewTokenBalance
 
-`func NewTokenBalance(tokenId string, balance TokenBalanceBalance, ) *TokenBalance`
+`func NewTokenBalance(tokenId string, balance Balance, ) *TokenBalance`
 
 NewTokenBalance instantiates a new TokenBalance object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetTokenId sets TokenId field to given value.
 
 ### GetBalance
 
-`func (o *TokenBalance) GetBalance() TokenBalanceBalance`
+`func (o *TokenBalance) GetBalance() Balance`
 
 GetBalance returns the Balance field if non-nil, zero value otherwise.
 
 ### GetBalanceOk
 
-`func (o *TokenBalance) GetBalanceOk() (*TokenBalanceBalance, bool)`
+`func (o *TokenBalance) GetBalanceOk() (*Balance, bool)`
 
 GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBalance
 
-`func (o *TokenBalance) SetBalance(v TokenBalanceBalance)`
+`func (o *TokenBalance) SetBalance(v Balance)`
 
 SetBalance sets Balance field to given value.
 

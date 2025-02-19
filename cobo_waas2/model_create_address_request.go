@@ -21,8 +21,12 @@ var _ MappedNullable = &CreateAddressRequest{}
 type CreateAddressRequest struct {
 	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 	ChainId string `json:"chain_id"`
-	// The number of addresses to create.
+	// The number of addresses to create. This property will be ignored if you are generating tweaked Taproot addresses.
 	Count int32 `json:"count"`
+	// A list of script tree hashes used to generate a tweaked Taproot address. This property is required only if you want to generate tweaked Taproot addresses.
+	TaprootScriptTreeHashes []string `json:"taproot_script_tree_hashes,omitempty"`
+	// The original Taproot address to be tweaked. This property is required only if you want to generate tweaked Taproot addresses.
+	TaprootInternalAddress *string `json:"taproot_internal_address,omitempty"`
 	Encoding *AddressEncoding `json:"encoding,omitempty"`
 }
 
@@ -97,6 +101,70 @@ func (o *CreateAddressRequest) SetCount(v int32) {
 	o.Count = v
 }
 
+// GetTaprootScriptTreeHashes returns the TaprootScriptTreeHashes field value if set, zero value otherwise.
+func (o *CreateAddressRequest) GetTaprootScriptTreeHashes() []string {
+	if o == nil || IsNil(o.TaprootScriptTreeHashes) {
+		var ret []string
+		return ret
+	}
+	return o.TaprootScriptTreeHashes
+}
+
+// GetTaprootScriptTreeHashesOk returns a tuple with the TaprootScriptTreeHashes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateAddressRequest) GetTaprootScriptTreeHashesOk() ([]string, bool) {
+	if o == nil || IsNil(o.TaprootScriptTreeHashes) {
+		return nil, false
+	}
+	return o.TaprootScriptTreeHashes, true
+}
+
+// HasTaprootScriptTreeHashes returns a boolean if a field has been set.
+func (o *CreateAddressRequest) HasTaprootScriptTreeHashes() bool {
+	if o != nil && !IsNil(o.TaprootScriptTreeHashes) {
+		return true
+	}
+
+	return false
+}
+
+// SetTaprootScriptTreeHashes gets a reference to the given []string and assigns it to the TaprootScriptTreeHashes field.
+func (o *CreateAddressRequest) SetTaprootScriptTreeHashes(v []string) {
+	o.TaprootScriptTreeHashes = v
+}
+
+// GetTaprootInternalAddress returns the TaprootInternalAddress field value if set, zero value otherwise.
+func (o *CreateAddressRequest) GetTaprootInternalAddress() string {
+	if o == nil || IsNil(o.TaprootInternalAddress) {
+		var ret string
+		return ret
+	}
+	return *o.TaprootInternalAddress
+}
+
+// GetTaprootInternalAddressOk returns a tuple with the TaprootInternalAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateAddressRequest) GetTaprootInternalAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.TaprootInternalAddress) {
+		return nil, false
+	}
+	return o.TaprootInternalAddress, true
+}
+
+// HasTaprootInternalAddress returns a boolean if a field has been set.
+func (o *CreateAddressRequest) HasTaprootInternalAddress() bool {
+	if o != nil && !IsNil(o.TaprootInternalAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetTaprootInternalAddress gets a reference to the given string and assigns it to the TaprootInternalAddress field.
+func (o *CreateAddressRequest) SetTaprootInternalAddress(v string) {
+	o.TaprootInternalAddress = &v
+}
+
 // GetEncoding returns the Encoding field value if set, zero value otherwise.
 func (o *CreateAddressRequest) GetEncoding() AddressEncoding {
 	if o == nil || IsNil(o.Encoding) {
@@ -141,6 +209,12 @@ func (o CreateAddressRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["chain_id"] = o.ChainId
 	toSerialize["count"] = o.Count
+	if !IsNil(o.TaprootScriptTreeHashes) {
+		toSerialize["taproot_script_tree_hashes"] = o.TaprootScriptTreeHashes
+	}
+	if !IsNil(o.TaprootInternalAddress) {
+		toSerialize["taproot_internal_address"] = o.TaprootInternalAddress
+	}
 	if !IsNil(o.Encoding) {
 		toSerialize["encoding"] = o.Encoding
 	}

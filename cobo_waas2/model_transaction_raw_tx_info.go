@@ -23,6 +23,8 @@ type TransactionRawTxInfo struct {
 	SelectedUtxos []TransactionSelectedUtxo `json:"selected_utxos,omitempty"`
 	// The raw transaction data.
 	RawTx *string `json:"raw_tx,omitempty"`
+	// The unsigned raw transaction data.
+	UnsignedRawTx *string `json:"unsigned_raw_tx,omitempty"`
 }
 
 // NewTransactionRawTxInfo instantiates a new TransactionRawTxInfo object
@@ -138,6 +140,38 @@ func (o *TransactionRawTxInfo) SetRawTx(v string) {
 	o.RawTx = &v
 }
 
+// GetUnsignedRawTx returns the UnsignedRawTx field value if set, zero value otherwise.
+func (o *TransactionRawTxInfo) GetUnsignedRawTx() string {
+	if o == nil || IsNil(o.UnsignedRawTx) {
+		var ret string
+		return ret
+	}
+	return *o.UnsignedRawTx
+}
+
+// GetUnsignedRawTxOk returns a tuple with the UnsignedRawTx field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionRawTxInfo) GetUnsignedRawTxOk() (*string, bool) {
+	if o == nil || IsNil(o.UnsignedRawTx) {
+		return nil, false
+	}
+	return o.UnsignedRawTx, true
+}
+
+// HasUnsignedRawTx returns a boolean if a field has been set.
+func (o *TransactionRawTxInfo) HasUnsignedRawTx() bool {
+	if o != nil && !IsNil(o.UnsignedRawTx) {
+		return true
+	}
+
+	return false
+}
+
+// SetUnsignedRawTx gets a reference to the given string and assigns it to the UnsignedRawTx field.
+func (o *TransactionRawTxInfo) SetUnsignedRawTx(v string) {
+	o.UnsignedRawTx = &v
+}
+
 func (o TransactionRawTxInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +190,9 @@ func (o TransactionRawTxInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RawTx) {
 		toSerialize["raw_tx"] = o.RawTx
+	}
+	if !IsNil(o.UnsignedRawTx) {
+		toSerialize["unsigned_raw_tx"] = o.UnsignedRawTx
 	}
 	return toSerialize, nil
 }

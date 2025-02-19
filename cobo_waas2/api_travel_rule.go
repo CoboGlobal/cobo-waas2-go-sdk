@@ -33,7 +33,7 @@ func (r ApiGetTransactionLimitationRequest) TransactionType(transactionType stri
 	return r
 }
 
-// The transaction ID
+// The transaction ID.
 func (r ApiGetTransactionLimitationRequest) TransactionId(transactionId string) ApiGetTransactionLimitationRequest {
 	r.transactionId = &transactionId
 	return r
@@ -46,16 +46,9 @@ func (r ApiGetTransactionLimitationRequest) Execute() (*GetTransactionLimitation
 /*
 GetTransactionLimitation Retrieve transaction limitations
 
-This endpoint retrieves transaction-related limitations based on the provided `transaction_type` and `transaction_id`.
+This operation retrieves Travel Rule requirements and available options for a transaction based on its transaction type and ID.
 
-The response includes the following information:
-- **`vasp_list`**: A list of Virtual Asset Service Providers (VASPs) associated with the transaction token.
-- **`is_threshold_reached`**: Indicates whether the transaction amount has exceeded the predefined threshold. 
-  - If `true`: Additional Travel Rule information may be required for processing.
-- **`self_custody_wallet_challenge`**: A challenge string for verifying ownership of self-custody wallets.
-- **`connect_wallet_list`**: A list of supported wallet integrations for the transaction, such as MetaMask or WalletConnect.
-
-Use this endpoint to ensure compliance with Travel Rule requirements and to retrieve supported options for completing the transaction.
+Use this endpoint before submitting Travel Rule information to understand the requirements and available options for your transaction.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -184,7 +177,12 @@ func (r ApiListSupportedCountriesRequest) Execute() ([]ListSupportedCountries200
 /*
 ListSupportedCountries List supported countries
 
-This operation retrieves all countries supported.
+This operation retrieves a list of supported countries that can be used when submitting Travel Rule information.
+
+Use this endpoint to obtain valid country values for:
+  - Place of incorporation of a legal entity
+  - Place of birth of a natural person
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListSupportedCountriesRequest
@@ -308,18 +306,9 @@ func (r ApiSubmitDepositTravelRuleInfoRequest) Execute() (*SubmitDepositTravelRu
 }
 
 /*
-SubmitDepositTravelRuleInfo Submit Deposit Transaction Travel Rule information
+SubmitDepositTravelRuleInfo Submit Travel Rule information for deposits
 
-This operation allows you to submit the required Travel Rule information based on the transaction details. It supports both self-custody wallets and exchanges/VASPs, ensuring compliance with Travel Rule requirements.
-
-
-- **Destination Wallet Type (`destination_wallet_type`)**:
-  - `SELF_CUSTODY_WALLET`: A self-custodial wallet (e.g., plugin wallet). Requires `self_custody_wallet_sign`, `self_custody_wallet_address`, and `self_custody_wallet_challenge`.
-  - `EXCHANGES_OR_VASP`: A wallet associated with an exchange or VASP. Requires `vendor_vasp_id` and information depending on `selected_entity_type`.
-
-- **Entity Types (`selected_entity_type`)**:
-  - `LEGAL`: For legal entities, provide `legal_name`, `date_of_incorporation`, and `place_of_incorporation`.
-  - `NATURAL`: For natural persons, provide `date_of_birth`, `place_of_birth`, `first_name`, and `last_name`.
+This operation submits Travel Rule information for a deposit transaction.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -446,18 +435,9 @@ func (r ApiSubmitWithdrawTravelRuleInfoRequest) Execute() (*SubmitDepositTravelR
 }
 
 /*
-SubmitWithdrawTravelRuleInfo Submit Withdraw Transaction Travel Rule information
+SubmitWithdrawTravelRuleInfo Submit Travel Rule information for withdrawals
 
-This operation allows you to submit the required Travel Rule information based on the transaction details. It supports both self-custody wallets and exchanges/VASPs, ensuring compliance with Travel Rule requirements.
-
-
-- **Destination Wallet Type (`destination_wallet_type`)**:
-  - `SELF_CUSTODY_WALLET`: A self-custodial wallet (e.g., plugin wallet). Requires `self_custody_wallet_sign`, `self_custody_wallet_address`, and `self_custody_wallet_challenge`.
-  - `EXCHANGES_OR_VASP`: A wallet associated with an exchange or VASP. Requires `vendor_vasp_id` and information depending on `selected_entity_type`.
-
-- **Entity Types (`selected_entity_type`)**:
-  - `LEGAL`: For legal entities, provide `legal_name`.
-  - `NATURAL`: For natural persons, provide `date_of_birth`, `place_of_birth`, `first_name`, and `last_name`.
+This operation submits Travel Rule information for a withdrawal transaction.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

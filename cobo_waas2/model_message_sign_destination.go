@@ -15,8 +15,17 @@ import (
 
 // MessageSignDestination - struct for MessageSignDestination
 type MessageSignDestination struct {
+	BTCEIP191MessageSignDestination *BTCEIP191MessageSignDestination
 	EvmEIP191MessageSignDestination *EvmEIP191MessageSignDestination
 	EvmEIP712MessageSignDestination *EvmEIP712MessageSignDestination
+	RawMessageSignDestination *RawMessageSignDestination
+}
+
+// BTCEIP191MessageSignDestinationAsMessageSignDestination is a convenience function that returns BTCEIP191MessageSignDestination wrapped in MessageSignDestination
+func BTCEIP191MessageSignDestinationAsMessageSignDestination(v *BTCEIP191MessageSignDestination) MessageSignDestination {
+	return MessageSignDestination{
+		BTCEIP191MessageSignDestination: v,
+	}
 }
 
 // EvmEIP191MessageSignDestinationAsMessageSignDestination is a convenience function that returns EvmEIP191MessageSignDestination wrapped in MessageSignDestination
@@ -33,6 +42,13 @@ func EvmEIP712MessageSignDestinationAsMessageSignDestination(v *EvmEIP712Message
 	}
 }
 
+// RawMessageSignDestinationAsMessageSignDestination is a convenience function that returns RawMessageSignDestination wrapped in MessageSignDestination
+func RawMessageSignDestinationAsMessageSignDestination(v *RawMessageSignDestination) MessageSignDestination {
+	return MessageSignDestination{
+		RawMessageSignDestination: v,
+	}
+}
+
 
 // Unmarshal JSON data into one of the pointers in the struct
 func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
@@ -42,6 +58,18 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
+	}
+
+	// check if the discriminator value is 'BTC_EIP_191_Signature'
+	if jsonDict["destination_type"] == "BTC_EIP_191_Signature" {
+		// try to unmarshal JSON data into BTCEIP191MessageSignDestination
+		err = json.Unmarshal(data, &dst.BTCEIP191MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.BTCEIP191MessageSignDestination, return on the first match
+		} else {
+			dst.BTCEIP191MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCEIP191MessageSignDestination: %s", err.Error())
+		}
 	}
 
 	// check if the discriminator value is 'EVM_EIP_191_Signature'
@@ -65,6 +93,30 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.EvmEIP712MessageSignDestination = nil
 			return fmt.Errorf("failed to unmarshal MessageSignDestination as EvmEIP712MessageSignDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'RAW_MESSAGE'
+	if jsonDict["destination_type"] == "RAW_MESSAGE" {
+		// try to unmarshal JSON data into RawMessageSignDestination
+		err = json.Unmarshal(data, &dst.RawMessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.RawMessageSignDestination, return on the first match
+		} else {
+			dst.RawMessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as RawMessageSignDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BTCEIP191MessageSignDestination'
+	if jsonDict["destination_type"] == "BTCEIP191MessageSignDestination" {
+		// try to unmarshal JSON data into BTCEIP191MessageSignDestination
+		err = json.Unmarshal(data, &dst.BTCEIP191MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.BTCEIP191MessageSignDestination, return on the first match
+		} else {
+			dst.BTCEIP191MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCEIP191MessageSignDestination: %s", err.Error())
 		}
 	}
 
@@ -92,17 +144,37 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'RawMessageSignDestination'
+	if jsonDict["destination_type"] == "RawMessageSignDestination" {
+		// try to unmarshal JSON data into RawMessageSignDestination
+		err = json.Unmarshal(data, &dst.RawMessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.RawMessageSignDestination, return on the first match
+		} else {
+			dst.RawMessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as RawMessageSignDestination: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src MessageSignDestination) MarshalJSON() ([]byte, error) {
+	if src.BTCEIP191MessageSignDestination != nil {
+		return json.Marshal(&src.BTCEIP191MessageSignDestination)
+	}
+
 	if src.EvmEIP191MessageSignDestination != nil {
 		return json.Marshal(&src.EvmEIP191MessageSignDestination)
 	}
 
 	if src.EvmEIP712MessageSignDestination != nil {
 		return json.Marshal(&src.EvmEIP712MessageSignDestination)
+	}
+
+	if src.RawMessageSignDestination != nil {
+		return json.Marshal(&src.RawMessageSignDestination)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -113,12 +185,20 @@ func (obj *MessageSignDestination) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.BTCEIP191MessageSignDestination != nil {
+		return obj.BTCEIP191MessageSignDestination
+	}
+
 	if obj.EvmEIP191MessageSignDestination != nil {
 		return obj.EvmEIP191MessageSignDestination
 	}
 
 	if obj.EvmEIP712MessageSignDestination != nil {
 		return obj.EvmEIP712MessageSignDestination
+	}
+
+	if obj.RawMessageSignDestination != nil {
+		return obj.RawMessageSignDestination
 	}
 
 	// all schemas are nil

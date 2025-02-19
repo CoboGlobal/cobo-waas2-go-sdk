@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradingAccountType** | Pointer to **string** | The trading account type. | [optional] 
 **AssetId** | **string** | The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | 
-**Balance** | [**TokenBalanceBalance**](TokenBalanceBalance.md) |  | 
+**Balance** | [**Balance**](Balance.md) |  | 
 
 ## Methods
 
 ### NewSubWalletAssetBalance
 
-`func NewSubWalletAssetBalance(assetId string, balance TokenBalanceBalance, ) *SubWalletAssetBalance`
+`func NewSubWalletAssetBalance(assetId string, balance Balance, ) *SubWalletAssetBalance`
 
 NewSubWalletAssetBalance instantiates a new SubWalletAssetBalance object
 This constructor will assign default values to properties that have it defined,
@@ -74,20 +74,20 @@ SetAssetId sets AssetId field to given value.
 
 ### GetBalance
 
-`func (o *SubWalletAssetBalance) GetBalance() TokenBalanceBalance`
+`func (o *SubWalletAssetBalance) GetBalance() Balance`
 
 GetBalance returns the Balance field if non-nil, zero value otherwise.
 
 ### GetBalanceOk
 
-`func (o *SubWalletAssetBalance) GetBalanceOk() (*TokenBalanceBalance, bool)`
+`func (o *SubWalletAssetBalance) GetBalanceOk() (*Balance, bool)`
 
 GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBalance
 
-`func (o *SubWalletAssetBalance) SetBalance(v TokenBalanceBalance)`
+`func (o *SubWalletAssetBalance) SetBalance(v Balance)`
 
 SetBalance sets Balance field to given value.
 

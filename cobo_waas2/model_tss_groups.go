@@ -20,7 +20,7 @@ type TSSGroups struct {
 	// The TSS key share group ID.
 	TssKeyShareGroupId *string `json:"tss_key_share_group_id,omitempty"`
 	Curve *CurveType `json:"curve,omitempty"`
-	// The vault's [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key).
+	// The vault's [root extended public key](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#root-extended-public-keys).
 	RootPubkey *string `json:"root_pubkey,omitempty"`
 }
 

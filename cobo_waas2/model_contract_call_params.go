@@ -30,6 +30,8 @@ type ContractCallParams struct {
 	// The custom category for you to identify your transactions.
 	CategoryNames []string `json:"category_names,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
+	// Transaction processing type. Possible values are: - `AutoProcess` (default): After the transaction is constructed, it will be automatically signed and broadcast.   - `BuildOnly`: Set to this value if you want to build the transaction first without automatically signing and broadcasting it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction) operation to complete the signing and broadcasting process. 
+	TransactionProcessType *string `json:"transaction_process_type,omitempty"`
 	AutoFuel *AutoFuelType `json:"auto_fuel,omitempty"`
 }
 
@@ -248,6 +250,38 @@ func (o *ContractCallParams) SetFee(v TransactionRequestFee) {
 	o.Fee = &v
 }
 
+// GetTransactionProcessType returns the TransactionProcessType field value if set, zero value otherwise.
+func (o *ContractCallParams) GetTransactionProcessType() string {
+	if o == nil || IsNil(o.TransactionProcessType) {
+		var ret string
+		return ret
+	}
+	return *o.TransactionProcessType
+}
+
+// GetTransactionProcessTypeOk returns a tuple with the TransactionProcessType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ContractCallParams) GetTransactionProcessTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.TransactionProcessType) {
+		return nil, false
+	}
+	return o.TransactionProcessType, true
+}
+
+// HasTransactionProcessType returns a boolean if a field has been set.
+func (o *ContractCallParams) HasTransactionProcessType() bool {
+	if o != nil && !IsNil(o.TransactionProcessType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactionProcessType gets a reference to the given string and assigns it to the TransactionProcessType field.
+func (o *ContractCallParams) SetTransactionProcessType(v string) {
+	o.TransactionProcessType = &v
+}
+
 // GetAutoFuel returns the AutoFuel field value if set, zero value otherwise.
 func (o *ContractCallParams) GetAutoFuel() AutoFuelType {
 	if o == nil || IsNil(o.AutoFuel) {
@@ -302,6 +336,9 @@ func (o ContractCallParams) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee
+	}
+	if !IsNil(o.TransactionProcessType) {
+		toSerialize["transaction_process_type"] = o.TransactionProcessType
 	}
 	if !IsNil(o.AutoFuel) {
 		toSerialize["auto_fuel"] = o.AutoFuel

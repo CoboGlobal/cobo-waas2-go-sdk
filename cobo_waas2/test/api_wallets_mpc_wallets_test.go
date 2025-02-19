@@ -110,6 +110,21 @@ func Test_cobo_waas2_WalletsMPCWalletsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test WalletsMPCWalletsAPIService GetKeyShareHolderByTssNodeId", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vaultId string
+		var tssNodeId string
+
+		resp, httpRes, err := apiClient.WalletsMPCWalletsAPI.GetKeyShareHolderByTssNodeId(ctx, vaultId, tssNodeId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test WalletsMPCWalletsAPIService GetKeyShareHolderGroupById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -187,6 +202,20 @@ func Test_cobo_waas2_WalletsMPCWalletsAPIService(t *testing.T) {
 		var vaultId string
 
 		resp, httpRes, err := apiClient.WalletsMPCWalletsAPI.ListKeyShareHolderGroups(ctx, vaultId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test WalletsMPCWalletsAPIService ListKeyShareHolders", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var vaultId string
+
+		resp, httpRes, err := apiClient.WalletsMPCWalletsAPI.ListKeyShareHolders(ctx, vaultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** | The description of the contract call transaction. | [optional] 
 **CategoryNames** | Pointer to **[]string** | The custom category for you to identify your transactions. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+**TransactionProcessType** | Pointer to **string** | Transaction processing type. Possible values are: - &#x60;AutoProcess&#x60; (default): After the transaction is constructed, it will be automatically signed and broadcast.   - &#x60;BuildOnly&#x60;: Set to this value if you want to build the transaction first without automatically signing and broadcasting it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction) operation to complete the signing and broadcasting process.  | [optional] 
 **AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 
 
 ## Methods
@@ -186,6 +187,31 @@ SetFee sets Fee field to given value.
 `func (o *ContractCallParams) HasFee() bool`
 
 HasFee returns a boolean if a field has been set.
+
+### GetTransactionProcessType
+
+`func (o *ContractCallParams) GetTransactionProcessType() string`
+
+GetTransactionProcessType returns the TransactionProcessType field if non-nil, zero value otherwise.
+
+### GetTransactionProcessTypeOk
+
+`func (o *ContractCallParams) GetTransactionProcessTypeOk() (*string, bool)`
+
+GetTransactionProcessTypeOk returns a tuple with the TransactionProcessType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransactionProcessType
+
+`func (o *ContractCallParams) SetTransactionProcessType(v string)`
+
+SetTransactionProcessType sets TransactionProcessType field to given value.
+
+### HasTransactionProcessType
+
+`func (o *ContractCallParams) HasTransactionProcessType() bool`
+
+HasTransactionProcessType returns a boolean if a field has been set.
 
 ### GetAutoFuel
 

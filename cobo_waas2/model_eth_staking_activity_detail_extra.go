@@ -22,7 +22,7 @@ type EthStakingActivityDetailExtra struct {
 	PoolType StakingPoolType `json:"pool_type"`
 	// The name of the provider.
 	ProviderName *string `json:"provider_name,omitempty"`
-	// A list of public keys identifying the validators to unstake from the Ethereum Beacon Chain.
+	// A list of public keys associated with the Ethereum validators for this unstaking operation.
 	ValidatorPubkeys []string `json:"validator_pubkeys,omitempty"`
 }
 

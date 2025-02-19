@@ -17,10 +17,10 @@ import (
 // checks if the TravelRuleWithdrawExchangesOrVASP type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TravelRuleWithdrawExchangesOrVASP{}
 
-// TravelRuleWithdrawExchangesOrVASP Required fields for `EXCHANGES_OR_VASP`.
+// TravelRuleWithdrawExchangesOrVASP Required information when withdrawing tokens to an exchange or other virtual asset service providers (VASP).
 type TravelRuleWithdrawExchangesOrVASP struct {
 	DestinationWalletType DestinationWalletType `json:"destination_wallet_type"`
-	// The vendor code for exchanges or VASPs.
+	// The vendor code of the exchange or virtual asset service provider (VASP).
 	VendorCode string `json:"vendor_code"`
 	// The unique identifier of the VASP.
 	VendorVaspId string `json:"vendor_vasp_id"`

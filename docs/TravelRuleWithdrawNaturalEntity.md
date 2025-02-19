@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SelectedEntityType** | [**SelectedEntityType**](SelectedEntityType.md) |  | 
-**FirstName** | **string** | The first name of the user. | 
-**LastName** | **string** | The last name of the user. | 
-**DateOfBirth** | Pointer to **string** | The date of birth of the user. | [optional] 
-**PlaceOfBirth** | Pointer to **string** | The place of birth of the user. | [optional] 
+**FirstName** | **string** | The first name of the natural person. | 
+**LastName** | **string** | The last name of the natural person. | 
+**DateOfBirth** | Pointer to **string** | The date of birth of the natural person. | [optional] 
+**PlaceOfBirth** | Pointer to **string** | The place of birth of the natural person. | [optional] 
 
 ## Methods
 

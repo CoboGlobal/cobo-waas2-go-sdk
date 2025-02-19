@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **AccountOutput** | Pointer to [**AddressTransferDestinationAccountOutput**](AddressTransferDestinationAccountOutput.md) |  | [optional] 
 **UtxoOutputs** | Pointer to [**[]AddressTransferDestinationUtxoOutputsInner**](AddressTransferDestinationUtxoOutputsInner.md) |  | [optional] 
 **ChangeAddress** | Pointer to **string** | The address used to receive the remaining funds or change from the transaction. | [optional] 
+**ChangeOutputType** | Pointer to **string** | The position of the change output in the transaction&#39;s outputs. Possible values are: - &#x60;Last&#x60;: The change output is placed at the end of the transaction&#39;s outputs.   - &#x60;First&#x60;: The change output is placed at the beginning of the transaction&#39;s outputs.  | [optional] 
 **ForceInternal** | Pointer to **bool** | Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - &#x60;true&#x60;: The transaction request must be executed as a Cobo Loop transfer.   - &#x60;false&#x60;: The transaction request may not be executed as a Cobo Loop transfer.    Please do not set both &#x60;force_internal&#x60; and &#x60;force_external&#x60; as &#x60;true&#x60;.  | [optional] 
 **ForceExternal** | Pointer to **bool** | Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - &#x60;true&#x60;: The transaction request must not be executed as a Cobo Loop transfer.   - &#x60;false&#x60;: The transaction request can be executed as a Cobo Loop transfer.  Please do not set both &#x60;force_internal&#x60; and &#x60;force_external&#x60; as &#x60;true&#x60;.  | [optional] 
 **WalletId** | **string** | The wallet ID. | 
@@ -127,6 +128,31 @@ SetChangeAddress sets ChangeAddress field to given value.
 `func (o *TransferDestination) HasChangeAddress() bool`
 
 HasChangeAddress returns a boolean if a field has been set.
+
+### GetChangeOutputType
+
+`func (o *TransferDestination) GetChangeOutputType() string`
+
+GetChangeOutputType returns the ChangeOutputType field if non-nil, zero value otherwise.
+
+### GetChangeOutputTypeOk
+
+`func (o *TransferDestination) GetChangeOutputTypeOk() (*string, bool)`
+
+GetChangeOutputTypeOk returns a tuple with the ChangeOutputType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChangeOutputType
+
+`func (o *TransferDestination) SetChangeOutputType(v string)`
+
+SetChangeOutputType sets ChangeOutputType field to given value.
+
+### HasChangeOutputType
+
+`func (o *TransferDestination) HasChangeOutputType() bool`
+
+HasChangeOutputType returns a boolean if a field has been set.
 
 ### GetForceInternal
 

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Submitted** | Pointer to **bool** | Whether the submitted Travel Rule info has been successfully executed. - &#x60;true&#x60;: The operation has been successfully executed. - &#x60;false&#x60;: The operation has not been executed.  | [optional] 
+**Submitted** | Pointer to **bool** | Whether the Travel Rule information has been successfully submitted. - &#x60;true&#x60;: The information has been successfully submitted. - &#x60;false&#x60;: The information has not been submitted.  | [optional] 
 
 ## Methods
 

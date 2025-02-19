@@ -1,4 +1,4 @@
-# TokenBalanceBalance
+# Balance
 
 ## Properties
 
@@ -11,110 +11,110 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewTokenBalanceBalance
+### NewBalance
 
-`func NewTokenBalanceBalance(total string, available string, ) *TokenBalanceBalance`
+`func NewBalance(total string, available string, ) *Balance`
 
-NewTokenBalanceBalance instantiates a new TokenBalanceBalance object
+NewBalance instantiates a new Balance object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewTokenBalanceBalanceWithDefaults
+### NewBalanceWithDefaults
 
-`func NewTokenBalanceBalanceWithDefaults() *TokenBalanceBalance`
+`func NewBalanceWithDefaults() *Balance`
 
-NewTokenBalanceBalanceWithDefaults instantiates a new TokenBalanceBalance object
+NewBalanceWithDefaults instantiates a new Balance object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetTotal
 
-`func (o *TokenBalanceBalance) GetTotal() string`
+`func (o *Balance) GetTotal() string`
 
 GetTotal returns the Total field if non-nil, zero value otherwise.
 
 ### GetTotalOk
 
-`func (o *TokenBalanceBalance) GetTotalOk() (*string, bool)`
+`func (o *Balance) GetTotalOk() (*string, bool)`
 
 GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotal
 
-`func (o *TokenBalanceBalance) SetTotal(v string)`
+`func (o *Balance) SetTotal(v string)`
 
 SetTotal sets Total field to given value.
 
 
 ### GetAvailable
 
-`func (o *TokenBalanceBalance) GetAvailable() string`
+`func (o *Balance) GetAvailable() string`
 
 GetAvailable returns the Available field if non-nil, zero value otherwise.
 
 ### GetAvailableOk
 
-`func (o *TokenBalanceBalance) GetAvailableOk() (*string, bool)`
+`func (o *Balance) GetAvailableOk() (*string, bool)`
 
 GetAvailableOk returns a tuple with the Available field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAvailable
 
-`func (o *TokenBalanceBalance) SetAvailable(v string)`
+`func (o *Balance) SetAvailable(v string)`
 
 SetAvailable sets Available field to given value.
 
 
 ### GetPending
 
-`func (o *TokenBalanceBalance) GetPending() string`
+`func (o *Balance) GetPending() string`
 
 GetPending returns the Pending field if non-nil, zero value otherwise.
 
 ### GetPendingOk
 
-`func (o *TokenBalanceBalance) GetPendingOk() (*string, bool)`
+`func (o *Balance) GetPendingOk() (*string, bool)`
 
 GetPendingOk returns a tuple with the Pending field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPending
 
-`func (o *TokenBalanceBalance) SetPending(v string)`
+`func (o *Balance) SetPending(v string)`
 
 SetPending sets Pending field to given value.
 
 ### HasPending
 
-`func (o *TokenBalanceBalance) HasPending() bool`
+`func (o *Balance) HasPending() bool`
 
 HasPending returns a boolean if a field has been set.
 
 ### GetLocked
 
-`func (o *TokenBalanceBalance) GetLocked() string`
+`func (o *Balance) GetLocked() string`
 
 GetLocked returns the Locked field if non-nil, zero value otherwise.
 
 ### GetLockedOk
 
-`func (o *TokenBalanceBalance) GetLockedOk() (*string, bool)`
+`func (o *Balance) GetLockedOk() (*string, bool)`
 
 GetLockedOk returns a tuple with the Locked field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocked
 
-`func (o *TokenBalanceBalance) SetLocked(v string)`
+`func (o *Balance) SetLocked(v string)`
 
 SetLocked sets Locked field to given value.
 
 ### HasLocked
 
-`func (o *TokenBalanceBalance) HasLocked() bool`
+`func (o *Balance) HasLocked() bool`
 
 HasLocked returns a boolean if a field has been set.
 

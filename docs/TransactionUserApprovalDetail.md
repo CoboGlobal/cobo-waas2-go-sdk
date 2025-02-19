@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Pubkey** | Pointer to **string** | The gaurd pubkey of the user who audited the message. | [optional] 
+**Pubkey** | Pointer to **string** | The Cobo Guard public key of the user who audited this message. | [optional] 
 **Result** | Pointer to [**TransactionApprovalResult**](TransactionApprovalResult.md) |  | [optional] 
-**Signature** | Pointer to **string** | Signature of the audited message. | [optional] 
+**Signature** | Pointer to **string** | The signature of the audited message. | [optional] 
 **Language** | Pointer to **string** | The language of the audited message. | [optional] 
-**MessageVersion** | Pointer to **string** | Version of the audited message. | [optional] 
+**MessageVersion** | Pointer to **string** | The version of the audited message. | [optional] 
 **Message** | Pointer to **string** | The audited message. | [optional] 
 **ExtraMessage** | Pointer to **string** | The extra audited message. | [optional] 
 

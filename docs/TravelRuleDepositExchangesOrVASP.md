@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationWalletType** | [**DestinationWalletType**](DestinationWalletType.md) |  | 
-**VendorCode** | **string** | The vendor code for exchanges or VASPs. | 
+**VendorCode** | **string** | The vendor code of the VASP. | 
 **VendorVaspId** | **string** | The unique identifier of the VASP. | 
-**VendorVaspName** | Pointer to **string** | The vendor name to be provided when selecting \&quot;Others\&quot; as the VASP case. This field allows customers to specify the name of a vendor not listed. | [optional] 
+**VendorVaspName** | Pointer to **string** | The vendor name. Use this field to specify the name of a vendor not listed. | [optional] 
 **EntityInfo** | [**TravelRuleDepositExchangesOrVASPEntityInfo**](TravelRuleDepositExchangesOrVASPEntityInfo.md) |  | 
 
 ## Methods

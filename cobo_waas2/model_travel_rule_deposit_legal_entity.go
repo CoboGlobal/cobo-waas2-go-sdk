@@ -17,15 +17,15 @@ import (
 // checks if the TravelRuleDepositLegalEntity type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TravelRuleDepositLegalEntity{}
 
-// TravelRuleDepositLegalEntity Required fields for LEGAL entities.
+// TravelRuleDepositLegalEntity The required information of a legal entity.
 type TravelRuleDepositLegalEntity struct {
-	// Specifies the type of entity associated with the transaction.
+	// The entity type. Possible values include: - `LEGAL`: Legal entity. - `NATURAL`: Natural person. 
 	SelectedEntityType string `json:"selected_entity_type"`
 	// The legal name of the entity.
 	LegalName string `json:"legal_name"`
-	// The incorporation date of the entity. This field is required when: - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`. - **Entity Type**: LEGAL. Otherwise, this field can be omitted. 
+	// The date of incorporation of the entity. This field is required when either of the following conditions is met: - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation. - `selected_entity_type` is `LEGAL`. 
 	DateOfIncorporation *string `json:"date_of_incorporation,omitempty"`
-	// The place of incorporation of the entity. This field is required when: - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`. - **Entity Type**: LEGAL. Otherwise, this field can be omitted. 
+	// The place of incorporation of the entity. This field is required when either of the following conditions is met: - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation. - `selected_entity_type` is `LEGAL`. 
 	PlaceOfIncorporation *string `json:"place_of_incorporation,omitempty"`
 }
 

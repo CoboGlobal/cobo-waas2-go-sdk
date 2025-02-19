@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionApprovalResult The transaction approval result. Possible values include:    - `Approved`: The transaction is approved.   - `Rejected`: The transaction is rejected.    - `Pending`: The transaction is pending approvals. 
+// TransactionApprovalResult The transaction approval result. Possible values include:    - `Approved`: The transaction is approved.   - `Rejected`: The transaction is rejected.    - `Pending`: The transaction is pending approval. 
 type TransactionApprovalResult string
 
 // List of TransactionApprovalResult

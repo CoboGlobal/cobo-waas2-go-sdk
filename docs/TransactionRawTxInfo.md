@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **UsedNonce** | Pointer to **int32** | The transaction nonce. | [optional] 
 **SelectedUtxos** | Pointer to [**[]TransactionSelectedUtxo**](TransactionSelectedUtxo.md) | The selected UTXOs to be consumed in the transaction. | [optional] 
 **RawTx** | Pointer to **string** | The raw transaction data. | [optional] 
+**UnsignedRawTx** | Pointer to **string** | The unsigned raw transaction data. | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetRawTx sets RawTx field to given value.
 `func (o *TransactionRawTxInfo) HasRawTx() bool`
 
 HasRawTx returns a boolean if a field has been set.
+
+### GetUnsignedRawTx
+
+`func (o *TransactionRawTxInfo) GetUnsignedRawTx() string`
+
+GetUnsignedRawTx returns the UnsignedRawTx field if non-nil, zero value otherwise.
+
+### GetUnsignedRawTxOk
+
+`func (o *TransactionRawTxInfo) GetUnsignedRawTxOk() (*string, bool)`
+
+GetUnsignedRawTxOk returns a tuple with the UnsignedRawTx field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUnsignedRawTx
+
+`func (o *TransactionRawTxInfo) SetUnsignedRawTx(v string)`
+
+SetUnsignedRawTx sets UnsignedRawTx field to given value.
+
+### HasUnsignedRawTx
+
+`func (o *TransactionRawTxInfo) HasUnsignedRawTx() bool`
+
+HasUnsignedRawTx returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// CurveType The elliptic curve type of the [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key). Possible values include:  - `SECP256K1`: The secp256k1 elliptic curve.  - `ED25519`: The Ed25519 elliptic curve. 
+// CurveType The elliptic curve type of the [root extended public key](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#root-extended-public-keys). Possible values include:  - `SECP256K1`: The secp256k1 elliptic curve.  - `ED25519`: The Ed25519 elliptic curve. 
 type CurveType string
 
 // List of CurveType

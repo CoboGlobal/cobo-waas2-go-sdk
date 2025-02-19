@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Memo** | Pointer to **string** | The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON. | [optional] 
+**TxInfo** | Pointer to [**TransactionDepositToAddressDestinationTxInfo**](TransactionDepositToAddressDestinationTxInfo.md) |  | [optional] 
 
 ## Methods
 
@@ -498,6 +499,31 @@ SetMemo sets Memo field to given value.
 `func (o *TransactionDestination) HasMemo() bool`
 
 HasMemo returns a boolean if a field has been set.
+
+### GetTxInfo
+
+`func (o *TransactionDestination) GetTxInfo() TransactionDepositToAddressDestinationTxInfo`
+
+GetTxInfo returns the TxInfo field if non-nil, zero value otherwise.
+
+### GetTxInfoOk
+
+`func (o *TransactionDestination) GetTxInfoOk() (*TransactionDepositToAddressDestinationTxInfo, bool)`
+
+GetTxInfoOk returns a tuple with the TxInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTxInfo
+
+`func (o *TransactionDestination) SetTxInfo(v TransactionDepositToAddressDestinationTxInfo)`
+
+SetTxInfo sets TxInfo field to given value.
+
+### HasTxInfo
+
+`func (o *TransactionDestination) HasTxInfo() bool`
+
+HasTxInfo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

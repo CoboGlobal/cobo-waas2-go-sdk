@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionSubStatus The transaction sub-status. Possible values include:    - `PendingDoubleCheck`: The transaction is pending a double check.    - `RejectedDoubleCheck`: The transaction is rejected because it failed a double check.   - `PendingSpenderCheck`: The transaction is pending a spender check.   - `RejectedSpenderAuth`: The transaction is rejected by the spender.   - `PendingTravelRuleCheck`: The transaction is undergoing a Travel Rule check.   - `PendingTravelRuleInfo`: The transaction is awaiting users to provide information related to the Travel Rule.   - `RejectedTravelRule`: The transaction is rejected because it failed to comply with the Travel Rule.   - `RejectedTravelRuleDueToCompliance`: The transaction is rejected because it failed the cross-check of the Travel Rule.    - `RejectedTravelRuleDueToUnsupportedToken`: The transaction is rejected because the token is not supported by the Travel Rule.   - `PendingRiskControlCheck`: The transaction is pending for a Risk Control check.   - `PendingApproverCheck`: The transaction is pending approval from the approver.   - `RejectedApproverAuth`: The transaction is rejected by the approver.   - `RejectedbyMobileCosigner`: The transaction is rejected by a mobile cosigner.   - `RejectedCoboCheck`: The transaction is rejected because it failed the internal check by Cobo.   - `RejectedWhiteList`: The transaction is rejected because the sender or receiver is not included in a whitelist.   - `PendingWaitSigner`: The transaction is pending signature.   - `PendingApprovalStart`: The transaction approval is waiting to be started.           - For [MPC Wallets (User-Controlled Wallets)](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction), you need to use the Client App and call the UCW SDK to start the transaction approval process.     - For [MPC Wallets (Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction)):       - If you are using the [server co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups), this status indicates that the TSS Node will soon request the callback server to start the [risk controls](https://manuals.cobo.com/en/portal/risk-controls/introduction) check. No further action is required from you at this stage.       - If you are using the [mobile co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups), key share holders need to use their [Cobo Guard](https://manuals.cobo.com/en/guard/introduction) to approve the transaction and participate in the signing process.   - `FailedBySigner`: The transaction failed during the signing process.   - `SignatureVerificationSuccess`: The transaction's signature has been successfully verified.   - `SignatureVerificationFailed`: The transaction's signature failed verification.   - `FailedBroadcasting`: The transaction failed to be broadcast to the blockchain network.   - `CanceledBySpender`: The transaction is canceled by a Spender.   - `CanceledByAPI`: The transaction is canceled by a [Cancel transaction](https://www.cobo.com/developers/v2/api-references/transactions/cancel-transaction) operation.   - `Queue`: The transaction is queued to be processed by Cobo Portal.   - `Reverting`: The transaction is being reverted due to failure on the blockchain.   - `OnchainRejection`: The transaction is rejected from being added to the blockchain.   - `FailedOnChain`: The transaction failed on the blockchain.   - `PendingBlockConfirmations`: The transaction is awaiting the required number of confirmations.   - `ReplacedByNewTransaction`: The transaction has been replaced by a new transaction. 
+// TransactionSubStatus The transaction sub-status. For more details, please refer to [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status). 
 type TransactionSubStatus string
 
 // List of TransactionSubStatus
@@ -30,6 +30,7 @@ const (
 	TRANSACTIONSUBSTATUS_REJECTED_RISK_CONTROL_CHECK TransactionSubStatus = "RejectedRiskControlCheck"
 	TRANSACTIONSUBSTATUS_REJECTED_APPROVER_AUTH TransactionSubStatus = "RejectedApproverAuth"
 	TRANSACTIONSUBSTATUS_REJECTEDBY_MOBILE_COSIGNER TransactionSubStatus = "RejectedbyMobileCosigner"
+	TRANSACTIONSUBSTATUS_BUILT TransactionSubStatus = "Built"
 	TRANSACTIONSUBSTATUS_PENDING_WAIT_SIGNER TransactionSubStatus = "PendingWaitSigner"
 	TRANSACTIONSUBSTATUS_PENDING_APPROVAL_START TransactionSubStatus = "PendingApprovalStart"
 	TRANSACTIONSUBSTATUS_FAILED_BY_SIGNER TransactionSubStatus = "FailedBySigner"
@@ -65,6 +66,7 @@ var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"RejectedRiskControlCheck",
 	"RejectedApproverAuth",
 	"RejectedbyMobileCosigner",
+	"Built",
 	"PendingWaitSigner",
 	"PendingApprovalStart",
 	"FailedBySigner",

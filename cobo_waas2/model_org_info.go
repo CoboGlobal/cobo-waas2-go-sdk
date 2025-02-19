@@ -17,9 +17,9 @@ import (
 // checks if the OrgInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &OrgInfo{}
 
-// OrgInfo [organization](https://manuals.cobo.com/en/portal/organization/introduction). 
+// OrgInfo The information of an organization. To learn more about organizations, see [Introduction to Organization](https://manuals.cobo.com/en/portal/organization/introduction). 
 type OrgInfo struct {
-	// The ID of the owning organization.
+	// The organization ID.
 	OrgId string `json:"org_id"`
 	// The organization name.
 	Name *string `json:"name,omitempty"`

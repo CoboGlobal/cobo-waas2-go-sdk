@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SelectedEntityType Specifies the type of entity. This must be `LEGAL`.
+// SelectedEntityType Specifies the entity type. This must be `LEGAL`.   - `LEGAL`: Legal entity.   - `NATURAL`: Natural person. 
 type SelectedEntityType string
 
 // List of SelectedEntityType

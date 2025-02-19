@@ -17,12 +17,12 @@ import (
 // checks if the TravelRuleWithdrawLegalEntity type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TravelRuleWithdrawLegalEntity{}
 
-// TravelRuleWithdrawLegalEntity Required fields for LEGAL entities.
+// TravelRuleWithdrawLegalEntity The required information of a legal entity.
 type TravelRuleWithdrawLegalEntity struct {
 	SelectedEntityType SelectedEntityType `json:"selected_entity_type"`
 	// The legal name of the entity.
 	LegalName string `json:"legal_name"`
-	// The incorporation date of the entity.
+	// The date of incorporation of the entity.
 	DateOfIncorporation *string `json:"date_of_incorporation,omitempty"`
 	// The place of incorporation of the entity.
 	PlaceOfIncorporation *string `json:"place_of_incorporation,omitempty"`

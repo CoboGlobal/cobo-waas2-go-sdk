@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **string** | The ID of the owning organization. | 
+**OrgId** | **string** | The organization ID. | 
 **Name** | Pointer to **string** | The organization name. | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The organization&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 

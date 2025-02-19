@@ -17,16 +17,16 @@ import (
 // checks if the TravelRuleWithdrawNaturalEntity type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TravelRuleWithdrawNaturalEntity{}
 
-// TravelRuleWithdrawNaturalEntity Required fields for NATURAL entities.
+// TravelRuleWithdrawNaturalEntity The required information of a natural person.
 type TravelRuleWithdrawNaturalEntity struct {
 	SelectedEntityType SelectedEntityType `json:"selected_entity_type"`
-	// The first name of the user.
+	// The first name of the natural person.
 	FirstName string `json:"first_name"`
-	// The last name of the user.
+	// The last name of the natural person.
 	LastName string `json:"last_name"`
-	// The date of birth of the user.
+	// The date of birth of the natural person.
 	DateOfBirth *string `json:"date_of_birth,omitempty"`
-	// The place of birth of the user.
+	// The place of birth of the natural person.
 	PlaceOfBirth *string `json:"place_of_birth,omitempty"`
 }
 

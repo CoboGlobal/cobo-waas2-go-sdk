@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationWalletType** | [**DestinationWalletType**](DestinationWalletType.md) |  | 
-**SelfCustodyWalletChallenge** | **string** | The challenge obtained from a previous operation. | 
-**SelfCustodyWalletAddress** | **string** | The address of the self-custodial wallet. | 
-**SelfCustodyWalletSign** | **string** | The signed message from the self-custodial wallet. | 
-**VendorCode** | **string** | The vendor code for exchanges or VASPs. | 
+**SelfCustodyWalletChallenge** | **string** | The message obtained from the &#x60;Retrieve transaction limitations&#x60; operation. This message is used to verify wallet ownership through signing. | 
+**SelfCustodyWalletAddress** | **string** | The address of the self-custody wallet. | 
+**SelfCustodyWalletSign** | **string** | The signature created by signing the challenge message with the wallet&#39;s private key. | 
+**VendorCode** | **string** | The vendor code of the exchange or virtual asset service provider (VASP). | 
 **VendorVaspId** | **string** | The unique identifier of the VASP. | 
 **EntityInfo** | [**TravelRuleWithdrawExchangesOrVASPEntityInfo**](TravelRuleWithdrawExchangesOrVASPEntityInfo.md) |  | 
 

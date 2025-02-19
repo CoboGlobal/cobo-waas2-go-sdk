@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationWalletType** | [**DestinationWalletType**](DestinationWalletType.md) |  | 
-**VendorCode** | **string** | The vendor code for exchanges or VASPs. | 
+**VendorCode** | **string** | The vendor code of the exchange or virtual asset service provider (VASP). | 
 **VendorVaspId** | **string** | The unique identifier of the VASP. | 
 **EntityInfo** | [**TravelRuleWithdrawExchangesOrVASPEntityInfo**](TravelRuleWithdrawExchangesOrVASPEntityInfo.md) |  | 
 
