@@ -17,14 +17,14 @@ import (
 // checks if the SelfCustodyWallet type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SelfCustodyWallet{}
 
-// SelfCustodyWallet Required fields for `SELF_CUSTODY_WALLET`.
+// SelfCustodyWallet Required information when depositing from or withdrawing to a self-custody wallet.
 type SelfCustodyWallet struct {
 	DestinationWalletType DestinationWalletType `json:"destination_wallet_type"`
-	// The challenge obtained from a previous operation.
+	// The message obtained from the `Retrieve transaction limitations` operation. This message is used to verify wallet ownership through signing.
 	SelfCustodyWalletChallenge string `json:"self_custody_wallet_challenge"`
-	// The address of the self-custodial wallet.
+	// The address of the self-custody wallet.
 	SelfCustodyWalletAddress string `json:"self_custody_wallet_address"`
-	// The signed message from the self-custodial wallet.
+	// The signature created by signing the challenge message with the wallet's private key.
 	SelfCustodyWalletSign string `json:"self_custody_wallet_sign"`
 }
 

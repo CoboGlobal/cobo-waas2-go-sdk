@@ -17,13 +17,13 @@ import (
 // checks if the Vasp type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Vasp{}
 
-// Vasp The information of an vasp.
+// Vasp The information of a virtual asset service provider (VASP).
 type Vasp struct {
-	// The name of the vasp.
+	// The VASP name.
 	Name string `json:"name"`
-	// The symbol.
+	// The vendor code of the VASP.
 	VendorCode string `json:"vendor_code"`
-	// The vasp str id.
+	// The VASP ID.
 	VendorVaspId string `json:"vendor_vasp_id"`
 }
 

@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**GetTransactionById**](TransactionsAPI.md#GetTransactionById) | **Get** /transactions/{transaction_id} | Get transaction information
 [**ListTransactions**](TransactionsAPI.md#ListTransactions) | **Get** /transactions | List all transactions
 [**ResendTransactionById**](TransactionsAPI.md#ResendTransactionById) | **Post** /transactions/{transaction_id}/resend | Resend transaction
+[**SignAndBroadcastTransactionById**](TransactionsAPI.md#SignAndBroadcastTransactionById) | **Post** /transactions/{transaction_id}/sign_and_broadcast | Sign and broadcast transaction
 [**SpeedupTransactionById**](TransactionsAPI.md#SpeedupTransactionById) | **Post** /transactions/{transaction_id}/speedup | Speed up transaction
 
 
@@ -84,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -164,7 +165,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -244,7 +245,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -320,7 +321,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -354,7 +355,7 @@ import (
 )
 
 func main() {
-	messageSignParams := *coboWaas2.NewMessageSignParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", coboWaas2.MessageSignSource{MpcMessageSignSource: coboWaas2.NewMpcMessageSignSource(coboWaas2.MessageSignSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}, coboWaas2.MessageSignDestination{EvmEIP191MessageSignDestination: coboWaas2.NewEvmEIP191MessageSignDestination(coboWaas2.MessageSignDestinationType("EVM_EIP_191_Signature"), "YWFhYQ==")})
+	messageSignParams := *coboWaas2.NewMessageSignParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", coboWaas2.MessageSignSource{MpcMessageSignSource: coboWaas2.NewMpcMessageSignSource(coboWaas2.MessageSignSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}, coboWaas2.MessageSignDestination{BTCEIP191MessageSignDestination: coboWaas2.NewBTCEIP191MessageSignDestination(coboWaas2.MessageSignDestinationType("EVM_EIP_191_Signature"), "YWFhYQ==")})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -396,7 +397,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -472,7 +473,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -554,7 +555,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -630,7 +631,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -790,7 +791,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -898,7 +899,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -980,11 +981,91 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SignAndBroadcastTransactionById
+
+> CreateTransferTransaction201Response SignAndBroadcastTransactionById(ctx, transactionId).Execute()
+
+Sign and broadcast transaction
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.SignAndBroadcastTransactionById(ctx, transactionId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.SignAndBroadcastTransactionById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SignAndBroadcastTransactionById`: CreateTransferTransaction201Response
+	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.SignAndBroadcastTransactionById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**transactionId** | **string** | The transaction ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSignAndBroadcastTransactionByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**CreateTransferTransaction201Response**](CreateTransferTransaction201Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1062,7 +1143,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

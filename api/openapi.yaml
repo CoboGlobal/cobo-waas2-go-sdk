@@ -51,6 +51,8 @@ tags:
   name: AddressBooks
 - description: Operations related to travel rule.
   name: TravelRule
+- description: Operations related to prime broker.
+  name: PrimeBroker
 paths:
   /wallets/chains:
     get:
@@ -181,8 +183,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List supported chains
       tags:
       - Wallets
@@ -223,8 +223,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: Get chain information
       tags:
       - Wallets
@@ -369,8 +367,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List supported tokens
       tags:
       - Wallets
@@ -411,8 +407,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: Get token information
       tags:
       - Wallets
@@ -527,8 +521,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List enabled chains
       tags:
       - Wallets
@@ -656,8 +648,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List enabled tokens
       tags:
       - Wallets
@@ -792,7 +782,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: List all wallets
       tags:
       - Wallets
@@ -825,11 +816,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - custodial_asset_wallet:create
-        - mpc_organization_controlled_wallet:create
-        - mpc_user_controlled_wallet:create
+        - wallet.create
       summary: Create wallet
       tags:
       - Wallets
@@ -870,7 +858,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: Get wallet information
       tags:
       - Wallets
@@ -914,11 +903,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - custodial_asset_wallet:edit
-        - mpc_organization_controlled_wallet:edit
-        - mpc_user_controlled_wallet:edit
+        - wallet.update
       summary: Update wallet
       tags:
       - Wallets
@@ -961,7 +947,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.delete
       summary: Delete wallet
       tags:
       - Wallets
@@ -1002,6 +989,15 @@ paths:
         required: false
         schema:
           description: The wallet address.
+          type: string
+        style: form
+      - example: dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83
+        explode: true
+        in: query
+        name: tx_hash
+        required: false
+        schema:
+          description: The transaction hash of the UTXO.
           type: string
         style: form
       - description: "The maximum number of objects to return. For most operations,\
@@ -1068,7 +1064,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: List UTXOs
       tags:
       - Wallets
@@ -1113,10 +1110,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_wallet:withdraw
-        - mpc_user_controlled_wallet:withdraw
+        - wallet.manage_utxo
       summary: Lock UTXOs
       tags:
       - Wallets
@@ -1161,10 +1156,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_wallet:withdraw
-        - mpc_user_controlled_wallet:withdraw
+        - wallet.manage_utxo
       summary: Unlock UTXOs
       tags:
       - Wallets
@@ -1248,7 +1241,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: Get maximum transferable value
       tags:
       - Wallets
@@ -1355,7 +1349,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: List wallet addresses
       tags:
       - Wallets
@@ -1401,11 +1396,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - custodial_asset_wallet:add
-        - mpc_organization_controlled_wallet:add
-        - mpc_user_controlled_wallet:add
+        - wallet.create_address
       summary: Create addresses in wallet
       tags:
       - Wallets
@@ -1512,7 +1504,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: List token balances by address
       tags:
       - Wallets
@@ -1610,8 +1603,117 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: List token balances by wallet
+      tags:
+      - Wallets
+  /wallets/{wallet_id}/tokens/{token_id}:
+    get:
+      description: "The operation retrieves a list of address balances for a specified\
+        \ token within a wallet. \n\n<Note>This operation is applicable to MPC Wallets\
+        \ only.</Note>\n"
+      operationId: list_address_balances_for_token
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "The token ID, which is the unique identifier of a token. You\
+          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
+          \ tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "A list of wallet addresses, separated by comma. For addresses\
+          \ requiring a memo, append the memo after the address using the '|' separator\
+          \ (e.g., \"address|memo\")."
+        example: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"
+        explode: true
+        in: query
+        name: addresses
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data before the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n\
+          - If you set it to `infinity`, the last page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data after the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_address_balances_for_token_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - OAuth2:
+        - wallet.read
+      summary: List address balances for token
       tags:
       - Wallets
   /wallets/check_address_validity:
@@ -1661,8 +1763,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: Check address validity
       tags:
       - Wallets
@@ -1715,8 +1815,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: Check addresses validity
       tags:
       - Wallets
@@ -1770,8 +1868,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: Check address validity across chains
       tags:
       - Wallets
@@ -1803,8 +1899,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List all Cobo key share holders
       tags:
       - Wallets - MPC Wallets
@@ -1880,7 +1974,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - mpc_project.read
       summary: List all projects
       tags:
       - Wallets - MPC Wallets
@@ -1913,9 +2008,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_user_controlled_project:manage
+        - mpc_project.create
       summary: Create project
       tags:
       - Wallets - MPC Wallets
@@ -1958,7 +2052,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - mpc_project.read
       summary: Get project information
       tags:
       - Wallets - MPC Wallets
@@ -2003,9 +2098,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_user_controlled_project:manage
+        - mpc_project.update
       summary: Update project name
       tags:
       - Wallets - MPC Wallets
@@ -2108,7 +2202,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - mpc_vault.read
       summary: List all vaults
       tags:
       - Wallets - MPC Wallets
@@ -2141,10 +2236,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_vault:manage
-        - mpc_user_controlled_vault:manage
+        - mpc_vault.create
       summary: Create vault
       tags:
       - Wallets - MPC Wallets
@@ -2156,7 +2249,7 @@ paths:
         <Info>To learn what a vault is and how it relates to MPC Wallets, see [Get started with MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#technical-architecture).</Info>
       operationId: get_mpc_vault_by_id
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2187,7 +2280,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - mpc_vault.read
       summary: Get vault information
       tags:
       - Wallets - MPC Wallets
@@ -2198,7 +2292,7 @@ paths:
         <Info>To learn what a vault is and how it relates to MPC Wallets, see [Get started with MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#technical-architecture).</Info>
       operationId: update_mpc_vault_by_id
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2231,10 +2325,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_vault:manage
-        - mpc_user_controlled_vault:manage
+        - mpc_vault.update
       summary: Update vault name
       tags:
       - Wallets - MPC Wallets
@@ -2244,7 +2336,7 @@ paths:
         This operation retrieves all key share holder groups under a specified vault. You can filter the result by group type.
       operationId: list_key_share_holder_groups
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2334,7 +2426,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - mpc_key_group.read
       summary: List all key share holder groups
       tags:
       - Wallets - MPC Wallets
@@ -2343,7 +2436,7 @@ paths:
         This operation creates a key share holder group for a specified vault. <Note>This operation will not return the `tss_key_share_groups` property until key shares have been created using the [Create TSS request](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/create-tss-request) operation. Creating a wallet with the [Create wallet](https://www.cobo.com/developers/v2/api-references/wallets/create-wallet) operation is only possible after you've completed the previous actions.</Note>
       operationId: create_key_share_holder_group
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2376,10 +2469,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_key_group:manage
-        - mpc_user_controlled_key_group:manage
+        - mpc_key_group.create
       summary: Create key share holder group
       tags:
       - Wallets - MPC Wallets
@@ -2389,7 +2480,7 @@ paths:
         This operation retrieves detailed information about a specified key share holder group.
       operationId: get_key_share_holder_group_by_id
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2429,7 +2520,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - mpc_key_group.read
       summary: Get key share holder group information
       tags:
       - Wallets - MPC Wallets
@@ -2438,7 +2530,7 @@ paths:
         This operation updates a specified active [Signing Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups). For example, you can use this operation to upgrade a Signing Group to the [Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups).
       operationId: update_key_share_holder_group_by_id
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2480,10 +2572,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_key_group:manage
-        - mpc_user_controlled_key_group:manage
+        - mpc_key_group.update
       summary: Update key share holder group
       tags:
       - Wallets - MPC Wallets
@@ -2492,7 +2582,7 @@ paths:
       description: This operation deletes a specified key share holder group.
       operationId: delete_key_share_holder_group_by_id
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2532,10 +2622,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_key_group:manage
-        - mpc_user_controlled_key_group:manage
+        - mpc_key_group.delete
       summary: Delete key share holder group
       tags:
       - Wallets - MPC Wallets
@@ -2545,7 +2633,7 @@ paths:
         This operation retrieves a list of TSS requests and their details.
       operationId: list_tss_requests
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2629,7 +2717,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - mpc_key_group.read
       summary: List TSS requests
       tags:
       - Wallets - MPC Wallets
@@ -2638,7 +2727,7 @@ paths:
         This operation creates a TSS request under a specified vault. You can use this operation to perform actions such as key generation and recovery.
       operationId: create_tss_request
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2671,10 +2760,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_tss_request:manage
-        - mpc_user_controlled_tss_request:manage
+        - mpc_key_group.create
       summary: Create TSS request
       tags:
       - Wallets - MPC Wallets
@@ -2684,7 +2771,7 @@ paths:
         This operation retrieves detailed information about a TSS request.
       operationId: get_tss_request_by_id
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2725,10 +2812,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_tss_request:manage
-        - mpc_user_controlled_tss_request:manage
+        - mpc_key_group.read
       summary: Get TSS request
       tags:
       - Wallets - MPC Wallets
@@ -2738,7 +2823,7 @@ paths:
         This operation cancels a TSS request.
       operationId: cancel_tss_request_by_id
       parameters:
-      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -2779,11 +2864,152 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_tss_request:manage
-        - mpc_user_controlled_tss_request:manage
+        - mpc_key_group.delete
       summary: Cancel TSS request
+      tags:
+      - Wallets - MPC Wallets
+  /wallets/mpc/vaults/{vault_id}/key_share_holders:
+    get:
+      description: |
+        This operation retrieves all key share holders under a specified vault. You can filter the result by key share holder group id.
+      operationId: list_key_share_holders
+      parameters:
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: vault_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "A list of key_share_holder_group_ids, separated by comma."
+        example: "dc0cac48-9add-4243-9c7a-b8badac8a198,5558bd1b-d221-4e2b-8c29-f6c97d9e6aca"
+        explode: true
+        in: query
+        name: key_share_holder_group_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data before the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n\
+          - If you set it to `infinity`, the last page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data after the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_key_share_holders_200_response'
+          description: Successfully listed key share holders.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      summary: List all key share holders
+      tags:
+      - Wallets - MPC Wallets
+  /wallets/mpc/vaults/{vault_id}/key_share_holders/{tss_node_id}:
+    get:
+      description: |
+        This operation retrieves detailed information about a specified key holder.
+      operationId: get_key_share_holder_by_tss_node_id
+      parameters:
+      - description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: vault_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: The TSS Node ID.
+        example: coboBTGDvjJG99pABegvPYmavrcTU3SkjTLHVdsko8dWBga4w
+        explode: false
+        in: path
+        name: tss_node_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyShareHolder'
+          description: Successfully get key share holder
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      summary: Get key share holder by tss node id
       tags:
       - Wallets - MPC Wallets
   /wallets/exchanges:
@@ -2813,8 +3039,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List supported exchanges
       tags:
       - Wallets - Exchange Wallet
@@ -2904,8 +3128,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List supported assets
       tags:
       - Wallets - Exchange Wallet
@@ -2968,8 +3190,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: List supported chains
       tags:
       - Wallets - Exchange Wallet
@@ -3076,7 +3296,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: List asset balances
       tags:
       - Wallets - Exchange Wallet
@@ -3121,7 +3342,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
       summary: List Delegates
       tags:
       - Wallets - Smart Contract Wallets
@@ -3185,7 +3407,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.estimate_fee
       summary: Check Cobo Loop transfers
       tags:
       - Transactions
@@ -3221,7 +3444,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.estimate_fee
       summary: Estimate transaction fee
       tags:
       - Transactions
@@ -3232,7 +3456,7 @@ paths:
 
         You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
-        <Note>If you make transfers from Custodial Wallets, do not set the fee-related properties. Otherwise, the transaction will fail.</Note>
+        <Note>If you make transfers from Custodial Wallets (Asset Wallets) and Exchange Wallets, do not set the fee-related properties, as they will not take effects.</Note>
 
         <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. You should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
 
@@ -3261,11 +3485,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - custodial_asset_wallet:withdraw
-        - mpc_organization_controlled_wallet:withdraw
-        - mpc_user_controlled_wallet:withdraw
+        - transaction.withdraw
       summary: Transfer token
       tags:
       - Transactions
@@ -3303,10 +3524,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_wallet:contract_call
-        - mpc_user_controlled_wallet:contract_call
+        - transaction.contract_call
       summary: Call smart contract
       tags:
       - Transactions
@@ -3344,10 +3563,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - mpc_organization_controlled_wallet:message_sign
-        - mpc_user_controlled_wallet:message_sign
+        - transaction.message_sign
       summary: Sign message
       tags:
       - Transactions
@@ -3586,7 +3803,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
       summary: List all transactions
       tags:
       - Transactions
@@ -3627,7 +3845,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
       summary: Get transaction information
       tags:
       - Transactions
@@ -3674,7 +3893,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.manage
       summary: Resend transaction
       tags:
       - Transactions
@@ -3720,7 +3940,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.manage
       summary: Cancel transaction
       tags:
       - Transactions
@@ -3759,7 +3980,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.manage
       summary: Broadcast signed transactions
       tags:
       - Transactions
@@ -3808,7 +4030,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.manage
       summary: Drop transaction
       tags:
       - Transactions
@@ -3859,8 +4082,50 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - transaction.manage
       summary: Speed up transaction
+      tags:
+      - Transactions
+  /transactions/{transaction_id}/sign_and_broadcast:
+    post:
+      description: |
+        This operation sign and broadcast a specified transaction.
+      operationId: sign_and_broadcast_transaction_by_id
+      parameters:
+      - description: The transaction ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: transaction_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_transfer_transaction_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      summary: Sign and broadcast transaction
       tags:
       - Transactions
   /transactions/{transaction_id}/approval_detail:
@@ -3970,8 +4235,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: Get Org Access Token
       tags:
       - OAuth
@@ -4005,8 +4268,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
-      security:
-      - CoboAuth: []
       summary: Refresh Org Access Token
       tags:
       - OAuth
@@ -4094,6 +4355,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
+      security:
+      - OAuth2:
+        - webhook.read
       summary: List webhook endpoints
       tags:
       - Developers - Webhooks
@@ -4123,9 +4387,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - webhook_url:edit
+        - webhook.edit
       summary: Register webhook endpoint
       tags:
       - Developers - Webhooks
@@ -4166,6 +4429,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
+      security:
+      - OAuth2:
+        - webhook.read
       summary: Get webhook endpoint information
       tags:
       - Developers - Webhooks
@@ -4207,9 +4473,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - webhook_url:edit
+        - webhook.edit
       summary: Update webhook endpoint
       tags:
       - Developers - Webhooks
@@ -4372,6 +4637,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
+      security:
+      - OAuth2:
+        - webhook.read
       summary: List all webhook events
       tags:
       - Developers - Webhooks
@@ -4423,6 +4691,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
+      security:
+      - OAuth2:
+        - webhook.read
       summary: Retrieve event information
       tags:
       - Developers - Webhooks
@@ -4517,6 +4788,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
+      security:
+      - OAuth2:
+        - webhook.read
       summary: List webhook event logs
       tags:
       - Developers - Webhooks
@@ -4569,9 +4843,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - webhook:resend
+        - webhook.resend
       summary: Retry event
       tags:
       - Developers - Webhooks
@@ -4673,6 +4946,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Forbidden. You do not have the permission to access the requested
             resource.
+      security:
+      - OAuth2:
+        - wallet.read
       summary: List staking pools
       tags:
       - Stakings
@@ -4727,6 +5003,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Requested resources not found.
+      security:
+      - OAuth2:
+        - wallet.read
       summary: Get staking pool details
       tags:
       - Stakings
@@ -4756,6 +5035,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Bad request. Your request contains malformed syntax or invalid
             parameters.
+      security:
+      - OAuth2:
+        - transaction.estimate_fee
       summary: Estimate staking fees
       tags:
       - Stakings
@@ -4782,6 +5064,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Bad request. Your request contains malformed syntax or invalid
             parameters.
+      security:
+      - OAuth2:
+        - transaction.estimate_fee
       summary: Estimate staking fees v2
       tags:
       - Stakings
@@ -4822,6 +5107,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Forbidden. You do not have the permission to access the requested
             resource.
+      security:
+      - OAuth2:
+        - transaction.stake
       summary: Create stake activity
       tags:
       - Stakings
@@ -4953,6 +5241,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Forbidden. You do not have the permission to access the requested
             resource.
+      security:
+      - OAuth2:
+        - wallet.read
       summary: List staking positions
       tags:
       - Stakings
@@ -5005,6 +5296,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Requested resources not found.
+      security:
+      - OAuth2:
+        - wallet.read
       summary: Get staking position details
       tags:
       - Stakings
@@ -5047,6 +5341,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Forbidden. You do not have the permission to access the requested
             resource.
+      security:
+      - OAuth2:
+        - transaction.unstake
       summary: Create unstake activity
       tags:
       - Stakings
@@ -5087,6 +5384,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Forbidden. You do not have the permission to access the requested
             resource.
+      security:
+      - OAuth2:
+        - transaction.unstake_withdraw
       summary: Create withdraw activity
       tags:
       - Stakings
@@ -5127,6 +5427,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Forbidden. You do not have the permission to access the requested
             resource.
+      security:
+      - OAuth2:
+        - transaction.stake
       summary: Create claim activity
       tags:
       - Stakings
@@ -5287,6 +5590,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Forbidden. You do not have the permission to access the requested
             resource.
+      security:
+      - OAuth2:
+        - wallet.read
       summary: List staking activities
       tags:
       - Stakings
@@ -5338,6 +5644,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Requested resources not found.
+      security:
+      - OAuth2:
+        - wallet.read
       summary: Get staking activity details
       tags:
       - Stakings
@@ -5367,7 +5676,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - api_key.read
       summary: Get API key information
       tags:
       - Developers
@@ -5494,7 +5804,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - callback.read
       summary: List all callback messages
       tags:
       - Developers
@@ -5536,7 +5847,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
+      - OAuth2:
+        - callback.resend
       summary: Retry callback message
       tags:
       - Developers
@@ -5640,12 +5952,296 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
+      security:
+      - OAuth2:
+        - address_book.read
       summary: List address book entries
       tags:
       - AddressBooks
+  /prime_broker/user/{user_id}/guard_pubkey:
+    get:
+      description: |
+        This operation query a user guard pubkey
+      operationId: query_guard_pubkey
+      parameters:
+      - description: user id.
+        example: "168108513539918"
+        explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          description: user id.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/query_guard_pubkey_200_response'
+          description: The information about an user guard pubkey.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: query a user guard pubkey
+      tags:
+      - PrimeBroker
+    post:
+      description: |
+        This operation create a guard pubkey binding.
+      operationId: create_guard_pubkey
+      parameters:
+      - description: user id.
+        example: "168108513539918"
+        explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          description: user id.
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/change_guard_pubkey_200_response'
+          description: Successfully created a guard binding.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: create a guard pubkey binding
+      tags:
+      - PrimeBroker
+    put:
+      description: |
+        This operation change a user guard pubkey.
+      operationId: change_guard_pubkey
+      parameters:
+      - description: user id.
+        example: "168108513539918"
+        explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          description: user id.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/change_guard_pubkey_200_response'
+          description: Successfully created a guard binding.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: change a user guard pubkey
+      tags:
+      - PrimeBroker
+  /prime_broker/user/{user_id}/guard_pubkey/delete:
+    post:
+      description: |
+        This operation delete a user guard pubkey.
+      operationId: delete_guard_pubkey
+      parameters:
+      - description: user id.
+        example: "168108513539918"
+        explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          description: user id.
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/delete_guard_pubkey_201_response'
+          description: Successfully created a guard binding.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: delete a user guard pubkey
+      tags:
+      - PrimeBroker
+  /prime_broker/user/{user_id}/addresses:
+    post:
+      description: |
+        This operation bind addresses to a broker user.
+      operationId: create_prime_broker_address
+      parameters:
+      - description: user id.
+        example: "168108513539918"
+        explode: false
+        in: path
+        name: user_id
+        required: true
+        schema:
+          description: user id.
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/createPrimeBrokerUserAddressBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_prime_broker_address_201_response'
+          description: Successfully created a address binding.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: bind addresses to a broker user
+      tags:
+      - PrimeBroker
+  /prime_broker/approval_statement/{statement_id}:
+    get:
+      description: |
+        This operation query a approval statement.
+      operationId: query_approval_statement
+      parameters:
+      - description: approval statement id.
+        example: "168108513539918"
+        explode: false
+        in: path
+        name: statement_id
+        required: true
+        schema:
+          description: approval statement id.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/query_approval_statement_200_response'
+          description: The information about a approval statement.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized. Please provide valid credentials.
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden. You do not have the permission to access the requested
+            resource.
+      summary: query a approval statement
+      tags:
+      - PrimeBroker
   /travel_rule/transaction/countries:
     get:
-      description: This operation retrieves all countries supported.
+      description: |
+        This operation retrieves a list of supported countries that can be used when submitting Travel Rule information.
+
+        Use this endpoint to obtain valid country values for:
+          - Place of incorporation of a legal entity
+          - Place of birth of a natural person
       operationId: list_supported_countries
       responses:
         "200":
@@ -5670,25 +6266,17 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - travel_rule:read
+        - travel_rule.read
       summary: List supported countries
       tags:
       - TravelRule
   /travel_rule/transaction/limitation:
     get:
-      description: "This endpoint retrieves transaction-related limitations based\
-        \ on the provided `transaction_type` and `transaction_id`.\n\nThe response\
-        \ includes the following information:\n- **`vasp_list`**: A list of Virtual\
-        \ Asset Service Providers (VASPs) associated with the transaction token.\n\
-        - **`is_threshold_reached`**: Indicates whether the transaction amount has\
-        \ exceeded the predefined threshold. \n  - If `true`: Additional Travel Rule\
-        \ information may be required for processing.\n- **`self_custody_wallet_challenge`**:\
-        \ A challenge string for verifying ownership of self-custody wallets.\n- **`connect_wallet_list`**:\
-        \ A list of supported wallet integrations for the transaction, such as MetaMask\
-        \ or WalletConnect.\n\nUse this endpoint to ensure compliance with Travel\
-        \ Rule requirements and to retrieve supported options for completing the transaction.\n"
+      description: |
+        This operation retrieves Travel Rule requirements and available options for a transaction based on its transaction type and ID.
+
+        Use this endpoint before submitting Travel Rule information to understand the requirements and available options for your transaction.
       operationId: get_transaction_limitation
       parameters:
       - description: "The transaction type. Possible values include: \n  - `DEPOSIT`:\
@@ -5704,7 +6292,7 @@ paths:
           - WITHDRAW
           type: string
         style: form
-      - description: The transaction ID
+      - description: The transaction ID.
         explode: true
         in: query
         name: transaction_id
@@ -5735,25 +6323,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - travel_rule:read
+        - travel_rule.read
       summary: Retrieve transaction limitations
       tags:
       - TravelRule
   /travel_rule/transaction/deposit/travel_rule_info:
     post:
       description: |
-        This operation allows you to submit the required Travel Rule information based on the transaction details. It supports both self-custody wallets and exchanges/VASPs, ensuring compliance with Travel Rule requirements.
-
-
-        - **Destination Wallet Type (`destination_wallet_type`)**:
-          - `SELF_CUSTODY_WALLET`: A self-custodial wallet (e.g., plugin wallet). Requires `self_custody_wallet_sign`, `self_custody_wallet_address`, and `self_custody_wallet_challenge`.
-          - `EXCHANGES_OR_VASP`: A wallet associated with an exchange or VASP. Requires `vendor_vasp_id` and information depending on `selected_entity_type`.
-
-        - **Entity Types (`selected_entity_type`)**:
-          - `LEGAL`: For legal entities, provide `legal_name`, `date_of_incorporation`, and `place_of_incorporation`.
-          - `NATURAL`: For natural persons, provide `date_of_birth`, `place_of_birth`, `first_name`, and `last_name`.
+        This operation submits Travel Rule information for a deposit transaction.
       operationId: submit_deposit_travel_rule_info
       requestBody:
         content:
@@ -5766,7 +6344,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/submit_deposit_travel_rule_info_201_response'
-          description: Successfully submitted Travel Rule information.
+          description: Successfully submitted the Travel Rule information.
         "4XX":
           content:
             application/json:
@@ -5781,25 +6359,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - travel_rule:edit
-      summary: Submit Deposit Transaction Travel Rule information
+        - travel_rule.edit
+      summary: Submit Travel Rule information for deposits
       tags:
       - TravelRule
   /travel_rule/transaction/withdraw/travel_rule_info:
     post:
       description: |
-        This operation allows you to submit the required Travel Rule information based on the transaction details. It supports both self-custody wallets and exchanges/VASPs, ensuring compliance with Travel Rule requirements.
-
-
-        - **Destination Wallet Type (`destination_wallet_type`)**:
-          - `SELF_CUSTODY_WALLET`: A self-custodial wallet (e.g., plugin wallet). Requires `self_custody_wallet_sign`, `self_custody_wallet_address`, and `self_custody_wallet_challenge`.
-          - `EXCHANGES_OR_VASP`: A wallet associated with an exchange or VASP. Requires `vendor_vasp_id` and information depending on `selected_entity_type`.
-
-        - **Entity Types (`selected_entity_type`)**:
-          - `LEGAL`: For legal entities, provide `legal_name`.
-          - `NATURAL`: For natural persons, provide `date_of_birth`, `place_of_birth`, `first_name`, and `last_name`.
+        This operation submits Travel Rule information for a withdrawal transaction.
       operationId: submit_withdraw_travel_rule_info
       requestBody:
         content:
@@ -5812,7 +6380,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/submit_deposit_travel_rule_info_201_response'
-          description: Successfully submitted Travel Rule information.
+          description: Successfully submitted the Travel Rule information.
         "4XX":
           content:
             application/json:
@@ -5827,10 +6395,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal server error.
       security:
-      - CoboAuth: []
       - OAuth2:
-        - travel_rule:edit
-      summary: Submit Withdraw Transaction Travel Rule information
+        - travel_rule.edit
+      summary: Submit Travel Rule information for withdrawals
       tags:
       - TravelRule
 components:
@@ -6400,7 +6967,7 @@ components:
         type: string
       style: simple
     vaultIdParam:
-      description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults)."
+      description: "The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults)."
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -6437,6 +7004,26 @@ components:
       explode: true
       in: query
       name: vault_name
+      required: false
+      schema:
+        type: string
+      style: form
+    tssNodeIdParam:
+      description: The TSS Node ID.
+      example: coboBTGDvjJG99pABegvPYmavrcTU3SkjTLHVdsko8dWBga4w
+      explode: false
+      in: path
+      name: tss_node_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    optionalGroupIdsListQueryParam:
+      description: "A list of key_share_holder_group_ids, separated by comma."
+      example: "dc0cac48-9add-4243-9c7a-b8badac8a198,5558bd1b-d221-4e2b-8c29-f6c97d9e6aca"
+      explode: true
+      in: query
+      name: key_share_holder_group_ids
       required: false
       schema:
         type: string
@@ -6889,7 +7476,7 @@ components:
         type: string
       style: form
     requiredTransactionIdParam:
-      description: The transaction ID
+      description: The transaction ID.
       explode: true
       in: query
       name: transaction_id
@@ -7212,6 +7799,17 @@ components:
         format: int64
         type: integer
       style: form
+    UserIdParam:
+      description: user id.
+      example: "168108513539918"
+      explode: false
+      in: path
+      name: user_id
+      required: true
+      schema:
+        description: user id.
+        type: string
+      style: simple
   requestBodies:
     createWalletBody:
       content:
@@ -7382,6 +7980,12 @@ components:
             $ref: '#/components/schemas/refresh_token_request'
       description: The request body for refreshing an Org Access Token.
       required: true
+    createPrimeBrokerUserAddressBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_prime_broker_address_request'
+      description: The request body to binding addresses to a broker user.
     createSwapActivityBody:
       content:
         application/json:
@@ -7483,6 +8087,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/list_token_balances_for_address_200_response'
+      description: The request was successful.
+    getAddressBalancesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_address_balances_for_token_200_response'
       description: The request was successful.
     getAssetBalancesResponse:
       content:
@@ -7684,6 +8294,18 @@ components:
           schema:
             $ref: '#/components/schemas/MPCVault'
       description: Successfully modify mpc vault
+    getKeyShareHolderResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/KeyShareHolder'
+      description: Successfully get key share holder
+    getKeyShareHoldersResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_key_share_holders_200_response'
+      description: Successfully listed key share holders.
     getExchangeSettingsResponse:
       content:
         application/json:
@@ -7891,6 +8513,36 @@ components:
           schema:
             $ref: '#/components/schemas/get_token_4XX_response'
       description: Unauthorized. Please provide valid credentials.
+    createUserAdressResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_prime_broker_address_201_response'
+      description: Successfully created a address binding.
+    createGuardPubkeyResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/change_guard_pubkey_200_response'
+      description: Successfully created a guard binding.
+    deleteGuardPubkeyResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/delete_guard_pubkey_201_response'
+      description: Successfully created a guard binding.
+    queryGuardPubkeyResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/query_guard_pubkey_200_response'
+      description: The information about an user guard pubkey.
+    queryApprovalStatementResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/query_approval_statement_200_response'
+      description: The information about a approval statement.
     listAddressBooksResponse:
       content:
         application/json:
@@ -7916,7 +8568,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/submit_deposit_travel_rule_info_201_response'
-      description: Successfully submitted Travel Rule information.
+      description: Successfully submitted the Travel Rule information.
     listApiLogsResponse:
       content:
         application/json:
@@ -8422,6 +9074,48 @@ components:
       - bitfinex
       example: binance
       type: string
+    Balance:
+      description: The balance details.
+      example:
+        total: "100.0"
+        pending: "10.5"
+        available: "80.5"
+        locked: "3.0"
+      properties:
+        total:
+          description: "The current amount of tokens in an address, which is retrieved\
+            \ directly from the network. To learn more, see [Balances and transaction\
+            \ amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
+            \ for more details."
+          example: "100.0"
+          type: string
+        available:
+          description: "The amount of tokens ready to be spent. To learn more, see\
+            \ [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
+            \ for more details."
+          example: "80.5"
+          type: string
+        pending:
+          default: "0"
+          description: "The total amount being sent in a transaction, which is calculated\
+            \ as the withdrawal amount plus the transaction fee. To learn more, see\
+            \ [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
+            \ for more details."
+          example: "10.5"
+          type: string
+        locked:
+          default: "0"
+          description: "For UTXO chains, this is the combined value of the selected\
+            \ UTXOs for the transaction. For other chains, it is equal to the Pending\
+            \ amount. To learn more, see [Balances and transaction amounts for MPC\
+            \ Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
+            \ for more details."
+          example: "3.0"
+          type: string
+      required:
+      - available
+      - total
+      type: object
     TokenBalance:
       description: The balance information.
       example:
@@ -8439,10 +9133,30 @@ components:
           example: BTC
           type: string
         balance:
-          $ref: '#/components/schemas/TokenBalance_balance'
+          $ref: '#/components/schemas/Balance'
       required:
       - balance
       - token_id
+      type: object
+    AddressBalance:
+      description: The balances of a specific token under address.
+      example:
+        address: 0x0000000000000000000000000000000000000000
+        balance:
+          total: "100.0"
+          pending: "10.5"
+          available: "80.5"
+          locked: "3.0"
+      properties:
+        address:
+          description: The wallet address.
+          example: 0x0000000000000000000000000000000000000000
+          type: string
+        balance:
+          $ref: '#/components/schemas/Balance'
+      required:
+      - address
+      - balance
       type: object
     AssetBalance:
       description: The data for asset balance information.
@@ -8454,7 +9168,7 @@ components:
           example: USDT
           type: string
         balance:
-          $ref: '#/components/schemas/TokenBalance/properties/balance'
+          $ref: '#/components/schemas/Balance'
       required:
       - asset_id
       - balance
@@ -8463,7 +9177,11 @@ components:
       description: The information about the asset balance of a trading account.
       example:
         trading_account_type: Spot
-        balance: "{}"
+        balance:
+          total: "100.0"
+          pending: "10.5"
+          available: "80.5"
+          locked: "3.0"
         asset_id: USDT
       properties:
         trading_account_type:
@@ -8476,7 +9194,7 @@ components:
           example: USDT
           type: string
         balance:
-          $ref: '#/components/schemas/TokenBalance/properties/balance'
+          $ref: '#/components/schemas/Balance'
       required:
       - asset_id
       - balance
@@ -9057,10 +9775,10 @@ components:
       - $ref: '#/components/schemas/SafeWalletDelegatesTransfer'
     OrgInfo:
       description: |
-        [organization](https://manuals.cobo.com/en/portal/organization/introduction).
+        The information of an organization. To learn more about organizations, see [Introduction to Organization](https://manuals.cobo.com/en/portal/organization/introduction).
       properties:
         org_id:
-          description: The ID of the owning organization.
+          description: The organization ID.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         name:
@@ -9078,7 +9796,7 @@ components:
       type: object
     CurveType:
       description: |
-        The elliptic curve type of the [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key). Possible values include:
+        The elliptic curve type of the [root extended public key](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#root-extended-public-keys). Possible values include:
 
         - `SECP256K1`: The secp256k1 elliptic curve.
 
@@ -9155,7 +9873,7 @@ components:
     KeyShareHolderGroupStatus:
       description: |
         The status of the key share holder group. Possible values include:
-        - `New`: The key share holder group has been newly created. The status will become `Valid` after you call [Create TSS request](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/create-a-tss-request-to-generate-key-secrets-for-a-tss-group) and specifying this key share holder group as the target key share holder group.
+        - `New`: The key share holder group has been newly created. The status will become `Valid` after you call [Create TSS request](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/create-tss-request) and specifying this key share holder group as the target key share holder group.
 
         - `Valid`: The key share holder group is valid.
 
@@ -9379,7 +10097,7 @@ components:
         root_pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
       properties:
         root_pubkey:
-          description: "The vault's [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key)."
+          description: "The vault's [root extended public key](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#root-extended-public-keys)."
           example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
           type: string
         curve:
@@ -9399,7 +10117,7 @@ components:
         curve:
           $ref: '#/components/schemas/CurveType'
         root_pubkey:
-          description: "The vault's [root extended public key](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/tss-node-deployment#tss-node-on-cobo-portal-and-mpc-root-extended-public-key)."
+          description: "The vault's [root extended public key](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#root-extended-public-keys)."
           example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
           type: string
       type: object
@@ -10043,6 +10761,7 @@ components:
             value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
+          unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
         replacement:
           replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -10260,6 +10979,7 @@ components:
             value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
+          unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
         replacement:
           replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -10443,13 +11163,13 @@ components:
         \ The transaction is pending for a Risk Control check.\n  - `PendingApproverCheck`:\
         \ The transaction is pending approval from the approver.\n  - `RejectedApproverAuth`:\
         \ The transaction is rejected by the approver.\n  - `RejectedbyMobileCosigner`:\
-        \ The transaction is rejected by a mobile cosigner.\n  - `RejectedCoboCheck`:\
-        \ The transaction is rejected because it failed the internal check by Cobo.\n\
-        \  - `RejectedWhiteList`: The transaction is rejected because the sender or\
-        \ receiver is not included in a whitelist.\n  - `PendingWaitSigner`: The transaction\
-        \ is pending signature.\n  - `PendingApprovalStart`: The transaction approval\
-        \ is waiting to be started.      \n    - For [MPC Wallets (User-Controlled\
-        \ Wallets)](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction),\
+        \ The transaction is rejected by a mobile cosigner.\n  - `Built`: The transaction\
+        \ has been built but not signed yet.\n  - `RejectedCoboCheck`: The transaction\
+        \ is rejected because it failed the internal check by Cobo.\n  - `RejectedWhiteList`:\
+        \ The transaction is rejected because the sender or receiver is not included\
+        \ in a whitelist.\n  - `PendingWaitSigner`: The transaction is pending signature.\n\
+        \  - `PendingApprovalStart`: The transaction approval is waiting to be started.\
+        \      \n    - For [MPC Wallets (User-Controlled Wallets)](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction),\
         \ you need to use the Client App and call the UCW SDK to start the transaction\
         \ approval process.\n    - For [MPC Wallets (Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction)):\n\
         \      - If you are using the [server co-signer](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups),\
@@ -10486,6 +11206,7 @@ components:
       - RejectedRiskControlCheck
       - RejectedApproverAuth
       - RejectedbyMobileCosigner
+      - Built
       - PendingWaitSigner
       - PendingApprovalStart
       - FailedBySigner
@@ -10833,6 +11554,8 @@ components:
             The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
           example: "1.5"
           type: string
+        tx_info:
+          $ref: '#/components/schemas/TransactionDepositToAddressDestination_tx_info'
       required:
       - address
       - amount
@@ -11191,6 +11914,7 @@ components:
           value: "0.5"
         raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
         used_nonce: 9
+        unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
       properties:
         used_nonce:
           description: The transaction nonce.
@@ -11203,6 +11927,10 @@ components:
           type: array
         raw_tx:
           description: The raw transaction data.
+          example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+          type: string
+        unsigned_raw_tx:
+          description: The unsigned raw transaction data.
           example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           type: string
       type: object
@@ -11836,6 +12564,7 @@ components:
         - amount: "1.5"
           address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
         force_internal: false
+        change_output_type: First
         force_external: false
       properties:
         destination_type:
@@ -11850,6 +12579,14 @@ components:
           description: The address used to receive the remaining funds or change from
             the transaction.
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
+          type: string
+        change_output_type:
+          description: |
+            The type of change output: **Last** means the change output is located at the end of the transaction's outputs, **Last** is the default value. while **First** means it is located at the beginning of the transaction's outputs.
+          enum:
+          - Last
+          - First
+          example: First
           type: string
         force_internal:
           description: "Whether the transaction request must be executed as a [Cobo\
@@ -11926,6 +12663,7 @@ components:
     TransferParams:
       description: The information about a token transfer.
       example:
+        transaction_process_type: AutoProcess
         token_id: ETH_USDT
         fee:
           max_fee_amount: "0.1"
@@ -11944,6 +12682,7 @@ components:
           - amount: "1.5"
             address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
           force_internal: false
+          change_output_type: First
           force_external: false
         description: Transfer from wallet
         auto_fuel: PassiveAutoFuel
@@ -11983,6 +12722,14 @@ components:
           type: string
         fee:
           $ref: '#/components/schemas/TransactionRequestFee'
+        transaction_process_type:
+          description: |
+            Transaction processing type: **AutoProcess** means that after the transaction is constructed, it will be automatically signed and broadcasted. **AutoProcess** is the default vault. **BuildOnly** means that after the transaction is constructed, you need to manually call an interface to sign and broadcast it.
+          enum:
+          - AutoProcess
+          - BuildOnly
+          example: AutoProcess
+          type: string
         auto_fuel:
           $ref: '#/components/schemas/AutoFuelType'
       required:
@@ -12029,6 +12776,7 @@ components:
           - amount: "1.5"
             address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sDEMO
           force_internal: false
+          change_output_type: First
           force_external: false
         source:
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -12210,6 +12958,7 @@ components:
       description: The information about a transaction that interacts with a smart
         contract
       example:
+        transaction_process_type: "{}"
         chain_id: ETH
         fee:
           max_fee_amount: "0.1"
@@ -12258,6 +13007,8 @@ components:
           type: array
         fee:
           $ref: '#/components/schemas/TransactionRequestFee'
+        transaction_process_type:
+          $ref: '#/components/schemas/TransferParams/properties/transaction_process_type'
         auto_fuel:
           $ref: '#/components/schemas/AutoFuelType'
       required:
@@ -12328,6 +13079,24 @@ components:
       - message
       title: EIP-191 Signature
       type: object
+    BTCEIP191MessageSignDestination:
+      description: "The information about the destination `BTC_EIP_191_Signature`.\
+        \ Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/MessageSignDestinationType'
+        message:
+          description: "The raw data of the message to be signed, encoded in Base64\
+            \ format."
+          example: YWFhYQ==
+          type: string
+      required:
+      - destination_type
+      - message
+      title: BTC-EIP-191 Signature
+      type: object
     EvmEIP712MessageSignDestination:
       description: "The information about the destination `EVM_EIP_712_Signature`.\
         \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
@@ -12372,6 +13141,7 @@ components:
       enum:
       - EVM_EIP_191_Signature
       - EVM_EIP_712_Signature
+      - BTC_EIP_191_Signature
       example: EVM_EIP_191_Signature
       type: string
     MessageSignDestination:
@@ -12379,10 +13149,14 @@ components:
         mapping:
           EVM_EIP_191_Signature: '#/components/schemas/EvmEIP191MessageSignDestination'
           EVM_EIP_712_Signature: '#/components/schemas/EvmEIP712MessageSignDestination'
+          RAW_MESSAGE: '#/components/schemas/RawMessageSignDestination'
+          BTC_EIP_191_Signature: '#/components/schemas/BTCEIP191MessageSignDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/EvmEIP191MessageSignDestination'
       - $ref: '#/components/schemas/EvmEIP712MessageSignDestination'
+      - $ref: '#/components/schemas/RawMessageSignDestination'
+      - $ref: '#/components/schemas/BTCEIP191MessageSignDestination'
     MessageSignParams:
       description: The information about a transaction that signs a message. You can
         provide the message either as raw data or as structured data.
@@ -12507,6 +13281,7 @@ components:
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
+            unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           replacement:
             replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -12672,6 +13447,7 @@ components:
             value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
+          unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
         replacement:
           replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -12815,6 +13591,7 @@ components:
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
+              unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             replacement:
               replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
               replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -13091,8 +13868,8 @@ components:
             type: string
           type: array
         core_btc_staking_address:
-          description: P2WSH address generated for this staking operation(If the estimated
-            fee is for core BTC staking).
+          description: The P2WSH address generated for this staking operation (only
+            applicable if the estimated fee is for CORE staking).
           example: bc1qcqj9k34vrvgmmvt85ym2ua79k2d22vcfxmuratakfm78chdqksnq5agezk
           type: string
       title: Ethereum Staking Fee
@@ -13219,7 +13996,7 @@ components:
         - timelock
         - validator_address
         type: object
-      title: CoreBTC
+      title: CORE
     EigenLayerLstStakeExtra:
       allOf:
       - $ref: '#/components/schemas/BaseStakeExtra'
@@ -13265,7 +14042,7 @@ components:
               Whether to automatically broadcast the transaction.
 
               - `true`: Automatically broadcast the transaction.
-              - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.
+              - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.
             example: false
             type: boolean
           param_version:
@@ -13294,8 +14071,8 @@ components:
             example: Stakefish
             type: string
           validator_pubkeys:
-            description: A list of public keys identifying the validators to unstake
-              from the Ethereum Beacon Chain.
+            description: A list of public keys associated with the Ethereum validators
+              for this unstaking operation.
             example:
             - 0x1234567890987654321012345678909876543210
             - 0x1234567890987654321012345678909876543210
@@ -13307,7 +14084,7 @@ components:
     CoreStakingActivityDetailExtra:
       allOf:
       - $ref: '#/components/schemas/BaseStakeExtra'
-      - description: The staking information specific to the CoreBTC staking protocol.
+      - description: The staking information specific to the CORE staking protocol.
         properties:
           timelock:
             description: The Unix timestamp (in seconds) when the staking position
@@ -13315,16 +14092,16 @@ components:
             example: 1704067200
             type: integer
           change_address:
-            description: "The change bitcoin address. If not provided, the source\
-              \ wallet's address will be used as the change address."
+            description: "The change address on the Bitcoin chain. If not provided,\
+              \ the source wallet's address will be used as the change address."
             example: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh
             type: string
           validator_address:
-            description: The validator evm address.
+            description: The validator's EVM address.
             example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
             type: string
           reward_address:
-            description: The reward evm address.
+            description: The EVM address to receive staking rewards.
             example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
             type: string
         type: object
@@ -13458,12 +14235,12 @@ components:
         - `ClaimRewards`: Claim the rewards from the validator.
         - `ActivateValidator`: Activate the validator to start staking.
         - `UnstakeETH`: Unstake ETH from the validator.
-        - `ApproveUSDC`: Approve the USDC token to be used for staking.
-        - `ConvertToUSDS`: Convert the USDC token to the USDS token.
-        - `ApproveUSDS`: Approve the USDS token to be used for staking.
-        - `DepositUSDS`: Deposit the USDS token to the validator.
-        - `WithdrawUSDS`: Withdraw the USDS token from the validator.
-        - `ConvertToUSDC`: Convert the USDS token to the USDC token.
+        - `ApproveUSDC`: Grant permission for the protocol to use your USDC.
+        - `ConvertToUSDS`: Convert your USDC to USDS.
+        - `ApproveUSDS`: Grant permission for the protocol to use your USDS.
+        - `DepositUSDS`: Stake the USDS with the validator.
+        - `WithdrawUSDS`: Withdraw the USDS from the protocol.
+        - `ConvertToUSDC`: Convert USDS back to USDC.
       enum:
       - Submitted
       - BTCConfirmation
@@ -14126,10 +14903,11 @@ components:
       - org_id
       type: object
     TravelRuleDepositExchangesOrVASP:
-      description: Required fields for `EXCHANGES_OR_VASP`.
+      description: Required information when depositing from an exchange or other
+        virtual asset service providers (VASP).
       example:
         vendor_code: NB
-        vendor_vasp_name: Others vendor
+        vendor_vasp_name: Vendor A
         entity_info:
           place_of_incorporation: "City, Country"
           selected_entity_type: LEGAL
@@ -14141,7 +14919,7 @@ components:
         destination_wallet_type:
           $ref: '#/components/schemas/DestinationWalletType'
         vendor_code:
-          description: The vendor code for exchanges or VASPs.
+          description: The vendor code of the VASP.
           example: NB
           type: string
         vendor_vasp_id:
@@ -14149,10 +14927,9 @@ components:
           example: did:ethr:0x45fca8109a8d2ce93e37f79f0acbb16f4a91f4c5
           type: string
         vendor_vasp_name:
-          description: The vendor name to be provided when selecting "Others" as the
-            VASP case. This field allows customers to specify the name of a vendor
+          description: The vendor name. Use this field to specify the name of a vendor
             not listed.
-          example: Others vendor
+          example: Vendor A
           type: string
         entity_info:
           $ref: '#/components/schemas/TravelRuleDepositExchangesOrVASP_entity_info'
@@ -14161,9 +14938,10 @@ components:
       - entity_info
       - vendor_code
       - vendor_vasp_id
+      title: VASPs (Deposit)
       type: object
     TravelRuleDepositLegalEntity:
-      description: Required fields for LEGAL entities.
+      description: The required information of a legal entity.
       example:
         place_of_incorporation: "City, Country"
         selected_entity_type: LEGAL
@@ -14171,7 +14949,10 @@ components:
         legal_name: Company ABC Ltd.
       properties:
         selected_entity_type:
-          description: Specifies the type of entity associated with the transaction.
+          description: |
+            The entity type. Possible values include:
+            - `LEGAL`: Legal entity.
+            - `NATURAL`: Natural person.
           enum:
           - LEGAL
           - NATURAL
@@ -14183,71 +14964,72 @@ components:
           type: string
         date_of_incorporation:
           description: |
-            The incorporation date of the entity. This field is required when:
-            - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`.
-            - **Entity Type**: LEGAL.
-            Otherwise, this field can be omitted.
+            The date of incorporation of the entity. This field is required when either of the following conditions is met:
+            - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation.
+            - `selected_entity_type` is `LEGAL`.
           example: 2010-05-20
           format: date
           type: string
         place_of_incorporation:
           description: |
-            The place of incorporation of the entity. This field is required when:
-            - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`.
-            - **Entity Type**: LEGAL.
-            Otherwise, this field can be omitted.
+            The place of incorporation of the entity. This field is required when either of the following conditions is met:
+            - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation.
+            - `selected_entity_type` is `LEGAL`.
           example: "City, Country"
           type: string
       required:
       - legal_name
       - selected_entity_type
+      title: Legal Entity (Deposit)
       type: object
     TravelRuleDepositNaturalEntity:
-      description: Required fields for NATURAL entities.
+      description: The required information of a natural person.
       properties:
         selected_entity_type:
-          description: Specifies the type of entity associated with the transaction.
+          description: |
+            Specifies the type of entity associated with the transaction.
+            - `LEGAL`: Legal entity.
+            - `NATURAL`: Natural person.
           enum:
           - LEGAL
           - NATURAL
           example: NATURAL
           type: string
         first_name:
-          description: The first name of the user.
+          description: The first name of the natural person.
           example: John
           type: string
         last_name:
-          description: The last name of the user.
+          description: The last name of the natural person.
           example: Doe
           type: string
         date_of_birth:
           description: |
-            The date of birth of the user. This field is required when:
-            - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`.
-            - **Entity Type**: NATURAL.
-            Otherwise, this field can be omitted.
+            The date of birth of the natural person. This field is required when either of the following conditions is met:
+            - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation.
+            - `selected_entity_type` is `NATURAL`.
           example: 1980-01-01
           format: date
           type: string
         place_of_birth:
           description: |
-            The place of birth of the user. This field is required when:
-            - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`.
-            - **Entity Type**: NATURAL.
-            Otherwise, this field can be omitted.
+            The place of birth of the natural person. This field is required when either of the following conditions is met:
+            - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation.
+            - `selected_entity_type` is `NATURAL`.
           example: "City, Country"
           type: string
       required:
       - first_name
       - last_name
       - selected_entity_type
+      title: Natural Person (Deposit)
       type: object
     TravelRuleDepositRequest:
       example:
         transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         travel_rule_info:
           vendor_code: NB
-          vendor_vasp_name: Others vendor
+          vendor_vasp_name: Vendor A
           entity_info:
             place_of_incorporation: "City, Country"
             selected_entity_type: LEGAL
@@ -14267,7 +15049,8 @@ components:
       - travel_rule_info
       type: object
     SelfCustodyWallet:
-      description: Required fields for `SELF_CUSTODY_WALLET`.
+      description: Required information when depositing from or withdrawing to a self-custody
+        wallet.
       example:
         self_custody_wallet_address: 0x1234567890abcdef1234567890abcdef12345678
         self_custody_wallet_challenge: challenge_token_abc123
@@ -14277,15 +15060,17 @@ components:
         destination_wallet_type:
           $ref: '#/components/schemas/DestinationWalletType'
         self_custody_wallet_challenge:
-          description: The challenge obtained from a previous operation.
+          description: The message obtained from the `Retrieve transaction limitations`
+            operation. This message is used to verify wallet ownership through signing.
           example: challenge_token_abc123
           type: string
         self_custody_wallet_address:
-          description: The address of the self-custodial wallet.
+          description: The address of the self-custody wallet.
           example: 0x1234567890abcdef1234567890abcdef12345678
           type: string
         self_custody_wallet_sign:
-          description: The signed message from the self-custodial wallet.
+          description: The signature created by signing the challenge message with
+            the wallet's private key.
           example: 0xf0a0ca69dd3afc57235c72aba3ff1f1144ee5409aeec013a9b17cdb58d0185a66a525945bfbd66e87bf0503eb0b83bf90cb973a8cbb730d19dc032e00dfe393a1c
           type: string
       required:
@@ -14293,39 +15078,46 @@ components:
       - self_custody_wallet_address
       - self_custody_wallet_challenge
       - self_custody_wallet_sign
+      title: Self-Custody Wallet
       type: object
     DestinationWalletType:
-      description: The type of the destination wallet.
+      description: |
+        The wallet type. Possible values include:
+          - `EXCHANGES_OR_VASP`: Exchanges or other virtual asset service providers (VASP)
+          - `SELF_CUSTODY_WALLET`: Self-custody wallets
       enum:
       - EXCHANGES_OR_VASP
       - SELF_CUSTODY_WALLET
       example: EXCHANGES_OR_VASP
       type: string
     SelectedEntityType:
-      description: Specifies the type of entity. This must be `LEGAL`.
+      description: |
+        Specifies the entity type. This must be `LEGAL`.
+          - `LEGAL`: Legal entity.
+          - `NATURAL`: Natural person.
       enum:
       - LEGAL
       - NATURAL
       example: LEGAL
       type: string
     Vasp:
-      description: The information of an vasp.
+      description: The information of a virtual asset service provider (VASP).
       example:
         vendor_code: NB
         name: ManyAges
         vendor_vasp_id: did:ethr:0x34414c8d5c8ed6f242aa6558ecb500283bab10f4
       properties:
         name:
-          description: The name of the vasp.
+          description: The VASP name.
           example: ManyAges
           format: name
           type: string
         vendor_code:
-          description: The symbol.
+          description: The vendor code of the VASP.
           example: NB
           type: string
         vendor_vasp_id:
-          description: The vasp str id.
+          description: The VASP ID.
           example: did:ethr:0x34414c8d5c8ed6f242aa6558ecb500283bab10f4
           type: string
       required:
@@ -14334,12 +15126,14 @@ components:
       - vendor_vasp_id
       type: object
     TravelRuleWithdrawExchangesOrVASP:
-      description: Required fields for `EXCHANGES_OR_VASP`.
+      description: Required information when withdrawing tokens to an exchange or
+        other virtual asset service providers (VASP).
       properties:
         destination_wallet_type:
           $ref: '#/components/schemas/DestinationWalletType'
         vendor_code:
-          description: The vendor code for exchanges or VASPs.
+          description: The vendor code of the exchange or virtual asset service provider
+            (VASP).
           example: NB
           type: string
         vendor_vasp_id:
@@ -14353,9 +15147,10 @@ components:
       - entity_info
       - vendor_code
       - vendor_vasp_id
+      title: VASPs (Withdrawal)
       type: object
     TravelRuleWithdrawLegalEntity:
-      description: Required fields for LEGAL entities.
+      description: The required information of a legal entity.
       properties:
         selected_entity_type:
           $ref: '#/components/schemas/SelectedEntityType'
@@ -14364,7 +15159,7 @@ components:
           example: Company ABC Ltd.
           type: string
         date_of_incorporation:
-          description: The incorporation date of the entity.
+          description: The date of incorporation of the entity.
           example: 2010-05-20
           format: date
           type: string
@@ -14375,33 +15170,35 @@ components:
       required:
       - legal_name
       - selected_entity_type
+      title: Legal Entity (Withdrawal)
       type: object
     TravelRuleWithdrawNaturalEntity:
-      description: Required fields for NATURAL entities.
+      description: The required information of a natural person.
       properties:
         selected_entity_type:
           $ref: '#/components/schemas/SelectedEntityType'
         first_name:
-          description: The first name of the user.
+          description: The first name of the natural person.
           example: John
           type: string
         last_name:
-          description: The last name of the user.
+          description: The last name of the natural person.
           example: Doe
           type: string
         date_of_birth:
-          description: The date of birth of the user.
+          description: The date of birth of the natural person.
           example: 1980-01-01
           format: date
           type: string
         place_of_birth:
-          description: The place of birth of the user.
+          description: The place of birth of the natural person.
           example: "City, Country"
           type: string
       required:
       - first_name
       - last_name
       - selected_entity_type
+      title: Natural Person (Withdrawal)
       type: object
     TravelRuleWithdrawRequest:
       example:
@@ -14677,6 +15474,7 @@ components:
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
+            unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           replacement:
             replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -14835,6 +15633,40 @@ components:
       - activity_count
       - total_usd_value
       type: object
+    GuardPubkeyStatus:
+      description: "The guard binding status. Possible values include: \n  - `New`:\
+        \ The guard binding created.\n  - `ChangeNew`: A new guard binding created\
+        \ \n  - `WaitSelfConfirm`: The guard binding waiting user confirm on old guard.\n\
+        \  - `WaitConfirm`: The guard binding waiting admin confirm on guard.\n  -\
+        \ `WaitActive`: The guard binding waiting active\n  - `Active`: The guard\
+        \ binding active.\n  - `Freeze`: The guard binding was frozen.\n  - `Invalid`:\
+        \ The guard binding was invalid.\n"
+      enum:
+      - New
+      - ChangeNew
+      - WaitSelfConfirm
+      - WaitConfirm
+      - WaitActive
+      - Active
+      - Freeze
+      - Invalid
+      example: New
+      type: string
+    ApprovalStatementStatus:
+      description: "The approval statement status. Possible values include: \n  -\
+        \ `UnSend`: The request has not send.\n  - `Wait`: The request sent to broker\
+        \ user ,waiting audit. \n  - `Approve`: The user approved.\n  - `Reject`:\
+        \ The user rejected.\n  - `Invalid`: The request invalid.\n  - `Timeout`:\
+        \ The request timeout.\n"
+      enum:
+      - UnSend
+      - WaitAudit
+      - Approve
+      - Reject
+      - Invalid
+      - Timeout
+      example: New
+      type: string
     list_supported_chains_200_response:
       example:
         pagination:
@@ -15064,11 +15896,24 @@ components:
           type: string
         count:
           default: 1
-          description: The number of addresses to create.
+          description: The number of addresses to create. This property will be ignored
+            if you are tweaking Taproot address(es).
           example: 1
           maximum: 50
           minimum: 1
           type: integer
+        taproot_script_tree_hashes:
+          description: The information about the new address. This parameter is required
+            only if you want to generate a tweaked address.
+          items:
+            example: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
+            type: string
+          type: array
+        taproot_internal_address:
+          description: The address you want to tweak. This parameter is required only
+            if you want to generate a tweaked address.
+          example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
+          type: string
         encoding:
           $ref: '#/components/schemas/AddressEncoding'
       required:
@@ -15098,6 +15943,33 @@ components:
         data:
           items:
             $ref: '#/components/schemas/TokenBalance'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    list_address_balances_for_token_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - address: 0x0000000000000000000000000000000000000000
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
+        - address: 0x0000000000000000000000000000000000000000
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AddressBalance'
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
@@ -15470,6 +16342,35 @@ components:
       - target_key_share_holder_group_id
       - type
       type: object
+    list_key_share_holders_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - account_id: auth0|cobo|839305394802991371
+          name: Key share holder name
+          tss_node_id: coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi
+          online: true
+          type: API
+          signer: true
+          status: Valid
+        - account_id: auth0|cobo|839305394802991371
+          name: Key share holder name
+          tss_node_id: coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi
+          online: true
+          type: API
+          signer: true
+          status: Valid
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/KeyShareHolder'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
     list_exchanges_200_response_inner:
       description: The information about the supported exchange.
       example:
@@ -15523,10 +16424,18 @@ components:
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
         - trading_account_type: Spot
-          balance: "{}"
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
           asset_id: USDT
         - trading_account_type: Spot
-          balance: "{}"
+          balance:
+            total: "100.0"
+            pending: "10.5"
+            available: "80.5"
+            locked: "3.0"
           asset_id: USDT
       properties:
         data:
@@ -15651,6 +16560,7 @@ components:
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
+            unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           replacement:
             replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -15726,6 +16636,7 @@ components:
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
+            unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           replacement:
             replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -16066,6 +16977,7 @@ components:
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
+              unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             replacement:
               replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
               replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -16150,6 +17062,7 @@ components:
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
+              unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             replacement:
               replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
               replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -16250,6 +17163,7 @@ components:
                   value: "0.5"
                 raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
                 used_nonce: 9
+                unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               replacement:
                 replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
                 replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -16343,6 +17257,7 @@ components:
                   value: "0.5"
                 raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
                 used_nonce: 9
+                unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               replacement:
                 replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
                 replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -16827,6 +17742,7 @@ components:
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
+              unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             replacement:
               replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
               replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -16912,6 +17828,7 @@ components:
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
+              unsigned_raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             replacement:
               replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
               replaced_transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
@@ -16987,6 +17904,119 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
+    query_guard_pubkey_200_response_addresses_inner:
+      example:
+        address: 0x0000000000000000000000000000000000000000
+        chain_id: ETH
+      properties:
+        address:
+          description: The wallet address.
+          example: 0x0000000000000000000000000000000000000000
+          type: string
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain.\
+            \ You can retrieve the IDs of all the chains you can use by calling [List\
+            \ enabled chains](/v2/api-references/wallets/list-enabled-chains)."
+          example: ETH
+          type: string
+      required:
+      - address
+      - chain_id
+      type: object
+    query_guard_pubkey_200_response:
+      example:
+        addresses:
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+        pubkey: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+        status: New
+      properties:
+        pubkey:
+          description: guard's pubkey.
+          example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          type: string
+        status:
+          $ref: '#/components/schemas/GuardPubkeyStatus'
+        addresses:
+          items:
+            $ref: '#/components/schemas/query_guard_pubkey_200_response_addresses_inner'
+          type: array
+      required:
+      - binder_id
+      type: object
+    change_guard_pubkey_200_response:
+      example:
+        binder_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+      properties:
+        binder_id:
+          description: The binding ID.
+          example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          type: string
+      required:
+      - binder_id
+      type: object
+    delete_guard_pubkey_201_response:
+      example:
+        statement_id: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+      properties:
+        statement_id:
+          description: The delete guard binding statement ID.
+          example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          type: string
+      required:
+      - statement_id
+      type: object
+    create_prime_broker_address_request:
+      properties:
+        addresses:
+          items:
+            $ref: '#/components/schemas/query_guard_pubkey_200_response_addresses_inner'
+          type: array
+      type: object
+    create_prime_broker_address_201_response:
+      example:
+        addresses:
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+        pubkey: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+      properties:
+        pubkey:
+          description: guard's pubkey.
+          example: 0111039d-27fb-49ba-b172-6e0aa80e37ec
+          type: string
+        addresses:
+          items:
+            $ref: '#/components/schemas/query_guard_pubkey_200_response_addresses_inner'
+          type: array
+      required:
+      - pubkey
+      type: object
+    query_approval_statement_200_response:
+      example:
+        user_id: "168108513539918"
+        id: "168108513539918"
+        pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+        status: New
+      properties:
+        id:
+          description: approval statement id.
+          example: "168108513539918"
+          type: string
+        user_id:
+          description: approver user id.
+          example: "168108513539918"
+          type: string
+        pubkey:
+          description: approver user pubkey.
+          example: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+          type: string
+        status:
+          $ref: '#/components/schemas/ApprovalStatementStatus'
+      type: object
     list_supported_countries_200_response_inner:
       example:
         code2: SG
@@ -17031,24 +18061,21 @@ components:
         - metamask
       properties:
         vasp_list:
-          description: A list of VASPs (Virtual Asset Service Providers) associated
-            with the token.
+          description: A list of virtual asset service providers (VASP) you can select
+            as the transaction source or destination.
           items:
             $ref: '#/components/schemas/Vasp'
           type: array
         is_threshold_reached:
           description: |
-            Indicates whether the transaction amount exceeds a predefined threshold.
-            - **If `true`**: Additional information is required when filling Travel Rule details:
-              - For deposits: `date_of_incorporation` and `place_of_incorporation`.
-            - **If `false`**: No extra fields are required.
+            Indicates whether the transaction amount exceeds a predefined threshold. If exceeded, additional information is required when filling Travel Rule details.
+            - `true`: Threshold exceeded.
+            - `false`: Threshold not exceeded.
           example: true
           type: boolean
         self_custody_wallet_challenge:
-          description: "A human-readable, time-sensitive message to be signed by the\
-            \ wallet owner. \nThe message contains key details including the wallet\
-            \ address, a unique nonce, and a timestamp.\nSigning this message confirms\
-            \ ownership of the wallet and allows the operation to proceed.\n"
+          description: |
+            A human-readable, time-sensitive message to be signed by the wallet owner. The message contains key information including the wallet address, a unique nonce, and a timestamp. Signing this message confirms ownership of the wallet and allows the operation to proceed.
           example: |
             Hi, please sign this message to confirm that you are the owner of this wallet address.
             The transfer can only proceed after signing.
@@ -17057,7 +18084,8 @@ components:
             - Timestamp: 1732523887
           type: string
         connect_wallet_list:
-          description: A list of wallets connected to the system for transactions.
+          description: A list of self-custody wallet providers you can select as the
+            transaction source or destination.
           items:
             description: A supported wallet type or integration.
             example: metamask
@@ -17070,53 +18098,11 @@ components:
       properties:
         submitted:
           description: |
-            Whether the submitted Travel Rule info has been successfully executed.
-            - `true`: The operation has been successfully executed.
-            - `false`: The operation has not been executed.
+            Whether the Travel Rule information has been successfully submitted.
+            - `true`: The information has been successfully submitted.
+            - `false`: The information has not been submitted.
           example: true
           type: boolean
-      type: object
-    TokenBalance_balance:
-      description: The balance details.
-      example:
-        total: "100.0"
-        pending: "10.5"
-        available: "80.5"
-        locked: "3.0"
-      properties:
-        total:
-          description: "The current amount of tokens in an address, which is retrieved\
-            \ directly from the network. To learn more, see [Balances and transaction\
-            \ amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
-            \ for more details."
-          example: "100.0"
-          type: string
-        available:
-          description: "The amount of tokens ready to be spent. To learn more, see\
-            \ [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
-            \ for more details."
-          example: "80.5"
-          type: string
-        pending:
-          default: "0"
-          description: "The total amount being sent in a transaction, which is calculated\
-            \ as the withdrawal amount plus the transaction fee. To learn more, see\
-            \ [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
-            \ for more details."
-          example: "10.5"
-          type: string
-        locked:
-          default: "0"
-          description: "For UTXO chains, this is the combined value of the selected\
-            \ UTXOs for the transaction. For other chains, it is equal to the Pending\
-            \ amount. To learn more, see [Balances and transaction amounts for MPC\
-            \ Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
-            \ for more details."
-          example: "3.0"
-          type: string
-      required:
-      - available
-      - total
       type: object
     EstimatedEvmEip1559Fee_slow:
       allOf:
@@ -17215,6 +18201,13 @@ components:
           description: The hash of the transaction that this transaction replaced.
           example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           type: string
+      type: object
+    TransactionDepositToAddressDestination_tx_info:
+      properties:
+        vout_n:
+          description: The output index of the UTXO.
+          example: 0
+          type: integer
       type: object
     TransactionTransferToAddressDestination_account_output:
       example:
@@ -17442,56 +18435,56 @@ components:
       in: header
       name: BIZ-API-KEY
       type: apiKey
+    CoboSignature:
+      description: "This field contains the EDDSA(ED25519) signature, generated using\
+        \ HTTP_METHOD, HTTP_REQUEST_PATH, TIMESTAMP, and PARAMS."
+      in: header
+      name: BIZ-API-SIGNATURE
+      type: apiKey
+    CoboNonce:
+      description: The UNIX EPOCH timestamp when calling the API in milliseconds.
+      in: header
+      name: BIZ-API-NONCE
+      type: apiKey
     OAuth2:
       flows:
         authorizationCode:
           authorizationUrl: https://auth.cobo.com/authorize
           scopes:
-            custodial_asset_wallet:create: Create access to custodial asset wallets
-            custodial_asset_wallet:add: Generate address access to custodial asset
-              wallets
-            custodial_asset_wallet:edit: Change wallet name access to custodial asset
-              wallets
-            custodial_asset_wallet:withdraw: Withdraw access to custodial asset wallets
-            mpc_organization_controlled_wallet:create: Create access to MPC organization-controlled
-              wallets
-            mpc_organization_controlled_wallet:add: Generate address access to MPC
-              organization-controlled wallets
-            mpc_organization_controlled_wallet:edit: Change wallet name access to
-              MPC organization-controlled wallets
-            mpc_organization_controlled_wallet:withdraw: Withdraw access to MPC organization-controlled
-              wallets
-            mpc_organization_controlled_wallet:contract_call: Contract call access
-              to MPC organization-controlled wallets
-            mpc_organization_controlled_wallet:message_sign: Message sign access to
-              MPC organization-controlled wallets
-            mpc_organization_controlled_vault:manage: Create/Edit access to MPC organization-controlled
-              vaults
-            mpc_organization_controlled_key_group:manage: Create/Edit/Delete access
-              to MPC organization-controlled key groups
-            mpc_organization_controlled_tss_request:manage: Create/Cancel access to
-              MPC organization-controlled tss requests
-            mpc_user_controlled_wallet:create: Create access to MPC user-controlled
-              wallets
-            mpc_user_controlled_wallet:add: Generate address access to MPC user-controlled
-              wallets
-            mpc_user_controlled_wallet:edit: Change wallet name access to MPC user-controlled
-              wallets
-            mpc_user_controlled_wallet:withdraw: Withdraw access to MPC user-controlled
-              wallets
-            mpc_user_controlled_wallet:contract_call: Contract call access to MPC
-              user-controlled wallets
-            mpc_user_controlled_wallet:message_sign: Message sign access to MPC user-controlled
-              wallets
-            mpc_user_controlled_project:manage: Create/Edit access to MPC user-controlled
-              projects
-            mpc_user_controlled_vault:manage: Create/Edit access to MPC user-controlled
-              vaults
-            mpc_user_controlled_key_group:manage: Create/Edit/Delete access to MPC
-              user-controlled key groups
-            mpc_user_controlled_tss_request:manage: Create/Cancel access to MPC user-controlled
-              tss requests
-            webhook:resend: Resend access to webhook events
-            webhook_url:edit: Create/Edit access to webhook urls
+            address_book.read: Read address book
+            api_key.read: Read API key info
+            callback.read: Read callback message
+            callback.resend: Resend callback message
+            wallet.create: Create wallet
+            wallet.read: Read wallet info
+            wallet.update: Update wallet info
+            wallet.delete: Delete wallet info
+            wallet.create_address: Create wallet address
+            wallet.manage_utxo: Manage UTXO
+            mpc_project.create: Create MPC project
+            mpc_project.read: Read MPC project info
+            mpc_project.update: Update MPC project info
+            mpc_vault.create: Create MPC vault
+            mpc_vault.read: Read MPC vault info
+            mpc_vault.update: Update MPC vault info
+            mpc_key_group.create: Create MPC key group
+            mpc_key_group.read: Read MPC key group info
+            mpc_key_group.update: Update MPC key group info
+            mpc_key_group.delete: Delete MPC key group info
+            transaction.read: Read transaction info
+            transaction.withdraw: Make withdrawals
+            transaction.estimate_fee: Estimate transaction fee
+            transaction.contract_call: Initiate contract calls
+            transaction.message_sign: Initiate message signings
+            transaction.stake: Stake assets
+            transaction.unstake: Unstake assets
+            transaction.unstake_withdraw: Withdraw unstaked assets
+            transaction.manage: Manage ongoing transactions
+            transaction.update: Update transaction notes
+            travel_rule.read: Read travel rule info
+            travel_rule.edit: Edit travel rule info
+            webhook.read: Read webhook URLs/events
+            webhook.edit: Edit webhook URLs
+            webhook.resend: Resend webhook events
           tokenUrl: https://auth.cobo.com/oauth/token
       type: oauth2

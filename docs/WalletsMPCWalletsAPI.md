@@ -10,12 +10,14 @@ Method | HTTP request | Description
 [**CreateMpcVault**](WalletsMPCWalletsAPI.md#CreateMpcVault) | **Post** /wallets/mpc/vaults | Create vault
 [**CreateTssRequest**](WalletsMPCWalletsAPI.md#CreateTssRequest) | **Post** /wallets/mpc/vaults/{vault_id}/tss_requests | Create TSS request
 [**DeleteKeyShareHolderGroupById**](WalletsMPCWalletsAPI.md#DeleteKeyShareHolderGroupById) | **Post** /wallets/mpc/vaults/{vault_id}/key_share_holder_groups/{key_share_holder_group_id}/delete | Delete key share holder group
+[**GetKeyShareHolderByTssNodeId**](WalletsMPCWalletsAPI.md#GetKeyShareHolderByTssNodeId) | **Get** /wallets/mpc/vaults/{vault_id}/key_share_holders/{tss_node_id} | Get key share holder by tss node id
 [**GetKeyShareHolderGroupById**](WalletsMPCWalletsAPI.md#GetKeyShareHolderGroupById) | **Get** /wallets/mpc/vaults/{vault_id}/key_share_holder_groups/{key_share_holder_group_id} | Get key share holder group information
 [**GetMpcProjectById**](WalletsMPCWalletsAPI.md#GetMpcProjectById) | **Get** /wallets/mpc/projects/{project_id} | Get project information
 [**GetMpcVaultById**](WalletsMPCWalletsAPI.md#GetMpcVaultById) | **Get** /wallets/mpc/vaults/{vault_id} | Get vault information
 [**GetTssRequestById**](WalletsMPCWalletsAPI.md#GetTssRequestById) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests/{tss_request_id} | Get TSS request
 [**ListCoboKeyHolders**](WalletsMPCWalletsAPI.md#ListCoboKeyHolders) | **Get** /wallets/mpc/cobo_key_share_holders | List all Cobo key share holders
 [**ListKeyShareHolderGroups**](WalletsMPCWalletsAPI.md#ListKeyShareHolderGroups) | **Get** /wallets/mpc/vaults/{vault_id}/key_share_holder_groups | List all key share holder groups
+[**ListKeyShareHolders**](WalletsMPCWalletsAPI.md#ListKeyShareHolders) | **Get** /wallets/mpc/vaults/{vault_id}/key_share_holders | List all key share holders
 [**ListMpcProjects**](WalletsMPCWalletsAPI.md#ListMpcProjects) | **Get** /wallets/mpc/projects | List all projects
 [**ListMpcVaults**](WalletsMPCWalletsAPI.md#ListMpcVaults) | **Get** /wallets/mpc/vaults | List all vaults
 [**ListTssRequests**](WalletsMPCWalletsAPI.md#ListTssRequests) | **Get** /wallets/mpc/vaults/{vault_id}/tss_requests | List TSS requests
@@ -77,7 +79,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 **tssRequestId** | **string** | The TSS request ID, which you can retrieve by calling [List TSS requests](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-tss-requests). | 
 
 ### Other Parameters
@@ -96,7 +98,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -160,7 +162,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 
 ### Other Parameters
 
@@ -178,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -254,7 +256,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -330,7 +332,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -394,7 +396,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 
 ### Other Parameters
 
@@ -412,7 +414,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -476,7 +478,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 **keyShareHolderGroupId** | **string** | The key share holder group ID. | 
 
 ### Other Parameters
@@ -495,7 +497,90 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetKeyShareHolderByTssNodeId
+
+> KeyShareHolder GetKeyShareHolderByTssNodeId(ctx, vaultId, tssNodeId).Execute()
+
+Get key share holder by tss node id
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	tssNodeId := "coboBTGDvjJG99pABegvPYmavrcTU3SkjTLHVdsko8dWBga4w"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletsAPI.GetKeyShareHolderByTssNodeId(ctx, vaultId, tssNodeId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletsAPI.GetKeyShareHolderByTssNodeId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetKeyShareHolderByTssNodeId`: KeyShareHolder
+	fmt.Fprintf(os.Stdout, "Response from `WalletsMPCWalletsAPI.GetKeyShareHolderByTssNodeId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
+**tssNodeId** | **string** | The TSS Node ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetKeyShareHolderByTssNodeIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**KeyShareHolder**](KeyShareHolder.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
 
 ### HTTP request headers
 
@@ -559,7 +644,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 **keyShareHolderGroupId** | **string** | The key share holder group ID. | 
 
 ### Other Parameters
@@ -578,7 +663,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -658,7 +743,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -721,7 +806,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 
 ### Other Parameters
 
@@ -738,7 +823,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -802,7 +887,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 **tssRequestId** | **string** | The TSS request ID, which you can retrieve by calling [List TSS requests](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-tss-requests). | 
 
 ### Other Parameters
@@ -821,7 +906,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -959,7 +1044,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 
 ### Other Parameters
 
@@ -977,6 +1062,94 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListKeyShareHolderGroups200Response**](ListKeyShareHolderGroups200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListKeyShareHolders
+
+> ListKeyShareHolders200Response ListKeyShareHolders(ctx, vaultId).KeyShareHolderGroupIds(keyShareHolderGroupIds).Limit(limit).Before(before).After(after).Execute()
+
+List all key share holders
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	vaultId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	keyShareHolderGroupIds := "dc0cac48-9add-4243-9c7a-b8badac8a198,5558bd1b-d221-4e2b-8c29-f6c97d9e6aca"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.WalletsMPCWalletsAPI.ListKeyShareHolders(ctx, vaultId).KeyShareHolderGroupIds(keyShareHolderGroupIds).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsMPCWalletsAPI.ListKeyShareHolders``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListKeyShareHolders`: ListKeyShareHolders200Response
+	fmt.Fprintf(os.Stdout, "Response from `WalletsMPCWalletsAPI.ListKeyShareHolders`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListKeyShareHoldersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **keyShareHolderGroupIds** | **string** | A list of key_share_holder_group_ids, separated by comma. | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+
+### Return type
+
+[**ListKeyShareHolders200Response**](ListKeyShareHolders200Response.md)
 
 ### Authorization
 
@@ -1060,7 +1233,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1144,7 +1317,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1211,7 +1384,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 
 ### Other Parameters
 
@@ -1232,7 +1405,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1297,7 +1470,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 **keyShareHolderGroupId** | **string** | The key share holder group ID. | 
 
 ### Other Parameters
@@ -1317,7 +1490,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1399,7 +1572,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1463,7 +1636,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults). | 
+**vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
 
 ### Other Parameters
 
@@ -1481,7 +1654,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

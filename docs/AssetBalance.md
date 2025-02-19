@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AssetId** | **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | 
-**Balance** | [**TokenBalanceBalance**](TokenBalanceBalance.md) |  | 
+**Balance** | [**Balance**](Balance.md) |  | 
 
 ## Methods
 
 ### NewAssetBalance
 
-`func NewAssetBalance(assetId string, balance TokenBalanceBalance, ) *AssetBalance`
+`func NewAssetBalance(assetId string, balance Balance, ) *AssetBalance`
 
 NewAssetBalance instantiates a new AssetBalance object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetAssetId sets AssetId field to given value.
 
 ### GetBalance
 
-`func (o *AssetBalance) GetBalance() TokenBalanceBalance`
+`func (o *AssetBalance) GetBalance() Balance`
 
 GetBalance returns the Balance field if non-nil, zero value otherwise.
 
 ### GetBalanceOk
 
-`func (o *AssetBalance) GetBalanceOk() (*TokenBalanceBalance, bool)`
+`func (o *AssetBalance) GetBalanceOk() (*Balance, bool)`
 
 GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBalance
 
-`func (o *AssetBalance) SetBalance(v TokenBalanceBalance)`
+`func (o *AssetBalance) SetBalance(v Balance)`
 
 SetBalance sets Balance field to given value.
 

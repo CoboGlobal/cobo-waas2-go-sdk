@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**GetMaxTransferableValue**](WalletsAPI.md#GetMaxTransferableValue) | **Get** /wallets/{wallet_id}/max_transferable_value | Get maximum transferable value
 [**GetTokenById**](WalletsAPI.md#GetTokenById) | **Get** /wallets/tokens/{token_id} | Get token information
 [**GetWalletById**](WalletsAPI.md#GetWalletById) | **Get** /wallets/{wallet_id} | Get wallet information
+[**ListAddressBalancesForToken**](WalletsAPI.md#ListAddressBalancesForToken) | **Get** /wallets/{wallet_id}/tokens/{token_id} | List address balances for token
 [**ListAddresses**](WalletsAPI.md#ListAddresses) | **Get** /wallets/{wallet_id}/addresses | List wallet addresses
 [**ListEnabledChains**](WalletsAPI.md#ListEnabledChains) | **Get** /wallets/enabled_chains | List enabled chains
 [**ListEnabledTokens**](WalletsAPI.md#ListEnabledTokens) | **Get** /wallets/enabled_tokens | List enabled tokens
@@ -333,7 +334,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -409,7 +410,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -489,7 +490,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -657,7 +658,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -817,7 +818,98 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListAddressBalancesForToken
+
+> ListAddressBalancesForToken200Response ListAddressBalancesForToken(ctx, walletId, tokenId).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
+
+List address balances for token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	tokenId := "ETH_USDT"
+	addresses := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.WalletsAPI.ListAddressBalancesForToken(ctx, walletId, tokenId).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListAddressBalancesForToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAddressBalancesForToken`: ListAddressBalancesForToken200Response
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.ListAddressBalancesForToken`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**walletId** | **string** | The wallet ID. | 
+**tokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAddressBalancesForTokenRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **addresses** | **string** | A list of wallet addresses, separated by comma. For addresses requiring a memo, append the memo after the address using the &#39;|&#39; separator (e.g., \&quot;address|memo\&quot;). | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+
+### Return type
+
+[**ListAddressBalancesForToken200Response**](ListAddressBalancesForToken200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -907,7 +999,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1342,7 +1434,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1430,7 +1522,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1444,7 +1536,7 @@ Name | Type | Description  | Notes
 
 ## ListUtxos
 
-> ListUtxos200Response ListUtxos(ctx, walletId).TokenId(tokenId).Address(address).Limit(limit).Before(before).After(after).Execute()
+> ListUtxos200Response ListUtxos(ctx, walletId).TokenId(tokenId).Address(address).TxHash(txHash).Limit(limit).Before(before).After(after).Execute()
 
 List UTXOs
 
@@ -1467,6 +1559,7 @@ func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 	tokenId := "ETH_USDT"
 	address := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+	txHash := "dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83"
 	limit := int32(10)
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
@@ -1482,7 +1575,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.WalletsAPI.ListUtxos(ctx, walletId).TokenId(tokenId).Address(address).Limit(limit).Before(before).After(after).Execute()
+	resp, r, err := apiClient.WalletsAPI.ListUtxos(ctx, walletId).TokenId(tokenId).Address(address).TxHash(txHash).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListUtxos``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1510,6 +1603,7 @@ Name | Type | Description  | Notes
 
  **tokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
  **address** | **string** | The wallet address. | 
+ **txHash** | **string** |  | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
  **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
  **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
@@ -1520,7 +1614,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1608,7 +1702,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1690,7 +1784,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1772,7 +1866,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -1854,7 +1948,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

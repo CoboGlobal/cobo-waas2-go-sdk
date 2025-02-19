@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SelectedEntityType** | [**SelectedEntityType**](SelectedEntityType.md) |  | 
 **LegalName** | **string** | The legal name of the entity. | 
-**DateOfIncorporation** | Pointer to **string** | The incorporation date of the entity. | [optional] 
+**DateOfIncorporation** | Pointer to **string** | The date of incorporation of the entity. | [optional] 
 **PlaceOfIncorporation** | Pointer to **string** | The place of incorporation of the entity. | [optional] 
 
 ## Methods

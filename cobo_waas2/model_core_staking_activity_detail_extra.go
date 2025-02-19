@@ -22,11 +22,11 @@ type CoreStakingActivityDetailExtra struct {
 	PoolType StakingPoolType `json:"pool_type"`
 	// The Unix timestamp (in seconds) when the staking position will be unlocked and available for withdrawal.
 	Timelock *int32 `json:"timelock,omitempty"`
-	// The change bitcoin address. If not provided, the source wallet's address will be used as the change address.
+	// The change address on the Bitcoin chain. If not provided, the source wallet's address will be used as the change address.
 	ChangeAddress *string `json:"change_address,omitempty"`
-	// The validator evm address.
+	// The validator's EVM address.
 	ValidatorAddress *string `json:"validator_address,omitempty"`
-	// The reward evm address.
+	// The EVM address to receive staking rewards.
 	RewardAddress *string `json:"reward_address,omitempty"`
 }
 

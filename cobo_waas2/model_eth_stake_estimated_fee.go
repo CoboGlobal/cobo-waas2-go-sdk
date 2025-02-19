@@ -21,7 +21,7 @@ type EthStakeEstimatedFee struct {
 	Fee *EstimatedFee `json:"fee,omitempty"`
 	// A list of public keys associated with the Ethereum validators for this staking operation.
 	ValidatorPubkeys []string `json:"validator_pubkeys,omitempty"`
-	// P2WSH address generated for this staking operation(If the estimated fee is for core BTC staking).
+	// The P2WSH address generated for this staking operation (only applicable if the estimated fee is for CORE staking).
 	CoreBtcStakingAddress *string `json:"core_btc_staking_address,omitempty"`
 }
 

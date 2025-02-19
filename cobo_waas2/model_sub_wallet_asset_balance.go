@@ -23,7 +23,7 @@ type SubWalletAssetBalance struct {
 	TradingAccountType *string `json:"trading_account_type,omitempty"`
 	// The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
 	AssetId string `json:"asset_id"`
-	Balance TokenBalanceBalance `json:"balance"`
+	Balance Balance `json:"balance"`
 }
 
 type _SubWalletAssetBalance SubWalletAssetBalance
@@ -32,7 +32,7 @@ type _SubWalletAssetBalance SubWalletAssetBalance
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSubWalletAssetBalance(assetId string, balance TokenBalanceBalance) *SubWalletAssetBalance {
+func NewSubWalletAssetBalance(assetId string, balance Balance) *SubWalletAssetBalance {
 	this := SubWalletAssetBalance{}
 	this.AssetId = assetId
 	this.Balance = balance
@@ -104,9 +104,9 @@ func (o *SubWalletAssetBalance) SetAssetId(v string) {
 }
 
 // GetBalance returns the Balance field value
-func (o *SubWalletAssetBalance) GetBalance() TokenBalanceBalance {
+func (o *SubWalletAssetBalance) GetBalance() Balance {
 	if o == nil {
-		var ret TokenBalanceBalance
+		var ret Balance
 		return ret
 	}
 
@@ -115,7 +115,7 @@ func (o *SubWalletAssetBalance) GetBalance() TokenBalanceBalance {
 
 // GetBalanceOk returns a tuple with the Balance field value
 // and a boolean to check if the value has been set.
-func (o *SubWalletAssetBalance) GetBalanceOk() (*TokenBalanceBalance, bool) {
+func (o *SubWalletAssetBalance) GetBalanceOk() (*Balance, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -123,7 +123,7 @@ func (o *SubWalletAssetBalance) GetBalanceOk() (*TokenBalanceBalance, bool) {
 }
 
 // SetBalance sets field value
-func (o *SubWalletAssetBalance) SetBalance(v TokenBalanceBalance) {
+func (o *SubWalletAssetBalance) SetBalance(v Balance) {
 	o.Balance = v
 }
 

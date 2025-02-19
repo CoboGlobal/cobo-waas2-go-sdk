@@ -39,7 +39,7 @@ This operation cancels a TSS request.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @param tssRequestId The TSS request ID, which you can retrieve by calling [List TSS requests](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-tss-requests).
  @return ApiCancelTssRequestByIdRequest
 */
@@ -174,7 +174,7 @@ This operation creates a key share holder group for a specified vault. <Note>Thi
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @return ApiCreateKeyShareHolderGroupRequest
 */
 func (a *WalletsMPCWalletsAPIService) CreateKeyShareHolderGroup(ctx context.Context, vaultId string) ApiCreateKeyShareHolderGroupRequest {
@@ -572,7 +572,7 @@ This operation creates a TSS request under a specified vault. You can use this o
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @return ApiCreateTssRequestRequest
 */
 func (a *WalletsMPCWalletsAPIService) CreateTssRequest(ctx context.Context, vaultId string) ApiCreateTssRequestRequest {
@@ -699,7 +699,7 @@ DeleteKeyShareHolderGroupById Delete key share holder group
 This operation deletes a specified key share holder group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @param keyShareHolderGroupId The key share holder group ID.
  @return ApiDeleteKeyShareHolderGroupByIdRequest
 */
@@ -810,6 +810,135 @@ func (a *WalletsMPCWalletsAPIService) DeleteKeyShareHolderGroupByIdExecute(r Api
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetKeyShareHolderByTssNodeIdRequest struct {
+	ctx context.Context
+	ApiService *WalletsMPCWalletsAPIService
+	vaultId string
+	tssNodeId string
+}
+
+func (r ApiGetKeyShareHolderByTssNodeIdRequest) Execute() (*KeyShareHolder, *http.Response, error) {
+	return r.ApiService.GetKeyShareHolderByTssNodeIdExecute(r)
+}
+
+/*
+GetKeyShareHolderByTssNodeId Get key share holder by tss node id
+
+This operation retrieves detailed information about a specified key holder.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
+ @param tssNodeId The TSS Node ID.
+ @return ApiGetKeyShareHolderByTssNodeIdRequest
+*/
+func (a *WalletsMPCWalletsAPIService) GetKeyShareHolderByTssNodeId(ctx context.Context, vaultId string, tssNodeId string) ApiGetKeyShareHolderByTssNodeIdRequest {
+	return ApiGetKeyShareHolderByTssNodeIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		vaultId: vaultId,
+		tssNodeId: tssNodeId,
+	}
+}
+
+// Execute executes the request
+//  @return KeyShareHolder
+func (a *WalletsMPCWalletsAPIService) GetKeyShareHolderByTssNodeIdExecute(r ApiGetKeyShareHolderByTssNodeIdRequest) (*KeyShareHolder, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *KeyShareHolder
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsMPCWalletsAPIService.GetKeyShareHolderByTssNodeId")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/mpc/vaults/{vault_id}/key_share_holders/{tss_node_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"vault_id"+"}", url.PathEscape(parameterValueToString(r.vaultId, "vaultId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"tss_node_id"+"}", url.PathEscape(parameterValueToString(r.tssNodeId, "tssNodeId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetKeyShareHolderGroupByIdRequest struct {
 	ctx context.Context
 	ApiService *WalletsMPCWalletsAPIService
@@ -828,7 +957,7 @@ This operation retrieves detailed information about a specified key share holder
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @param keyShareHolderGroupId The key share holder group ID.
  @return ApiGetKeyShareHolderGroupByIdRequest
 */
@@ -1084,7 +1213,7 @@ This operation retrieves detailed information about a vault.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @return ApiGetMpcVaultByIdRequest
 */
 func (a *WalletsMPCWalletsAPIService) GetMpcVaultById(ctx context.Context, vaultId string) ApiGetMpcVaultByIdRequest {
@@ -1210,7 +1339,7 @@ This operation retrieves detailed information about a TSS request.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @param tssRequestId The TSS request ID, which you can retrieve by calling [List TSS requests](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-tss-requests).
  @return ApiGetTssRequestByIdRequest
 */
@@ -1489,7 +1618,7 @@ This operation retrieves all key share holder groups under a specified vault. Yo
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @return ApiListKeyShareHolderGroupsRequest
 */
 func (a *WalletsMPCWalletsAPIService) ListKeyShareHolderGroups(ctx context.Context, vaultId string) ApiListKeyShareHolderGroupsRequest {
@@ -1524,6 +1653,174 @@ func (a *WalletsMPCWalletsAPIService) ListKeyShareHolderGroupsExecute(r ApiListK
 
 	if r.keyShareHolderGroupType != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "key_share_holder_group_type", r.keyShareHolderGroupType, "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListKeyShareHoldersRequest struct {
+	ctx context.Context
+	ApiService *WalletsMPCWalletsAPIService
+	vaultId string
+	keyShareHolderGroupIds *string
+	limit *int32
+	before *string
+	after *string
+}
+
+// A list of key_share_holder_group_ids, separated by comma.
+func (r ApiListKeyShareHoldersRequest) KeyShareHolderGroupIds(keyShareHolderGroupIds string) ApiListKeyShareHoldersRequest {
+	r.keyShareHolderGroupIds = &keyShareHolderGroupIds
+	return r
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListKeyShareHoldersRequest) Limit(limit int32) ApiListKeyShareHoldersRequest {
+	r.limit = &limit
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
+func (r ApiListKeyShareHoldersRequest) Before(before string) ApiListKeyShareHoldersRequest {
+	r.before = &before
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+func (r ApiListKeyShareHoldersRequest) After(after string) ApiListKeyShareHoldersRequest {
+	r.after = &after
+	return r
+}
+
+func (r ApiListKeyShareHoldersRequest) Execute() (*ListKeyShareHolders200Response, *http.Response, error) {
+	return r.ApiService.ListKeyShareHoldersExecute(r)
+}
+
+/*
+ListKeyShareHolders List all key share holders
+
+This operation retrieves all key share holders under a specified vault. You can filter the result by key share holder group id.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
+ @return ApiListKeyShareHoldersRequest
+*/
+func (a *WalletsMPCWalletsAPIService) ListKeyShareHolders(ctx context.Context, vaultId string) ApiListKeyShareHoldersRequest {
+	return ApiListKeyShareHoldersRequest{
+		ApiService: a,
+		ctx: ctx,
+		vaultId: vaultId,
+	}
+}
+
+// Execute executes the request
+//  @return ListKeyShareHolders200Response
+func (a *WalletsMPCWalletsAPIService) ListKeyShareHoldersExecute(r ApiListKeyShareHoldersRequest) (*ListKeyShareHolders200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListKeyShareHolders200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsMPCWalletsAPIService.ListKeyShareHolders")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/mpc/vaults/{vault_id}/key_share_holders"
+	localVarPath = strings.Replace(localVarPath, "{"+"vault_id"+"}", url.PathEscape(parameterValueToString(r.vaultId, "vaultId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.keyShareHolderGroupIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "key_share_holder_group_ids", r.keyShareHolderGroupIds, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1994,7 +2291,7 @@ This operation retrieves a list of TSS requests and their details.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @return ApiListTssRequestsRequest
 */
 func (a *WalletsMPCWalletsAPIService) ListTssRequests(ctx context.Context, vaultId string) ApiListTssRequestsRequest {
@@ -2142,7 +2439,7 @@ This operation updates a specified active [Signing Group](https://manuals.cobo.c
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @param keyShareHolderGroupId The key share holder group ID.
  @return ApiUpdateKeyShareHolderGroupByIdRequest
 */
@@ -2417,7 +2714,7 @@ This operation updates a vault's name.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallet/list-all-mpc-vaults).
+ @param vaultId The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults).
  @return ApiUpdateMpcVaultByIdRequest
 */
 func (a *WalletsMPCWalletsAPIService) UpdateMpcVaultById(ctx context.Context, vaultId string) ApiUpdateMpcVaultByIdRequest {

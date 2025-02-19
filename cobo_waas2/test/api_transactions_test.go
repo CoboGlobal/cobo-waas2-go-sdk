@@ -182,6 +182,20 @@ func Test_cobo_waas2_TransactionsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test TransactionsAPIService SignAndBroadcastTransactionById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var transactionId string
+
+		resp, httpRes, err := apiClient.TransactionsAPI.SignAndBroadcastTransactionById(ctx, transactionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test TransactionsAPIService SpeedupTransactionById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -14,11 +14,11 @@ import (
 	"fmt"
 )
 
-// checks if the TokenBalanceBalance type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &TokenBalanceBalance{}
+// checks if the Balance type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Balance{}
 
-// TokenBalanceBalance The balance details.
-type TokenBalanceBalance struct {
+// Balance The balance details.
+type Balance struct {
 	// The current amount of tokens in an address, which is retrieved directly from the network. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details.
 	Total string `json:"total"`
 	// The amount of tokens ready to be spent. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details.
@@ -29,14 +29,14 @@ type TokenBalanceBalance struct {
 	Locked *string `json:"locked,omitempty"`
 }
 
-type _TokenBalanceBalance TokenBalanceBalance
+type _Balance Balance
 
-// NewTokenBalanceBalance instantiates a new TokenBalanceBalance object
+// NewBalance instantiates a new Balance object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenBalanceBalance(total string, available string) *TokenBalanceBalance {
-	this := TokenBalanceBalance{}
+func NewBalance(total string, available string) *Balance {
+	this := Balance{}
 	this.Total = total
 	this.Available = available
 	var pending string = "0"
@@ -46,11 +46,11 @@ func NewTokenBalanceBalance(total string, available string) *TokenBalanceBalance
 	return &this
 }
 
-// NewTokenBalanceBalanceWithDefaults instantiates a new TokenBalanceBalance object
+// NewBalanceWithDefaults instantiates a new Balance object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewTokenBalanceBalanceWithDefaults() *TokenBalanceBalance {
-	this := TokenBalanceBalance{}
+func NewBalanceWithDefaults() *Balance {
+	this := Balance{}
 	var pending string = "0"
 	this.Pending = &pending
 	var locked string = "0"
@@ -59,7 +59,7 @@ func NewTokenBalanceBalanceWithDefaults() *TokenBalanceBalance {
 }
 
 // GetTotal returns the Total field value
-func (o *TokenBalanceBalance) GetTotal() string {
+func (o *Balance) GetTotal() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -70,7 +70,7 @@ func (o *TokenBalanceBalance) GetTotal() string {
 
 // GetTotalOk returns a tuple with the Total field value
 // and a boolean to check if the value has been set.
-func (o *TokenBalanceBalance) GetTotalOk() (*string, bool) {
+func (o *Balance) GetTotalOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -78,12 +78,12 @@ func (o *TokenBalanceBalance) GetTotalOk() (*string, bool) {
 }
 
 // SetTotal sets field value
-func (o *TokenBalanceBalance) SetTotal(v string) {
+func (o *Balance) SetTotal(v string) {
 	o.Total = v
 }
 
 // GetAvailable returns the Available field value
-func (o *TokenBalanceBalance) GetAvailable() string {
+func (o *Balance) GetAvailable() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -94,7 +94,7 @@ func (o *TokenBalanceBalance) GetAvailable() string {
 
 // GetAvailableOk returns a tuple with the Available field value
 // and a boolean to check if the value has been set.
-func (o *TokenBalanceBalance) GetAvailableOk() (*string, bool) {
+func (o *Balance) GetAvailableOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -102,12 +102,12 @@ func (o *TokenBalanceBalance) GetAvailableOk() (*string, bool) {
 }
 
 // SetAvailable sets field value
-func (o *TokenBalanceBalance) SetAvailable(v string) {
+func (o *Balance) SetAvailable(v string) {
 	o.Available = v
 }
 
 // GetPending returns the Pending field value if set, zero value otherwise.
-func (o *TokenBalanceBalance) GetPending() string {
+func (o *Balance) GetPending() string {
 	if o == nil || IsNil(o.Pending) {
 		var ret string
 		return ret
@@ -117,7 +117,7 @@ func (o *TokenBalanceBalance) GetPending() string {
 
 // GetPendingOk returns a tuple with the Pending field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenBalanceBalance) GetPendingOk() (*string, bool) {
+func (o *Balance) GetPendingOk() (*string, bool) {
 	if o == nil || IsNil(o.Pending) {
 		return nil, false
 	}
@@ -125,7 +125,7 @@ func (o *TokenBalanceBalance) GetPendingOk() (*string, bool) {
 }
 
 // HasPending returns a boolean if a field has been set.
-func (o *TokenBalanceBalance) HasPending() bool {
+func (o *Balance) HasPending() bool {
 	if o != nil && !IsNil(o.Pending) {
 		return true
 	}
@@ -134,12 +134,12 @@ func (o *TokenBalanceBalance) HasPending() bool {
 }
 
 // SetPending gets a reference to the given string and assigns it to the Pending field.
-func (o *TokenBalanceBalance) SetPending(v string) {
+func (o *Balance) SetPending(v string) {
 	o.Pending = &v
 }
 
 // GetLocked returns the Locked field value if set, zero value otherwise.
-func (o *TokenBalanceBalance) GetLocked() string {
+func (o *Balance) GetLocked() string {
 	if o == nil || IsNil(o.Locked) {
 		var ret string
 		return ret
@@ -149,7 +149,7 @@ func (o *TokenBalanceBalance) GetLocked() string {
 
 // GetLockedOk returns a tuple with the Locked field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenBalanceBalance) GetLockedOk() (*string, bool) {
+func (o *Balance) GetLockedOk() (*string, bool) {
 	if o == nil || IsNil(o.Locked) {
 		return nil, false
 	}
@@ -157,7 +157,7 @@ func (o *TokenBalanceBalance) GetLockedOk() (*string, bool) {
 }
 
 // HasLocked returns a boolean if a field has been set.
-func (o *TokenBalanceBalance) HasLocked() bool {
+func (o *Balance) HasLocked() bool {
 	if o != nil && !IsNil(o.Locked) {
 		return true
 	}
@@ -166,11 +166,11 @@ func (o *TokenBalanceBalance) HasLocked() bool {
 }
 
 // SetLocked gets a reference to the given string and assigns it to the Locked field.
-func (o *TokenBalanceBalance) SetLocked(v string) {
+func (o *Balance) SetLocked(v string) {
 	o.Locked = &v
 }
 
-func (o TokenBalanceBalance) MarshalJSON() ([]byte, error) {
+func (o Balance) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -178,7 +178,7 @@ func (o TokenBalanceBalance) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o TokenBalanceBalance) ToMap() (map[string]interface{}, error) {
+func (o Balance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["total"] = o.Total
 	toSerialize["available"] = o.Available
@@ -191,7 +191,7 @@ func (o TokenBalanceBalance) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *TokenBalanceBalance) UnmarshalJSON(data []byte) (err error) {
+func (o *Balance) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -214,53 +214,53 @@ func (o *TokenBalanceBalance) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varTokenBalanceBalance := _TokenBalanceBalance{}
+	varBalance := _Balance{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	//decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTokenBalanceBalance)
+	err = decoder.Decode(&varBalance)
 
 	if err != nil {
 		return err
 	}
 
-	*o = TokenBalanceBalance(varTokenBalanceBalance)
+	*o = Balance(varBalance)
 
 	return err
 }
 
-type NullableTokenBalanceBalance struct {
-	value *TokenBalanceBalance
+type NullableBalance struct {
+	value *Balance
 	isSet bool
 }
 
-func (v NullableTokenBalanceBalance) Get() *TokenBalanceBalance {
+func (v NullableBalance) Get() *Balance {
 	return v.value
 }
 
-func (v *NullableTokenBalanceBalance) Set(val *TokenBalanceBalance) {
+func (v *NullableBalance) Set(val *Balance) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableTokenBalanceBalance) IsSet() bool {
+func (v NullableBalance) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableTokenBalanceBalance) Unset() {
+func (v *NullableBalance) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableTokenBalanceBalance(val *TokenBalanceBalance) *NullableTokenBalanceBalance {
-	return &NullableTokenBalanceBalance{value: val, isSet: true}
+func NewNullableBalance(val *Balance) *NullableBalance {
+	return &NullableBalance{value: val, isSet: true}
 }
 
-func (v NullableTokenBalanceBalance) MarshalJSON() ([]byte, error) {
+func (v NullableBalance) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableTokenBalanceBalance) UnmarshalJSON(src []byte) error {
+func (v *NullableBalance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

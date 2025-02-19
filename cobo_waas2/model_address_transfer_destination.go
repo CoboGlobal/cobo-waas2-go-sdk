@@ -24,6 +24,8 @@ type AddressTransferDestination struct {
 	UtxoOutputs []AddressTransferDestinationUtxoOutputsInner `json:"utxo_outputs,omitempty"`
 	// The address used to receive the remaining funds or change from the transaction.
 	ChangeAddress *string `json:"change_address,omitempty"`
+	// The type of change output: **Last** means the change output is located at the end of the transaction's outputs, **Last** is the default value. while **First** means it is located at the beginning of the transaction's outputs. 
+	ChangeOutputType *string `json:"change_output_type,omitempty"`
 	// Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must be executed as a Cobo Loop transfer.   - `false`: The transaction request may not be executed as a Cobo Loop transfer.    Please do not set both `force_internal` and `force_external` as `true`. 
 	ForceInternal *bool `json:"force_internal,omitempty"`
 	// Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must not be executed as a Cobo Loop transfer.   - `false`: The transaction request can be executed as a Cobo Loop transfer.  Please do not set both `force_internal` and `force_external` as `true`. 
@@ -170,6 +172,38 @@ func (o *AddressTransferDestination) SetChangeAddress(v string) {
 	o.ChangeAddress = &v
 }
 
+// GetChangeOutputType returns the ChangeOutputType field value if set, zero value otherwise.
+func (o *AddressTransferDestination) GetChangeOutputType() string {
+	if o == nil || IsNil(o.ChangeOutputType) {
+		var ret string
+		return ret
+	}
+	return *o.ChangeOutputType
+}
+
+// GetChangeOutputTypeOk returns a tuple with the ChangeOutputType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressTransferDestination) GetChangeOutputTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.ChangeOutputType) {
+		return nil, false
+	}
+	return o.ChangeOutputType, true
+}
+
+// HasChangeOutputType returns a boolean if a field has been set.
+func (o *AddressTransferDestination) HasChangeOutputType() bool {
+	if o != nil && !IsNil(o.ChangeOutputType) {
+		return true
+	}
+
+	return false
+}
+
+// SetChangeOutputType gets a reference to the given string and assigns it to the ChangeOutputType field.
+func (o *AddressTransferDestination) SetChangeOutputType(v string) {
+	o.ChangeOutputType = &v
+}
+
 // GetForceInternal returns the ForceInternal field value if set, zero value otherwise.
 func (o *AddressTransferDestination) GetForceInternal() bool {
 	if o == nil || IsNil(o.ForceInternal) {
@@ -253,6 +287,9 @@ func (o AddressTransferDestination) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ChangeAddress) {
 		toSerialize["change_address"] = o.ChangeAddress
+	}
+	if !IsNil(o.ChangeOutputType) {
+		toSerialize["change_output_type"] = o.ChangeOutputType
 	}
 	if !IsNil(o.ForceInternal) {
 		toSerialize["force_internal"] = o.ForceInternal

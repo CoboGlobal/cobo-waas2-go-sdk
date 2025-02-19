@@ -6,8 +6,8 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**GetTransactionLimitation**](TravelRuleAPI.md#GetTransactionLimitation) | **Get** /travel_rule/transaction/limitation | Retrieve transaction limitations
 [**ListSupportedCountries**](TravelRuleAPI.md#ListSupportedCountries) | **Get** /travel_rule/transaction/countries | List supported countries
-[**SubmitDepositTravelRuleInfo**](TravelRuleAPI.md#SubmitDepositTravelRuleInfo) | **Post** /travel_rule/transaction/deposit/travel_rule_info | Submit Deposit Transaction Travel Rule information
-[**SubmitWithdrawTravelRuleInfo**](TravelRuleAPI.md#SubmitWithdrawTravelRuleInfo) | **Post** /travel_rule/transaction/withdraw/travel_rule_info | Submit Withdraw Transaction Travel Rule information
+[**SubmitDepositTravelRuleInfo**](TravelRuleAPI.md#SubmitDepositTravelRuleInfo) | **Post** /travel_rule/transaction/deposit/travel_rule_info | Submit Travel Rule information for deposits
+[**SubmitWithdrawTravelRuleInfo**](TravelRuleAPI.md#SubmitWithdrawTravelRuleInfo) | **Post** /travel_rule/transaction/withdraw/travel_rule_info | Submit Travel Rule information for withdrawals
 
 
 
@@ -69,7 +69,7 @@ Other parameters are passed through a pointer to a apiGetTransactionLimitationRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **transactionType** | **string** | The transaction type. Possible values include:    - &#x60;DEPOSIT&#x60;: A deposit transaction.   - &#x60;WITHDRAW&#x60;: A withdrawal transaction.  | 
- **transactionId** | **string** | The transaction ID | 
+ **transactionId** | **string** | The transaction ID. | 
 
 ### Return type
 
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -148,7 +148,7 @@ Other parameters are passed through a pointer to a apiListSupportedCountriesRequ
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -164,7 +164,7 @@ Other parameters are passed through a pointer to a apiListSupportedCountriesRequ
 
 > SubmitDepositTravelRuleInfo201Response SubmitDepositTravelRuleInfo(ctx).TravelRuleDepositRequest(travelRuleDepositRequest).Execute()
 
-Submit Deposit Transaction Travel Rule information
+Submit Travel Rule information for deposits
 
 
 
@@ -224,7 +224,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 
 > SubmitDepositTravelRuleInfo201Response SubmitWithdrawTravelRuleInfo(ctx).TravelRuleWithdrawRequest(travelRuleWithdrawRequest).Execute()
 
-Submit Withdraw Transaction Travel Rule information
+Submit Travel Rule information for withdrawals
 
 
 
@@ -300,7 +300,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

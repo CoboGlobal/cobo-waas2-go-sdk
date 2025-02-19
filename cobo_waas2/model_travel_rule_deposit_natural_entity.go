@@ -17,17 +17,17 @@ import (
 // checks if the TravelRuleDepositNaturalEntity type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TravelRuleDepositNaturalEntity{}
 
-// TravelRuleDepositNaturalEntity Required fields for NATURAL entities.
+// TravelRuleDepositNaturalEntity The required information of a natural person.
 type TravelRuleDepositNaturalEntity struct {
-	// Specifies the type of entity associated with the transaction.
+	// Specifies the type of entity associated with the transaction. - `LEGAL`: Legal entity. - `NATURAL`: Natural person. 
 	SelectedEntityType string `json:"selected_entity_type"`
-	// The first name of the user.
+	// The first name of the natural person.
 	FirstName string `json:"first_name"`
-	// The last name of the user.
+	// The last name of the natural person.
 	LastName string `json:"last_name"`
-	// The date of birth of the user. This field is required when: - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`. - **Entity Type**: NATURAL. Otherwise, this field can be omitted. 
+	// The date of birth of the natural person. This field is required when either of the following conditions is met: - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation. - `selected_entity_type` is `NATURAL`. 
 	DateOfBirth *string `json:"date_of_birth,omitempty"`
-	// The place of birth of the user. This field is required when: - **Calling**: `travel_rule/transaction/limitation` API returns `is_threshold_reached = true`. - **Entity Type**: NATURAL. Otherwise, this field can be omitted. 
+	// The place of birth of the natural person. This field is required when either of the following conditions is met: - `is_threshold_reached` is `true` in the response of the [Retrieve transaction limitations](https://www.cobo.com/developers/v2/api-references/travelrule/retrieve-transaction-limitations) operation. - `selected_entity_type` is `NATURAL`. 
 	PlaceOfBirth *string `json:"place_of_birth,omitempty"`
 }
 

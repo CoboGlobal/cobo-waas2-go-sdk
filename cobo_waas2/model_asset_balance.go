@@ -21,7 +21,7 @@ var _ MappedNullable = &AssetBalance{}
 type AssetBalance struct {
 	// (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account.
 	AssetId string `json:"asset_id"`
-	Balance TokenBalanceBalance `json:"balance"`
+	Balance Balance `json:"balance"`
 }
 
 type _AssetBalance AssetBalance
@@ -30,7 +30,7 @@ type _AssetBalance AssetBalance
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAssetBalance(assetId string, balance TokenBalanceBalance) *AssetBalance {
+func NewAssetBalance(assetId string, balance Balance) *AssetBalance {
 	this := AssetBalance{}
 	this.AssetId = assetId
 	this.Balance = balance
@@ -70,9 +70,9 @@ func (o *AssetBalance) SetAssetId(v string) {
 }
 
 // GetBalance returns the Balance field value
-func (o *AssetBalance) GetBalance() TokenBalanceBalance {
+func (o *AssetBalance) GetBalance() Balance {
 	if o == nil {
-		var ret TokenBalanceBalance
+		var ret Balance
 		return ret
 	}
 
@@ -81,7 +81,7 @@ func (o *AssetBalance) GetBalance() TokenBalanceBalance {
 
 // GetBalanceOk returns a tuple with the Balance field value
 // and a boolean to check if the value has been set.
-func (o *AssetBalance) GetBalanceOk() (*TokenBalanceBalance, bool) {
+func (o *AssetBalance) GetBalanceOk() (*Balance, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -89,7 +89,7 @@ func (o *AssetBalance) GetBalanceOk() (*TokenBalanceBalance, bool) {
 }
 
 // SetBalance sets field value
-func (o *AssetBalance) SetBalance(v TokenBalanceBalance) {
+func (o *AssetBalance) SetBalance(v Balance) {
 	o.Balance = v
 }
 

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | The name of the vasp. | 
-**VendorCode** | **string** | The symbol. | 
-**VendorVaspId** | **string** | The vasp str id. | 
+**Name** | **string** | The VASP name. | 
+**VendorCode** | **string** | The vendor code of the VASP. | 
+**VendorVaspId** | **string** | The VASP ID. | 
 
 ## Methods
 

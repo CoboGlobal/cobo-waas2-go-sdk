@@ -18,14 +18,16 @@ type MessageSignDestinationType string
 
 // List of MessageSignDestinationType
 const (
-	MESSAGESIGNDESTINATIONTYPE__191_SIGNATURE MessageSignDestinationType = "EVM_EIP_191_Signature"
-	MESSAGESIGNDESTINATIONTYPE__712_SIGNATURE MessageSignDestinationType = "EVM_EIP_712_Signature"
+	MESSAGESIGNDESTINATIONTYPE_EVM_EIP_191_SIGNATURE MessageSignDestinationType = "EVM_EIP_191_Signature"
+	MESSAGESIGNDESTINATIONTYPE_EVM_EIP_712_SIGNATURE MessageSignDestinationType = "EVM_EIP_712_Signature"
+	MESSAGESIGNDESTINATIONTYPE_BTC_EIP_191_SIGNATURE MessageSignDestinationType = "BTC_EIP_191_Signature"
 )
 
 // All allowed values of MessageSignDestinationType enum
 var AllowedMessageSignDestinationTypeEnumValues = []MessageSignDestinationType{
 	"EVM_EIP_191_Signature",
 	"EVM_EIP_712_Signature",
+	"BTC_EIP_191_Signature",
 }
 
 func (v *MessageSignDestinationType) UnmarshalJSON(src []byte) error {

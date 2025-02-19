@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**VaspList** | Pointer to [**[]Vasp**](Vasp.md) | A list of VASPs (Virtual Asset Service Providers) associated with the token. | [optional] 
-**IsThresholdReached** | Pointer to **bool** | Indicates whether the transaction amount exceeds a predefined threshold. - **If &#x60;true&#x60;**: Additional information is required when filling Travel Rule details:   - For deposits: &#x60;date_of_incorporation&#x60; and &#x60;place_of_incorporation&#x60;. - **If &#x60;false&#x60;**: No extra fields are required.  | [optional] 
-**SelfCustodyWalletChallenge** | Pointer to **string** | A human-readable, time-sensitive message to be signed by the wallet owner.  The message contains key details including the wallet address, a unique nonce, and a timestamp. Signing this message confirms ownership of the wallet and allows the operation to proceed.  | [optional] 
-**ConnectWalletList** | Pointer to **[]string** | A list of wallets connected to the system for transactions. | [optional] 
+**VaspList** | Pointer to [**[]Vasp**](Vasp.md) | A list of virtual asset service providers (VASP) you can select as the transaction source or destination. | [optional] 
+**IsThresholdReached** | Pointer to **bool** | Indicates whether the transaction amount exceeds a predefined threshold. If exceeded, additional information is required when filling Travel Rule details. - &#x60;true&#x60;: Threshold exceeded. - &#x60;false&#x60;: Threshold not exceeded.  | [optional] 
+**SelfCustodyWalletChallenge** | Pointer to **string** | A human-readable, time-sensitive message to be signed by the wallet owner. The message contains key information including the wallet address, a unique nonce, and a timestamp. Signing this message confirms ownership of the wallet and allows the operation to proceed.  | [optional] 
+**ConnectWalletList** | Pointer to **[]string** | A list of self-custody wallet providers you can select as the transaction source or destination. | [optional] 
 
 ## Methods
 

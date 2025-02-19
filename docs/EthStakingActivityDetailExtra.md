@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
 **ProviderName** | Pointer to **string** | The name of the provider. | [optional] 
-**ValidatorPubkeys** | Pointer to **[]string** | A list of public keys identifying the validators to unstake from the Ethereum Beacon Chain. | [optional] 
+**ValidatorPubkeys** | Pointer to **[]string** | A list of public keys associated with the Ethereum validators for this unstaking operation. | [optional] 
 
 ## Methods
 

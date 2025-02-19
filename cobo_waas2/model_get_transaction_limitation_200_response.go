@@ -17,13 +17,13 @@ var _ MappedNullable = &GetTransactionLimitation200Response{}
 
 // GetTransactionLimitation200Response struct for GetTransactionLimitation200Response
 type GetTransactionLimitation200Response struct {
-	// A list of VASPs (Virtual Asset Service Providers) associated with the token.
+	// A list of virtual asset service providers (VASP) you can select as the transaction source or destination.
 	VaspList []Vasp `json:"vasp_list,omitempty"`
-	// Indicates whether the transaction amount exceeds a predefined threshold. - **If `true`**: Additional information is required when filling Travel Rule details:   - For deposits: `date_of_incorporation` and `place_of_incorporation`. - **If `false`**: No extra fields are required. 
+	// Indicates whether the transaction amount exceeds a predefined threshold. If exceeded, additional information is required when filling Travel Rule details. - `true`: Threshold exceeded. - `false`: Threshold not exceeded. 
 	IsThresholdReached *bool `json:"is_threshold_reached,omitempty"`
-	// A human-readable, time-sensitive message to be signed by the wallet owner.  The message contains key details including the wallet address, a unique nonce, and a timestamp. Signing this message confirms ownership of the wallet and allows the operation to proceed. 
+	// A human-readable, time-sensitive message to be signed by the wallet owner. The message contains key information including the wallet address, a unique nonce, and a timestamp. Signing this message confirms ownership of the wallet and allows the operation to proceed. 
 	SelfCustodyWalletChallenge *string `json:"self_custody_wallet_challenge,omitempty"`
-	// A list of wallets connected to the system for transactions.
+	// A list of self-custody wallet providers you can select as the transaction source or destination.
 	ConnectWalletList []string `json:"connect_wallet_list,omitempty"`
 }
 

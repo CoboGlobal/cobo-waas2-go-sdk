@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **PoolType** | Pointer to [**StakingPoolType**](StakingPoolType.md) |  | [optional] 
 **Fee** | Pointer to [**EstimatedFee**](EstimatedFee.md) |  | [optional] 
 **ValidatorPubkeys** | Pointer to **[]string** | A list of public keys associated with the Ethereum validators for this staking operation. | [optional] 
-**CoreBtcStakingAddress** | Pointer to **string** | P2WSH address generated for this staking operation(If the estimated fee is for core BTC staking). | [optional] 
+**CoreBtcStakingAddress** | Pointer to **string** | The P2WSH address generated for this staking operation (only applicable if the estimated fee is for CORE staking). | [optional] 
 
 ## Methods
 

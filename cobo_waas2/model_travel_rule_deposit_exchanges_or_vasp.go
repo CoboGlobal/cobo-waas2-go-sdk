@@ -17,14 +17,14 @@ import (
 // checks if the TravelRuleDepositExchangesOrVASP type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TravelRuleDepositExchangesOrVASP{}
 
-// TravelRuleDepositExchangesOrVASP Required fields for `EXCHANGES_OR_VASP`.
+// TravelRuleDepositExchangesOrVASP Required information when depositing from an exchange or other virtual asset service providers (VASP).
 type TravelRuleDepositExchangesOrVASP struct {
 	DestinationWalletType DestinationWalletType `json:"destination_wallet_type"`
-	// The vendor code for exchanges or VASPs.
+	// The vendor code of the VASP.
 	VendorCode string `json:"vendor_code"`
 	// The unique identifier of the VASP.
 	VendorVaspId string `json:"vendor_vasp_id"`
-	// The vendor name to be provided when selecting \"Others\" as the VASP case. This field allows customers to specify the name of a vendor not listed.
+	// The vendor name. Use this field to specify the name of a vendor not listed.
 	VendorVaspName *string `json:"vendor_vasp_name,omitempty"`
 	EntityInfo TravelRuleDepositExchangesOrVASPEntityInfo `json:"entity_info"`
 }

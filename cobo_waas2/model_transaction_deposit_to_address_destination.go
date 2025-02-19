@@ -30,6 +30,7 @@ type TransactionDepositToAddressDestination struct {
 	Memo *string `json:"memo,omitempty"`
 	// The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`. 
 	Amount string `json:"amount"`
+	TxInfo *TransactionDepositToAddressDestinationTxInfo `json:"tx_info,omitempty"`
 }
 
 type _TransactionDepositToAddressDestination TransactionDepositToAddressDestination
@@ -240,6 +241,38 @@ func (o *TransactionDepositToAddressDestination) SetAmount(v string) {
 	o.Amount = v
 }
 
+// GetTxInfo returns the TxInfo field value if set, zero value otherwise.
+func (o *TransactionDepositToAddressDestination) GetTxInfo() TransactionDepositToAddressDestinationTxInfo {
+	if o == nil || IsNil(o.TxInfo) {
+		var ret TransactionDepositToAddressDestinationTxInfo
+		return ret
+	}
+	return *o.TxInfo
+}
+
+// GetTxInfoOk returns a tuple with the TxInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionDepositToAddressDestination) GetTxInfoOk() (*TransactionDepositToAddressDestinationTxInfo, bool) {
+	if o == nil || IsNil(o.TxInfo) {
+		return nil, false
+	}
+	return o.TxInfo, true
+}
+
+// HasTxInfo returns a boolean if a field has been set.
+func (o *TransactionDepositToAddressDestination) HasTxInfo() bool {
+	if o != nil && !IsNil(o.TxInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetTxInfo gets a reference to the given TransactionDepositToAddressDestinationTxInfo and assigns it to the TxInfo field.
+func (o *TransactionDepositToAddressDestination) SetTxInfo(v TransactionDepositToAddressDestinationTxInfo) {
+	o.TxInfo = &v
+}
+
 func (o TransactionDepositToAddressDestination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -261,6 +294,9 @@ func (o TransactionDepositToAddressDestination) ToMap() (map[string]interface{},
 		toSerialize["memo"] = o.Memo
 	}
 	toSerialize["amount"] = o.Amount
+	if !IsNil(o.TxInfo) {
+		toSerialize["tx_info"] = o.TxInfo
+	}
 	return toSerialize, nil
 }
 
