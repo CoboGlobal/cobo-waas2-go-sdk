@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
-**Count** | **int32** | The number of addresses to create. This property will be ignored if you are tweaking Taproot address(es). | [default to 1]
-**TaprootScriptTreeHashes** | Pointer to **[]string** | The information about the new address. This parameter is required only if you want to generate a tweaked address. | [optional] 
-**TaprootInternalAddress** | Pointer to **string** | The address you want to tweak. This parameter is required only if you want to generate a tweaked address. | [optional] 
+**Count** | **int32** | The number of addresses to create. This property will be ignored if you are generating tweaked Taproot addresses. | [default to 1]
+**TaprootScriptTreeHashes** | Pointer to **[]string** | A list of script tree hashes used to generate a tweaked Taproot address. This property is required only if you want to generate tweaked Taproot addresses. | [optional] 
+**TaprootInternalAddress** | Pointer to **string** | The original Taproot address to be tweaked. This property is required only if you want to generate tweaked Taproot addresses. | [optional] 
 **Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
 
 ## Methods

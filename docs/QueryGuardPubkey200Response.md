@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Pubkey** | Pointer to **string** | guard&#39;s pubkey. | [optional] 
+**Pubkey** | Pointer to **string** | The Cobo Guard&#39;s public key. | [optional] 
 **Status** | Pointer to [**GuardPubkeyStatus**](GuardPubkeyStatus.md) |  | [optional] 
 **Addresses** | Pointer to [**[]QueryGuardPubkey200ResponseAddressesInner**](QueryGuardPubkey200ResponseAddressesInner.md) |  | [optional] 
 

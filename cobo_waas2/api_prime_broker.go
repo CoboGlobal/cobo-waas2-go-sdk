@@ -32,13 +32,13 @@ func (r ApiChangeGuardPubkeyRequest) Execute() (*ChangeGuardPubkey200Response, *
 }
 
 /*
-ChangeGuardPubkey change a user guard pubkey
+ChangeGuardPubkey Change Guard pubkey binding
 
-This operation change a user guard pubkey.
+This operation updates an existing binding to associate a broker user ID with a new Cobo Guard public key.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId user id.
+ @param userId The user ID.
  @return ApiChangeGuardPubkeyRequest
 */
 func (a *PrimeBrokerAPIService) ChangeGuardPubkey(ctx context.Context, userId string) ApiChangeGuardPubkeyRequest {
@@ -168,13 +168,13 @@ func (r ApiCreateGuardPubkeyRequest) Execute() (*ChangeGuardPubkey200Response, *
 }
 
 /*
-CreateGuardPubkey create a guard pubkey binding
+CreateGuardPubkey Create Guard pubkey binding
 
-This operation create a guard pubkey binding.
+This operation creates a binding between a broker user ID and a Cobo Guard public key. 
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId user id.
+ @param userId The user ID.
  @return ApiCreateGuardPubkeyRequest
 */
 func (a *PrimeBrokerAPIService) CreateGuardPubkey(ctx context.Context, userId string) ApiCreateGuardPubkeyRequest {
@@ -300,7 +300,7 @@ type ApiCreatePrimeBrokerAddressRequest struct {
 	createPrimeBrokerAddressRequest *CreatePrimeBrokerAddressRequest
 }
 
-// The request body to binding addresses to a broker user.
+// The request body to bind addresses to a broker user.
 func (r ApiCreatePrimeBrokerAddressRequest) CreatePrimeBrokerAddressRequest(createPrimeBrokerAddressRequest CreatePrimeBrokerAddressRequest) ApiCreatePrimeBrokerAddressRequest {
 	r.createPrimeBrokerAddressRequest = &createPrimeBrokerAddressRequest
 	return r
@@ -311,13 +311,13 @@ func (r ApiCreatePrimeBrokerAddressRequest) Execute() (*CreatePrimeBrokerAddress
 }
 
 /*
-CreatePrimeBrokerAddress bind addresses to a broker user
+CreatePrimeBrokerAddress Bind addresses to a broker user
 
-This operation bind addresses to a broker user.
+This operation binds addresses to a broker user.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId user id.
+ @param userId The user ID.
  @return ApiCreatePrimeBrokerAddressRequest
 */
 func (a *PrimeBrokerAPIService) CreatePrimeBrokerAddress(ctx context.Context, userId string) ApiCreatePrimeBrokerAddressRequest {
@@ -449,13 +449,13 @@ func (r ApiDeleteGuardPubkeyRequest) Execute() (*DeleteGuardPubkey201Response, *
 }
 
 /*
-DeleteGuardPubkey delete a user guard pubkey
+DeleteGuardPubkey Delete Guard pubkey binding
 
-This operation delete a user guard pubkey.
+This operation deletes a binding between a broker user ID and a Cobo Guard public key.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId user id.
+ @param userId The user ID.
  @return ApiDeleteGuardPubkeyRequest
 */
 func (a *PrimeBrokerAPIService) DeleteGuardPubkey(ctx context.Context, userId string) ApiDeleteGuardPubkeyRequest {
@@ -585,13 +585,13 @@ func (r ApiQueryApprovalStatementRequest) Execute() (*QueryApprovalStatement200R
 }
 
 /*
-QueryApprovalStatement query a approval statement
+QueryApprovalStatement Query approval statement
 
-This operation query a approval statement.
+This operation queries an approval statement.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param statementId approval statement id.
+ @param statementId The approval statement ID.
  @return ApiQueryApprovalStatementRequest
 */
 func (a *PrimeBrokerAPIService) QueryApprovalStatement(ctx context.Context, statementId string) ApiQueryApprovalStatementRequest {
@@ -721,13 +721,13 @@ func (r ApiQueryGuardPubkeyRequest) Execute() (*QueryGuardPubkey200Response, *ht
 }
 
 /*
-QueryGuardPubkey query a user guard pubkey
+QueryGuardPubkey Query a Guard pubkey
 
-This operation query a user guard pubkey
+This operation retrieves the current Cobo Guard public key binding details for a broker user.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId user id.
+ @param userId The user ID.
  @return ApiQueryGuardPubkeyRequest
 */
 func (a *PrimeBrokerAPIService) QueryGuardPubkey(ctx context.Context, userId string) ApiQueryGuardPubkeyRequest {

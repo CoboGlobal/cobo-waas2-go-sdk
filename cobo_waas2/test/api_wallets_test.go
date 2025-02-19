@@ -160,14 +160,14 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test WalletsAPIService ListAddressBalancesForToken", func(t *testing.T) {
+	t.Run("Test WalletsAPIService ListAddressBalancesByToken", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var walletId string
 		var tokenId string
 
-		resp, httpRes, err := apiClient.WalletsAPI.ListAddressBalancesForToken(ctx, walletId, tokenId).Execute()
+		resp, httpRes, err := apiClient.WalletsAPI.ListAddressBalancesByToken(ctx, walletId, tokenId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

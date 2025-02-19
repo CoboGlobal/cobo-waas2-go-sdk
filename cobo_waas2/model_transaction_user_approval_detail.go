@@ -17,14 +17,14 @@ var _ MappedNullable = &TransactionUserApprovalDetail{}
 
 // TransactionUserApprovalDetail The user approval data for transaction.
 type TransactionUserApprovalDetail struct {
-	// The gaurd pubkey of the user who audited the message.
+	// The Cobo Guard public key of the user who audited this message.
 	Pubkey *string `json:"pubkey,omitempty"`
 	Result *TransactionApprovalResult `json:"result,omitempty"`
-	// Signature of the audited message.
+	// The signature of the audited message.
 	Signature *string `json:"signature,omitempty"`
 	// The language of the audited message.
 	Language *string `json:"language,omitempty"`
-	// Version of the audited message.
+	// The version of the audited message.
 	MessageVersion *string `json:"message_version,omitempty"`
 	// The audited message.
 	Message *string `json:"message,omitempty"`

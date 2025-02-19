@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** | The description of the contract call transaction. | [optional] 
 **CategoryNames** | Pointer to **[]string** | The custom category for you to identify your transactions. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
-**TransactionProcessType** | Pointer to **string** | Transaction processing type: **AutoProcess** means that after the transaction is constructed, it will be automatically signed and broadcasted. **AutoProcess** is the default vault. **BuildOnly** means that after the transaction is constructed, you need to manually call an interface to sign and broadcast it.  | [optional] 
+**TransactionProcessType** | Pointer to **string** | Transaction processing type. Possible values are: - &#x60;AutoProcess&#x60; (default): After the transaction is constructed, it will be automatically signed and broadcast.   - &#x60;BuildOnly&#x60;: Set to this value if you want to build the transaction first without automatically signing and broadcasting it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction) operation to complete the signing and broadcasting process.  | [optional] 
 **AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 
 
 ## Methods

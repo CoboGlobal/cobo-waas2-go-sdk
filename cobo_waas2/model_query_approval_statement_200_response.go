@@ -17,11 +17,11 @@ var _ MappedNullable = &QueryApprovalStatement200Response{}
 
 // QueryApprovalStatement200Response struct for QueryApprovalStatement200Response
 type QueryApprovalStatement200Response struct {
-	// approval statement id.
+	// The approval statement ID.
 	Id *string `json:"id,omitempty"`
-	// approver user id.
+	// The user ID of the approver.
 	UserId *string `json:"user_id,omitempty"`
-	// approver user pubkey.
+	// The Cobo Guard public key of the approver.
 	Pubkey *string `json:"pubkey,omitempty"`
 	Status *ApprovalStatementStatus `json:"status,omitempty"`
 }

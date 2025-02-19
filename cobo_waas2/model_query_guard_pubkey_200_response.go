@@ -17,7 +17,7 @@ var _ MappedNullable = &QueryGuardPubkey200Response{}
 
 // QueryGuardPubkey200Response struct for QueryGuardPubkey200Response
 type QueryGuardPubkey200Response struct {
-	// guard's pubkey.
+	// The Cobo Guard's public key.
 	Pubkey *string `json:"pubkey,omitempty"`
 	Status *GuardPubkeyStatus `json:"status,omitempty"`
 	Addresses []QueryGuardPubkey200ResponseAddressesInner `json:"addresses,omitempty"`

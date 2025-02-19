@@ -21,6 +21,7 @@ const (
 	MESSAGESIGNDESTINATIONTYPE_EVM_EIP_191_SIGNATURE MessageSignDestinationType = "EVM_EIP_191_Signature"
 	MESSAGESIGNDESTINATIONTYPE_EVM_EIP_712_SIGNATURE MessageSignDestinationType = "EVM_EIP_712_Signature"
 	MESSAGESIGNDESTINATIONTYPE_BTC_EIP_191_SIGNATURE MessageSignDestinationType = "BTC_EIP_191_Signature"
+	MESSAGESIGNDESTINATIONTYPE_RAW_MESSAGE_SIGNATURE MessageSignDestinationType = "Raw_Message_Signature"
 )
 
 // All allowed values of MessageSignDestinationType enum
@@ -28,6 +29,7 @@ var AllowedMessageSignDestinationTypeEnumValues = []MessageSignDestinationType{
 	"EVM_EIP_191_Signature",
 	"EVM_EIP_712_Signature",
 	"BTC_EIP_191_Signature",
+	"Raw_Message_Signature",
 }
 
 func (v *MessageSignDestinationType) UnmarshalJSON(src []byte) error {

@@ -17,7 +17,7 @@ import (
 // checks if the AddressBalance type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressBalance{}
 
-// AddressBalance The balances of a specific token under address.
+// AddressBalance The token balance for a specific wallet address.
 type AddressBalance struct {
 	// The wallet address.
 	Address string `json:"address"`

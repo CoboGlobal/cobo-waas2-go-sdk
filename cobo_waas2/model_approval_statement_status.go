@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ApprovalStatementStatus The approval statement status. Possible values include:    - `UnSend`: The request has not send.   - `Wait`: The request sent to broker user ,waiting audit.    - `Approve`: The user approved.   - `Reject`: The user rejected.   - `Invalid`: The request invalid.   - `Timeout`: The request timeout. 
+// ApprovalStatementStatus The status of the approval statement. Possible values include:    - `UnSend`: The request has been created but not yet sent to the broker user.   - `Wait`: The request is sent to broker user and is pending review by the broker user.   - `Approve`: The user has approved the request.   - `Reject`: The user has rejected the request.   - `Invalid`: The request is invalid.   - `Timeout`: The request has expired. 
 type ApprovalStatementStatus string
 
 // List of ApprovalStatementStatus

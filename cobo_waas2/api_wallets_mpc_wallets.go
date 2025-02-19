@@ -822,9 +822,9 @@ func (r ApiGetKeyShareHolderByTssNodeIdRequest) Execute() (*KeyShareHolder, *htt
 }
 
 /*
-GetKeyShareHolderByTssNodeId Get key share holder by tss node id
+GetKeyShareHolderByTssNodeId Get key share holder information
 
-This operation retrieves detailed information about a specified key holder.
+This operation retrieves detailed information about a specified key share holder.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1751,7 +1751,7 @@ type ApiListKeyShareHoldersRequest struct {
 	after *string
 }
 
-// A list of key_share_holder_group_ids, separated by comma.
+// A list of key share holder group IDs, separated by comma. You can retrieve the IDs of all the key share holder groups by calling [List all key share holder groups](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-key-share-holder-groups).
 func (r ApiListKeyShareHoldersRequest) KeyShareHolderGroupIds(keyShareHolderGroupIds string) ApiListKeyShareHoldersRequest {
 	r.keyShareHolderGroupIds = &keyShareHolderGroupIds
 	return r
@@ -1782,7 +1782,7 @@ func (r ApiListKeyShareHoldersRequest) Execute() (*ListKeyShareHolders200Respons
 /*
 ListKeyShareHolders List all key share holders
 
-This operation retrieves all key share holders under a specified vault. You can filter the result by key share holder group id.
+This operation retrieves a list of all key share holders under a specified vault. You can filter the result by key share holder group ID.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

@@ -19,7 +19,7 @@ var _ MappedNullable = &DeleteGuardPubkey201Response{}
 
 // DeleteGuardPubkey201Response struct for DeleteGuardPubkey201Response
 type DeleteGuardPubkey201Response struct {
-	// The delete guard binding statement ID.
+	// The deleted Cobo Guard binding statement ID.
 	StatementId string `json:"statement_id"`
 }
 

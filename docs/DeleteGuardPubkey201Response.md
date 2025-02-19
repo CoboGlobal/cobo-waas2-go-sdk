@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**StatementId** | **string** | The delete guard binding statement ID. | 
+**StatementId** | **string** | The deleted Cobo Guard binding statement ID. | 
 
 ## Methods
 

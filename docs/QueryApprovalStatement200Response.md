@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | approval statement id. | [optional] 
-**UserId** | Pointer to **string** | approver user id. | [optional] 
-**Pubkey** | Pointer to **string** | approver user pubkey. | [optional] 
+**Id** | Pointer to **string** | The approval statement ID. | [optional] 
+**UserId** | Pointer to **string** | The user ID of the approver. | [optional] 
+**Pubkey** | Pointer to **string** | The Cobo Guard public key of the approver. | [optional] 
 **Status** | Pointer to [**ApprovalStatementStatus**](ApprovalStatementStatus.md) |  | [optional] 
 
 ## Methods

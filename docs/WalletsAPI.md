@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**GetMaxTransferableValue**](WalletsAPI.md#GetMaxTransferableValue) | **Get** /wallets/{wallet_id}/max_transferable_value | Get maximum transferable value
 [**GetTokenById**](WalletsAPI.md#GetTokenById) | **Get** /wallets/tokens/{token_id} | Get token information
 [**GetWalletById**](WalletsAPI.md#GetWalletById) | **Get** /wallets/{wallet_id} | Get wallet information
-[**ListAddressBalancesForToken**](WalletsAPI.md#ListAddressBalancesForToken) | **Get** /wallets/{wallet_id}/tokens/{token_id} | List address balances for token
+[**ListAddressBalancesByToken**](WalletsAPI.md#ListAddressBalancesByToken) | **Get** /wallets/{wallet_id}/tokens/{token_id} | List address balances by token
 [**ListAddresses**](WalletsAPI.md#ListAddresses) | **Get** /wallets/{wallet_id}/addresses | List wallet addresses
 [**ListEnabledChains**](WalletsAPI.md#ListEnabledChains) | **Get** /wallets/enabled_chains | List enabled chains
 [**ListEnabledTokens**](WalletsAPI.md#ListEnabledTokens) | **Get** /wallets/enabled_tokens | List enabled tokens
@@ -830,11 +830,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListAddressBalancesForToken
+## ListAddressBalancesByToken
 
-> ListAddressBalancesForToken200Response ListAddressBalancesForToken(ctx, walletId, tokenId).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
+> ListAddressBalancesByToken200Response ListAddressBalancesByToken(ctx, walletId, tokenId).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
 
-List address balances for token
+List address balances by token
 
 
 
@@ -870,13 +870,13 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.WalletsAPI.ListAddressBalancesForToken(ctx, walletId, tokenId).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
+	resp, r, err := apiClient.WalletsAPI.ListAddressBalancesByToken(ctx, walletId, tokenId).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListAddressBalancesForToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListAddressBalancesByToken``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListAddressBalancesForToken`: ListAddressBalancesForToken200Response
-	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.ListAddressBalancesForToken`: %v\n", resp)
+	// response from `ListAddressBalancesByToken`: ListAddressBalancesByToken200Response
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.ListAddressBalancesByToken`: %v\n", resp)
 }
 ```
 
@@ -891,7 +891,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListAddressBalancesForTokenRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListAddressBalancesByTokenRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -905,7 +905,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListAddressBalancesForToken200Response**](ListAddressBalancesForToken200Response.md)
+[**ListAddressBalancesByToken200Response**](ListAddressBalancesByToken200Response.md)
 
 ### Authorization
 

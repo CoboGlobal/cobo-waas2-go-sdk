@@ -4,12 +4,12 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ChangeGuardPubkey**](PrimeBrokerAPI.md#ChangeGuardPubkey) | **Put** /prime_broker/user/{user_id}/guard_pubkey | change a user guard pubkey
-[**CreateGuardPubkey**](PrimeBrokerAPI.md#CreateGuardPubkey) | **Post** /prime_broker/user/{user_id}/guard_pubkey | create a guard pubkey binding
-[**CreatePrimeBrokerAddress**](PrimeBrokerAPI.md#CreatePrimeBrokerAddress) | **Post** /prime_broker/user/{user_id}/addresses | bind addresses to a broker user
-[**DeleteGuardPubkey**](PrimeBrokerAPI.md#DeleteGuardPubkey) | **Post** /prime_broker/user/{user_id}/guard_pubkey/delete | delete a user guard pubkey
-[**QueryApprovalStatement**](PrimeBrokerAPI.md#QueryApprovalStatement) | **Get** /prime_broker/approval_statement/{statement_id} | query a approval statement
-[**QueryGuardPubkey**](PrimeBrokerAPI.md#QueryGuardPubkey) | **Get** /prime_broker/user/{user_id}/guard_pubkey | query a user guard pubkey
+[**ChangeGuardPubkey**](PrimeBrokerAPI.md#ChangeGuardPubkey) | **Put** /prime_broker/user/{user_id}/guard_pubkey | Change Guard pubkey binding
+[**CreateGuardPubkey**](PrimeBrokerAPI.md#CreateGuardPubkey) | **Post** /prime_broker/user/{user_id}/guard_pubkey | Create Guard pubkey binding
+[**CreatePrimeBrokerAddress**](PrimeBrokerAPI.md#CreatePrimeBrokerAddress) | **Post** /prime_broker/user/{user_id}/addresses | Bind addresses to a broker user
+[**DeleteGuardPubkey**](PrimeBrokerAPI.md#DeleteGuardPubkey) | **Post** /prime_broker/user/{user_id}/guard_pubkey/delete | Delete Guard pubkey binding
+[**QueryApprovalStatement**](PrimeBrokerAPI.md#QueryApprovalStatement) | **Get** /prime_broker/approval_statement/{statement_id} | Query approval statement
+[**QueryGuardPubkey**](PrimeBrokerAPI.md#QueryGuardPubkey) | **Get** /prime_broker/user/{user_id}/guard_pubkey | Query a Guard pubkey
 
 
 
@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 > ChangeGuardPubkey200Response ChangeGuardPubkey(ctx, userId).Execute()
 
-change a user guard pubkey
+Change Guard pubkey binding
 
 
 
@@ -64,7 +64,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**userId** | **string** | user id. | 
+**userId** | **string** | The user ID. | 
 
 ### Other Parameters
 
@@ -97,7 +97,7 @@ Name | Type | Description  | Notes
 
 > ChangeGuardPubkey200Response CreateGuardPubkey(ctx, userId).Execute()
 
-create a guard pubkey binding
+Create Guard pubkey binding
 
 
 
@@ -144,7 +144,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**userId** | **string** | user id. | 
+**userId** | **string** | The user ID. | 
 
 ### Other Parameters
 
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 
 > CreatePrimeBrokerAddress201Response CreatePrimeBrokerAddress(ctx, userId).CreatePrimeBrokerAddressRequest(createPrimeBrokerAddressRequest).Execute()
 
-bind addresses to a broker user
+Bind addresses to a broker user
 
 
 
@@ -225,7 +225,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**userId** | **string** | user id. | 
+**userId** | **string** | The user ID. | 
 
 ### Other Parameters
 
@@ -235,7 +235,7 @@ Other parameters are passed through a pointer to a apiCreatePrimeBrokerAddressRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **createPrimeBrokerAddressRequest** | [**CreatePrimeBrokerAddressRequest**](CreatePrimeBrokerAddressRequest.md) | The request body to binding addresses to a broker user. | 
+ **createPrimeBrokerAddressRequest** | [**CreatePrimeBrokerAddressRequest**](CreatePrimeBrokerAddressRequest.md) | The request body to bind addresses to a broker user. | 
 
 ### Return type
 
@@ -259,7 +259,7 @@ Name | Type | Description  | Notes
 
 > DeleteGuardPubkey201Response DeleteGuardPubkey(ctx, userId).Execute()
 
-delete a user guard pubkey
+Delete Guard pubkey binding
 
 
 
@@ -306,7 +306,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**userId** | **string** | user id. | 
+**userId** | **string** | The user ID. | 
 
 ### Other Parameters
 
@@ -339,7 +339,7 @@ Name | Type | Description  | Notes
 
 > QueryApprovalStatement200Response QueryApprovalStatement(ctx, statementId).Execute()
 
-query a approval statement
+Query approval statement
 
 
 
@@ -386,7 +386,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**statementId** | **string** | approval statement id. | 
+**statementId** | **string** | The approval statement ID. | 
 
 ### Other Parameters
 
@@ -419,7 +419,7 @@ Name | Type | Description  | Notes
 
 > QueryGuardPubkey200Response QueryGuardPubkey(ctx, userId).Execute()
 
-query a user guard pubkey
+Query a Guard pubkey
 
 
 
@@ -466,7 +466,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**userId** | **string** | user id. | 
+**userId** | **string** | The user ID. | 
 
 ### Other Parameters
 

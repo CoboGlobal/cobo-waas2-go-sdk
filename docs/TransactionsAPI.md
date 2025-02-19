@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**CreateTransferTransaction**](TransactionsAPI.md#CreateTransferTransaction) | **Post** /transactions/transfer | Transfer token
 [**DropTransactionById**](TransactionsAPI.md#DropTransactionById) | **Post** /transactions/{transaction_id}/drop | Drop transaction
 [**EstimateFee**](TransactionsAPI.md#EstimateFee) | **Post** /transactions/estimate_fee | Estimate transaction fee
-[**GetTransactionApprovalDetail**](TransactionsAPI.md#GetTransactionApprovalDetail) | **Get** /transactions/{transaction_id}/approval_detail | Get transaction approval information
+[**GetTransactionApprovalDetail**](TransactionsAPI.md#GetTransactionApprovalDetail) | **Get** /transactions/{transaction_id}/approval_detail | Get transaction approval details
 [**GetTransactionById**](TransactionsAPI.md#GetTransactionById) | **Get** /transactions/{transaction_id} | Get transaction information
 [**ListTransactions**](TransactionsAPI.md#ListTransactions) | **Get** /transactions | List all transactions
 [**ResendTransactionById**](TransactionsAPI.md#ResendTransactionById) | **Post** /transactions/{transaction_id}/resend | Resend transaction
@@ -647,7 +647,7 @@ Name | Type | Description  | Notes
 
 > TransactionApprovalDetail GetTransactionApprovalDetail(ctx, transactionId).Execute()
 
-Get transaction approval information
+Get transaction approval details
 
 
 

@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// GuardPubkeyStatus The guard binding status. Possible values include:    - `New`: The guard binding created.   - `ChangeNew`: A new guard binding created    - `WaitSelfConfirm`: The guard binding waiting user confirm on old guard.   - `WaitConfirm`: The guard binding waiting admin confirm on guard.   - `WaitActive`: The guard binding waiting active   - `Active`: The guard binding active.   - `Freeze`: The guard binding was frozen.   - `Invalid`: The guard binding was invalid. 
+// GuardPubkeyStatus The status of a Cobo Guard public key binding. Possible values include:    - `New`: The binding is created.   - `ChangeNew`: A new binding is created    - `WaitSelfConfirm`: The binding is waiting for user confirmation on the old Cobo Guard.   - `WaitConfirm`: The binding is waiting for admin confirmation.   - `WaitActive`: The binding is waiting to become active.   - `Active`: The binding has come into effect.   - `Freeze`: The binding is frozen.   - `Invalid`: The binding is invalid. 
 type GuardPubkeyStatus string
 
 // List of GuardPubkeyStatus

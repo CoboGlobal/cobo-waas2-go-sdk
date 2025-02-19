@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**CreateMpcVault**](WalletsMPCWalletsAPI.md#CreateMpcVault) | **Post** /wallets/mpc/vaults | Create vault
 [**CreateTssRequest**](WalletsMPCWalletsAPI.md#CreateTssRequest) | **Post** /wallets/mpc/vaults/{vault_id}/tss_requests | Create TSS request
 [**DeleteKeyShareHolderGroupById**](WalletsMPCWalletsAPI.md#DeleteKeyShareHolderGroupById) | **Post** /wallets/mpc/vaults/{vault_id}/key_share_holder_groups/{key_share_holder_group_id}/delete | Delete key share holder group
-[**GetKeyShareHolderByTssNodeId**](WalletsMPCWalletsAPI.md#GetKeyShareHolderByTssNodeId) | **Get** /wallets/mpc/vaults/{vault_id}/key_share_holders/{tss_node_id} | Get key share holder by tss node id
+[**GetKeyShareHolderByTssNodeId**](WalletsMPCWalletsAPI.md#GetKeyShareHolderByTssNodeId) | **Get** /wallets/mpc/vaults/{vault_id}/key_share_holders/{tss_node_id} | Get key share holder information
 [**GetKeyShareHolderGroupById**](WalletsMPCWalletsAPI.md#GetKeyShareHolderGroupById) | **Get** /wallets/mpc/vaults/{vault_id}/key_share_holder_groups/{key_share_holder_group_id} | Get key share holder group information
 [**GetMpcProjectById**](WalletsMPCWalletsAPI.md#GetMpcProjectById) | **Get** /wallets/mpc/projects/{project_id} | Get project information
 [**GetMpcVaultById**](WalletsMPCWalletsAPI.md#GetMpcVaultById) | **Get** /wallets/mpc/vaults/{vault_id} | Get vault information
@@ -513,7 +513,7 @@ Name | Type | Description  | Notes
 
 > KeyShareHolder GetKeyShareHolderByTssNodeId(ctx, vaultId, tssNodeId).Execute()
 
-Get key share holder by tss node id
+Get key share holder information
 
 
 
@@ -1142,7 +1142,7 @@ Other parameters are passed through a pointer to a apiListKeyShareHoldersRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **keyShareHolderGroupIds** | **string** | A list of key_share_holder_group_ids, separated by comma. | 
+ **keyShareHolderGroupIds** | **string** | A list of key share holder group IDs, separated by comma. You can retrieve the IDs of all the key share holder groups by calling [List all key share holder groups](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-key-share-holder-groups). | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
  **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
  **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 

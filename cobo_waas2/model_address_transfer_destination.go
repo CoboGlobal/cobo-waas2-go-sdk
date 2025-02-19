@@ -24,7 +24,7 @@ type AddressTransferDestination struct {
 	UtxoOutputs []AddressTransferDestinationUtxoOutputsInner `json:"utxo_outputs,omitempty"`
 	// The address used to receive the remaining funds or change from the transaction.
 	ChangeAddress *string `json:"change_address,omitempty"`
-	// The type of change output: **Last** means the change output is located at the end of the transaction's outputs, **Last** is the default value. while **First** means it is located at the beginning of the transaction's outputs. 
+	// The position of the change output in the transaction's outputs. Possible values are: - `Last`: The change output is placed at the end of the transaction's outputs.   - `First`: The change output is placed at the beginning of the transaction's outputs. 
 	ChangeOutputType *string `json:"change_output_type,omitempty"`
 	// Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must be executed as a Cobo Loop transfer.   - `false`: The transaction request may not be executed as a Cobo Loop transfer.    Please do not set both `force_internal` and `force_external` as `true`. 
 	ForceInternal *bool `json:"force_internal,omitempty"`

@@ -170,7 +170,7 @@ docs/KeyShareHolderGroupStatus.md
 docs/KeyShareHolderGroupType.md
 docs/KeyShareHolderStatus.md
 docs/KeyShareHolderType.md
-docs/ListAddressBalancesForToken200Response.md
+docs/ListAddressBalancesByToken200Response.md
 docs/ListAddressBooks200Response.md
 docs/ListAddresses200Response.md
 docs/ListAssetBalancesForExchangeWallet200Response.md
@@ -529,7 +529,7 @@ model_key_share_holder_group_status.go
 model_key_share_holder_group_type.go
 model_key_share_holder_status.go
 model_key_share_holder_type.go
-model_list_address_balances_for_token_200_response.go
+model_list_address_balances_by_token_200_response.go
 model_list_address_books_200_response.go
 model_list_addresses_200_response.go
 model_list_asset_balances_for_exchange_wallet_200_response.go

@@ -19,7 +19,7 @@ var _ MappedNullable = &CreatePrimeBrokerAddress201Response{}
 
 // CreatePrimeBrokerAddress201Response struct for CreatePrimeBrokerAddress201Response
 type CreatePrimeBrokerAddress201Response struct {
-	// guard's pubkey.
+	// The Cobo Guard's public key.
 	Pubkey string `json:"pubkey"`
 	Addresses []QueryGuardPubkey200ResponseAddressesInner `json:"addresses,omitempty"`
 }

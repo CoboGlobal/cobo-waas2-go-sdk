@@ -1,4 +1,4 @@
-# ListAddressBalancesForToken200Response
+# ListAddressBalancesByToken200Response
 
 ## Properties
 
@@ -9,70 +9,70 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewListAddressBalancesForToken200Response
+### NewListAddressBalancesByToken200Response
 
-`func NewListAddressBalancesForToken200Response() *ListAddressBalancesForToken200Response`
+`func NewListAddressBalancesByToken200Response() *ListAddressBalancesByToken200Response`
 
-NewListAddressBalancesForToken200Response instantiates a new ListAddressBalancesForToken200Response object
+NewListAddressBalancesByToken200Response instantiates a new ListAddressBalancesByToken200Response object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewListAddressBalancesForToken200ResponseWithDefaults
+### NewListAddressBalancesByToken200ResponseWithDefaults
 
-`func NewListAddressBalancesForToken200ResponseWithDefaults() *ListAddressBalancesForToken200Response`
+`func NewListAddressBalancesByToken200ResponseWithDefaults() *ListAddressBalancesByToken200Response`
 
-NewListAddressBalancesForToken200ResponseWithDefaults instantiates a new ListAddressBalancesForToken200Response object
+NewListAddressBalancesByToken200ResponseWithDefaults instantiates a new ListAddressBalancesByToken200Response object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *ListAddressBalancesForToken200Response) GetData() []AddressBalance`
+`func (o *ListAddressBalancesByToken200Response) GetData() []AddressBalance`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *ListAddressBalancesForToken200Response) GetDataOk() (*[]AddressBalance, bool)`
+`func (o *ListAddressBalancesByToken200Response) GetDataOk() (*[]AddressBalance, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *ListAddressBalancesForToken200Response) SetData(v []AddressBalance)`
+`func (o *ListAddressBalancesByToken200Response) SetData(v []AddressBalance)`
 
 SetData sets Data field to given value.
 
 ### HasData
 
-`func (o *ListAddressBalancesForToken200Response) HasData() bool`
+`func (o *ListAddressBalancesByToken200Response) HasData() bool`
 
 HasData returns a boolean if a field has been set.
 
 ### GetPagination
 
-`func (o *ListAddressBalancesForToken200Response) GetPagination() Pagination`
+`func (o *ListAddressBalancesByToken200Response) GetPagination() Pagination`
 
 GetPagination returns the Pagination field if non-nil, zero value otherwise.
 
 ### GetPaginationOk
 
-`func (o *ListAddressBalancesForToken200Response) GetPaginationOk() (*Pagination, bool)`
+`func (o *ListAddressBalancesByToken200Response) GetPaginationOk() (*Pagination, bool)`
 
 GetPaginationOk returns a tuple with the Pagination field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPagination
 
-`func (o *ListAddressBalancesForToken200Response) SetPagination(v Pagination)`
+`func (o *ListAddressBalancesByToken200Response) SetPagination(v Pagination)`
 
 SetPagination sets Pagination field to given value.
 
 ### HasPagination
 
-`func (o *ListAddressBalancesForToken200Response) HasPagination() bool`
+`func (o *ListAddressBalancesByToken200Response) HasPagination() bool`
 
 HasPagination returns a boolean if a field has been set.
 
