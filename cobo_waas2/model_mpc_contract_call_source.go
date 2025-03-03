@@ -24,6 +24,7 @@ type MpcContractCallSource struct {
 	WalletId string `json:"wallet_id"`
 	// The wallet address.
 	Address string `json:"address"`
+	MpcUsedKeyShareHolderGroup *MpcSigningGroup `json:"mpc_used_key_share_holder_group,omitempty"`
 }
 
 type _MpcContractCallSource MpcContractCallSource
@@ -120,6 +121,38 @@ func (o *MpcContractCallSource) SetAddress(v string) {
 	o.Address = v
 }
 
+// GetMpcUsedKeyShareHolderGroup returns the MpcUsedKeyShareHolderGroup field value if set, zero value otherwise.
+func (o *MpcContractCallSource) GetMpcUsedKeyShareHolderGroup() MpcSigningGroup {
+	if o == nil || IsNil(o.MpcUsedKeyShareHolderGroup) {
+		var ret MpcSigningGroup
+		return ret
+	}
+	return *o.MpcUsedKeyShareHolderGroup
+}
+
+// GetMpcUsedKeyShareHolderGroupOk returns a tuple with the MpcUsedKeyShareHolderGroup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MpcContractCallSource) GetMpcUsedKeyShareHolderGroupOk() (*MpcSigningGroup, bool) {
+	if o == nil || IsNil(o.MpcUsedKeyShareHolderGroup) {
+		return nil, false
+	}
+	return o.MpcUsedKeyShareHolderGroup, true
+}
+
+// HasMpcUsedKeyShareHolderGroup returns a boolean if a field has been set.
+func (o *MpcContractCallSource) HasMpcUsedKeyShareHolderGroup() bool {
+	if o != nil && !IsNil(o.MpcUsedKeyShareHolderGroup) {
+		return true
+	}
+
+	return false
+}
+
+// SetMpcUsedKeyShareHolderGroup gets a reference to the given MpcSigningGroup and assigns it to the MpcUsedKeyShareHolderGroup field.
+func (o *MpcContractCallSource) SetMpcUsedKeyShareHolderGroup(v MpcSigningGroup) {
+	o.MpcUsedKeyShareHolderGroup = &v
+}
+
 func (o MpcContractCallSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -133,6 +166,9 @@ func (o MpcContractCallSource) ToMap() (map[string]interface{}, error) {
 	toSerialize["source_type"] = o.SourceType
 	toSerialize["wallet_id"] = o.WalletId
 	toSerialize["address"] = o.Address
+	if !IsNil(o.MpcUsedKeyShareHolderGroup) {
+		toSerialize["mpc_used_key_share_holder_group"] = o.MpcUsedKeyShareHolderGroup
+	}
 	return toSerialize, nil
 }
 

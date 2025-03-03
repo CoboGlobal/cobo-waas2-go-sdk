@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. | 
-**Addresses** | Pointer to [**[]AddressInfo**](AddressInfo.md) | A list of addresses. | [optional] 
+**Addresses** | Pointer to [**[]AddressesEventDataAllOfAddresses**](AddressesEventDataAllOfAddresses.md) | A list of addresses. | [optional] 
 
 ## Methods
 
@@ -48,20 +48,20 @@ SetDataType sets DataType field to given value.
 
 ### GetAddresses
 
-`func (o *AddressesEventData) GetAddresses() []AddressInfo`
+`func (o *AddressesEventData) GetAddresses() []AddressesEventDataAllOfAddresses`
 
 GetAddresses returns the Addresses field if non-nil, zero value otherwise.
 
 ### GetAddressesOk
 
-`func (o *AddressesEventData) GetAddressesOk() (*[]AddressInfo, bool)`
+`func (o *AddressesEventData) GetAddressesOk() (*[]AddressesEventDataAllOfAddresses, bool)`
 
 GetAddressesOk returns a tuple with the Addresses field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAddresses
 
-`func (o *AddressesEventData) SetAddresses(v []AddressInfo)`
+`func (o *AddressesEventData) SetAddresses(v []AddressesEventDataAllOfAddresses)`
 
 SetAddresses sets Addresses field to given value.
 

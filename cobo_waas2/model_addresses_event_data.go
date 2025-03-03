@@ -22,7 +22,7 @@ type AddressesEventData struct {
 	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data.
 	DataType string `json:"data_type"`
 	// A list of addresses.
-	Addresses []AddressInfo `json:"addresses,omitempty"`
+	Addresses []AddressesEventDataAllOfAddresses `json:"addresses,omitempty"`
 }
 
 type _AddressesEventData AddressesEventData
@@ -70,9 +70,9 @@ func (o *AddressesEventData) SetDataType(v string) {
 }
 
 // GetAddresses returns the Addresses field value if set, zero value otherwise.
-func (o *AddressesEventData) GetAddresses() []AddressInfo {
+func (o *AddressesEventData) GetAddresses() []AddressesEventDataAllOfAddresses {
 	if o == nil || IsNil(o.Addresses) {
-		var ret []AddressInfo
+		var ret []AddressesEventDataAllOfAddresses
 		return ret
 	}
 	return o.Addresses
@@ -80,7 +80,7 @@ func (o *AddressesEventData) GetAddresses() []AddressInfo {
 
 // GetAddressesOk returns a tuple with the Addresses field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddressesEventData) GetAddressesOk() ([]AddressInfo, bool) {
+func (o *AddressesEventData) GetAddressesOk() ([]AddressesEventDataAllOfAddresses, bool) {
 	if o == nil || IsNil(o.Addresses) {
 		return nil, false
 	}
@@ -96,8 +96,8 @@ func (o *AddressesEventData) HasAddresses() bool {
 	return false
 }
 
-// SetAddresses gets a reference to the given []AddressInfo and assigns it to the Addresses field.
-func (o *AddressesEventData) SetAddresses(v []AddressInfo) {
+// SetAddresses gets a reference to the given []AddressesEventDataAllOfAddresses and assigns it to the Addresses field.
+func (o *AddressesEventData) SetAddresses(v []AddressesEventDataAllOfAddresses) {
 	o.Addresses = v
 }
 

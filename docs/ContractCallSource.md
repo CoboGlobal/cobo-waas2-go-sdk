@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **SourceType** | [**ContractCallSourceType**](ContractCallSourceType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
 **Address** | **string** | The wallet address. | 
+**MpcUsedKeyShareHolderGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 **Delegate** | [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | 
 
 ## Methods
@@ -87,6 +88,31 @@ and a boolean to check if the value has been set.
 
 SetAddress sets Address field to given value.
 
+
+### GetMpcUsedKeyShareHolderGroup
+
+`func (o *ContractCallSource) GetMpcUsedKeyShareHolderGroup() MpcSigningGroup`
+
+GetMpcUsedKeyShareHolderGroup returns the MpcUsedKeyShareHolderGroup field if non-nil, zero value otherwise.
+
+### GetMpcUsedKeyShareHolderGroupOk
+
+`func (o *ContractCallSource) GetMpcUsedKeyShareHolderGroupOk() (*MpcSigningGroup, bool)`
+
+GetMpcUsedKeyShareHolderGroupOk returns a tuple with the MpcUsedKeyShareHolderGroup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMpcUsedKeyShareHolderGroup
+
+`func (o *ContractCallSource) SetMpcUsedKeyShareHolderGroup(v MpcSigningGroup)`
+
+SetMpcUsedKeyShareHolderGroup sets MpcUsedKeyShareHolderGroup field to given value.
+
+### HasMpcUsedKeyShareHolderGroup
+
+`func (o *ContractCallSource) HasMpcUsedKeyShareHolderGroup() bool`
+
+HasMpcUsedKeyShareHolderGroup returns a boolean if a field has been set.
 
 ### GetDelegate
 

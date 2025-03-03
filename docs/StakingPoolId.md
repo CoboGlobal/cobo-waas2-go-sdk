@@ -17,6 +17,18 @@
 
 * `SKY_FARM_ETH_USDC` (value: `"sky_farm_eth_usdc"`)
 
+* `BITHIVE_SIGNET` (value: `"bithive_signet"`)
+
+* `BITHIVE` (value: `"bithive"`)
+
+* `BEACON_BERA` (value: `"beacon_bera"`)
+
+* `BEACON_BERA_TESTNET` (value: `"beacon_bera_testnet"`)
+
+* `BERACHAIN_BGT` (value: `"berachain_bgt"`)
+
+* `BERACHAIN_BGT_TESTNET` (value: `"berachain_bgt_testnet"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

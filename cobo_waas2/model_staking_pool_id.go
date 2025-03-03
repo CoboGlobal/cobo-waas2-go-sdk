@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// StakingPoolId The ID of the staking pool. A staking pool is a pairing of a staking protocol and a specific type of token. Currently, only `babylon_btc_signet` and `babylon_btc` are supported.
+// StakingPoolId The ID of the staking pool. A staking pool is a pairing of a staking protocol and a specific type of token. Currently, `berachain_bgt` and `erachain_bgt_testnet` are not supported.
 type StakingPoolId string
 
 // List of StakingPoolId
@@ -25,6 +25,12 @@ const (
 	STAKINGPOOLID_CORE_BTC StakingPoolId = "core_btc"
 	STAKINGPOOLID_CORE_XTN StakingPoolId = "core_xtn"
 	STAKINGPOOLID_SKY_FARM_ETH_USDC StakingPoolId = "sky_farm_eth_usdc"
+	STAKINGPOOLID_BITHIVE_SIGNET StakingPoolId = "bithive_signet"
+	STAKINGPOOLID_BITHIVE StakingPoolId = "bithive"
+	STAKINGPOOLID_BEACON_BERA StakingPoolId = "beacon_bera"
+	STAKINGPOOLID_BEACON_BERA_TESTNET StakingPoolId = "beacon_bera_testnet"
+	STAKINGPOOLID_BERACHAIN_BGT StakingPoolId = "berachain_bgt"
+	STAKINGPOOLID_BERACHAIN_BGT_TESTNET StakingPoolId = "berachain_bgt_testnet"
 )
 
 // All allowed values of StakingPoolId enum
@@ -36,6 +42,12 @@ var AllowedStakingPoolIdEnumValues = []StakingPoolId{
 	"core_btc",
 	"core_xtn",
 	"sky_farm_eth_usdc",
+	"bithive_signet",
+	"bithive",
+	"beacon_bera",
+	"beacon_bera_testnet",
+	"berachain_bgt",
+	"berachain_bgt_testnet",
 }
 
 func (v *StakingPoolId) UnmarshalJSON(src []byte) error {

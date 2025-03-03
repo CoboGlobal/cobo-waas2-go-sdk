@@ -10,6 +10,7 @@ api_developers_webhooks.go
 api_o_auth.go
 api_prime_broker.go
 api_stakings.go
+api_swaps.go
 api_transactions.go
 api_travel_rule.go
 api_wallets.go
@@ -39,6 +40,7 @@ docs/AddressTransferDestination.md
 docs/AddressTransferDestinationAccountOutput.md
 docs/AddressTransferDestinationUtxoOutputsInner.md
 docs/AddressesEventData.md
+docs/AddressesEventDataAllOfAddresses.md
 docs/AmountDetailsInner.md
 docs/AmountStatus.md
 docs/ApiLogDetails.md
@@ -48,10 +50,16 @@ docs/AssetBalance.md
 docs/AssetInfo.md
 docs/AutoFuelType.md
 docs/BTCEIP191MessageSignDestination.md
+docs/BabylonAirdropPop.md
+docs/BabylonAirdropRegistration.md
+docs/BabylonEligibleAirdrop.md
+docs/BabylonRegistrationRequestStatus.md
+docs/BabylonRegistrationStatus.md
 docs/BabylonStakeEstimatedFee.md
 docs/BabylonStakeExtra.md
 docs/BabylonStakingActivityDetailExtra.md
 docs/BabylonStakingExtra.md
+docs/BabylonStakingRegistration.md
 docs/BabylonValidator.md
 docs/Balance.md
 docs/BaseContractCallSource.md
@@ -78,6 +86,10 @@ docs/CoreStakeExtra.md
 docs/CoreStakingActivityDetailExtra.md
 docs/CoreStakingExtra.md
 docs/CreateAddressRequest.md
+docs/CreateBabylonAirdropRegistration201Response.md
+docs/CreateBabylonAirdropRegistrationRequest.md
+docs/CreateBabylonStakingRegistration201Response.md
+docs/CreateBabylonStakingRegistrationRequest.md
 docs/CreateClaimActivity.md
 docs/CreateClaimActivityRequest.md
 docs/CreateCustodialWalletParams.md
@@ -95,6 +107,9 @@ docs/CreateStakeActivity.md
 docs/CreateStakeActivity201Response.md
 docs/CreateStakeActivityExtra.md
 docs/CreateStakeActivityRequest.md
+docs/CreateSwapActivityRequest.md
+docs/CreateSwapQuote201Response.md
+docs/CreateSwapQuoteRequest.md
 docs/CreateTransferTransaction201Response.md
 docs/CreateTssRequestRequest.md
 docs/CreateUnstakeActivity.md
@@ -174,7 +189,13 @@ docs/ListAddressBalancesByToken200Response.md
 docs/ListAddressBooks200Response.md
 docs/ListAddresses200Response.md
 docs/ListAssetBalancesForExchangeWallet200Response.md
+docs/ListBabylonAirdropRegistrations200Response.md
+docs/ListBabylonEligibleAirdrops200Response.md
+docs/ListBabylonEligibleStakings200Response.md
+docs/ListBabylonEligibleStakings200ResponseDataInner.md
+docs/ListBabylonStakingRegistrations200Response.md
 docs/ListCallbackMessages200Response.md
+docs/ListEnableTokenPairs200Response.md
 docs/ListExchanges200ResponseInner.md
 docs/ListKeyShareHolderGroups200Response.md
 docs/ListKeyShareHolders200Response.md
@@ -187,6 +208,7 @@ docs/ListSupportedAssetsForExchange200Response.md
 docs/ListSupportedChains200Response.md
 docs/ListSupportedCountries200ResponseInner.md
 docs/ListSupportedTokens200Response.md
+docs/ListSwapActivities200Response.md
 docs/ListTokenBalancesForAddress200Response.md
 docs/ListTransactions200Response.md
 docs/ListTssRequests200Response.md
@@ -259,8 +281,9 @@ docs/StakingsExtra.md
 docs/SubWalletAssetBalance.md
 docs/SubmitDepositTravelRuleInfo201Response.md
 docs/SwapActivity.md
-docs/SwapSummary.md
+docs/SwapQuote.md
 docs/SwapTokenPair.md
+docs/SwapsAPI.md
 docs/TSSGroups.md
 docs/TSSRequest.md
 docs/TSSRequestStatus.md
@@ -330,6 +353,7 @@ docs/TransactionTransferToWalletDestination.md
 docs/TransactionType.md
 docs/TransactionUserApprovalDetail.md
 docs/TransactionUtxo.md
+docs/TransactionUtxoChange.md
 docs/TransactionUtxoFee.md
 docs/TransactionWebhookEventData.md
 docs/TransactionsAPI.md
@@ -400,6 +424,7 @@ model_address_transfer_destination.go
 model_address_transfer_destination_account_output.go
 model_address_transfer_destination_utxo_outputs_inner.go
 model_addresses_event_data.go
+model_addresses_event_data_all_of_addresses.go
 model_amount_details_inner.go
 model_amount_status.go
 model_api_log_details.go
@@ -408,10 +433,16 @@ model_approval_statement_status.go
 model_asset_balance.go
 model_asset_info.go
 model_auto_fuel_type.go
+model_babylon_airdrop_pop.go
+model_babylon_airdrop_registration.go
+model_babylon_eligible_airdrop.go
+model_babylon_registration_request_status.go
+model_babylon_registration_status.go
 model_babylon_stake_estimated_fee.go
 model_babylon_stake_extra.go
 model_babylon_staking_activity_detail_extra.go
 model_babylon_staking_extra.go
+model_babylon_staking_registration.go
 model_babylon_validator.go
 model_balance.go
 model_base_contract_call_source.go
@@ -439,6 +470,10 @@ model_core_stake_extra.go
 model_core_staking_activity_detail_extra.go
 model_core_staking_extra.go
 model_create_address_request.go
+model_create_babylon_airdrop_registration_201_response.go
+model_create_babylon_airdrop_registration_request.go
+model_create_babylon_staking_registration_201_response.go
+model_create_babylon_staking_registration_request.go
 model_create_claim_activity.go
 model_create_claim_activity_request.go
 model_create_custodial_wallet_params.go
@@ -456,6 +491,9 @@ model_create_stake_activity.go
 model_create_stake_activity_201_response.go
 model_create_stake_activity_extra.go
 model_create_stake_activity_request.go
+model_create_swap_activity_request.go
+model_create_swap_quote_201_response.go
+model_create_swap_quote_request.go
 model_create_transfer_transaction_201_response.go
 model_create_tss_request_request.go
 model_create_unstake_activity.go
@@ -533,7 +571,13 @@ model_list_address_balances_by_token_200_response.go
 model_list_address_books_200_response.go
 model_list_addresses_200_response.go
 model_list_asset_balances_for_exchange_wallet_200_response.go
+model_list_babylon_airdrop_registrations_200_response.go
+model_list_babylon_eligible_airdrops_200_response.go
+model_list_babylon_eligible_stakings_200_response.go
+model_list_babylon_eligible_stakings_200_response_data_inner.go
+model_list_babylon_staking_registrations_200_response.go
 model_list_callback_messages_200_response.go
+model_list_enable_token_pairs_200_response.go
 model_list_exchanges_200_response_inner.go
 model_list_key_share_holder_groups_200_response.go
 model_list_key_share_holders_200_response.go
@@ -546,6 +590,7 @@ model_list_supported_assets_for_exchange_200_response.go
 model_list_supported_chains_200_response.go
 model_list_supported_countries_200_response_inner.go
 model_list_supported_tokens_200_response.go
+model_list_swap_activities_200_response.go
 model_list_token_balances_for_address_200_response.go
 model_list_transactions_200_response.go
 model_list_tss_requests_200_response.go
@@ -615,7 +660,7 @@ model_stakings_extra.go
 model_sub_wallet_asset_balance.go
 model_submit_deposit_travel_rule_info_201_response.go
 model_swap_activity.go
-model_swap_summary.go
+model_swap_quote.go
 model_swap_token_pair.go
 model_token_asset_model_type.go
 model_token_balance.go
@@ -681,6 +726,7 @@ model_transaction_transfer_to_wallet_destination.go
 model_transaction_type.go
 model_transaction_user_approval_detail.go
 model_transaction_utxo.go
+model_transaction_utxo_change.go
 model_transaction_utxo_fee.go
 model_transaction_webhook_event_data.go
 model_transfer_destination.go
@@ -739,6 +785,7 @@ test/api_developers_webhooks_test.go
 test/api_o_auth_test.go
 test/api_prime_broker_test.go
 test/api_stakings_test.go
+test/api_swaps_test.go
 test/api_transactions_test.go
 test/api_travel_rule_test.go
 test/api_wallets_exchange_wallet_test.go

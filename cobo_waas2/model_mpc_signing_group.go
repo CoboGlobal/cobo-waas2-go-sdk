@@ -10,6 +10,8 @@ package cobo_waas2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the MpcSigningGroup type satisfies the MappedNullable interface at compile time
@@ -18,17 +20,20 @@ var _ MappedNullable = &MpcSigningGroup{}
 // MpcSigningGroup The information about the Signing Group of an MPC Wallet.
 type MpcSigningGroup struct {
 	// The ID of the Signing Group.
-	UsedKeyShareHolderGroupId *string `json:"used_key_share_holder_group_id,omitempty"`
+	UsedKeyShareHolderGroupId string `json:"used_key_share_holder_group_id"`
 	// The ID of the TSS Nodes that are required to participate in the signature.
 	UsedTssNodeIds []string `json:"used_tss_node_ids,omitempty"`
 }
+
+type _MpcSigningGroup MpcSigningGroup
 
 // NewMpcSigningGroup instantiates a new MpcSigningGroup object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMpcSigningGroup() *MpcSigningGroup {
+func NewMpcSigningGroup(usedKeyShareHolderGroupId string) *MpcSigningGroup {
 	this := MpcSigningGroup{}
+	this.UsedKeyShareHolderGroupId = usedKeyShareHolderGroupId
 	return &this
 }
 
@@ -40,36 +45,28 @@ func NewMpcSigningGroupWithDefaults() *MpcSigningGroup {
 	return &this
 }
 
-// GetUsedKeyShareHolderGroupId returns the UsedKeyShareHolderGroupId field value if set, zero value otherwise.
+// GetUsedKeyShareHolderGroupId returns the UsedKeyShareHolderGroupId field value
 func (o *MpcSigningGroup) GetUsedKeyShareHolderGroupId() string {
-	if o == nil || IsNil(o.UsedKeyShareHolderGroupId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UsedKeyShareHolderGroupId
+
+	return o.UsedKeyShareHolderGroupId
 }
 
-// GetUsedKeyShareHolderGroupIdOk returns a tuple with the UsedKeyShareHolderGroupId field value if set, nil otherwise
+// GetUsedKeyShareHolderGroupIdOk returns a tuple with the UsedKeyShareHolderGroupId field value
 // and a boolean to check if the value has been set.
 func (o *MpcSigningGroup) GetUsedKeyShareHolderGroupIdOk() (*string, bool) {
-	if o == nil || IsNil(o.UsedKeyShareHolderGroupId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UsedKeyShareHolderGroupId, true
+	return &o.UsedKeyShareHolderGroupId, true
 }
 
-// HasUsedKeyShareHolderGroupId returns a boolean if a field has been set.
-func (o *MpcSigningGroup) HasUsedKeyShareHolderGroupId() bool {
-	if o != nil && !IsNil(o.UsedKeyShareHolderGroupId) {
-		return true
-	}
-
-	return false
-}
-
-// SetUsedKeyShareHolderGroupId gets a reference to the given string and assigns it to the UsedKeyShareHolderGroupId field.
+// SetUsedKeyShareHolderGroupId sets field value
 func (o *MpcSigningGroup) SetUsedKeyShareHolderGroupId(v string) {
-	o.UsedKeyShareHolderGroupId = &v
+	o.UsedKeyShareHolderGroupId = v
 }
 
 // GetUsedTssNodeIds returns the UsedTssNodeIds field value if set, zero value otherwise.
@@ -114,13 +111,48 @@ func (o MpcSigningGroup) MarshalJSON() ([]byte, error) {
 
 func (o MpcSigningGroup) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.UsedKeyShareHolderGroupId) {
-		toSerialize["used_key_share_holder_group_id"] = o.UsedKeyShareHolderGroupId
-	}
+	toSerialize["used_key_share_holder_group_id"] = o.UsedKeyShareHolderGroupId
 	if !IsNil(o.UsedTssNodeIds) {
 		toSerialize["used_tss_node_ids"] = o.UsedTssNodeIds
 	}
 	return toSerialize, nil
+}
+
+func (o *MpcSigningGroup) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"used_key_share_holder_group_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varMpcSigningGroup := _MpcSigningGroup{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	//decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varMpcSigningGroup)
+
+	if err != nil {
+		return err
+	}
+
+	*o = MpcSigningGroup(varMpcSigningGroup)
+
+	return err
 }
 
 type NullableMpcSigningGroup struct {

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Address** | Pointer to **string** | The wallet address. If you want to specify the UTXOs to be used, please provide the &#x60;included_utxos&#x60; property. If you specify both the &#x60;address&#x60; and &#x60;included_utxos&#x60; properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.  You need to provide either the &#x60;address&#x60; or &#x60;included_utxos&#x60; property. If neither property is provided, the transfer will fail.  | [optional] 
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
+**MpcUsedKeyShareHolderGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 
 ## Methods
 
@@ -143,6 +144,31 @@ SetExcludedUtxos sets ExcludedUtxos field to given value.
 `func (o *MpcTransferSource) HasExcludedUtxos() bool`
 
 HasExcludedUtxos returns a boolean if a field has been set.
+
+### GetMpcUsedKeyShareHolderGroup
+
+`func (o *MpcTransferSource) GetMpcUsedKeyShareHolderGroup() MpcSigningGroup`
+
+GetMpcUsedKeyShareHolderGroup returns the MpcUsedKeyShareHolderGroup field if non-nil, zero value otherwise.
+
+### GetMpcUsedKeyShareHolderGroupOk
+
+`func (o *MpcTransferSource) GetMpcUsedKeyShareHolderGroupOk() (*MpcSigningGroup, bool)`
+
+GetMpcUsedKeyShareHolderGroupOk returns a tuple with the MpcUsedKeyShareHolderGroup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMpcUsedKeyShareHolderGroup
+
+`func (o *MpcTransferSource) SetMpcUsedKeyShareHolderGroup(v MpcSigningGroup)`
+
+SetMpcUsedKeyShareHolderGroup sets MpcUsedKeyShareHolderGroup field to given value.
+
+### HasMpcUsedKeyShareHolderGroup
+
+`func (o *MpcTransferSource) HasMpcUsedKeyShareHolderGroup() bool`
+
+HasMpcUsedKeyShareHolderGroup returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
