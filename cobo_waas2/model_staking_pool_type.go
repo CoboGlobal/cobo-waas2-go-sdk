@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// StakingPoolType The type of the staking pool.
+// StakingPoolType The type of the staking pool. Possible values are: - `Babylon`: Babylon staking pool - `ETHBeacon`: Ethereum Beacon Chain staking pool - `CoreBTC`: Core BTC staking pool - `SkyFarm`: SKY farm staking pool - `BitHive`: BitHive staking pool - `BERABeacon`: BERA Beacon Chain staking pool - `BeraChainBGT`: Bera Chain BGT staking pool 
 type StakingPoolType string
 
 // List of StakingPoolType
@@ -22,6 +22,9 @@ const (
 	STAKINGPOOLTYPE_ETH_BEACON StakingPoolType = "ETHBeacon"
 	STAKINGPOOLTYPE_CORE_BTC StakingPoolType = "CoreBTC"
 	STAKINGPOOLTYPE_SKY_FARM StakingPoolType = "SkyFarm"
+	STAKINGPOOLTYPE_BIT_HIVE StakingPoolType = "BitHive"
+	STAKINGPOOLTYPE_BERA_BEACON StakingPoolType = "BERABeacon"
+	STAKINGPOOLTYPE_BERA_CHAIN_BGT StakingPoolType = "BeraChainBGT"
 )
 
 // All allowed values of StakingPoolType enum
@@ -30,6 +33,9 @@ var AllowedStakingPoolTypeEnumValues = []StakingPoolType{
 	"ETHBeacon",
 	"CoreBTC",
 	"SkyFarm",
+	"BitHive",
+	"BERABeacon",
+	"BeraChainBGT",
 }
 
 func (v *StakingPoolType) UnmarshalJSON(src []byte) error {

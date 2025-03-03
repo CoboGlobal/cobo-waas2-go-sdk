@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Address** | **string** | The wallet address. | 
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
+**MpcUsedKeyShareHolderGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 **Delegate** | [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | 
 **TradingAccountType** | **string** | The trading account type. | 
 
@@ -140,6 +141,31 @@ SetExcludedUtxos sets ExcludedUtxos field to given value.
 `func (o *TransferSource) HasExcludedUtxos() bool`
 
 HasExcludedUtxos returns a boolean if a field has been set.
+
+### GetMpcUsedKeyShareHolderGroup
+
+`func (o *TransferSource) GetMpcUsedKeyShareHolderGroup() MpcSigningGroup`
+
+GetMpcUsedKeyShareHolderGroup returns the MpcUsedKeyShareHolderGroup field if non-nil, zero value otherwise.
+
+### GetMpcUsedKeyShareHolderGroupOk
+
+`func (o *TransferSource) GetMpcUsedKeyShareHolderGroupOk() (*MpcSigningGroup, bool)`
+
+GetMpcUsedKeyShareHolderGroupOk returns a tuple with the MpcUsedKeyShareHolderGroup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMpcUsedKeyShareHolderGroup
+
+`func (o *TransferSource) SetMpcUsedKeyShareHolderGroup(v MpcSigningGroup)`
+
+SetMpcUsedKeyShareHolderGroup sets MpcUsedKeyShareHolderGroup field to given value.
+
+### HasMpcUsedKeyShareHolderGroup
+
+`func (o *TransferSource) HasMpcUsedKeyShareHolderGroup() bool`
+
+HasMpcUsedKeyShareHolderGroup returns a boolean if a field has been set.
 
 ### GetDelegate
 

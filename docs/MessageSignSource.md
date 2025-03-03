@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **SourceType** | [**MessageSignSourceType**](MessageSignSourceType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
 **Address** | **string** | The wallet address. | 
+**MpcUsedKeyShareHolderGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetAddress sets Address field to given value.
 
+
+### GetMpcUsedKeyShareHolderGroup
+
+`func (o *MessageSignSource) GetMpcUsedKeyShareHolderGroup() MpcSigningGroup`
+
+GetMpcUsedKeyShareHolderGroup returns the MpcUsedKeyShareHolderGroup field if non-nil, zero value otherwise.
+
+### GetMpcUsedKeyShareHolderGroupOk
+
+`func (o *MessageSignSource) GetMpcUsedKeyShareHolderGroupOk() (*MpcSigningGroup, bool)`
+
+GetMpcUsedKeyShareHolderGroupOk returns a tuple with the MpcUsedKeyShareHolderGroup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMpcUsedKeyShareHolderGroup
+
+`func (o *MessageSignSource) SetMpcUsedKeyShareHolderGroup(v MpcSigningGroup)`
+
+SetMpcUsedKeyShareHolderGroup sets MpcUsedKeyShareHolderGroup field to given value.
+
+### HasMpcUsedKeyShareHolderGroup
+
+`func (o *MessageSignSource) HasMpcUsedKeyShareHolderGroup() bool`
+
+HasMpcUsedKeyShareHolderGroup returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

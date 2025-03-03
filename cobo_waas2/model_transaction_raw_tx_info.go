@@ -25,6 +25,7 @@ type TransactionRawTxInfo struct {
 	RawTx *string `json:"raw_tx,omitempty"`
 	// The unsigned raw transaction data.
 	UnsignedRawTx *string `json:"unsigned_raw_tx,omitempty"`
+	UtxoChange *TransactionUtxoChange `json:"utxo_change,omitempty"`
 }
 
 // NewTransactionRawTxInfo instantiates a new TransactionRawTxInfo object
@@ -172,6 +173,38 @@ func (o *TransactionRawTxInfo) SetUnsignedRawTx(v string) {
 	o.UnsignedRawTx = &v
 }
 
+// GetUtxoChange returns the UtxoChange field value if set, zero value otherwise.
+func (o *TransactionRawTxInfo) GetUtxoChange() TransactionUtxoChange {
+	if o == nil || IsNil(o.UtxoChange) {
+		var ret TransactionUtxoChange
+		return ret
+	}
+	return *o.UtxoChange
+}
+
+// GetUtxoChangeOk returns a tuple with the UtxoChange field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionRawTxInfo) GetUtxoChangeOk() (*TransactionUtxoChange, bool) {
+	if o == nil || IsNil(o.UtxoChange) {
+		return nil, false
+	}
+	return o.UtxoChange, true
+}
+
+// HasUtxoChange returns a boolean if a field has been set.
+func (o *TransactionRawTxInfo) HasUtxoChange() bool {
+	if o != nil && !IsNil(o.UtxoChange) {
+		return true
+	}
+
+	return false
+}
+
+// SetUtxoChange gets a reference to the given TransactionUtxoChange and assigns it to the UtxoChange field.
+func (o *TransactionRawTxInfo) SetUtxoChange(v TransactionUtxoChange) {
+	o.UtxoChange = &v
+}
+
 func (o TransactionRawTxInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -193,6 +226,9 @@ func (o TransactionRawTxInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UnsignedRawTx) {
 		toSerialize["unsigned_raw_tx"] = o.UnsignedRawTx
+	}
+	if !IsNil(o.UtxoChange) {
+		toSerialize["utxo_change"] = o.UtxoChange
 	}
 	return toSerialize, nil
 }

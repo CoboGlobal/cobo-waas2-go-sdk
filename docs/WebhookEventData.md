@@ -36,7 +36,7 @@ Name | Type | Description | Notes
 **TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
 **SourceKeyShareHolderGroup** | Pointer to [**SourceGroup**](SourceGroup.md) |  | [optional] 
 **TargetKeyShareHolderGroupId** | Pointer to **string** | The target key share holder group ID. | [optional] 
-**Addresses** | Pointer to [**[]AddressInfo**](AddressInfo.md) | A list of addresses. | [optional] 
+**Addresses** | Pointer to [**[]AddressesEventDataAllOfAddresses**](AddressesEventDataAllOfAddresses.md) | A list of addresses. | [optional] 
 **Wallet** | Pointer to [**WalletInfo**](WalletInfo.md) |  | [optional] 
 **VaultId** | Pointer to **string** | The vault ID. | [optional] 
 **ProjectId** | Pointer to **string** | The project ID. | [optional] 
@@ -829,20 +829,20 @@ HasTargetKeyShareHolderGroupId returns a boolean if a field has been set.
 
 ### GetAddresses
 
-`func (o *WebhookEventData) GetAddresses() []AddressInfo`
+`func (o *WebhookEventData) GetAddresses() []AddressesEventDataAllOfAddresses`
 
 GetAddresses returns the Addresses field if non-nil, zero value otherwise.
 
 ### GetAddressesOk
 
-`func (o *WebhookEventData) GetAddressesOk() (*[]AddressInfo, bool)`
+`func (o *WebhookEventData) GetAddressesOk() (*[]AddressesEventDataAllOfAddresses, bool)`
 
 GetAddressesOk returns a tuple with the Addresses field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAddresses
 
-`func (o *WebhookEventData) SetAddresses(v []AddressInfo)`
+`func (o *WebhookEventData) SetAddresses(v []AddressesEventDataAllOfAddresses)`
 
 SetAddresses sets Addresses field to given value.
 

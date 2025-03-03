@@ -26,6 +26,7 @@ type MpcTransferSource struct {
 	Address *string `json:"address,omitempty"`
 	IncludedUtxos []TransactionUtxo `json:"included_utxos,omitempty"`
 	ExcludedUtxos []TransactionUtxo `json:"excluded_utxos,omitempty"`
+	MpcUsedKeyShareHolderGroup *MpcSigningGroup `json:"mpc_used_key_share_holder_group,omitempty"`
 }
 
 type _MpcTransferSource MpcTransferSource
@@ -193,6 +194,38 @@ func (o *MpcTransferSource) SetExcludedUtxos(v []TransactionUtxo) {
 	o.ExcludedUtxos = v
 }
 
+// GetMpcUsedKeyShareHolderGroup returns the MpcUsedKeyShareHolderGroup field value if set, zero value otherwise.
+func (o *MpcTransferSource) GetMpcUsedKeyShareHolderGroup() MpcSigningGroup {
+	if o == nil || IsNil(o.MpcUsedKeyShareHolderGroup) {
+		var ret MpcSigningGroup
+		return ret
+	}
+	return *o.MpcUsedKeyShareHolderGroup
+}
+
+// GetMpcUsedKeyShareHolderGroupOk returns a tuple with the MpcUsedKeyShareHolderGroup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MpcTransferSource) GetMpcUsedKeyShareHolderGroupOk() (*MpcSigningGroup, bool) {
+	if o == nil || IsNil(o.MpcUsedKeyShareHolderGroup) {
+		return nil, false
+	}
+	return o.MpcUsedKeyShareHolderGroup, true
+}
+
+// HasMpcUsedKeyShareHolderGroup returns a boolean if a field has been set.
+func (o *MpcTransferSource) HasMpcUsedKeyShareHolderGroup() bool {
+	if o != nil && !IsNil(o.MpcUsedKeyShareHolderGroup) {
+		return true
+	}
+
+	return false
+}
+
+// SetMpcUsedKeyShareHolderGroup gets a reference to the given MpcSigningGroup and assigns it to the MpcUsedKeyShareHolderGroup field.
+func (o *MpcTransferSource) SetMpcUsedKeyShareHolderGroup(v MpcSigningGroup) {
+	o.MpcUsedKeyShareHolderGroup = &v
+}
+
 func (o MpcTransferSource) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -213,6 +246,9 @@ func (o MpcTransferSource) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExcludedUtxos) {
 		toSerialize["excluded_utxos"] = o.ExcludedUtxos
+	}
+	if !IsNil(o.MpcUsedKeyShareHolderGroup) {
+		toSerialize["mpc_used_key_share_holder_group"] = o.MpcUsedKeyShareHolderGroup
 	}
 	return toSerialize, nil
 }

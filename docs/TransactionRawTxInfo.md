@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **SelectedUtxos** | Pointer to [**[]TransactionSelectedUtxo**](TransactionSelectedUtxo.md) | The selected UTXOs to be consumed in the transaction. | [optional] 
 **RawTx** | Pointer to **string** | The raw transaction data. | [optional] 
 **UnsignedRawTx** | Pointer to **string** | The unsigned raw transaction data. | [optional] 
+**UtxoChange** | Pointer to [**TransactionUtxoChange**](TransactionUtxoChange.md) |  | [optional] 
 
 ## Methods
 
@@ -127,6 +128,31 @@ SetUnsignedRawTx sets UnsignedRawTx field to given value.
 `func (o *TransactionRawTxInfo) HasUnsignedRawTx() bool`
 
 HasUnsignedRawTx returns a boolean if a field has been set.
+
+### GetUtxoChange
+
+`func (o *TransactionRawTxInfo) GetUtxoChange() TransactionUtxoChange`
+
+GetUtxoChange returns the UtxoChange field if non-nil, zero value otherwise.
+
+### GetUtxoChangeOk
+
+`func (o *TransactionRawTxInfo) GetUtxoChangeOk() (*TransactionUtxoChange, bool)`
+
+GetUtxoChangeOk returns a tuple with the UtxoChange field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUtxoChange
+
+`func (o *TransactionRawTxInfo) SetUtxoChange(v TransactionUtxoChange)`
+
+SetUtxoChange sets UtxoChange field to given value.
+
+### HasUtxoChange
+
+`func (o *TransactionRawTxInfo) HasUtxoChange() bool`
+
+HasUtxoChange returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -17,7 +17,7 @@ import (
 // checks if the BTCEIP191MessageSignDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BTCEIP191MessageSignDestination{}
 
-// BTCEIP191MessageSignDestination The information about the destination `BTC_EIP_191_Signature`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+// BTCEIP191MessageSignDestination The information about the destination `BTC_EIP_191_Signature`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 type BTCEIP191MessageSignDestination struct {
 	DestinationType MessageSignDestinationType `json:"destination_type"`
 	// The raw data of the message to be signed, encoded in Base64 format.

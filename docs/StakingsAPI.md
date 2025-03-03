@@ -4,19 +4,179 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateBabylonAirdropRegistration**](StakingsAPI.md#CreateBabylonAirdropRegistration) | **Post** /stakings/protocols/babylon/airdrops/registrations | Register for Babylon airdrop
+[**CreateBabylonStakingRegistration**](StakingsAPI.md#CreateBabylonStakingRegistration) | **Post** /stakings/protocols/babylon/stakings/registrations | Register for Babylon Phase-2
 [**CreateClaimActivity**](StakingsAPI.md#CreateClaimActivity) | **Post** /stakings/activities/claim | Create claim activity
 [**CreateStakeActivity**](StakingsAPI.md#CreateStakeActivity) | **Post** /stakings/activities/stake | Create stake activity
 [**CreateUnstakeActivity**](StakingsAPI.md#CreateUnstakeActivity) | **Post** /stakings/activities/unstake | Create unstake activity
 [**CreateWithdrawActivity**](StakingsAPI.md#CreateWithdrawActivity) | **Post** /stakings/activities/withdraw | Create withdraw activity
+[**GetBabylonAirdropRegistrationById**](StakingsAPI.md#GetBabylonAirdropRegistrationById) | **Get** /stakings/protocols/babylon/airdrops/registrations/{registration_id} | Get Babylon airdrop registration details
+[**GetBabylonStakingRegistrationById**](StakingsAPI.md#GetBabylonStakingRegistrationById) | **Get** /stakings/protocols/babylon/stakings/registrations/{registration_id} | Get Babylon Phase-2 registration details
 [**GetStakingActivityById**](StakingsAPI.md#GetStakingActivityById) | **Get** /stakings/activities/{activity_id} | Get staking activity details
 [**GetStakingById**](StakingsAPI.md#GetStakingById) | **Get** /stakings/{staking_id} | Get staking position details
 [**GetStakingEstimationFee**](StakingsAPI.md#GetStakingEstimationFee) | **Post** /stakings/estimate_fee | Estimate staking fees
 [**GetStakingEstimationFeeV2**](StakingsAPI.md#GetStakingEstimationFeeV2) | **Post** /stakings/estimate_fee_v2 | Estimate staking fees v2
 [**GetStakingPoolById**](StakingsAPI.md#GetStakingPoolById) | **Get** /stakings/pools/{pool_id} | Get staking pool details
+[**ListBabylonAirdropRegistrations**](StakingsAPI.md#ListBabylonAirdropRegistrations) | **Get** /stakings/protocols/babylon/airdrops/registrations | List Babylon airdrop registrations
+[**ListBabylonEligibleAirdrops**](StakingsAPI.md#ListBabylonEligibleAirdrops) | **Get** /stakings/protocols/babylon/airdrops/eligibles | List wallets eligible for Babylon airdrop
+[**ListBabylonEligibleStakings**](StakingsAPI.md#ListBabylonEligibleStakings) | **Get** /stakings/protocols/babylon/stakings/eligibles | List staking positions eligible for Babylon Phase-2
+[**ListBabylonStakingRegistrations**](StakingsAPI.md#ListBabylonStakingRegistrations) | **Get** /stakings/protocols/babylon/stakings/registrations | List Babylon Phase-2 registrations
 [**ListStakingActivities**](StakingsAPI.md#ListStakingActivities) | **Get** /stakings/activities | List staking activities
 [**ListStakingPools**](StakingsAPI.md#ListStakingPools) | **Get** /stakings/pools | List staking pools
 [**ListStakings**](StakingsAPI.md#ListStakings) | **Get** /stakings | List staking positions
 
+
+
+## CreateBabylonAirdropRegistration
+
+> CreateBabylonAirdropRegistration201Response CreateBabylonAirdropRegistration(ctx).CreateBabylonAirdropRegistrationRequest(createBabylonAirdropRegistrationRequest).Execute()
+
+Register for Babylon airdrop
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createBabylonAirdropRegistrationRequest := *coboWaas2.NewCreateBabylonAirdropRegistrationRequest()
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.CreateBabylonAirdropRegistration(ctx).CreateBabylonAirdropRegistrationRequest(createBabylonAirdropRegistrationRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.CreateBabylonAirdropRegistration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateBabylonAirdropRegistration`: CreateBabylonAirdropRegistration201Response
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.CreateBabylonAirdropRegistration`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateBabylonAirdropRegistrationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createBabylonAirdropRegistrationRequest** | [**CreateBabylonAirdropRegistrationRequest**](CreateBabylonAirdropRegistrationRequest.md) | The request body to register for the Babylon airdrop. | 
+
+### Return type
+
+[**CreateBabylonAirdropRegistration201Response**](CreateBabylonAirdropRegistration201Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateBabylonStakingRegistration
+
+> CreateBabylonStakingRegistration201Response CreateBabylonStakingRegistration(ctx).CreateBabylonStakingRegistrationRequest(createBabylonStakingRegistrationRequest).Execute()
+
+Register for Babylon Phase-2
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createBabylonStakingRegistrationRequest := *coboWaas2.NewCreateBabylonStakingRegistrationRequest()
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.CreateBabylonStakingRegistration(ctx).CreateBabylonStakingRegistrationRequest(createBabylonStakingRegistrationRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.CreateBabylonStakingRegistration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateBabylonStakingRegistration`: CreateBabylonStakingRegistration201Response
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.CreateBabylonStakingRegistration`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateBabylonStakingRegistrationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createBabylonStakingRegistrationRequest** | [**CreateBabylonStakingRegistrationRequest**](CreateBabylonStakingRegistrationRequest.md) | The request body to transit Babylon BTC staking to phase 2 | 
+
+### Return type
+
+[**CreateBabylonStakingRegistration201Response**](CreateBabylonStakingRegistration201Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateClaimActivity
@@ -316,6 +476,166 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetBabylonAirdropRegistrationById
+
+> BabylonAirdropRegistration GetBabylonAirdropRegistrationById(ctx, registrationId).Execute()
+
+Get Babylon airdrop registration details
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	registrationId := "registrationId_example"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.GetBabylonAirdropRegistrationById(ctx, registrationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.GetBabylonAirdropRegistrationById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetBabylonAirdropRegistrationById`: BabylonAirdropRegistration
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.GetBabylonAirdropRegistrationById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**registrationId** | **string** | The Babylon airdrop or Babylon Phase-2 registration ID. You can use the [Register for Babylon airdrop](https://www.cobo.com/developers/v2/api-references/stakings/register-for-babylon-airdrop) or the [Register for Babylon Phase-2](https://www.cobo.com/developers/v2/api-references/stakings/register-for-babylon-phase-2) operation to get this information. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetBabylonAirdropRegistrationByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**BabylonAirdropRegistration**](BabylonAirdropRegistration.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetBabylonStakingRegistrationById
+
+> BabylonStakingRegistration GetBabylonStakingRegistrationById(ctx, registrationId).Execute()
+
+Get Babylon Phase-2 registration details
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	registrationId := "registrationId_example"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.GetBabylonStakingRegistrationById(ctx, registrationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.GetBabylonStakingRegistrationById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetBabylonStakingRegistrationById`: BabylonStakingRegistration
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.GetBabylonStakingRegistrationById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**registrationId** | **string** | The Babylon airdrop or Babylon Phase-2 registration ID. You can use the [Register for Babylon airdrop](https://www.cobo.com/developers/v2/api-references/stakings/register-for-babylon-airdrop) or the [Register for Babylon Phase-2](https://www.cobo.com/developers/v2/api-references/stakings/register-for-babylon-phase-2) operation to get this information. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetBabylonStakingRegistrationByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**BabylonStakingRegistration**](BabylonStakingRegistration.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -715,6 +1035,338 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListBabylonAirdropRegistrations
+
+> ListBabylonAirdropRegistrations200Response ListBabylonAirdropRegistrations(ctx).Status(status).BtcAddress(btcAddress).Limit(limit).Before(before).After(after).Execute()
+
+List Babylon airdrop registrations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	status := "Processing"
+	btcAddress := "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.ListBabylonAirdropRegistrations(ctx).Status(status).BtcAddress(btcAddress).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.ListBabylonAirdropRegistrations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBabylonAirdropRegistrations`: ListBabylonAirdropRegistrations200Response
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.ListBabylonAirdropRegistrations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBabylonAirdropRegistrationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **status** | **string** | The registration request status. | 
+ **btcAddress** | **string** | The Bitcoin (BTC) address used for staking. | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+
+### Return type
+
+[**ListBabylonAirdropRegistrations200Response**](ListBabylonAirdropRegistrations200Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListBabylonEligibleAirdrops
+
+> ListBabylonEligibleAirdrops200Response ListBabylonEligibleAirdrops(ctx).Status(status).Limit(limit).Before(before).After(after).Execute()
+
+List wallets eligible for Babylon airdrop
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	status := "Registered"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.ListBabylonEligibleAirdrops(ctx).Status(status).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.ListBabylonEligibleAirdrops``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBabylonEligibleAirdrops`: ListBabylonEligibleAirdrops200Response
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.ListBabylonEligibleAirdrops`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBabylonEligibleAirdropsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **status** | **string** | The status of Babylon airdrop or Phase-2 registration. Possible values are: - &#x60;Registered&#x60;: Registered for Babylon airdrop or Phase-2. - &#x60;Unregistered&#x60;: Not registered for any Babylon airdrop or Phase-2. - &#x60;Registering&#x60;: The Babylon airdrop or Phase-2 registration is in progress but not yet completed.  | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+
+### Return type
+
+[**ListBabylonEligibleAirdrops200Response**](ListBabylonEligibleAirdrops200Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListBabylonEligibleStakings
+
+> ListBabylonEligibleStakings200Response ListBabylonEligibleStakings(ctx).Status(status).Limit(limit).Before(before).After(after).Execute()
+
+List staking positions eligible for Babylon Phase-2
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	status := "Registered"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.ListBabylonEligibleStakings(ctx).Status(status).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.ListBabylonEligibleStakings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBabylonEligibleStakings`: ListBabylonEligibleStakings200Response
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.ListBabylonEligibleStakings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBabylonEligibleStakingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **status** | **string** | The status of Babylon airdrop or Phase-2 registration. Possible values are: - &#x60;Registered&#x60;: Registered for Babylon airdrop or Phase-2. - &#x60;Unregistered&#x60;: Not registered for any Babylon airdrop or Phase-2. - &#x60;Registering&#x60;: The Babylon airdrop or Phase-2 registration is in progress but not yet completed.  | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+
+### Return type
+
+[**ListBabylonEligibleStakings200Response**](ListBabylonEligibleStakings200Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListBabylonStakingRegistrations
+
+> ListBabylonStakingRegistrations200Response ListBabylonStakingRegistrations(ctx).Status(status).StakingId(stakingId).Limit(limit).Before(before).After(after).Execute()
+
+List Babylon Phase-2 registrations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	status := "Processing"
+	stakingId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.ListBabylonStakingRegistrations(ctx).Status(status).StakingId(stakingId).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.ListBabylonStakingRegistrations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBabylonStakingRegistrations`: ListBabylonStakingRegistrations200Response
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.ListBabylonStakingRegistrations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBabylonStakingRegistrationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **status** | **string** | The registration request status. | 
+ **stakingId** | **string** | The ID of the Phase-1 BTC staking position. | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+
+### Return type
+
+[**ListBabylonStakingRegistrations200Response**](ListBabylonStakingRegistrations200Response.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListStakingActivities
 
 > ListStakingActivities200Response ListStakingActivities(ctx).PoolId(poolId).StakingId(stakingId).ActivityType(activityType).ActivityStatus(activityStatus).MinModifiedTimestamp(minModifiedTimestamp).MaxModifiedTimestamp(maxModifiedTimestamp).Initiator(initiator).RequestId(requestId).Limit(limit).Before(before).After(after).Execute()
@@ -782,7 +1434,7 @@ Other parameters are passed through a pointer to a apiListStakingActivitiesReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **poolId** | **string** | The ID of the staking pool. A staking pool is a pairing of a staking protocol and a specific type of token. You can call [List staking pools](https://www.cobo.com/developers/v2/api-references/stakings/list-staking-pools) to retrieve a list of staking pools. | 
- **stakingId** | **string** | The position ID. | 
+ **stakingId** | **string** | The ID of the Phase-1 BTC staking position. | 
  **activityType** | [**ActivityType**](ActivityType.md) |  | 
  **activityStatus** | [**ActivityStatus**](ActivityStatus.md) |  | 
  **minModifiedTimestamp** | **int64** | The start time of the query. All staking activities updated after the specified time will be retrieved. The time is in Unix timestamp format, measured in milliseconds. | 

@@ -28,6 +28,30 @@ func Test_cobo_waas2_StakingsAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test StakingsAPIService CreateBabylonAirdropRegistration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.CreateBabylonAirdropRegistration(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService CreateBabylonStakingRegistration", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.CreateBabylonStakingRegistration(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test StakingsAPIService CreateClaimActivity", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -69,6 +93,34 @@ func Test_cobo_waas2_StakingsAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.StakingsAPI.CreateWithdrawActivity(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService GetBabylonAirdropRegistrationById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var registrationId string
+
+		resp, httpRes, err := apiClient.StakingsAPI.GetBabylonAirdropRegistrationById(ctx, registrationId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService GetBabylonStakingRegistrationById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var registrationId string
+
+		resp, httpRes, err := apiClient.StakingsAPI.GetBabylonStakingRegistrationById(ctx, registrationId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -135,6 +187,54 @@ func Test_cobo_waas2_StakingsAPIService(t *testing.T) {
 		var poolId string
 
 		resp, httpRes, err := apiClient.StakingsAPI.GetStakingPoolById(ctx, poolId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService ListBabylonAirdropRegistrations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.ListBabylonAirdropRegistrations(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService ListBabylonEligibleAirdrops", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.ListBabylonEligibleAirdrops(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService ListBabylonEligibleStakings", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.ListBabylonEligibleStakings(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test StakingsAPIService ListBabylonStakingRegistrations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.ListBabylonStakingRegistrations(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

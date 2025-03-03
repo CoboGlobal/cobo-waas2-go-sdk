@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**UsedKeyShareHolderGroupId** | Pointer to **string** | The ID of the Signing Group. | [optional] 
+**UsedKeyShareHolderGroupId** | **string** | The ID of the Signing Group. | 
 **UsedTssNodeIds** | Pointer to **[]string** | The ID of the TSS Nodes that are required to participate in the signature. | [optional] 
 
 ## Methods
 
 ### NewMpcSigningGroup
 
-`func NewMpcSigningGroup() *MpcSigningGroup`
+`func NewMpcSigningGroup(usedKeyShareHolderGroupId string, ) *MpcSigningGroup`
 
 NewMpcSigningGroup instantiates a new MpcSigningGroup object
 This constructor will assign default values to properties that have it defined,
@@ -45,11 +45,6 @@ and a boolean to check if the value has been set.
 
 SetUsedKeyShareHolderGroupId sets UsedKeyShareHolderGroupId field to given value.
 
-### HasUsedKeyShareHolderGroupId
-
-`func (o *MpcSigningGroup) HasUsedKeyShareHolderGroupId() bool`
-
-HasUsedKeyShareHolderGroupId returns a boolean if a field has been set.
 
 ### GetUsedTssNodeIds
 
