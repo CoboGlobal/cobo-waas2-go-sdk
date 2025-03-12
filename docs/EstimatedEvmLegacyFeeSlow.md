@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **GasPrice** | **string** | The gas price, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions per gas unit used. | 
 **GasLimit** | **string** | The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies. | 
+**ReservedFee** | Pointer to **string** | The estimated fee required for submitting the transaction data to L1 (Layer 1), measured in wei. | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetGasLimit sets GasLimit field to given value.
 
+
+### GetReservedFee
+
+`func (o *EstimatedEvmLegacyFeeSlow) GetReservedFee() string`
+
+GetReservedFee returns the ReservedFee field if non-nil, zero value otherwise.
+
+### GetReservedFeeOk
+
+`func (o *EstimatedEvmLegacyFeeSlow) GetReservedFeeOk() (*string, bool)`
+
+GetReservedFeeOk returns a tuple with the ReservedFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReservedFee
+
+`func (o *EstimatedEvmLegacyFeeSlow) SetReservedFee(v string)`
+
+SetReservedFee sets ReservedFee field to given value.
+
+### HasReservedFee
+
+`func (o *EstimatedEvmLegacyFeeSlow) HasReservedFee() bool`
+
+HasReservedFee returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

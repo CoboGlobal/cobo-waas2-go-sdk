@@ -25,6 +25,8 @@ type EstimatedEvmEip1559FeeSlow struct {
 	MaxPriorityFeePerGas string `json:"max_priority_fee_per_gas"`
 	// The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies.
 	GasLimit string `json:"gas_limit"`
+	// The estimated fee required for submitting the transaction data to L1 (Layer 1), measured in wei.
+	ReservedFee *string `json:"reserved_fee,omitempty"`
 }
 
 type _EstimatedEvmEip1559FeeSlow EstimatedEvmEip1559FeeSlow
@@ -121,6 +123,38 @@ func (o *EstimatedEvmEip1559FeeSlow) SetGasLimit(v string) {
 	o.GasLimit = v
 }
 
+// GetReservedFee returns the ReservedFee field value if set, zero value otherwise.
+func (o *EstimatedEvmEip1559FeeSlow) GetReservedFee() string {
+	if o == nil || IsNil(o.ReservedFee) {
+		var ret string
+		return ret
+	}
+	return *o.ReservedFee
+}
+
+// GetReservedFeeOk returns a tuple with the ReservedFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EstimatedEvmEip1559FeeSlow) GetReservedFeeOk() (*string, bool) {
+	if o == nil || IsNil(o.ReservedFee) {
+		return nil, false
+	}
+	return o.ReservedFee, true
+}
+
+// HasReservedFee returns a boolean if a field has been set.
+func (o *EstimatedEvmEip1559FeeSlow) HasReservedFee() bool {
+	if o != nil && !IsNil(o.ReservedFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetReservedFee gets a reference to the given string and assigns it to the ReservedFee field.
+func (o *EstimatedEvmEip1559FeeSlow) SetReservedFee(v string) {
+	o.ReservedFee = &v
+}
+
 func (o EstimatedEvmEip1559FeeSlow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -134,6 +168,9 @@ func (o EstimatedEvmEip1559FeeSlow) ToMap() (map[string]interface{}, error) {
 	toSerialize["max_fee_per_gas"] = o.MaxFeePerGas
 	toSerialize["max_priority_fee_per_gas"] = o.MaxPriorityFeePerGas
 	toSerialize["gas_limit"] = o.GasLimit
+	if !IsNil(o.ReservedFee) {
+		toSerialize["reserved_fee"] = o.ReservedFee
+	}
 	return toSerialize, nil
 }
 

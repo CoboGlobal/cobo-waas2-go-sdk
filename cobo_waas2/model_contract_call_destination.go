@@ -16,12 +16,20 @@ import (
 // ContractCallDestination - struct for ContractCallDestination
 type ContractCallDestination struct {
 	EvmContractCallDestination *EvmContractCallDestination
+	SolContractCallDestination *SolContractCallDestination
 }
 
 // EvmContractCallDestinationAsContractCallDestination is a convenience function that returns EvmContractCallDestination wrapped in ContractCallDestination
 func EvmContractCallDestinationAsContractCallDestination(v *EvmContractCallDestination) ContractCallDestination {
 	return ContractCallDestination{
 		EvmContractCallDestination: v,
+	}
+}
+
+// SolContractCallDestinationAsContractCallDestination is a convenience function that returns SolContractCallDestination wrapped in ContractCallDestination
+func SolContractCallDestinationAsContractCallDestination(v *SolContractCallDestination) ContractCallDestination {
+	return ContractCallDestination{
+		SolContractCallDestination: v,
 	}
 }
 
@@ -48,6 +56,18 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'SOL_Contract'
+	if jsonDict["destination_type"] == "SOL_Contract" {
+		// try to unmarshal JSON data into SolContractCallDestination
+		err = json.Unmarshal(data, &dst.SolContractCallDestination)
+		if err == nil {
+			return nil // data stored in dst.SolContractCallDestination, return on the first match
+		} else {
+			dst.SolContractCallDestination = nil
+			return fmt.Errorf("failed to unmarshal ContractCallDestination as SolContractCallDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'EvmContractCallDestination'
 	if jsonDict["destination_type"] == "EvmContractCallDestination" {
 		// try to unmarshal JSON data into EvmContractCallDestination
@@ -60,6 +80,18 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'SolContractCallDestination'
+	if jsonDict["destination_type"] == "SolContractCallDestination" {
+		// try to unmarshal JSON data into SolContractCallDestination
+		err = json.Unmarshal(data, &dst.SolContractCallDestination)
+		if err == nil {
+			return nil // data stored in dst.SolContractCallDestination, return on the first match
+		} else {
+			dst.SolContractCallDestination = nil
+			return fmt.Errorf("failed to unmarshal ContractCallDestination as SolContractCallDestination: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
@@ -67,6 +99,10 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 func (src ContractCallDestination) MarshalJSON() ([]byte, error) {
 	if src.EvmContractCallDestination != nil {
 		return json.Marshal(&src.EvmContractCallDestination)
+	}
+
+	if src.SolContractCallDestination != nil {
+		return json.Marshal(&src.SolContractCallDestination)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -79,6 +115,10 @@ func (obj *ContractCallDestination) GetActualInstance() (interface{}) {
 	}
 	if obj.EvmContractCallDestination != nil {
 		return obj.EvmContractCallDestination
+	}
+
+	if obj.SolContractCallDestination != nil {
+		return obj.SolContractCallDestination
 	}
 
 	// all schemas are nil

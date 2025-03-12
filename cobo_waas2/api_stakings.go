@@ -184,7 +184,7 @@ CreateBabylonStakingRegistration Register for Babylon Phase-2
 This operation initiates a Babylon Phase-2 registration request. 
 
 Before calling this operation, please ensure the following:
-- The staking position is eligible for the Babylon Phase-2 and has not been registered. You can call the [List staking positions eligible for Babylon Phase-2](https://www.cobo.com/developers/v2/api-references/stakings/list-eligible-staking-positions-for-babylon-phase-2) operation to check the registration status.
+- The staking position is eligible for the Babylon Phase-2 and has not been registered. You can call the [List staking positions eligible for Babylon Phase-2](https://www.cobo.com/developers/v2/api-references/stakings/list-staking-positions-eligible-for-babylon-phase-2) operation to check the registration status.
 - The Babylon address has enough asset to pay for the registration fee.
 - The Babylon address must be a Babylon address in an MPC Wallet in your organization.
 

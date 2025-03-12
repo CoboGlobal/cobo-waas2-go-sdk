@@ -862,7 +862,7 @@ This operation retrieves the detailed information about a specified chain.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param chainId The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
+ @param chainId The chain ID, which is the unique identifier of a blockchain.
  @return ApiGetChainByIdRequest
 */
 func (a *WalletsAPIService) GetChainById(ctx context.Context, chainId string) ApiGetChainByIdRequest {
@@ -1159,7 +1159,7 @@ This operation retrieves the detailed information about a specified token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param tokenId The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+ @param tokenId The token ID, which is the unique identifier of a token.
  @return ApiGetTokenByIdRequest
 */
 func (a *WalletsAPIService) GetTokenById(ctx context.Context, tokenId string) ApiGetTokenByIdRequest {
@@ -1441,7 +1441,7 @@ This operation retrieves a list of address balances for a specified token within
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param walletId The wallet ID.
- @param tokenId The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+ @param tokenId The token ID, which is the unique identifier of a token.
  @return ApiListAddressBalancesByTokenRequest
 */
 func (a *WalletsAPIService) ListAddressBalancesByToken(ctx context.Context, walletId string, tokenId string) ApiListAddressBalancesByTokenRequest {

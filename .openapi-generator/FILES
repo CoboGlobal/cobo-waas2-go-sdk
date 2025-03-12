@@ -170,6 +170,7 @@ docs/ExtendedTokenInfo.md
 docs/FeeAmount.md
 docs/FeeGasLimit.md
 docs/FeeRate.md
+docs/FeeReserved.md
 docs/FeeType.md
 docs/FixedFeeRate.md
 docs/GetApiKeyInfo200Response.md
@@ -270,6 +271,9 @@ docs/SmartContractInitiator.md
 docs/SmartContractWalletInfo.md
 docs/SmartContractWalletOperationType.md
 docs/SmartContractWalletType.md
+docs/SolContractCallAccount.md
+docs/SolContractCallDestination.md
+docs/SolContractCallInstruction.md
 docs/SourceGroup.md
 docs/StakeSourceType.md
 docs/StakingPoolId.md
@@ -339,6 +343,9 @@ docs/TransactionSelectedUtxo.md
 docs/TransactionSignatureResult.md
 docs/TransactionSigner.md
 docs/TransactionSmartContractSafeWalletSource.md
+docs/TransactionSolContractAccount.md
+docs/TransactionSolContractDestination.md
+docs/TransactionSolContractInstruction.md
 docs/TransactionSource.md
 docs/TransactionSourceType.md
 docs/TransactionStatus.md
@@ -552,6 +559,7 @@ model_extended_token_info.go
 model_fee_amount.go
 model_fee_gas_limit.go
 model_fee_rate.go
+model_fee_reserved.go
 model_fee_type.go
 model_fixed_fee_rate.go
 model_get_api_key_info_200_response.go
@@ -650,6 +658,9 @@ model_smart_contract_initiator.go
 model_smart_contract_wallet_info.go
 model_smart_contract_wallet_operation_type.go
 model_smart_contract_wallet_type.go
+model_sol_contract_call_account.go
+model_sol_contract_call_destination.go
+model_sol_contract_call_instruction.go
 model_source_group.go
 model_stake_source_type.go
 model_staking_pool_id.go
@@ -712,6 +723,9 @@ model_transaction_selected_utxo.go
 model_transaction_signature_result.go
 model_transaction_signer.go
 model_transaction_smart_contract_safe_wallet_source.go
+model_transaction_sol_contract_account.go
+model_transaction_sol_contract_destination.go
+model_transaction_sol_contract_instruction.go
 model_transaction_source.go
 model_transaction_source_type.go
 model_transaction_status.go

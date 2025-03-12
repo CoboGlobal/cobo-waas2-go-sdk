@@ -19,7 +19,7 @@ var _ MappedNullable = &TokenInfo{}
 
 // TokenInfo The token information.
 type TokenInfo struct {
-	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+	// The token ID, which is the unique identifier of a token.
 	TokenId string `json:"token_id"`
 	// The ID of the chain on which the token operates.
 	ChainId string `json:"chain_id"`

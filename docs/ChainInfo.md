@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
+**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. | 
 **Symbol** | Pointer to **string** | The chain symbol, which is the abbreviated name of a chain. | [optional] 
 **IconUrl** | Pointer to **string** | The URL of the chain icon. | [optional] 
 **ExplorerTxUrl** | Pointer to **string** | The transaction URL pattern on the blockchain explorer. You can use it to concatenate the transaction URLs. | [optional] 
