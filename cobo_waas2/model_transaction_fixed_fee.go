@@ -19,7 +19,7 @@ var _ MappedNullable = &TransactionFixedFee{}
 
 // TransactionFixedFee The transaction fee actually charged by the chain that uses the fixed fee model.   Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionFixedFee struct {
-	// The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee.
+	// The maximum fee that you are willing to pay for the transaction. Provide the value without applying precision. The transaction will fail if the transaction fee exceeds the maximum fee.
 	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
 	FeeType FeeType `json:"fee_type"`
 	// The token ID of the transaction fee.

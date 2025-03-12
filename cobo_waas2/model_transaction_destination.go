@@ -21,6 +21,7 @@ type TransactionDestination struct {
 	TransactionMessageSignEIP191Destination *TransactionMessageSignEIP191Destination
 	TransactionMessageSignEIP712Destination *TransactionMessageSignEIP712Destination
 	TransactionRawMessageSignDestination *TransactionRawMessageSignDestination
+	TransactionSolContractDestination *TransactionSolContractDestination
 	TransactionTransferToAddressDestination *TransactionTransferToAddressDestination
 	TransactionTransferToWalletDestination *TransactionTransferToWalletDestination
 }
@@ -64,6 +65,13 @@ func TransactionMessageSignEIP712DestinationAsTransactionDestination(v *Transact
 func TransactionRawMessageSignDestinationAsTransactionDestination(v *TransactionRawMessageSignDestination) TransactionDestination {
 	return TransactionDestination{
 		TransactionRawMessageSignDestination: v,
+	}
+}
+
+// TransactionSolContractDestinationAsTransactionDestination is a convenience function that returns TransactionSolContractDestination wrapped in TransactionDestination
+func TransactionSolContractDestinationAsTransactionDestination(v *TransactionSolContractDestination) TransactionDestination {
+	return TransactionDestination{
+		TransactionSolContractDestination: v,
 	}
 }
 
@@ -188,6 +196,18 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'SOL_Contract'
+	if jsonDict["destination_type"] == "SOL_Contract" {
+		// try to unmarshal JSON data into TransactionSolContractDestination
+		err = json.Unmarshal(data, &dst.TransactionSolContractDestination)
+		if err == nil {
+			return nil // data stored in dst.TransactionSolContractDestination, return on the first match
+		} else {
+			dst.TransactionSolContractDestination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionSolContractDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TransactionDepositToAddressDestination'
 	if jsonDict["destination_type"] == "TransactionDepositToAddressDestination" {
 		// try to unmarshal JSON data into TransactionDepositToAddressDestination
@@ -260,6 +280,18 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'TransactionSolContractDestination'
+	if jsonDict["destination_type"] == "TransactionSolContractDestination" {
+		// try to unmarshal JSON data into TransactionSolContractDestination
+		err = json.Unmarshal(data, &dst.TransactionSolContractDestination)
+		if err == nil {
+			return nil // data stored in dst.TransactionSolContractDestination, return on the first match
+		} else {
+			dst.TransactionSolContractDestination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionSolContractDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TransactionTransferToAddressDestination'
 	if jsonDict["destination_type"] == "TransactionTransferToAddressDestination" {
 		// try to unmarshal JSON data into TransactionTransferToAddressDestination
@@ -313,6 +345,10 @@ func (src TransactionDestination) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionRawMessageSignDestination)
 	}
 
+	if src.TransactionSolContractDestination != nil {
+		return json.Marshal(&src.TransactionSolContractDestination)
+	}
+
 	if src.TransactionTransferToAddressDestination != nil {
 		return json.Marshal(&src.TransactionTransferToAddressDestination)
 	}
@@ -351,6 +387,10 @@ func (obj *TransactionDestination) GetActualInstance() (interface{}) {
 
 	if obj.TransactionRawMessageSignDestination != nil {
 		return obj.TransactionRawMessageSignDestination
+	}
+
+	if obj.TransactionSolContractDestination != nil {
+		return obj.TransactionSolContractDestination
 	}
 
 	if obj.TransactionTransferToAddressDestination != nil {

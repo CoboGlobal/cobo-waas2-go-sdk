@@ -19,7 +19,7 @@ var _ MappedNullable = &ChainInfo{}
 
 // ChainInfo The chain information.
 type ChainInfo struct {
-	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
+	// The chain ID, which is the unique identifier of a blockchain.
 	ChainId string `json:"chain_id"`
 	// The chain symbol, which is the abbreviated name of a chain.
 	Symbol *string `json:"symbol,omitempty"`

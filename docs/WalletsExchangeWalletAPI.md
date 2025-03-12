@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
 
 ### HTTP request headers
 

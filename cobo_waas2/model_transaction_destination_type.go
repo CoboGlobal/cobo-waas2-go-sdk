@@ -21,6 +21,7 @@ const (
 	TRANSACTIONDESTINATIONTYPE_ADDRESS TransactionDestinationType = "Address"
 	TRANSACTIONDESTINATIONTYPE_EXCHANGE_WALLET TransactionDestinationType = "ExchangeWallet"
 	TRANSACTIONDESTINATIONTYPE_EVM_CONTRACT TransactionDestinationType = "EVM_Contract"
+	TRANSACTIONDESTINATIONTYPE_SOL_CONTRACT TransactionDestinationType = "SOL_Contract"
 	TRANSACTIONDESTINATIONTYPE_EVM_EIP_191_SIGNATURE TransactionDestinationType = "EVM_EIP_191_Signature"
 	TRANSACTIONDESTINATIONTYPE_EVM_EIP_712_SIGNATURE TransactionDestinationType = "EVM_EIP_712_Signature"
 	TRANSACTIONDESTINATIONTYPE_RAW_MESSAGE_SIGNATURE TransactionDestinationType = "Raw_Message_Signature"
@@ -33,6 +34,7 @@ var AllowedTransactionDestinationTypeEnumValues = []TransactionDestinationType{
 	"Address",
 	"ExchangeWallet",
 	"EVM_Contract",
+	"SOL_Contract",
 	"EVM_EIP_191_Signature",
 	"EVM_EIP_712_Signature",
 	"Raw_Message_Signature",

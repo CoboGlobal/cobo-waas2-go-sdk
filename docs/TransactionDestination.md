@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **CalldataInfo** | Pointer to [**TransactionEvmCalldataInfo**](TransactionEvmCalldataInfo.md) |  | [optional] 
+**Instructions** | Pointer to [**[]TransactionSolContractInstruction**](TransactionSolContractInstruction.md) |  | [optional] 
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **StructuredData** | **map[string]interface{}** | The structured data to be signed, formatted as a JSON object according to the EIP-712 standard. | 
 **MsgHash** | Pointer to **string** | Message hash to be signed, in hexadecimal format. | [optional] 
@@ -369,6 +370,31 @@ SetCalldataInfo sets CalldataInfo field to given value.
 `func (o *TransactionDestination) HasCalldataInfo() bool`
 
 HasCalldataInfo returns a boolean if a field has been set.
+
+### GetInstructions
+
+`func (o *TransactionDestination) GetInstructions() []TransactionSolContractInstruction`
+
+GetInstructions returns the Instructions field if non-nil, zero value otherwise.
+
+### GetInstructionsOk
+
+`func (o *TransactionDestination) GetInstructionsOk() (*[]TransactionSolContractInstruction, bool)`
+
+GetInstructionsOk returns a tuple with the Instructions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInstructions
+
+`func (o *TransactionDestination) SetInstructions(v []TransactionSolContractInstruction)`
+
+SetInstructions sets Instructions field to given value.
+
+### HasInstructions
+
+`func (o *TransactionDestination) HasInstructions() bool`
+
+HasInstructions returns a boolean if a field has been set.
 
 ### GetMessage
 

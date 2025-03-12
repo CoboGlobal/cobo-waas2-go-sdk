@@ -17,7 +17,7 @@ var _ MappedNullable = &CreateBabylonAirdropRegistration201Response{}
 
 // CreateBabylonAirdropRegistration201Response struct for CreateBabylonAirdropRegistration201Response
 type CreateBabylonAirdropRegistration201Response struct {
-	// The registration ID, a unique identifier for tracking the airdrop registration request. You can check the registration status with the [Get Babylon airdrop registration details](https://www.cobo.com/developers/v2/api-references/stakings/get_babylon_airdrop_registration_details) operation.
+	// The registration ID, a unique identifier for tracking the airdrop registration request. You can check the registration status with the [Get Babylon airdrop registration details](https://www.cobo.com/developers/v2/api-references/stakings/get-babylon-airdrop-registration-details) operation.
 	RegistrationId *string `json:"registration_id,omitempty"`
 }
 
