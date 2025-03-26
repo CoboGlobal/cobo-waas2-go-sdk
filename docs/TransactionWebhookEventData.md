@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The Chain enabled event data. - &#x60;Tokens&#x60;: The Token enabled event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
@@ -31,6 +31,8 @@ Name | Type | Description | Notes
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description for your transaction. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
+**CoboCategory** | Pointer to **[]string** | A transaction category for cobo to identify your transactions. | [optional] 
+**FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 
@@ -692,6 +694,56 @@ SetIsLoop sets IsLoop field to given value.
 `func (o *TransactionWebhookEventData) HasIsLoop() bool`
 
 HasIsLoop returns a boolean if a field has been set.
+
+### GetCoboCategory
+
+`func (o *TransactionWebhookEventData) GetCoboCategory() []string`
+
+GetCoboCategory returns the CoboCategory field if non-nil, zero value otherwise.
+
+### GetCoboCategoryOk
+
+`func (o *TransactionWebhookEventData) GetCoboCategoryOk() (*[]string, bool)`
+
+GetCoboCategoryOk returns a tuple with the CoboCategory field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCoboCategory
+
+`func (o *TransactionWebhookEventData) SetCoboCategory(v []string)`
+
+SetCoboCategory sets CoboCategory field to given value.
+
+### HasCoboCategory
+
+`func (o *TransactionWebhookEventData) HasCoboCategory() bool`
+
+HasCoboCategory returns a boolean if a field has been set.
+
+### GetFuelingInfo
+
+`func (o *TransactionWebhookEventData) GetFuelingInfo() TransactionFuelingInfo`
+
+GetFuelingInfo returns the FuelingInfo field if non-nil, zero value otherwise.
+
+### GetFuelingInfoOk
+
+`func (o *TransactionWebhookEventData) GetFuelingInfoOk() (*TransactionFuelingInfo, bool)`
+
+GetFuelingInfoOk returns a tuple with the FuelingInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFuelingInfo
+
+`func (o *TransactionWebhookEventData) SetFuelingInfo(v TransactionFuelingInfo)`
+
+SetFuelingInfo sets FuelingInfo field to given value.
+
+### HasFuelingInfo
+
+`func (o *TransactionWebhookEventData) HasFuelingInfo() bool`
+
+HasFuelingInfo returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

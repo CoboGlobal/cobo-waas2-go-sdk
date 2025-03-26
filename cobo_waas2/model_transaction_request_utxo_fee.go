@@ -20,7 +20,7 @@ var _ MappedNullable = &TransactionRequestUtxoFee{}
 // TransactionRequestUtxoFee The preset properties to limit transaction fee.  In the UTXO fee model, the transaction fee is calculated by multiplying the fee rate by the transaction size. This can be expressed as: Transaction fee = fee rate * transaction size. For more information about the UTXO fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify the maximum fee amount to limit the transaction fee. The transaction will fail if the transaction fee exceeds the specified maximum fee amount.  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionRequestUtxoFee struct {
 	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
-	FeeRate string `json:"fee_rate"`
+	FeeRate *string `json:"fee_rate,omitempty"`
 	FeeType FeeType `json:"fee_type"`
 	// The token ID of the transaction fee.
 	TokenId string `json:"token_id"`
@@ -34,9 +34,8 @@ type _TransactionRequestUtxoFee TransactionRequestUtxoFee
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransactionRequestUtxoFee(feeRate string, feeType FeeType, tokenId string) *TransactionRequestUtxoFee {
+func NewTransactionRequestUtxoFee(feeType FeeType, tokenId string) *TransactionRequestUtxoFee {
 	this := TransactionRequestUtxoFee{}
-	this.FeeRate = feeRate
 	this.FeeType = feeType
 	this.TokenId = tokenId
 	return &this
@@ -52,28 +51,36 @@ func NewTransactionRequestUtxoFeeWithDefaults() *TransactionRequestUtxoFee {
 	return &this
 }
 
-// GetFeeRate returns the FeeRate field value
+// GetFeeRate returns the FeeRate field value if set, zero value otherwise.
 func (o *TransactionRequestUtxoFee) GetFeeRate() string {
-	if o == nil {
+	if o == nil || IsNil(o.FeeRate) {
 		var ret string
 		return ret
 	}
-
-	return o.FeeRate
+	return *o.FeeRate
 }
 
-// GetFeeRateOk returns a tuple with the FeeRate field value
+// GetFeeRateOk returns a tuple with the FeeRate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TransactionRequestUtxoFee) GetFeeRateOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.FeeRate) {
 		return nil, false
 	}
-	return &o.FeeRate, true
+	return o.FeeRate, true
 }
 
-// SetFeeRate sets field value
+// HasFeeRate returns a boolean if a field has been set.
+func (o *TransactionRequestUtxoFee) HasFeeRate() bool {
+	if o != nil && !IsNil(o.FeeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetFeeRate gets a reference to the given string and assigns it to the FeeRate field.
 func (o *TransactionRequestUtxoFee) SetFeeRate(v string) {
-	o.FeeRate = v
+	o.FeeRate = &v
 }
 
 // GetFeeType returns the FeeType field value
@@ -166,7 +173,9 @@ func (o TransactionRequestUtxoFee) MarshalJSON() ([]byte, error) {
 
 func (o TransactionRequestUtxoFee) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["fee_rate"] = o.FeeRate
+	if !IsNil(o.FeeRate) {
+		toSerialize["fee_rate"] = o.FeeRate
+	}
 	toSerialize["fee_type"] = o.FeeType
 	toSerialize["token_id"] = o.TokenId
 	if !IsNil(o.MaxFeeAmount) {
@@ -180,7 +189,6 @@ func (o *TransactionRequestUtxoFee) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"fee_rate",
 		"fee_type",
 		"token_id",
 	}

@@ -17,6 +17,12 @@ var _ MappedNullable = &TransactionApprovalDetail{}
 
 // TransactionApprovalDetail The approval detail data for transaction.
 type TransactionApprovalDetail struct {
+	// The transaction ID.
+	TransactionId *string `json:"transaction_id,omitempty"`
+	// The Cobo ID, which can be used to track a transaction.
+	CoboId *string `json:"cobo_id,omitempty"`
+	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
+	RequestId *string `json:"request_id,omitempty"`
 	Spender *TransactionRoleApprovalDetail `json:"spender,omitempty"`
 	Approver *TransactionRoleApprovalDetail `json:"approver,omitempty"`
 	AddressOwner *TransactionRoleApprovalDetail `json:"address_owner,omitempty"`
@@ -37,6 +43,102 @@ func NewTransactionApprovalDetail() *TransactionApprovalDetail {
 func NewTransactionApprovalDetailWithDefaults() *TransactionApprovalDetail {
 	this := TransactionApprovalDetail{}
 	return &this
+}
+
+// GetTransactionId returns the TransactionId field value if set, zero value otherwise.
+func (o *TransactionApprovalDetail) GetTransactionId() string {
+	if o == nil || IsNil(o.TransactionId) {
+		var ret string
+		return ret
+	}
+	return *o.TransactionId
+}
+
+// GetTransactionIdOk returns a tuple with the TransactionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionApprovalDetail) GetTransactionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TransactionId) {
+		return nil, false
+	}
+	return o.TransactionId, true
+}
+
+// HasTransactionId returns a boolean if a field has been set.
+func (o *TransactionApprovalDetail) HasTransactionId() bool {
+	if o != nil && !IsNil(o.TransactionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactionId gets a reference to the given string and assigns it to the TransactionId field.
+func (o *TransactionApprovalDetail) SetTransactionId(v string) {
+	o.TransactionId = &v
+}
+
+// GetCoboId returns the CoboId field value if set, zero value otherwise.
+func (o *TransactionApprovalDetail) GetCoboId() string {
+	if o == nil || IsNil(o.CoboId) {
+		var ret string
+		return ret
+	}
+	return *o.CoboId
+}
+
+// GetCoboIdOk returns a tuple with the CoboId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionApprovalDetail) GetCoboIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CoboId) {
+		return nil, false
+	}
+	return o.CoboId, true
+}
+
+// HasCoboId returns a boolean if a field has been set.
+func (o *TransactionApprovalDetail) HasCoboId() bool {
+	if o != nil && !IsNil(o.CoboId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCoboId gets a reference to the given string and assigns it to the CoboId field.
+func (o *TransactionApprovalDetail) SetCoboId(v string) {
+	o.CoboId = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *TransactionApprovalDetail) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionApprovalDetail) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *TransactionApprovalDetail) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *TransactionApprovalDetail) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetSpender returns the Spender field value if set, zero value otherwise.
@@ -145,6 +247,15 @@ func (o TransactionApprovalDetail) MarshalJSON() ([]byte, error) {
 
 func (o TransactionApprovalDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.TransactionId) {
+		toSerialize["transaction_id"] = o.TransactionId
+	}
+	if !IsNil(o.CoboId) {
+		toSerialize["cobo_id"] = o.CoboId
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	if !IsNil(o.Spender) {
 		toSerialize["spender"] = o.Spender
 	}

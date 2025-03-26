@@ -177,7 +177,7 @@ func (src TransactionFee) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionUtxoFee)
 	}
 
-	return nil, nil // no data in oneOf schemas
+	return []byte(`{}`), nil // no data in oneOf schemas
 }
 
 // Get the actual instance

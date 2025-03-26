@@ -15,8 +15,16 @@ import (
 
 // ContractCallSource - struct for ContractCallSource
 type ContractCallSource struct {
+	CustodialWeb3ContractCallSource *CustodialWeb3ContractCallSource
 	MpcContractCallSource *MpcContractCallSource
 	SafeContractCallSource *SafeContractCallSource
+}
+
+// CustodialWeb3ContractCallSourceAsContractCallSource is a convenience function that returns CustodialWeb3ContractCallSource wrapped in ContractCallSource
+func CustodialWeb3ContractCallSourceAsContractCallSource(v *CustodialWeb3ContractCallSource) ContractCallSource {
+	return ContractCallSource{
+		CustodialWeb3ContractCallSource: v,
+	}
 }
 
 // MpcContractCallSourceAsContractCallSource is a convenience function that returns MpcContractCallSource wrapped in ContractCallSource
@@ -80,6 +88,30 @@ func (dst *ContractCallSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'Web3'
+	if jsonDict["source_type"] == "Web3" {
+		// try to unmarshal JSON data into CustodialWeb3ContractCallSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3ContractCallSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3ContractCallSource, return on the first match
+		} else {
+			dst.CustodialWeb3ContractCallSource = nil
+			return fmt.Errorf("failed to unmarshal ContractCallSource as CustodialWeb3ContractCallSource: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'CustodialWeb3ContractCallSource'
+	if jsonDict["source_type"] == "CustodialWeb3ContractCallSource" {
+		// try to unmarshal JSON data into CustodialWeb3ContractCallSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3ContractCallSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3ContractCallSource, return on the first match
+		} else {
+			dst.CustodialWeb3ContractCallSource = nil
+			return fmt.Errorf("failed to unmarshal ContractCallSource as CustodialWeb3ContractCallSource: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MpcContractCallSource'
 	if jsonDict["source_type"] == "MpcContractCallSource" {
 		// try to unmarshal JSON data into MpcContractCallSource
@@ -109,6 +141,10 @@ func (dst *ContractCallSource) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src ContractCallSource) MarshalJSON() ([]byte, error) {
+	if src.CustodialWeb3ContractCallSource != nil {
+		return json.Marshal(&src.CustodialWeb3ContractCallSource)
+	}
+
 	if src.MpcContractCallSource != nil {
 		return json.Marshal(&src.MpcContractCallSource)
 	}
@@ -117,7 +153,7 @@ func (src ContractCallSource) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.SafeContractCallSource)
 	}
 
-	return nil, nil // no data in oneOf schemas
+	return []byte(`{}`), nil // no data in oneOf schemas
 }
 
 // Get the actual instance
@@ -125,6 +161,10 @@ func (obj *ContractCallSource) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.CustodialWeb3ContractCallSource != nil {
+		return obj.CustodialWeb3ContractCallSource
+	}
+
 	if obj.MpcContractCallSource != nil {
 		return obj.MpcContractCallSource
 	}

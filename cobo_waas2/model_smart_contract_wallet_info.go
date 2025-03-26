@@ -69,7 +69,7 @@ func (src SmartContractWalletInfo) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.SafeWallet)
 	}
 
-	return nil, nil // no data in oneOf schemas
+	return []byte(`{}`), nil // no data in oneOf schemas
 }
 
 // Get the actual instance

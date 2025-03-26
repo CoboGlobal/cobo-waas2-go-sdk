@@ -29,6 +29,12 @@ const (
 	WEBHOOKEVENTTYPE_WALLETS_ADDRESSES_CREATED WebhookEventType = "wallets.addresses.created"
 	WEBHOOKEVENTTYPE_WALLETS_CREATED WebhookEventType = "wallets.created"
 	WEBHOOKEVENTTYPE_MPC_VAULTS_CREATED WebhookEventType = "mpc_vaults.created"
+	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_CREATED WebhookEventType = "fee_station.transaction.created"
+	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_UPDATED WebhookEventType = "fee_station.transaction.updated"
+	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_FAILED WebhookEventType = "fee_station.transaction.failed"
+	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_SUCCEEDED WebhookEventType = "fee_station.transaction.succeeded"
+	WEBHOOKEVENTTYPE_WALLET_TOKEN_ENABLED WebhookEventType = "wallet.token.enabled"
+	WEBHOOKEVENTTYPE_WALLET_CHAIN_ENABLED WebhookEventType = "wallet.chain.enabled"
 )
 
 // All allowed values of WebhookEventType enum
@@ -44,6 +50,12 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"wallets.addresses.created",
 	"wallets.created",
 	"mpc_vaults.created",
+	"fee_station.transaction.created",
+	"fee_station.transaction.updated",
+	"fee_station.transaction.failed",
+	"fee_station.transaction.succeeded",
+	"wallet.token.enabled",
+	"wallet.chain.enabled",
 }
 
 func (v *WebhookEventType) UnmarshalJSON(src []byte) error {

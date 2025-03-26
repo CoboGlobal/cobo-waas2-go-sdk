@@ -69,7 +69,7 @@ func (src TransactionResult) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionSignatureResult)
 	}
 
-	return nil, nil // no data in oneOf schemas
+	return []byte(`{}`), nil // no data in oneOf schemas
 }
 
 // Get the actual instance

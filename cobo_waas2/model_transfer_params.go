@@ -30,8 +30,7 @@ type TransferParams struct {
 	// The description of the transfer.
 	Description *string `json:"description,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
-	// Transaction processing type. Possible values are: - `AutoProcess` (default): After the transaction is constructed, it will be automatically signed and broadcast.   - `BuildOnly`: Set to this value if you want to build the transaction first without automatically signing and broadcasting it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction) operation to complete the signing and broadcasting process. 
-	TransactionProcessType *string `json:"transaction_process_type,omitempty"`
+	TransactionProcessType *TransactionProcessType `json:"transaction_process_type,omitempty"`
 	AutoFuel *AutoFuelType `json:"auto_fuel,omitempty"`
 }
 
@@ -251,9 +250,9 @@ func (o *TransferParams) SetFee(v TransactionRequestFee) {
 }
 
 // GetTransactionProcessType returns the TransactionProcessType field value if set, zero value otherwise.
-func (o *TransferParams) GetTransactionProcessType() string {
+func (o *TransferParams) GetTransactionProcessType() TransactionProcessType {
 	if o == nil || IsNil(o.TransactionProcessType) {
-		var ret string
+		var ret TransactionProcessType
 		return ret
 	}
 	return *o.TransactionProcessType
@@ -261,7 +260,7 @@ func (o *TransferParams) GetTransactionProcessType() string {
 
 // GetTransactionProcessTypeOk returns a tuple with the TransactionProcessType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransferParams) GetTransactionProcessTypeOk() (*string, bool) {
+func (o *TransferParams) GetTransactionProcessTypeOk() (*TransactionProcessType, bool) {
 	if o == nil || IsNil(o.TransactionProcessType) {
 		return nil, false
 	}
@@ -277,8 +276,8 @@ func (o *TransferParams) HasTransactionProcessType() bool {
 	return false
 }
 
-// SetTransactionProcessType gets a reference to the given string and assigns it to the TransactionProcessType field.
-func (o *TransferParams) SetTransactionProcessType(v string) {
+// SetTransactionProcessType gets a reference to the given TransactionProcessType and assigns it to the TransactionProcessType field.
+func (o *TransferParams) SetTransactionProcessType(v TransactionProcessType) {
 	o.TransactionProcessType = &v
 }
 

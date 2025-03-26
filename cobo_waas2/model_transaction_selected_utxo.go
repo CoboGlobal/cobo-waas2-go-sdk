@@ -25,6 +25,10 @@ type TransactionSelectedUtxo struct {
 	Address *string `json:"address,omitempty"`
 	// The value of the UTXO.
 	Value *string `json:"value,omitempty"`
+	// Redeem script is used in P2SH and P2WSH transactions.
+	RedeemScript *string `json:"redeem_script,omitempty"`
+	// Revealed script is used for script path spending in Taproot transactions.
+	RevealedScript *string `json:"revealed_script,omitempty"`
 }
 
 // NewTransactionSelectedUtxo instantiates a new TransactionSelectedUtxo object
@@ -172,6 +176,70 @@ func (o *TransactionSelectedUtxo) SetValue(v string) {
 	o.Value = &v
 }
 
+// GetRedeemScript returns the RedeemScript field value if set, zero value otherwise.
+func (o *TransactionSelectedUtxo) GetRedeemScript() string {
+	if o == nil || IsNil(o.RedeemScript) {
+		var ret string
+		return ret
+	}
+	return *o.RedeemScript
+}
+
+// GetRedeemScriptOk returns a tuple with the RedeemScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionSelectedUtxo) GetRedeemScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.RedeemScript) {
+		return nil, false
+	}
+	return o.RedeemScript, true
+}
+
+// HasRedeemScript returns a boolean if a field has been set.
+func (o *TransactionSelectedUtxo) HasRedeemScript() bool {
+	if o != nil && !IsNil(o.RedeemScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetRedeemScript gets a reference to the given string and assigns it to the RedeemScript field.
+func (o *TransactionSelectedUtxo) SetRedeemScript(v string) {
+	o.RedeemScript = &v
+}
+
+// GetRevealedScript returns the RevealedScript field value if set, zero value otherwise.
+func (o *TransactionSelectedUtxo) GetRevealedScript() string {
+	if o == nil || IsNil(o.RevealedScript) {
+		var ret string
+		return ret
+	}
+	return *o.RevealedScript
+}
+
+// GetRevealedScriptOk returns a tuple with the RevealedScript field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionSelectedUtxo) GetRevealedScriptOk() (*string, bool) {
+	if o == nil || IsNil(o.RevealedScript) {
+		return nil, false
+	}
+	return o.RevealedScript, true
+}
+
+// HasRevealedScript returns a boolean if a field has been set.
+func (o *TransactionSelectedUtxo) HasRevealedScript() bool {
+	if o != nil && !IsNil(o.RevealedScript) {
+		return true
+	}
+
+	return false
+}
+
+// SetRevealedScript gets a reference to the given string and assigns it to the RevealedScript field.
+func (o *TransactionSelectedUtxo) SetRevealedScript(v string) {
+	o.RevealedScript = &v
+}
+
 func (o TransactionSelectedUtxo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -193,6 +261,12 @@ func (o TransactionSelectedUtxo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
+	}
+	if !IsNil(o.RedeemScript) {
+		toSerialize["redeem_script"] = o.RedeemScript
+	}
+	if !IsNil(o.RevealedScript) {
+		toSerialize["revealed_script"] = o.RevealedScript
 	}
 	return toSerialize, nil
 }

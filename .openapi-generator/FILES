@@ -7,6 +7,7 @@ api/openapi.yaml
 api_address_books.go
 api_developers.go
 api_developers_webhooks.go
+api_fee_station.go
 api_o_auth.go
 api_prime_broker.go
 api_stakings.go
@@ -70,6 +71,7 @@ docs/BroadcastSignedTransactions201ResponseInner.md
 docs/BroadcastSignedTransactionsRequest.md
 docs/CallbackMessage.md
 docs/ChainInfo.md
+docs/ChainsEventData.md
 docs/ChangeGuardPubkey200Response.md
 docs/CheckAddressChainsValidity200ResponseInner.md
 docs/CheckAddressValidity200Response.md
@@ -123,6 +125,9 @@ docs/CreatedWalletInfo.md
 docs/CurveType.md
 docs/CustodialTransferSource.md
 docs/CustodialWalletInfo.md
+docs/CustodialWeb3ContractCallSource.md
+docs/CustodialWeb3MessageSignSource.md
+docs/CustodialWeb3TransferSource.md
 docs/DeleteGuardPubkey201Response.md
 docs/DeleteKeyShareHolderGroupById201Response.md
 docs/DeleteWalletById201Response.md
@@ -171,6 +176,8 @@ docs/FeeAmount.md
 docs/FeeGasLimit.md
 docs/FeeRate.md
 docs/FeeReserved.md
+docs/FeeStationAPI.md
+docs/FeeStationTransactionType.md
 docs/FeeType.md
 docs/FixedFeeRate.md
 docs/GetApiKeyInfo200Response.md
@@ -211,6 +218,7 @@ docs/ListSupportedCountries200ResponseInner.md
 docs/ListSupportedTokens200Response.md
 docs/ListSwapActivities200Response.md
 docs/ListTokenBalancesForAddress200Response.md
+docs/ListTransactionApprovalDetails200Response.md
 docs/ListTransactions200Response.md
 docs/ListTssRequests200Response.md
 docs/ListUtxos200Response.md
@@ -260,6 +268,10 @@ docs/RoleScopes.md
 docs/RootPubkey.md
 docs/SafeContractCallSource.md
 docs/SafeTransferSource.md
+docs/SafeTxDecodedData.md
+docs/SafeTxDecodedDataParameters.md
+docs/SafeTxExtraData.md
+docs/SafeTxSubTransaction.md
 docs/SafeWallet.md
 docs/SafeWalletDelegates.md
 docs/SafeWalletDelegatesContractCall.md
@@ -296,12 +308,15 @@ docs/TSSRequestWebhookEventData.md
 docs/TokenAssetModelType.md
 docs/TokenBalance.md
 docs/TokenInfo.md
+docs/TokensEventData.md
 docs/Transaction.md
 docs/TransactionApprovalDetail.md
 docs/TransactionApprovalResult.md
 docs/TransactionApprover.md
 docs/TransactionBlockInfo.md
+docs/TransactionCoboCategory.md
 docs/TransactionCustodialAssetWalletSource.md
+docs/TransactionCustodialWeb3WalletSource.md
 docs/TransactionDepositFromAddressSource.md
 docs/TransactionDepositFromLoopSource.md
 docs/TransactionDepositFromWalletSource.md
@@ -321,10 +336,12 @@ docs/TransactionExchangeWalletSource.md
 docs/TransactionFee.md
 docs/TransactionFeeStationWalletSource.md
 docs/TransactionFixedFee.md
+docs/TransactionFuelingInfo.md
 docs/TransactionInitiatorType.md
 docs/TransactionMPCWalletSource.md
 docs/TransactionMessageSignEIP191Destination.md
 docs/TransactionMessageSignEIP712Destination.md
+docs/TransactionProcessType.md
 docs/TransactionRawMessageSignDestination.md
 docs/TransactionRawTxInfo.md
 docs/TransactionRbf.md
@@ -461,6 +478,7 @@ model_broadcast_signed_transactions_request.go
 model_btceip191_message_sign_destination.go
 model_callback_message.go
 model_chain_info.go
+model_chains_event_data.go
 model_change_guard_pubkey_200_response.go
 model_check_address_chains_validity_200_response_inner.go
 model_check_address_validity_200_response.go
@@ -514,6 +532,9 @@ model_created_wallet_info.go
 model_curve_type.go
 model_custodial_transfer_source.go
 model_custodial_wallet_info.go
+model_custodial_web3_contract_call_source.go
+model_custodial_web3_message_sign_source.go
+model_custodial_web3_transfer_source.go
 model_delete_guard_pubkey_201_response.go
 model_delete_key_share_holder_group_by_id_201_response.go
 model_delete_wallet_by_id_201_response.go
@@ -560,6 +581,7 @@ model_fee_amount.go
 model_fee_gas_limit.go
 model_fee_rate.go
 model_fee_reserved.go
+model_fee_station_transaction_type.go
 model_fee_type.go
 model_fixed_fee_rate.go
 model_get_api_key_info_200_response.go
@@ -600,6 +622,7 @@ model_list_supported_countries_200_response_inner.go
 model_list_supported_tokens_200_response.go
 model_list_swap_activities_200_response.go
 model_list_token_balances_for_address_200_response.go
+model_list_transaction_approval_details_200_response.go
 model_list_transactions_200_response.go
 model_list_tss_requests_200_response.go
 model_list_utxos_200_response.go
@@ -647,6 +670,10 @@ model_role_scopes.go
 model_root_pubkey.go
 model_safe_contract_call_source.go
 model_safe_transfer_source.go
+model_safe_tx_decoded_data.go
+model_safe_tx_decoded_data_parameters.go
+model_safe_tx_extra_data.go
+model_safe_tx_sub_transaction.go
 model_safe_wallet.go
 model_safe_wallet_delegates.go
 model_safe_wallet_delegates_contract_call.go
@@ -676,12 +703,15 @@ model_swap_token_pair.go
 model_token_asset_model_type.go
 model_token_balance.go
 model_token_info.go
+model_tokens_event_data.go
 model_transaction.go
 model_transaction_approval_detail.go
 model_transaction_approval_result.go
 model_transaction_approver.go
 model_transaction_block_info.go
+model_transaction_cobo_category.go
 model_transaction_custodial_asset_wallet_source.go
+model_transaction_custodial_web3_wallet_source.go
 model_transaction_deposit_from_address_source.go
 model_transaction_deposit_from_loop_source.go
 model_transaction_deposit_from_wallet_source.go
@@ -701,10 +731,12 @@ model_transaction_exchange_wallet_source.go
 model_transaction_fee.go
 model_transaction_fee_station_wallet_source.go
 model_transaction_fixed_fee.go
+model_transaction_fueling_info.go
 model_transaction_initiator_type.go
 model_transaction_message_sign_eip191_destination.go
 model_transaction_message_sign_eip712_destination.go
 model_transaction_mpc_wallet_source.go
+model_transaction_process_type.go
 model_transaction_raw_message_sign_destination.go
 model_transaction_raw_tx_info.go
 model_transaction_rbf.go
@@ -796,6 +828,7 @@ response.go
 test/api_address_books_test.go
 test/api_developers_test.go
 test/api_developers_webhooks_test.go
+test/api_fee_station_test.go
 test/api_o_auth_test.go
 test/api_prime_broker_test.go
 test/api_stakings_test.go

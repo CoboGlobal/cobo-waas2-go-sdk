@@ -105,7 +105,7 @@ func (src TravelRuleWithdrawExchangesOrVASPEntityInfo) MarshalJSON() ([]byte, er
 		return json.Marshal(&src.TravelRuleWithdrawNaturalEntity)
 	}
 
-	return nil, nil // no data in oneOf schemas
+	return []byte(`{}`), nil // no data in oneOf schemas
 }
 
 // Get the actual instance

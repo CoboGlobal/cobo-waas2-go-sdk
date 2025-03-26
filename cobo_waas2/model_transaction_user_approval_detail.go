@@ -17,6 +17,10 @@ var _ MappedNullable = &TransactionUserApprovalDetail{}
 
 // TransactionUserApprovalDetail The user approval data for transaction.
 type TransactionUserApprovalDetail struct {
+	// The name the user who audited this message.
+	Name *string `json:"name,omitempty"`
+	// The email the user who audited this message.
+	Email *string `json:"email,omitempty"`
 	// The Cobo Guard public key of the user who audited this message.
 	Pubkey *string `json:"pubkey,omitempty"`
 	Result *TransactionApprovalResult `json:"result,omitempty"`
@@ -47,6 +51,70 @@ func NewTransactionUserApprovalDetail() *TransactionUserApprovalDetail {
 func NewTransactionUserApprovalDetailWithDefaults() *TransactionUserApprovalDetail {
 	this := TransactionUserApprovalDetail{}
 	return &this
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *TransactionUserApprovalDetail) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionUserApprovalDetail) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *TransactionUserApprovalDetail) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *TransactionUserApprovalDetail) SetName(v string) {
+	o.Name = &v
+}
+
+// GetEmail returns the Email field value if set, zero value otherwise.
+func (o *TransactionUserApprovalDetail) GetEmail() string {
+	if o == nil || IsNil(o.Email) {
+		var ret string
+		return ret
+	}
+	return *o.Email
+}
+
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionUserApprovalDetail) GetEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.Email) {
+		return nil, false
+	}
+	return o.Email, true
+}
+
+// HasEmail returns a boolean if a field has been set.
+func (o *TransactionUserApprovalDetail) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given string and assigns it to the Email field.
+func (o *TransactionUserApprovalDetail) SetEmail(v string) {
+	o.Email = &v
 }
 
 // GetPubkey returns the Pubkey field value if set, zero value otherwise.
@@ -283,6 +351,12 @@ func (o TransactionUserApprovalDetail) MarshalJSON() ([]byte, error) {
 
 func (o TransactionUserApprovalDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
 	if !IsNil(o.Pubkey) {
 		toSerialize["pubkey"] = o.Pubkey
 	}

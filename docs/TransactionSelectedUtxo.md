@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **VoutN** | Pointer to **int32** | The output index of the UTXO. | [optional] 
 **Address** | Pointer to **string** | The address of the UTXO. | [optional] 
 **Value** | Pointer to **string** | The value of the UTXO. | [optional] 
+**RedeemScript** | Pointer to **string** | Redeem script is used in P2SH and P2WSH transactions. | [optional] 
+**RevealedScript** | Pointer to **string** | Revealed script is used for script path spending in Taproot transactions. | [optional] 
 
 ## Methods
 
@@ -127,6 +129,56 @@ SetValue sets Value field to given value.
 `func (o *TransactionSelectedUtxo) HasValue() bool`
 
 HasValue returns a boolean if a field has been set.
+
+### GetRedeemScript
+
+`func (o *TransactionSelectedUtxo) GetRedeemScript() string`
+
+GetRedeemScript returns the RedeemScript field if non-nil, zero value otherwise.
+
+### GetRedeemScriptOk
+
+`func (o *TransactionSelectedUtxo) GetRedeemScriptOk() (*string, bool)`
+
+GetRedeemScriptOk returns a tuple with the RedeemScript field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRedeemScript
+
+`func (o *TransactionSelectedUtxo) SetRedeemScript(v string)`
+
+SetRedeemScript sets RedeemScript field to given value.
+
+### HasRedeemScript
+
+`func (o *TransactionSelectedUtxo) HasRedeemScript() bool`
+
+HasRedeemScript returns a boolean if a field has been set.
+
+### GetRevealedScript
+
+`func (o *TransactionSelectedUtxo) GetRevealedScript() string`
+
+GetRevealedScript returns the RevealedScript field if non-nil, zero value otherwise.
+
+### GetRevealedScriptOk
+
+`func (o *TransactionSelectedUtxo) GetRevealedScriptOk() (*string, bool)`
+
+GetRevealedScriptOk returns a tuple with the RevealedScript field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRevealedScript
+
+`func (o *TransactionSelectedUtxo) SetRevealedScript(v string)`
+
+SetRevealedScript sets RevealedScript field to given value.
+
+### HasRevealedScript
+
+`func (o *TransactionSelectedUtxo) HasRevealedScript() bool`
+
+HasRevealedScript returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

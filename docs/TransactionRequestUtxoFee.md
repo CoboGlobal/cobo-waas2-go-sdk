@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeRate** | **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**FeeRate** | Pointer to **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | [optional] 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 **TokenId** | **string** | The token ID of the transaction fee. | 
 **MaxFeeAmount** | Pointer to **string** | The maximum fee that you are willing to pay for the transaction. Provide the value without applying precision. The transaction will fail if the transaction fee exceeds the maximum fee. | [optional] 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewTransactionRequestUtxoFee
 
-`func NewTransactionRequestUtxoFee(feeRate string, feeType FeeType, tokenId string, ) *TransactionRequestUtxoFee`
+`func NewTransactionRequestUtxoFee(feeType FeeType, tokenId string, ) *TransactionRequestUtxoFee`
 
 NewTransactionRequestUtxoFee instantiates a new TransactionRequestUtxoFee object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +47,11 @@ and a boolean to check if the value has been set.
 
 SetFeeRate sets FeeRate field to given value.
 
+### HasFeeRate
+
+`func (o *TransactionRequestUtxoFee) HasFeeRate() bool`
+
+HasFeeRate returns a boolean if a field has been set.
 
 ### GetFeeType
 

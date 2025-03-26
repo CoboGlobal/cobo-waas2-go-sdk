@@ -4,6 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Name** | Pointer to **string** | The name the user who audited this message. | [optional] 
+**Email** | Pointer to **string** | The email the user who audited this message. | [optional] 
 **Pubkey** | Pointer to **string** | The Cobo Guard public key of the user who audited this message. | [optional] 
 **Result** | Pointer to [**TransactionApprovalResult**](TransactionApprovalResult.md) |  | [optional] 
 **Signature** | Pointer to **string** | The signature of the audited message. | [optional] 
@@ -30,6 +32,56 @@ will change when the set of required properties is changed
 NewTransactionUserApprovalDetailWithDefaults instantiates a new TransactionUserApprovalDetail object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetName
+
+`func (o *TransactionUserApprovalDetail) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *TransactionUserApprovalDetail) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *TransactionUserApprovalDetail) SetName(v string)`
+
+SetName sets Name field to given value.
+
+### HasName
+
+`func (o *TransactionUserApprovalDetail) HasName() bool`
+
+HasName returns a boolean if a field has been set.
+
+### GetEmail
+
+`func (o *TransactionUserApprovalDetail) GetEmail() string`
+
+GetEmail returns the Email field if non-nil, zero value otherwise.
+
+### GetEmailOk
+
+`func (o *TransactionUserApprovalDetail) GetEmailOk() (*string, bool)`
+
+GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmail
+
+`func (o *TransactionUserApprovalDetail) SetEmail(v string)`
+
+SetEmail sets Email field to given value.
+
+### HasEmail
+
+`func (o *TransactionUserApprovalDetail) HasEmail() bool`
+
+HasEmail returns a boolean if a field has been set.
 
 ### GetPubkey
 

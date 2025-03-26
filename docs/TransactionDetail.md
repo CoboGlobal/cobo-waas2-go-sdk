@@ -30,6 +30,8 @@ Name | Type | Description | Notes
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description for your transaction. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
+**CoboCategory** | Pointer to **[]string** | A transaction category for cobo to identify your transactions. | [optional] 
+**FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **Timeline** | Pointer to [**[]TransactionTimeline**](TransactionTimeline.md) |  | [optional] 
@@ -672,6 +674,56 @@ SetIsLoop sets IsLoop field to given value.
 `func (o *TransactionDetail) HasIsLoop() bool`
 
 HasIsLoop returns a boolean if a field has been set.
+
+### GetCoboCategory
+
+`func (o *TransactionDetail) GetCoboCategory() []string`
+
+GetCoboCategory returns the CoboCategory field if non-nil, zero value otherwise.
+
+### GetCoboCategoryOk
+
+`func (o *TransactionDetail) GetCoboCategoryOk() (*[]string, bool)`
+
+GetCoboCategoryOk returns a tuple with the CoboCategory field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCoboCategory
+
+`func (o *TransactionDetail) SetCoboCategory(v []string)`
+
+SetCoboCategory sets CoboCategory field to given value.
+
+### HasCoboCategory
+
+`func (o *TransactionDetail) HasCoboCategory() bool`
+
+HasCoboCategory returns a boolean if a field has been set.
+
+### GetFuelingInfo
+
+`func (o *TransactionDetail) GetFuelingInfo() TransactionFuelingInfo`
+
+GetFuelingInfo returns the FuelingInfo field if non-nil, zero value otherwise.
+
+### GetFuelingInfoOk
+
+`func (o *TransactionDetail) GetFuelingInfoOk() (*TransactionFuelingInfo, bool)`
+
+GetFuelingInfoOk returns a tuple with the FuelingInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFuelingInfo
+
+`func (o *TransactionDetail) SetFuelingInfo(v TransactionFuelingInfo)`
+
+SetFuelingInfo sets FuelingInfo field to given value.
+
+### HasFuelingInfo
+
+`func (o *TransactionDetail) HasFuelingInfo() bool`
+
+HasFuelingInfo returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 
