@@ -742,7 +742,7 @@ You need to specify details such as the sender address and recipient address, to
 
 <Note>If you make transfers from Custodial Wallets (Asset Wallets) and Exchange Wallets, do not set the fee-related properties, as they will not take effects.</Note>
 
-<Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. You should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
+<Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. To do this, you should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
 
 <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
 
@@ -1379,6 +1379,147 @@ func (a *TransactionsAPIService) GetTransactionByIdExecute(r ApiGetTransactionBy
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiListTransactionApprovalDetailsRequest struct {
+	ctx context.Context
+	ApiService *TransactionsAPIService
+	transactionIds *string
+	coboIds *string
+}
+
+// A list of transaction IDs, separated by comma.
+func (r ApiListTransactionApprovalDetailsRequest) TransactionIds(transactionIds string) ApiListTransactionApprovalDetailsRequest {
+	r.transactionIds = &transactionIds
+	return r
+}
+
+// A list of Cobo IDs, separated by comma. A Cobo ID can be used to track a transaction.
+func (r ApiListTransactionApprovalDetailsRequest) CoboIds(coboIds string) ApiListTransactionApprovalDetailsRequest {
+	r.coboIds = &coboIds
+	return r
+}
+
+func (r ApiListTransactionApprovalDetailsRequest) Execute() (*ListTransactionApprovalDetails200Response, *http.Response, error) {
+	return r.ApiService.ListTransactionApprovalDetailsExecute(r)
+}
+
+/*
+ListTransactionApprovalDetails List transaction approval details
+
+This operation retrieves approval detailed information about multi specified transaction.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListTransactionApprovalDetailsRequest
+*/
+func (a *TransactionsAPIService) ListTransactionApprovalDetails(ctx context.Context) ApiListTransactionApprovalDetailsRequest {
+	return ApiListTransactionApprovalDetailsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListTransactionApprovalDetails200Response
+func (a *TransactionsAPIService) ListTransactionApprovalDetailsExecute(r ApiListTransactionApprovalDetailsRequest) (*ListTransactionApprovalDetails200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListTransactionApprovalDetails200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.ListTransactionApprovalDetails")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/transactions/approval_details"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.transactionIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "transaction_ids", r.transactionIds, "")
+	}
+	if r.coboIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cobo_ids", r.coboIds, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListTransactionsRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
@@ -1399,6 +1540,7 @@ type ApiListTransactionsRequest struct {
 	limit *int32
 	before *string
 	after *string
+	direction *string
 }
 
 // The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
@@ -1503,6 +1645,12 @@ func (r ApiListTransactionsRequest) After(after string) ApiListTransactionsReque
 	return r
 }
 
+// The sort direction. Possible values include:   - &#x60;ASC&#x60;: Sort the results in ascending order.   - &#x60;DESC&#x60;: Sort the results in descending order. 
+func (r ApiListTransactionsRequest) Direction(direction string) ApiListTransactionsRequest {
+	r.direction = &direction
+	return r
+}
+
 func (r ApiListTransactionsRequest) Execute() (*ListTransactions200Response, *http.Response, error) {
 	return r.ApiService.ListTransactionsExecute(r)
 }
@@ -1599,6 +1747,12 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.direction != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "direction", r.direction, "")
+	} else {
+		var defaultValue string = ""
+		r.direction = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

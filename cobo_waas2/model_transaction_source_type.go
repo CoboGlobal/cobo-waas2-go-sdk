@@ -19,6 +19,7 @@ type TransactionSourceType string
 // List of TransactionSourceType
 const (
 	TRANSACTIONSOURCETYPE_ASSET TransactionSourceType = "Asset"
+	TRANSACTIONSOURCETYPE_WEB3 TransactionSourceType = "Web3"
 	TRANSACTIONSOURCETYPE_ORG_CONTROLLED TransactionSourceType = "Org-Controlled"
 	TRANSACTIONSOURCETYPE_USER_CONTROLLED TransactionSourceType = "User-Controlled"
 	TRANSACTIONSOURCETYPE_SAFEWALLET TransactionSourceType = "Safe{Wallet}"
@@ -32,6 +33,7 @@ const (
 // All allowed values of TransactionSourceType enum
 var AllowedTransactionSourceTypeEnumValues = []TransactionSourceType{
 	"Asset",
+	"Web3",
 	"Org-Controlled",
 	"User-Controlled",
 	"Safe{Wallet}",

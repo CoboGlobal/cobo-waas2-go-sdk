@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The Chain enabled event data. - &#x60;Tokens&#x60;: The Token enabled event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
@@ -31,6 +31,8 @@ Name | Type | Description | Notes
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description of the TSS request. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
+**CoboCategory** | Pointer to **[]string** | A transaction category for cobo to identify your transactions. | [optional] 
+**FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The vault&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
@@ -42,12 +44,14 @@ Name | Type | Description | Notes
 **ProjectId** | Pointer to **string** | The project ID. | [optional] 
 **Name** | Pointer to **string** | The vault name. | [optional] 
 **RootPubkeys** | Pointer to [**[]RootPubkey**](RootPubkey.md) |  | [optional] 
+**Chains** | [**[]ChainInfo**](ChainInfo.md) | The chains. | 
+**Tokens** | [**[]TokenInfo**](TokenInfo.md) | The tokens. | 
 
 ## Methods
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, walletId string, status TSSRequestStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, walletId string, status TSSRequestStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, chains []ChainInfo, tokens []TokenInfo, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -702,6 +706,56 @@ SetIsLoop sets IsLoop field to given value.
 
 HasIsLoop returns a boolean if a field has been set.
 
+### GetCoboCategory
+
+`func (o *WebhookEventData) GetCoboCategory() []string`
+
+GetCoboCategory returns the CoboCategory field if non-nil, zero value otherwise.
+
+### GetCoboCategoryOk
+
+`func (o *WebhookEventData) GetCoboCategoryOk() (*[]string, bool)`
+
+GetCoboCategoryOk returns a tuple with the CoboCategory field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCoboCategory
+
+`func (o *WebhookEventData) SetCoboCategory(v []string)`
+
+SetCoboCategory sets CoboCategory field to given value.
+
+### HasCoboCategory
+
+`func (o *WebhookEventData) HasCoboCategory() bool`
+
+HasCoboCategory returns a boolean if a field has been set.
+
+### GetFuelingInfo
+
+`func (o *WebhookEventData) GetFuelingInfo() TransactionFuelingInfo`
+
+GetFuelingInfo returns the FuelingInfo field if non-nil, zero value otherwise.
+
+### GetFuelingInfoOk
+
+`func (o *WebhookEventData) GetFuelingInfoOk() (*TransactionFuelingInfo, bool)`
+
+GetFuelingInfoOk returns a tuple with the FuelingInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFuelingInfo
+
+`func (o *WebhookEventData) SetFuelingInfo(v TransactionFuelingInfo)`
+
+SetFuelingInfo sets FuelingInfo field to given value.
+
+### HasFuelingInfo
+
+`func (o *WebhookEventData) HasFuelingInfo() bool`
+
+HasFuelingInfo returns a boolean if a field has been set.
+
 ### GetCreatedTimestamp
 
 `func (o *WebhookEventData) GetCreatedTimestamp() int64`
@@ -976,6 +1030,46 @@ SetRootPubkeys sets RootPubkeys field to given value.
 `func (o *WebhookEventData) HasRootPubkeys() bool`
 
 HasRootPubkeys returns a boolean if a field has been set.
+
+### GetChains
+
+`func (o *WebhookEventData) GetChains() []ChainInfo`
+
+GetChains returns the Chains field if non-nil, zero value otherwise.
+
+### GetChainsOk
+
+`func (o *WebhookEventData) GetChainsOk() (*[]ChainInfo, bool)`
+
+GetChainsOk returns a tuple with the Chains field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChains
+
+`func (o *WebhookEventData) SetChains(v []ChainInfo)`
+
+SetChains sets Chains field to given value.
+
+
+### GetTokens
+
+`func (o *WebhookEventData) GetTokens() []TokenInfo`
+
+GetTokens returns the Tokens field if non-nil, zero value otherwise.
+
+### GetTokensOk
+
+`func (o *WebhookEventData) GetTokensOk() (*[]TokenInfo, bool)`
+
+GetTokensOk returns a tuple with the Tokens field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokens
+
+`func (o *WebhookEventData) SetTokens(v []TokenInfo)`
+
+SetTokens sets Tokens field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

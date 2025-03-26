@@ -11,13 +11,13 @@ Name | Type | Description | Notes
 **MaxFeePerGas** | **string** | The maximum gas fee per gas unit used on the chain, in wei. | 
 **MaxPriorityFeePerGas** | **string** | The maximum priority fee per gas unit used, in wei. The maximum priority fee represents the highest amount of miner tips that you are willing to pay for your transaction. | 
 **GasPrice** | **string** | The gas price, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions per gas unit used. | 
-**FeeRate** | **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | 
+**FeeRate** | Pointer to **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | [optional] 
 
 ## Methods
 
 ### NewTransactionRequestFee
 
-`func NewTransactionRequestFee(feeType FeeType, tokenId string, maxFeePerGas string, maxPriorityFeePerGas string, gasPrice string, feeRate string, ) *TransactionRequestFee`
+`func NewTransactionRequestFee(feeType FeeType, tokenId string, maxFeePerGas string, maxPriorityFeePerGas string, gasPrice string, ) *TransactionRequestFee`
 
 NewTransactionRequestFee instantiates a new TransactionRequestFee object
 This constructor will assign default values to properties that have it defined,
@@ -201,6 +201,11 @@ and a boolean to check if the value has been set.
 
 SetFeeRate sets FeeRate field to given value.
 
+### HasFeeRate
+
+`func (o *TransactionRequestFee) HasFeeRate() bool`
+
+HasFeeRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -53,6 +53,8 @@ tags:
   name: TravelRule
 - description: Operations related to prime broker.
   name: PrimeBroker
+- description: Operations related to fee station.
+  name: FeeStation
 paths:
   /wallets/chains:
     get:
@@ -3493,7 +3495,7 @@ paths:
 
         <Note>If you make transfers from Custodial Wallets (Asset Wallets) and Exchange Wallets, do not set the fee-related properties, as they will not take effects.</Note>
 
-        <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. You should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
+        <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. To do this, you should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
 
         <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
       operationId: create_transfer_transaction
@@ -3818,6 +3820,22 @@ paths:
         name: after
         required: false
         schema:
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ""
+          enum:
+          - ASC
+          - DESC
           type: string
         style: form
       responses:
@@ -4220,6 +4238,58 @@ paths:
       - OAuth2:
         - transaction.read
       summary: Get transaction approval details
+      tags:
+      - Transactions
+  /transactions/approval_details:
+    get:
+      description: |
+        This operation retrieves approval detailed information about multi specified transaction.
+      operationId: list_transaction_approval_details
+      parameters:
+      - description: "A list of transaction IDs, separated by comma."
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+        explode: true
+        in: query
+        name: transaction_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of Cobo IDs, separated by comma. A Cobo ID can be used\
+          \ to track a transaction."
+        example: "20231213122855000000000000000000,20231213122955000000000000000000"
+        explode: true
+        in: query
+        name: cobo_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_transaction_approval_details_200_response'
+          description: The information about transaction approval detail.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: List transaction approval details
       tags:
       - Transactions
   /oauth/token:
@@ -6985,6 +7055,459 @@ paths:
       summary: Submit Travel Rule information for withdrawals
       tags:
       - TravelRule
+  /fee_station/addresses:
+    get:
+      description: |
+        This operation retrieves a list of addresses within a specified wallet.
+      operationId: list_fee_station_addresses
+      parameters:
+      - description: "A list of chain IDs, separated by comma. The chain ID is the\
+          \ unique identifier of a blockchain. You can retrieve the IDs of all the\
+          \ chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+        example: "BTC,ETH"
+        explode: true
+        in: query
+        name: chain_ids
+        required: false
+        schema:
+          description: "A list of chain IDs, separated by comma."
+          type: string
+        style: form
+      - description: "A list of wallet addresses, separated by comma. For addresses\
+          \ requiring a memo, append the memo after the address using the '|' separator\
+          \ (e.g., \"address|memo\")."
+        example: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"
+        explode: true
+        in: query
+        name: addresses
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data before the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n\
+          - If you set it to `infinity`, the last page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data after the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_addresses_200_response'
+          description: Successfully listed addresses
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: List fee station addresses
+      tags:
+      - FeeStation
+  /fee_station/tokens:
+    get:
+      description: |
+        The operation retrieves a list of token balances within a specified wallet.
+
+        <Note>This operation is not applicable to Exchange Wallets.</Note>
+      operationId: list_token_balances_for_fee_station
+      parameters:
+      - description: "A list of token IDs, separated by comma. The token ID is the\
+          \ unique identifier of a token. You can retrieve the IDs of all the tokens\
+          \ you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+        example: "ETH_USDT,ETH_USDC"
+        explode: true
+        in: query
+        name: token_ids
+        required: false
+        schema:
+          description: "A list of token IDs, separated by comma."
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data before the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n\
+          - If you set it to `infinity`, the last page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data after the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_token_balances_for_address_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: List token balances by fee station
+      tags:
+      - FeeStation
+  /fee_station/transactions:
+    get:
+      description: |
+        This operation retrieves all the transactions under your organization.
+
+        You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamps. You can also paginate and sort your query results.
+      operationId: list_fee_station_transactions
+      parameters:
+      - description: The request ID that is used to track a transaction request. The
+          request ID is provided by you and must be unique within your organization.
+        example: web_send_by_user_327_1610444045047
+        explode: true
+        in: query
+        name: request_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of Cobo IDs, separated by comma. A Cobo ID can be used\
+          \ to track a transaction."
+        example: "20231213122855000000000000000000,20231213122955000000000000000000"
+        explode: true
+        in: query
+        name: cobo_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of transaction IDs, separated by comma."
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+        explode: true
+        in: query
+        name: transaction_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of transaction hashes, separated by comma."
+        example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        explode: true
+        in: query
+        name: transaction_hashes
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of transaction types, separated by comma. Possible values\
+          \ include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`: A\
+          \ withdrawal transaction.\n"
+        example: "Deposit,Withdrawal"
+        explode: true
+        in: query
+        name: types
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of transaction statuses, separated by comma. Possible\
+          \ values include: \n  - `Submitted`: The transaction is submitted.\n  -\
+          \ `PendingScreening`: The transaction is pending screening by Risk Control.\
+          \ \n  - `PendingAuthorization`: The transaction is pending approvals.\n\
+          \  - `PendingSignature`: The transaction is pending signature. \n  - `Broadcasting`:\
+          \ The transaction is being broadcast.\n  - `Confirming`: The transaction\
+          \ is waiting for the required number of confirmations.\n  - `Completed`:\
+          \ The transaction is completed.\n  - `Failed`: The transaction failed.\n\
+          \  - `Rejected`: The transaction is rejected.\n  - `Pending`: The transaction\
+          \ is waiting to be included in the next block of the blockchain.\n"
+        example: "Completed,Failed"
+        explode: true
+        in: query
+        name: statuses
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of chain IDs, separated by comma. The chain ID is the\
+          \ unique identifier of a blockchain. You can retrieve the IDs of all the\
+          \ chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+        example: "BTC,ETH"
+        explode: true
+        in: query
+        name: chain_ids
+        required: false
+        schema:
+          description: "A list of chain IDs, separated by comma."
+          type: string
+        style: form
+      - description: "A list of token IDs, separated by comma. The token ID is the\
+          \ unique identifier of a token. You can retrieve the IDs of all the tokens\
+          \ you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+        example: "ETH_USDT,ETH_USDC"
+        explode: true
+        in: query
+        name: token_ids
+        required: false
+        schema:
+          description: "A list of token IDs, separated by comma."
+          type: string
+        style: form
+      - description: "(This concept applies to Exchange Wallets only) A list of asset\
+          \ IDs, separated by comma. An asset ID is the unique identifier of the asset\
+          \ held within your linked exchange account."
+        example: "USDT,USDC"
+        explode: true
+        in: query
+        name: asset_ids
+        required: false
+        schema:
+          description: "A list of asset IDs, separated by comma."
+          type: string
+        style: form
+      - description: "The time when the transaction was created, in Unix timestamp\
+          \ format, measured in milliseconds. You can use this parameter to filter\
+          \ transactions created on or after the specified time."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: min_created_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The time when the transaction was created, in Unix timestamp\
+          \ format, measured in milliseconds. You can use this parameter to filter\
+          \ transactions created on or before the specified time."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: max_created_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data before the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n\
+          - If you set it to `infinity`, the last page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data after the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ""
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_transactions_200_response'
+          description: The information about the transactions.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: List all fee station transactions
+      tags:
+      - FeeStation
+  /fee_station/transactions/{transaction_id}:
+    get:
+      description: |
+        This operation retrieves detailed information about a specified transaction, such as the transaction status, source address, destination address, and timestamp.
+      operationId: get_fee_station_transaction_by_id
+      parameters:
+      - description: The transaction ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: transaction_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDetail'
+          description: The information about a transaction.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: Get fee station transaction information
+      tags:
+      - FeeStation
   /swaps/activities:
     get:
       description: |
@@ -8102,6 +8625,16 @@ components:
       schema:
         type: string
       style: form
+    optionalTransactionIdParam:
+      description: "A list of transaction IDs, separated by comma."
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+      explode: true
+      in: query
+      name: transaction_ids
+      required: false
+      schema:
+        type: string
+      style: form
     optionalTransactionTypeParam:
       description: The type of a transaction
       explode: true
@@ -8268,6 +8801,16 @@ components:
         format: uuid
         type: string
       style: simple
+    optionalTransactionHashParam:
+      description: "A list of transaction hashes, separated by comma."
+      example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+      explode: true
+      in: query
+      name: transaction_hashes
+      required: false
+      schema:
+        type: string
+      style: form
     webhookEventIdParam:
       description: "The event ID. You can obtain a list of event IDs by calling [List\
         \ all events](https://www.cobo.com/developers/v2/api-references/developers--webhooks/list-all-events)."
@@ -8855,6 +9398,18 @@ components:
         description: The user ID.
         type: string
       style: simple
+    optionalFeeStationTransactionTypeListParam:
+      description: "A list of transaction types, separated by comma. Possible values\
+        \ include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`: A withdrawal\
+        \ transaction.\n"
+      example: "Deposit,Withdrawal"
+      explode: true
+      in: query
+      name: types
+      required: false
+      schema:
+        type: string
+      style: form
   requestBodies:
     createWalletBody:
       content:
@@ -8886,6 +9441,24 @@ components:
           schema:
             $ref: '#/components/schemas/SafeWalletDelegates'
       description: "The request body to query the Delegates of a Safe{Wallet}."
+    refreshAddressBalancesBody:
+      content:
+        application/json:
+          schema:
+            description: The request body to refresh the addresses balance by  specified
+              token within a specified wallet.
+            properties:
+              addresses:
+                description: A list of  address.
+                items:
+                  example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
+                  type: string
+                type: array
+            required:
+            - addresses
+            type: object
+      description: The request body to refresh the addresses balance by  specified
+        token within a specified wallet
     createKeyShareHolderGroupBody:
       content:
         application/json:
@@ -9250,6 +9823,22 @@ components:
               $ref: '#/components/schemas/check_loop_transfers_200_response_inner'
             type: array
       description: The request was successful.
+    refreshAddressBalancesResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              submitted:
+                description: |
+                  Whether the request to refresh address balances has been successfully submitted.
+                  - `true`: The request to refresh address balances has been successfully submitted.
+                  - `false`: The request to  refresh address balances has not been submitted.
+                example: true
+                type: boolean
+            required:
+            - submitted
+            type: object
+      description: The request was successful.
     createKeyShareHolderGroupsResponse:
       content:
         application/json:
@@ -9435,6 +10024,12 @@ components:
           schema:
             $ref: '#/components/schemas/TransactionApprovalDetail'
       description: The information about a transaction approval detail.
+    batchGetTransactionApprovalDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_transaction_approval_details_200_response'
+      description: The information about transaction approval detail.
     createWebhookEndpointResponse:
       content:
         application/json:
@@ -10016,6 +10611,7 @@ components:
       description: |
         The wallet sub-type. Possible values include:
         - `Asset`: Custodial Wallets (Asset Wallets).
+        - `Web3`: Custodial Wallets (Web3 Wallets).
         - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
         - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
         - `Safe{Wallet}`: Smart Contract Wallets (Safe).
@@ -11695,7 +12291,6 @@ components:
 
         Switch between the tabs to display the properties for different transaction fee models.
       required:
-      - fee_rate
       - fee_type
       - token_id
       title: UTXO (Preset)
@@ -11755,7 +12350,7 @@ components:
         confirming_threshold: 15
         type: Deposit
         result:
-          result_type: Address
+          result_type: Signature
           signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
         token_id: ETH_USDT
         updated_timestamp: 1610445878970
@@ -11766,22 +12361,29 @@ components:
         created_timestamp: 1610445878970
         initiator_type: API
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        cobo_category:
+        - AutoFueling
+        - AutoFueling
         category:
         - Payment
         - Payment
-        request_id: web_send_by_user_327_1610444045047
+        request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
         raw_tx_info:
           utxo_change:
             address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             value: "0.5"
           selected_utxos:
-          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+            address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
             value: "0.5"
-          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+            address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
             value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
@@ -11795,6 +12397,9 @@ components:
           replaced_type: Resend
         failed_reason: Rejected by signer Cobo TSS
         status: Submitted
+        fueling_info:
+          transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         transaction_id:
           description: The transaction ID.
@@ -11808,7 +12413,7 @@ components:
         request_id:
           description: The request ID that is used to track a transaction request.
             The request ID is provided by you and must be unique within your organization.
-          example: web_send_by_user_327_1610444045047
+          example: 760a1955-e212-4dfb-a8d0-e66312a1a051
           type: string
         wallet_id:
           description: "For deposit transactions, this property represents the wallet\
@@ -11897,6 +12502,24 @@ components:
             - `false`: The transaction was not executed as a Cobo Loop transfer.
           example: false
           type: boolean
+        cobo_category:
+          description: A transaction category for cobo to identify your transactions.
+          items:
+            description: |
+              A transaction category for cobo to identify your transactions.
+              - AutoSweep
+              - AutoFueling
+              - AutoFuelingRefund
+              - SafeTxMessage
+              - BillPayment
+              - BillRefund
+              - CommissionFeeCharge
+              - CommissionFeeRefund
+            example: AutoFueling
+            type: string
+          type: array
+        fueling_info:
+          $ref: '#/components/schemas/TransactionFuelingInfo'
         created_timestamp:
           description: "The time when the transaction was created, in Unix timestamp\
             \ format, measured in milliseconds."
@@ -11969,7 +12592,7 @@ components:
         confirming_threshold: 15
         type: Deposit
         result:
-          result_type: Address
+          result_type: Signature
           signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
         token_id: ETH_USDT
         updated_timestamp: 1610445878970
@@ -11987,22 +12610,29 @@ components:
         - finished_timestamp: 1610445878970
           finished: true
           status: Submitted
+        cobo_category:
+        - AutoFueling
+        - AutoFueling
         category:
         - Payment
         - Payment
-        request_id: web_send_by_user_327_1610444045047
+        request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
         raw_tx_info:
           utxo_change:
             address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             value: "0.5"
           selected_utxos:
-          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+            address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
             value: "0.5"
-          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+            address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
             value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
@@ -12016,6 +12646,9 @@ components:
           replaced_type: Resend
         failed_reason: Rejected by signer Cobo TSS
         status: Submitted
+        fueling_info:
+          transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
     TransactionApprover:
       description: The approver data for transaction.
       properties:
@@ -12292,6 +12925,7 @@ components:
         The transaction source. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
       enum:
       - Asset
+      - Web3
       - Org-Controlled
       - User-Controlled
       - "Safe{Wallet}"
@@ -12322,6 +12956,36 @@ components:
       - source_type
       - wallet_id
       title: Custodial Wallet (Asset)
+      type: object
+    TransactionCustodialWeb3WalletSource:
+      description: |
+        Information about the transaction source type `Web3`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        Switch between the tabs to display the properties for different transaction sources.
+      properties:
+        source_type:
+          $ref: '#/components/schemas/TransactionSourceType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        included_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+        excluded_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+      required:
+      - source_type
+      - wallet_id
+      title: Custodial Wallet (Web3)
       type: object
     TransactionMPCWalletSource:
       description: |
@@ -12777,6 +13441,10 @@ components:
       properties:
         destination_type:
           $ref: '#/components/schemas/TransactionDestinationType'
+        raw_structured_data:
+          description: "The raw structured data to be signed, formatted as a JSON\
+            \ string."
+          type: string
         structured_data:
           additionalProperties: true
           description: "The structured data to be signed, formatted as a JSON object\
@@ -12784,6 +13452,8 @@ components:
           example: |
             {"types": {"EIP712Domain": [{"name": "name", "type": "string"}, {"name": "version", "type": "string"}, {"name": "chainId", "type": "uint256"}, {"name": "verifyingContract", "type": "address"}], "Person": [{"name": "name", "type": "string"}, {"name": "wallet", "type": "address"}], "Mail": [{"name": "from", "type": "Person"}, {"name": "to", "type": "Person"}, {"name": "contents", "type": "string"}]}, "primaryType": "Mail", "domain": {"name": "Ether Mail", "version": "1", "chainId": 1, "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"}, "message": {"from": {"name": "Cow", "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"}, "to": {"name": "Bob", "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"}, "contents": "Hello, Bob!"}}
           type: object
+        safe_tx_extra_data:
+          $ref: '#/components/schemas/SafeTxExtraData'
       required:
       - destination_type
       - structured_data
@@ -12892,12 +13562,12 @@ components:
           - `Signature`: An EVM EIP-191 or EVM EIP-712 signature.
       enum:
       - Signature
-      example: Address
+      example: Signature
       type: string
     TransactionSignatureResult:
       description: The result of a message signing transaction.
       example:
-        result_type: Address
+        result_type: Signature
         signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
       properties:
         result_type:
@@ -12947,13 +13617,17 @@ components:
           address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
           value: "0.5"
         selected_utxos:
-        - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+        - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+          address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
           vout_n: 0
           tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+          redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
           value: "0.5"
-        - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+        - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+          address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
           vout_n: 0
           tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+          redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
           value: "0.5"
         raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
         used_nonce: 9
@@ -12997,9 +13671,11 @@ components:
     TransactionSelectedUtxo:
       description: The selected UTXO information.
       example:
+        revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
         address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
         vout_n: 0
         tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+        redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
         value: "0.5"
       properties:
         tx_hash:
@@ -13017,6 +13693,15 @@ components:
         value:
           description: The value of the UTXO.
           example: "0.5"
+          type: string
+        redeem_script:
+          description: Redeem script is used in P2SH and P2WSH transactions.
+          example: 0x1cc56cbbac4622082221a8768d1d0901
+          type: string
+        revealed_script:
+          description: Revealed script is used for script path spending in Taproot
+            transactions.
+          example: 0x1cc56cbbac4622082221a8768d1d0901
           type: string
       type: object
     TransactionUtxo:
@@ -13271,6 +13956,7 @@ components:
     TransactionApprovalDetail:
       description: The approval detail data for transaction.
       example:
+        transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
         approver:
           result: Approved
           review_threshold: 1
@@ -13278,16 +13964,20 @@ components:
           user_details:
           - result: Approved
             signature: signature
+            name: tom
             language: en
             message: message
             extra_message: extra_message
+            email: tom@gmail.com
             message_version: 1.0.1
             pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
           - result: Approved
             signature: signature
+            name: tom
             language: en
             message: message
             extra_message: extra_message
+            email: tom@gmail.com
             message_version: 1.0.1
             pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
           initiator: tom@gmail.com
@@ -13298,16 +13988,20 @@ components:
           user_details:
           - result: Approved
             signature: signature
+            name: tom
             language: en
             message: message
             extra_message: extra_message
+            email: tom@gmail.com
             message_version: 1.0.1
             pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
           - result: Approved
             signature: signature
+            name: tom
             language: en
             message: message
             extra_message: extra_message
+            email: tom@gmail.com
             message_version: 1.0.1
             pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
           initiator: tom@gmail.com
@@ -13318,20 +14012,40 @@ components:
           user_details:
           - result: Approved
             signature: signature
+            name: tom
             language: en
             message: message
             extra_message: extra_message
+            email: tom@gmail.com
             message_version: 1.0.1
             pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
           - result: Approved
             signature: signature
+            name: tom
             language: en
             message: message
             extra_message: extra_message
+            email: tom@gmail.com
             message_version: 1.0.1
             pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
           initiator: tom@gmail.com
+        cobo_id: "20231213122855000000000000000000"
+        request_id: web_send_by_user_327_1610444045047
       properties:
+        transaction_id:
+          description: The transaction ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          format: uuid
+          type: string
+        cobo_id:
+          description: "The Cobo ID, which can be used to track a transaction."
+          example: "20231213122855000000000000000000"
+          type: string
+        request_id:
+          description: The request ID that is used to track a transaction request.
+            The request ID is provided by you and must be unique within your organization.
+          example: web_send_by_user_327_1610444045047
+          type: string
         spender:
           $ref: '#/components/schemas/TransactionRoleApprovalDetail'
         approver:
@@ -13358,16 +14072,20 @@ components:
         user_details:
         - result: Approved
           signature: signature
+          name: tom
           language: en
           message: message
           extra_message: extra_message
+          email: tom@gmail.com
           message_version: 1.0.1
           pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
         - result: Approved
           signature: signature
+          name: tom
           language: en
           message: message
           extra_message: extra_message
+          email: tom@gmail.com
           message_version: 1.0.1
           pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
         initiator: tom@gmail.com
@@ -13395,12 +14113,22 @@ components:
       example:
         result: Approved
         signature: signature
+        name: tom
         language: en
         message: message
         extra_message: extra_message
+        email: tom@gmail.com
         message_version: 1.0.1
         pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
       properties:
+        name:
+          description: The name the user who audited this message.
+          example: tom
+          type: string
+        email:
+          description: The email the user who audited this message.
+          example: tom@gmail.com
+          type: string
         pubkey:
           description: The Cobo Guard public key of the user who audited this message.
           example: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
@@ -13425,6 +14153,193 @@ components:
           description: The extra audited message.
           type: string
       type: object
+    TransactionFuelingInfo:
+      description: The fuel transaction data.
+      example:
+        transaction_id: b0530b27-104f-4338-87de-de01500326ea
+        request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
+      properties:
+        request_id:
+          description: The fuel transaction request ID.
+          example: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
+          type: string
+        transaction_id:
+          description: The fuel transaction ID.
+          example: b0530b27-104f-4338-87de-de01500326ea
+          format: uuid
+          type: string
+      type: object
+    TransactionCoboCategory:
+      description: "The transaction type. Possible values include: \n  - `AutoSweep`:\
+        \ A auto sweep transaction.\n  - `AutoFueling`: A gas station transaction.\n\
+        \  - `AutoFuelingRefund`: A gas station refund transaction.\n  - `SafeTxMessage`:\
+        \ A safe transaction. \n  - `BillPayment`: A fee station bill payment transaction.\
+        \ \n  - `BillRefund`: A fee station bill payment refund transaction. \n  -\
+        \ `CommissionFeeCharge`: A fee station commission fee charge transaction.\
+        \ \n  - `CommissionFeeRefund`: A fee station commission fee refund transaction.\
+        \ \n"
+      enum:
+      - AutoSweep
+      - AutoFueling
+      - AutoFuelingRefund
+      - SafeTxMessage
+      - BillPayment
+      - BillRefund
+      - CommissionFeeCharge
+      - CommissionFeeRefund
+      example: AutoSweep
+      type: string
+    SafeTxExtraData:
+      description: "The information about the extra data of the Safe{Wallet} tx message\
+        \ transaction."
+      properties:
+        to:
+          description: The recipient address of the transaction
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        value:
+          description: "Readable transaction value (e.g., 1 ETH)"
+          example: 1 ETH
+          type: string
+        data:
+          description: The transaction data
+          example: 0xabcdef...
+          type: string
+        domain_hash:
+          description: EIP712 structured data domain hash
+          example: 0xabcdef123456...
+          type: string
+        message_hash:
+          description: Hash of the structured message
+          example: 0xabcdef123456...
+          type: string
+        safe_address:
+          description: Address of the Safe contract
+          example: 0xabcdefabcdefabcdefabcdefabcdefabcdef
+          type: string
+        safe_tx_hash:
+          description: Hash of the Safe transaction
+          example: 0x123456abcdef...
+          type: string
+        safe_nonce:
+          description: Safe transaction nonce
+          example: 42
+          type: integer
+        operation:
+          description: Type of operation performed in the transaction
+          example: Call
+          type: string
+        gas_token_addr:
+          description: Address of the gas token
+          example: 0xabcdefabcdef...
+          type: string
+        safe_tx_gas:
+          description: Gas used for the Safe transaction
+          example: 21000
+          type: integer
+        base_gas:
+          description: Base gas for the transaction
+          example: 5000
+          type: integer
+        gas_price:
+          description: Gas price used in the transaction
+          example: "100"
+          type: string
+        refund_receiver:
+          description: Address to receive the gas refund
+          example: 0xabcdefabcdef...
+          type: string
+        to_contract_name:
+          description: Name of the recipient contract (if available)
+          example: UniswapV2Router
+          type: string
+        decoded_data:
+          $ref: '#/components/schemas/SafeTxDecodedData'
+        signature:
+          description: Signature of the transaction (if signed by Cobo Signer)
+          example: 0xabcdef123456...
+          type: string
+        wei:
+          description: Transaction amount in Wei
+          example: "1000000000000000000"
+          nullable: true
+          type: string
+      required:
+      - data
+      - domain_hash
+      - message_hash
+      - operation
+      - safe_address
+      - safe_nonce
+      - safe_tx_hash
+      - to
+      - value
+      type: object
+    SafeTxDecodedData:
+      description: The information about the decoded data of the transaction.
+      properties:
+        method:
+          description: Name of the decoded method
+          example: transfer
+          type: string
+        parameters:
+          description: List of method parameters
+          items:
+            $ref: '#/components/schemas/SafeTxDecodedDataParameters'
+          type: array
+      type: object
+    SafeTxDecodedDataParameters:
+      description: The information about the decoded parameters of the transaction.
+      properties:
+        name:
+          description: Name of the parameter
+          example: recipient
+          type: string
+        type:
+          description: Type of the parameter
+          example: address
+          type: string
+        value:
+          description: Value of the parameter
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        value_decoded:
+          description: Decoded value if applicable
+          items:
+            $ref: '#/components/schemas/SafeTxSubTransaction'
+          type: array
+      type: object
+    SafeTxSubTransaction:
+      description: The information about the sub-transaction.
+      properties:
+        operation:
+          description: Type of operation in the sub-transaction
+          example: Call
+          type: string
+        to:
+          description: Address the transaction is sent to
+          example: 0xabcdefabcdefabcdefabcdefabcdefabcdef
+          type: string
+        value:
+          description: "Readable transaction value (e.g., 1 ETH)"
+          example: 1 ETH
+          type: string
+        wei:
+          description: Transaction amount in Wei
+          example: "1000000000000000000"
+          type: string
+        data:
+          description: Encoded transaction data
+          example: 0xabcdef...
+          type: string
+        data_decoded:
+          $ref: '#/components/schemas/SafeTxDecodedData'
+        to_contract_name:
+          description: Name of the recipient contract (if available)
+          example: UniswapV2Router
+          nullable: true
+          type: string
+      type: object
     CustodialTransferSource:
       description: |
         The information about the transaction source types `Asset` and `Web3`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -13445,6 +14360,42 @@ components:
       - source_type
       - wallet_id
       title: Transfer from Custodial Wallet
+      type: object
+    CustodialWeb3TransferSource:
+      description: |
+        The information about the transaction source types `Web3`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+
+        Switch between the tabs to display the properties for different transaction sources.
+      properties:
+        source_type:
+          $ref: '#/components/schemas/WalletSubtype'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: |
+            The wallet address.
+            If you want to specify the UTXOs to be used, please provide the `included_utxos` property. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.
+
+            You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        included_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+        excluded_utxos:
+          items:
+            $ref: '#/components/schemas/TransactionUtxo'
+          type: array
+      required:
+      - source_type
+      - wallet_id
+      title: Transfer from Custodial Wallet (Web3)
       type: object
     MpcTransferSource:
       description: |
@@ -13605,6 +14556,7 @@ components:
       discriminator:
         mapping:
           Asset: '#/components/schemas/CustodialTransferSource'
+          Web3: '#/components/schemas/CustodialWeb3TransferSource'
           Org-Controlled: '#/components/schemas/MpcTransferSource'
           User-Controlled: '#/components/schemas/MpcTransferSource'
           Safe{Wallet}: '#/components/schemas/SafeTransferSource'
@@ -13613,6 +14565,7 @@ components:
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/CustodialTransferSource'
+      - $ref: '#/components/schemas/CustodialWeb3TransferSource'
       - $ref: '#/components/schemas/MpcTransferSource'
       - $ref: '#/components/schemas/SafeTransferSource'
       - $ref: '#/components/schemas/ExchangeTransferSource'
@@ -13620,7 +14573,9 @@ components:
       description: |
         The information about the transaction destination type `Address`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
-        Specify either the `account_output` property or the `utxo_outputs` property. You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. You should use the `utxo_outputs` property to specify the destination addresses.
+        **You need to specify either the `account_output` property or the `utxo_outputs` property.**
+
+        You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. To do this, you should use the `utxo_outputs` property to specify the destination addresses.
 
         Switch between the tabs to display the properties for different transaction destinations.
       example:
@@ -13797,17 +14752,7 @@ components:
         fee:
           $ref: '#/components/schemas/TransactionRequestFee'
         transaction_process_type:
-          description: "Transaction processing type. Possible values are:\n- `AutoProcess`\
-            \ (default): After the transaction is constructed, it will be automatically\
-            \ signed and broadcast.  \n- `BuildOnly`: Set to this value if you want\
-            \ to build the transaction first without automatically signing and broadcasting\
-            \ it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction)\
-            \ operation to complete the signing and broadcasting process.\n"
-          enum:
-          - AutoProcess
-          - BuildOnly
-          example: AutoProcess
-          type: string
+          $ref: '#/components/schemas/TransactionProcessType'
         auto_fuel:
           $ref: '#/components/schemas/AutoFuelType'
       required:
@@ -13959,6 +14904,10 @@ components:
           - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
           used_key_share_holder_group_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
       title: Contract Call from MPC Wallet
+    CustodialWeb3ContractCallSource:
+      allOf:
+      - $ref: '#/components/schemas/BaseContractCallSource'
+      title: Contract Call from Custodial Web3 Wallet
     SafeContractCallSource:
       allOf:
       - $ref: '#/components/schemas/BaseContractCallSource'
@@ -13979,6 +14928,7 @@ components:
 
         Each source type requires a different set of properties. Switch between the above tabs for details.
       enum:
+      - Web3
       - Org-Controlled
       - User-Controlled
       - "Safe{Wallet}"
@@ -13990,10 +14940,12 @@ components:
           Org-Controlled: '#/components/schemas/MpcContractCallSource'
           User-Controlled: '#/components/schemas/MpcContractCallSource'
           Safe{Wallet}: '#/components/schemas/SafeContractCallSource'
+          Web3: '#/components/schemas/CustodialWeb3ContractCallSource'
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/MpcContractCallSource'
       - $ref: '#/components/schemas/SafeContractCallSource'
+      - $ref: '#/components/schemas/CustodialWeb3ContractCallSource'
     ContractCallDestinationType:
       description: |
         The type of the contract format. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -14115,7 +15067,7 @@ components:
       description: The information about a transaction that interacts with a smart
         contract
       example:
-        transaction_process_type: "{}"
+        transaction_process_type: AutoProcess
         chain_id: ETH
         fee:
           max_fee_amount: "0.1"
@@ -14170,7 +15122,7 @@ components:
         fee:
           $ref: '#/components/schemas/TransactionRequestFee'
         transaction_process_type:
-          $ref: '#/components/schemas/TransferParams/properties/transaction_process_type'
+          $ref: '#/components/schemas/TransactionProcessType'
         auto_fuel:
           $ref: '#/components/schemas/AutoFuelType'
       required:
@@ -14181,6 +15133,18 @@ components:
       - source
       title: Contract call
       type: object
+    TransactionProcessType:
+      description: "Transaction processing type. Possible values are:\n- `AutoProcess`\
+        \ (default): After the transaction is constructed, it will be automatically\
+        \ signed and broadcast.  \n- `BuildOnly`: Set to this value if you want to\
+        \ build the transaction first without automatically signing and broadcasting\
+        \ it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction)\
+        \ operation to complete the signing and broadcasting process.\n"
+      enum:
+      - AutoProcess
+      - BuildOnly
+      example: AutoProcess
+      type: string
     MpcMessageSignSource:
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -14211,10 +15175,30 @@ components:
       - wallet_id
       title: Message Signing from MPC Wallet
       type: object
+    CustodialWeb3MessageSignSource:
+      properties:
+        source_type:
+          $ref: '#/components/schemas/MessageSignSourceType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+      required:
+      - address
+      - source_type
+      - wallet_id
+      title: Message Signing from Custodial Web3 Wallet
+      type: object
     MessageSignSourceType:
       description: |
         The wallet subtype of the transaction source. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
       enum:
+      - Web3
       - Org-Controlled
       - User-Controlled
       example: Org-Controlled
@@ -14224,9 +15208,11 @@ components:
         mapping:
           Org-Controlled: '#/components/schemas/MpcMessageSignSource'
           User-Controlled: '#/components/schemas/MpcMessageSignSource'
+          Web3: '#/components/schemas/CustodialWeb3MessageSignSource'
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/MpcMessageSignSource'
+      - $ref: '#/components/schemas/CustodialWeb3MessageSignSource'
     EvmEIP191MessageSignDestination:
       description: "The information about the destination `EVM_EIP_191_Signature`.\
         \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
@@ -14428,7 +15414,7 @@ components:
           confirming_threshold: 15
           type: Deposit
           result:
-            result_type: Address
+            result_type: Signature
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
@@ -14440,22 +15426,29 @@ components:
           initiator_type: API
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           data_type: Transaction
+          cobo_category:
+          - AutoFueling
+          - AutoFueling
           category:
           - Payment
           - Payment
-          request_id: web_send_by_user_327_1610444045047
+          request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
           raw_tx_info:
             utxo_change:
               address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               value: "0.5"
             selected_utxos:
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
@@ -14469,6 +15462,9 @@ components:
             replaced_type: Resend
           failed_reason: Rejected by signer Cobo TSS
           status: Submitted
+          fueling_info:
+            transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         created_timestamp: 1701396866000
         type: wallets.transaction.created
         url: https://example.com/webhook
@@ -14527,12 +15523,16 @@ components:
             - `Addresses`: The addresses event data.
             - `WalletInfo`: The wallet information event data.
             - `MPCVault`: The MPC vault event data.
+            - `Chains`: The Chain enabled event data.
+            - `Tokens`: The Token enabled event data.
           enum:
           - Transaction
           - TSSRequest
           - Addresses
           - WalletInfo
           - MPCVault
+          - Chains
+          - Tokens
           example: Transaction
           type: string
       required:
@@ -14546,6 +15546,8 @@ components:
           Addresses: '#/components/schemas/AddressesEventData'
           WalletInfo: '#/components/schemas/WalletInfoEventData'
           MPCVault: '#/components/schemas/MPCVaultEventData'
+          Chains: '#/components/schemas/ChainsEventData'
+          Tokens: '#/components/schemas/TokensEventData'
         propertyName: data_type
       oneOf:
       - $ref: '#/components/schemas/TransactionWebhookEventData'
@@ -14553,6 +15555,8 @@ components:
       - $ref: '#/components/schemas/AddressesEventData'
       - $ref: '#/components/schemas/WalletInfoEventData'
       - $ref: '#/components/schemas/MPCVaultEventData'
+      - $ref: '#/components/schemas/ChainsEventData'
+      - $ref: '#/components/schemas/TokensEventData'
     TransactionWebhookEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -14597,7 +15601,7 @@ components:
         confirming_threshold: 15
         type: Deposit
         result:
-          result_type: Address
+          result_type: Signature
           signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
         token_id: ETH_USDT
         updated_timestamp: 1610445878970
@@ -14609,22 +15613,29 @@ components:
         initiator_type: API
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         data_type: Transaction
+        cobo_category:
+        - AutoFueling
+        - AutoFueling
         category:
         - Payment
         - Payment
-        request_id: web_send_by_user_327_1610444045047
+        request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
         raw_tx_info:
           utxo_change:
             address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             value: "0.5"
           selected_utxos:
-          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+            address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
             value: "0.5"
-          - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+            address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
             vout_n: 0
             tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+            redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
             value: "0.5"
           raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           used_nonce: 9
@@ -14638,6 +15649,9 @@ components:
           replaced_type: Resend
         failed_reason: Rejected by signer Cobo TSS
         status: Submitted
+        fueling_info:
+          transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       title: Transaction Event Data
     TSSRequestWebhookEventData:
       allOf:
@@ -14668,6 +15682,32 @@ components:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - $ref: '#/components/schemas/MPCVault'
       title: MPC Vault Event Data
+    ChainsEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          chains:
+            description: The chains.
+            items:
+              $ref: '#/components/schemas/ChainInfo'
+            type: array
+        required:
+        - chains
+        type: object
+      title: The Chain Enabled Event Data
+    TokensEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          tokens:
+            description: The tokens.
+            items:
+              $ref: '#/components/schemas/TokenInfo'
+            type: array
+        required:
+        - tokens
+        type: object
+      title: The Token Enabled Event Data
     WebhookEventType:
       description: "The event type. To learn the trigger condition of each event type,\
         \ refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type)."
@@ -14683,6 +15723,12 @@ components:
       - wallets.addresses.created
       - wallets.created
       - mpc_vaults.created
+      - fee_station.transaction.created
+      - fee_station.transaction.updated
+      - fee_station.transaction.failed
+      - fee_station.transaction.succeeded
+      - wallet.token.enabled
+      - wallet.chain.enabled
       example: wallets.transaction.created
       type: string
     WebhookEventStatus:
@@ -14744,7 +15790,7 @@ components:
             confirming_threshold: 15
             type: Deposit
             result:
-              result_type: Address
+              result_type: Signature
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
@@ -14756,22 +15802,29 @@ components:
             initiator_type: API
             wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
             data_type: Transaction
+            cobo_category:
+            - AutoFueling
+            - AutoFueling
             category:
             - Payment
             - Payment
-            request_id: web_send_by_user_327_1610444045047
+            request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
             raw_tx_info:
               utxo_change:
                 address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 value: "0.5"
               selected_utxos:
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
@@ -14785,6 +15838,9 @@ components:
               replaced_type: Resend
             failed_reason: Rejected by signer Cobo TSS
             status: Submitted
+            fueling_info:
+              transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
           url: https://example.com/webhook
@@ -15240,8 +16296,16 @@ components:
             type: integer
           withdraw_from_type:
             $ref: '#/components/schemas/ActivityType'
+          slash_from_type:
+            $ref: '#/components/schemas/ActivityType'
+          stake_amount:
+            description: The origin staking amount.
+            example: "100.00"
+            type: string
         type: object
       example:
+        slash_from_type: Stake
+        stake_amount: "100.00"
         param_version: 2
         finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
         stake_block_time: 2000
@@ -15312,6 +16376,8 @@ components:
         token_id: BTC
         updated_timestamp: 1640995200000
         extra:
+          slash_from_type: Stake
+          stake_amount: "100.00"
           param_version: 2
           finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
           stake_block_time: 2000
@@ -16857,7 +17923,7 @@ components:
           confirming_threshold: 15
           type: Deposit
           result:
-            result_type: Address
+            result_type: Signature
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
@@ -16868,22 +17934,29 @@ components:
           created_timestamp: 1610445878970
           initiator_type: API
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          cobo_category:
+          - AutoFueling
+          - AutoFueling
           category:
           - Payment
           - Payment
-          request_id: web_send_by_user_327_1610444045047
+          request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
           raw_tx_info:
             utxo_change:
               address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               value: "0.5"
             selected_utxos:
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
@@ -16897,6 +17970,9 @@ components:
             replaced_type: Resend
           failed_reason: Rejected by signer Cobo TSS
           status: Submitted
+          fueling_info:
+            transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         updated_timestamp: 1640918000000
         created_timestamp: 1640918000000
         id: 00000000-0000-0000-0000-000000000000
@@ -17131,6 +18207,14 @@ components:
       - Invalid
       - Timeout
       example: New
+      type: string
+    FeeStationTransactionType:
+      description: "The transaction type. Possible values include: \n  - `Deposit`:\
+        \ A deposit transaction.\n  - `Withdrawal`: A withdrawal transaction.\n"
+      enum:
+      - Deposit
+      - Withdrawal
+      example: Deposit
       type: string
     list_supported_chains_200_response:
       example:
@@ -17999,7 +19083,7 @@ components:
           confirming_threshold: 15
           type: Deposit
           result:
-            result_type: Address
+            result_type: Signature
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
@@ -18010,22 +19094,29 @@ components:
           created_timestamp: 1610445878970
           initiator_type: API
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          cobo_category:
+          - AutoFueling
+          - AutoFueling
           category:
           - Payment
           - Payment
-          request_id: web_send_by_user_327_1610444045047
+          request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
           raw_tx_info:
             utxo_change:
               address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               value: "0.5"
             selected_utxos:
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
@@ -18039,6 +19130,9 @@ components:
             replaced_type: Resend
           failed_reason: Rejected by signer Cobo TSS
           status: Submitted
+          fueling_info:
+            transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         - is_loop: false
           chain_id: ETH
           confirmed_num: 12
@@ -18078,7 +19172,7 @@ components:
           confirming_threshold: 15
           type: Deposit
           result:
-            result_type: Address
+            result_type: Signature
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
@@ -18089,22 +19183,29 @@ components:
           created_timestamp: 1610445878970
           initiator_type: API
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          cobo_category:
+          - AutoFueling
+          - AutoFueling
           category:
           - Payment
           - Payment
-          request_id: web_send_by_user_327_1610444045047
+          request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
           raw_tx_info:
             utxo_change:
               address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               value: "0.5"
             selected_utxos:
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
-            - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+            - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+              address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
               vout_n: 0
               tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+              redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
               value: "0.5"
             raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
             used_nonce: 9
@@ -18118,6 +19219,9 @@ components:
             replaced_type: Resend
           failed_reason: Rejected by signer Cobo TSS
           status: Submitted
+          fueling_info:
+            transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         data:
           items:
@@ -18153,6 +19257,165 @@ components:
       required:
       - request_id
       - transaction_id
+      type: object
+    list_transaction_approval_details_200_response:
+      example:
+        data:
+        - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          approver:
+            result: Approved
+            review_threshold: 1
+            complete_time: complete_time
+            user_details:
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            initiator: tom@gmail.com
+          address_owner:
+            result: Approved
+            review_threshold: 1
+            complete_time: complete_time
+            user_details:
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            initiator: tom@gmail.com
+          spender:
+            result: Approved
+            review_threshold: 1
+            complete_time: complete_time
+            user_details:
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            initiator: tom@gmail.com
+          cobo_id: "20231213122855000000000000000000"
+          request_id: web_send_by_user_327_1610444045047
+        - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          approver:
+            result: Approved
+            review_threshold: 1
+            complete_time: complete_time
+            user_details:
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            initiator: tom@gmail.com
+          address_owner:
+            result: Approved
+            review_threshold: 1
+            complete_time: complete_time
+            user_details:
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            initiator: tom@gmail.com
+          spender:
+            result: Approved
+            review_threshold: 1
+            complete_time: complete_time
+            user_details:
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            - result: Approved
+              signature: signature
+              name: tom
+              language: en
+              message: message
+              extra_message: extra_message
+              email: tom@gmail.com
+              message_version: 1.0.1
+              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
+            initiator: tom@gmail.com
+          cobo_id: "20231213122855000000000000000000"
+          request_id: web_send_by_user_327_1610444045047
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TransactionApprovalDetail'
+          type: array
       type: object
     get_token_2XX_response:
       example:
@@ -18421,7 +19684,7 @@ components:
             confirming_threshold: 15
             type: Deposit
             result:
-              result_type: Address
+              result_type: Signature
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
@@ -18433,22 +19696,29 @@ components:
             initiator_type: API
             wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
             data_type: Transaction
+            cobo_category:
+            - AutoFueling
+            - AutoFueling
             category:
             - Payment
             - Payment
-            request_id: web_send_by_user_327_1610444045047
+            request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
             raw_tx_info:
               utxo_change:
                 address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 value: "0.5"
               selected_utxos:
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
@@ -18462,6 +19732,9 @@ components:
               replaced_type: Resend
             failed_reason: Rejected by signer Cobo TSS
             status: Submitted
+            fueling_info:
+              transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
           url: https://example.com/webhook
@@ -18509,7 +19782,7 @@ components:
             confirming_threshold: 15
             type: Deposit
             result:
-              result_type: Address
+              result_type: Signature
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
@@ -18521,22 +19794,29 @@ components:
             initiator_type: API
             wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
             data_type: Transaction
+            cobo_category:
+            - AutoFueling
+            - AutoFueling
             category:
             - Payment
             - Payment
-            request_id: web_send_by_user_327_1610444045047
+            request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
             raw_tx_info:
               utxo_change:
                 address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 value: "0.5"
               selected_utxos:
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
@@ -18550,6 +19830,9 @@ components:
               replaced_type: Resend
             failed_reason: Rejected by signer Cobo TSS
             status: Submitted
+            fueling_info:
+              transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
           url: https://example.com/webhook
@@ -18613,7 +19896,7 @@ components:
               confirming_threshold: 15
               type: Deposit
               result:
-                result_type: Address
+                result_type: Signature
                 signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
               token_id: ETH_USDT
               updated_timestamp: 1610445878970
@@ -18625,22 +19908,29 @@ components:
               initiator_type: API
               wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
               data_type: Transaction
+              cobo_category:
+              - AutoFueling
+              - AutoFueling
               category:
               - Payment
               - Payment
-              request_id: web_send_by_user_327_1610444045047
+              request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
               raw_tx_info:
                 utxo_change:
                   address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                   value: "0.5"
                 selected_utxos:
-                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                  address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                   vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                  redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                   value: "0.5"
-                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                  address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                   vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                  redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                   value: "0.5"
                 raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
                 used_nonce: 9
@@ -18654,6 +19944,9 @@ components:
                 replaced_type: Resend
               failed_reason: Rejected by signer Cobo TSS
               status: Submitted
+              fueling_info:
+                transaction_id: b0530b27-104f-4338-87de-de01500326ea
+                request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
             created_timestamp: 1701396866000
             type: wallets.transaction.created
             url: https://example.com/webhook
@@ -18710,7 +20003,7 @@ components:
               confirming_threshold: 15
               type: Deposit
               result:
-                result_type: Address
+                result_type: Signature
                 signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
               token_id: ETH_USDT
               updated_timestamp: 1610445878970
@@ -18722,22 +20015,29 @@ components:
               initiator_type: API
               wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
               data_type: Transaction
+              cobo_category:
+              - AutoFueling
+              - AutoFueling
               category:
               - Payment
               - Payment
-              request_id: web_send_by_user_327_1610444045047
+              request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
               raw_tx_info:
                 utxo_change:
                   address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                   value: "0.5"
                 selected_utxos:
-                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                  address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                   vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                  redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                   value: "0.5"
-                - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+                - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                  address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                   vout_n: 0
                   tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                  redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                   value: "0.5"
                 raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
                 used_nonce: 9
@@ -18751,6 +20051,9 @@ components:
                 replaced_type: Resend
               failed_reason: Rejected by signer Cobo TSS
               status: Submitted
+              fueling_info:
+                transaction_id: b0530b27-104f-4338-87de-de01500326ea
+                request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
             created_timestamp: 1701396866000
             type: wallets.transaction.created
             url: https://example.com/webhook
@@ -18968,6 +20271,8 @@ components:
           token_id: BTC
           updated_timestamp: 1640995200000
           extra:
+            slash_from_type: Stake
+            stake_amount: "100.00"
             param_version: 2
             finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
             stake_block_time: 2000
@@ -19007,6 +20312,8 @@ components:
           token_id: BTC
           updated_timestamp: 1640995200000
           extra:
+            slash_from_type: Stake
+            stake_amount: "100.00"
             param_version: 2
             finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
             stake_block_time: 2000
@@ -19418,7 +20725,7 @@ components:
             confirming_threshold: 15
             type: Deposit
             result:
-              result_type: Address
+              result_type: Signature
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
@@ -19429,22 +20736,29 @@ components:
             created_timestamp: 1610445878970
             initiator_type: API
             wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            cobo_category:
+            - AutoFueling
+            - AutoFueling
             category:
             - Payment
             - Payment
-            request_id: web_send_by_user_327_1610444045047
+            request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
             raw_tx_info:
               utxo_change:
                 address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 value: "0.5"
               selected_utxos:
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
@@ -19458,6 +20772,9 @@ components:
               replaced_type: Resend
             failed_reason: Rejected by signer Cobo TSS
             status: Submitted
+            fueling_info:
+              transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           updated_timestamp: 1640918000000
           created_timestamp: 1640918000000
           id: 00000000-0000-0000-0000-000000000000
@@ -19507,7 +20824,7 @@ components:
             confirming_threshold: 15
             type: Deposit
             result:
-              result_type: Address
+              result_type: Signature
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
@@ -19518,22 +20835,29 @@ components:
             created_timestamp: 1610445878970
             initiator_type: API
             wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            cobo_category:
+            - AutoFueling
+            - AutoFueling
             category:
             - Payment
             - Payment
-            request_id: web_send_by_user_327_1610444045047
+            request_id: 760a1955-e212-4dfb-a8d0-e66312a1a051
             raw_tx_info:
               utxo_change:
                 address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 value: "0.5"
               selected_utxos:
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
-              - address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+              - revealed_script: 0x1cc56cbbac4622082221a8768d1d0901
+                address: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
                 vout_n: 0
                 tx_hash: 7014d7d9b91862d7131f7543d84da3bec60e20be93c23ad01167c48b778fdemo
+                redeem_script: 0x1cc56cbbac4622082221a8768d1d0901
                 value: "0.5"
               raw_tx: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
               used_nonce: 9
@@ -19547,6 +20871,9 @@ components:
               replaced_type: Resend
             failed_reason: Rejected by signer Cobo TSS
             status: Submitted
+            fueling_info:
+              transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           updated_timestamp: 1640918000000
           created_timestamp: 1640918000000
           id: 00000000-0000-0000-0000-000000000000
@@ -19979,6 +21306,7 @@ components:
       discriminator:
         mapping:
           Asset: '#/components/schemas/TransactionCustodialAssetWalletSource'
+          Web3: '#/components/schemas/TransactionCustodialWeb3WalletSource'
           Org-Controlled: '#/components/schemas/TransactionMPCWalletSource'
           User-Controlled: '#/components/schemas/TransactionMPCWalletSource'
           Safe{Wallet}: '#/components/schemas/TransactionSmartContractSafeWalletSource'
@@ -19990,6 +21318,7 @@ components:
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/TransactionCustodialAssetWalletSource'
+      - $ref: '#/components/schemas/TransactionCustodialWeb3WalletSource'
       - $ref: '#/components/schemas/TransactionMPCWalletSource'
       - $ref: '#/components/schemas/TransactionSmartContractSafeWalletSource'
       - $ref: '#/components/schemas/TransactionExchangeWalletSource'

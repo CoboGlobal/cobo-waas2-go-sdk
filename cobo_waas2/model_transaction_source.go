@@ -16,6 +16,7 @@ import (
 // TransactionSource - struct for TransactionSource
 type TransactionSource struct {
 	TransactionCustodialAssetWalletSource *TransactionCustodialAssetWalletSource
+	TransactionCustodialWeb3WalletSource *TransactionCustodialWeb3WalletSource
 	TransactionDepositFromAddressSource *TransactionDepositFromAddressSource
 	TransactionDepositFromLoopSource *TransactionDepositFromLoopSource
 	TransactionDepositFromWalletSource *TransactionDepositFromWalletSource
@@ -28,6 +29,13 @@ type TransactionSource struct {
 func TransactionCustodialAssetWalletSourceAsTransactionSource(v *TransactionCustodialAssetWalletSource) TransactionSource {
 	return TransactionSource{
 		TransactionCustodialAssetWalletSource: v,
+	}
+}
+
+// TransactionCustodialWeb3WalletSourceAsTransactionSource is a convenience function that returns TransactionCustodialWeb3WalletSource wrapped in TransactionSource
+func TransactionCustodialWeb3WalletSourceAsTransactionSource(v *TransactionCustodialWeb3WalletSource) TransactionSource {
+	return TransactionSource{
+		TransactionCustodialWeb3WalletSource: v,
 	}
 }
 
@@ -192,6 +200,18 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'Web3'
+	if jsonDict["source_type"] == "Web3" {
+		// try to unmarshal JSON data into TransactionCustodialWeb3WalletSource
+		err = json.Unmarshal(data, &dst.TransactionCustodialWeb3WalletSource)
+		if err == nil {
+			return nil // data stored in dst.TransactionCustodialWeb3WalletSource, return on the first match
+		} else {
+			dst.TransactionCustodialWeb3WalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionCustodialWeb3WalletSource: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TransactionCustodialAssetWalletSource'
 	if jsonDict["source_type"] == "TransactionCustodialAssetWalletSource" {
 		// try to unmarshal JSON data into TransactionCustodialAssetWalletSource
@@ -201,6 +221,18 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionCustodialAssetWalletSource = nil
 			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionCustodialAssetWalletSource: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TransactionCustodialWeb3WalletSource'
+	if jsonDict["source_type"] == "TransactionCustodialWeb3WalletSource" {
+		// try to unmarshal JSON data into TransactionCustodialWeb3WalletSource
+		err = json.Unmarshal(data, &dst.TransactionCustodialWeb3WalletSource)
+		if err == nil {
+			return nil // data stored in dst.TransactionCustodialWeb3WalletSource, return on the first match
+		} else {
+			dst.TransactionCustodialWeb3WalletSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionCustodialWeb3WalletSource: %s", err.Error())
 		}
 	}
 
@@ -285,6 +317,10 @@ func (src TransactionSource) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionCustodialAssetWalletSource)
 	}
 
+	if src.TransactionCustodialWeb3WalletSource != nil {
+		return json.Marshal(&src.TransactionCustodialWeb3WalletSource)
+	}
+
 	if src.TransactionDepositFromAddressSource != nil {
 		return json.Marshal(&src.TransactionDepositFromAddressSource)
 	}
@@ -309,7 +345,7 @@ func (src TransactionSource) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionSmartContractSafeWalletSource)
 	}
 
-	return nil, nil // no data in oneOf schemas
+	return []byte(`{}`), nil // no data in oneOf schemas
 }
 
 // Get the actual instance
@@ -319,6 +355,10 @@ func (obj *TransactionSource) GetActualInstance() (interface{}) {
 	}
 	if obj.TransactionCustodialAssetWalletSource != nil {
 		return obj.TransactionCustodialAssetWalletSource
+	}
+
+	if obj.TransactionCustodialWeb3WalletSource != nil {
+		return obj.TransactionCustodialWeb3WalletSource
 	}
 
 	if obj.TransactionDepositFromAddressSource != nil {

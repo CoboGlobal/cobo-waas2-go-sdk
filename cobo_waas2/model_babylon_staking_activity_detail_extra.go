@@ -29,6 +29,9 @@ type BabylonStakingActivityDetailExtra struct {
 	// The version of babylon global parameters.
 	ParamVersion *int64 `json:"param_version,omitempty"`
 	WithdrawFromType *ActivityType `json:"withdraw_from_type,omitempty"`
+	SlashFromType *ActivityType `json:"slash_from_type,omitempty"`
+	// The origin staking amount.
+	StakeAmount *string `json:"stake_amount,omitempty"`
 }
 
 type _BabylonStakingActivityDetailExtra BabylonStakingActivityDetailExtra
@@ -235,6 +238,70 @@ func (o *BabylonStakingActivityDetailExtra) SetWithdrawFromType(v ActivityType) 
 	o.WithdrawFromType = &v
 }
 
+// GetSlashFromType returns the SlashFromType field value if set, zero value otherwise.
+func (o *BabylonStakingActivityDetailExtra) GetSlashFromType() ActivityType {
+	if o == nil || IsNil(o.SlashFromType) {
+		var ret ActivityType
+		return ret
+	}
+	return *o.SlashFromType
+}
+
+// GetSlashFromTypeOk returns a tuple with the SlashFromType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BabylonStakingActivityDetailExtra) GetSlashFromTypeOk() (*ActivityType, bool) {
+	if o == nil || IsNil(o.SlashFromType) {
+		return nil, false
+	}
+	return o.SlashFromType, true
+}
+
+// HasSlashFromType returns a boolean if a field has been set.
+func (o *BabylonStakingActivityDetailExtra) HasSlashFromType() bool {
+	if o != nil && !IsNil(o.SlashFromType) {
+		return true
+	}
+
+	return false
+}
+
+// SetSlashFromType gets a reference to the given ActivityType and assigns it to the SlashFromType field.
+func (o *BabylonStakingActivityDetailExtra) SetSlashFromType(v ActivityType) {
+	o.SlashFromType = &v
+}
+
+// GetStakeAmount returns the StakeAmount field value if set, zero value otherwise.
+func (o *BabylonStakingActivityDetailExtra) GetStakeAmount() string {
+	if o == nil || IsNil(o.StakeAmount) {
+		var ret string
+		return ret
+	}
+	return *o.StakeAmount
+}
+
+// GetStakeAmountOk returns a tuple with the StakeAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BabylonStakingActivityDetailExtra) GetStakeAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.StakeAmount) {
+		return nil, false
+	}
+	return o.StakeAmount, true
+}
+
+// HasStakeAmount returns a boolean if a field has been set.
+func (o *BabylonStakingActivityDetailExtra) HasStakeAmount() bool {
+	if o != nil && !IsNil(o.StakeAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetStakeAmount gets a reference to the given string and assigns it to the StakeAmount field.
+func (o *BabylonStakingActivityDetailExtra) SetStakeAmount(v string) {
+	o.StakeAmount = &v
+}
+
 func (o BabylonStakingActivityDetailExtra) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -260,6 +327,12 @@ func (o BabylonStakingActivityDetailExtra) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.WithdrawFromType) {
 		toSerialize["withdraw_from_type"] = o.WithdrawFromType
+	}
+	if !IsNil(o.SlashFromType) {
+		toSerialize["slash_from_type"] = o.SlashFromType
+	}
+	if !IsNil(o.StakeAmount) {
+		toSerialize["stake_amount"] = o.StakeAmount
 	}
 	return toSerialize, nil
 }

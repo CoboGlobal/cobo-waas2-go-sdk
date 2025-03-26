@@ -16,8 +16,10 @@ import (
 // WebhookEventData - struct for WebhookEventData
 type WebhookEventData struct {
 	AddressesEventData *AddressesEventData
+	ChainsEventData *ChainsEventData
 	MPCVaultEventData *MPCVaultEventData
 	TSSRequestWebhookEventData *TSSRequestWebhookEventData
+	TokensEventData *TokensEventData
 	TransactionWebhookEventData *TransactionWebhookEventData
 	WalletInfoEventData *WalletInfoEventData
 }
@@ -26,6 +28,13 @@ type WebhookEventData struct {
 func AddressesEventDataAsWebhookEventData(v *AddressesEventData) WebhookEventData {
 	return WebhookEventData{
 		AddressesEventData: v,
+	}
+}
+
+// ChainsEventDataAsWebhookEventData is a convenience function that returns ChainsEventData wrapped in WebhookEventData
+func ChainsEventDataAsWebhookEventData(v *ChainsEventData) WebhookEventData {
+	return WebhookEventData{
+		ChainsEventData: v,
 	}
 }
 
@@ -40,6 +49,13 @@ func MPCVaultEventDataAsWebhookEventData(v *MPCVaultEventData) WebhookEventData 
 func TSSRequestWebhookEventDataAsWebhookEventData(v *TSSRequestWebhookEventData) WebhookEventData {
 	return WebhookEventData{
 		TSSRequestWebhookEventData: v,
+	}
+}
+
+// TokensEventDataAsWebhookEventData is a convenience function that returns TokensEventData wrapped in WebhookEventData
+func TokensEventDataAsWebhookEventData(v *TokensEventData) WebhookEventData {
+	return WebhookEventData{
+		TokensEventData: v,
 	}
 }
 
@@ -80,6 +96,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'Chains'
+	if jsonDict["data_type"] == "Chains" {
+		// try to unmarshal JSON data into ChainsEventData
+		err = json.Unmarshal(data, &dst.ChainsEventData)
+		if err == nil {
+			return nil // data stored in dst.ChainsEventData, return on the first match
+		} else {
+			dst.ChainsEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as ChainsEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MPCVault'
 	if jsonDict["data_type"] == "MPCVault" {
 		// try to unmarshal JSON data into MPCVaultEventData
@@ -101,6 +129,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TSSRequestWebhookEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as TSSRequestWebhookEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'Tokens'
+	if jsonDict["data_type"] == "Tokens" {
+		// try to unmarshal JSON data into TokensEventData
+		err = json.Unmarshal(data, &dst.TokensEventData)
+		if err == nil {
+			return nil // data stored in dst.TokensEventData, return on the first match
+		} else {
+			dst.TokensEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as TokensEventData: %s", err.Error())
 		}
 	}
 
@@ -140,6 +180,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'ChainsEventData'
+	if jsonDict["data_type"] == "ChainsEventData" {
+		// try to unmarshal JSON data into ChainsEventData
+		err = json.Unmarshal(data, &dst.ChainsEventData)
+		if err == nil {
+			return nil // data stored in dst.ChainsEventData, return on the first match
+		} else {
+			dst.ChainsEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as ChainsEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MPCVaultEventData'
 	if jsonDict["data_type"] == "MPCVaultEventData" {
 		// try to unmarshal JSON data into MPCVaultEventData
@@ -161,6 +213,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TSSRequestWebhookEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as TSSRequestWebhookEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TokensEventData'
+	if jsonDict["data_type"] == "TokensEventData" {
+		// try to unmarshal JSON data into TokensEventData
+		err = json.Unmarshal(data, &dst.TokensEventData)
+		if err == nil {
+			return nil // data stored in dst.TokensEventData, return on the first match
+		} else {
+			dst.TokensEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as TokensEventData: %s", err.Error())
 		}
 	}
 
@@ -197,12 +261,20 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.AddressesEventData)
 	}
 
+	if src.ChainsEventData != nil {
+		return json.Marshal(&src.ChainsEventData)
+	}
+
 	if src.MPCVaultEventData != nil {
 		return json.Marshal(&src.MPCVaultEventData)
 	}
 
 	if src.TSSRequestWebhookEventData != nil {
 		return json.Marshal(&src.TSSRequestWebhookEventData)
+	}
+
+	if src.TokensEventData != nil {
+		return json.Marshal(&src.TokensEventData)
 	}
 
 	if src.TransactionWebhookEventData != nil {
@@ -213,7 +285,7 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.WalletInfoEventData)
 	}
 
-	return nil, nil // no data in oneOf schemas
+	return []byte(`{}`), nil // no data in oneOf schemas
 }
 
 // Get the actual instance
@@ -225,12 +297,20 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 		return obj.AddressesEventData
 	}
 
+	if obj.ChainsEventData != nil {
+		return obj.ChainsEventData
+	}
+
 	if obj.MPCVaultEventData != nil {
 		return obj.MPCVaultEventData
 	}
 
 	if obj.TSSRequestWebhookEventData != nil {
 		return obj.TSSRequestWebhookEventData
+	}
+
+	if obj.TokensEventData != nil {
+		return obj.TokensEventData
 	}
 
 	if obj.TransactionWebhookEventData != nil {

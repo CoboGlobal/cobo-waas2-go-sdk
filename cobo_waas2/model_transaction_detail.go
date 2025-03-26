@@ -60,6 +60,9 @@ type TransactionDetail struct {
 	Description *string `json:"description,omitempty"`
 	// Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - `true`: The transaction was executed as a Cobo Loop transfer. - `false`: The transaction was not executed as a Cobo Loop transfer. 
 	IsLoop *bool `json:"is_loop,omitempty"`
+	// A transaction category for cobo to identify your transactions.
+	CoboCategory []string `json:"cobo_category,omitempty"`
+	FuelingInfo *TransactionFuelingInfo `json:"fueling_info,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 	// The time when the transaction was updated, in Unix timestamp format, measured in milliseconds.
@@ -876,6 +879,70 @@ func (o *TransactionDetail) SetIsLoop(v bool) {
 	o.IsLoop = &v
 }
 
+// GetCoboCategory returns the CoboCategory field value if set, zero value otherwise.
+func (o *TransactionDetail) GetCoboCategory() []string {
+	if o == nil || IsNil(o.CoboCategory) {
+		var ret []string
+		return ret
+	}
+	return o.CoboCategory
+}
+
+// GetCoboCategoryOk returns a tuple with the CoboCategory field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionDetail) GetCoboCategoryOk() ([]string, bool) {
+	if o == nil || IsNil(o.CoboCategory) {
+		return nil, false
+	}
+	return o.CoboCategory, true
+}
+
+// HasCoboCategory returns a boolean if a field has been set.
+func (o *TransactionDetail) HasCoboCategory() bool {
+	if o != nil && !IsNil(o.CoboCategory) {
+		return true
+	}
+
+	return false
+}
+
+// SetCoboCategory gets a reference to the given []string and assigns it to the CoboCategory field.
+func (o *TransactionDetail) SetCoboCategory(v []string) {
+	o.CoboCategory = v
+}
+
+// GetFuelingInfo returns the FuelingInfo field value if set, zero value otherwise.
+func (o *TransactionDetail) GetFuelingInfo() TransactionFuelingInfo {
+	if o == nil || IsNil(o.FuelingInfo) {
+		var ret TransactionFuelingInfo
+		return ret
+	}
+	return *o.FuelingInfo
+}
+
+// GetFuelingInfoOk returns a tuple with the FuelingInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionDetail) GetFuelingInfoOk() (*TransactionFuelingInfo, bool) {
+	if o == nil || IsNil(o.FuelingInfo) {
+		return nil, false
+	}
+	return o.FuelingInfo, true
+}
+
+// HasFuelingInfo returns a boolean if a field has been set.
+func (o *TransactionDetail) HasFuelingInfo() bool {
+	if o != nil && !IsNil(o.FuelingInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetFuelingInfo gets a reference to the given TransactionFuelingInfo and assigns it to the FuelingInfo field.
+func (o *TransactionDetail) SetFuelingInfo(v TransactionFuelingInfo) {
+	o.FuelingInfo = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *TransactionDetail) GetCreatedTimestamp() int64 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -1047,6 +1114,12 @@ func (o TransactionDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsLoop) {
 		toSerialize["is_loop"] = o.IsLoop
+	}
+	if !IsNil(o.CoboCategory) {
+		toSerialize["cobo_category"] = o.CoboCategory
+	}
+	if !IsNil(o.FuelingInfo) {
+		toSerialize["fueling_info"] = o.FuelingInfo
 	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp

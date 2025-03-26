@@ -20,8 +20,11 @@ var _ MappedNullable = &TransactionMessageSignEIP712Destination{}
 // TransactionMessageSignEIP712Destination Information about the transaction destination type `EVM_EIP_712_Signature`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
 type TransactionMessageSignEIP712Destination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
+	// The raw structured data to be signed, formatted as a JSON string.
+	RawStructuredData *string `json:"raw_structured_data,omitempty"`
 	// The structured data to be signed, formatted as a JSON object according to the EIP-712 standard.
 	StructuredData map[string]interface{} `json:"structured_data"`
+	SafeTxExtraData *SafeTxExtraData `json:"safe_tx_extra_data,omitempty"`
 }
 
 type _TransactionMessageSignEIP712Destination TransactionMessageSignEIP712Destination
@@ -69,6 +72,38 @@ func (o *TransactionMessageSignEIP712Destination) SetDestinationType(v Transacti
 	o.DestinationType = v
 }
 
+// GetRawStructuredData returns the RawStructuredData field value if set, zero value otherwise.
+func (o *TransactionMessageSignEIP712Destination) GetRawStructuredData() string {
+	if o == nil || IsNil(o.RawStructuredData) {
+		var ret string
+		return ret
+	}
+	return *o.RawStructuredData
+}
+
+// GetRawStructuredDataOk returns a tuple with the RawStructuredData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionMessageSignEIP712Destination) GetRawStructuredDataOk() (*string, bool) {
+	if o == nil || IsNil(o.RawStructuredData) {
+		return nil, false
+	}
+	return o.RawStructuredData, true
+}
+
+// HasRawStructuredData returns a boolean if a field has been set.
+func (o *TransactionMessageSignEIP712Destination) HasRawStructuredData() bool {
+	if o != nil && !IsNil(o.RawStructuredData) {
+		return true
+	}
+
+	return false
+}
+
+// SetRawStructuredData gets a reference to the given string and assigns it to the RawStructuredData field.
+func (o *TransactionMessageSignEIP712Destination) SetRawStructuredData(v string) {
+	o.RawStructuredData = &v
+}
+
 // GetStructuredData returns the StructuredData field value
 func (o *TransactionMessageSignEIP712Destination) GetStructuredData() map[string]interface{} {
 	if o == nil {
@@ -93,6 +128,38 @@ func (o *TransactionMessageSignEIP712Destination) SetStructuredData(v map[string
 	o.StructuredData = v
 }
 
+// GetSafeTxExtraData returns the SafeTxExtraData field value if set, zero value otherwise.
+func (o *TransactionMessageSignEIP712Destination) GetSafeTxExtraData() SafeTxExtraData {
+	if o == nil || IsNil(o.SafeTxExtraData) {
+		var ret SafeTxExtraData
+		return ret
+	}
+	return *o.SafeTxExtraData
+}
+
+// GetSafeTxExtraDataOk returns a tuple with the SafeTxExtraData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionMessageSignEIP712Destination) GetSafeTxExtraDataOk() (*SafeTxExtraData, bool) {
+	if o == nil || IsNil(o.SafeTxExtraData) {
+		return nil, false
+	}
+	return o.SafeTxExtraData, true
+}
+
+// HasSafeTxExtraData returns a boolean if a field has been set.
+func (o *TransactionMessageSignEIP712Destination) HasSafeTxExtraData() bool {
+	if o != nil && !IsNil(o.SafeTxExtraData) {
+		return true
+	}
+
+	return false
+}
+
+// SetSafeTxExtraData gets a reference to the given SafeTxExtraData and assigns it to the SafeTxExtraData field.
+func (o *TransactionMessageSignEIP712Destination) SetSafeTxExtraData(v SafeTxExtraData) {
+	o.SafeTxExtraData = &v
+}
+
 func (o TransactionMessageSignEIP712Destination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -104,7 +171,13 @@ func (o TransactionMessageSignEIP712Destination) MarshalJSON() ([]byte, error) {
 func (o TransactionMessageSignEIP712Destination) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["destination_type"] = o.DestinationType
+	if !IsNil(o.RawStructuredData) {
+		toSerialize["raw_structured_data"] = o.RawStructuredData
+	}
 	toSerialize["structured_data"] = o.StructuredData
+	if !IsNil(o.SafeTxExtraData) {
+		toSerialize["safe_tx_extra_data"] = o.SafeTxExtraData
+	}
 	return toSerialize, nil
 }
 

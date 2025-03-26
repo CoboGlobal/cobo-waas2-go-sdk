@@ -18,12 +18,14 @@ type MessageSignSourceType string
 
 // List of MessageSignSourceType
 const (
+	MESSAGESIGNSOURCETYPE_WEB3 MessageSignSourceType = "Web3"
 	MESSAGESIGNSOURCETYPE_ORG_CONTROLLED MessageSignSourceType = "Org-Controlled"
 	MESSAGESIGNSOURCETYPE_USER_CONTROLLED MessageSignSourceType = "User-Controlled"
 )
 
 // All allowed values of MessageSignSourceType enum
 var AllowedMessageSignSourceTypeEnumValues = []MessageSignSourceType{
+	"Web3",
 	"Org-Controlled",
 	"User-Controlled",
 }
