@@ -3356,6 +3356,147 @@ func (a *WalletsAPIService) LockUtxosExecute(r ApiLockUtxosRequest) (*LockUtxos2
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiRefreshAddressBalancesByTokenRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	walletId string
+	tokenId string
+	refreshAddressBalancesByTokenRequest *RefreshAddressBalancesByTokenRequest
+}
+
+// The request body to refresh the addresses balance by  specified token within a specified wallet
+func (r ApiRefreshAddressBalancesByTokenRequest) RefreshAddressBalancesByTokenRequest(refreshAddressBalancesByTokenRequest RefreshAddressBalancesByTokenRequest) ApiRefreshAddressBalancesByTokenRequest {
+	r.refreshAddressBalancesByTokenRequest = &refreshAddressBalancesByTokenRequest
+	return r
+}
+
+func (r ApiRefreshAddressBalancesByTokenRequest) Execute() (*RefreshAddressBalancesByToken200Response, *http.Response, error) {
+	return r.ApiService.RefreshAddressBalancesByTokenExecute(r)
+}
+
+/*
+RefreshAddressBalancesByToken refresh address balances by token
+
+The operation refresh the balance of the given address list for a specified token within a wallet.
+The successful return of the request only means that the refresh request has been submitted.
+
+<Note>This operation is applicable to MPC Wallets only.</Note>
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param walletId The wallet ID.
+ @param tokenId The token ID, which is the unique identifier of a token.
+ @return ApiRefreshAddressBalancesByTokenRequest
+*/
+func (a *WalletsAPIService) RefreshAddressBalancesByToken(ctx context.Context, walletId string, tokenId string) ApiRefreshAddressBalancesByTokenRequest {
+	return ApiRefreshAddressBalancesByTokenRequest{
+		ApiService: a,
+		ctx: ctx,
+		walletId: walletId,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return RefreshAddressBalancesByToken200Response
+func (a *WalletsAPIService) RefreshAddressBalancesByTokenExecute(r ApiRefreshAddressBalancesByTokenRequest) (*RefreshAddressBalancesByToken200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RefreshAddressBalancesByToken200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.RefreshAddressBalancesByToken")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/{wallet_id}/tokens/{token_id}/refresh_address_balances"
+	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.refreshAddressBalancesByTokenRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUnlockUtxosRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService

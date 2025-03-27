@@ -25,6 +25,7 @@ Method | HTTP request | Description
 [**ListUtxos**](WalletsAPI.md#ListUtxos) | **Get** /wallets/{wallet_id}/utxos | List UTXOs
 [**ListWallets**](WalletsAPI.md#ListWallets) | **Get** /wallets | List all wallets
 [**LockUtxos**](WalletsAPI.md#LockUtxos) | **Post** /wallets/{wallet_id}/utxos/lock | Lock UTXOs
+[**RefreshAddressBalancesByToken**](WalletsAPI.md#RefreshAddressBalancesByToken) | **Put** /wallets/{wallet_id}/tokens/{token_id}/refresh_address_balances | refresh address balances by token
 [**UnlockUtxos**](WalletsAPI.md#UnlockUtxos) | **Post** /wallets/{wallet_id}/utxos/unlock | Unlock UTXOs
 [**UpdateWalletById**](WalletsAPI.md#UpdateWalletById) | **Put** /wallets/{wallet_id} | Update wallet
 
@@ -1781,6 +1782,91 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**LockUtxos201Response**](LockUtxos201Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RefreshAddressBalancesByToken
+
+> RefreshAddressBalancesByToken200Response RefreshAddressBalancesByToken(ctx, walletId, tokenId).RefreshAddressBalancesByTokenRequest(refreshAddressBalancesByTokenRequest).Execute()
+
+refresh address balances by token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	tokenId := "ETH_USDT"
+	refreshAddressBalancesByTokenRequest := *coboWaas2.NewRefreshAddressBalancesByTokenRequest([]string{"3HYV6ta67197syD1ZVFganpmL2wLz4RyoC"})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.WalletsAPI.RefreshAddressBalancesByToken(ctx, walletId, tokenId).RefreshAddressBalancesByTokenRequest(refreshAddressBalancesByTokenRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.RefreshAddressBalancesByToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RefreshAddressBalancesByToken`: RefreshAddressBalancesByToken200Response
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.RefreshAddressBalancesByToken`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**walletId** | **string** | The wallet ID. | 
+**tokenId** | **string** | The token ID, which is the unique identifier of a token. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRefreshAddressBalancesByTokenRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **refreshAddressBalancesByTokenRequest** | [**RefreshAddressBalancesByTokenRequest**](RefreshAddressBalancesByTokenRequest.md) | The request body to refresh the addresses balance by  specified token within a specified wallet | 
+
+### Return type
+
+[**RefreshAddressBalancesByToken200Response**](RefreshAddressBalancesByToken200Response.md)
 
 ### Authorization
 

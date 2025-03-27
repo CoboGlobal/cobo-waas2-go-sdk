@@ -171,6 +171,7 @@ Class | Method | HTTP request | Description
 *WalletsAPI* | [**ListUtxos**](docs/WalletsAPI.md#listutxos) | **Get** /wallets/{wallet_id}/utxos | List UTXOs
 *WalletsAPI* | [**ListWallets**](docs/WalletsAPI.md#listwallets) | **Get** /wallets | List all wallets
 *WalletsAPI* | [**LockUtxos**](docs/WalletsAPI.md#lockutxos) | **Post** /wallets/{wallet_id}/utxos/lock | Lock UTXOs
+*WalletsAPI* | [**RefreshAddressBalancesByToken**](docs/WalletsAPI.md#refreshaddressbalancesbytoken) | **Put** /wallets/{wallet_id}/tokens/{token_id}/refresh_address_balances | refresh address balances by token
 *WalletsAPI* | [**UnlockUtxos**](docs/WalletsAPI.md#unlockutxos) | **Post** /wallets/{wallet_id}/utxos/unlock | Unlock UTXOs
 *WalletsAPI* | [**UpdateWalletById**](docs/WalletsAPI.md#updatewalletbyid) | **Put** /wallets/{wallet_id} | Update wallet
 *WalletsExchangeWalletAPI* | [**ListAssetBalancesForExchangeWallet**](docs/WalletsExchangeWalletAPI.md#listassetbalancesforexchangewallet) | **Get** /wallets/{wallet_id}/exchanges/assets | List asset balances
@@ -430,6 +431,8 @@ Class | Method | HTTP request | Description
  - [QueryGuardPubkey200Response](docs/QueryGuardPubkey200Response.md)
  - [QueryGuardPubkey200ResponseAddressesInner](docs/QueryGuardPubkey200ResponseAddressesInner.md)
  - [RawMessageSignDestination](docs/RawMessageSignDestination.md)
+ - [RefreshAddressBalancesByToken200Response](docs/RefreshAddressBalancesByToken200Response.md)
+ - [RefreshAddressBalancesByTokenRequest](docs/RefreshAddressBalancesByTokenRequest.md)
  - [RefreshToken2XXResponse](docs/RefreshToken2XXResponse.md)
  - [RefreshTokenRequest](docs/RefreshTokenRequest.md)
  - [ReplaceType](docs/ReplaceType.md)

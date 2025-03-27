@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Method** | Pointer to **string** | Name of the decoded method | [optional] 
-**Parameters** | Pointer to [**[]SafeTxDecodedDataParameters**](SafeTxDecodedDataParameters.md) | List of method parameters | [optional] 
+**Method** | Pointer to **string** | The name of the method decoded from the transaction data. | [optional] 
+**Parameters** | Pointer to [**[]SafeTxDecodedDataParameters**](SafeTxDecodedDataParameters.md) | The list of parameters decoded from the transaction data. | [optional] 
 
 ## Methods
 

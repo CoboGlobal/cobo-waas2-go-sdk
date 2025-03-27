@@ -1726,6 +1726,63 @@ paths:
       summary: List address balances by token
       tags:
       - Wallets
+  /wallets/{wallet_id}/tokens/{token_id}/refresh_address_balances:
+    put:
+      description: |
+        The operation refresh the balance of the given address list for a specified token within a wallet.
+        The successful return of the request only means that the refresh request has been submitted.
+
+        <Note>This operation is applicable to MPC Wallets only.</Note>
+      operationId: refresh_address_balances_by_token
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/refreshAddressBalancesBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refresh_address_balances_by_token_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: refresh address balances by token
+      tags:
+      - Wallets
   /wallets/check_address_validity:
     get:
       description: |
@@ -4200,7 +4257,7 @@ paths:
   /transactions/{transaction_id}/approval_detail:
     get:
       description: |
-        This operation retrieves approval detailed information about a specified transaction.
+        This operation retrieves detailed approval information about a specified transaction.
       operationId: get_transaction_approval_detail
       parameters:
       - description: The transaction ID.
@@ -4243,7 +4300,7 @@ paths:
   /transactions/approval_details:
     get:
       description: |
-        This operation retrieves approval detailed information about multi specified transaction.
+        This operation retrieves detailed approval information for all transactions.
       operationId: list_transaction_approval_details
       parameters:
       - description: "A list of transaction IDs, separated by comma."
@@ -9445,18 +9502,7 @@ components:
       content:
         application/json:
           schema:
-            description: The request body to refresh the addresses balance by  specified
-              token within a specified wallet.
-            properties:
-              addresses:
-                description: A list of  address.
-                items:
-                  example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
-                  type: string
-                type: array
-            required:
-            - addresses
-            type: object
+            $ref: '#/components/schemas/refresh_address_balances_by_token_request'
       description: The request body to refresh the addresses balance by  specified
         token within a specified wallet
     createKeyShareHolderGroupBody:
@@ -9827,17 +9873,7 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              submitted:
-                description: |
-                  Whether the request to refresh address balances has been successfully submitted.
-                  - `true`: The request to refresh address balances has been successfully submitted.
-                  - `false`: The request to  refresh address balances has not been submitted.
-                example: true
-                type: boolean
-            required:
-            - submitted
-            type: object
+            $ref: '#/components/schemas/refresh_address_balances_by_token_200_response'
       description: The request was successful.
     createKeyShareHolderGroupsResponse:
       content:
@@ -12093,7 +12129,7 @@ components:
       - fee_amount
       - fee_type
       - token_id
-      title: Fixed (Estimated)
+      title: Fixed
       type: object
     EstimatedEvmEip1559Fee:
       description: The estimated transaction fee based on the EIP-1559 fee model.
@@ -12114,7 +12150,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: EIP-1559 (Estimated)
+      title: EVM_EIP_1559
       type: object
     EstimatedEvmLegacyFee:
       description: The estimated transaction fee based on the legacy fee model.
@@ -12135,7 +12171,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: Legacy (Estimated)
+      title: EVM_Legacy
       type: object
     EstimatedUtxoFee:
       description: The estimated transaction fee for UTXO-based chains.
@@ -12156,7 +12192,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: UTXO (Estimated)
+      title: UTXO
       type: object
     EstimatedFee:
       discriminator:
@@ -12197,7 +12233,7 @@ components:
       required:
       - fee_type
       - token_id
-      title: Fixed (Preset)
+      title: Fixed
       type: object
     TransactionRequestEvmEip1559Fee:
       allOf:
@@ -12231,7 +12267,7 @@ components:
       - max_fee_per_gas
       - max_priority_fee_per_gas
       - token_id
-      title: EIP-1559 (Preset)
+      title: EVM_EIP_1559
       type: object
     TransactionRequestEvmLegacyFee:
       allOf:
@@ -12263,7 +12299,7 @@ components:
       - fee_type
       - gas_price
       - token_id
-      title: Legacy (Preset)
+      title: EVM_Legacy
       type: object
     TransactionRequestUtxoFee:
       allOf:
@@ -12293,7 +12329,7 @@ components:
       required:
       - fee_type
       - token_id
-      title: UTXO (Preset)
+      title: UTXO
       type: object
     TransactionRequestFee:
       discriminator:
@@ -12955,7 +12991,7 @@ components:
       required:
       - source_type
       - wallet_id
-      title: Custodial Wallet (Asset)
+      title: Asset
       type: object
     TransactionCustodialWeb3WalletSource:
       description: |
@@ -12985,7 +13021,7 @@ components:
       required:
       - source_type
       - wallet_id
-      title: Custodial Wallet (Web3)
+      title: Web3
       type: object
     TransactionMPCWalletSource:
       description: |
@@ -13020,7 +13056,7 @@ components:
       required:
       - source_type
       - wallet_id
-      title: MPC Wallet
+      title: Org-Controlled/User-Controlled
       type: object
     TransactionSmartContractSafeWalletSource:
       description: |
@@ -13045,7 +13081,7 @@ components:
       - address
       - source_type
       - wallet_id
-      title: Smart Contract Wallet
+      title: "Safe{Wallet}"
       type: object
     TransactionExchangeWalletSource:
       description: |
@@ -13070,7 +13106,7 @@ components:
       - exchange_id
       - source_type
       - wallet_id
-      title: Exchange Wallet
+      title: Main/Sub
       type: object
     TransactionDepositFromAddressSource:
       description: |
@@ -13098,7 +13134,7 @@ components:
       required:
       - addresses
       - source_type
-      title: Deposit from Address
+      title: DepositFromAddress
       type: object
     TransactionDepositFromWalletSource:
       description: |
@@ -13126,7 +13162,7 @@ components:
       - wallet_id
       - wallet_subtype
       - wallet_type
-      title: Deposit from Wallet
+      title: DepositFromWallet
       type: object
     TransactionDepositFromLoopSource:
       description: |
@@ -13138,7 +13174,7 @@ components:
           $ref: '#/components/schemas/TransactionSourceType'
       required:
       - source_type
-      title: Deposit from Cobo Loop
+      title: DepositFromLoop
       type: object
     TransactionFeeStationWalletSource:
       description: The information about the transaction source.
@@ -13211,7 +13247,7 @@ components:
       - destination_type
       - wallet_id
       - wallet_type
-      title: Deposit to Address
+      title: DepositToAddress
       type: object
     TransactionDepositToWalletDestination:
       description: |
@@ -13247,7 +13283,7 @@ components:
       - wallet_id
       - wallet_subtype
       - wallet_type
-      title: Deposit to Wallet
+      title: DepositToWallet
       type: object
     TransactionEvmContractMethod:
       description: The information about a method in a smart contract.
@@ -13358,11 +13394,11 @@ components:
       - address
       - calldata
       - destination_type
-      title: EVM Contract
+      title: EVM_Contract
       type: object
     TransactionSolContractDestination:
-      description: "The information about the transaction destination. Refer to [Transaction\
-        \ sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+      description: "The information about the transaction destination type `SOL_Contract`.\
+        \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
         \ for a detailed introduction about the supported sources and destinations\
         \ for each transaction type."
       properties:
@@ -13374,7 +13410,7 @@ components:
           type: array
       required:
       - destination_type
-      title: SOL Contract
+      title: SOL_Contract
       type: object
     TransactionSolContractAccount:
       description: sol contract instruction account
@@ -13431,7 +13467,7 @@ components:
       required:
       - destination_type
       - message
-      title: EIP-191 Signature
+      title: EVM_EIP_191_Signature
       type: object
     TransactionMessageSignEIP712Destination:
       description: |
@@ -13457,7 +13493,7 @@ components:
       required:
       - destination_type
       - structured_data
-      title: EIP-712 Signature
+      title: EVM_EIP_712_Signature
       type: object
     TransactionRawMessageSignDestination:
       description: |
@@ -13473,7 +13509,7 @@ components:
       required:
       - destination_type
       - message
-      title: Raw Message Signature
+      title: Raw_Message_Signature
       type: object
     TransactionTransferToAddressDestination:
       description: |
@@ -13554,7 +13590,7 @@ components:
       - amount
       - destination_type
       - wallet_id
-      title: Exchange Wallet
+      title: ExchangeWallet
       type: object
     TransactionResultType:
       description: |
@@ -13739,7 +13775,7 @@ components:
         \ different transaction fee models.\n"
       required:
       - fee_type
-      title: Fixed (Actually Charged)
+      title: Fixed
       type: object
     TransactionEvmEip1559Fee:
       allOf:
@@ -13783,7 +13819,7 @@ components:
         fee_used: "0.1"
       required:
       - fee_type
-      title: EIP-1559 (Actually Charged)
+      title: EVM_EIP_1559
       type: object
     TransactionEvmLegacyFee:
       allOf:
@@ -13812,7 +13848,7 @@ components:
         \ for different transaction fee models.\n"
       required:
       - fee_type
-      title: Legacy (Actually Charged)
+      title: EVM_Legacy
       type: object
     TransactionUtxoFee:
       allOf:
@@ -13843,7 +13879,7 @@ components:
         Switch between the tabs to display the properties for different transaction fee models.
       required:
       - fee_type
-      title: UTXO (Actually Charged)
+      title: UTXO
       type: object
     TransactionFee:
       discriminator:
@@ -14122,11 +14158,11 @@ components:
         pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
       properties:
         name:
-          description: The name the user who audited this message.
+          description: The name of the user who audited this message.
           example: tom
           type: string
         email:
-          description: The email the user who audited this message.
+          description: The email of the user who audited this message.
           example: tom@gmail.com
           type: string
         pubkey:
@@ -14190,77 +14226,77 @@ components:
       example: AutoSweep
       type: string
     SafeTxExtraData:
-      description: "The information about the extra data of the Safe{Wallet} tx message\
-        \ transaction."
+      description: "The information used to construct and sign Safe{Wallet} transactions\
+        \ using the EIP-712 standard."
       properties:
         to:
-          description: The recipient address of the transaction
+          description: The recipient address of the transaction.
           example: 0x1234567890abcdef1234567890abcdef12345678
           type: string
         value:
-          description: "Readable transaction value (e.g., 1 ETH)"
+          description: "The human-readable transaction value, for example, `1 ETH`."
           example: 1 ETH
           type: string
         data:
-          description: The transaction data
+          description: The transaction call data.
           example: 0xabcdef...
           type: string
         domain_hash:
-          description: EIP712 structured data domain hash
+          description: The EIP-712 domain separator hash.
           example: 0xabcdef123456...
           type: string
         message_hash:
-          description: Hash of the structured message
+          description: The hash of the structured message to be signed.
           example: 0xabcdef123456...
           type: string
         safe_address:
-          description: Address of the Safe contract
+          description: The address of the Safe contract.
           example: 0xabcdefabcdefabcdefabcdefabcdefabcdef
           type: string
         safe_tx_hash:
-          description: Hash of the Safe transaction
+          description: The hash of the transaction.
           example: 0x123456abcdef...
           type: string
         safe_nonce:
-          description: Safe transaction nonce
+          description: The nonce of the transaction.
           example: 42
           type: integer
         operation:
-          description: Type of operation performed in the transaction
+          description: The operation type for the transaction.
           example: Call
           type: string
         gas_token_addr:
-          description: Address of the gas token
+          description: The address of the token used to pay gas.
           example: 0xabcdefabcdef...
           type: string
         safe_tx_gas:
-          description: Gas used for the Safe transaction
+          description: The gas limit used for the transaction.
           example: 21000
           type: integer
         base_gas:
-          description: Base gas for the transaction
+          description: The base gas for the transaction.
           example: 5000
           type: integer
         gas_price:
-          description: Gas price used in the transaction
+          description: The gas price used in the transaction.
           example: "100"
           type: string
         refund_receiver:
-          description: Address to receive the gas refund
+          description: The address used to receive the gas refund.
           example: 0xabcdefabcdef...
           type: string
         to_contract_name:
-          description: Name of the recipient contract (if available)
+          description: The name of the recipient contract (if available).
           example: UniswapV2Router
           type: string
         decoded_data:
           $ref: '#/components/schemas/SafeTxDecodedData'
         signature:
-          description: Signature of the transaction (if signed by Cobo Signer)
+          description: The signature of the transaction (if signed by Cobo Signer).
           example: 0xabcdef123456...
           type: string
         wei:
-          description: Transaction amount in Wei
+          description: The transaction amount in Wei.
           example: "1000000000000000000"
           nullable: true
           type: string
@@ -14279,11 +14315,11 @@ components:
       description: The information about the decoded data of the transaction.
       properties:
         method:
-          description: Name of the decoded method
+          description: The name of the method decoded from the transaction data.
           example: transfer
           type: string
         parameters:
-          description: List of method parameters
+          description: The list of parameters decoded from the transaction data.
           items:
             $ref: '#/components/schemas/SafeTxDecodedDataParameters'
           type: array
@@ -14292,19 +14328,19 @@ components:
       description: The information about the decoded parameters of the transaction.
       properties:
         name:
-          description: Name of the parameter
+          description: The name of the parameter.
           example: recipient
           type: string
         type:
-          description: Type of the parameter
+          description: The data type of the parameter.
           example: address
           type: string
         value:
-          description: Value of the parameter
+          description: The value of the parameter.
           example: 0x1234567890abcdef1234567890abcdef12345678
           type: string
         value_decoded:
-          description: Decoded value if applicable
+          description: The decoded value of the parameter (if applicable).
           items:
             $ref: '#/components/schemas/SafeTxSubTransaction'
           type: array
@@ -14313,19 +14349,19 @@ components:
       description: The information about the sub-transaction.
       properties:
         operation:
-          description: Type of operation in the sub-transaction
+          description: The type of operation in the sub-transaction.
           example: Call
           type: string
         to:
-          description: Address the transaction is sent to
+          description: The destination address of the sub-transaction.
           example: 0xabcdefabcdefabcdefabcdefabcdefabcdef
           type: string
         value:
-          description: "Readable transaction value (e.g., 1 ETH)"
+          description: "The human-readable transaction value, for example, `1 ETH`."
           example: 1 ETH
           type: string
         wei:
-          description: Transaction amount in Wei
+          description: The transaction amount in Wei
           example: "1000000000000000000"
           type: string
         data:
@@ -14335,14 +14371,14 @@ components:
         data_decoded:
           $ref: '#/components/schemas/SafeTxDecodedData'
         to_contract_name:
-          description: Name of the recipient contract (if available)
+          description: The name of the recipient contract (if available).
           example: UniswapV2Router
           nullable: true
           type: string
       type: object
     CustodialTransferSource:
       description: |
-        The information about the transaction source types `Asset` and `Web3`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+        The information about the transaction source types `Asset`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
         Switch between the tabs to display the properties for different transaction sources.
       example:
@@ -14359,11 +14395,11 @@ components:
       required:
       - source_type
       - wallet_id
-      title: Transfer from Custodial Wallet
+      title: Asset
       type: object
     CustodialWeb3TransferSource:
       description: |
-        The information about the transaction source types `Web3`. Refer to [Transaction sources and destinations](/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+        The information about the transaction source types `Web3`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
         You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
 
@@ -14379,6 +14415,7 @@ components:
         address:
           description: |
             The wallet address.
+
             If you want to specify the UTXOs to be used, please provide the `included_utxos` property. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.
 
             You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
@@ -14395,7 +14432,7 @@ components:
       required:
       - source_type
       - wallet_id
-      title: Transfer from Custodial Wallet (Web3)
+      title: Web3
       type: object
     MpcTransferSource:
       description: |
@@ -14452,7 +14489,7 @@ components:
       required:
       - source_type
       - wallet_id
-      title: Transfer from MPC Wallet
+      title: Org-Controlled/User-Controlled
       type: object
     SafeTransferSource:
       description: |
@@ -14478,7 +14515,7 @@ components:
       - delegate
       - source_type
       - wallet_id
-      title: Transfer from Smart Contract Wallet
+      title: "Safe{Wallet}"
       type: object
     CoboSafeDelegateType:
       default: Org-Controlled
@@ -14550,7 +14587,7 @@ components:
       - source_type
       - trading_account_type
       - wallet_id
-      title: Transfer from Exchange Wallet
+      title: Main/Sub
       type: object
     TransferSource:
       discriminator:
@@ -14637,7 +14674,7 @@ components:
           type: boolean
       required:
       - destination_type
-      title: Transfer to Address
+      title: Address
       type: object
     ExchangeTransferDestination:
       description: |
@@ -14668,7 +14705,7 @@ components:
       - destination_type
       - trading_account_type
       - wallet_id
-      title: Transfer to Exchange Wallet
+      title: ExchangeWallet
       type: object
     TransferDestinationType:
       description: |
@@ -14863,11 +14900,11 @@ components:
       - destination
       - request_type
       - source
-      title: Contract Call
+      title: ContractCall
       type: object
     BaseContractCallSource:
       description: |
-        The information about the transaction source type `Org-Controlled` and `User-Controlled`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+        The information about the transaction source type. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
         Switch between the tabs to display the properties for different transaction sources.
       properties:
@@ -14903,11 +14940,11 @@ components:
           - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
           - cobo5yb7BNEBwwp5XXedbhnzQfvQtp132W4dH4Jz4x4eDp4KA
           used_key_share_holder_group_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-      title: Contract Call from MPC Wallet
+      title: Org-Controlled/User-Controlled
     CustodialWeb3ContractCallSource:
       allOf:
       - $ref: '#/components/schemas/BaseContractCallSource'
-      title: Contract Call from Custodial Web3 Wallet
+      title: Web3
     SafeContractCallSource:
       allOf:
       - $ref: '#/components/schemas/BaseContractCallSource'
@@ -14921,7 +14958,7 @@ components:
         The information about the transaction source type `Safe{Wallet}`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
         Switch between the tabs to display the properties for different transaction sources.
-      title: Contract Call from Smart Contract Wallet
+      title: "Safe{Wallet}"
     ContractCallSourceType:
       description: |
         The type of the source. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -14985,7 +15022,7 @@ components:
       - address
       - calldata
       - destination_type
-      title: EVM Contract
+      title: EVM_Contract
       type: object
     SolContractCallDestination:
       description: "The information about the transaction destination. Refer to [Transaction\
@@ -15002,7 +15039,7 @@ components:
       required:
       - destination_type
       - instructions
-      title: SOL Contract
+      title: SOL_Contract
       type: object
     SolContractCallAccount:
       description: The information about the account involved in a Solana instruction.
@@ -15173,7 +15210,7 @@ components:
       - address
       - source_type
       - wallet_id
-      title: Message Signing from MPC Wallet
+      title: Org-Controlled/User-Controlled
       type: object
     CustodialWeb3MessageSignSource:
       properties:
@@ -15192,7 +15229,7 @@ components:
       - address
       - source_type
       - wallet_id
-      title: Message Signing from Custodial Web3 Wallet
+      title: Web3
       type: object
     MessageSignSourceType:
       description: |
@@ -15232,7 +15269,7 @@ components:
       required:
       - destination_type
       - message
-      title: EVM EIP-191 Signature
+      title: EVM_EIP_191_Signature
       type: object
     BTCEIP191MessageSignDestination:
       description: "The information about the destination `BTC_EIP_191_Signature`.\
@@ -15250,7 +15287,7 @@ components:
       required:
       - destination_type
       - message
-      title: BTC EIP-191 Signature
+      title: BTC_EIP_191_Signature
       type: object
     EvmEIP712MessageSignDestination:
       description: "The information about the destination `EVM_EIP_712_Signature`.\
@@ -15270,7 +15307,7 @@ components:
       required:
       - destination_type
       - structured_data
-      title: EVM EIP-712 Signature
+      title: EVM_EIP_712_Signature
       type: object
     RawMessageSignDestination:
       description: "The information about the destination `Raw_Message_Signature`.\
@@ -15286,7 +15323,7 @@ components:
       required:
       - destination_type
       - msg_hash
-      title: Raw Message Signature
+      title: Raw_Message_Signature
       type: object
     MessageSignDestinationType:
       description: |
@@ -15523,8 +15560,8 @@ components:
             - `Addresses`: The addresses event data.
             - `WalletInfo`: The wallet information event data.
             - `MPCVault`: The MPC vault event data.
-            - `Chains`: The Chain enabled event data.
-            - `Tokens`: The Token enabled event data.
+            - `Chains`: The enabled chain event data.
+            - `Tokens`: The enabled token event data.
           enum:
           - Transaction
           - TSSRequest
@@ -15652,12 +15689,12 @@ components:
         fueling_info:
           transaction_id: b0530b27-104f-4338-87de-de01500326ea
           request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
-      title: Transaction Event Data
+      title: Transaction
     TSSRequestWebhookEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - $ref: '#/components/schemas/TSSRequest'
-      title: TSS Request Event Data
+      title: TSSRequest
     AddressesEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -15668,7 +15705,7 @@ components:
               $ref: '#/components/schemas/AddressesEventData_allOf_addresses'
             type: array
         type: object
-      title: Addresses Event Data
+      title: Addresses
     WalletInfoEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -15676,38 +15713,38 @@ components:
           wallet:
             $ref: '#/components/schemas/WalletInfo'
         type: object
-      title: Wallet Event Data
+      title: WalletInfo
     MPCVaultEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - $ref: '#/components/schemas/MPCVault'
-      title: MPC Vault Event Data
+      title: MPCVault
     ChainsEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - properties:
           chains:
-            description: The chains.
+            description: The enabled chains.
             items:
               $ref: '#/components/schemas/ChainInfo'
             type: array
         required:
         - chains
         type: object
-      title: The Chain Enabled Event Data
+      title: Chains
     TokensEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - properties:
           tokens:
-            description: The tokens.
+            description: The enabled tokens.
             items:
               $ref: '#/components/schemas/TokenInfo'
             type: array
         required:
         - tokens
         type: object
-      title: The Token Enabled Event Data
+      title: Tokens
     WebhookEventType:
       description: "The event type. To learn the trigger condition of each event type,\
         \ refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type)."
@@ -17061,7 +17098,7 @@ components:
       type: string
     StakingPoolId:
       description: "The ID of the staking pool. A staking pool is a pairing of a staking\
-        \ protocol and a specific type of token. Currently, `berachain_bgt` and `erachain_bgt_testnet`\
+        \ protocol and a specific type of token. Currently, `berachain_bgt` and `berachain_bgt_testnet`\
         \ are not supported."
       enum:
       - babylon_btc_signet
@@ -18523,6 +18560,33 @@ components:
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
+      type: object
+    refresh_address_balances_by_token_request:
+      description: The request body to refresh the addresses balance by  specified
+        token within a specified wallet.
+      properties:
+        addresses:
+          description: A list of  address.
+          items:
+            example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
+            type: string
+          type: array
+      required:
+      - addresses
+      type: object
+    refresh_address_balances_by_token_200_response:
+      example:
+        submitted: true
+      properties:
+        submitted:
+          description: |
+            Whether the request to refresh address balances has been successfully submitted.
+            - `true`: The request to refresh address balances has been successfully submitted.
+            - `false`: The request to  refresh address balances has not been submitted.
+          example: true
+          type: boolean
+      required:
+      - submitted
       type: object
     check_address_validity_200_response:
       example:

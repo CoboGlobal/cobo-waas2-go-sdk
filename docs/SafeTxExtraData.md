@@ -4,24 +4,24 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**To** | **string** | The recipient address of the transaction | 
-**Value** | **string** | Readable transaction value (e.g., 1 ETH) | 
-**Data** | **string** | The transaction data | 
-**DomainHash** | **string** | EIP712 structured data domain hash | 
-**MessageHash** | **string** | Hash of the structured message | 
-**SafeAddress** | **string** | Address of the Safe contract | 
-**SafeTxHash** | **string** | Hash of the Safe transaction | 
-**SafeNonce** | **int32** | Safe transaction nonce | 
-**Operation** | **string** | Type of operation performed in the transaction | 
-**GasTokenAddr** | Pointer to **string** | Address of the gas token | [optional] 
-**SafeTxGas** | Pointer to **int32** | Gas used for the Safe transaction | [optional] 
-**BaseGas** | Pointer to **int32** | Base gas for the transaction | [optional] 
-**GasPrice** | Pointer to **string** | Gas price used in the transaction | [optional] 
-**RefundReceiver** | Pointer to **string** | Address to receive the gas refund | [optional] 
-**ToContractName** | Pointer to **string** | Name of the recipient contract (if available) | [optional] 
+**To** | **string** | The recipient address of the transaction. | 
+**Value** | **string** | The human-readable transaction value, for example, &#x60;1 ETH&#x60;. | 
+**Data** | **string** | The transaction call data. | 
+**DomainHash** | **string** | The EIP-712 domain separator hash. | 
+**MessageHash** | **string** | The hash of the structured message to be signed. | 
+**SafeAddress** | **string** | The address of the Safe contract. | 
+**SafeTxHash** | **string** | The hash of the transaction. | 
+**SafeNonce** | **int32** | The nonce of the transaction. | 
+**Operation** | **string** | The operation type for the transaction. | 
+**GasTokenAddr** | Pointer to **string** | The address of the token used to pay gas. | [optional] 
+**SafeTxGas** | Pointer to **int32** | The gas limit used for the transaction. | [optional] 
+**BaseGas** | Pointer to **int32** | The base gas for the transaction. | [optional] 
+**GasPrice** | Pointer to **string** | The gas price used in the transaction. | [optional] 
+**RefundReceiver** | Pointer to **string** | The address used to receive the gas refund. | [optional] 
+**ToContractName** | Pointer to **string** | The name of the recipient contract (if available). | [optional] 
 **DecodedData** | Pointer to [**SafeTxDecodedData**](SafeTxDecodedData.md) |  | [optional] 
-**Signature** | Pointer to **string** | Signature of the transaction (if signed by Cobo Signer) | [optional] 
-**Wei** | Pointer to **NullableString** | Transaction amount in Wei | [optional] 
+**Signature** | Pointer to **string** | The signature of the transaction (if signed by Cobo Signer). | [optional] 
+**Wei** | Pointer to **NullableString** | The transaction amount in Wei. | [optional] 
 
 ## Methods
 

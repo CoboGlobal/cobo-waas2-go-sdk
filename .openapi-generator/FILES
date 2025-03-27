@@ -259,6 +259,8 @@ docs/QueryApprovalStatement200Response.md
 docs/QueryGuardPubkey200Response.md
 docs/QueryGuardPubkey200ResponseAddressesInner.md
 docs/RawMessageSignDestination.md
+docs/RefreshAddressBalancesByToken200Response.md
+docs/RefreshAddressBalancesByTokenRequest.md
 docs/RefreshToken2XXResponse.md
 docs/RefreshTokenRequest.md
 docs/ReplaceType.md
@@ -661,6 +663,8 @@ model_query_approval_statement_200_response.go
 model_query_guard_pubkey_200_response.go
 model_query_guard_pubkey_200_response_addresses_inner.go
 model_raw_message_sign_destination.go
+model_refresh_address_balances_by_token_200_response.go
+model_refresh_address_balances_by_token_request.go
 model_refresh_token_2_xx_response.go
 model_refresh_token_request.go
 model_replace_type.go
