@@ -17,18 +17,18 @@ var _ MappedNullable = &SafeTxSubTransaction{}
 
 // SafeTxSubTransaction The information about the sub-transaction.
 type SafeTxSubTransaction struct {
-	// Type of operation in the sub-transaction
+	// The type of operation in the sub-transaction.
 	Operation *string `json:"operation,omitempty"`
-	// Address the transaction is sent to
+	// The destination address of the sub-transaction.
 	To *string `json:"to,omitempty"`
-	// Readable transaction value (e.g., 1 ETH)
+	// The human-readable transaction value, for example, `1 ETH`.
 	Value *string `json:"value,omitempty"`
-	// Transaction amount in Wei
+	// The transaction amount in Wei
 	Wei *string `json:"wei,omitempty"`
 	// Encoded transaction data
 	Data *string `json:"data,omitempty"`
 	DataDecoded *SafeTxDecodedData `json:"data_decoded,omitempty"`
-	// Name of the recipient contract (if available)
+	// The name of the recipient contract (if available).
 	ToContractName NullableString `json:"to_contract_name,omitempty"`
 }
 

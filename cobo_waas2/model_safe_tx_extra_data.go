@@ -17,42 +17,42 @@ import (
 // checks if the SafeTxExtraData type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SafeTxExtraData{}
 
-// SafeTxExtraData The information about the extra data of the Safe{Wallet} tx message transaction.
+// SafeTxExtraData The information used to construct and sign Safe{Wallet} transactions using the EIP-712 standard.
 type SafeTxExtraData struct {
-	// The recipient address of the transaction
+	// The recipient address of the transaction.
 	To string `json:"to"`
-	// Readable transaction value (e.g., 1 ETH)
+	// The human-readable transaction value, for example, `1 ETH`.
 	Value string `json:"value"`
-	// The transaction data
+	// The transaction call data.
 	Data string `json:"data"`
-	// EIP712 structured data domain hash
+	// The EIP-712 domain separator hash.
 	DomainHash string `json:"domain_hash"`
-	// Hash of the structured message
+	// The hash of the structured message to be signed.
 	MessageHash string `json:"message_hash"`
-	// Address of the Safe contract
+	// The address of the Safe contract.
 	SafeAddress string `json:"safe_address"`
-	// Hash of the Safe transaction
+	// The hash of the transaction.
 	SafeTxHash string `json:"safe_tx_hash"`
-	// Safe transaction nonce
+	// The nonce of the transaction.
 	SafeNonce int32 `json:"safe_nonce"`
-	// Type of operation performed in the transaction
+	// The operation type for the transaction.
 	Operation string `json:"operation"`
-	// Address of the gas token
+	// The address of the token used to pay gas.
 	GasTokenAddr *string `json:"gas_token_addr,omitempty"`
-	// Gas used for the Safe transaction
+	// The gas limit used for the transaction.
 	SafeTxGas *int32 `json:"safe_tx_gas,omitempty"`
-	// Base gas for the transaction
+	// The base gas for the transaction.
 	BaseGas *int32 `json:"base_gas,omitempty"`
-	// Gas price used in the transaction
+	// The gas price used in the transaction.
 	GasPrice *string `json:"gas_price,omitempty"`
-	// Address to receive the gas refund
+	// The address used to receive the gas refund.
 	RefundReceiver *string `json:"refund_receiver,omitempty"`
-	// Name of the recipient contract (if available)
+	// The name of the recipient contract (if available).
 	ToContractName *string `json:"to_contract_name,omitempty"`
 	DecodedData *SafeTxDecodedData `json:"decoded_data,omitempty"`
-	// Signature of the transaction (if signed by Cobo Signer)
+	// The signature of the transaction (if signed by Cobo Signer).
 	Signature *string `json:"signature,omitempty"`
-	// Transaction amount in Wei
+	// The transaction amount in Wei.
 	Wei NullableString `json:"wei,omitempty"`
 }
 

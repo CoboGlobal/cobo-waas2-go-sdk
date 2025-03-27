@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Operation** | Pointer to **string** | Type of operation in the sub-transaction | [optional] 
-**To** | Pointer to **string** | Address the transaction is sent to | [optional] 
-**Value** | Pointer to **string** | Readable transaction value (e.g., 1 ETH) | [optional] 
-**Wei** | Pointer to **string** | Transaction amount in Wei | [optional] 
+**Operation** | Pointer to **string** | The type of operation in the sub-transaction. | [optional] 
+**To** | Pointer to **string** | The destination address of the sub-transaction. | [optional] 
+**Value** | Pointer to **string** | The human-readable transaction value, for example, &#x60;1 ETH&#x60;. | [optional] 
+**Wei** | Pointer to **string** | The transaction amount in Wei | [optional] 
 **Data** | Pointer to **string** | Encoded transaction data | [optional] 
 **DataDecoded** | Pointer to [**SafeTxDecodedData**](SafeTxDecodedData.md) |  | [optional] 
-**ToContractName** | Pointer to **NullableString** | Name of the recipient contract (if available) | [optional] 
+**ToContractName** | Pointer to **NullableString** | The name of the recipient contract (if available). | [optional] 
 
 ## Methods
 

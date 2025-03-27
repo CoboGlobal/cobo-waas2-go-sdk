@@ -1142,7 +1142,7 @@ func (r ApiGetTransactionApprovalDetailRequest) Execute() (*TransactionApprovalD
 /*
 GetTransactionApprovalDetail Get transaction approval details
 
-This operation retrieves approval detailed information about a specified transaction.
+This operation retrieves detailed approval information about a specified transaction.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1405,7 +1405,7 @@ func (r ApiListTransactionApprovalDetailsRequest) Execute() (*ListTransactionApp
 /*
 ListTransactionApprovalDetails List transaction approval details
 
-This operation retrieves approval detailed information about multi specified transaction.
+This operation retrieves detailed approval information for all transactions.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

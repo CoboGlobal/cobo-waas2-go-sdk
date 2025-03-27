@@ -306,6 +306,21 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test WalletsAPIService RefreshAddressBalancesByToken", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var walletId string
+		var tokenId string
+
+		resp, httpRes, err := apiClient.WalletsAPI.RefreshAddressBalancesByToken(ctx, walletId, tokenId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test WalletsAPIService UnlockUtxos", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

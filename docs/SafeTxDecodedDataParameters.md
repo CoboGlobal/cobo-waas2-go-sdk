@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** | Name of the parameter | [optional] 
-**Type** | Pointer to **string** | Type of the parameter | [optional] 
-**Value** | Pointer to **string** | Value of the parameter | [optional] 
-**ValueDecoded** | Pointer to [**[]SafeTxSubTransaction**](SafeTxSubTransaction.md) | Decoded value if applicable | [optional] 
+**Name** | Pointer to **string** | The name of the parameter. | [optional] 
+**Type** | Pointer to **string** | The data type of the parameter. | [optional] 
+**Value** | Pointer to **string** | The value of the parameter. | [optional] 
+**ValueDecoded** | Pointer to [**[]SafeTxSubTransaction**](SafeTxSubTransaction.md) | The decoded value of the parameter (if applicable). | [optional] 
 
 ## Methods
 

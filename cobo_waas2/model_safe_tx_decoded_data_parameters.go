@@ -17,13 +17,13 @@ var _ MappedNullable = &SafeTxDecodedDataParameters{}
 
 // SafeTxDecodedDataParameters The information about the decoded parameters of the transaction.
 type SafeTxDecodedDataParameters struct {
-	// Name of the parameter
+	// The name of the parameter.
 	Name *string `json:"name,omitempty"`
-	// Type of the parameter
+	// The data type of the parameter.
 	Type *string `json:"type,omitempty"`
-	// Value of the parameter
+	// The value of the parameter.
 	Value *string `json:"value,omitempty"`
-	// Decoded value if applicable
+	// The decoded value of the parameter (if applicable).
 	ValueDecoded []SafeTxSubTransaction `json:"value_decoded,omitempty"`
 }
 
