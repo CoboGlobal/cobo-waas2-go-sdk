@@ -15,16 +15,40 @@ import (
 
 // MessageSignDestination - struct for MessageSignDestination
 type MessageSignDestination struct {
+	BTCBIP137MessageSignDestination *BTCBIP137MessageSignDestination
+	BTCBIP322MessageSignDestination *BTCBIP322MessageSignDestination
 	BTCEIP191MessageSignDestination *BTCEIP191MessageSignDestination
+	CosmosAdr36MessageSignDestination *CosmosAdr36MessageSignDestination
 	EvmEIP191MessageSignDestination *EvmEIP191MessageSignDestination
 	EvmEIP712MessageSignDestination *EvmEIP712MessageSignDestination
 	RawMessageSignDestination *RawMessageSignDestination
+}
+
+// BTCBIP137MessageSignDestinationAsMessageSignDestination is a convenience function that returns BTCBIP137MessageSignDestination wrapped in MessageSignDestination
+func BTCBIP137MessageSignDestinationAsMessageSignDestination(v *BTCBIP137MessageSignDestination) MessageSignDestination {
+	return MessageSignDestination{
+		BTCBIP137MessageSignDestination: v,
+	}
+}
+
+// BTCBIP322MessageSignDestinationAsMessageSignDestination is a convenience function that returns BTCBIP322MessageSignDestination wrapped in MessageSignDestination
+func BTCBIP322MessageSignDestinationAsMessageSignDestination(v *BTCBIP322MessageSignDestination) MessageSignDestination {
+	return MessageSignDestination{
+		BTCBIP322MessageSignDestination: v,
+	}
 }
 
 // BTCEIP191MessageSignDestinationAsMessageSignDestination is a convenience function that returns BTCEIP191MessageSignDestination wrapped in MessageSignDestination
 func BTCEIP191MessageSignDestinationAsMessageSignDestination(v *BTCEIP191MessageSignDestination) MessageSignDestination {
 	return MessageSignDestination{
 		BTCEIP191MessageSignDestination: v,
+	}
+}
+
+// CosmosAdr36MessageSignDestinationAsMessageSignDestination is a convenience function that returns CosmosAdr36MessageSignDestination wrapped in MessageSignDestination
+func CosmosAdr36MessageSignDestinationAsMessageSignDestination(v *CosmosAdr36MessageSignDestination) MessageSignDestination {
+	return MessageSignDestination{
+		CosmosAdr36MessageSignDestination: v,
 	}
 }
 
@@ -60,6 +84,30 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
 	}
 
+	// check if the discriminator value is 'BTC_BIP_137_Signature'
+	if jsonDict["destination_type"] == "BTC_BIP_137_Signature" {
+		// try to unmarshal JSON data into BTCBIP137MessageSignDestination
+		err = json.Unmarshal(data, &dst.BTCBIP137MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.BTCBIP137MessageSignDestination, return on the first match
+		} else {
+			dst.BTCBIP137MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCBIP137MessageSignDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BTC_BIP_322_Signature'
+	if jsonDict["destination_type"] == "BTC_BIP_322_Signature" {
+		// try to unmarshal JSON data into BTCBIP322MessageSignDestination
+		err = json.Unmarshal(data, &dst.BTCBIP322MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.BTCBIP322MessageSignDestination, return on the first match
+		} else {
+			dst.BTCBIP322MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCBIP322MessageSignDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'BTC_EIP_191_Signature'
 	if jsonDict["destination_type"] == "BTC_EIP_191_Signature" {
 		// try to unmarshal JSON data into BTCEIP191MessageSignDestination
@@ -69,6 +117,18 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.BTCEIP191MessageSignDestination = nil
 			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCEIP191MessageSignDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'COSMOS_ADR_36_Signature'
+	if jsonDict["destination_type"] == "COSMOS_ADR_36_Signature" {
+		// try to unmarshal JSON data into CosmosAdr36MessageSignDestination
+		err = json.Unmarshal(data, &dst.CosmosAdr36MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.CosmosAdr36MessageSignDestination, return on the first match
+		} else {
+			dst.CosmosAdr36MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as CosmosAdr36MessageSignDestination: %s", err.Error())
 		}
 	}
 
@@ -96,8 +156,8 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'RAW_MESSAGE'
-	if jsonDict["destination_type"] == "RAW_MESSAGE" {
+	// check if the discriminator value is 'Raw_Message_Signature'
+	if jsonDict["destination_type"] == "Raw_Message_Signature" {
 		// try to unmarshal JSON data into RawMessageSignDestination
 		err = json.Unmarshal(data, &dst.RawMessageSignDestination)
 		if err == nil {
@@ -105,6 +165,30 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.RawMessageSignDestination = nil
 			return fmt.Errorf("failed to unmarshal MessageSignDestination as RawMessageSignDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BTCBIP137MessageSignDestination'
+	if jsonDict["destination_type"] == "BTCBIP137MessageSignDestination" {
+		// try to unmarshal JSON data into BTCBIP137MessageSignDestination
+		err = json.Unmarshal(data, &dst.BTCBIP137MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.BTCBIP137MessageSignDestination, return on the first match
+		} else {
+			dst.BTCBIP137MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCBIP137MessageSignDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BTCBIP322MessageSignDestination'
+	if jsonDict["destination_type"] == "BTCBIP322MessageSignDestination" {
+		// try to unmarshal JSON data into BTCBIP322MessageSignDestination
+		err = json.Unmarshal(data, &dst.BTCBIP322MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.BTCBIP322MessageSignDestination, return on the first match
+		} else {
+			dst.BTCBIP322MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCBIP322MessageSignDestination: %s", err.Error())
 		}
 	}
 
@@ -117,6 +201,18 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.BTCEIP191MessageSignDestination = nil
 			return fmt.Errorf("failed to unmarshal MessageSignDestination as BTCEIP191MessageSignDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'CosmosAdr36MessageSignDestination'
+	if jsonDict["destination_type"] == "CosmosAdr36MessageSignDestination" {
+		// try to unmarshal JSON data into CosmosAdr36MessageSignDestination
+		err = json.Unmarshal(data, &dst.CosmosAdr36MessageSignDestination)
+		if err == nil {
+			return nil // data stored in dst.CosmosAdr36MessageSignDestination, return on the first match
+		} else {
+			dst.CosmosAdr36MessageSignDestination = nil
+			return fmt.Errorf("failed to unmarshal MessageSignDestination as CosmosAdr36MessageSignDestination: %s", err.Error())
 		}
 	}
 
@@ -161,8 +257,20 @@ func (dst *MessageSignDestination) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src MessageSignDestination) MarshalJSON() ([]byte, error) {
+	if src.BTCBIP137MessageSignDestination != nil {
+		return json.Marshal(&src.BTCBIP137MessageSignDestination)
+	}
+
+	if src.BTCBIP322MessageSignDestination != nil {
+		return json.Marshal(&src.BTCBIP322MessageSignDestination)
+	}
+
 	if src.BTCEIP191MessageSignDestination != nil {
 		return json.Marshal(&src.BTCEIP191MessageSignDestination)
+	}
+
+	if src.CosmosAdr36MessageSignDestination != nil {
+		return json.Marshal(&src.CosmosAdr36MessageSignDestination)
 	}
 
 	if src.EvmEIP191MessageSignDestination != nil {
@@ -185,8 +293,20 @@ func (obj *MessageSignDestination) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.BTCBIP137MessageSignDestination != nil {
+		return obj.BTCBIP137MessageSignDestination
+	}
+
+	if obj.BTCBIP322MessageSignDestination != nil {
+		return obj.BTCBIP322MessageSignDestination
+	}
+
 	if obj.BTCEIP191MessageSignDestination != nil {
 		return obj.BTCEIP191MessageSignDestination
+	}
+
+	if obj.CosmosAdr36MessageSignDestination != nil {
+		return obj.CosmosAdr36MessageSignDestination
 	}
 
 	if obj.EvmEIP191MessageSignDestination != nil {

@@ -4,13 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**QuoteId** | Pointer to **string** | The unique id of quote. | [optional] 
 **PayAmount** | **string** | The amount of tokens to pay. | 
 **ReceiveAmount** | **string** | The amount of tokens to receive. | 
 **FeeAmount** | **string** | The amount of tokens to pay for fee. | 
-**MinPayAmount** | Pointer to **string** | The minimum amount of tokens to pay. | [optional] 
-**MaxPayAmount** | Pointer to **string** | The maximum amount of tokens to pay. | [optional] 
-**MinReceiveAmount** | Pointer to **string** | The minimum amount of tokens to receive. | [optional] 
-**MaxReceiveAmount** | Pointer to **string** | The maximum amount of tokens to receive. | [optional] 
+**MinReceiveAmount** | Pointer to **string** | The minimum amount of tokens to receive if the pay amount is specified. | [optional] 
+**MaxPayAmount** | Pointer to **string** | The maximum amount of tokens to pay if the receive amount is specified. | [optional] 
 **QuoteExpiredTimestamp** | **int32** | The time when the quote will expire, in Unix timestamp format, measured in milliseconds. | 
 
 ## Methods
@@ -31,6 +30,31 @@ will change when the set of required properties is changed
 NewSwapQuoteWithDefaults instantiates a new SwapQuote object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetQuoteId
+
+`func (o *SwapQuote) GetQuoteId() string`
+
+GetQuoteId returns the QuoteId field if non-nil, zero value otherwise.
+
+### GetQuoteIdOk
+
+`func (o *SwapQuote) GetQuoteIdOk() (*string, bool)`
+
+GetQuoteIdOk returns a tuple with the QuoteId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuoteId
+
+`func (o *SwapQuote) SetQuoteId(v string)`
+
+SetQuoteId sets QuoteId field to given value.
+
+### HasQuoteId
+
+`func (o *SwapQuote) HasQuoteId() bool`
+
+HasQuoteId returns a boolean if a field has been set.
 
 ### GetPayAmount
 
@@ -92,56 +116,6 @@ and a boolean to check if the value has been set.
 SetFeeAmount sets FeeAmount field to given value.
 
 
-### GetMinPayAmount
-
-`func (o *SwapQuote) GetMinPayAmount() string`
-
-GetMinPayAmount returns the MinPayAmount field if non-nil, zero value otherwise.
-
-### GetMinPayAmountOk
-
-`func (o *SwapQuote) GetMinPayAmountOk() (*string, bool)`
-
-GetMinPayAmountOk returns a tuple with the MinPayAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMinPayAmount
-
-`func (o *SwapQuote) SetMinPayAmount(v string)`
-
-SetMinPayAmount sets MinPayAmount field to given value.
-
-### HasMinPayAmount
-
-`func (o *SwapQuote) HasMinPayAmount() bool`
-
-HasMinPayAmount returns a boolean if a field has been set.
-
-### GetMaxPayAmount
-
-`func (o *SwapQuote) GetMaxPayAmount() string`
-
-GetMaxPayAmount returns the MaxPayAmount field if non-nil, zero value otherwise.
-
-### GetMaxPayAmountOk
-
-`func (o *SwapQuote) GetMaxPayAmountOk() (*string, bool)`
-
-GetMaxPayAmountOk returns a tuple with the MaxPayAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaxPayAmount
-
-`func (o *SwapQuote) SetMaxPayAmount(v string)`
-
-SetMaxPayAmount sets MaxPayAmount field to given value.
-
-### HasMaxPayAmount
-
-`func (o *SwapQuote) HasMaxPayAmount() bool`
-
-HasMaxPayAmount returns a boolean if a field has been set.
-
 ### GetMinReceiveAmount
 
 `func (o *SwapQuote) GetMinReceiveAmount() string`
@@ -167,30 +141,30 @@ SetMinReceiveAmount sets MinReceiveAmount field to given value.
 
 HasMinReceiveAmount returns a boolean if a field has been set.
 
-### GetMaxReceiveAmount
+### GetMaxPayAmount
 
-`func (o *SwapQuote) GetMaxReceiveAmount() string`
+`func (o *SwapQuote) GetMaxPayAmount() string`
 
-GetMaxReceiveAmount returns the MaxReceiveAmount field if non-nil, zero value otherwise.
+GetMaxPayAmount returns the MaxPayAmount field if non-nil, zero value otherwise.
 
-### GetMaxReceiveAmountOk
+### GetMaxPayAmountOk
 
-`func (o *SwapQuote) GetMaxReceiveAmountOk() (*string, bool)`
+`func (o *SwapQuote) GetMaxPayAmountOk() (*string, bool)`
 
-GetMaxReceiveAmountOk returns a tuple with the MaxReceiveAmount field if it's non-nil, zero value otherwise
+GetMaxPayAmountOk returns a tuple with the MaxPayAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMaxReceiveAmount
+### SetMaxPayAmount
 
-`func (o *SwapQuote) SetMaxReceiveAmount(v string)`
+`func (o *SwapQuote) SetMaxPayAmount(v string)`
 
-SetMaxReceiveAmount sets MaxReceiveAmount field to given value.
+SetMaxPayAmount sets MaxPayAmount field to given value.
 
-### HasMaxReceiveAmount
+### HasMaxPayAmount
 
-`func (o *SwapQuote) HasMaxReceiveAmount() bool`
+`func (o *SwapQuote) HasMaxPayAmount() bool`
 
-HasMaxReceiveAmount returns a boolean if a field has been set.
+HasMaxPayAmount returns a boolean if a field has been set.
 
 ### GetQuoteExpiredTimestamp
 

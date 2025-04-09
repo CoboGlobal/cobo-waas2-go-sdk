@@ -55,6 +55,8 @@ tags:
   name: PrimeBroker
 - description: Operations related to fee station.
   name: FeeStation
+- description: Operations related to payment.
+  name: Payment
 paths:
   /wallets/chains:
     get:
@@ -867,8 +869,6 @@ paths:
     put:
       description: |
         This operation updates the information of a specified wallet.
-
-        For Exchange Wallets, you can update the API key, API secret, and other information about your exchange accounts with this operation. For other wallet types, you can only update the wallet name.
       operationId: update_wallet_by_id
       parameters:
       - description: The wallet ID.
@@ -1729,7 +1729,8 @@ paths:
   /wallets/{wallet_id}/tokens/{token_id}/refresh_address_balances:
     put:
       description: |
-        The operation refresh the balance of the given address list for a specified token within a wallet.
+        This operation refreshes the balances of specified addresses for a given token within a wallet.
+
         The successful return of the request only means that the refresh request has been submitted.
 
         <Note>This operation is applicable to MPC Wallets only.</Note>
@@ -1780,7 +1781,7 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: refresh address balances by token
+      summary: Refresh address balances by token
       tags:
       - Wallets
   /wallets/check_address_validity:
@@ -4016,13 +4017,16 @@ paths:
       - Transactions
   /transactions/{transaction_id}/cancel:
     post:
-      description: "This operation cancels a specified transaction. Canceling a transaction\
-        \ stops it while it is still pending. For more information, see [Cancel a\
-        \ transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#cancel-a-transaction).\n\
-        \n<Note>This operation only applies to transactions from MPC Wallets and Smart\
-        \ Contract Wallets.</Note>\n\nA transaction can be cancelled if its status\
-        \ is either of the following:\n- `Submitted`\n- `PendingScreening`\n- `PendingAuthorization`\n\
-        - `PendingSignature` \n"
+      description: |
+        This operation cancels a specified transaction. Canceling a transaction stops it while it is still pending. For more information, see [Cancel a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#cancel-a-transaction).
+
+        <Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets.</Note>
+
+        A transaction can be cancelled if its status is either of the following:
+        - `Submitted`
+        - `PendingScreening`
+        - `PendingAuthorization`
+        - `PendingSignature` (excluding the `SystemProcessingOngoing` and `SignatureVerificationSuccess` sub-statuses)
       operationId: cancel_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -7115,7 +7119,7 @@ paths:
   /fee_station/addresses:
     get:
       description: |
-        This operation retrieves a list of addresses within a specified wallet.
+        This operation retrieves a list of addresses within your Fee Station.
       operationId: list_fee_station_addresses
       parameters:
       - description: "A list of chain IDs, separated by comma. The chain ID is the\
@@ -7208,15 +7212,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: List fee station addresses
+      summary: List Fee Station addresses
       tags:
       - FeeStation
   /fee_station/tokens:
     get:
       description: |
-        The operation retrieves a list of token balances within a specified wallet.
-
-        <Note>This operation is not applicable to Exchange Wallets.</Note>
+        The operation retrieves a list of token balances within your Fee Station.
       operationId: list_token_balances_for_fee_station
       parameters:
       - description: "A list of token IDs, separated by comma. The token ID is the\
@@ -7298,15 +7300,15 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: List token balances by fee station
+      summary: List Fee Station token balances
       tags:
       - FeeStation
   /fee_station/transactions:
     get:
       description: |
-        This operation retrieves all the transactions under your organization.
+        This operation retrieves all Fee Station transactions under your organization.
 
-        You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamps. You can also paginate and sort your query results.
+        You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamp. You can also paginate and sort your query results.
       operationId: list_fee_station_transactions
       parameters:
       - description: The request ID that is used to track a transaction request. The
@@ -7347,9 +7349,9 @@ paths:
         schema:
           type: string
         style: form
-      - description: "A list of transaction types, separated by comma. Possible values\
-          \ include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`: A\
-          \ withdrawal transaction.\n"
+      - description: "A list of transaction types for Fee Station, separated by comma.\
+          \ Possible values include: \n  - `Deposit`: A deposit transaction.\n  -\
+          \ `Withdrawal`: A withdrawal transaction.\n"
         example: "Deposit,Withdrawal"
         explode: true
         in: query
@@ -7519,13 +7521,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.read
-      summary: List all fee station transactions
+      summary: List all Fee Station transactions
       tags:
       - FeeStation
   /fee_station/transactions/{transaction_id}:
     get:
       description: |
-        This operation retrieves detailed information about a specified transaction, such as the transaction status, source address, destination address, and timestamp.
+        This operation retrieves detailed information about a specified Fee Station transaction, such as the transaction status, source address, destination address, and timestamp.
       operationId: get_fee_station_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -7562,412 +7564,9 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.read
-      summary: Get fee station transaction information
+      summary: Get Fee Station transaction information
       tags:
       - FeeStation
-  /swaps/activities:
-    get:
-      description: |
-        This operation retrieves a list of swap activities.
-      operationId: list_swap_activities
-      parameters:
-      - example: Success
-        explode: true
-        in: query
-        name: status
-        required: false
-        schema:
-          description: |
-            The status of the swap activity. Possible values include:
-            - `Success`: The activity is successfully completed.
-            - `Processing`: The activity is being processed.
-            - `Failed`: The activity has failed.
-          enum:
-          - Success
-          - Processing
-          - Failed
-          example: Success
-          type: string
-        style: form
-      - description: "The start time of the query. All staking activities updated\
-          \ after the specified time will be retrieved. The time is in Unix timestamp\
-          \ format, measured in milliseconds."
-        example: 1635744000000
-        explode: true
-        in: query
-        name: min_updated_timestamp
-        required: false
-        schema:
-          format: int64
-          type: integer
-        style: form
-      - description: "The end time of the query. All staking activities updated before\
-          \ the specified time will be retrieved. The time is in Unix timestamp format,\
-          \ measured in milliseconds."
-        example: 1635744000000
-        explode: true
-        in: query
-        name: max_updated_timestamp
-        required: false
-        schema:
-          format: int64
-          type: integer
-        style: form
-      - description: "The activity initiator, which is your API key by default. You\
-          \ can also specify the initiator when creating the activity."
-        example: steve@example.com
-        explode: true
-        in: query
-        name: initiator
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: "The maximum number of objects to return. For most operations,\
-          \ the value range is [1, 50]."
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: "This parameter specifies an object ID as a starting point for\
-          \ pagination, retrieving data before the specified object relative to the\
-          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
-          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
-          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
-          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
-          \ both `before` and `after` empty, the first page of data is returned.\n\
-          - If you set it to `infinity`, the last page of data is returned.\n"
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: "This parameter specifies an object ID as a starting point for\
-          \ pagination, retrieving data after the specified object relative to the\
-          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
-          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
-          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
-          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
-          \ both `before` and `after` empty, the first page of data is returned.\n"
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The field used for sorting.
-        example: timestamp
-        explode: true
-        in: query
-        name: sort_by
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      - description: |
-          The sort direction. Possible values include:
-            - `ASC`: Sort the results in ascending order.
-            - `DESC`: Sort the results in descending order.
-        example: ASC
-        explode: true
-        in: query
-        name: direction
-        required: false
-        schema:
-          default: ""
-          enum:
-          - ASC
-          - DESC
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_swap_activities_200_response'
-          description: A list of staking activities have been successfully retrieved.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      summary: List Swap Activities
-      tags:
-      - Swaps
-  /swaps/activities/{activity_id}:
-    get:
-      description: |
-        This operation retrieves the details of a swap activity.
-      operationId: get_swap_activity
-      parameters:
-      - description: The unique id of the activity.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: activity_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SwapActivity'
-          description: The swap activity details have been successfully retrieved.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      summary: Get Swap Activity Details
-      tags:
-      - Swaps
-  /swaps/enabled_pairs:
-    get:
-      description: |
-        This operation retrieves all supported token pairs for swaps in a specified wallet.
-      operationId: list_enable_token_pairs
-      parameters:
-      - description: "The maximum number of objects to return. For most operations,\
-          \ the value range is [1, 50]."
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: "This parameter specifies an object ID as a starting point for\
-          \ pagination, retrieving data before the specified object relative to the\
-          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
-          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
-          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
-          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
-          \ both `before` and `after` empty, the first page of data is returned.\n\
-          - If you set it to `infinity`, the last page of data is returned.\n"
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: "This parameter specifies an object ID as a starting point for\
-          \ pagination, retrieving data after the specified object relative to the\
-          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
-          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
-          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
-          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
-          \ both `before` and `after` empty, the first page of data is returned.\n"
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_enable_token_pairs_200_response'
-          description: The supported token pairs have been successfully retrieved.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      summary: List Supported Token Pairs
-      tags:
-      - Swaps
-  /swaps/quote:
-    get:
-      description: |
-        This operation retrieves the current market exchange rate and estimated amount for swapping between two tokens.
-        Either pay_amount or receive_amount must be provided.
-      operationId: get_swap_quote
-      parameters:
-      - description: The wallet ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: true
-        in: query
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: form
-      - description: Unique id of the token to pay.
-        example: ETH
-        explode: true
-        in: query
-        name: pay_token_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: Unique id of the token to receive.
-        example: USDT
-        explode: true
-        in: query
-        name: receive_token_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: The amount of pay token to swap.
-        example: "1.5"
-        explode: true
-        in: query
-        name: pay_amount
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The amount of token to receive.
-        example: "2000"
-        explode: true
-        in: query
-        name: receive_amount
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SwapQuote'
-          description: The swap quote has been successfully retrieved.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      summary: Get Current Swap Rate
-      tags:
-      - Swaps
-    post:
-      description: |
-        This operation retrieves a quote for swapping between two tokens. Either pay_amount or receive_amount must be provided.
-      operationId: create_swap_quote
-      requestBody:
-        $ref: '#/components/requestBodies/createSwapQuoteBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/create_swap_quote_201_response'
-          description: The swap quote has been successfully retrieved.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - transaction.withdraw
-      summary: Create Swap Quote
-      tags:
-      - Swaps
-  /swaps/swap:
-    post:
-      description: |
-        This operation to create a swap activity.
-      operationId: create_swap_activity
-      requestBody:
-        $ref: '#/components/requestBodies/createSwapActivityBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SwapActivity'
-          description: The swap activity details have been successfully retrieved.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - transaction.withdraw
-      summary: Create Swap Activity
-      tags:
-      - Swaps
 components:
   parameters:
     sortByParam:
@@ -9406,17 +9005,16 @@ components:
       name: status
       required: false
       schema:
-        description: |
-          The status of the swap activity. Possible values include:
-          - `Success`: The activity is successfully completed.
-          - `Processing`: The activity is being processed.
-          - `Failed`: The activity has failed.
-        enum:
-        - Success
-        - Processing
-        - Failed
-        example: Success
-        type: string
+        $ref: '#/components/schemas/SwapActivityStatus'
+      style: form
+    swapActivityTypeOptionalParam:
+      example: Bridge
+      explode: true
+      in: query
+      name: type
+      required: false
+      schema:
+        $ref: '#/components/schemas/SwapActivityType'
       style: form
     swapActivityMinUpdatedTimestampOptionalParam:
       description: "The start time of the query. All staking activities updated after\
@@ -9456,15 +9054,163 @@ components:
         type: string
       style: simple
     optionalFeeStationTransactionTypeListParam:
-      description: "A list of transaction types, separated by comma. Possible values\
-        \ include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`: A withdrawal\
-        \ transaction.\n"
+      description: "A list of transaction types for Fee Station, separated by comma.\
+        \ Possible values include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`:\
+        \ A withdrawal transaction.\n"
       example: "Deposit,Withdrawal"
       explode: true
       in: query
       name: types
       required: false
       schema:
+        type: string
+      style: form
+    BankIdPathParam:
+      description: The bank account ID.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: false
+      in: path
+      name: bank_account_id
+      required: true
+      schema:
+        description: The bank account ID.
+        format: uuid
+        type: string
+      style: simple
+    CurrencyRequiredParam:
+      description: "The currency for the operation. Currently, only `USD` is supported."
+      example: USD
+      explode: false
+      in: path
+      name: currency
+      required: true
+      schema:
+        default: USD
+        type: string
+      style: simple
+    KeywordOptionalParam:
+      description: A search term used for fuzzy matching of merchant names.
+      example: keyword
+      explode: true
+      in: query
+      name: keyword
+      required: false
+      schema:
+        description: The keyword.
+        type: string
+      style: form
+    MerchantIdOptionalParam:
+      description: The merchant ID.
+      example: M1001
+      explode: true
+      in: query
+      name: merchant_id
+      required: false
+      schema:
+        description: The merchant ID.
+        type: string
+      style: form
+    MerchantIdPathParam:
+      description: The merchant ID.
+      example: M1001
+      explode: false
+      in: path
+      name: merchant_id
+      required: true
+      schema:
+        description: The merchant ID.
+        type: string
+      style: simple
+    MerchantIdsParam:
+      description: A list of merchant IDs to query.
+      example: "M1001,M1002,M1003"
+      explode: true
+      in: query
+      name: merchant_ids
+      required: false
+      schema:
+        description: List of merchant IDs to query.
+        type: string
+      style: form
+    OrderIdRequiredParam:
+      description: The payment order ID.
+      example: O20250304-M1001-1001
+      explode: false
+      in: path
+      name: order_id
+      required: true
+      schema:
+        description: The order ID.
+        type: string
+      style: simple
+    TokenIdRequiredParam:
+      description: "The token ID, which identifies the cryptocurrency token for the\
+        \ payment operation. Supported values: \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`,\
+        \ `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`\n  - USDT: `TRON_USDT`,\
+        \ `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+      example: ETH_USDT
+      explode: false
+      in: path
+      name: token_id
+      required: true
+      schema:
+        description: The unique identifier of the cryptocurrency token used in the
+          payment.
+        type: string
+      style: simple
+    WalletIdOptionalParam:
+      description: The wallet ID.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: true
+      in: query
+      name: wallet_id
+      required: false
+      schema:
+        format: uuid
+        type: string
+      style: form
+    RefundIdPathParam:
+      description: The refund order ID.
+      example: R20250304-M1001-1001
+      explode: false
+      in: path
+      name: refund_id
+      required: true
+      schema:
+        description: The refund order ID.
+        type: string
+      style: simple
+    RefundIdOptionalParam:
+      description: The refund order ID.
+      example: R20250304-M1001-1001
+      explode: true
+      in: query
+      name: refund_id
+      required: false
+      schema:
+        description: The refund order ID.
+        type: string
+      style: form
+    SettlementRequestIdPathParam:
+      description: The settlement request ID.
+      example: S20250304-1001
+      explode: false
+      in: path
+      name: settlement_request_id
+      required: true
+      schema:
+        description: The settlement request ID.
+        type: string
+      style: simple
+    RequestIdOptionalParam:
+      description: The request ID.
+      example: random_request_id
+      explode: true
+      in: query
+      name: request_id
+      required: false
+      schema:
+        description: The request ID.
         type: string
       style: form
   requestBodies:
@@ -9503,8 +9249,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/refresh_address_balances_by_token_request'
-      description: The request body to refresh the addresses balance by  specified
-        token within a specified wallet
+      description: The request body to refresh addresses balances.
+    createTokenListingRequestBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              wallet_type:
+                $ref: '#/components/schemas/WalletType'
+              wallet_subtype:
+                $ref: '#/components/schemas/WalletSubtype'
+              chain_id:
+                description: ID of the blockchain where the token exists
+                example: ETH
+                type: string
+              contract_address:
+                description: Contract address of the token
+                example: 0x6B175474E89094C44Da98b954EedeAC495271d0F
+                type: string
+            required:
+            - chain_id
+            - contract_address
+            - wallet_subtype
+            - wallet_type
+            type: object
+      description: |
+        Request body for submitting a token listing request.
+        <note>
+          wallet_type only supports `Custodial` and `MPC`.
+          wallet_subtype only supports `Asset`, `Web3`, and `Org-Controlled`.
+        </note>
+      required: true
     createKeyShareHolderGroupBody:
       content:
         application/json:
@@ -9666,16 +9441,267 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_swap_activity_request'
+            properties:
+              wallet_id:
+                description: The unique identifier of the wallet to pay.
+                example: 123e4567-e89b-12d3-a456-426614174000
+                format: uuid
+                type: string
+              quote_id:
+                description: The unique identifier of the quote.
+                example: 123e4567-e89b-12d3-a456-426614174001
+                format: uuid
+                type: string
+              app_initiator:
+                description: "The initiator of the app activity. If you do not specify\
+                  \ this property, the WaaS service will automatically designate the\
+                  \ API key as the initiator."
+                example: steve@example.com
+                type: string
+              request_id:
+                description: The request id of the swap activity.
+                example: 123e4567-e89b-12d3-a456-426614174002
+                type: string
+            required:
+            - quote_id
+            - wallet_id
+            type: object
       description: The request body for creating a swap activity.
       required: true
-    createSwapQuoteBody:
+    createMerchantBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_swap_quote_request'
-      description: The request body for creating a swap activity.
-      required: true
+            properties:
+              name:
+                description: The merchant name.
+                example: Merchant A
+                type: string
+              wallet_id:
+                description: The ID of the associated wallet.
+                example: 123e4567-e89b-12d3-a456-426614174001
+                format: uuid
+                type: string
+            required:
+            - name
+            - wallet_id
+            type: object
+      description: The request body to create a merchant.
+    updateMerchantBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                description: The new name for the merchant.
+                example: Merchant B
+                type: string
+              wallet_id:
+                description: The ID of the new wallet to associate with the merchant.
+                example: 123e4567-e89b-12d3-a456-426614174002
+                format: uuid
+                type: string
+            type: object
+      description: The request body to update a merchant.
+    createBankAccountBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              info:
+                additionalProperties: true
+                description: |
+                  JSON-formatted bank account details. The object should include the following fields:
+                  - beneficiary_name: Name of the account holder
+                  - beneficiary_address: Address of the account holder
+                  - account_number: Bank account number
+                  - bank_name: Name of the bank
+                  - bank_address: Address of the bank
+                  - iban: (Optional) International Bank Account Number
+                  - swift_or_bic: SWIFT or BIC code of the bank
+                example:
+                  beneficiary_name: John Doe
+                  beneficiary_address: "123 Main St, Anytown, USA"
+                  account_number: "4111111111111111"
+                  bank_name: ABC Bank
+                  bank_address: "456 Bank Ave, Cityville, USA"
+                  swift_or_bic: ABCDEFGH
+                type: object
+            required:
+            - info
+            type: object
+      description: The request body to register a bank account.
+    updateBankAccountBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              info:
+                additionalProperties: true
+                description: |
+                  JSON-formatted bank account details. The object should include the following fields:
+                  - beneficiary_name: Name of the account holder
+                  - beneficiary_address: Address of the account holder
+                  - account_number: Bank account number
+                  - bank_name: Name of the bank
+                  - bank_address: Address of the bank
+                  - iban: (Optional) International Bank Account Number
+                  - swift_or_bic: SWIFT or BIC code of the bank
+                example:
+                  beneficiary_name: John Doe
+                  beneficiary_address: "123 Main St, Anytown, USA"
+                  account_number: "4111111111111111"
+                  bank_name: ABC Bank
+                  bank_address: "456 Bank Ave, Cityville, USA"
+                  swift_or_bic: ABCDEFGH
+                type: object
+            required:
+            - info
+            type: object
+      description: The request body for updating an existing bank account.
+    createPaymentOrderBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              merchant_id:
+                description: The merchant ID.
+                example: "1001"
+                type: string
+              token_id:
+                description: "The ID of the cryptocurrency token used for payment.\
+                  \ Supported values: \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`,\
+                  \ `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`\n  - USDT: `TRON_USDT`,\
+                  \ `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`,\
+                  \ `BSC_USDT`\n"
+                example: ETH_USDT
+                type: string
+              currency:
+                default: USD
+                description: The currency of the order.
+                example: USD
+                type: string
+              order_amount:
+                description: "The base amount in currency to be charged for the payment\
+                  \ order, excluding the payment gateway fee (specified in `fee_amount`).\
+                  \ Values must be greater than `0` and contain two decimal places."
+                example: "100.00"
+                type: string
+              fee_amount:
+                description: "The payment gateway fee in currency. It is added to\
+                  \ the base amount (`order_amount`) to determine the final charge.\
+                  \ For example, if order_amount is \"100.00\" and fee_amount is \"\
+                  2.00\", the customer will be charged \"102.00\" in total, with \"\
+                  100.00\" being settled to the merchant and \"2.00\" settled to the\
+                  \ payment gateway. Values must be greater than 0 and contain two\
+                  \ decimal places."
+                example: "2.00"
+                type: string
+              merchant_order_code:
+                description: A unique reference code assigned by the merchant to identify
+                  this order in their system.
+                example: M20240201001
+                type: string
+              psp_order_code:
+                description: A unique reference code assigned by the payment gateway
+                  to identify this order in their system.
+                example: P20240201001
+                type: string
+              expired_at:
+                description: |
+                  The expiration time of the payment order, represented as a UNIX timestamp in seconds. After this time:
+                  - The order status becomes final and cannot be changed
+                  - The `received_token_amount` field will no longer be updated
+                  - Funds received after expiration will be categorized as late payments and can only be settled from the payment gateway balance.
+                  - Late deposits will trigger a `transactionLate` webhook event.
+                example: 1711324800
+                type: integer
+            required:
+            - fee_amount
+            - merchant_id
+            - order_amount
+            - psp_order_code
+            - token_id
+            type: object
+      description: The request body to create a payment order.
+    updatePaymentOrderBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              expired:
+                description: "Whether to manually expire the order. If set to `true`,\
+                  \ the order status will be updated to `Expired`."
+                example: true
+                type: boolean
+            required:
+            - expired
+            type: object
+      description: The request body to update a payment order.
+    createRefundBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              request_id:
+                description: The request id.
+                example: 123e4567-e89b-12d3-a456-426614174004
+                type: string
+              merchant_id:
+                description: The merchant ID.
+                example: M1001
+                type: string
+              payable_amount:
+                description: The amount to refund in cryptocurrency.
+                example: "0.0025"
+                type: string
+              to_address:
+                description: The address where the refunded cryptocurrency will be
+                  sent.
+                example: 0x9876543210abcdef1234567890abcdef12345678
+                type: string
+              token_id:
+                description: "The ID of the cryptocurrency token used for refund.\
+                  \ Supported values: \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`,\
+                  \ `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`\n  - USDT: `TRON_USDT`,\
+                  \ `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`,\
+                  \ `BSC_USDT`\n"
+                example: ETH_USDT
+                type: string
+              refund_type:
+                $ref: '#/components/schemas/RefundType'
+              order_id:
+                description: The ID of the original payment order associated with
+                  this refund. Use this to track refunds against specific payments.
+                example: R20250304-M1001-1001
+                type: string
+            required:
+            - payable_amount
+            - refund_type
+            - request_id
+            - to_address
+            - token_id
+            type: object
+      description: The request body to create a refund order.
+    createSettlementBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              request_id:
+                description: The settlement request ID that is used to track a settlement
+                  request. The request ID is provided by you and must be unique.
+                example: SETTLEMENT123
+                type: string
+              settlements:
+                items:
+                  $ref: '#/components/schemas/CreateSettlement'
+                type: array
+            required:
+            - request_id
+            - settlements
+            type: object
+      description: The request body to create a settlement request.
   responses:
     badRequestError:
       content:
@@ -9875,6 +9901,20 @@ components:
           schema:
             $ref: '#/components/schemas/refresh_address_balances_by_token_200_response'
       description: The request was successful.
+    createTokenListingRequestResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              request_id:
+                description: Unique identifier for the token listing request
+                example: 123e4567-e89b-12d3-a456-426614174000
+                format: uuid
+                type: string
+            required:
+            - request_id
+            type: object
+      description: Successful token listing request submission
     createKeyShareHolderGroupsResponse:
       content:
         application/json:
@@ -10348,26 +10388,185 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/list_swap_activities_200_response'
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/SwapActivity'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
       description: A list of staking activities have been successfully retrieved.
-    listSwapTokenPairsResponse:
+    listSwapEnabledTokensResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/list_enable_token_pairs_200_response'
-      description: The supported token pairs have been successfully retrieved.
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/SwapToken'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: A list of enabled tokens have been successfully retrieved.
     getSwapQuoteResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/SwapQuote'
       description: The swap quote has been successfully retrieved.
-    createSwapQuoteResponse:
+    createMerchantResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_swap_quote_201_response'
-      description: The swap quote has been successfully retrieved.
+            $ref: '#/components/schemas/Merchant'
+      description: The request was successful.
+    listMerchantResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/Merchant'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The request was successful.
+    createBankAccountResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BankAccount'
+      description: The request was successful.
+    listBankAccountsResponse:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/BankAccount'
+            type: array
+      description: The request was successful.
+    createPaymentOrderResponse:
+      $ref: '#/components/responses/getPaymentOrderResponse'
+    listPaymentOrdersResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/Order'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The request was successful.
+    getPaymentOrderResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Order'
+      description: The request was successful.
+    createRefundResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Refund'
+      description: Refund transaction created successfully.
+    getExchangeRateResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              token_id:
+                description: The token ID.
+                example: ETH_USDT
+                type: string
+              currency:
+                description: The currency.
+                example: USD
+                type: string
+              rate:
+                description: "The current exchange rate between the specified cryptocurrency\
+                  \ token and currency. Expressed as the amount of currency per one\
+                  \ unit of cryptocurrency. For example, if the token is USDT and\
+                  \ the currency is USD, a rate of \"0.99\" means 1 USDT = 0.99 USD."
+                example: "1.00"
+                type: string
+            required:
+            - currency
+            - rate
+            - token_id
+            type: object
+      description: The request was successful.
+    getSettlementInfoResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              psp_token_balances:
+                items:
+                  $ref: '#/components/schemas/SettlementInfo'
+                type: array
+              token_balances:
+                items:
+                  $ref: '#/components/schemas/SettlementInfo'
+                type: array
+            type: object
+      description: The request was successful.
+    getSettlementResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Settlement'
+      description: The details of a settlement request.
+    createSettlementResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Settlement'
+      description: The settlement request was successfully created.
+    listSettlementResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/Settlement'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The request was successful.
+    listRefundsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/Refund'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
+      description: The request was successful.
+    getRefundDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Refund'
+      description: The request was successful.
+    getSettlementReqeustDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Settlement'
+      description: The request was successful.
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -11131,6 +11330,9 @@ components:
       - ENCODING_P2SH_P2MS
       - ENCODING_P2SH_P2WSH_P2MS
       - ENCODING_P2TR
+      - ENCODING_ADA_BYRON
+      - ENCODING_ADA_SHELLEY
+      - ENCODING_DEFAULT
       example: ENCODING_P2PKH
       type: string
     CreateCustodialWalletParams:
@@ -11304,6 +11506,7 @@ components:
           example: My WaaS 2.0 Wallet
           type: string
       required:
+      - name
       - wallet_type
       title: Custodial Wallets
       type: object
@@ -11317,6 +11520,7 @@ components:
           example: My WaaS 2.0 Wallet
           type: string
       required:
+      - name
       - wallet_type
       title: MPC Wallets
       type: object
@@ -11330,6 +11534,7 @@ components:
           example: My WaaS 2.0 Wallet
           type: string
       required:
+      - name
       - wallet_type
       title: Smart Contract Wallets
       type: object
@@ -11343,6 +11548,7 @@ components:
           example: Example Wallet
           type: string
       required:
+      - name
       - wallet_type
       title: Exchange Wallets
       type: object
@@ -11438,6 +11644,20 @@ components:
       required:
       - org_id
       type: object
+    TokenListingRequestStatus:
+      enum:
+      - Submitted
+      - Succeeded
+      - Failed
+      example: Submitted
+      type: string
+    TokenListingRequestSource:
+      description: Source of the token listing request
+      enum:
+      - API
+      - Admin
+      example: API
+      type: string
     CurveType:
       description: |
         The elliptic curve type of the [root extended public key](https://www.cobo.com/developers/v2/guides/mpc-wallets/get-started-ocw#root-extended-public-keys). Possible values include:
@@ -12390,6 +12610,11 @@ components:
           signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
         token_id: ETH_USDT
         updated_timestamp: 1610445878970
+        extra:
+        - |
+          {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+        - |
+          {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
         transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
         transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
         sub_status: PendingDoubleCheck
@@ -12539,19 +12764,27 @@ components:
           example: false
           type: boolean
         cobo_category:
-          description: A transaction category for cobo to identify your transactions.
+          description: "The transaction category defined by Cobo. Possible values\
+            \ include: \n- `AutoSweep`: An auto-sweep transaction.\n- `AutoFueling`:\
+            \ A transaction where Fee Station pays transaction fees to an address\
+            \ within your wallet.\n- `AutoFuelingRefund`: A refund for an auto-fueling\
+            \ transaction.\n- `SafeTxMessage`: A message signing transaction to authorize\
+            \ a Smart Contract Wallet (Safe\\{Wallet\\}) transaction.\n- `BillPayment`:\
+            \ A transaction to pay Cobo bills through Fee Station.\n- `BillRefund`:\
+            \ A refund for a previously made bill payment.\n- `CommissionFeeCharge`:\
+            \ A transaction to charge commission fees via Fee Station.\n- `CommissionFeeRefund`:\
+            \ A refund of previously charged commission fees.\n"
           items:
             description: |
-              A transaction category for cobo to identify your transactions.
-              - AutoSweep
-              - AutoFueling
-              - AutoFuelingRefund
-              - SafeTxMessage
-              - BillPayment
-              - BillRefund
-              - CommissionFeeCharge
-              - CommissionFeeRefund
+              The transaction category defined by Cobo.
             example: AutoFueling
+            type: string
+          type: array
+        extra:
+          description: The transaction extra information.
+          items:
+            example: |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
             type: string
           type: array
         fueling_info:
@@ -12569,14 +12802,14 @@ components:
           format: int64
           type: integer
       required:
-      - created_time
+      - created_timestamp
       - destination
       - initiator_type
       - source
       - status
       - transaction_id
       - transaction_type
-      - updated_time
+      - updated_timestamp
       - wallet_id
       type: object
     TransactionDetail:
@@ -12632,6 +12865,11 @@ components:
           signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
         token_id: ETH_USDT
         updated_timestamp: 1610445878970
+        extra:
+        - |
+          {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+        - |
+          {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
         transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
         transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
         sub_status: PendingDoubleCheck
@@ -12855,12 +13093,21 @@ components:
       - Built
       - PendingWaitSigner
       - PendingApprovalStart
+      - PendingSignerApproval
+      - PendingSignerProcessing
+      - RejectedBySigner
       - FailedBySigner
+      - FailedSignerTimeout
       - FailedBroadcasting
       - FailedOnChain
       - Reverting
       - Queue
+      - InsufficientBalance
+      - InsufficientBalanceFundLocked
+      - PendingSystemProcessing
+      - SystemProcessingOngoing
       - PendingBlockConfirmations
+      - ReOrged
       - ReplacedByNewTransaction
       - CanceledBySpender
       - CanceledByAPI
@@ -13199,8 +13446,12 @@ components:
       - ExchangeWallet
       - EVM_Contract
       - SOL_Contract
+      - COSMOS_Contract
       - EVM_EIP_191_Signature
       - EVM_EIP_712_Signature
+      - BTC_BIP_137_Signature
+      - BTC_BIP_322_Signature
+      - COSMOS_ADR_36_Signature
       - Raw_Message_Signature
       - DepositToAddress
       - DepositToWallet
@@ -13412,6 +13663,46 @@ components:
       - destination_type
       title: SOL_Contract
       type: object
+    TransactionCosmosMessage:
+      description: The information about the Cosmos message.
+      properties:
+        type_url:
+          description: |
+            The type URL of the Cosmos message.
+          example: /babylon.btcstaking.v1.MsgCreateBTCDelegation
+          type: string
+        message:
+          description: |
+            The Base64-encoded Cosmos message.
+          example: eyJ0eXBlIjoiYmFiY29zZS5idGNzdGFnaW5nLnYxLk1zZ0NyZWF0ZUJUQ0RlbGVnYXRpb24iLCJtZXNzYWdlIjp7ImNvbW1hbmRfaWQiOiJjb21tYW5kX2lkIiwibWVzc2FnZV92YWx1ZSI6Im1lc3NhZ2VfdmFsdWUiLCJtZXNzYWdlX3R5cGUiOiJtZXNzYWdlX3R5cGUifX0=
+          type: string
+      required:
+      - message
+      - type_url
+      title: Cosmos Message
+      type: object
+    TransactionCosmosContractDestination:
+      description: |
+        Information about the transaction destination type `COSMOS_Contract`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        Switch between the tabs to display the properties for different transaction destinations.
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        cosmos_messages:
+          items:
+            $ref: '#/components/schemas/TransactionCosmosMessage'
+          type: array
+        value:
+          description: |
+            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+          example: "1.5"
+          type: string
+      required:
+      - cosmos_messages
+      - destination_type
+      title: Cosmos Contract
+      type: object
     TransactionSolContractAccount:
       description: sol contract instruction account
       properties:
@@ -13468,6 +13759,24 @@ components:
       - destination_type
       - message
       title: EVM_EIP_191_Signature
+      type: object
+    TransactionMessageSignBTCEIP191Destination:
+      description: "The information about the destination `BTC_EIP_191_Signature`.\
+        \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        message:
+          description: "The raw data of the message to be signed, encoded in Base64\
+            \ format."
+          example: YWFhYQ==
+          type: string
+      required:
+      - destination_type
+      - message
+      title: BTC_EIP_191_Signature
       type: object
     TransactionMessageSignEIP712Destination:
       description: |
@@ -13591,6 +13900,54 @@ components:
       - destination_type
       - wallet_id
       title: ExchangeWallet
+      type: object
+    TransactionBIP322Destination:
+      description: |
+        The information about the destination `BTC_BIP_322`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        Switch between the tabs to display the properties for different transaction destinations.
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        message_bip322:
+          description: "Message to be signed, in hexadecimal format."
+          type: string
+      required:
+      - destination_type
+      - message_bip322
+      title: BTC BIP322 Destination
+      type: object
+    TransactionBIP137Destination:
+      description: |
+        The information about the destination `BTC_BIP_137`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        Switch between the tabs to display the properties for different transaction destinations.
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        message_bip137:
+          description: "Message to be signed, in hexadecimal format."
+          type: string
+      required:
+      - destination_type
+      - message_bip137
+      title: BTC BIP137 Destination
+      type: object
+    TransactionCosmosAdr36Destination:
+      description: |
+        The information about the destination `Cosmos_ADR36`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        Switch between the tabs to display the properties for different transaction destinations.
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        message_cosmos_adr36:
+          description: "Message to be signed, in hexadecimal format."
+          type: string
+      required:
+      - destination_type
+      - message_cosmos_adr36
+      title: Cosmos ADR36 Destination
       type: object
     TransactionResultType:
       description: |
@@ -13731,12 +14088,11 @@ components:
           example: "0.5"
           type: string
         redeem_script:
-          description: Redeem script is used in P2SH and P2WSH transactions.
+          description: The redeem script used in P2SH and P2WSH transactions.
           example: 0x1cc56cbbac4622082221a8768d1d0901
           type: string
         revealed_script:
-          description: Revealed script is used for script path spending in Taproot
-            transactions.
+          description: The revealed script used for Taproot script-path spend transaction.
           example: 0x1cc56cbbac4622082221a8768d1d0901
           type: string
       type: object
@@ -14190,30 +14546,33 @@ components:
           type: string
       type: object
     TransactionFuelingInfo:
-      description: The fuel transaction data.
+      description: Details of the auto-fueling transaction that provides gas for the
+        current transaction.
       example:
         transaction_id: b0530b27-104f-4338-87de-de01500326ea
         request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         request_id:
-          description: The fuel transaction request ID.
+          description: The request ID of the transaction.
           example: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           type: string
         transaction_id:
-          description: The fuel transaction ID.
+          description: The transaction ID.
           example: b0530b27-104f-4338-87de-de01500326ea
           format: uuid
           type: string
       type: object
     TransactionCoboCategory:
-      description: "The transaction type. Possible values include: \n  - `AutoSweep`:\
-        \ A auto sweep transaction.\n  - `AutoFueling`: A gas station transaction.\n\
-        \  - `AutoFuelingRefund`: A gas station refund transaction.\n  - `SafeTxMessage`:\
-        \ A safe transaction. \n  - `BillPayment`: A fee station bill payment transaction.\
-        \ \n  - `BillRefund`: A fee station bill payment refund transaction. \n  -\
-        \ `CommissionFeeCharge`: A fee station commission fee charge transaction.\
-        \ \n  - `CommissionFeeRefund`: A fee station commission fee refund transaction.\
-        \ \n"
+      description: "The transaction category defined by Cobo. Possible values include:\
+        \ \n  - `AutoSweep`: An auto-sweep transaction.\n  - `AutoFueling`: A transaction\
+        \ where Fee Station pays transaction fees to an address within your MPC Wallets.\n\
+        \  - `AutoFuelingRefund`: A refund for an auto-fueling transaction.\n  - `SafeTxMessage`:\
+        \ A message signing transaction initiated by an MPC wallet to authorize a\
+        \ Smart Contract Wallet (Safe\\{Wallet\\}) transaction.\n  - `BillPayment`:\
+        \ A transaction to pay Cobo bills through Fee Station.\n  - `BillRefund`:\
+        \ A refund for a previously made bill payment.\n  - `CommissionFeeCharge`:\
+        \ A transaction to charge commission fees via Fee Station.\n  - `CommissionFeeRefund`:\
+        \ A refund of previously charged commission fees.\n"
       enum:
       - AutoSweep
       - AutoFueling
@@ -14375,6 +14734,102 @@ components:
           example: UniswapV2Router
           nullable: true
           type: string
+      type: object
+    TransactionExtra:
+      discriminator:
+        mapping:
+          BabylonBusinessInfo: '#/components/schemas/TransactionBabylonBusinessInfo'
+          BabylonTxParameters: '#/components/schemas/TransactionBabylonTxParameters'
+          CoreStakeInfo: '#/components/schemas/TransactionCoreStakeInfo'
+        propertyName: extra_type
+      oneOf:
+      - $ref: '#/components/schemas/TransactionBabylonBusinessInfo'
+      - $ref: '#/components/schemas/TransactionBabylonTxParameters'
+      - $ref: '#/components/schemas/TransactionCoreStakeInfo'
+    TransactionExtraType:
+      description: |
+        The transaction extra information type. Possible values include:
+          - `BabylonBusinessInfo`: The extra information of Babylon business.
+          - `BabylonTxParameters`: The extra information of Babylon transaction parameters.
+          - `CoreStakeInfo`: The extra information of core stake.
+      enum:
+      - BabylonBusinessInfo
+      - BabylonTxParameters
+      - CoreStakeInfo
+      example: BabylonBusinessInfo
+      type: string
+    TransactionBabylonBusinessInfo:
+      description: The Babylon business information.
+      properties:
+        extra_type:
+          $ref: '#/components/schemas/TransactionExtraType'
+        babylon_address_info:
+          $ref: '#/components/schemas/AddressInfo'
+        btc_address_info:
+          $ref: '#/components/schemas/AddressInfo'
+      required:
+      - extra_type
+      title: Babylon Business Information
+      type: object
+    TransactionBabylonTxParameters:
+      description: The Babylon transaction parameters.
+      properties:
+        extra_type:
+          $ref: '#/components/schemas/TransactionExtraType'
+        stake_amount:
+          description: The origin staking amount.
+          example: "100.00"
+          type: string
+        finality_provider_public_key:
+          description: The public key of the finality provider.
+          example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+          pattern: "^[0-9a-fA-F]{64}$"
+          type: string
+        stake_block_time:
+          description: The number of blocks that need to be processed before the locked
+            tokens are unlocked and become accessible.
+          example: 2000
+          format: int64
+          type: integer
+        param_version:
+          description: The version of babylon global parameters.
+          example: 2
+          format: int64
+          type: integer
+        withdraw_from_type:
+          $ref: '#/components/schemas/ActivityType'
+        slash_from_type:
+          $ref: '#/components/schemas/ActivityType'
+      required:
+      - extra_type
+      title: Babylon Transaction Parameters
+      type: object
+    TransactionCoreStakeInfo:
+      description: The core stake information.
+      properties:
+        extra_type:
+          $ref: '#/components/schemas/TransactionExtraType'
+        stake_amount:
+          description: The origin staking amount.
+          example: "100.00"
+          type: string
+        timelock:
+          description: The Unix timestamp (in seconds) when the staking position will
+            be unlocked and available for withdrawal.
+          type: integer
+        change_address:
+          description: "The change address on the Bitcoin chain. If not provided,\
+            \ the source wallet's address will be used as the change address."
+          type: string
+        validator_address:
+          description: The validator's EVM address.
+          type: string
+        reward_address:
+          description: The EVM address to receive staking rewards.
+          type: string
+      required:
+      - extra_type
+      title: Core Stake Information
       type: object
     CustodialTransferSource:
       description: |
@@ -15024,6 +15479,46 @@ components:
       - destination_type
       title: EVM_Contract
       type: object
+    CosmosContractCallMessage:
+      description: The information about the Cosmos message.
+      properties:
+        type_url:
+          description: |
+            The type URL of the Cosmos message.
+          example: /babylon.btcstaking.v1.MsgCreateBTCDelegation
+          type: string
+        message:
+          description: |
+            The Base64-encoded Cosmos message.
+          example: eyJ0eXBlIjoiYmFiY29zZS5idGNzdGFnaW5nLnYxLk1zZ0NyZWF0ZUJUQ0RlbGVnYXRpb24iLCJtZXNzYWdlIjp7ImNvbW1hbmRfaWQiOiJjb21tYW5kX2lkIiwibWVzc2FnZV92YWx1ZSI6Im1lc3NhZ2VfdmFsdWUiLCJtZXNzYWdlX3R5cGUiOiJtZXNzYWdlX3R5cGUifX0=
+          type: string
+      required:
+      - message
+      - type_url
+      title: Cosmos Message
+      type: object
+    CosmosContractCallDestination:
+      description: "The information about the transaction destination. Refer to [Transaction\
+        \ sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/ContractCallDestinationType'
+        cosmos_messages:
+          items:
+            $ref: '#/components/schemas/CosmosContractCallMessage'
+          type: array
+        value:
+          description: |
+            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+          example: "1.5"
+          type: string
+      required:
+      - cosmos_messages
+      - destination_type
+      title: Cosmos Contract
+      type: object
     SolContractCallDestination:
       description: "The information about the transaction destination. Refer to [Transaction\
         \ sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
@@ -15325,6 +15820,54 @@ components:
       - msg_hash
       title: Raw_Message_Signature
       type: object
+    BTCBIP322MessageSignDestination:
+      description: "The information about the destination `BTC_BIP_322`. Refer to\
+        \ [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/MessageSignDestinationType'
+        message_bip322:
+          description: "Message to be signed, in hexadecimal format."
+          type: string
+      required:
+      - destination_type
+      - message_bip322
+      title: BTC BIP322 Destination
+      type: object
+    BTCBIP137MessageSignDestination:
+      description: "The information about the destination `BTC_BIP_137`. Refer to\
+        \ [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/MessageSignDestinationType'
+        message_bip137:
+          description: "Message to be signed, in hexadecimal format."
+          type: string
+      required:
+      - destination_type
+      - message_bip137
+      title: BTC BIP137 Destination
+      type: object
+    CosmosAdr36MessageSignDestination:
+      description: "The information about the destination `COSMOS_ADR_36`. Refer to\
+        \ [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/MessageSignDestinationType'
+        message_cosmos_adr36:
+          description: "Message to be signed, in hexadecimal format."
+          type: string
+      required:
+      - destination_type
+      - message_cosmos_adr36
+      title: Cosmos ADR36 Destination
+      type: object
     MessageSignDestinationType:
       description: |
         The type of the signature format. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -15334,6 +15877,9 @@ components:
       - EVM_EIP_191_Signature
       - EVM_EIP_712_Signature
       - BTC_EIP_191_Signature
+      - BTC_BIP_137_Signature
+      - BTC_BIP_322_Signature
+      - COSMOS_ADR_36_Signature
       - Raw_Message_Signature
       example: EVM_EIP_191_Signature
       type: string
@@ -15342,14 +15888,20 @@ components:
         mapping:
           EVM_EIP_191_Signature: '#/components/schemas/EvmEIP191MessageSignDestination'
           EVM_EIP_712_Signature: '#/components/schemas/EvmEIP712MessageSignDestination'
-          RAW_MESSAGE: '#/components/schemas/RawMessageSignDestination'
           BTC_EIP_191_Signature: '#/components/schemas/BTCEIP191MessageSignDestination'
+          BTC_BIP_137_Signature: '#/components/schemas/BTCBIP137MessageSignDestination'
+          BTC_BIP_322_Signature: '#/components/schemas/BTCBIP322MessageSignDestination'
+          COSMOS_ADR_36_Signature: '#/components/schemas/CosmosAdr36MessageSignDestination'
+          Raw_Message_Signature: '#/components/schemas/RawMessageSignDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/EvmEIP191MessageSignDestination'
       - $ref: '#/components/schemas/EvmEIP712MessageSignDestination'
       - $ref: '#/components/schemas/RawMessageSignDestination'
       - $ref: '#/components/schemas/BTCEIP191MessageSignDestination'
+      - $ref: '#/components/schemas/BTCBIP137MessageSignDestination'
+      - $ref: '#/components/schemas/BTCBIP322MessageSignDestination'
+      - $ref: '#/components/schemas/CosmosAdr36MessageSignDestination'
     MessageSignParams:
       description: The information about a transaction that signs a message. You can
         provide the message either as raw data or as structured data.
@@ -15455,6 +16007,11 @@ components:
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
+          extra:
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
           transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           sub_status: PendingDoubleCheck
@@ -15562,6 +16119,7 @@ components:
             - `MPCVault`: The MPC vault event data.
             - `Chains`: The enabled chain event data.
             - `Tokens`: The enabled token event data.
+            - `TokenListing`: The token listing event data.
           enum:
           - Transaction
           - TSSRequest
@@ -15570,6 +16128,7 @@ components:
           - MPCVault
           - Chains
           - Tokens
+          - TokenListing
           example: Transaction
           type: string
       required:
@@ -15585,6 +16144,7 @@ components:
           MPCVault: '#/components/schemas/MPCVaultEventData'
           Chains: '#/components/schemas/ChainsEventData'
           Tokens: '#/components/schemas/TokensEventData'
+          TokenListing: '#/components/schemas/TokenListingEventData'
         propertyName: data_type
       oneOf:
       - $ref: '#/components/schemas/TransactionWebhookEventData'
@@ -15594,6 +16154,7 @@ components:
       - $ref: '#/components/schemas/MPCVaultEventData'
       - $ref: '#/components/schemas/ChainsEventData'
       - $ref: '#/components/schemas/TokensEventData'
+      - $ref: '#/components/schemas/TokenListingEventData'
     TransactionWebhookEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -15642,6 +16203,11 @@ components:
           signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
         token_id: ETH_USDT
         updated_timestamp: 1610445878970
+        extra:
+        - |
+          {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+        - |
+          {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
         transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
         transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
         sub_status: PendingDoubleCheck
@@ -15745,6 +16311,63 @@ components:
         - tokens
         type: object
       title: Tokens
+    TokenListing:
+      description: Detailed information about a token listing request
+      properties:
+        request_id:
+          description: Unique identifier of the token listing request
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+        chain_id:
+          description: chain_id of the blockchain where the token exists
+          example: ETH
+          type: string
+        contract_address:
+          description: Contract address of the token
+          example: 0x6B175474E89094C44Da98b954EedeAC495271d0F
+          type: string
+        wallet_type:
+          $ref: '#/components/schemas/WalletType'
+        wallet_subtype:
+          $ref: '#/components/schemas/WalletSubtype'
+        token:
+          $ref: '#/components/schemas/TokenInfo'
+        status:
+          $ref: '#/components/schemas/TokenListingRequestStatus'
+        source:
+          $ref: '#/components/schemas/TokenListingRequestSource'
+        feedback:
+          description: Feedback provided by the admin for rejected requests
+          example: Token has been added to the system
+          type: string
+        created_timestamp:
+          description: Timestamp when the request was created (in milliseconds since
+            Unix epoch)
+          example: 1625097600000
+          format: int64
+          type: integer
+        updated_timestamp:
+          description: Timestamp when the request was last updated (in milliseconds
+            since Unix epoch)
+          example: 1625184000000
+          format: int64
+          type: integer
+      required:
+      - chain_id
+      - contract_address
+      - created_at
+      - request_id
+      - status
+      - updated_at
+      - wallet_subtype
+      - wallet_type
+      type: object
+    TokenListingEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - $ref: '#/components/schemas/TokenListing'
+      title: Token Listing Event Data
     WebhookEventType:
       description: "The event type. To learn the trigger condition of each event type,\
         \ refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type)."
@@ -15759,6 +16382,8 @@ components:
       - wallets.mpc.tss_request.succeeded
       - wallets.addresses.created
       - wallets.created
+      - wallets.token_listing.failed
+      - wallets.token_listing.succeeded
       - mpc_vaults.created
       - fee_station.transaction.created
       - fee_station.transaction.updated
@@ -15831,6 +16456,11 @@ components:
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
+            extra:
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
             transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             sub_status: PendingDoubleCheck
@@ -16326,28 +16956,11 @@ components:
               - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.
             example: false
             type: boolean
-          param_version:
-            description: The version of babylon global parameters.
-            example: 2
-            format: int64
-            type: integer
-          withdraw_from_type:
-            $ref: '#/components/schemas/ActivityType'
-          slash_from_type:
-            $ref: '#/components/schemas/ActivityType'
-          stake_amount:
-            description: The origin staking amount.
-            example: "100.00"
-            type: string
         type: object
       example:
-        slash_from_type: Stake
-        stake_amount: "100.00"
-        param_version: 2
         finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
         stake_block_time: 2000
         auto_broadcast: false
-        withdraw_from_type: Stake
         pool_type: Babylon
       title: Babylon
     EthStakingActivityDetailExtra:
@@ -16413,13 +17026,9 @@ components:
         token_id: BTC
         updated_timestamp: 1640995200000
         extra:
-          slash_from_type: Stake
-          stake_amount: "100.00"
-          param_version: 2
           finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
           stake_block_time: 2000
           auto_broadcast: false
-          withdraw_from_type: Stake
           pool_type: Babylon
         request_ids:
         - f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -17964,6 +18573,11 @@ components:
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
+          extra:
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
           transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           sub_status: PendingDoubleCheck
@@ -18080,28 +18694,19 @@ components:
       - url
       type: object
     SwapActivity:
-      example:
-        wallet_id: 123e4567-e89b-12d3-a456-426614174001
-        fee_amount: "0.3"
-        updated_timestamp: 1677587393000
-        pay_amount: "100"
-        initiator: John Doe
-        activity_id: 123e4567-e89b-12d3-a456-426614174000
-        pay_token_id: BTC
-        receive_token_id: ETH_WBTC
-        receive_amount: "100"
-        created_timestamp: 1677587333000
-        status: Success
-        initiator_type: API
       properties:
         activity_id:
           description: The unique identifier of the swap activity.
           example: 123e4567-e89b-12d3-a456-426614174000
           format: uuid
           type: string
+        activity_type:
+          $ref: '#/components/schemas/SwapActivityType'
         status:
-          description: The status of the swap activity.
-          example: Success
+          $ref: '#/components/schemas/SwapActivityStatus'
+        request_id:
+          description: The request id of the swap activity.
+          example: 123e4567-e89b-12d3-a456-426614174000
           type: string
         wallet_id:
           description: The unique identifier of the wallet.
@@ -18135,6 +18740,10 @@ components:
           type: string
         initiator_type:
           $ref: '#/components/schemas/TransactionInitiatorType'
+        description:
+          description: The description of the swap activity.
+          example: This is a description of the swap activity.
+          type: string
         created_timestamp:
           description: "The time when the swap activity was created, in Unix timestamp\
             \ format, measured in milliseconds."
@@ -18146,31 +18755,43 @@ components:
           example: 1677587393000
           type: integer
       type: object
-    SwapTokenPair:
-      example:
-        pay_token_id: BTC
-        receive_token_id: ETH_WBTC
+    SwapToken:
       properties:
-        pay_token_id:
-          description: The source token symbol.
-          example: BTC
+        token_id:
+          description: The token id.
+          example: ETH_USDT
           type: string
-        receive_token_id:
-          description: The target token symbol.
-          example: ETH_WBTC
+        chain_id:
+          description: The chain id.
+          example: ETH
           type: string
+        asset_id:
+          description: The asset id.
+          example: ETH
+          type: string
+        token_address:
+          description: The token address.
+          example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
+          type: string
+        min_amount:
+          description: The minimum amount to swap.
+          example: "1000"
+          type: string
+        max_amount:
+          description: The maximum amount to swap.
+          example: "100000"
+          type: string
+      required:
+      - asset_id
+      - chain_id
+      - token_id
       type: object
     SwapQuote:
-      example:
-        min_receive_amount: "0"
-        fee_amount: "0.3"
-        quote_expired_timestamp: 1677587393000
-        pay_amount: "100"
-        receive_amount: "100"
-        max_pay_amount: "10000"
-        max_receive_amount: "10000"
-        min_pay_amount: "0"
       properties:
+        quote_id:
+          description: The unique id of quote.
+          example: 2ec094034044ffa50f4294d48363fef31eb5755fc783ba3837a03c91b4904659
+          type: string
         pay_amount:
           description: The amount of tokens to pay.
           example: "100"
@@ -18183,20 +18804,14 @@ components:
           description: The amount of tokens to pay for fee.
           example: "0.3"
           type: string
-        min_pay_amount:
-          description: The minimum amount of tokens to pay.
+        min_receive_amount:
+          description: The minimum amount of tokens to receive if the pay amount is
+            specified.
           example: "0"
           type: string
         max_pay_amount:
-          description: The maximum amount of tokens to pay.
-          example: "10000"
-          type: string
-        min_receive_amount:
-          description: The minimum amount of tokens to receive.
-          example: "0"
-          type: string
-        max_receive_amount:
-          description: The maximum amount of tokens to receive.
+          description: The maximum amount of tokens to pay if the receive amount is
+            specified.
           example: "10000"
           type: string
         quote_expired_timestamp:
@@ -18210,6 +18825,28 @@ components:
       - quote_expired_timestamp
       - receive_amount
       type: object
+    SwapActivityType:
+      description: |
+        The type of the swap activity. Possible values include:
+        - `Bridge`: The activity is a bridge activity.
+        - `Exchange`: The activity is an exchange activity.
+      enum:
+      - Bridge
+      - Exchange
+      example: Bridge
+      type: string
+    SwapActivityStatus:
+      description: |
+        The status of the swap activity. Possible values include:
+        - `Success`: The activity is successfully completed.
+        - `Processing`: The activity is being processed.
+        - `Failed`: The activity has failed.
+      enum:
+      - Success
+      - Processing
+      - Failed
+      example: Success
+      type: string
     GuardPubkeyStatus:
       description: "The status of a Cobo Guard public key binding. Possible values\
         \ include: \n  - `New`: The binding is created.\n  - `ChangeNew`: A new binding\
@@ -18253,6 +18890,433 @@ components:
       - Withdrawal
       example: Deposit
       type: string
+    BankAccount:
+      properties:
+        bank_account_id:
+          description: The bank account ID.
+          example: 123e4567-e89b-12d3-a456-426614174003
+          format: uuid
+          type: string
+        info:
+          additionalProperties: true
+          description: JSON-formatted bank account details.
+          example:
+            beneficiary_name: John Doe
+            beneficiary_address: "123 Main St, Anytown, USA"
+            account_number: "4111111111111111"
+            bank_name: ABC Bank
+            bank_address: "456 Bank Ave, Cityville, USA"
+            swift_or_bic: ABCDEFGH
+          type: object
+      required:
+      - bank_account_id
+      - info
+      type: object
+    CreateSettlement:
+      properties:
+        merchant_id:
+          description: The merchant ID.
+          example: M1001
+          type: string
+        token_id:
+          description: "The ID of the cryptocurrency token you want to settle. Supported\
+            \ values: \n- USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`,\
+            \ `MATIC_USDC`, `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+          example: ETH_USDT
+          type: string
+        currency:
+          default: USD
+          description: "The currency for settling the cryptocurrency. Currently, only\
+            \ `USD` is supported."
+          example: USD
+          type: string
+        amount:
+          description: "The amount to be settled. - If `token_id` is specified, this\
+            \ represents the settlement amount in the specified cryptocurrency token.\
+            \ - If `token_id` is not specified, this represents the settlement amount\
+            \ in the specified currency."
+          example: "500.00"
+          type: string
+        bank_account_id:
+          description: The ID of the bank account where the settled funds will be
+            deposited.
+          example: 0123e457-e89b-12d3-a456-426614174004
+          format: uuid
+          type: string
+        settlement_type:
+          $ref: '#/components/schemas/SettlementType'
+      required:
+      - amount
+      - bank_account_id
+      type: object
+    Merchant:
+      properties:
+        merchant_id:
+          description: The merchant ID.
+          example: "1"
+          type: string
+        name:
+          description: The merchant name.
+          example: Merchant-1
+          type: string
+        wallet_id:
+          description: The ID of the associated wallet.
+          example: 123e4567-e89b-12d3-a456-426614174001
+          format: uuid
+          type: string
+      required:
+      - merchant_id
+      - name
+      - wallet_id
+      type: object
+    Order:
+      properties:
+        order_id:
+          description: The order ID.
+          example: "5001"
+          type: string
+        merchant_id:
+          description: The merchant ID.
+          example: "1001"
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency token used for payment.
+          example: ETH_USDT
+          type: string
+        chain_id:
+          description: The ID of the blockchain network where the payment transaction
+            should be made.
+          example: ETH
+          type: string
+        payable_amount:
+          description: The cryptocurrency amount to be paid for this order.
+          example: "103.03"
+          type: string
+        receive_address:
+          description: The recipient wallet address to be used for the payment transaction.
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        currency:
+          description: The currency of the order.
+          example: USD
+          type: string
+        order_amount:
+          description: "The base amount in currency to be charged for the payment\
+            \ order, excluding the payment gateway fee (specified in `fee_amount`)."
+          example: "100.00"
+          type: string
+        fee_amount:
+          description: The payment gateway fee in currency. It is added to the base
+            amount (`order_amount`) to determine the final charge.
+          example: "2.00"
+          type: string
+        exchange_rate:
+          description: "The exchange rate used to convert between currency and cryptocurrency\
+            \ token. Expressed as the amount of currency per one unit of cryptocurrency.\
+            \ For example, if the token is USDT and the currency is USD, a rate of\
+            \ \"0.99\" means 1 USDT = 0.99 USD."
+          example: "0.99"
+          type: string
+        expired_at:
+          description: "The expiration time of the payment order, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1711324800
+          type: integer
+        merchant_order_code:
+          description: A unique reference code assigned by the merchant to identify
+            this order in their system.
+          example: M20240201001
+          type: string
+        psp_order_code:
+          description: A unique reference code assigned by the payment gateway to
+            identify this order in their system.
+          example: P20240201001
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        received_token_amount:
+          description: "The total cryptocurrency amount received for this order. Updates\
+            \ until order expires. Precision matches the token standard (e.g., 6 decimals\
+            \ for USDT)."
+          example: "103.0305"
+          type: string
+      required:
+      - chain_id
+      - currency
+      - exchange_rate
+      - fee_amount
+      - order_amount
+      - order_id
+      - payable_amount
+      - psp_order_code
+      - receive_address
+      - received_token_amount
+      - status
+      - token_id
+      type: object
+    OrderStatus:
+      description: |
+        The current status of the payment order:
+        - `Pending`: The order has been created and is awaiting payment. No incoming transaction has been detected.
+        - `Processing`: An incoming transaction has been detected at the recipient address.
+        - `Completed`: The payment has been fully received and is now complete.
+        - `Expired`: The order has reached its expiration time without receiving any payment, or the order has been cancelled by the [Update payment order](https://www.cobo.com/developers/v2/api-references/payment/update-payment-order) operation.
+        - `Underpaid`: The order has reached its expiration time. A payment was received but the amount is less than the order's required amount.
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      - Expired
+      - Underpaid
+      example: Pending
+      type: string
+    Refund:
+      properties:
+        request_id:
+          description: The request id.
+          example: 123e4567-e89b-12d3-a456-426614174004
+          type: string
+        refund_id:
+          description: The refund order ID.
+          example: R20250304-M1001-1001
+          type: string
+        merchant_id:
+          description: The merchant ID.
+          example: M1001
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency token used for refund.
+          example: ETH_USDT
+          type: string
+        chain_id:
+          description: The ID of the blockchain network on which the refund transaction
+            occurs.
+          example: ETH
+          type: string
+        amount:
+          description: The amount in cryptocurrency to be returned for this refund
+            order.
+          example: "0.0025"
+          type: string
+        to_address:
+          description: The recipient's wallet address where the refund will be sent.
+          example: 0x9876543210abcdef1234567890abcdef12345678
+          type: string
+        status:
+          $ref: '#/components/schemas/RefundStatus'
+        transactions:
+          items:
+            $ref: '#/components/schemas/PaymentTransaction'
+          type: array
+      required:
+      - amount
+      - chain_id
+      - refund_id
+      - status
+      - to_address
+      - token_id
+      type: object
+    RefundStatus:
+      description: "The current status of the refund order. For information about\
+        \ transaction status, see [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status).\
+        \ \n- `Pending`: The refund order has been created but the transaction has\
+        \ not been initiated.\n- `Processing`: The refund order is currently being\
+        \ processed, with at least one refund transaction in progress.\n- `Completed`:\
+        \ All refund transactions have been completed successfully.\n- `PartiallyCompleted`:\
+        \ Some refund transactions have been completed successfully, while others\
+        \ have failed.\n- `Failed`: All refund transactions have failed.\n"
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      - PartiallyCompleted
+      - Failed
+      example: Pending
+      type: string
+    RefundType:
+      description: |
+        Specifies the source of funds for the refund:
+        - `Merchant`: The refund amount will be deducted from the merchant balance.
+        - `Psp`: The refund amount will be deducted from the payment gateway balance.
+      enum:
+      - Merchant
+      - Psp
+      example: Merchant
+      type: string
+    SettleRequestStatus:
+      description: |
+        The current status of the settlement request:
+        - `Pending`: The settlement request has been created and is awaiting processing.
+        - `Processing`: The settlement request is currently being processed, with at least one settlement in progress.
+        - `Completed`: All requested settlements have been completed.
+        - `PartiallyCompleted`: Some requested settlements have been completed successfully, while others have failed.
+        - `Failed`: All requested settlements have failed.
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      - PartiallyCompleted
+      - Failed
+      example: Pending
+      type: string
+    SettleStatus:
+      description: |
+        The current status of the settlement:
+        - `Pending`: The settlement has been created and is awaiting processing.
+        - `Processing`: The settlement is being processed.
+        - `Completed`: The funds have been successfully deposited into the bank account.
+        - `PartiallyCompleted`: Some settlement transactions have been completed successfully, while others have failed.
+        - `Failed`: The settlement could not be completed due to an error.
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      - PartiallyCompleted
+      - Failed
+      example: Pending
+      type: string
+    Settlement:
+      properties:
+        settlement_request_id:
+          description: Internal system-generated identifier with a human-readable
+            format. Used primarily for internal operations and logging.
+          example: S20250304-1001
+          type: string
+        request_id:
+          description: Client-provided external identifier.
+          example: SETTLEMENT123
+          type: string
+        status:
+          $ref: '#/components/schemas/SettleRequestStatus'
+        settlements:
+          items:
+            $ref: '#/components/schemas/SettlementDetail'
+          type: array
+      required:
+      - request_id
+      - settlement_request_id
+      - settlements
+      - status
+      type: object
+    SettlementDetail:
+      properties:
+        currency:
+          description: The currency for the settlement.
+          example: USD
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency token settled.
+          example: ETH_USDT
+          type: string
+        chain_id:
+          description: The ID of the blockchain network on which the settlement occurred.
+          example: ETH
+          type: string
+        amount:
+          description: |
+            The settled amount.
+            - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency token.
+            - If `token_id` is not specified, this represents the settlement amount in the specified currency.
+          example: "500.00"
+          type: string
+        status:
+          $ref: '#/components/schemas/SettleStatus'
+        bank_account:
+          $ref: '#/components/schemas/BankAccount'
+        transactions:
+          items:
+            $ref: '#/components/schemas/PaymentTransaction'
+          type: array
+      type: object
+    SettlementInfo:
+      properties:
+        merchant_id:
+          description: "The merchant ID. For payment gateway balance, this field will\
+            \ be empty."
+          example: "123"
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency token.
+          example: ETH_USDT
+          type: string
+        available_amount:
+          description: The amount available for settlement in the specified cryptocurrency
+            token.
+          example: "500.00"
+          type: string
+        available_currency_balance:
+          description: The available currency balance.
+          example: "500.00"
+          type: string
+        pending_amount:
+          description: The pending amount.
+          example: "500.00"
+          type: string
+        pending_currency_balance:
+          description: The pending currency balance.
+          example: "500.00"
+          type: string
+      required:
+      - available_amount
+      - token
+      type: object
+    SettlementType:
+      description: |
+        Specifies the source of funds for the settlement:
+        - `Merchant`: The settlement amount will be deducted from the merchant balance.
+        - `Psp`: The settlement amount will be deducted from the payment gateway balance.
+      enum:
+      - Merchant
+      - Psp
+      example: Merchant
+      type: string
+    PaymentTransaction:
+      properties:
+        tx_id:
+          description: Unique identifier for the transaction.
+          example: tx_123e4567-e89b-12d3-a456-426614174003
+          type: string
+        tx_hash:
+          description: "The blockchain transaction hash, may be initially null and\
+            \ populated after submission."
+          example: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          type: string
+        from_address:
+          description: Source cryptocurrency address for the transaction.
+          example: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          type: string
+        to_address:
+          description: Destination cryptocurrency address for the transaction.
+          example: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          type: string
+        amount:
+          description: "The amount of cryptocurrency transferred, as a decimal string."
+          example: "0.15"
+          type: string
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        created_timestamp:
+          description: "The time when the transaction was created, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+        updated_timestamp:
+          description: "The time when the transaction was updated, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+      required:
+      - amount
+      - created_timestamp
+      - from_address
+      - status
+      - to_address
+      - tx_id
+      - updated_timestamp
+      type: object
     list_supported_chains_200_response:
       example:
         pagination:
@@ -18562,11 +19626,9 @@ components:
           $ref: '#/components/schemas/Pagination'
       type: object
     refresh_address_balances_by_token_request:
-      description: The request body to refresh the addresses balance by  specified
-        token within a specified wallet.
       properties:
         addresses:
-          description: A list of  address.
+          description: A list of addresses.
           items:
             example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
             type: string
@@ -19151,6 +20213,11 @@ components:
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
+          extra:
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
           transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           sub_status: PendingDoubleCheck
@@ -19240,6 +20307,11 @@ components:
             signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
           token_id: ETH_USDT
           updated_timestamp: 1610445878970
+          extra:
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+          - |
+            {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
           transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
           transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           sub_status: PendingDoubleCheck
@@ -19752,6 +20824,11 @@ components:
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
+            extra:
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
             transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             sub_status: PendingDoubleCheck
@@ -19850,6 +20927,11 @@ components:
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
+            extra:
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
             transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             sub_status: PendingDoubleCheck
@@ -19964,6 +21046,11 @@ components:
                 signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
               token_id: ETH_USDT
               updated_timestamp: 1610445878970
+              extra:
+              - |
+                {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+              - |
+                {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
               transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
               transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
               sub_status: PendingDoubleCheck
@@ -20071,6 +21158,11 @@ components:
                 signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
               token_id: ETH_USDT
               updated_timestamp: 1610445878970
+              extra:
+              - |
+                {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+              - |
+                {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
               transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
               transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
               sub_status: PendingDoubleCheck
@@ -20335,13 +21427,9 @@ components:
           token_id: BTC
           updated_timestamp: 1640995200000
           extra:
-            slash_from_type: Stake
-            stake_amount: "100.00"
-            param_version: 2
             finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
             stake_block_time: 2000
             auto_broadcast: false
-            withdraw_from_type: Stake
             pool_type: Babylon
           request_ids:
           - f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -20376,13 +21464,9 @@ components:
           token_id: BTC
           updated_timestamp: 1640995200000
           extra:
-            slash_from_type: Stake
-            stake_amount: "100.00"
-            param_version: 2
             finality_provider_public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
             stake_block_time: 2000
             auto_broadcast: false
-            withdraw_from_type: Stake
             pool_type: Babylon
           request_ids:
           - f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -20793,6 +21877,11 @@ components:
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
+            extra:
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
             transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             sub_status: PendingDoubleCheck
@@ -20892,6 +21981,11 @@ components:
               signature: 0x6a8d82c2b080c18e7c1d187a95b3d9b0b9b20454d5e1d784b8a4625d16772d3f
             token_id: ETH_USDT
             updated_timestamp: 1610445878970
+            extra:
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
+            - |
+              {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
             transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
             transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
             sub_status: PendingDoubleCheck
@@ -21204,144 +22298,6 @@ components:
           example: true
           type: boolean
       type: object
-    list_swap_activities_200_response:
-      example:
-        pagination:
-          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-          total_count: 10000
-          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        data:
-        - wallet_id: 123e4567-e89b-12d3-a456-426614174001
-          fee_amount: "0.3"
-          updated_timestamp: 1677587393000
-          pay_amount: "100"
-          initiator: John Doe
-          activity_id: 123e4567-e89b-12d3-a456-426614174000
-          pay_token_id: BTC
-          receive_token_id: ETH_WBTC
-          receive_amount: "100"
-          created_timestamp: 1677587333000
-          status: Success
-          initiator_type: API
-        - wallet_id: 123e4567-e89b-12d3-a456-426614174001
-          fee_amount: "0.3"
-          updated_timestamp: 1677587393000
-          pay_amount: "100"
-          initiator: John Doe
-          activity_id: 123e4567-e89b-12d3-a456-426614174000
-          pay_token_id: BTC
-          receive_token_id: ETH_WBTC
-          receive_amount: "100"
-          created_timestamp: 1677587333000
-          status: Success
-          initiator_type: API
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/SwapActivity'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    list_enable_token_pairs_200_response:
-      example:
-        pagination:
-          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-          total_count: 10000
-          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        data:
-        - pay_token_id: BTC
-          receive_token_id: ETH_WBTC
-        - pay_token_id: BTC
-          receive_token_id: ETH_WBTC
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/SwapTokenPair'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    create_swap_quote_request:
-      properties:
-        wallet_id:
-          description: The unique identifier of the wallet.
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          type: string
-        pay_token_id:
-          description: Unique id of the token to pay.
-          example: BTC
-          type: string
-        receive_token_id:
-          description: Unique id of the token to receive.
-          example: ETH_WBTC
-          type: string
-        pay_amount:
-          description: |
-            Amount of tokens to pay. For example "0.5 BTC".
-            Note: Either pay_amount or receive_amount must be provided, but not both.
-          example: "100"
-          type: string
-        receive_amount:
-          description: |
-            Amount of tokens to receive. For example "0.5 ETH_WBTC".
-            Note: Either pay_amount or receive_amount must be provided, but not both.
-          example: "100"
-          type: string
-      required:
-      - pay_token_id
-      - receive_token_id
-      - wallet_id
-      type: object
-    create_swap_quote_201_response:
-      allOf:
-      - $ref: '#/components/schemas/SwapQuote'
-      - properties:
-          quote_id:
-            description: The unique identifier of this quote.
-            example: 550e8400-e29b-41d4-a716-446655440000
-            type: string
-        required:
-        - quote_id
-        type: object
-      example:
-        min_receive_amount: "0"
-        fee_amount: "0.3"
-        quote_expired_timestamp: 1677587393000
-        pay_amount: "100"
-        quote_id: 550e8400-e29b-41d4-a716-446655440000
-        receive_amount: "100"
-        max_pay_amount: "10000"
-        max_receive_amount: "10000"
-        min_pay_amount: "0"
-    create_swap_activity_request:
-      properties:
-        wallet_id:
-          description: The unique identifier of the wallet.
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          type: string
-        quote_id:
-          description: The unique identifier of the quote.
-          example: 123e4567-e89b-12d3-a456-426614174001
-          format: uuid
-          type: string
-        slippage_tolerance:
-          description: The slippage tolerance for the swap.
-          example: "0.005"
-          type: string
-        app_initiator:
-          description: "The initiator of the app activity. If you do not specify this\
-            \ property, the WaaS service will automatically designate the API key\
-            \ as the initiator."
-          example: steve@example.com
-          type: string
-      required:
-      - quote_id
-      - slippage_tolerance
-      - wallet_id
-      type: object
     EstimatedEvmEip1559Fee_slow:
       allOf:
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
@@ -21396,8 +22352,13 @@ components:
           ExchangeWallet: '#/components/schemas/TransactionTransferToWalletDestination'
           EVM_Contract: '#/components/schemas/TransactionEvmContractDestination'
           SOL_Contract: '#/components/schemas/TransactionSolContractDestination'
+          COSMOS_Contract: '#/components/schemas/TransactionCosmosContractDestination'
           EVM_EIP_191_Signature: '#/components/schemas/TransactionMessageSignEIP191Destination'
           EVM_EIP_712_Signature: '#/components/schemas/TransactionMessageSignEIP712Destination'
+          BTC_BIP_137_Signature: '#/components/schemas/TransactionBIP137Destination'
+          BTC_EIP_191_Signature: '#/components/schemas/TransactionMessageSignBTCEIP191Destination'
+          BTC_BIP_322_Signature: '#/components/schemas/TransactionBIP322Destination'
+          COSMOS_ADR_36_Signature: '#/components/schemas/TransactionCosmosAdr36Destination'
           Raw_Message_Signature: '#/components/schemas/TransactionRawMessageSignDestination'
           DepositToAddress: '#/components/schemas/TransactionDepositToAddressDestination'
           DepositToWallet: '#/components/schemas/TransactionDepositToWalletDestination'
@@ -21407,11 +22368,16 @@ components:
       - $ref: '#/components/schemas/TransactionTransferToWalletDestination'
       - $ref: '#/components/schemas/TransactionEvmContractDestination'
       - $ref: '#/components/schemas/TransactionSolContractDestination'
+      - $ref: '#/components/schemas/TransactionCosmosContractDestination'
       - $ref: '#/components/schemas/TransactionMessageSignEIP191Destination'
       - $ref: '#/components/schemas/TransactionMessageSignEIP712Destination'
+      - $ref: '#/components/schemas/TransactionMessageSignBTCEIP191Destination'
       - $ref: '#/components/schemas/TransactionRawMessageSignDestination'
       - $ref: '#/components/schemas/TransactionDepositToAddressDestination'
       - $ref: '#/components/schemas/TransactionDepositToWalletDestination'
+      - $ref: '#/components/schemas/TransactionBIP137Destination'
+      - $ref: '#/components/schemas/TransactionBIP322Destination'
+      - $ref: '#/components/schemas/TransactionCosmosAdr36Destination'
     Transaction_replacement:
       example:
         replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
@@ -21494,11 +22460,13 @@ components:
     TransactionRbf_source:
       discriminator:
         mapping:
+          Web3: '#/components/schemas/CustodialWeb3TransferSource'
           Org-Controlled: '#/components/schemas/MpcTransferSource'
           User-Controlled: '#/components/schemas/MpcTransferSource'
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/MpcTransferSource'
+      - $ref: '#/components/schemas/CustodialWeb3TransferSource'
     AddressTransferDestination_account_output:
       example:
         amount: "1.5"
@@ -21744,5 +22712,15 @@ components:
             webhook.read: Read webhook URLs/events
             webhook.edit: Edit webhook URLs
             webhook.resend: Resend webhook events
+            payment_orders_payin.create: Create payment order
+            payment_orders_payin.read: Read payment order information
+            payment_orders_payin.update: Update payment order
+            payment_orders_refund.create: Create payment refund order
+            payment_orders_refund.read: Read payment refund order information
+            payment_settlement.create: Create payment settlement request
+            payment_settlement.read: Read payment settlement request information
+            payment_merchant.create: Create payment merchant
+            payment_merchant.read: Read payment merchant information
+            payment_merchant.update: Update payment merchant
           tokenUrl: https://auth.cobo.com/oauth/token
       type: oauth2

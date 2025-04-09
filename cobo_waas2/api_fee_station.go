@@ -32,9 +32,9 @@ func (r ApiGetFeeStationTransactionByIdRequest) Execute() (*TransactionDetail, *
 }
 
 /*
-GetFeeStationTransactionById Get fee station transaction information
+GetFeeStationTransactionById Get Fee Station transaction information
 
-This operation retrieves detailed information about a specified transaction, such as the transaction status, source address, destination address, and timestamp.
+This operation retrieves detailed information about a specified Fee Station transaction, such as the transaction status, source address, destination address, and timestamp.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -191,9 +191,9 @@ func (r ApiListFeeStationAddressesRequest) Execute() (*ListAddresses200Response,
 }
 
 /*
-ListFeeStationAddresses List fee station addresses
+ListFeeStationAddresses List Fee Station addresses
 
-This operation retrieves a list of addresses within a specified wallet.
+This operation retrieves a list of addresses within your Fee Station.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -364,7 +364,7 @@ func (r ApiListFeeStationTransactionsRequest) TransactionHashes(transactionHashe
 	return r
 }
 
-// A list of transaction types, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction. 
+// A list of transaction types for Fee Station, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction. 
 func (r ApiListFeeStationTransactionsRequest) Types(types string) ApiListFeeStationTransactionsRequest {
 	r.types = &types
 	return r
@@ -435,11 +435,11 @@ func (r ApiListFeeStationTransactionsRequest) Execute() (*ListTransactions200Res
 }
 
 /*
-ListFeeStationTransactions List all fee station transactions
+ListFeeStationTransactions List all Fee Station transactions
 
-This operation retrieves all the transactions under your organization.
+This operation retrieves all Fee Station transactions under your organization.
 
-You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamps. You can also paginate and sort your query results.
+You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamp. You can also paginate and sort your query results.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -637,11 +637,9 @@ func (r ApiListTokenBalancesForFeeStationRequest) Execute() (*ListTokenBalancesF
 }
 
 /*
-ListTokenBalancesForFeeStation List token balances by fee station
+ListTokenBalancesForFeeStation List Fee Station token balances
 
-The operation retrieves a list of token balances within a specified wallet.
-
-<Note>This operation is not applicable to Exchange Wallets.</Note>
+The operation retrieves a list of token balances within your Fee Station.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

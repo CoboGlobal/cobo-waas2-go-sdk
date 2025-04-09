@@ -4,10 +4,10 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get fee station transaction information
-[**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List fee station addresses
-[**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all fee station transactions
-[**ListTokenBalancesForFeeStation**](FeeStationAPI.md#ListTokenBalancesForFeeStation) | **Get** /fee_station/tokens | List token balances by fee station
+[**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get Fee Station transaction information
+[**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List Fee Station addresses
+[**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all Fee Station transactions
+[**ListTokenBalancesForFeeStation**](FeeStationAPI.md#ListTokenBalancesForFeeStation) | **Get** /fee_station/tokens | List Fee Station token balances
 
 
 
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 > TransactionDetail GetFeeStationTransactionById(ctx, transactionId).Execute()
 
-Get fee station transaction information
+Get Fee Station transaction information
 
 
 
@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
 
 > ListAddresses200Response ListFeeStationAddresses(ctx).ChainIds(chainIds).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
 
-List fee station addresses
+List Fee Station addresses
 
 
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 
 > ListTransactions200Response ListFeeStationTransactions(ctx).RequestId(requestId).CoboIds(coboIds).TransactionIds(transactionIds).TransactionHashes(transactionHashes).Types(types).Statuses(statuses).ChainIds(chainIds).TokenIds(tokenIds).AssetIds(assetIds).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).Limit(limit).Before(before).After(after).Direction(direction).Execute()
 
-List all fee station transactions
+List all Fee Station transactions
 
 
 
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
  **coboIds** | **string** | A list of Cobo IDs, separated by comma. A Cobo ID can be used to track a transaction. | 
  **transactionIds** | **string** | A list of transaction IDs, separated by comma. | 
  **transactionHashes** | **string** | A list of transaction hashes, separated by comma. | 
- **types** | **string** | A list of transaction types, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.  | 
+ **types** | **string** | A list of transaction types for Fee Station, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.  | 
  **statuses** | **string** | A list of transaction statuses, separated by comma. Possible values include:    - &#x60;Submitted&#x60;: The transaction is submitted.   - &#x60;PendingScreening&#x60;: The transaction is pending screening by Risk Control.    - &#x60;PendingAuthorization&#x60;: The transaction is pending approvals.   - &#x60;PendingSignature&#x60;: The transaction is pending signature.    - &#x60;Broadcasting&#x60;: The transaction is being broadcast.   - &#x60;Confirming&#x60;: The transaction is waiting for the required number of confirmations.   - &#x60;Completed&#x60;: The transaction is completed.   - &#x60;Failed&#x60;: The transaction failed.   - &#x60;Rejected&#x60;: The transaction is rejected.   - &#x60;Pending&#x60;: The transaction is waiting to be included in the next block of the blockchain.  | 
  **chainIds** | **string** | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
  **tokenIds** | **string** | A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
@@ -283,7 +283,7 @@ Name | Type | Description  | Notes
 
 > ListTokenBalancesForAddress200Response ListTokenBalancesForFeeStation(ctx).TokenIds(tokenIds).Limit(limit).Before(before).After(after).Execute()
 
-List token balances by fee station
+List Fee Station token balances
 
 
 

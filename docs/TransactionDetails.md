@@ -30,10 +30,11 @@ Name | Type | Description | Notes
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description for your transaction. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
-**CoboCategory** | Pointer to **[]string** | A transaction category for cobo to identify your transactions. | [optional] 
+**CoboCategory** | Pointer to **[]string** | The transaction category defined by Cobo. Possible values include:  - &#x60;AutoSweep&#x60;: An auto-sweep transaction. - &#x60;AutoFueling&#x60;: A transaction where Fee Station pays transaction fees to an address within your wallet. - &#x60;AutoFuelingRefund&#x60;: A refund for an auto-fueling transaction. - &#x60;SafeTxMessage&#x60;: A message signing transaction to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction. - &#x60;BillPayment&#x60;: A transaction to pay Cobo bills through Fee Station. - &#x60;BillRefund&#x60;: A refund for a previously made bill payment. - &#x60;CommissionFeeCharge&#x60;: A transaction to charge commission fees via Fee Station. - &#x60;CommissionFeeRefund&#x60;: A refund of previously charged commission fees.  | [optional] 
+**Extra** | Pointer to **[]string** | The transaction extra information. | [optional] 
 **FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
-**CreatedTimestamp** | Pointer to **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | [optional] 
+**CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
+**UpdatedTimestamp** | **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | 
 **Approvers** | Pointer to [**[]TransactionApprover**](TransactionApprover.md) |  | [optional] 
 **Signers** | Pointer to [**[]TransactionSigner**](TransactionSigner.md) |  | [optional] 
 **Nonce** | Pointer to **int32** | Transaction nonce | [optional] 
@@ -48,7 +49,7 @@ Name | Type | Description | Notes
 
 ### NewTransactionDetails
 
-`func NewTransactionDetails(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, ) *TransactionDetails`
+`func NewTransactionDetails(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, ) *TransactionDetails`
 
 NewTransactionDetails instantiates a new TransactionDetails object
 This constructor will assign default values to properties that have it defined,
@@ -708,6 +709,31 @@ SetCoboCategory sets CoboCategory field to given value.
 
 HasCoboCategory returns a boolean if a field has been set.
 
+### GetExtra
+
+`func (o *TransactionDetails) GetExtra() []string`
+
+GetExtra returns the Extra field if non-nil, zero value otherwise.
+
+### GetExtraOk
+
+`func (o *TransactionDetails) GetExtraOk() (*[]string, bool)`
+
+GetExtraOk returns a tuple with the Extra field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExtra
+
+`func (o *TransactionDetails) SetExtra(v []string)`
+
+SetExtra sets Extra field to given value.
+
+### HasExtra
+
+`func (o *TransactionDetails) HasExtra() bool`
+
+HasExtra returns a boolean if a field has been set.
+
 ### GetFuelingInfo
 
 `func (o *TransactionDetails) GetFuelingInfo() TransactionFuelingInfo`
@@ -752,11 +778,6 @@ and a boolean to check if the value has been set.
 
 SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
-### HasCreatedTimestamp
-
-`func (o *TransactionDetails) HasCreatedTimestamp() bool`
-
-HasCreatedTimestamp returns a boolean if a field has been set.
 
 ### GetUpdatedTimestamp
 
@@ -777,11 +798,6 @@ and a boolean to check if the value has been set.
 
 SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
-### HasUpdatedTimestamp
-
-`func (o *TransactionDetails) HasUpdatedTimestamp() bool`
-
-HasUpdatedTimestamp returns a boolean if a field has been set.
 
 ### GetApprovers
 

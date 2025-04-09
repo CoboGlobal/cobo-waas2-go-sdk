@@ -33,12 +33,21 @@ const (
 	TRANSACTIONSUBSTATUS_BUILT TransactionSubStatus = "Built"
 	TRANSACTIONSUBSTATUS_PENDING_WAIT_SIGNER TransactionSubStatus = "PendingWaitSigner"
 	TRANSACTIONSUBSTATUS_PENDING_APPROVAL_START TransactionSubStatus = "PendingApprovalStart"
+	TRANSACTIONSUBSTATUS_PENDING_SIGNER_APPROVAL TransactionSubStatus = "PendingSignerApproval"
+	TRANSACTIONSUBSTATUS_PENDING_SIGNER_PROCESSING TransactionSubStatus = "PendingSignerProcessing"
+	TRANSACTIONSUBSTATUS_REJECTED_BY_SIGNER TransactionSubStatus = "RejectedBySigner"
 	TRANSACTIONSUBSTATUS_FAILED_BY_SIGNER TransactionSubStatus = "FailedBySigner"
+	TRANSACTIONSUBSTATUS_FAILED_SIGNER_TIMEOUT TransactionSubStatus = "FailedSignerTimeout"
 	TRANSACTIONSUBSTATUS_FAILED_BROADCASTING TransactionSubStatus = "FailedBroadcasting"
 	TRANSACTIONSUBSTATUS_FAILED_ON_CHAIN TransactionSubStatus = "FailedOnChain"
 	TRANSACTIONSUBSTATUS_REVERTING TransactionSubStatus = "Reverting"
 	TRANSACTIONSUBSTATUS_QUEUE TransactionSubStatus = "Queue"
+	TRANSACTIONSUBSTATUS_INSUFFICIENT_BALANCE TransactionSubStatus = "InsufficientBalance"
+	TRANSACTIONSUBSTATUS_INSUFFICIENT_BALANCE_FUND_LOCKED TransactionSubStatus = "InsufficientBalanceFundLocked"
+	TRANSACTIONSUBSTATUS_PENDING_SYSTEM_PROCESSING TransactionSubStatus = "PendingSystemProcessing"
+	TRANSACTIONSUBSTATUS_SYSTEM_PROCESSING_ONGOING TransactionSubStatus = "SystemProcessingOngoing"
 	TRANSACTIONSUBSTATUS_PENDING_BLOCK_CONFIRMATIONS TransactionSubStatus = "PendingBlockConfirmations"
+	TRANSACTIONSUBSTATUS_RE_ORGED TransactionSubStatus = "ReOrged"
 	TRANSACTIONSUBSTATUS_REPLACED_BY_NEW_TRANSACTION TransactionSubStatus = "ReplacedByNewTransaction"
 	TRANSACTIONSUBSTATUS_CANCELED_BY_SPENDER TransactionSubStatus = "CanceledBySpender"
 	TRANSACTIONSUBSTATUS_CANCELED_BY_API TransactionSubStatus = "CanceledByAPI"
@@ -69,12 +78,21 @@ var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"Built",
 	"PendingWaitSigner",
 	"PendingApprovalStart",
+	"PendingSignerApproval",
+	"PendingSignerProcessing",
+	"RejectedBySigner",
 	"FailedBySigner",
+	"FailedSignerTimeout",
 	"FailedBroadcasting",
 	"FailedOnChain",
 	"Reverting",
 	"Queue",
+	"InsufficientBalance",
+	"InsufficientBalanceFundLocked",
+	"PendingSystemProcessing",
+	"SystemProcessingOngoing",
 	"PendingBlockConfirmations",
+	"ReOrged",
 	"ReplacedByNewTransaction",
 	"CanceledBySpender",
 	"CanceledByAPI",

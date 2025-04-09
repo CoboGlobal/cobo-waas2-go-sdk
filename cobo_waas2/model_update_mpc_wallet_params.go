@@ -21,7 +21,7 @@ var _ MappedNullable = &UpdateMpcWalletParams{}
 type UpdateMpcWalletParams struct {
 	WalletType WalletType `json:"wallet_type"`
 	// The wallet name.
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 }
 
 type _UpdateMpcWalletParams UpdateMpcWalletParams
@@ -30,9 +30,10 @@ type _UpdateMpcWalletParams UpdateMpcWalletParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateMpcWalletParams(walletType WalletType) *UpdateMpcWalletParams {
+func NewUpdateMpcWalletParams(walletType WalletType, name string) *UpdateMpcWalletParams {
 	this := UpdateMpcWalletParams{}
 	this.WalletType = walletType
+	this.Name = name
 	return &this
 }
 
@@ -68,36 +69,28 @@ func (o *UpdateMpcWalletParams) SetWalletType(v WalletType) {
 	o.WalletType = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *UpdateMpcWalletParams) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *UpdateMpcWalletParams) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *UpdateMpcWalletParams) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *UpdateMpcWalletParams) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
 func (o UpdateMpcWalletParams) MarshalJSON() ([]byte, error) {
@@ -111,9 +104,7 @@ func (o UpdateMpcWalletParams) MarshalJSON() ([]byte, error) {
 func (o UpdateMpcWalletParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["wallet_type"] = o.WalletType
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	return toSerialize, nil
 }
 
@@ -123,6 +114,7 @@ func (o *UpdateMpcWalletParams) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"wallet_type",
+		"name",
 	}
 
 	allProperties := make(map[string]interface{})

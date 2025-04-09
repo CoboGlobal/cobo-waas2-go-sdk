@@ -177,7 +177,7 @@ A transaction can be cancelled if its status is either of the following:
 - `Submitted`
 - `PendingScreening`
 - `PendingAuthorization`
-- `PendingSignature` 
+- `PendingSignature` (excluding the `SystemProcessingOngoing` and `SignatureVerificationSuccess` sub-statuses)
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

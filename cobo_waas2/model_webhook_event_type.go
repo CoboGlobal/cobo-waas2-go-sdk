@@ -28,6 +28,8 @@ const (
 	WEBHOOKEVENTTYPE_WALLETS_MPC_TSS_REQUEST_SUCCEEDED WebhookEventType = "wallets.mpc.tss_request.succeeded"
 	WEBHOOKEVENTTYPE_WALLETS_ADDRESSES_CREATED WebhookEventType = "wallets.addresses.created"
 	WEBHOOKEVENTTYPE_WALLETS_CREATED WebhookEventType = "wallets.created"
+	WEBHOOKEVENTTYPE_WALLETS_TOKEN_LISTING_FAILED WebhookEventType = "wallets.token_listing.failed"
+	WEBHOOKEVENTTYPE_WALLETS_TOKEN_LISTING_SUCCEEDED WebhookEventType = "wallets.token_listing.succeeded"
 	WEBHOOKEVENTTYPE_MPC_VAULTS_CREATED WebhookEventType = "mpc_vaults.created"
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_CREATED WebhookEventType = "fee_station.transaction.created"
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_UPDATED WebhookEventType = "fee_station.transaction.updated"
@@ -49,6 +51,8 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"wallets.mpc.tss_request.succeeded",
 	"wallets.addresses.created",
 	"wallets.created",
+	"wallets.token_listing.failed",
+	"wallets.token_listing.succeeded",
 	"mpc_vaults.created",
 	"fee_station.transaction.created",
 	"fee_station.transaction.updated",

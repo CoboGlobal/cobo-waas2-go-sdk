@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **CalldataInfo** | Pointer to [**TransactionEvmCalldataInfo**](TransactionEvmCalldataInfo.md) |  | [optional] 
 **Instructions** | Pointer to [**[]TransactionSolContractInstruction**](TransactionSolContractInstruction.md) |  | [optional] 
+**CosmosMessages** | [**[]TransactionCosmosMessage**](TransactionCosmosMessage.md) |  | 
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **RawStructuredData** | Pointer to **string** | The raw structured data to be signed, formatted as a JSON string. | [optional] 
 **StructuredData** | **map[string]interface{}** | The structured data to be signed, formatted as a JSON object according to the EIP-712 standard. | 
@@ -28,12 +29,15 @@ Name | Type | Description | Notes
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Memo** | Pointer to **string** | The memo that identifies a transaction in order to credit the correct account. For transfers out of Cobo Portal, it is highly recommended to include a memo for the chains such as XRP, EOS, XLM, IOST, BNB_BNB, ATOM, LUNA, and TON. | [optional] 
 **TxInfo** | Pointer to [**TransactionDepositToAddressDestinationTxInfo**](TransactionDepositToAddressDestinationTxInfo.md) |  | [optional] 
+**MessageBip137** | **string** | Message to be signed, in hexadecimal format. | 
+**MessageBip322** | **string** | Message to be signed, in hexadecimal format. | 
+**MessageCosmosAdr36** | **string** | Message to be signed, in hexadecimal format. | 
 
 ## Methods
 
 ### NewTransactionDestination
 
-`func NewTransactionDestination(destinationType TransactionDestinationType, walletId string, amount string, address string, calldata string, message string, structuredData map[string]interface{}, walletType WalletType, walletSubtype WalletSubtype, ) *TransactionDestination`
+`func NewTransactionDestination(destinationType TransactionDestinationType, walletId string, amount string, address string, calldata string, cosmosMessages []TransactionCosmosMessage, message string, structuredData map[string]interface{}, walletType WalletType, walletSubtype WalletSubtype, messageBip137 string, messageBip322 string, messageCosmosAdr36 string, ) *TransactionDestination`
 
 NewTransactionDestination instantiates a new TransactionDestination object
 This constructor will assign default values to properties that have it defined,
@@ -398,6 +402,26 @@ SetInstructions sets Instructions field to given value.
 
 HasInstructions returns a boolean if a field has been set.
 
+### GetCosmosMessages
+
+`func (o *TransactionDestination) GetCosmosMessages() []TransactionCosmosMessage`
+
+GetCosmosMessages returns the CosmosMessages field if non-nil, zero value otherwise.
+
+### GetCosmosMessagesOk
+
+`func (o *TransactionDestination) GetCosmosMessagesOk() (*[]TransactionCosmosMessage, bool)`
+
+GetCosmosMessagesOk returns a tuple with the CosmosMessages field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCosmosMessages
+
+`func (o *TransactionDestination) SetCosmosMessages(v []TransactionCosmosMessage)`
+
+SetCosmosMessages sets CosmosMessages field to given value.
+
+
 ### GetMessage
 
 `func (o *TransactionDestination) GetMessage() string`
@@ -602,6 +626,66 @@ SetTxInfo sets TxInfo field to given value.
 `func (o *TransactionDestination) HasTxInfo() bool`
 
 HasTxInfo returns a boolean if a field has been set.
+
+### GetMessageBip137
+
+`func (o *TransactionDestination) GetMessageBip137() string`
+
+GetMessageBip137 returns the MessageBip137 field if non-nil, zero value otherwise.
+
+### GetMessageBip137Ok
+
+`func (o *TransactionDestination) GetMessageBip137Ok() (*string, bool)`
+
+GetMessageBip137Ok returns a tuple with the MessageBip137 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMessageBip137
+
+`func (o *TransactionDestination) SetMessageBip137(v string)`
+
+SetMessageBip137 sets MessageBip137 field to given value.
+
+
+### GetMessageBip322
+
+`func (o *TransactionDestination) GetMessageBip322() string`
+
+GetMessageBip322 returns the MessageBip322 field if non-nil, zero value otherwise.
+
+### GetMessageBip322Ok
+
+`func (o *TransactionDestination) GetMessageBip322Ok() (*string, bool)`
+
+GetMessageBip322Ok returns a tuple with the MessageBip322 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMessageBip322
+
+`func (o *TransactionDestination) SetMessageBip322(v string)`
+
+SetMessageBip322 sets MessageBip322 field to given value.
+
+
+### GetMessageCosmosAdr36
+
+`func (o *TransactionDestination) GetMessageCosmosAdr36() string`
+
+GetMessageCosmosAdr36 returns the MessageCosmosAdr36 field if non-nil, zero value otherwise.
+
+### GetMessageCosmosAdr36Ok
+
+`func (o *TransactionDestination) GetMessageCosmosAdr36Ok() (*string, bool)`
+
+GetMessageCosmosAdr36Ok returns a tuple with the MessageCosmosAdr36 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMessageCosmosAdr36
+
+`func (o *TransactionDestination) SetMessageCosmosAdr36(v string)`
+
+SetMessageCosmosAdr36 sets MessageCosmosAdr36 field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

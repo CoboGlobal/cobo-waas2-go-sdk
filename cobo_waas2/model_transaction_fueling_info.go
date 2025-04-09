@@ -15,11 +15,11 @@ import (
 // checks if the TransactionFuelingInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionFuelingInfo{}
 
-// TransactionFuelingInfo The fuel transaction data.
+// TransactionFuelingInfo Details of the auto-fueling transaction that provides gas for the current transaction.
 type TransactionFuelingInfo struct {
-	// The fuel transaction request ID.
+	// The request ID of the transaction.
 	RequestId *string `json:"request_id,omitempty"`
-	// The fuel transaction ID.
+	// The transaction ID.
 	TransactionId *string `json:"transaction_id,omitempty"`
 }
 

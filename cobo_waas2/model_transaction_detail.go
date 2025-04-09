@@ -60,13 +60,15 @@ type TransactionDetail struct {
 	Description *string `json:"description,omitempty"`
 	// Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - `true`: The transaction was executed as a Cobo Loop transfer. - `false`: The transaction was not executed as a Cobo Loop transfer. 
 	IsLoop *bool `json:"is_loop,omitempty"`
-	// A transaction category for cobo to identify your transactions.
+	// The transaction category defined by Cobo. Possible values include:  - `AutoSweep`: An auto-sweep transaction. - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your wallet. - `AutoFuelingRefund`: A refund for an auto-fueling transaction. - `SafeTxMessage`: A message signing transaction to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction. - `BillPayment`: A transaction to pay Cobo bills through Fee Station. - `BillRefund`: A refund for a previously made bill payment. - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station. - `CommissionFeeRefund`: A refund of previously charged commission fees. 
 	CoboCategory []string `json:"cobo_category,omitempty"`
+	// The transaction extra information.
+	Extra []string `json:"extra,omitempty"`
 	FuelingInfo *TransactionFuelingInfo `json:"fueling_info,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
-	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
+	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The time when the transaction was updated, in Unix timestamp format, measured in milliseconds.
-	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
+	UpdatedTimestamp int64 `json:"updated_timestamp"`
 	Timeline []TransactionTimeline `json:"timeline,omitempty"`
 }
 
@@ -76,7 +78,7 @@ type _TransactionDetail TransactionDetail
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTransactionDetail(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType) *TransactionDetail {
+func NewTransactionDetail(transactionId string, walletId string, status TransactionStatus, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64) *TransactionDetail {
 	this := TransactionDetail{}
 	this.TransactionId = transactionId
 	this.WalletId = walletId
@@ -84,6 +86,8 @@ func NewTransactionDetail(transactionId string, walletId string, status Transact
 	this.Source = source
 	this.Destination = destination
 	this.InitiatorType = initiatorType
+	this.CreatedTimestamp = createdTimestamp
+	this.UpdatedTimestamp = updatedTimestamp
 	return &this
 }
 
@@ -911,6 +915,38 @@ func (o *TransactionDetail) SetCoboCategory(v []string) {
 	o.CoboCategory = v
 }
 
+// GetExtra returns the Extra field value if set, zero value otherwise.
+func (o *TransactionDetail) GetExtra() []string {
+	if o == nil || IsNil(o.Extra) {
+		var ret []string
+		return ret
+	}
+	return o.Extra
+}
+
+// GetExtraOk returns a tuple with the Extra field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionDetail) GetExtraOk() ([]string, bool) {
+	if o == nil || IsNil(o.Extra) {
+		return nil, false
+	}
+	return o.Extra, true
+}
+
+// HasExtra returns a boolean if a field has been set.
+func (o *TransactionDetail) HasExtra() bool {
+	if o != nil && !IsNil(o.Extra) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtra gets a reference to the given []string and assigns it to the Extra field.
+func (o *TransactionDetail) SetExtra(v []string) {
+	o.Extra = v
+}
+
 // GetFuelingInfo returns the FuelingInfo field value if set, zero value otherwise.
 func (o *TransactionDetail) GetFuelingInfo() TransactionFuelingInfo {
 	if o == nil || IsNil(o.FuelingInfo) {
@@ -943,68 +979,52 @@ func (o *TransactionDetail) SetFuelingInfo(v TransactionFuelingInfo) {
 	o.FuelingInfo = &v
 }
 
-// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+// GetCreatedTimestamp returns the CreatedTimestamp field value
 func (o *TransactionDetail) GetCreatedTimestamp() int64 {
-	if o == nil || IsNil(o.CreatedTimestamp) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedTimestamp
+
+	return o.CreatedTimestamp
 }
 
-// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value
 // and a boolean to check if the value has been set.
 func (o *TransactionDetail) GetCreatedTimestampOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedTimestamp) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedTimestamp, true
+	return &o.CreatedTimestamp, true
 }
 
-// HasCreatedTimestamp returns a boolean if a field has been set.
-func (o *TransactionDetail) HasCreatedTimestamp() bool {
-	if o != nil && !IsNil(o.CreatedTimestamp) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+// SetCreatedTimestamp sets field value
 func (o *TransactionDetail) SetCreatedTimestamp(v int64) {
-	o.CreatedTimestamp = &v
+	o.CreatedTimestamp = v
 }
 
-// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value
 func (o *TransactionDetail) GetUpdatedTimestamp() int64 {
-	if o == nil || IsNil(o.UpdatedTimestamp) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.UpdatedTimestamp
+
+	return o.UpdatedTimestamp
 }
 
-// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value
 // and a boolean to check if the value has been set.
 func (o *TransactionDetail) GetUpdatedTimestampOk() (*int64, bool) {
-	if o == nil || IsNil(o.UpdatedTimestamp) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UpdatedTimestamp, true
+	return &o.UpdatedTimestamp, true
 }
 
-// HasUpdatedTimestamp returns a boolean if a field has been set.
-func (o *TransactionDetail) HasUpdatedTimestamp() bool {
-	if o != nil && !IsNil(o.UpdatedTimestamp) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedTimestamp gets a reference to the given int64 and assigns it to the UpdatedTimestamp field.
+// SetUpdatedTimestamp sets field value
 func (o *TransactionDetail) SetUpdatedTimestamp(v int64) {
-	o.UpdatedTimestamp = &v
+	o.UpdatedTimestamp = v
 }
 
 // GetTimeline returns the Timeline field value if set, zero value otherwise.
@@ -1118,15 +1138,14 @@ func (o TransactionDetail) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CoboCategory) {
 		toSerialize["cobo_category"] = o.CoboCategory
 	}
+	if !IsNil(o.Extra) {
+		toSerialize["extra"] = o.Extra
+	}
 	if !IsNil(o.FuelingInfo) {
 		toSerialize["fueling_info"] = o.FuelingInfo
 	}
-	if !IsNil(o.CreatedTimestamp) {
-		toSerialize["created_timestamp"] = o.CreatedTimestamp
-	}
-	if !IsNil(o.UpdatedTimestamp) {
-		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
-	}
+	toSerialize["created_timestamp"] = o.CreatedTimestamp
+	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	if !IsNil(o.Timeline) {
 		toSerialize["timeline"] = o.Timeline
 	}
@@ -1144,6 +1163,8 @@ func (o *TransactionDetail) UnmarshalJSON(data []byte) (err error) {
 		"source",
 		"destination",
 		"initiator_type",
+		"created_timestamp",
+		"updated_timestamp",
 	}
 
 	allProperties := make(map[string]interface{})

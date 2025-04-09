@@ -15,7 +15,15 @@ import (
 
 // TransactionRbfSource - struct for TransactionRbfSource
 type TransactionRbfSource struct {
+	CustodialWeb3TransferSource *CustodialWeb3TransferSource
 	MpcTransferSource *MpcTransferSource
+}
+
+// CustodialWeb3TransferSourceAsTransactionRbfSource is a convenience function that returns CustodialWeb3TransferSource wrapped in TransactionRbfSource
+func CustodialWeb3TransferSourceAsTransactionRbfSource(v *CustodialWeb3TransferSource) TransactionRbfSource {
+	return TransactionRbfSource{
+		CustodialWeb3TransferSource: v,
+	}
 }
 
 // MpcTransferSourceAsTransactionRbfSource is a convenience function that returns MpcTransferSource wrapped in TransactionRbfSource
@@ -60,6 +68,30 @@ func (dst *TransactionRbfSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'Web3'
+	if jsonDict["source_type"] == "Web3" {
+		// try to unmarshal JSON data into CustodialWeb3TransferSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3TransferSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3TransferSource, return on the first match
+		} else {
+			dst.CustodialWeb3TransferSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionRbfSource as CustodialWeb3TransferSource: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'CustodialWeb3TransferSource'
+	if jsonDict["source_type"] == "CustodialWeb3TransferSource" {
+		// try to unmarshal JSON data into CustodialWeb3TransferSource
+		err = json.Unmarshal(data, &dst.CustodialWeb3TransferSource)
+		if err == nil {
+			return nil // data stored in dst.CustodialWeb3TransferSource, return on the first match
+		} else {
+			dst.CustodialWeb3TransferSource = nil
+			return fmt.Errorf("failed to unmarshal TransactionRbfSource as CustodialWeb3TransferSource: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MpcTransferSource'
 	if jsonDict["source_type"] == "MpcTransferSource" {
 		// try to unmarshal JSON data into MpcTransferSource
@@ -77,6 +109,10 @@ func (dst *TransactionRbfSource) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src TransactionRbfSource) MarshalJSON() ([]byte, error) {
+	if src.CustodialWeb3TransferSource != nil {
+		return json.Marshal(&src.CustodialWeb3TransferSource)
+	}
+
 	if src.MpcTransferSource != nil {
 		return json.Marshal(&src.MpcTransferSource)
 	}
@@ -89,6 +125,10 @@ func (obj *TransactionRbfSource) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.CustodialWeb3TransferSource != nil {
+		return obj.CustodialWeb3TransferSource
+	}
+
 	if obj.MpcTransferSource != nil {
 		return obj.MpcTransferSource
 	}

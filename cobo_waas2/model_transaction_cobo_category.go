@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionCoboCategory The transaction type. Possible values include:    - `AutoSweep`: A auto sweep transaction.   - `AutoFueling`: A gas station transaction.   - `AutoFuelingRefund`: A gas station refund transaction.   - `SafeTxMessage`: A safe transaction.    - `BillPayment`: A fee station bill payment transaction.    - `BillRefund`: A fee station bill payment refund transaction.    - `CommissionFeeCharge`: A fee station commission fee charge transaction.    - `CommissionFeeRefund`: A fee station commission fee refund transaction.  
+// TransactionCoboCategory The transaction category defined by Cobo. Possible values include:    - `AutoSweep`: An auto-sweep transaction.   - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your MPC Wallets.   - `AutoFuelingRefund`: A refund for an auto-fueling transaction.   - `SafeTxMessage`: A message signing transaction initiated by an MPC wallet to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction.   - `BillPayment`: A transaction to pay Cobo bills through Fee Station.   - `BillRefund`: A refund for a previously made bill payment.   - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station.   - `CommissionFeeRefund`: A refund of previously charged commission fees. 
 type TransactionCoboCategory string
 
 // List of TransactionCoboCategory

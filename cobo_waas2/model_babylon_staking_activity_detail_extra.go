@@ -26,12 +26,6 @@ type BabylonStakingActivityDetailExtra struct {
 	StakeBlockTime *int64 `json:"stake_block_time,omitempty"`
 	// Whether to automatically broadcast the transaction.  - `true`: Automatically broadcast the transaction. - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself. 
 	AutoBroadcast *bool `json:"auto_broadcast,omitempty"`
-	// The version of babylon global parameters.
-	ParamVersion *int64 `json:"param_version,omitempty"`
-	WithdrawFromType *ActivityType `json:"withdraw_from_type,omitempty"`
-	SlashFromType *ActivityType `json:"slash_from_type,omitempty"`
-	// The origin staking amount.
-	StakeAmount *string `json:"stake_amount,omitempty"`
 }
 
 type _BabylonStakingActivityDetailExtra BabylonStakingActivityDetailExtra
@@ -174,134 +168,6 @@ func (o *BabylonStakingActivityDetailExtra) SetAutoBroadcast(v bool) {
 	o.AutoBroadcast = &v
 }
 
-// GetParamVersion returns the ParamVersion field value if set, zero value otherwise.
-func (o *BabylonStakingActivityDetailExtra) GetParamVersion() int64 {
-	if o == nil || IsNil(o.ParamVersion) {
-		var ret int64
-		return ret
-	}
-	return *o.ParamVersion
-}
-
-// GetParamVersionOk returns a tuple with the ParamVersion field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BabylonStakingActivityDetailExtra) GetParamVersionOk() (*int64, bool) {
-	if o == nil || IsNil(o.ParamVersion) {
-		return nil, false
-	}
-	return o.ParamVersion, true
-}
-
-// HasParamVersion returns a boolean if a field has been set.
-func (o *BabylonStakingActivityDetailExtra) HasParamVersion() bool {
-	if o != nil && !IsNil(o.ParamVersion) {
-		return true
-	}
-
-	return false
-}
-
-// SetParamVersion gets a reference to the given int64 and assigns it to the ParamVersion field.
-func (o *BabylonStakingActivityDetailExtra) SetParamVersion(v int64) {
-	o.ParamVersion = &v
-}
-
-// GetWithdrawFromType returns the WithdrawFromType field value if set, zero value otherwise.
-func (o *BabylonStakingActivityDetailExtra) GetWithdrawFromType() ActivityType {
-	if o == nil || IsNil(o.WithdrawFromType) {
-		var ret ActivityType
-		return ret
-	}
-	return *o.WithdrawFromType
-}
-
-// GetWithdrawFromTypeOk returns a tuple with the WithdrawFromType field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BabylonStakingActivityDetailExtra) GetWithdrawFromTypeOk() (*ActivityType, bool) {
-	if o == nil || IsNil(o.WithdrawFromType) {
-		return nil, false
-	}
-	return o.WithdrawFromType, true
-}
-
-// HasWithdrawFromType returns a boolean if a field has been set.
-func (o *BabylonStakingActivityDetailExtra) HasWithdrawFromType() bool {
-	if o != nil && !IsNil(o.WithdrawFromType) {
-		return true
-	}
-
-	return false
-}
-
-// SetWithdrawFromType gets a reference to the given ActivityType and assigns it to the WithdrawFromType field.
-func (o *BabylonStakingActivityDetailExtra) SetWithdrawFromType(v ActivityType) {
-	o.WithdrawFromType = &v
-}
-
-// GetSlashFromType returns the SlashFromType field value if set, zero value otherwise.
-func (o *BabylonStakingActivityDetailExtra) GetSlashFromType() ActivityType {
-	if o == nil || IsNil(o.SlashFromType) {
-		var ret ActivityType
-		return ret
-	}
-	return *o.SlashFromType
-}
-
-// GetSlashFromTypeOk returns a tuple with the SlashFromType field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BabylonStakingActivityDetailExtra) GetSlashFromTypeOk() (*ActivityType, bool) {
-	if o == nil || IsNil(o.SlashFromType) {
-		return nil, false
-	}
-	return o.SlashFromType, true
-}
-
-// HasSlashFromType returns a boolean if a field has been set.
-func (o *BabylonStakingActivityDetailExtra) HasSlashFromType() bool {
-	if o != nil && !IsNil(o.SlashFromType) {
-		return true
-	}
-
-	return false
-}
-
-// SetSlashFromType gets a reference to the given ActivityType and assigns it to the SlashFromType field.
-func (o *BabylonStakingActivityDetailExtra) SetSlashFromType(v ActivityType) {
-	o.SlashFromType = &v
-}
-
-// GetStakeAmount returns the StakeAmount field value if set, zero value otherwise.
-func (o *BabylonStakingActivityDetailExtra) GetStakeAmount() string {
-	if o == nil || IsNil(o.StakeAmount) {
-		var ret string
-		return ret
-	}
-	return *o.StakeAmount
-}
-
-// GetStakeAmountOk returns a tuple with the StakeAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BabylonStakingActivityDetailExtra) GetStakeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.StakeAmount) {
-		return nil, false
-	}
-	return o.StakeAmount, true
-}
-
-// HasStakeAmount returns a boolean if a field has been set.
-func (o *BabylonStakingActivityDetailExtra) HasStakeAmount() bool {
-	if o != nil && !IsNil(o.StakeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetStakeAmount gets a reference to the given string and assigns it to the StakeAmount field.
-func (o *BabylonStakingActivityDetailExtra) SetStakeAmount(v string) {
-	o.StakeAmount = &v
-}
-
 func (o BabylonStakingActivityDetailExtra) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -321,18 +187,6 @@ func (o BabylonStakingActivityDetailExtra) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.AutoBroadcast) {
 		toSerialize["auto_broadcast"] = o.AutoBroadcast
-	}
-	if !IsNil(o.ParamVersion) {
-		toSerialize["param_version"] = o.ParamVersion
-	}
-	if !IsNil(o.WithdrawFromType) {
-		toSerialize["withdraw_from_type"] = o.WithdrawFromType
-	}
-	if !IsNil(o.SlashFromType) {
-		toSerialize["slash_from_type"] = o.SlashFromType
-	}
-	if !IsNil(o.StakeAmount) {
-		toSerialize["stake_amount"] = o.StakeAmount
 	}
 	return toSerialize, nil
 }

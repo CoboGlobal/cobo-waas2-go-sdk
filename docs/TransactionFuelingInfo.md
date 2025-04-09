@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | Pointer to **string** | The fuel transaction request ID. | [optional] 
-**TransactionId** | Pointer to **string** | The fuel transaction ID. | [optional] 
+**RequestId** | Pointer to **string** | The request ID of the transaction. | [optional] 
+**TransactionId** | Pointer to **string** | The transaction ID. | [optional] 
 
 ## Methods
 

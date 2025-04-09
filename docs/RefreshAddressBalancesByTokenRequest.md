@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Addresses** | **[]string** | A list of  address. | 
+**Addresses** | **[]string** | A list of addresses. | 
 
 ## Methods
 
