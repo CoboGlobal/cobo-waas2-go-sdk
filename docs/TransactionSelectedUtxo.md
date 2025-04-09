@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **VoutN** | Pointer to **int32** | The output index of the UTXO. | [optional] 
 **Address** | Pointer to **string** | The address of the UTXO. | [optional] 
 **Value** | Pointer to **string** | The value of the UTXO. | [optional] 
-**RedeemScript** | Pointer to **string** | Redeem script is used in P2SH and P2WSH transactions. | [optional] 
-**RevealedScript** | Pointer to **string** | Revealed script is used for script path spending in Taproot transactions. | [optional] 
+**RedeemScript** | Pointer to **string** | The redeem script used in P2SH and P2WSH transactions. | [optional] 
+**RevealedScript** | Pointer to **string** | The revealed script used for Taproot script-path spend transaction. | [optional] 
 
 ## Methods
 

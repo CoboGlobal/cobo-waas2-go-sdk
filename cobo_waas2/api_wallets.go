@@ -3364,7 +3364,7 @@ type ApiRefreshAddressBalancesByTokenRequest struct {
 	refreshAddressBalancesByTokenRequest *RefreshAddressBalancesByTokenRequest
 }
 
-// The request body to refresh the addresses balance by  specified token within a specified wallet
+// The request body to refresh addresses balances.
 func (r ApiRefreshAddressBalancesByTokenRequest) RefreshAddressBalancesByTokenRequest(refreshAddressBalancesByTokenRequest RefreshAddressBalancesByTokenRequest) ApiRefreshAddressBalancesByTokenRequest {
 	r.refreshAddressBalancesByTokenRequest = &refreshAddressBalancesByTokenRequest
 	return r
@@ -3375,9 +3375,10 @@ func (r ApiRefreshAddressBalancesByTokenRequest) Execute() (*RefreshAddressBalan
 }
 
 /*
-RefreshAddressBalancesByToken refresh address balances by token
+RefreshAddressBalancesByToken Refresh address balances by token
 
-The operation refresh the balance of the given address list for a specified token within a wallet.
+This operation refreshes the balances of specified addresses for a given token within a wallet.
+
 The successful return of the request only means that the refresh request has been submitted.
 
 <Note>This operation is applicable to MPC Wallets only.</Note>
@@ -3654,8 +3655,6 @@ func (r ApiUpdateWalletByIdRequest) Execute() (*WalletInfo, *http.Response, erro
 UpdateWalletById Update wallet
 
 This operation updates the information of a specified wallet.
-
-For Exchange Wallets, you can update the API key, API secret, and other information about your exchange accounts with this operation. For other wallet types, you can only update the wallet name.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

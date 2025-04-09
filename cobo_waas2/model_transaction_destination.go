@@ -15,15 +15,48 @@ import (
 
 // TransactionDestination - struct for TransactionDestination
 type TransactionDestination struct {
+	TransactionBIP137Destination *TransactionBIP137Destination
+	TransactionBIP322Destination *TransactionBIP322Destination
+	TransactionCosmosAdr36Destination *TransactionCosmosAdr36Destination
+	TransactionCosmosContractDestination *TransactionCosmosContractDestination
 	TransactionDepositToAddressDestination *TransactionDepositToAddressDestination
 	TransactionDepositToWalletDestination *TransactionDepositToWalletDestination
 	TransactionEvmContractDestination *TransactionEvmContractDestination
+	TransactionMessageSignBTCEIP191Destination *TransactionMessageSignBTCEIP191Destination
 	TransactionMessageSignEIP191Destination *TransactionMessageSignEIP191Destination
 	TransactionMessageSignEIP712Destination *TransactionMessageSignEIP712Destination
 	TransactionRawMessageSignDestination *TransactionRawMessageSignDestination
 	TransactionSolContractDestination *TransactionSolContractDestination
 	TransactionTransferToAddressDestination *TransactionTransferToAddressDestination
 	TransactionTransferToWalletDestination *TransactionTransferToWalletDestination
+}
+
+// TransactionBIP137DestinationAsTransactionDestination is a convenience function that returns TransactionBIP137Destination wrapped in TransactionDestination
+func TransactionBIP137DestinationAsTransactionDestination(v *TransactionBIP137Destination) TransactionDestination {
+	return TransactionDestination{
+		TransactionBIP137Destination: v,
+	}
+}
+
+// TransactionBIP322DestinationAsTransactionDestination is a convenience function that returns TransactionBIP322Destination wrapped in TransactionDestination
+func TransactionBIP322DestinationAsTransactionDestination(v *TransactionBIP322Destination) TransactionDestination {
+	return TransactionDestination{
+		TransactionBIP322Destination: v,
+	}
+}
+
+// TransactionCosmosAdr36DestinationAsTransactionDestination is a convenience function that returns TransactionCosmosAdr36Destination wrapped in TransactionDestination
+func TransactionCosmosAdr36DestinationAsTransactionDestination(v *TransactionCosmosAdr36Destination) TransactionDestination {
+	return TransactionDestination{
+		TransactionCosmosAdr36Destination: v,
+	}
+}
+
+// TransactionCosmosContractDestinationAsTransactionDestination is a convenience function that returns TransactionCosmosContractDestination wrapped in TransactionDestination
+func TransactionCosmosContractDestinationAsTransactionDestination(v *TransactionCosmosContractDestination) TransactionDestination {
+	return TransactionDestination{
+		TransactionCosmosContractDestination: v,
+	}
 }
 
 // TransactionDepositToAddressDestinationAsTransactionDestination is a convenience function that returns TransactionDepositToAddressDestination wrapped in TransactionDestination
@@ -44,6 +77,13 @@ func TransactionDepositToWalletDestinationAsTransactionDestination(v *Transactio
 func TransactionEvmContractDestinationAsTransactionDestination(v *TransactionEvmContractDestination) TransactionDestination {
 	return TransactionDestination{
 		TransactionEvmContractDestination: v,
+	}
+}
+
+// TransactionMessageSignBTCEIP191DestinationAsTransactionDestination is a convenience function that returns TransactionMessageSignBTCEIP191Destination wrapped in TransactionDestination
+func TransactionMessageSignBTCEIP191DestinationAsTransactionDestination(v *TransactionMessageSignBTCEIP191Destination) TransactionDestination {
+	return TransactionDestination{
+		TransactionMessageSignBTCEIP191Destination: v,
 	}
 }
 
@@ -109,6 +149,66 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionTransferToAddressDestination = nil
 			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionTransferToAddressDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BTC_BIP_137_Signature'
+	if jsonDict["destination_type"] == "BTC_BIP_137_Signature" {
+		// try to unmarshal JSON data into TransactionBIP137Destination
+		err = json.Unmarshal(data, &dst.TransactionBIP137Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionBIP137Destination, return on the first match
+		} else {
+			dst.TransactionBIP137Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionBIP137Destination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BTC_BIP_322_Signature'
+	if jsonDict["destination_type"] == "BTC_BIP_322_Signature" {
+		// try to unmarshal JSON data into TransactionBIP322Destination
+		err = json.Unmarshal(data, &dst.TransactionBIP322Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionBIP322Destination, return on the first match
+		} else {
+			dst.TransactionBIP322Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionBIP322Destination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BTC_EIP_191_Signature'
+	if jsonDict["destination_type"] == "BTC_EIP_191_Signature" {
+		// try to unmarshal JSON data into TransactionMessageSignBTCEIP191Destination
+		err = json.Unmarshal(data, &dst.TransactionMessageSignBTCEIP191Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionMessageSignBTCEIP191Destination, return on the first match
+		} else {
+			dst.TransactionMessageSignBTCEIP191Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionMessageSignBTCEIP191Destination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'COSMOS_ADR_36_Signature'
+	if jsonDict["destination_type"] == "COSMOS_ADR_36_Signature" {
+		// try to unmarshal JSON data into TransactionCosmosAdr36Destination
+		err = json.Unmarshal(data, &dst.TransactionCosmosAdr36Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionCosmosAdr36Destination, return on the first match
+		} else {
+			dst.TransactionCosmosAdr36Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionCosmosAdr36Destination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'COSMOS_Contract'
+	if jsonDict["destination_type"] == "COSMOS_Contract" {
+		// try to unmarshal JSON data into TransactionCosmosContractDestination
+		err = json.Unmarshal(data, &dst.TransactionCosmosContractDestination)
+		if err == nil {
+			return nil // data stored in dst.TransactionCosmosContractDestination, return on the first match
+		} else {
+			dst.TransactionCosmosContractDestination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionCosmosContractDestination: %s", err.Error())
 		}
 	}
 
@@ -208,6 +308,54 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'TransactionBIP137Destination'
+	if jsonDict["destination_type"] == "TransactionBIP137Destination" {
+		// try to unmarshal JSON data into TransactionBIP137Destination
+		err = json.Unmarshal(data, &dst.TransactionBIP137Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionBIP137Destination, return on the first match
+		} else {
+			dst.TransactionBIP137Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionBIP137Destination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TransactionBIP322Destination'
+	if jsonDict["destination_type"] == "TransactionBIP322Destination" {
+		// try to unmarshal JSON data into TransactionBIP322Destination
+		err = json.Unmarshal(data, &dst.TransactionBIP322Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionBIP322Destination, return on the first match
+		} else {
+			dst.TransactionBIP322Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionBIP322Destination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TransactionCosmosAdr36Destination'
+	if jsonDict["destination_type"] == "TransactionCosmosAdr36Destination" {
+		// try to unmarshal JSON data into TransactionCosmosAdr36Destination
+		err = json.Unmarshal(data, &dst.TransactionCosmosAdr36Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionCosmosAdr36Destination, return on the first match
+		} else {
+			dst.TransactionCosmosAdr36Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionCosmosAdr36Destination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TransactionCosmosContractDestination'
+	if jsonDict["destination_type"] == "TransactionCosmosContractDestination" {
+		// try to unmarshal JSON data into TransactionCosmosContractDestination
+		err = json.Unmarshal(data, &dst.TransactionCosmosContractDestination)
+		if err == nil {
+			return nil // data stored in dst.TransactionCosmosContractDestination, return on the first match
+		} else {
+			dst.TransactionCosmosContractDestination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionCosmosContractDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TransactionDepositToAddressDestination'
 	if jsonDict["destination_type"] == "TransactionDepositToAddressDestination" {
 		// try to unmarshal JSON data into TransactionDepositToAddressDestination
@@ -241,6 +389,18 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionEvmContractDestination = nil
 			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionEvmContractDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TransactionMessageSignBTCEIP191Destination'
+	if jsonDict["destination_type"] == "TransactionMessageSignBTCEIP191Destination" {
+		// try to unmarshal JSON data into TransactionMessageSignBTCEIP191Destination
+		err = json.Unmarshal(data, &dst.TransactionMessageSignBTCEIP191Destination)
+		if err == nil {
+			return nil // data stored in dst.TransactionMessageSignBTCEIP191Destination, return on the first match
+		} else {
+			dst.TransactionMessageSignBTCEIP191Destination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionMessageSignBTCEIP191Destination: %s", err.Error())
 		}
 	}
 
@@ -321,6 +481,22 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src TransactionDestination) MarshalJSON() ([]byte, error) {
+	if src.TransactionBIP137Destination != nil {
+		return json.Marshal(&src.TransactionBIP137Destination)
+	}
+
+	if src.TransactionBIP322Destination != nil {
+		return json.Marshal(&src.TransactionBIP322Destination)
+	}
+
+	if src.TransactionCosmosAdr36Destination != nil {
+		return json.Marshal(&src.TransactionCosmosAdr36Destination)
+	}
+
+	if src.TransactionCosmosContractDestination != nil {
+		return json.Marshal(&src.TransactionCosmosContractDestination)
+	}
+
 	if src.TransactionDepositToAddressDestination != nil {
 		return json.Marshal(&src.TransactionDepositToAddressDestination)
 	}
@@ -331,6 +507,10 @@ func (src TransactionDestination) MarshalJSON() ([]byte, error) {
 
 	if src.TransactionEvmContractDestination != nil {
 		return json.Marshal(&src.TransactionEvmContractDestination)
+	}
+
+	if src.TransactionMessageSignBTCEIP191Destination != nil {
+		return json.Marshal(&src.TransactionMessageSignBTCEIP191Destination)
 	}
 
 	if src.TransactionMessageSignEIP191Destination != nil {
@@ -365,6 +545,22 @@ func (obj *TransactionDestination) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.TransactionBIP137Destination != nil {
+		return obj.TransactionBIP137Destination
+	}
+
+	if obj.TransactionBIP322Destination != nil {
+		return obj.TransactionBIP322Destination
+	}
+
+	if obj.TransactionCosmosAdr36Destination != nil {
+		return obj.TransactionCosmosAdr36Destination
+	}
+
+	if obj.TransactionCosmosContractDestination != nil {
+		return obj.TransactionCosmosContractDestination
+	}
+
 	if obj.TransactionDepositToAddressDestination != nil {
 		return obj.TransactionDepositToAddressDestination
 	}
@@ -375,6 +571,10 @@ func (obj *TransactionDestination) GetActualInstance() (interface{}) {
 
 	if obj.TransactionEvmContractDestination != nil {
 		return obj.TransactionEvmContractDestination
+	}
+
+	if obj.TransactionMessageSignBTCEIP191Destination != nil {
+		return obj.TransactionMessageSignBTCEIP191Destination
 	}
 
 	if obj.TransactionMessageSignEIP191Destination != nil {

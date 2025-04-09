@@ -5,7 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ActivityId** | Pointer to **string** | The unique identifier of the swap activity. | [optional] 
-**Status** | Pointer to **string** | The status of the swap activity. | [optional] 
+**ActivityType** | Pointer to [**SwapActivityType**](SwapActivityType.md) |  | [optional] 
+**Status** | Pointer to [**SwapActivityStatus**](SwapActivityStatus.md) |  | [optional] 
+**RequestId** | Pointer to **string** | The request id of the swap activity. | [optional] 
 **WalletId** | Pointer to **string** | The unique identifier of the wallet. | [optional] 
 **PayTokenId** | Pointer to **string** | The token symbol to swap from. | [optional] 
 **ReceiveTokenId** | Pointer to **string** | The token symbol to swap to. | [optional] 
@@ -14,6 +16,7 @@ Name | Type | Description | Notes
 **FeeAmount** | Pointer to **string** | The amount of fee. | [optional] 
 **Initiator** | Pointer to **NullableString** | The initiator of the swap activity. | [optional] 
 **InitiatorType** | Pointer to [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | [optional] 
+**Description** | Pointer to **string** | The description of the swap activity. | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The time when the swap activity was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 
@@ -61,22 +64,47 @@ SetActivityId sets ActivityId field to given value.
 
 HasActivityId returns a boolean if a field has been set.
 
+### GetActivityType
+
+`func (o *SwapActivity) GetActivityType() SwapActivityType`
+
+GetActivityType returns the ActivityType field if non-nil, zero value otherwise.
+
+### GetActivityTypeOk
+
+`func (o *SwapActivity) GetActivityTypeOk() (*SwapActivityType, bool)`
+
+GetActivityTypeOk returns a tuple with the ActivityType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetActivityType
+
+`func (o *SwapActivity) SetActivityType(v SwapActivityType)`
+
+SetActivityType sets ActivityType field to given value.
+
+### HasActivityType
+
+`func (o *SwapActivity) HasActivityType() bool`
+
+HasActivityType returns a boolean if a field has been set.
+
 ### GetStatus
 
-`func (o *SwapActivity) GetStatus() string`
+`func (o *SwapActivity) GetStatus() SwapActivityStatus`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *SwapActivity) GetStatusOk() (*string, bool)`
+`func (o *SwapActivity) GetStatusOk() (*SwapActivityStatus, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *SwapActivity) SetStatus(v string)`
+`func (o *SwapActivity) SetStatus(v SwapActivityStatus)`
 
 SetStatus sets Status field to given value.
 
@@ -85,6 +113,31 @@ SetStatus sets Status field to given value.
 `func (o *SwapActivity) HasStatus() bool`
 
 HasStatus returns a boolean if a field has been set.
+
+### GetRequestId
+
+`func (o *SwapActivity) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *SwapActivity) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *SwapActivity) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *SwapActivity) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetWalletId
 
@@ -295,6 +348,31 @@ SetInitiatorType sets InitiatorType field to given value.
 `func (o *SwapActivity) HasInitiatorType() bool`
 
 HasInitiatorType returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *SwapActivity) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *SwapActivity) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *SwapActivity) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *SwapActivity) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

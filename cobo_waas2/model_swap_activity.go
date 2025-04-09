@@ -19,8 +19,10 @@ var _ MappedNullable = &SwapActivity{}
 type SwapActivity struct {
 	// The unique identifier of the swap activity.
 	ActivityId *string `json:"activity_id,omitempty"`
-	// The status of the swap activity.
-	Status *string `json:"status,omitempty"`
+	ActivityType *SwapActivityType `json:"activity_type,omitempty"`
+	Status *SwapActivityStatus `json:"status,omitempty"`
+	// The request id of the swap activity.
+	RequestId *string `json:"request_id,omitempty"`
 	// The unique identifier of the wallet.
 	WalletId *string `json:"wallet_id,omitempty"`
 	// The token symbol to swap from.
@@ -36,6 +38,8 @@ type SwapActivity struct {
 	// The initiator of the swap activity.
 	Initiator NullableString `json:"initiator,omitempty"`
 	InitiatorType *TransactionInitiatorType `json:"initiator_type,omitempty"`
+	// The description of the swap activity.
+	Description *string `json:"description,omitempty"`
 	// The time when the swap activity was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds.
@@ -91,10 +95,42 @@ func (o *SwapActivity) SetActivityId(v string) {
 	o.ActivityId = &v
 }
 
+// GetActivityType returns the ActivityType field value if set, zero value otherwise.
+func (o *SwapActivity) GetActivityType() SwapActivityType {
+	if o == nil || IsNil(o.ActivityType) {
+		var ret SwapActivityType
+		return ret
+	}
+	return *o.ActivityType
+}
+
+// GetActivityTypeOk returns a tuple with the ActivityType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivity) GetActivityTypeOk() (*SwapActivityType, bool) {
+	if o == nil || IsNil(o.ActivityType) {
+		return nil, false
+	}
+	return o.ActivityType, true
+}
+
+// HasActivityType returns a boolean if a field has been set.
+func (o *SwapActivity) HasActivityType() bool {
+	if o != nil && !IsNil(o.ActivityType) {
+		return true
+	}
+
+	return false
+}
+
+// SetActivityType gets a reference to the given SwapActivityType and assigns it to the ActivityType field.
+func (o *SwapActivity) SetActivityType(v SwapActivityType) {
+	o.ActivityType = &v
+}
+
 // GetStatus returns the Status field value if set, zero value otherwise.
-func (o *SwapActivity) GetStatus() string {
+func (o *SwapActivity) GetStatus() SwapActivityStatus {
 	if o == nil || IsNil(o.Status) {
-		var ret string
+		var ret SwapActivityStatus
 		return ret
 	}
 	return *o.Status
@@ -102,7 +138,7 @@ func (o *SwapActivity) GetStatus() string {
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SwapActivity) GetStatusOk() (*string, bool) {
+func (o *SwapActivity) GetStatusOk() (*SwapActivityStatus, bool) {
 	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
@@ -118,9 +154,41 @@ func (o *SwapActivity) HasStatus() bool {
 	return false
 }
 
-// SetStatus gets a reference to the given string and assigns it to the Status field.
-func (o *SwapActivity) SetStatus(v string) {
+// SetStatus gets a reference to the given SwapActivityStatus and assigns it to the Status field.
+func (o *SwapActivity) SetStatus(v SwapActivityStatus) {
 	o.Status = &v
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *SwapActivity) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivity) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *SwapActivity) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *SwapActivity) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetWalletId returns the WalletId field value if set, zero value otherwise.
@@ -389,6 +457,38 @@ func (o *SwapActivity) SetInitiatorType(v TransactionInitiatorType) {
 	o.InitiatorType = &v
 }
 
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *SwapActivity) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivity) GetDescriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Description) {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *SwapActivity) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *SwapActivity) SetDescription(v string) {
+	o.Description = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *SwapActivity) GetCreatedTimestamp() int32 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -466,8 +566,14 @@ func (o SwapActivity) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ActivityId) {
 		toSerialize["activity_id"] = o.ActivityId
 	}
+	if !IsNil(o.ActivityType) {
+		toSerialize["activity_type"] = o.ActivityType
+	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
 	}
 	if !IsNil(o.WalletId) {
 		toSerialize["wallet_id"] = o.WalletId
@@ -492,6 +598,9 @@ func (o SwapActivity) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.InitiatorType) {
 		toSerialize["initiator_type"] = o.InitiatorType
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
 	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp

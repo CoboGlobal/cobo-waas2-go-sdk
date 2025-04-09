@@ -25,7 +25,7 @@ Method | HTTP request | Description
 [**ListUtxos**](WalletsAPI.md#ListUtxos) | **Get** /wallets/{wallet_id}/utxos | List UTXOs
 [**ListWallets**](WalletsAPI.md#ListWallets) | **Get** /wallets | List all wallets
 [**LockUtxos**](WalletsAPI.md#LockUtxos) | **Post** /wallets/{wallet_id}/utxos/lock | Lock UTXOs
-[**RefreshAddressBalancesByToken**](WalletsAPI.md#RefreshAddressBalancesByToken) | **Put** /wallets/{wallet_id}/tokens/{token_id}/refresh_address_balances | refresh address balances by token
+[**RefreshAddressBalancesByToken**](WalletsAPI.md#RefreshAddressBalancesByToken) | **Put** /wallets/{wallet_id}/tokens/{token_id}/refresh_address_balances | Refresh address balances by token
 [**UnlockUtxos**](WalletsAPI.md#UnlockUtxos) | **Post** /wallets/{wallet_id}/utxos/unlock | Unlock UTXOs
 [**UpdateWalletById**](WalletsAPI.md#UpdateWalletById) | **Put** /wallets/{wallet_id} | Update wallet
 
@@ -1801,7 +1801,7 @@ Name | Type | Description  | Notes
 
 > RefreshAddressBalancesByToken200Response RefreshAddressBalancesByToken(ctx, walletId, tokenId).RefreshAddressBalancesByTokenRequest(refreshAddressBalancesByTokenRequest).Execute()
 
-refresh address balances by token
+Refresh address balances by token
 
 
 
@@ -1862,7 +1862,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **refreshAddressBalancesByTokenRequest** | [**RefreshAddressBalancesByTokenRequest**](RefreshAddressBalancesByTokenRequest.md) | The request body to refresh the addresses balance by  specified token within a specified wallet | 
+ **refreshAddressBalancesByTokenRequest** | [**RefreshAddressBalancesByTokenRequest**](RefreshAddressBalancesByTokenRequest.md) | The request body to refresh addresses balances. | 
 
 ### Return type
 
@@ -1987,7 +1987,7 @@ import (
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-	updateWalletParams := coboWaas2.UpdateWalletParams{UpdateCustodialWalletParams: coboWaas2.NewUpdateCustodialWalletParams(coboWaas2.WalletType("Custodial"))}
+	updateWalletParams := coboWaas2.UpdateWalletParams{UpdateCustodialWalletParams: coboWaas2.NewUpdateCustodialWalletParams(coboWaas2.WalletType("Custodial"), "My WaaS 2.0 Wallet")}
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

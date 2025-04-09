@@ -25,9 +25,9 @@ type TransactionSelectedUtxo struct {
 	Address *string `json:"address,omitempty"`
 	// The value of the UTXO.
 	Value *string `json:"value,omitempty"`
-	// Redeem script is used in P2SH and P2WSH transactions.
+	// The redeem script used in P2SH and P2WSH transactions.
 	RedeemScript *string `json:"redeem_script,omitempty"`
-	// Revealed script is used for script path spending in Taproot transactions.
+	// The revealed script used for Taproot script-path spend transaction.
 	RevealedScript *string `json:"revealed_script,omitempty"`
 }
 

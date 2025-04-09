@@ -19,6 +19,7 @@ type WebhookEventData struct {
 	ChainsEventData *ChainsEventData
 	MPCVaultEventData *MPCVaultEventData
 	TSSRequestWebhookEventData *TSSRequestWebhookEventData
+	TokenListingEventData *TokenListingEventData
 	TokensEventData *TokensEventData
 	TransactionWebhookEventData *TransactionWebhookEventData
 	WalletInfoEventData *WalletInfoEventData
@@ -49,6 +50,13 @@ func MPCVaultEventDataAsWebhookEventData(v *MPCVaultEventData) WebhookEventData 
 func TSSRequestWebhookEventDataAsWebhookEventData(v *TSSRequestWebhookEventData) WebhookEventData {
 	return WebhookEventData{
 		TSSRequestWebhookEventData: v,
+	}
+}
+
+// TokenListingEventDataAsWebhookEventData is a convenience function that returns TokenListingEventData wrapped in WebhookEventData
+func TokenListingEventDataAsWebhookEventData(v *TokenListingEventData) WebhookEventData {
+	return WebhookEventData{
+		TokenListingEventData: v,
 	}
 }
 
@@ -129,6 +137,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TSSRequestWebhookEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as TSSRequestWebhookEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TokenListing'
+	if jsonDict["data_type"] == "TokenListing" {
+		// try to unmarshal JSON data into TokenListingEventData
+		err = json.Unmarshal(data, &dst.TokenListingEventData)
+		if err == nil {
+			return nil // data stored in dst.TokenListingEventData, return on the first match
+		} else {
+			dst.TokenListingEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as TokenListingEventData: %s", err.Error())
 		}
 	}
 
@@ -216,6 +236,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'TokenListingEventData'
+	if jsonDict["data_type"] == "TokenListingEventData" {
+		// try to unmarshal JSON data into TokenListingEventData
+		err = json.Unmarshal(data, &dst.TokenListingEventData)
+		if err == nil {
+			return nil // data stored in dst.TokenListingEventData, return on the first match
+		} else {
+			dst.TokenListingEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as TokenListingEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TokensEventData'
 	if jsonDict["data_type"] == "TokensEventData" {
 		// try to unmarshal JSON data into TokensEventData
@@ -273,6 +305,10 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TSSRequestWebhookEventData)
 	}
 
+	if src.TokenListingEventData != nil {
+		return json.Marshal(&src.TokenListingEventData)
+	}
+
 	if src.TokensEventData != nil {
 		return json.Marshal(&src.TokensEventData)
 	}
@@ -307,6 +343,10 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 
 	if obj.TSSRequestWebhookEventData != nil {
 		return obj.TSSRequestWebhookEventData
+	}
+
+	if obj.TokenListingEventData != nil {
+		return obj.TokenListingEventData
 	}
 
 	if obj.TokensEventData != nil {

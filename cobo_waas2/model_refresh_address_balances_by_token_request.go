@@ -17,9 +17,9 @@ import (
 // checks if the RefreshAddressBalancesByTokenRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RefreshAddressBalancesByTokenRequest{}
 
-// RefreshAddressBalancesByTokenRequest The request body to refresh the addresses balance by  specified token within a specified wallet.
+// RefreshAddressBalancesByTokenRequest struct for RefreshAddressBalancesByTokenRequest
 type RefreshAddressBalancesByTokenRequest struct {
-	// A list of  address.
+	// A list of addresses.
 	Addresses []string `json:"addresses"`
 }
 

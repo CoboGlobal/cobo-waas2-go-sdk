@@ -356,7 +356,7 @@ import (
 )
 
 func main() {
-	messageSignParams := *coboWaas2.NewMessageSignParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", coboWaas2.MessageSignSource{CustodialWeb3MessageSignSource: coboWaas2.NewCustodialWeb3MessageSignSource(coboWaas2.MessageSignSourceType("Web3"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}, coboWaas2.MessageSignDestination{BTCEIP191MessageSignDestination: coboWaas2.NewBTCEIP191MessageSignDestination(coboWaas2.MessageSignDestinationType("EVM_EIP_191_Signature"), "YWFhYQ==")})
+	messageSignParams := *coboWaas2.NewMessageSignParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", "ETH", coboWaas2.MessageSignSource{CustodialWeb3MessageSignSource: coboWaas2.NewCustodialWeb3MessageSignSource(coboWaas2.MessageSignSourceType("Web3"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku")}, coboWaas2.MessageSignDestination{BTCBIP137MessageSignDestination: coboWaas2.NewBTCBIP137MessageSignDestination(coboWaas2.MessageSignDestinationType("EVM_EIP_191_Signature"), "MessageBip137_example")})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

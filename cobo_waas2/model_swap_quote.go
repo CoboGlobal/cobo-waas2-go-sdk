@@ -19,20 +19,18 @@ var _ MappedNullable = &SwapQuote{}
 
 // SwapQuote struct for SwapQuote
 type SwapQuote struct {
+	// The unique id of quote.
+	QuoteId *string `json:"quote_id,omitempty"`
 	// The amount of tokens to pay.
 	PayAmount string `json:"pay_amount"`
 	// The amount of tokens to receive.
 	ReceiveAmount string `json:"receive_amount"`
 	// The amount of tokens to pay for fee.
 	FeeAmount string `json:"fee_amount"`
-	// The minimum amount of tokens to pay.
-	MinPayAmount *string `json:"min_pay_amount,omitempty"`
-	// The maximum amount of tokens to pay.
-	MaxPayAmount *string `json:"max_pay_amount,omitempty"`
-	// The minimum amount of tokens to receive.
+	// The minimum amount of tokens to receive if the pay amount is specified.
 	MinReceiveAmount *string `json:"min_receive_amount,omitempty"`
-	// The maximum amount of tokens to receive.
-	MaxReceiveAmount *string `json:"max_receive_amount,omitempty"`
+	// The maximum amount of tokens to pay if the receive amount is specified.
+	MaxPayAmount *string `json:"max_pay_amount,omitempty"`
 	// The time when the quote will expire, in Unix timestamp format, measured in milliseconds.
 	QuoteExpiredTimestamp int32 `json:"quote_expired_timestamp"`
 }
@@ -58,6 +56,38 @@ func NewSwapQuote(payAmount string, receiveAmount string, feeAmount string, quot
 func NewSwapQuoteWithDefaults() *SwapQuote {
 	this := SwapQuote{}
 	return &this
+}
+
+// GetQuoteId returns the QuoteId field value if set, zero value otherwise.
+func (o *SwapQuote) GetQuoteId() string {
+	if o == nil || IsNil(o.QuoteId) {
+		var ret string
+		return ret
+	}
+	return *o.QuoteId
+}
+
+// GetQuoteIdOk returns a tuple with the QuoteId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapQuote) GetQuoteIdOk() (*string, bool) {
+	if o == nil || IsNil(o.QuoteId) {
+		return nil, false
+	}
+	return o.QuoteId, true
+}
+
+// HasQuoteId returns a boolean if a field has been set.
+func (o *SwapQuote) HasQuoteId() bool {
+	if o != nil && !IsNil(o.QuoteId) {
+		return true
+	}
+
+	return false
+}
+
+// SetQuoteId gets a reference to the given string and assigns it to the QuoteId field.
+func (o *SwapQuote) SetQuoteId(v string) {
+	o.QuoteId = &v
 }
 
 // GetPayAmount returns the PayAmount field value
@@ -132,70 +162,6 @@ func (o *SwapQuote) SetFeeAmount(v string) {
 	o.FeeAmount = v
 }
 
-// GetMinPayAmount returns the MinPayAmount field value if set, zero value otherwise.
-func (o *SwapQuote) GetMinPayAmount() string {
-	if o == nil || IsNil(o.MinPayAmount) {
-		var ret string
-		return ret
-	}
-	return *o.MinPayAmount
-}
-
-// GetMinPayAmountOk returns a tuple with the MinPayAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SwapQuote) GetMinPayAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.MinPayAmount) {
-		return nil, false
-	}
-	return o.MinPayAmount, true
-}
-
-// HasMinPayAmount returns a boolean if a field has been set.
-func (o *SwapQuote) HasMinPayAmount() bool {
-	if o != nil && !IsNil(o.MinPayAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetMinPayAmount gets a reference to the given string and assigns it to the MinPayAmount field.
-func (o *SwapQuote) SetMinPayAmount(v string) {
-	o.MinPayAmount = &v
-}
-
-// GetMaxPayAmount returns the MaxPayAmount field value if set, zero value otherwise.
-func (o *SwapQuote) GetMaxPayAmount() string {
-	if o == nil || IsNil(o.MaxPayAmount) {
-		var ret string
-		return ret
-	}
-	return *o.MaxPayAmount
-}
-
-// GetMaxPayAmountOk returns a tuple with the MaxPayAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SwapQuote) GetMaxPayAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.MaxPayAmount) {
-		return nil, false
-	}
-	return o.MaxPayAmount, true
-}
-
-// HasMaxPayAmount returns a boolean if a field has been set.
-func (o *SwapQuote) HasMaxPayAmount() bool {
-	if o != nil && !IsNil(o.MaxPayAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetMaxPayAmount gets a reference to the given string and assigns it to the MaxPayAmount field.
-func (o *SwapQuote) SetMaxPayAmount(v string) {
-	o.MaxPayAmount = &v
-}
-
 // GetMinReceiveAmount returns the MinReceiveAmount field value if set, zero value otherwise.
 func (o *SwapQuote) GetMinReceiveAmount() string {
 	if o == nil || IsNil(o.MinReceiveAmount) {
@@ -228,36 +194,36 @@ func (o *SwapQuote) SetMinReceiveAmount(v string) {
 	o.MinReceiveAmount = &v
 }
 
-// GetMaxReceiveAmount returns the MaxReceiveAmount field value if set, zero value otherwise.
-func (o *SwapQuote) GetMaxReceiveAmount() string {
-	if o == nil || IsNil(o.MaxReceiveAmount) {
+// GetMaxPayAmount returns the MaxPayAmount field value if set, zero value otherwise.
+func (o *SwapQuote) GetMaxPayAmount() string {
+	if o == nil || IsNil(o.MaxPayAmount) {
 		var ret string
 		return ret
 	}
-	return *o.MaxReceiveAmount
+	return *o.MaxPayAmount
 }
 
-// GetMaxReceiveAmountOk returns a tuple with the MaxReceiveAmount field value if set, nil otherwise
+// GetMaxPayAmountOk returns a tuple with the MaxPayAmount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SwapQuote) GetMaxReceiveAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.MaxReceiveAmount) {
+func (o *SwapQuote) GetMaxPayAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.MaxPayAmount) {
 		return nil, false
 	}
-	return o.MaxReceiveAmount, true
+	return o.MaxPayAmount, true
 }
 
-// HasMaxReceiveAmount returns a boolean if a field has been set.
-func (o *SwapQuote) HasMaxReceiveAmount() bool {
-	if o != nil && !IsNil(o.MaxReceiveAmount) {
+// HasMaxPayAmount returns a boolean if a field has been set.
+func (o *SwapQuote) HasMaxPayAmount() bool {
+	if o != nil && !IsNil(o.MaxPayAmount) {
 		return true
 	}
 
 	return false
 }
 
-// SetMaxReceiveAmount gets a reference to the given string and assigns it to the MaxReceiveAmount field.
-func (o *SwapQuote) SetMaxReceiveAmount(v string) {
-	o.MaxReceiveAmount = &v
+// SetMaxPayAmount gets a reference to the given string and assigns it to the MaxPayAmount field.
+func (o *SwapQuote) SetMaxPayAmount(v string) {
+	o.MaxPayAmount = &v
 }
 
 // GetQuoteExpiredTimestamp returns the QuoteExpiredTimestamp field value
@@ -294,20 +260,17 @@ func (o SwapQuote) MarshalJSON() ([]byte, error) {
 
 func (o SwapQuote) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.QuoteId) {
+		toSerialize["quote_id"] = o.QuoteId
+	}
 	toSerialize["pay_amount"] = o.PayAmount
 	toSerialize["receive_amount"] = o.ReceiveAmount
 	toSerialize["fee_amount"] = o.FeeAmount
-	if !IsNil(o.MinPayAmount) {
-		toSerialize["min_pay_amount"] = o.MinPayAmount
-	}
-	if !IsNil(o.MaxPayAmount) {
-		toSerialize["max_pay_amount"] = o.MaxPayAmount
-	}
 	if !IsNil(o.MinReceiveAmount) {
 		toSerialize["min_receive_amount"] = o.MinReceiveAmount
 	}
-	if !IsNil(o.MaxReceiveAmount) {
-		toSerialize["max_receive_amount"] = o.MaxReceiveAmount
+	if !IsNil(o.MaxPayAmount) {
+		toSerialize["max_pay_amount"] = o.MaxPayAmount
 	}
 	toSerialize["quote_expired_timestamp"] = o.QuoteExpiredTimestamp
 	return toSerialize, nil

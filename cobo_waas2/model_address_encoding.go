@@ -25,6 +25,9 @@ const (
 	ADDRESSENCODING_P2_SH_P2_MS AddressEncoding = "ENCODING_P2SH_P2MS"
 	ADDRESSENCODING_P2_SH_P2_WSH_P2_MS AddressEncoding = "ENCODING_P2SH_P2WSH_P2MS"
 	ADDRESSENCODING_P2_TR AddressEncoding = "ENCODING_P2TR"
+	ADDRESSENCODING_ADA_BYRON AddressEncoding = "ENCODING_ADA_BYRON"
+	ADDRESSENCODING_ADA_SHELLEY AddressEncoding = "ENCODING_ADA_SHELLEY"
+	ADDRESSENCODING_DEFAULT AddressEncoding = "ENCODING_DEFAULT"
 )
 
 // All allowed values of AddressEncoding enum
@@ -36,6 +39,9 @@ var AllowedAddressEncodingEnumValues = []AddressEncoding{
 	"ENCODING_P2SH_P2MS",
 	"ENCODING_P2SH_P2WSH_P2MS",
 	"ENCODING_P2TR",
+	"ENCODING_ADA_BYRON",
+	"ENCODING_ADA_SHELLEY",
+	"ENCODING_DEFAULT",
 }
 
 func (v *AddressEncoding) UnmarshalJSON(src []byte) error {

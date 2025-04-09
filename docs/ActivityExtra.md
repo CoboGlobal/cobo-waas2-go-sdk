@@ -8,10 +8,6 @@ Name | Type | Description | Notes
 **FinalityProviderPublicKey** | Pointer to **string** | The public key of the finality provider. | [optional] 
 **StakeBlockTime** | Pointer to **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | [optional] 
 **AutoBroadcast** | Pointer to **bool** | Whether to automatically broadcast the transaction.  - &#x60;true&#x60;: Automatically broadcast the transaction. - &#x60;false&#x60;: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data &#x60;raw_tx&#x60; by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.  | [optional] 
-**ParamVersion** | Pointer to **int64** | The version of babylon global parameters. | [optional] 
-**WithdrawFromType** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
-**SlashFromType** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
-**StakeAmount** | Pointer to **string** | The origin staking amount. | [optional] 
 **ProviderName** | Pointer to **string** | The name of the provider. | [optional] 
 **ValidatorPubkeys** | Pointer to **[]string** | A list of public keys associated with the Ethereum validators for this unstaking operation. | [optional] 
 **Timelock** | Pointer to **int32** | The Unix timestamp (in seconds) when the staking position will be unlocked and available for withdrawal. | [optional] 
@@ -132,106 +128,6 @@ SetAutoBroadcast sets AutoBroadcast field to given value.
 `func (o *ActivityExtra) HasAutoBroadcast() bool`
 
 HasAutoBroadcast returns a boolean if a field has been set.
-
-### GetParamVersion
-
-`func (o *ActivityExtra) GetParamVersion() int64`
-
-GetParamVersion returns the ParamVersion field if non-nil, zero value otherwise.
-
-### GetParamVersionOk
-
-`func (o *ActivityExtra) GetParamVersionOk() (*int64, bool)`
-
-GetParamVersionOk returns a tuple with the ParamVersion field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetParamVersion
-
-`func (o *ActivityExtra) SetParamVersion(v int64)`
-
-SetParamVersion sets ParamVersion field to given value.
-
-### HasParamVersion
-
-`func (o *ActivityExtra) HasParamVersion() bool`
-
-HasParamVersion returns a boolean if a field has been set.
-
-### GetWithdrawFromType
-
-`func (o *ActivityExtra) GetWithdrawFromType() ActivityType`
-
-GetWithdrawFromType returns the WithdrawFromType field if non-nil, zero value otherwise.
-
-### GetWithdrawFromTypeOk
-
-`func (o *ActivityExtra) GetWithdrawFromTypeOk() (*ActivityType, bool)`
-
-GetWithdrawFromTypeOk returns a tuple with the WithdrawFromType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetWithdrawFromType
-
-`func (o *ActivityExtra) SetWithdrawFromType(v ActivityType)`
-
-SetWithdrawFromType sets WithdrawFromType field to given value.
-
-### HasWithdrawFromType
-
-`func (o *ActivityExtra) HasWithdrawFromType() bool`
-
-HasWithdrawFromType returns a boolean if a field has been set.
-
-### GetSlashFromType
-
-`func (o *ActivityExtra) GetSlashFromType() ActivityType`
-
-GetSlashFromType returns the SlashFromType field if non-nil, zero value otherwise.
-
-### GetSlashFromTypeOk
-
-`func (o *ActivityExtra) GetSlashFromTypeOk() (*ActivityType, bool)`
-
-GetSlashFromTypeOk returns a tuple with the SlashFromType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSlashFromType
-
-`func (o *ActivityExtra) SetSlashFromType(v ActivityType)`
-
-SetSlashFromType sets SlashFromType field to given value.
-
-### HasSlashFromType
-
-`func (o *ActivityExtra) HasSlashFromType() bool`
-
-HasSlashFromType returns a boolean if a field has been set.
-
-### GetStakeAmount
-
-`func (o *ActivityExtra) GetStakeAmount() string`
-
-GetStakeAmount returns the StakeAmount field if non-nil, zero value otherwise.
-
-### GetStakeAmountOk
-
-`func (o *ActivityExtra) GetStakeAmountOk() (*string, bool)`
-
-GetStakeAmountOk returns a tuple with the StakeAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetStakeAmount
-
-`func (o *ActivityExtra) SetStakeAmount(v string)`
-
-SetStakeAmount sets StakeAmount field to given value.
-
-### HasStakeAmount
-
-`func (o *ActivityExtra) HasStakeAmount() bool`
-
-HasStakeAmount returns a boolean if a field has been set.
 
 ### GetProviderName
 
