@@ -20,7 +20,7 @@ var _ MappedNullable = &SwapQuote{}
 // SwapQuote struct for SwapQuote
 type SwapQuote struct {
 	// The unique id of quote.
-	QuoteId *string `json:"quote_id,omitempty"`
+	QuoteId string `json:"quote_id"`
 	// The amount of tokens to pay.
 	PayAmount string `json:"pay_amount"`
 	// The amount of tokens to receive.
@@ -41,8 +41,9 @@ type _SwapQuote SwapQuote
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSwapQuote(payAmount string, receiveAmount string, feeAmount string, quoteExpiredTimestamp int32) *SwapQuote {
+func NewSwapQuote(quoteId string, payAmount string, receiveAmount string, feeAmount string, quoteExpiredTimestamp int32) *SwapQuote {
 	this := SwapQuote{}
+	this.QuoteId = quoteId
 	this.PayAmount = payAmount
 	this.ReceiveAmount = receiveAmount
 	this.FeeAmount = feeAmount
@@ -58,36 +59,28 @@ func NewSwapQuoteWithDefaults() *SwapQuote {
 	return &this
 }
 
-// GetQuoteId returns the QuoteId field value if set, zero value otherwise.
+// GetQuoteId returns the QuoteId field value
 func (o *SwapQuote) GetQuoteId() string {
-	if o == nil || IsNil(o.QuoteId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.QuoteId
+
+	return o.QuoteId
 }
 
-// GetQuoteIdOk returns a tuple with the QuoteId field value if set, nil otherwise
+// GetQuoteIdOk returns a tuple with the QuoteId field value
 // and a boolean to check if the value has been set.
 func (o *SwapQuote) GetQuoteIdOk() (*string, bool) {
-	if o == nil || IsNil(o.QuoteId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.QuoteId, true
+	return &o.QuoteId, true
 }
 
-// HasQuoteId returns a boolean if a field has been set.
-func (o *SwapQuote) HasQuoteId() bool {
-	if o != nil && !IsNil(o.QuoteId) {
-		return true
-	}
-
-	return false
-}
-
-// SetQuoteId gets a reference to the given string and assigns it to the QuoteId field.
+// SetQuoteId sets field value
 func (o *SwapQuote) SetQuoteId(v string) {
-	o.QuoteId = &v
+	o.QuoteId = v
 }
 
 // GetPayAmount returns the PayAmount field value
@@ -260,9 +253,7 @@ func (o SwapQuote) MarshalJSON() ([]byte, error) {
 
 func (o SwapQuote) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.QuoteId) {
-		toSerialize["quote_id"] = o.QuoteId
-	}
+	toSerialize["quote_id"] = o.QuoteId
 	toSerialize["pay_amount"] = o.PayAmount
 	toSerialize["receive_amount"] = o.ReceiveAmount
 	toSerialize["fee_amount"] = o.FeeAmount
@@ -281,6 +272,7 @@ func (o *SwapQuote) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"quote_id",
 		"pay_amount",
 		"receive_amount",
 		"fee_amount",

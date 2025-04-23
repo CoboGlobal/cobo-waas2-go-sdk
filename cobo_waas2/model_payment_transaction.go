@@ -19,13 +19,13 @@ var _ MappedNullable = &PaymentTransaction{}
 
 // PaymentTransaction struct for PaymentTransaction
 type PaymentTransaction struct {
-	// Unique identifier for the transaction.
+	// The transaction ID.
 	TxId string `json:"tx_id"`
-	// The blockchain transaction hash, may be initially null and populated after submission.
+	// The transaction hash.
 	TxHash *string `json:"tx_hash,omitempty"`
-	// Source cryptocurrency address for the transaction.
+	// The source address of the transaction.
 	FromAddress string `json:"from_address"`
-	// Destination cryptocurrency address for the transaction.
+	// The destination address of the transaction.
 	ToAddress string `json:"to_address"`
 	// The amount of cryptocurrency transferred, as a decimal string.
 	Amount string `json:"amount"`

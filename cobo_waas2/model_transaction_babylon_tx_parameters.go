@@ -17,16 +17,16 @@ import (
 // checks if the TransactionBabylonTxParameters type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionBabylonTxParameters{}
 
-// TransactionBabylonTxParameters The Babylon transaction parameters.
+// TransactionBabylonTxParameters The extra information for Babylon transaction parameters.
 type TransactionBabylonTxParameters struct {
 	ExtraType TransactionExtraType `json:"extra_type"`
-	// The origin staking amount.
+	// The original staking amount.
 	StakeAmount *string `json:"stake_amount,omitempty"`
 	// The public key of the finality provider.
 	FinalityProviderPublicKey *string `json:"finality_provider_public_key,omitempty"`
 	// The number of blocks that need to be processed before the locked tokens are unlocked and become accessible.
 	StakeBlockTime *int64 `json:"stake_block_time,omitempty"`
-	// The version of babylon global parameters.
+	// The version of Babylon global parameters.
 	ParamVersion *int64 `json:"param_version,omitempty"`
 	WithdrawFromType *ActivityType `json:"withdraw_from_type,omitempty"`
 	SlashFromType *ActivityType `json:"slash_from_type,omitempty"`

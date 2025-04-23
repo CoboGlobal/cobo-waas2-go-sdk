@@ -21,6 +21,140 @@ import (
 // FeeStationAPIService FeeStationAPI service
 type FeeStationAPIService service
 
+type ApiEstimateFeeStationFeeRequest struct {
+	ctx context.Context
+	ApiService *FeeStationAPIService
+	feeStationTransfer *FeeStationTransfer
+}
+
+// The information about a token transfer.
+func (r ApiEstimateFeeStationFeeRequest) FeeStationTransfer(feeStationTransfer FeeStationTransfer) ApiEstimateFeeStationFeeRequest {
+	r.feeStationTransfer = &feeStationTransfer
+	return r
+}
+
+func (r ApiEstimateFeeStationFeeRequest) Execute() (*EstimatedFixedFee, *http.Response, error) {
+	return r.ApiService.EstimateFeeStationFeeExecute(r)
+}
+
+/*
+EstimateFeeStationFee Estimate transaction fee
+
+This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
+
+You need to specify the transaction information, including destination address, token ID.
+
+The response can contain different properties based on the transaction fee model used by the chain. For the legacy, EIP-1559, and UTXO fee models, Cobo also supports three different transaction speed levels: slow, recommended, and fast. For more information about estimating transaction fees, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiEstimateFeeStationFeeRequest
+*/
+func (a *FeeStationAPIService) EstimateFeeStationFee(ctx context.Context) ApiEstimateFeeStationFeeRequest {
+	return ApiEstimateFeeStationFeeRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return EstimatedFixedFee
+func (a *FeeStationAPIService) EstimateFeeStationFeeExecute(r ApiEstimateFeeStationFeeRequest) (*EstimatedFixedFee, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *EstimatedFixedFee
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "FeeStationAPIService.EstimateFeeStationFee")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/fee_station/transactions/estimate_fee"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.feeStationTransfer
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetFeeStationTransactionByIdRequest struct {
 	ctx context.Context
 	ApiService *FeeStationAPIService
@@ -632,7 +766,7 @@ func (r ApiListTokenBalancesForFeeStationRequest) After(after string) ApiListTok
 	return r
 }
 
-func (r ApiListTokenBalancesForFeeStationRequest) Execute() (*ListTokenBalancesForAddress200Response, *http.Response, error) {
+func (r ApiListTokenBalancesForFeeStationRequest) Execute() (*ListTokenBalancesForFeeStation200Response, *http.Response, error) {
 	return r.ApiService.ListTokenBalancesForFeeStationExecute(r)
 }
 
@@ -653,13 +787,13 @@ func (a *FeeStationAPIService) ListTokenBalancesForFeeStation(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return ListTokenBalancesForAddress200Response
-func (a *FeeStationAPIService) ListTokenBalancesForFeeStationExecute(r ApiListTokenBalancesForFeeStationRequest) (*ListTokenBalancesForAddress200Response, *http.Response, error) {
+//  @return ListTokenBalancesForFeeStation200Response
+func (a *FeeStationAPIService) ListTokenBalancesForFeeStationExecute(r ApiListTokenBalancesForFeeStationRequest) (*ListTokenBalancesForFeeStation200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListTokenBalancesForAddress200Response
+		localVarReturnValue  *ListTokenBalancesForFeeStation200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "FeeStationAPIService.ListTokenBalancesForFeeStation")

@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SettlementType Specifies the source of funds for the settlement: - `Merchant`: The settlement amount will be deducted from the merchant balance. - `Psp`: The settlement amount will be deducted from the payment gateway balance. 
+// SettlementType Specifies the source of funds for the settlement: - `Merchant`: The settlement amount will be deducted from the merchant balance. - `Psp`: The settlement amount will be deducted from the developer balance. 
 type SettlementType string
 
 // List of SettlementType

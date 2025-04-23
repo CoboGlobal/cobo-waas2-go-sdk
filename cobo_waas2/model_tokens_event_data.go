@@ -19,10 +19,12 @@ var _ MappedNullable = &TokensEventData{}
 
 // TokensEventData struct for TokensEventData
 type TokensEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data.
 	DataType string `json:"data_type"`
 	// The enabled tokens.
 	Tokens []TokenInfo `json:"tokens"`
+	WalletType *WalletType `json:"wallet_type,omitempty"`
+	WalletSubtypes []WalletSubtype `json:"wallet_subtypes,omitempty"`
 }
 
 type _TokensEventData TokensEventData
@@ -94,6 +96,70 @@ func (o *TokensEventData) SetTokens(v []TokenInfo) {
 	o.Tokens = v
 }
 
+// GetWalletType returns the WalletType field value if set, zero value otherwise.
+func (o *TokensEventData) GetWalletType() WalletType {
+	if o == nil || IsNil(o.WalletType) {
+		var ret WalletType
+		return ret
+	}
+	return *o.WalletType
+}
+
+// GetWalletTypeOk returns a tuple with the WalletType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokensEventData) GetWalletTypeOk() (*WalletType, bool) {
+	if o == nil || IsNil(o.WalletType) {
+		return nil, false
+	}
+	return o.WalletType, true
+}
+
+// HasWalletType returns a boolean if a field has been set.
+func (o *TokensEventData) HasWalletType() bool {
+	if o != nil && !IsNil(o.WalletType) {
+		return true
+	}
+
+	return false
+}
+
+// SetWalletType gets a reference to the given WalletType and assigns it to the WalletType field.
+func (o *TokensEventData) SetWalletType(v WalletType) {
+	o.WalletType = &v
+}
+
+// GetWalletSubtypes returns the WalletSubtypes field value if set, zero value otherwise.
+func (o *TokensEventData) GetWalletSubtypes() []WalletSubtype {
+	if o == nil || IsNil(o.WalletSubtypes) {
+		var ret []WalletSubtype
+		return ret
+	}
+	return o.WalletSubtypes
+}
+
+// GetWalletSubtypesOk returns a tuple with the WalletSubtypes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokensEventData) GetWalletSubtypesOk() ([]WalletSubtype, bool) {
+	if o == nil || IsNil(o.WalletSubtypes) {
+		return nil, false
+	}
+	return o.WalletSubtypes, true
+}
+
+// HasWalletSubtypes returns a boolean if a field has been set.
+func (o *TokensEventData) HasWalletSubtypes() bool {
+	if o != nil && !IsNil(o.WalletSubtypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetWalletSubtypes gets a reference to the given []WalletSubtype and assigns it to the WalletSubtypes field.
+func (o *TokensEventData) SetWalletSubtypes(v []WalletSubtype) {
+	o.WalletSubtypes = v
+}
+
 func (o TokensEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +172,12 @@ func (o TokensEventData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["data_type"] = o.DataType
 	toSerialize["tokens"] = o.Tokens
+	if !IsNil(o.WalletType) {
+		toSerialize["wallet_type"] = o.WalletType
+	}
+	if !IsNil(o.WalletSubtypes) {
+		toSerialize["wallet_subtypes"] = o.WalletSubtypes
+	}
 	return toSerialize, nil
 }
 

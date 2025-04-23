@@ -19,7 +19,7 @@ var _ MappedNullable = &SwapActivity{}
 type SwapActivity struct {
 	// The unique identifier of the swap activity.
 	ActivityId *string `json:"activity_id,omitempty"`
-	ActivityType *SwapActivityType `json:"activity_type,omitempty"`
+	SwapType *SwapType `json:"swap_type,omitempty"`
 	Status *SwapActivityStatus `json:"status,omitempty"`
 	// The request id of the swap activity.
 	RequestId *string `json:"request_id,omitempty"`
@@ -33,6 +33,8 @@ type SwapActivity struct {
 	PayAmount *string `json:"pay_amount,omitempty"`
 	// The amount of tokens to receive.
 	ReceiveAmount *string `json:"receive_amount,omitempty"`
+	// The fee token symbol.
+	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The amount of fee.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 	// The initiator of the swap activity.
@@ -95,36 +97,36 @@ func (o *SwapActivity) SetActivityId(v string) {
 	o.ActivityId = &v
 }
 
-// GetActivityType returns the ActivityType field value if set, zero value otherwise.
-func (o *SwapActivity) GetActivityType() SwapActivityType {
-	if o == nil || IsNil(o.ActivityType) {
-		var ret SwapActivityType
+// GetSwapType returns the SwapType field value if set, zero value otherwise.
+func (o *SwapActivity) GetSwapType() SwapType {
+	if o == nil || IsNil(o.SwapType) {
+		var ret SwapType
 		return ret
 	}
-	return *o.ActivityType
+	return *o.SwapType
 }
 
-// GetActivityTypeOk returns a tuple with the ActivityType field value if set, nil otherwise
+// GetSwapTypeOk returns a tuple with the SwapType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SwapActivity) GetActivityTypeOk() (*SwapActivityType, bool) {
-	if o == nil || IsNil(o.ActivityType) {
+func (o *SwapActivity) GetSwapTypeOk() (*SwapType, bool) {
+	if o == nil || IsNil(o.SwapType) {
 		return nil, false
 	}
-	return o.ActivityType, true
+	return o.SwapType, true
 }
 
-// HasActivityType returns a boolean if a field has been set.
-func (o *SwapActivity) HasActivityType() bool {
-	if o != nil && !IsNil(o.ActivityType) {
+// HasSwapType returns a boolean if a field has been set.
+func (o *SwapActivity) HasSwapType() bool {
+	if o != nil && !IsNil(o.SwapType) {
 		return true
 	}
 
 	return false
 }
 
-// SetActivityType gets a reference to the given SwapActivityType and assigns it to the ActivityType field.
-func (o *SwapActivity) SetActivityType(v SwapActivityType) {
-	o.ActivityType = &v
+// SetSwapType gets a reference to the given SwapType and assigns it to the SwapType field.
+func (o *SwapActivity) SetSwapType(v SwapType) {
+	o.SwapType = &v
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
@@ -351,6 +353,38 @@ func (o *SwapActivity) SetReceiveAmount(v string) {
 	o.ReceiveAmount = &v
 }
 
+// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
+func (o *SwapActivity) GetFeeTokenId() string {
+	if o == nil || IsNil(o.FeeTokenId) {
+		var ret string
+		return ret
+	}
+	return *o.FeeTokenId
+}
+
+// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivity) GetFeeTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.FeeTokenId) {
+		return nil, false
+	}
+	return o.FeeTokenId, true
+}
+
+// HasFeeTokenId returns a boolean if a field has been set.
+func (o *SwapActivity) HasFeeTokenId() bool {
+	if o != nil && !IsNil(o.FeeTokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
+func (o *SwapActivity) SetFeeTokenId(v string) {
+	o.FeeTokenId = &v
+}
+
 // GetFeeAmount returns the FeeAmount field value if set, zero value otherwise.
 func (o *SwapActivity) GetFeeAmount() string {
 	if o == nil || IsNil(o.FeeAmount) {
@@ -566,8 +600,8 @@ func (o SwapActivity) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ActivityId) {
 		toSerialize["activity_id"] = o.ActivityId
 	}
-	if !IsNil(o.ActivityType) {
-		toSerialize["activity_type"] = o.ActivityType
+	if !IsNil(o.SwapType) {
+		toSerialize["swap_type"] = o.SwapType
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
@@ -589,6 +623,9 @@ func (o SwapActivity) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ReceiveAmount) {
 		toSerialize["receive_amount"] = o.ReceiveAmount
+	}
+	if !IsNil(o.FeeTokenId) {
+		toSerialize["fee_token_id"] = o.FeeTokenId
 	}
 	if !IsNil(o.FeeAmount) {
 		toSerialize["fee_amount"] = o.FeeAmount

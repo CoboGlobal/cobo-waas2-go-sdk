@@ -17,16 +17,17 @@ var _ MappedNullable = &SettlementDetail{}
 
 // SettlementDetail struct for SettlementDetail
 type SettlementDetail struct {
-	// The currency for the settlement.
+	// The fiat currency for the settlement.
 	Currency *string `json:"currency,omitempty"`
-	// The ID of the cryptocurrency token settled.
+	// The ID of the cryptocurrency settled.
 	TokenId *string `json:"token_id,omitempty"`
 	// The ID of the blockchain network on which the settlement occurred.
 	ChainId *string `json:"chain_id,omitempty"`
-	// The settled amount. - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency token. - If `token_id` is not specified, this represents the settlement amount in the specified currency. 
+	// The settlement amount.  - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency.  - If `token_id` is not specified, this represents the settlement amount in the specified fiat currency. 
 	Amount *string `json:"amount,omitempty"`
 	Status *SettleStatus `json:"status,omitempty"`
 	BankAccount *BankAccount `json:"bank_account,omitempty"`
+	// An array of transactions associated with this settlement request. Each transaction represents a separate blockchain operation related to the settlement process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 }
 

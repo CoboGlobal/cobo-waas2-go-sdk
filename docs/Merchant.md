@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MerchantId** | **string** | The merchant ID. | 
 **Name** | **string** | The merchant name. | 
-**WalletId** | **string** | The ID of the associated wallet. | 
+**WalletId** | **string** | The ID of the linked wallet. | 
 
 ## Methods
 

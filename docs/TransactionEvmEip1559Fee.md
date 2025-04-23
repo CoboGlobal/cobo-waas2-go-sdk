@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **EffectiveGasPrice** | Pointer to **string** | The gas price (gas fee per gas unit) on the chain, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | [optional] 
 **FeeUsed** | Pointer to **string** | The transaction fee. | [optional] 
+**EstimatedFeeUsed** | Pointer to **string** | The estimated transaction fee. | [optional] 
 **GasUsed** | Pointer to **string** | The number of gas units used in the transaction. | [optional] 
 
 ## Methods
@@ -201,6 +202,31 @@ SetFeeUsed sets FeeUsed field to given value.
 `func (o *TransactionEvmEip1559Fee) HasFeeUsed() bool`
 
 HasFeeUsed returns a boolean if a field has been set.
+
+### GetEstimatedFeeUsed
+
+`func (o *TransactionEvmEip1559Fee) GetEstimatedFeeUsed() string`
+
+GetEstimatedFeeUsed returns the EstimatedFeeUsed field if non-nil, zero value otherwise.
+
+### GetEstimatedFeeUsedOk
+
+`func (o *TransactionEvmEip1559Fee) GetEstimatedFeeUsedOk() (*string, bool)`
+
+GetEstimatedFeeUsedOk returns a tuple with the EstimatedFeeUsed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEstimatedFeeUsed
+
+`func (o *TransactionEvmEip1559Fee) SetEstimatedFeeUsed(v string)`
+
+SetEstimatedFeeUsed sets EstimatedFeeUsed field to given value.
+
+### HasEstimatedFeeUsed
+
+`func (o *TransactionEvmEip1559Fee) HasEstimatedFeeUsed() bool`
+
+HasEstimatedFeeUsed returns a boolean if a field has been set.
 
 ### GetGasUsed
 

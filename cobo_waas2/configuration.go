@@ -80,7 +80,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "cobo-waas2-go-sdk/1.13.0",
+		UserAgent:        "cobo-waas2-go-sdk/1.14.0",
 		Debug:            false,
 		Log:              &DefaultLogger{},
 		Servers:          ServerConfigurations{

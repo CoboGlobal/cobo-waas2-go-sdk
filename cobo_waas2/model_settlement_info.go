@@ -19,17 +19,17 @@ var _ MappedNullable = &SettlementInfo{}
 
 // SettlementInfo struct for SettlementInfo
 type SettlementInfo struct {
-	// The merchant ID. For payment gateway balance, this field will be empty.
+	// The merchant ID. For developer balance, this field will be empty.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The ID of the cryptocurrency token.
+	// The ID of the cryptocurrency.
 	TokenId *string `json:"token_id,omitempty"`
-	// The amount available for settlement in the specified cryptocurrency token.
+	// The amount available for settlement or refund, in the specified cryptocurrency.
 	AvailableAmount string `json:"available_amount"`
-	// The available currency balance.
+	// The amount available for settlement or refund, in the specified fiat currency.
 	AvailableCurrencyBalance *string `json:"available_currency_balance,omitempty"`
-	// The pending amount.
+	// The amount unavailable for settlement or refund, in the specified cryptocurrency.
 	PendingAmount *string `json:"pending_amount,omitempty"`
-	// The pending currency balance.
+	// The amount unavailable for settlement or refund, in the specified fiat currency.
 	PendingCurrencyBalance *string `json:"pending_currency_balance,omitempty"`
 }
 

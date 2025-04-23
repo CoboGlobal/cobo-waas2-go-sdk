@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**QuoteId** | Pointer to **string** | The unique id of quote. | [optional] 
+**QuoteId** | **string** | The unique id of quote. | 
 **PayAmount** | **string** | The amount of tokens to pay. | 
 **ReceiveAmount** | **string** | The amount of tokens to receive. | 
 **FeeAmount** | **string** | The amount of tokens to pay for fee. | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewSwapQuote
 
-`func NewSwapQuote(payAmount string, receiveAmount string, feeAmount string, quoteExpiredTimestamp int32, ) *SwapQuote`
+`func NewSwapQuote(quoteId string, payAmount string, receiveAmount string, feeAmount string, quoteExpiredTimestamp int32, ) *SwapQuote`
 
 NewSwapQuote instantiates a new SwapQuote object
 This constructor will assign default values to properties that have it defined,
@@ -50,11 +50,6 @@ and a boolean to check if the value has been set.
 
 SetQuoteId sets QuoteId field to given value.
 
-### HasQuoteId
-
-`func (o *SwapQuote) HasQuoteId() bool`
-
-HasQuoteId returns a boolean if a field has been set.
 
 ### GetPayAmount
 

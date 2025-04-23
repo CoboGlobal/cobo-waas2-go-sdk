@@ -23,7 +23,7 @@ type Order struct {
 	OrderId string `json:"order_id"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The ID of the cryptocurrency token used for payment.
+	// The ID of the cryptocurrency used for payment.
 	TokenId string `json:"token_id"`
 	// The ID of the blockchain network where the payment transaction should be made.
 	ChainId string `json:"chain_id"`
@@ -31,22 +31,22 @@ type Order struct {
 	PayableAmount string `json:"payable_amount"`
 	// The recipient wallet address to be used for the payment transaction.
 	ReceiveAddress string `json:"receive_address"`
-	// The currency of the order.
+	// The fiat currency of the order.
 	Currency string `json:"currency"`
-	// The base amount in currency to be charged for the payment order, excluding the payment gateway fee (specified in `fee_amount`).
+	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`).
 	OrderAmount string `json:"order_amount"`
-	// The payment gateway fee in currency. It is added to the base amount (`order_amount`) to determine the final charge.
+	// The developer fee for the order in fiat currency. It is added to the base amount (`order_amount`) to determine the final charge.
 	FeeAmount string `json:"fee_amount"`
-	// The exchange rate used to convert between currency and cryptocurrency token. Expressed as the amount of currency per one unit of cryptocurrency. For example, if the token is USDT and the currency is USD, a rate of \"0.99\" means 1 USDT = 0.99 USD.
+	// The exchange rate between a currency pair. Expressed as the amount of fiat currency per one unit of cryptocurrency. For example, if the cryptocurrency is USDT and the fiat currency is USD, a rate of \"0.99\" means 1 USDT = 0.99 USD.
 	ExchangeRate string `json:"exchange_rate"`
-	// The expiration time of the payment order, represented as a UNIX timestamp in seconds.
+	// The expiration time of the pay-in order, represented as a UNIX timestamp in seconds.
 	ExpiredAt *int32 `json:"expired_at,omitempty"`
 	// A unique reference code assigned by the merchant to identify this order in their system.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
-	// A unique reference code assigned by the payment gateway to identify this order in their system.
+	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
 	Status OrderStatus `json:"status"`
-	// The total cryptocurrency amount received for this order. Updates until order expires. Precision matches the token standard (e.g., 6 decimals for USDT).
+	// The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT).
 	ReceivedTokenAmount string `json:"received_token_amount"`
 }
 

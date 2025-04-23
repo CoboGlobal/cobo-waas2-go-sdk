@@ -32,6 +32,8 @@ type TransactionEvmEip1559Fee struct {
 	EffectiveGasPrice *string `json:"effective_gas_price,omitempty"`
 	// The transaction fee.
 	FeeUsed *string `json:"fee_used,omitempty"`
+	// The estimated transaction fee.
+	EstimatedFeeUsed *string `json:"estimated_fee_used,omitempty"`
 	// The number of gas units used in the transaction.
 	GasUsed *string `json:"gas_used,omitempty"`
 }
@@ -274,6 +276,38 @@ func (o *TransactionEvmEip1559Fee) SetFeeUsed(v string) {
 	o.FeeUsed = &v
 }
 
+// GetEstimatedFeeUsed returns the EstimatedFeeUsed field value if set, zero value otherwise.
+func (o *TransactionEvmEip1559Fee) GetEstimatedFeeUsed() string {
+	if o == nil || IsNil(o.EstimatedFeeUsed) {
+		var ret string
+		return ret
+	}
+	return *o.EstimatedFeeUsed
+}
+
+// GetEstimatedFeeUsedOk returns a tuple with the EstimatedFeeUsed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionEvmEip1559Fee) GetEstimatedFeeUsedOk() (*string, bool) {
+	if o == nil || IsNil(o.EstimatedFeeUsed) {
+		return nil, false
+	}
+	return o.EstimatedFeeUsed, true
+}
+
+// HasEstimatedFeeUsed returns a boolean if a field has been set.
+func (o *TransactionEvmEip1559Fee) HasEstimatedFeeUsed() bool {
+	if o != nil && !IsNil(o.EstimatedFeeUsed) {
+		return true
+	}
+
+	return false
+}
+
+// SetEstimatedFeeUsed gets a reference to the given string and assigns it to the EstimatedFeeUsed field.
+func (o *TransactionEvmEip1559Fee) SetEstimatedFeeUsed(v string) {
+	o.EstimatedFeeUsed = &v
+}
+
 // GetGasUsed returns the GasUsed field value if set, zero value otherwise.
 func (o *TransactionEvmEip1559Fee) GetGasUsed() string {
 	if o == nil || IsNil(o.GasUsed) {
@@ -334,6 +368,9 @@ func (o TransactionEvmEip1559Fee) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.FeeUsed) {
 		toSerialize["fee_used"] = o.FeeUsed
+	}
+	if !IsNil(o.EstimatedFeeUsed) {
+		toSerialize["estimated_fee_used"] = o.EstimatedFeeUsed
 	}
 	if !IsNil(o.GasUsed) {
 		toSerialize["gas_used"] = o.GasUsed

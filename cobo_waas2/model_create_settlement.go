@@ -21,11 +21,11 @@ var _ MappedNullable = &CreateSettlement{}
 type CreateSettlement struct {
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The ID of the cryptocurrency token you want to settle. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency you want to settle. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId *string `json:"token_id,omitempty"`
-	// The currency for settling the cryptocurrency. Currently, only `USD` is supported.
+	// The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported.
 	Currency *string `json:"currency,omitempty"`
-	// The amount to be settled. - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency token. - If `token_id` is not specified, this represents the settlement amount in the specified currency.
+	// The settlement amount. - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency. - If `token_id` is not specified, this represents the settlement amount in the specified fiat currency.
 	Amount string `json:"amount"`
 	// The ID of the bank account where the settled funds will be deposited.
 	BankAccountId string `json:"bank_account_id"`

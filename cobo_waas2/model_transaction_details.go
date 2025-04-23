@@ -62,7 +62,7 @@ type TransactionDetails struct {
 	IsLoop *bool `json:"is_loop,omitempty"`
 	// The transaction category defined by Cobo. Possible values include:  - `AutoSweep`: An auto-sweep transaction. - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your wallet. - `AutoFuelingRefund`: A refund for an auto-fueling transaction. - `SafeTxMessage`: A message signing transaction to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction. - `BillPayment`: A transaction to pay Cobo bills through Fee Station. - `BillRefund`: A refund for a previously made bill payment. - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station. - `CommissionFeeRefund`: A refund of previously charged commission fees. 
 	CoboCategory []string `json:"cobo_category,omitempty"`
-	// The transaction extra information.
+	// A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the `extra_type` field in the JSON object (for example, \"BabylonBusinessInfo\", \"BtcAddressInfo\"). 
 	Extra []string `json:"extra,omitempty"`
 	FuelingInfo *TransactionFuelingInfo `json:"fueling_info,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.

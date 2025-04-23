@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ActivityId** | Pointer to **string** | The unique identifier of the swap activity. | [optional] 
-**ActivityType** | Pointer to [**SwapActivityType**](SwapActivityType.md) |  | [optional] 
+**SwapType** | Pointer to [**SwapType**](SwapType.md) |  | [optional] 
 **Status** | Pointer to [**SwapActivityStatus**](SwapActivityStatus.md) |  | [optional] 
 **RequestId** | Pointer to **string** | The request id of the swap activity. | [optional] 
 **WalletId** | Pointer to **string** | The unique identifier of the wallet. | [optional] 
@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **ReceiveTokenId** | Pointer to **string** | The token symbol to swap to. | [optional] 
 **PayAmount** | Pointer to **string** | The amount of tokens to bridge. | [optional] 
 **ReceiveAmount** | Pointer to **string** | The amount of tokens to receive. | [optional] 
+**FeeTokenId** | Pointer to **string** | The fee token symbol. | [optional] 
 **FeeAmount** | Pointer to **string** | The amount of fee. | [optional] 
 **Initiator** | Pointer to **NullableString** | The initiator of the swap activity. | [optional] 
 **InitiatorType** | Pointer to [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | [optional] 
@@ -64,30 +65,30 @@ SetActivityId sets ActivityId field to given value.
 
 HasActivityId returns a boolean if a field has been set.
 
-### GetActivityType
+### GetSwapType
 
-`func (o *SwapActivity) GetActivityType() SwapActivityType`
+`func (o *SwapActivity) GetSwapType() SwapType`
 
-GetActivityType returns the ActivityType field if non-nil, zero value otherwise.
+GetSwapType returns the SwapType field if non-nil, zero value otherwise.
 
-### GetActivityTypeOk
+### GetSwapTypeOk
 
-`func (o *SwapActivity) GetActivityTypeOk() (*SwapActivityType, bool)`
+`func (o *SwapActivity) GetSwapTypeOk() (*SwapType, bool)`
 
-GetActivityTypeOk returns a tuple with the ActivityType field if it's non-nil, zero value otherwise
+GetSwapTypeOk returns a tuple with the SwapType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetActivityType
+### SetSwapType
 
-`func (o *SwapActivity) SetActivityType(v SwapActivityType)`
+`func (o *SwapActivity) SetSwapType(v SwapType)`
 
-SetActivityType sets ActivityType field to given value.
+SetSwapType sets SwapType field to given value.
 
-### HasActivityType
+### HasSwapType
 
-`func (o *SwapActivity) HasActivityType() bool`
+`func (o *SwapActivity) HasSwapType() bool`
 
-HasActivityType returns a boolean if a field has been set.
+HasSwapType returns a boolean if a field has been set.
 
 ### GetStatus
 
@@ -263,6 +264,31 @@ SetReceiveAmount sets ReceiveAmount field to given value.
 `func (o *SwapActivity) HasReceiveAmount() bool`
 
 HasReceiveAmount returns a boolean if a field has been set.
+
+### GetFeeTokenId
+
+`func (o *SwapActivity) GetFeeTokenId() string`
+
+GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
+
+### GetFeeTokenIdOk
+
+`func (o *SwapActivity) GetFeeTokenIdOk() (*string, bool)`
+
+GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeeTokenId
+
+`func (o *SwapActivity) SetFeeTokenId(v string)`
+
+SetFeeTokenId sets FeeTokenId field to given value.
+
+### HasFeeTokenId
+
+`func (o *SwapActivity) HasFeeTokenId() bool`
+
+HasFeeTokenId returns a boolean if a field has been set.
 
 ### GetFeeAmount
 
