@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// RefundType Specifies the source of funds for the refund: - `Merchant`: The refund amount will be deducted from the merchant balance. - `Psp`: The refund amount will be deducted from the payment gateway balance. 
+// RefundType Specifies the source of funds for the refund: - `Merchant`: The refund amount will be deducted from the merchant balance. - `Psp`: The refund amount will be deducted from the developer balance. 
 type RefundType string
 
 // List of RefundType

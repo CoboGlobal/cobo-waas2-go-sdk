@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TxId** | **string** | Unique identifier for the transaction. | 
-**TxHash** | Pointer to **string** | The blockchain transaction hash, may be initially null and populated after submission. | [optional] 
-**FromAddress** | **string** | Source cryptocurrency address for the transaction. | 
-**ToAddress** | **string** | Destination cryptocurrency address for the transaction. | 
+**TxId** | **string** | The transaction ID. | 
+**TxHash** | Pointer to **string** | The transaction hash. | [optional] 
+**FromAddress** | **string** | The source address of the transaction. | 
+**ToAddress** | **string** | The destination address of the transaction. | 
 **Amount** | **string** | The amount of cryptocurrency transferred, as a decimal string. | 
 **Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
 **CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 

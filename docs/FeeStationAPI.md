@@ -4,11 +4,88 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**EstimateFeeStationFee**](FeeStationAPI.md#EstimateFeeStationFee) | **Post** /fee_station/transactions/estimate_fee | Estimate transaction fee
 [**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get Fee Station transaction information
 [**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List Fee Station addresses
 [**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all Fee Station transactions
 [**ListTokenBalancesForFeeStation**](FeeStationAPI.md#ListTokenBalancesForFeeStation) | **Get** /fee_station/tokens | List Fee Station token balances
 
+
+
+## EstimateFeeStationFee
+
+> EstimatedFixedFee EstimateFeeStationFee(ctx).FeeStationTransfer(feeStationTransfer).Execute()
+
+Estimate transaction fee
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	feeStationTransfer := *coboWaas2.NewFeeStationTransfer("ETH_USDT")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.FeeStationAPI.EstimateFeeStationFee(ctx).FeeStationTransfer(feeStationTransfer).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `FeeStationAPI.EstimateFeeStationFee``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `EstimateFeeStationFee`: EstimatedFixedFee
+	fmt.Fprintf(os.Stdout, "Response from `FeeStationAPI.EstimateFeeStationFee`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiEstimateFeeStationFeeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **feeStationTransfer** | [**FeeStationTransfer**](FeeStationTransfer.md) | The information about a token transfer. | 
+
+### Return type
+
+[**EstimatedFixedFee**](EstimatedFixedFee.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetFeeStationTransactionById
@@ -281,7 +358,7 @@ Name | Type | Description  | Notes
 
 ## ListTokenBalancesForFeeStation
 
-> ListTokenBalancesForAddress200Response ListTokenBalancesForFeeStation(ctx).TokenIds(tokenIds).Limit(limit).Before(before).After(after).Execute()
+> ListTokenBalancesForFeeStation200Response ListTokenBalancesForFeeStation(ctx).TokenIds(tokenIds).Limit(limit).Before(before).After(after).Execute()
 
 List Fee Station token balances
 
@@ -322,7 +399,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `FeeStationAPI.ListTokenBalancesForFeeStation``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListTokenBalancesForFeeStation`: ListTokenBalancesForAddress200Response
+	// response from `ListTokenBalancesForFeeStation`: ListTokenBalancesForFeeStation200Response
 	fmt.Fprintf(os.Stdout, "Response from `FeeStationAPI.ListTokenBalancesForFeeStation`: %v\n", resp)
 }
 ```
@@ -345,7 +422,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListTokenBalancesForAddress200Response**](ListTokenBalancesForAddress200Response.md)
+[**ListTokenBalancesForFeeStation200Response**](ListTokenBalancesForFeeStation200Response.md)
 
 ### Authorization
 

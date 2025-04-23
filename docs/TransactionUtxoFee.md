@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 **TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **FeeUsed** | Pointer to **string** | The transaction fee. | [optional] 
+**EstimatedFeeUsed** | Pointer to **string** | The estimated transaction fee. | [optional] 
 **MaxFeeAmount** | Pointer to **string** | The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee. | [optional] 
 
 ## Methods
@@ -123,6 +124,31 @@ SetFeeUsed sets FeeUsed field to given value.
 `func (o *TransactionUtxoFee) HasFeeUsed() bool`
 
 HasFeeUsed returns a boolean if a field has been set.
+
+### GetEstimatedFeeUsed
+
+`func (o *TransactionUtxoFee) GetEstimatedFeeUsed() string`
+
+GetEstimatedFeeUsed returns the EstimatedFeeUsed field if non-nil, zero value otherwise.
+
+### GetEstimatedFeeUsedOk
+
+`func (o *TransactionUtxoFee) GetEstimatedFeeUsedOk() (*string, bool)`
+
+GetEstimatedFeeUsedOk returns a tuple with the EstimatedFeeUsed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEstimatedFeeUsed
+
+`func (o *TransactionUtxoFee) SetEstimatedFeeUsed(v string)`
+
+SetEstimatedFeeUsed sets EstimatedFeeUsed field to given value.
+
+### HasEstimatedFeeUsed
+
+`func (o *TransactionUtxoFee) HasEstimatedFeeUsed() bool`
+
+HasEstimatedFeeUsed returns a boolean if a field has been set.
 
 ### GetMaxFeeAmount
 

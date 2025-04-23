@@ -7,16 +7,16 @@ Name | Type | Description | Notes
 **ExtraType** | [**TransactionExtraType**](TransactionExtraType.md) |  | 
 **BabylonAddressInfo** | Pointer to [**AddressInfo**](AddressInfo.md) |  | [optional] 
 **BtcAddressInfo** | Pointer to [**AddressInfo**](AddressInfo.md) |  | [optional] 
-**StakeAmount** | Pointer to **string** | The origin staking amount. | [optional] 
+**StakeAmount** | Pointer to **string** | The original staking amount. | [optional] 
 **FinalityProviderPublicKey** | Pointer to **string** | The public key of the finality provider. | [optional] 
 **StakeBlockTime** | Pointer to **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | [optional] 
-**ParamVersion** | Pointer to **int64** | The version of babylon global parameters. | [optional] 
+**ParamVersion** | Pointer to **int64** | The version of Babylon global parameters. | [optional] 
 **WithdrawFromType** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
 **SlashFromType** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
 **Timelock** | Pointer to **int32** | The Unix timestamp (in seconds) when the staking position will be unlocked and available for withdrawal. | [optional] 
 **ChangeAddress** | Pointer to **string** | The change address on the Bitcoin chain. If not provided, the source wallet&#39;s address will be used as the change address. | [optional] 
 **ValidatorAddress** | Pointer to **string** | The validator&#39;s EVM address. | [optional] 
-**RewardAddress** | Pointer to **string** | The EVM address to receive staking rewards. | [optional] 
+**RewardAddress** | Pointer to **string** | The EVM address used to receive staking rewards. | [optional] 
 
 ## Methods
 

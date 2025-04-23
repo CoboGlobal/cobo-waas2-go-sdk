@@ -23,7 +23,7 @@ type Merchant struct {
 	MerchantId string `json:"merchant_id"`
 	// The merchant name.
 	Name string `json:"name"`
-	// The ID of the associated wallet.
+	// The ID of the linked wallet.
 	WalletId string `json:"wallet_id"`
 }
 

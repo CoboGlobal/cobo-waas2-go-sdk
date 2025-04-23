@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionExtraType The transaction extra information type. Possible values include:   - `BabylonBusinessInfo`: The extra information of Babylon business.   - `BabylonTxParameters`: The extra information of Babylon transaction parameters.   - `CoreStakeInfo`: The extra information of core stake. 
+// TransactionExtraType The transaction extra information type. Possible values include:   - `BabylonBusinessInfo`: The extra information related to Babylon business logic.   - `BabylonTxParameters`: The extra information for Babylon transaction parameters.   - `CoreStakeInfo`: The extra information related to core staking operations. 
 type TransactionExtraType string
 
 // List of TransactionExtraType

@@ -78,6 +78,18 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test WalletsAPIService CreateTokenListingRequest", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.WalletsAPI.CreateTokenListingRequest(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test WalletsAPIService CreateWallet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -139,6 +151,20 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 		var tokenId string
 
 		resp, httpRes, err := apiClient.WalletsAPI.GetTokenById(ctx, tokenId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test WalletsAPIService GetTokenListingRequestByRequestId", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var requestId string
+
+		resp, httpRes, err := apiClient.WalletsAPI.GetTokenListingRequestByRequestId(ctx, requestId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -259,6 +285,18 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 		var walletId string
 
 		resp, httpRes, err := apiClient.WalletsAPI.ListTokenBalancesForWallet(ctx, walletId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test WalletsAPIService ListTokenListingRequests", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.WalletsAPI.ListTokenListingRequests(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

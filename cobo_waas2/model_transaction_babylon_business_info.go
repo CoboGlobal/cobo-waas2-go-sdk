@@ -17,7 +17,7 @@ import (
 // checks if the TransactionBabylonBusinessInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionBabylonBusinessInfo{}
 
-// TransactionBabylonBusinessInfo The Babylon business information.
+// TransactionBabylonBusinessInfo The extra information related to Babylon business logic.
 type TransactionBabylonBusinessInfo struct {
 	ExtraType TransactionExtraType `json:"extra_type"`
 	BabylonAddressInfo *AddressInfo `json:"babylon_address_info,omitempty"`

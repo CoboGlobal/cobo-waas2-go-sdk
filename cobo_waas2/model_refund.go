@@ -19,13 +19,13 @@ var _ MappedNullable = &Refund{}
 
 // Refund struct for Refund
 type Refund struct {
-	// The request id.
+	// The request ID provided by you when creating the refund request.
 	RequestId *string `json:"request_id,omitempty"`
 	// The refund order ID.
 	RefundId string `json:"refund_id"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The ID of the cryptocurrency token used for refund.
+	// The ID of the cryptocurrency used for refund.
 	TokenId string `json:"token_id"`
 	// The ID of the blockchain network on which the refund transaction occurs.
 	ChainId string `json:"chain_id"`
@@ -34,6 +34,7 @@ type Refund struct {
 	// The recipient's wallet address where the refund will be sent.
 	ToAddress string `json:"to_address"`
 	Status RefundStatus `json:"status"`
+	// An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 }
 

@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MerchantId** | Pointer to **string** | The merchant ID. For payment gateway balance, this field will be empty. | [optional] 
-**TokenId** | Pointer to **string** | The ID of the cryptocurrency token. | [optional] 
-**AvailableAmount** | **string** | The amount available for settlement in the specified cryptocurrency token. | 
-**AvailableCurrencyBalance** | Pointer to **string** | The available currency balance. | [optional] 
-**PendingAmount** | Pointer to **string** | The pending amount. | [optional] 
-**PendingCurrencyBalance** | Pointer to **string** | The pending currency balance. | [optional] 
+**MerchantId** | Pointer to **string** | The merchant ID. For developer balance, this field will be empty. | [optional] 
+**TokenId** | Pointer to **string** | The ID of the cryptocurrency. | [optional] 
+**AvailableAmount** | **string** | The amount available for settlement or refund, in the specified cryptocurrency. | 
+**AvailableCurrencyBalance** | Pointer to **string** | The amount available for settlement or refund, in the specified fiat currency. | [optional] 
+**PendingAmount** | Pointer to **string** | The amount unavailable for settlement or refund, in the specified cryptocurrency. | [optional] 
+**PendingCurrencyBalance** | Pointer to **string** | The amount unavailable for settlement or refund, in the specified fiat currency. | [optional] 
 
 ## Methods
 

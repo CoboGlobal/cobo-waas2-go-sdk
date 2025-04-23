@@ -26,6 +26,8 @@ type TransactionUtxoFee struct {
 	TokenId *string `json:"token_id,omitempty"`
 	// The transaction fee.
 	FeeUsed *string `json:"fee_used,omitempty"`
+	// The estimated transaction fee.
+	EstimatedFeeUsed *string `json:"estimated_fee_used,omitempty"`
 	// The maximum fee that you are willing to pay for the transaction. The transaction will fail if the transaction fee exceeds the maximum fee.
 	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`
 }
@@ -172,6 +174,38 @@ func (o *TransactionUtxoFee) SetFeeUsed(v string) {
 	o.FeeUsed = &v
 }
 
+// GetEstimatedFeeUsed returns the EstimatedFeeUsed field value if set, zero value otherwise.
+func (o *TransactionUtxoFee) GetEstimatedFeeUsed() string {
+	if o == nil || IsNil(o.EstimatedFeeUsed) {
+		var ret string
+		return ret
+	}
+	return *o.EstimatedFeeUsed
+}
+
+// GetEstimatedFeeUsedOk returns a tuple with the EstimatedFeeUsed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionUtxoFee) GetEstimatedFeeUsedOk() (*string, bool) {
+	if o == nil || IsNil(o.EstimatedFeeUsed) {
+		return nil, false
+	}
+	return o.EstimatedFeeUsed, true
+}
+
+// HasEstimatedFeeUsed returns a boolean if a field has been set.
+func (o *TransactionUtxoFee) HasEstimatedFeeUsed() bool {
+	if o != nil && !IsNil(o.EstimatedFeeUsed) {
+		return true
+	}
+
+	return false
+}
+
+// SetEstimatedFeeUsed gets a reference to the given string and assigns it to the EstimatedFeeUsed field.
+func (o *TransactionUtxoFee) SetEstimatedFeeUsed(v string) {
+	o.EstimatedFeeUsed = &v
+}
+
 // GetMaxFeeAmount returns the MaxFeeAmount field value if set, zero value otherwise.
 func (o *TransactionUtxoFee) GetMaxFeeAmount() string {
 	if o == nil || IsNil(o.MaxFeeAmount) {
@@ -223,6 +257,9 @@ func (o TransactionUtxoFee) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.FeeUsed) {
 		toSerialize["fee_used"] = o.FeeUsed
+	}
+	if !IsNil(o.EstimatedFeeUsed) {
+		toSerialize["estimated_fee_used"] = o.EstimatedFeeUsed
 	}
 	if !IsNil(o.MaxFeeAmount) {
 		toSerialize["max_fee_amount"] = o.MaxFeeAmount

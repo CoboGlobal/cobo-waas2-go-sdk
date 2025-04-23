@@ -17,7 +17,7 @@ import (
 // checks if the BTCBIP322MessageSignDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BTCBIP322MessageSignDestination{}
 
-// BTCBIP322MessageSignDestination The information about the destination `BTC_BIP_322`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+// BTCBIP322MessageSignDestination The information about the destination `BTC_BIP_322_Signature`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 type BTCBIP322MessageSignDestination struct {
 	DestinationType MessageSignDestinationType `json:"destination_type"`
 	// Message to be signed, in hexadecimal format.
