@@ -5,8 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **QuoteId** | **string** | The unique id of quote. | 
+**PayTokenId** | **string** | The token ID to pay. | 
 **PayAmount** | **string** | The amount of tokens to pay. | 
+**ReceiveTokenId** | **string** | The token ID to receive. | 
 **ReceiveAmount** | **string** | The amount of tokens to receive. | 
+**FeeTokenId** | **string** | The fee token ID. | 
 **FeeAmount** | **string** | The amount of tokens to pay for fee. | 
 **MinReceiveAmount** | Pointer to **string** | The minimum amount of tokens to receive if the pay amount is specified. | [optional] 
 **MaxPayAmount** | Pointer to **string** | The maximum amount of tokens to pay if the receive amount is specified. | [optional] 
@@ -16,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewSwapQuote
 
-`func NewSwapQuote(quoteId string, payAmount string, receiveAmount string, feeAmount string, quoteExpiredTimestamp int32, ) *SwapQuote`
+`func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int32, ) *SwapQuote`
 
 NewSwapQuote instantiates a new SwapQuote object
 This constructor will assign default values to properties that have it defined,
@@ -51,6 +54,26 @@ and a boolean to check if the value has been set.
 SetQuoteId sets QuoteId field to given value.
 
 
+### GetPayTokenId
+
+`func (o *SwapQuote) GetPayTokenId() string`
+
+GetPayTokenId returns the PayTokenId field if non-nil, zero value otherwise.
+
+### GetPayTokenIdOk
+
+`func (o *SwapQuote) GetPayTokenIdOk() (*string, bool)`
+
+GetPayTokenIdOk returns a tuple with the PayTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayTokenId
+
+`func (o *SwapQuote) SetPayTokenId(v string)`
+
+SetPayTokenId sets PayTokenId field to given value.
+
+
 ### GetPayAmount
 
 `func (o *SwapQuote) GetPayAmount() string`
@@ -71,6 +94,26 @@ and a boolean to check if the value has been set.
 SetPayAmount sets PayAmount field to given value.
 
 
+### GetReceiveTokenId
+
+`func (o *SwapQuote) GetReceiveTokenId() string`
+
+GetReceiveTokenId returns the ReceiveTokenId field if non-nil, zero value otherwise.
+
+### GetReceiveTokenIdOk
+
+`func (o *SwapQuote) GetReceiveTokenIdOk() (*string, bool)`
+
+GetReceiveTokenIdOk returns a tuple with the ReceiveTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReceiveTokenId
+
+`func (o *SwapQuote) SetReceiveTokenId(v string)`
+
+SetReceiveTokenId sets ReceiveTokenId field to given value.
+
+
 ### GetReceiveAmount
 
 `func (o *SwapQuote) GetReceiveAmount() string`
@@ -89,6 +132,26 @@ and a boolean to check if the value has been set.
 `func (o *SwapQuote) SetReceiveAmount(v string)`
 
 SetReceiveAmount sets ReceiveAmount field to given value.
+
+
+### GetFeeTokenId
+
+`func (o *SwapQuote) GetFeeTokenId() string`
+
+GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
+
+### GetFeeTokenIdOk
+
+`func (o *SwapQuote) GetFeeTokenIdOk() (*string, bool)`
+
+GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeeTokenId
+
+`func (o *SwapQuote) SetFeeTokenId(v string)`
+
+SetFeeTokenId sets FeeTokenId field to given value.
 
 
 ### GetFeeAmount

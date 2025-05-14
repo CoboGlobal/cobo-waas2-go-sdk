@@ -41,8 +41,8 @@ func (v *CoboSafeDelegateType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = CoboSafeDelegateType("unknown")
-    return nil
+	*v = CoboSafeDelegateType("unknown")
+	return nil
 }
 
 // NewCoboSafeDelegateTypeFromValue returns a pointer to a valid CoboSafeDelegateType

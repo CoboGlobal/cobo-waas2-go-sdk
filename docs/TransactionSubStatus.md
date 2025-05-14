@@ -85,6 +85,16 @@
 
 * `SIGNATURE_VERIFICATION_FAILED` (value: `"SignatureVerificationFailed"`)
 
+* `PENDING_COBO_CHECK` (value: `"PendingCoboCheck"`)
+
+* `REJECTED_TRANSACTION_POLICY` (value: `"RejectedTransactionPolicy"`)
+
+* `REJECTED_BY_SCREENING_APP` (value: `"RejectedByScreeningApp"`)
+
+* `PENDING_SCREENING_APP_CHECK` (value: `"PendingScreeningAppCheck"`)
+
+* `PENDING_COBO_TRAVEL_RULE_CHECK` (value: `"PendingCoboTravelRuleCheck"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

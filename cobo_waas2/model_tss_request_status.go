@@ -49,8 +49,8 @@ func (v *TSSRequestStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TSSRequestStatus("unknown")
-    return nil
+	*v = TSSRequestStatus("unknown")
+	return nil
 }
 
 // NewTSSRequestStatusFromValue returns a pointer to a valid TSSRequestStatus

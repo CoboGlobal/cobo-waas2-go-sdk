@@ -43,8 +43,8 @@ func (v *KeyShareHolderGroupType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = KeyShareHolderGroupType("unknown")
-    return nil
+	*v = KeyShareHolderGroupType("unknown")
+	return nil
 }
 
 // NewKeyShareHolderGroupTypeFromValue returns a pointer to a valid KeyShareHolderGroupType

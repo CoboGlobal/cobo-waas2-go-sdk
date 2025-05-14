@@ -53,8 +53,8 @@ func (v *TransactionCoboCategory) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransactionCoboCategory("unknown")
-    return nil
+	*v = TransactionCoboCategory("unknown")
+	return nil
 }
 
 // NewTransactionCoboCategoryFromValue returns a pointer to a valid TransactionCoboCategory

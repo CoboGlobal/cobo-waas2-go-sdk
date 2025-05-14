@@ -20,6 +20,9 @@ Name | Type | Description | Notes
 **PspOrderCode** | **string** | A unique reference code assigned by the developer to identify this order in their system. | 
 **Status** | [**OrderStatus**](OrderStatus.md) |  | 
 **ReceivedTokenAmount** | **string** | The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT). | 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the order, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the order, represented as a UNIX timestamp in seconds. | [optional] 
+**Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process. | [optional] 
 
 ## Methods
 
@@ -374,6 +377,81 @@ and a boolean to check if the value has been set.
 
 SetReceivedTokenAmount sets ReceivedTokenAmount field to given value.
 
+
+### GetCreatedTimestamp
+
+`func (o *PaymentOrderEventData) GetCreatedTimestamp() int32`
+
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
+
+### GetCreatedTimestampOk
+
+`func (o *PaymentOrderEventData) GetCreatedTimestampOk() (*int32, bool)`
+
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedTimestamp
+
+`func (o *PaymentOrderEventData) SetCreatedTimestamp(v int32)`
+
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
+
+### HasCreatedTimestamp
+
+`func (o *PaymentOrderEventData) HasCreatedTimestamp() bool`
+
+HasCreatedTimestamp returns a boolean if a field has been set.
+
+### GetUpdatedTimestamp
+
+`func (o *PaymentOrderEventData) GetUpdatedTimestamp() int32`
+
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
+
+### GetUpdatedTimestampOk
+
+`func (o *PaymentOrderEventData) GetUpdatedTimestampOk() (*int32, bool)`
+
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedTimestamp
+
+`func (o *PaymentOrderEventData) SetUpdatedTimestamp(v int32)`
+
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
+
+### HasUpdatedTimestamp
+
+`func (o *PaymentOrderEventData) HasUpdatedTimestamp() bool`
+
+HasUpdatedTimestamp returns a boolean if a field has been set.
+
+### GetTransactions
+
+`func (o *PaymentOrderEventData) GetTransactions() []PaymentTransaction`
+
+GetTransactions returns the Transactions field if non-nil, zero value otherwise.
+
+### GetTransactionsOk
+
+`func (o *PaymentOrderEventData) GetTransactionsOk() (*[]PaymentTransaction, bool)`
+
+GetTransactionsOk returns a tuple with the Transactions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransactions
+
+`func (o *PaymentOrderEventData) SetTransactions(v []PaymentTransaction)`
+
+SetTransactions sets Transactions field to given value.
+
+### HasTransactions
+
+`func (o *PaymentOrderEventData) HasTransactions() bool`
+
+HasTransactions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -41,8 +41,8 @@ func (v *EstimateFeeRequestType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = EstimateFeeRequestType("unknown")
-    return nil
+	*v = EstimateFeeRequestType("unknown")
+	return nil
 }
 
 // NewEstimateFeeRequestTypeFromValue returns a pointer to a valid EstimateFeeRequestType

@@ -39,8 +39,8 @@ func (v *SmartContractWalletOperationType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = SmartContractWalletOperationType("unknown")
-    return nil
+	*v = SmartContractWalletOperationType("unknown")
+	return nil
 }
 
 // NewSmartContractWalletOperationTypeFromValue returns a pointer to a valid SmartContractWalletOperationType

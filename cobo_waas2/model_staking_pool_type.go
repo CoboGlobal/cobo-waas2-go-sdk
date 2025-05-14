@@ -51,8 +51,8 @@ func (v *StakingPoolType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = StakingPoolType("unknown")
-    return nil
+	*v = StakingPoolType("unknown")
+	return nil
 }
 
 // NewStakingPoolTypeFromValue returns a pointer to a valid StakingPoolType

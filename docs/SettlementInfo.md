@@ -10,6 +10,9 @@ Name | Type | Description | Notes
 **AvailableCurrencyBalance** | Pointer to **string** | The amount available for settlement or refund, in the specified fiat currency. | [optional] 
 **PendingAmount** | Pointer to **string** | The amount unavailable for settlement or refund, in the specified cryptocurrency. | [optional] 
 **PendingCurrencyBalance** | Pointer to **string** | The amount unavailable for settlement or refund, in the specified fiat currency. | [optional] 
+**SettledAmount** | Pointer to **string** | The amount already settled, in the specified cryptocurrency. | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
 
 ## Methods
 
@@ -174,6 +177,81 @@ SetPendingCurrencyBalance sets PendingCurrencyBalance field to given value.
 `func (o *SettlementInfo) HasPendingCurrencyBalance() bool`
 
 HasPendingCurrencyBalance returns a boolean if a field has been set.
+
+### GetSettledAmount
+
+`func (o *SettlementInfo) GetSettledAmount() string`
+
+GetSettledAmount returns the SettledAmount field if non-nil, zero value otherwise.
+
+### GetSettledAmountOk
+
+`func (o *SettlementInfo) GetSettledAmountOk() (*string, bool)`
+
+GetSettledAmountOk returns a tuple with the SettledAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettledAmount
+
+`func (o *SettlementInfo) SetSettledAmount(v string)`
+
+SetSettledAmount sets SettledAmount field to given value.
+
+### HasSettledAmount
+
+`func (o *SettlementInfo) HasSettledAmount() bool`
+
+HasSettledAmount returns a boolean if a field has been set.
+
+### GetCreatedTimestamp
+
+`func (o *SettlementInfo) GetCreatedTimestamp() int32`
+
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
+
+### GetCreatedTimestampOk
+
+`func (o *SettlementInfo) GetCreatedTimestampOk() (*int32, bool)`
+
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedTimestamp
+
+`func (o *SettlementInfo) SetCreatedTimestamp(v int32)`
+
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
+
+### HasCreatedTimestamp
+
+`func (o *SettlementInfo) HasCreatedTimestamp() bool`
+
+HasCreatedTimestamp returns a boolean if a field has been set.
+
+### GetUpdatedTimestamp
+
+`func (o *SettlementInfo) GetUpdatedTimestamp() int32`
+
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
+
+### GetUpdatedTimestampOk
+
+`func (o *SettlementInfo) GetUpdatedTimestampOk() (*int32, bool)`
+
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedTimestamp
+
+`func (o *SettlementInfo) SetUpdatedTimestamp(v int32)`
+
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
+
+### HasUpdatedTimestamp
+
+`func (o *SettlementInfo) HasUpdatedTimestamp() bool`
+
+HasUpdatedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

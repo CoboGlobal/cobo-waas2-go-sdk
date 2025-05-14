@@ -15,7 +15,7 @@ import (
 // checks if the TSSGroups type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TSSGroups{}
 
-// TSSGroups The data for the TSS key share group ID.
+// TSSGroups The data for the TSS key share group.
 type TSSGroups struct {
 	// The TSS key share group ID.
 	TssKeyShareGroupId *string `json:"tss_key_share_group_id,omitempty"`

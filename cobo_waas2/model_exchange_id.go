@@ -53,8 +53,8 @@ func (v *ExchangeId) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ExchangeId("unknown")
-    return nil
+	*v = ExchangeId("unknown")
+	return nil
 }
 
 // NewExchangeIdFromValue returns a pointer to a valid ExchangeId

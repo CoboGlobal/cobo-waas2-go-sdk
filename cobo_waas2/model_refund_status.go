@@ -47,8 +47,8 @@ func (v *RefundStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = RefundStatus("unknown")
-    return nil
+	*v = RefundStatus("unknown")
+	return nil
 }
 
 // NewRefundStatusFromValue returns a pointer to a valid RefundStatus

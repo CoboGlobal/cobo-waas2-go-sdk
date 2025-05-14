@@ -31,6 +31,12 @@ type SettlementInfo struct {
 	PendingAmount *string `json:"pending_amount,omitempty"`
 	// The amount unavailable for settlement or refund, in the specified fiat currency.
 	PendingCurrencyBalance *string `json:"pending_currency_balance,omitempty"`
+	// The amount already settled, in the specified cryptocurrency.
+	SettledAmount *string `json:"settled_amount,omitempty"`
+	// The created time of the settlement, represented as a UNIX timestamp in seconds.
+	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
+	// The updated time of the settlement, represented as a UNIX timestamp in seconds.
+	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 }
 
 type _SettlementInfo SettlementInfo
@@ -237,6 +243,102 @@ func (o *SettlementInfo) SetPendingCurrencyBalance(v string) {
 	o.PendingCurrencyBalance = &v
 }
 
+// GetSettledAmount returns the SettledAmount field value if set, zero value otherwise.
+func (o *SettlementInfo) GetSettledAmount() string {
+	if o == nil || IsNil(o.SettledAmount) {
+		var ret string
+		return ret
+	}
+	return *o.SettledAmount
+}
+
+// GetSettledAmountOk returns a tuple with the SettledAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementInfo) GetSettledAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.SettledAmount) {
+		return nil, false
+	}
+	return o.SettledAmount, true
+}
+
+// HasSettledAmount returns a boolean if a field has been set.
+func (o *SettlementInfo) HasSettledAmount() bool {
+	if o != nil && !IsNil(o.SettledAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettledAmount gets a reference to the given string and assigns it to the SettledAmount field.
+func (o *SettlementInfo) SetSettledAmount(v string) {
+	o.SettledAmount = &v
+}
+
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *SettlementInfo) GetCreatedTimestamp() int32 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementInfo) GetCreatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		return nil, false
+	}
+	return o.CreatedTimestamp, true
+}
+
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *SettlementInfo) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
+func (o *SettlementInfo) SetCreatedTimestamp(v int32) {
+	o.CreatedTimestamp = &v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *SettlementInfo) GetUpdatedTimestamp() int32 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.UpdatedTimestamp
+}
+
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementInfo) GetUpdatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		return nil, false
+	}
+	return o.UpdatedTimestamp, true
+}
+
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *SettlementInfo) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
+func (o *SettlementInfo) SetUpdatedTimestamp(v int32) {
+	o.UpdatedTimestamp = &v
+}
+
 func (o SettlementInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -262,6 +364,15 @@ func (o SettlementInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PendingCurrencyBalance) {
 		toSerialize["pending_currency_balance"] = o.PendingCurrencyBalance
+	}
+	if !IsNil(o.SettledAmount) {
+		toSerialize["settled_amount"] = o.SettledAmount
+	}
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
+	}
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	}
 	return toSerialize, nil
 }

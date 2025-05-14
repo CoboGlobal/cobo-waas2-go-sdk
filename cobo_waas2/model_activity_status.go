@@ -43,8 +43,8 @@ func (v *ActivityStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ActivityStatus("unknown")
-    return nil
+	*v = ActivityStatus("unknown")
+	return nil
 }
 
 // NewActivityStatusFromValue returns a pointer to a valid ActivityStatus

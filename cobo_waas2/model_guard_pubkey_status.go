@@ -53,8 +53,8 @@ func (v *GuardPubkeyStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = GuardPubkeyStatus("unknown")
-    return nil
+	*v = GuardPubkeyStatus("unknown")
+	return nil
 }
 
 // NewGuardPubkeyStatusFromValue returns a pointer to a valid GuardPubkeyStatus

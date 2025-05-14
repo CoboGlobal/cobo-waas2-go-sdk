@@ -45,8 +45,8 @@ func (v *ActivityType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ActivityType("unknown")
-    return nil
+	*v = ActivityType("unknown")
+	return nil
 }
 
 // NewActivityTypeFromValue returns a pointer to a valid ActivityType

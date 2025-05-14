@@ -57,8 +57,8 @@ func (v *TransactionStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransactionStatus("unknown")
-    return nil
+	*v = TransactionStatus("unknown")
+	return nil
 }
 
 // NewTransactionStatusFromValue returns a pointer to a valid TransactionStatus

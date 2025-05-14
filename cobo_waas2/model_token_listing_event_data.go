@@ -21,22 +21,22 @@ var _ MappedNullable = &TokenListingEventData{}
 type TokenListingEventData struct {
 	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data.
 	DataType string `json:"data_type"`
-	// Unique identifier of the token listing request
+	// The unique identifier of the token listing request.
 	RequestId string `json:"request_id"`
-	// chain_id of the blockchain where the token exists
+	// The ID of the blockchain where the token is deployed.
 	ChainId string `json:"chain_id"`
-	// Contract address of the token
+	// The token's contract address on the specified blockchain.
 	ContractAddress string `json:"contract_address"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 	Token *TokenInfo `json:"token,omitempty"`
 	Status TokenListingRequestStatus `json:"status"`
 	Source *TokenListingRequestSource `json:"source,omitempty"`
-	// Feedback provided by the admin for rejected requests
+	// The feedback provided by Cobo when a token listing request is rejected.
 	Feedback *string `json:"feedback,omitempty"`
-	// Timestamp when the request was created (in milliseconds since Unix epoch)
+	// The time when the request was created in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
-	// Timestamp when the request was last updated (in milliseconds since Unix epoch)
+	// The time when the request was last updated in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 }
 

@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TokenListingRequestStatus the model 'TokenListingRequestStatus'
+// TokenListingRequestStatus The status of the token listing request. - `Submitted`: The request has been submitted and is pending processing. - `Succeeded`: The token has been successfully listed. - `Failed`: The token listing request was rejected or failed to process. 
 type TokenListingRequestStatus string
 
 // List of TokenListingRequestStatus
@@ -43,8 +43,8 @@ func (v *TokenListingRequestStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TokenListingRequestStatus("unknown")
-    return nil
+	*v = TokenListingRequestStatus("unknown")
+	return nil
 }
 
 // NewTokenListingRequestStatusFromValue returns a pointer to a valid TokenListingRequestStatus

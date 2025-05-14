@@ -23,6 +23,10 @@ type BankAccount struct {
 	BankAccountId string `json:"bank_account_id"`
 	// JSON-formatted bank account details.
 	Info map[string]interface{} `json:"info"`
+	// The created time of the bank account, represented as a UNIX timestamp in seconds.
+	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
+	// The updated time of the bank account, represented as a UNIX timestamp in seconds.
+	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 }
 
 type _BankAccount BankAccount
@@ -94,6 +98,70 @@ func (o *BankAccount) SetInfo(v map[string]interface{}) {
 	o.Info = v
 }
 
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *BankAccount) GetCreatedTimestamp() int32 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankAccount) GetCreatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		return nil, false
+	}
+	return o.CreatedTimestamp, true
+}
+
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *BankAccount) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
+func (o *BankAccount) SetCreatedTimestamp(v int32) {
+	o.CreatedTimestamp = &v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *BankAccount) GetUpdatedTimestamp() int32 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.UpdatedTimestamp
+}
+
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BankAccount) GetUpdatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		return nil, false
+	}
+	return o.UpdatedTimestamp, true
+}
+
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *BankAccount) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
+func (o *BankAccount) SetUpdatedTimestamp(v int32) {
+	o.UpdatedTimestamp = &v
+}
+
 func (o BankAccount) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +174,12 @@ func (o BankAccount) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["bank_account_id"] = o.BankAccountId
 	toSerialize["info"] = o.Info
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
+	}
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
 	return toSerialize, nil
 }
 

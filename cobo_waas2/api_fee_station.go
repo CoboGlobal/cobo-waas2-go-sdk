@@ -27,7 +27,7 @@ type ApiEstimateFeeStationFeeRequest struct {
 	feeStationTransfer *FeeStationTransfer
 }
 
-// The information about a token transfer.
+// The information about a Fee Station top-up transaction.
 func (r ApiEstimateFeeStationFeeRequest) FeeStationTransfer(feeStationTransfer FeeStationTransfer) ApiEstimateFeeStationFeeRequest {
 	r.feeStationTransfer = &feeStationTransfer
 	return r
@@ -38,13 +38,13 @@ func (r ApiEstimateFeeStationFeeRequest) Execute() (*EstimatedFixedFee, *http.Re
 }
 
 /*
-EstimateFeeStationFee Estimate transaction fee
+EstimateFeeStationFee Estimate fee for Fee Station transaction
 
-This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
+This operation estimates the gas fee required for a top-up transaction sent by [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction) to provide gas to the sender of the original transaction.
 
-You need to specify the transaction information, including destination address, token ID.
+You need to provide the token ID and transfer amount.
 
-The response can contain different properties based on the transaction fee model used by the chain. For the legacy, EIP-1559, and UTXO fee models, Cobo also supports three different transaction speed levels: slow, recommended, and fast. For more information about estimating transaction fees, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
+For more information about transaction fee models and how fees are calculated, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -168,7 +168,7 @@ func (r ApiGetFeeStationTransactionByIdRequest) Execute() (*TransactionDetail, *
 /*
 GetFeeStationTransactionById Get Fee Station transaction information
 
-This operation retrieves detailed information about a specified Fee Station transaction, such as the transaction status, source address, destination address, and timestamp.
+This operation retrieves detailed information about a specified Fee Station transaction record, such as the transaction status, source address, destination address, and timestamp.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -327,7 +327,7 @@ func (r ApiListFeeStationAddressesRequest) Execute() (*ListAddresses200Response,
 /*
 ListFeeStationAddresses List Fee Station addresses
 
-This operation retrieves a list of addresses within your Fee Station.
+This operation retrieves a list of deposit addresses of your Fee Station, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -528,13 +528,13 @@ func (r ApiListFeeStationTransactionsRequest) AssetIds(assetIds string) ApiListF
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If not provided, the default value is 90 days before the current time. This default value is subject to change. 
 func (r ApiListFeeStationTransactionsRequest) MinCreatedTimestamp(minCreatedTimestamp int64) ApiListFeeStationTransactionsRequest {
 	r.minCreatedTimestamp = &minCreatedTimestamp
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If not provided, the default value is the current time. This default value is subject to change. 
 func (r ApiListFeeStationTransactionsRequest) MaxCreatedTimestamp(maxCreatedTimestamp int64) ApiListFeeStationTransactionsRequest {
 	r.maxCreatedTimestamp = &maxCreatedTimestamp
 	return r

@@ -41,8 +41,8 @@ func (v *SettlementType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = SettlementType("unknown")
-    return nil
+	*v = SettlementType("unknown")
+	return nil
 }
 
 // NewSettlementTypeFromValue returns a pointer to a valid SettlementType

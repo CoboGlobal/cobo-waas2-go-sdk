@@ -6,12 +6,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | Pointer to **string** | The request ID provided by you when creating the refund request. | [optional] 
 **RefundId** | **string** | The refund order ID. | 
+**OrderId** | Pointer to **string** | The order ID corresponding to this refund. | [optional] 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **TokenId** | **string** | The ID of the cryptocurrency used for refund. | 
 **ChainId** | **string** | The ID of the blockchain network on which the refund transaction occurs. | 
 **Amount** | **string** | The amount in cryptocurrency to be returned for this refund order. | 
 **ToAddress** | **string** | The recipient&#39;s wallet address where the refund will be sent. | 
 **Status** | [**RefundStatus**](RefundStatus.md) |  | 
+**RefundType** | Pointer to [**RefundType**](RefundType.md) |  | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
+**Initiator** | Pointer to **string** | The initiator of this refund order, usually the user&#39;s API key. | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process. | [optional] 
 
 ## Methods
@@ -77,6 +82,31 @@ and a boolean to check if the value has been set.
 
 SetRefundId sets RefundId field to given value.
 
+
+### GetOrderId
+
+`func (o *Refund) GetOrderId() string`
+
+GetOrderId returns the OrderId field if non-nil, zero value otherwise.
+
+### GetOrderIdOk
+
+`func (o *Refund) GetOrderIdOk() (*string, bool)`
+
+GetOrderIdOk returns a tuple with the OrderId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrderId
+
+`func (o *Refund) SetOrderId(v string)`
+
+SetOrderId sets OrderId field to given value.
+
+### HasOrderId
+
+`func (o *Refund) HasOrderId() bool`
+
+HasOrderId returns a boolean if a field has been set.
 
 ### GetMerchantId
 
@@ -202,6 +232,106 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetRefundType
+
+`func (o *Refund) GetRefundType() RefundType`
+
+GetRefundType returns the RefundType field if non-nil, zero value otherwise.
+
+### GetRefundTypeOk
+
+`func (o *Refund) GetRefundTypeOk() (*RefundType, bool)`
+
+GetRefundTypeOk returns a tuple with the RefundType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRefundType
+
+`func (o *Refund) SetRefundType(v RefundType)`
+
+SetRefundType sets RefundType field to given value.
+
+### HasRefundType
+
+`func (o *Refund) HasRefundType() bool`
+
+HasRefundType returns a boolean if a field has been set.
+
+### GetCreatedTimestamp
+
+`func (o *Refund) GetCreatedTimestamp() int32`
+
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
+
+### GetCreatedTimestampOk
+
+`func (o *Refund) GetCreatedTimestampOk() (*int32, bool)`
+
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedTimestamp
+
+`func (o *Refund) SetCreatedTimestamp(v int32)`
+
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
+
+### HasCreatedTimestamp
+
+`func (o *Refund) HasCreatedTimestamp() bool`
+
+HasCreatedTimestamp returns a boolean if a field has been set.
+
+### GetUpdatedTimestamp
+
+`func (o *Refund) GetUpdatedTimestamp() int32`
+
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
+
+### GetUpdatedTimestampOk
+
+`func (o *Refund) GetUpdatedTimestampOk() (*int32, bool)`
+
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedTimestamp
+
+`func (o *Refund) SetUpdatedTimestamp(v int32)`
+
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
+
+### HasUpdatedTimestamp
+
+`func (o *Refund) HasUpdatedTimestamp() bool`
+
+HasUpdatedTimestamp returns a boolean if a field has been set.
+
+### GetInitiator
+
+`func (o *Refund) GetInitiator() string`
+
+GetInitiator returns the Initiator field if non-nil, zero value otherwise.
+
+### GetInitiatorOk
+
+`func (o *Refund) GetInitiatorOk() (*string, bool)`
+
+GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitiator
+
+`func (o *Refund) SetInitiator(v string)`
+
+SetInitiator sets Initiator field to given value.
+
+### HasInitiator
+
+`func (o *Refund) HasInitiator() bool`
+
+HasInitiator returns a boolean if a field has been set.
 
 ### GetTransactions
 

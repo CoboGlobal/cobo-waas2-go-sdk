@@ -47,8 +47,8 @@ func (v *SettleRequestStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = SettleRequestStatus("unknown")
-    return nil
+	*v = SettleRequestStatus("unknown")
+	return nil
 }
 
 // NewSettleRequestStatusFromValue returns a pointer to a valid SettleRequestStatus

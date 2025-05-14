@@ -23,6 +23,8 @@ type PaymentTransaction struct {
 	TxId string `json:"tx_id"`
 	// The transaction hash.
 	TxHash *string `json:"tx_hash,omitempty"`
+	// The ID of the cryptocurrency.
+	TokenId *string `json:"token_id,omitempty"`
 	// The source address of the transaction.
 	FromAddress string `json:"from_address"`
 	// The destination address of the transaction.
@@ -116,6 +118,38 @@ func (o *PaymentTransaction) HasTxHash() bool {
 // SetTxHash gets a reference to the given string and assigns it to the TxHash field.
 func (o *PaymentTransaction) SetTxHash(v string) {
 	o.TxHash = &v
+}
+
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *PaymentTransaction) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentTransaction) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *PaymentTransaction) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *PaymentTransaction) SetTokenId(v string) {
+	o.TokenId = &v
 }
 
 // GetFromAddress returns the FromAddress field value
@@ -275,6 +309,9 @@ func (o PaymentTransaction) ToMap() (map[string]interface{}, error) {
 	toSerialize["tx_id"] = o.TxId
 	if !IsNil(o.TxHash) {
 		toSerialize["tx_hash"] = o.TxHash
+	}
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
 	}
 	toSerialize["from_address"] = o.FromAddress
 	toSerialize["to_address"] = o.ToAddress

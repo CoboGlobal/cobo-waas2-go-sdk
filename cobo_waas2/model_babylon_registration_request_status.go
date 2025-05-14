@@ -43,8 +43,8 @@ func (v *BabylonRegistrationRequestStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = BabylonRegistrationRequestStatus("unknown")
-    return nil
+	*v = BabylonRegistrationRequestStatus("unknown")
+	return nil
 }
 
 // NewBabylonRegistrationRequestStatusFromValue returns a pointer to a valid BabylonRegistrationRequestStatus

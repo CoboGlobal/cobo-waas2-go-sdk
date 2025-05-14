@@ -43,8 +43,8 @@ func (v *WebhookEventStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = WebhookEventStatus("unknown")
-    return nil
+	*v = WebhookEventStatus("unknown")
+	return nil
 }
 
 // NewWebhookEventStatusFromValue returns a pointer to a valid WebhookEventStatus

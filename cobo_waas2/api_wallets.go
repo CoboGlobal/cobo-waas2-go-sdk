@@ -49,6 +49,8 @@ CheckAddressChainsValidity Check address validity across chains
 
 This operation verifies if a given address is valid for a list of chains.
 
+<Note>You can specify up to 20 chain IDs in a single request.</Note>
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCheckAddressChainsValidityRequest
@@ -592,7 +594,7 @@ type ApiCreateTokenListingRequestRequest struct {
 	createTokenListingRequestRequest *CreateTokenListingRequestRequest
 }
 
-// Request body for submitting a token listing request. &lt;note&gt;   wallet_type only supports &#x60;Custodial&#x60; and &#x60;MPC&#x60;.   wallet_subtype only supports &#x60;Asset&#x60;, &#x60;Web3&#x60;, and &#x60;Org-Controlled&#x60;. &lt;/note&gt; 
+// Request body for submitting a token listing request. 
 func (r ApiCreateTokenListingRequestRequest) CreateTokenListingRequestRequest(createTokenListingRequestRequest CreateTokenListingRequestRequest) ApiCreateTokenListingRequestRequest {
 	r.createTokenListingRequestRequest = &createTokenListingRequestRequest
 	return r
@@ -603,10 +605,11 @@ func (r ApiCreateTokenListingRequestRequest) Execute() (*CreateTokenListingReque
 }
 
 /*
-CreateTokenListingRequest Submit token listing request
+CreateTokenListingRequest Create token listing request
 
-Submit a request to add a non-listed token.
-The token must exist on the specified blockchain with a valid contract address.
+This operation creates a token listing request. The token to be listed must already be deployed on the specified blockchain and have a valid contract address.
+
+<note>Currently, tokens listed through this operation are only supported in wallets of type `Custodial` or `MPC`, and subtype `Asset`, `Web3`, or `Org-Controlled`.</note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1412,14 +1415,13 @@ func (r ApiGetTokenListingRequestByRequestIdRequest) Execute() (*TokenListing, *
 }
 
 /*
-GetTokenListingRequestByRequestId Get token listing request details
+GetTokenListingRequestByRequestId Get token listing request
 
-Retrieve detailed information about a specific token listing request
-including its current status and any admin feedback.
+This operation retrieves detailed information about a specific token listing request, including its current status.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param requestId The unique identifier of the token listing request
+ @param requestId The unique identifier of the token listing request.
  @return ApiGetTokenListingRequestByRequestIdRequest
 */
 func (a *WalletsAPIService) GetTokenListingRequestByRequestId(ctx context.Context, requestId string) ApiGetTokenListingRequestByRequestIdRequest {
@@ -3123,7 +3125,7 @@ func (r ApiListTokenListingRequestsRequest) After(after string) ApiListTokenList
 	return r
 }
 
-// Filter by request status
+// The current status of the token listing request.
 func (r ApiListTokenListingRequestsRequest) Status(status TokenListingRequestStatus) ApiListTokenListingRequestsRequest {
 	r.status = &status
 	return r
@@ -3134,10 +3136,9 @@ func (r ApiListTokenListingRequestsRequest) Execute() (*ListTokenListingRequests
 }
 
 /*
-ListTokenListingRequests Get all token listing requests
+ListTokenListingRequests List token listing requests
 
-Retrieve a list of all token listing requests.
-Results can be filtered and paginated.
+This operation lists all token listing requests in your organization. You can filter the results by request status.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

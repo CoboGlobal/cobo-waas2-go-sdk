@@ -41,8 +41,8 @@ func (v *TransferDestinationType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransferDestinationType("unknown")
-    return nil
+	*v = TransferDestinationType("unknown")
+	return nil
 }
 
 // NewTransferDestinationTypeFromValue returns a pointer to a valid TransferDestinationType

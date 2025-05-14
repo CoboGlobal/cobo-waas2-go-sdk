@@ -25,15 +25,15 @@ type SwapActivityDetail struct {
 	RequestId *string `json:"request_id,omitempty"`
 	// The unique identifier of the wallet.
 	WalletId *string `json:"wallet_id,omitempty"`
-	// The token symbol to swap from.
+	// The token ID to pay.
 	PayTokenId *string `json:"pay_token_id,omitempty"`
-	// The token symbol to swap to.
+	// The token ID to receive.
 	ReceiveTokenId *string `json:"receive_token_id,omitempty"`
 	// The amount of tokens to bridge.
 	PayAmount *string `json:"pay_amount,omitempty"`
 	// The amount of tokens to receive.
 	ReceiveAmount *string `json:"receive_amount,omitempty"`
-	// The fee token symbol.
+	// The fee token ID.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The amount of fee.
 	FeeAmount *string `json:"fee_amount,omitempty"`

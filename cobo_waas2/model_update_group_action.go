@@ -39,8 +39,8 @@ func (v *UpdateGroupAction) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = UpdateGroupAction("unknown")
-    return nil
+	*v = UpdateGroupAction("unknown")
+	return nil
 }
 
 // NewUpdateGroupActionFromValue returns a pointer to a valid UpdateGroupAction

@@ -45,8 +45,8 @@ func (v *KeyShareHolderStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = KeyShareHolderStatus("unknown")
-    return nil
+	*v = KeyShareHolderStatus("unknown")
+	return nil
 }
 
 // NewKeyShareHolderStatusFromValue returns a pointer to a valid KeyShareHolderStatus

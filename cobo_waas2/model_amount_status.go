@@ -55,8 +55,8 @@ func (v *AmountStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = AmountStatus("unknown")
-    return nil
+	*v = AmountStatus("unknown")
+	return nil
 }
 
 // NewAmountStatusFromValue returns a pointer to a valid AmountStatus

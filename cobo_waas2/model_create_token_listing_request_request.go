@@ -21,9 +21,9 @@ var _ MappedNullable = &CreateTokenListingRequestRequest{}
 type CreateTokenListingRequestRequest struct {
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
-	// ID of the blockchain where the token exists
+	// The ID of the blockchain where the token is deployed.
 	ChainId string `json:"chain_id"`
-	// Contract address of the token
+	// The token's contract address on the specified blockchain.
 	ContractAddress string `json:"contract_address"`
 }
 

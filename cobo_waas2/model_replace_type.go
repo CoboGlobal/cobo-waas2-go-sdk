@@ -43,8 +43,8 @@ func (v *ReplaceType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ReplaceType("unknown")
-    return nil
+	*v = ReplaceType("unknown")
+	return nil
 }
 
 // NewReplaceTypeFromValue returns a pointer to a valid ReplaceType

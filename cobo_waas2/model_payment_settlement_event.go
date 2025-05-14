@@ -27,6 +27,12 @@ type PaymentSettlementEvent struct {
 	RequestId string `json:"request_id"`
 	Status SettleRequestStatus `json:"status"`
 	Settlements []SettlementDetail `json:"settlements"`
+	// The created time of the settlement request, represented as a UNIX timestamp in seconds.
+	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
+	// The updated time of the settlement request, represented as a UNIX timestamp in seconds.
+	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
+	// The initiator of this settlement request, usually the user's API key.
+	Initiator *string `json:"initiator,omitempty"`
 }
 
 type _PaymentSettlementEvent PaymentSettlementEvent
@@ -173,6 +179,102 @@ func (o *PaymentSettlementEvent) SetSettlements(v []SettlementDetail) {
 	o.Settlements = v
 }
 
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *PaymentSettlementEvent) GetCreatedTimestamp() int32 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSettlementEvent) GetCreatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		return nil, false
+	}
+	return o.CreatedTimestamp, true
+}
+
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *PaymentSettlementEvent) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
+func (o *PaymentSettlementEvent) SetCreatedTimestamp(v int32) {
+	o.CreatedTimestamp = &v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *PaymentSettlementEvent) GetUpdatedTimestamp() int32 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.UpdatedTimestamp
+}
+
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSettlementEvent) GetUpdatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		return nil, false
+	}
+	return o.UpdatedTimestamp, true
+}
+
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *PaymentSettlementEvent) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
+func (o *PaymentSettlementEvent) SetUpdatedTimestamp(v int32) {
+	o.UpdatedTimestamp = &v
+}
+
+// GetInitiator returns the Initiator field value if set, zero value otherwise.
+func (o *PaymentSettlementEvent) GetInitiator() string {
+	if o == nil || IsNil(o.Initiator) {
+		var ret string
+		return ret
+	}
+	return *o.Initiator
+}
+
+// GetInitiatorOk returns a tuple with the Initiator field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSettlementEvent) GetInitiatorOk() (*string, bool) {
+	if o == nil || IsNil(o.Initiator) {
+		return nil, false
+	}
+	return o.Initiator, true
+}
+
+// HasInitiator returns a boolean if a field has been set.
+func (o *PaymentSettlementEvent) HasInitiator() bool {
+	if o != nil && !IsNil(o.Initiator) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitiator gets a reference to the given string and assigns it to the Initiator field.
+func (o *PaymentSettlementEvent) SetInitiator(v string) {
+	o.Initiator = &v
+}
+
 func (o PaymentSettlementEvent) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -188,6 +290,15 @@ func (o PaymentSettlementEvent) ToMap() (map[string]interface{}, error) {
 	toSerialize["request_id"] = o.RequestId
 	toSerialize["status"] = o.Status
 	toSerialize["settlements"] = o.Settlements
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
+	}
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
+	if !IsNil(o.Initiator) {
+		toSerialize["initiator"] = o.Initiator
+	}
 	return toSerialize, nil
 }
 

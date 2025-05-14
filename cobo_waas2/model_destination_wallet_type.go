@@ -41,8 +41,8 @@ func (v *DestinationWalletType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = DestinationWalletType("unknown")
-    return nil
+	*v = DestinationWalletType("unknown")
+	return nil
 }
 
 // NewDestinationWalletTypeFromValue returns a pointer to a valid DestinationWalletType

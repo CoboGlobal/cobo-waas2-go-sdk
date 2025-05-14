@@ -39,8 +39,8 @@ func (v *StakeSourceType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = StakeSourceType("unknown")
-    return nil
+	*v = StakeSourceType("unknown")
+	return nil
 }
 
 // NewStakeSourceTypeFromValue returns a pointer to a valid StakeSourceType

@@ -17,24 +17,24 @@ import (
 // checks if the TokenListing type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TokenListing{}
 
-// TokenListing Detailed information about a token listing request
+// TokenListing Detailed information about a token listing request.
 type TokenListing struct {
-	// Unique identifier of the token listing request
+	// The unique identifier of the token listing request.
 	RequestId string `json:"request_id"`
-	// chain_id of the blockchain where the token exists
+	// The ID of the blockchain where the token is deployed.
 	ChainId string `json:"chain_id"`
-	// Contract address of the token
+	// The token's contract address on the specified blockchain.
 	ContractAddress string `json:"contract_address"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 	Token *TokenInfo `json:"token,omitempty"`
 	Status TokenListingRequestStatus `json:"status"`
 	Source *TokenListingRequestSource `json:"source,omitempty"`
-	// Feedback provided by the admin for rejected requests
+	// The feedback provided by Cobo when a token listing request is rejected.
 	Feedback *string `json:"feedback,omitempty"`
-	// Timestamp when the request was created (in milliseconds since Unix epoch)
+	// The time when the request was created in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
-	// Timestamp when the request was last updated (in milliseconds since Unix epoch)
+	// The time when the request was last updated in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 }
 

@@ -57,8 +57,8 @@ func (v *AddressEncoding) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = AddressEncoding("unknown")
-    return nil
+	*v = AddressEncoding("unknown")
+	return nil
 }
 
 // NewAddressEncodingFromValue returns a pointer to a valid AddressEncoding

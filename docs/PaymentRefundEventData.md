@@ -7,12 +7,17 @@ Name | Type | Description | Notes
 **DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. | 
 **RequestId** | Pointer to **string** | The request ID provided by you when creating the refund request. | [optional] 
 **RefundId** | **string** | The refund order ID. | 
+**OrderId** | Pointer to **string** | The order ID corresponding to this refund. | [optional] 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **TokenId** | **string** | The ID of the cryptocurrency used for refund. | 
 **ChainId** | **string** | The ID of the blockchain network on which the refund transaction occurs. | 
 **Amount** | **string** | The amount in cryptocurrency to be returned for this refund order. | 
 **ToAddress** | **string** | The recipient&#39;s wallet address where the refund will be sent. | 
 **Status** | [**RefundStatus**](RefundStatus.md) |  | 
+**RefundType** | Pointer to [**RefundType**](RefundType.md) |  | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
+**Initiator** | Pointer to **string** | The initiator of this refund order, usually the user&#39;s API key. | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process. | [optional] 
 
 ## Methods
@@ -98,6 +103,31 @@ and a boolean to check if the value has been set.
 
 SetRefundId sets RefundId field to given value.
 
+
+### GetOrderId
+
+`func (o *PaymentRefundEventData) GetOrderId() string`
+
+GetOrderId returns the OrderId field if non-nil, zero value otherwise.
+
+### GetOrderIdOk
+
+`func (o *PaymentRefundEventData) GetOrderIdOk() (*string, bool)`
+
+GetOrderIdOk returns a tuple with the OrderId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrderId
+
+`func (o *PaymentRefundEventData) SetOrderId(v string)`
+
+SetOrderId sets OrderId field to given value.
+
+### HasOrderId
+
+`func (o *PaymentRefundEventData) HasOrderId() bool`
+
+HasOrderId returns a boolean if a field has been set.
 
 ### GetMerchantId
 
@@ -223,6 +253,106 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetRefundType
+
+`func (o *PaymentRefundEventData) GetRefundType() RefundType`
+
+GetRefundType returns the RefundType field if non-nil, zero value otherwise.
+
+### GetRefundTypeOk
+
+`func (o *PaymentRefundEventData) GetRefundTypeOk() (*RefundType, bool)`
+
+GetRefundTypeOk returns a tuple with the RefundType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRefundType
+
+`func (o *PaymentRefundEventData) SetRefundType(v RefundType)`
+
+SetRefundType sets RefundType field to given value.
+
+### HasRefundType
+
+`func (o *PaymentRefundEventData) HasRefundType() bool`
+
+HasRefundType returns a boolean if a field has been set.
+
+### GetCreatedTimestamp
+
+`func (o *PaymentRefundEventData) GetCreatedTimestamp() int32`
+
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
+
+### GetCreatedTimestampOk
+
+`func (o *PaymentRefundEventData) GetCreatedTimestampOk() (*int32, bool)`
+
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedTimestamp
+
+`func (o *PaymentRefundEventData) SetCreatedTimestamp(v int32)`
+
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
+
+### HasCreatedTimestamp
+
+`func (o *PaymentRefundEventData) HasCreatedTimestamp() bool`
+
+HasCreatedTimestamp returns a boolean if a field has been set.
+
+### GetUpdatedTimestamp
+
+`func (o *PaymentRefundEventData) GetUpdatedTimestamp() int32`
+
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
+
+### GetUpdatedTimestampOk
+
+`func (o *PaymentRefundEventData) GetUpdatedTimestampOk() (*int32, bool)`
+
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedTimestamp
+
+`func (o *PaymentRefundEventData) SetUpdatedTimestamp(v int32)`
+
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
+
+### HasUpdatedTimestamp
+
+`func (o *PaymentRefundEventData) HasUpdatedTimestamp() bool`
+
+HasUpdatedTimestamp returns a boolean if a field has been set.
+
+### GetInitiator
+
+`func (o *PaymentRefundEventData) GetInitiator() string`
+
+GetInitiator returns the Initiator field if non-nil, zero value otherwise.
+
+### GetInitiatorOk
+
+`func (o *PaymentRefundEventData) GetInitiatorOk() (*string, bool)`
+
+GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitiator
+
+`func (o *PaymentRefundEventData) SetInitiator(v string)`
+
+SetInitiator sets Initiator field to given value.
+
+### HasInitiator
+
+`func (o *PaymentRefundEventData) HasInitiator() bool`
+
+HasInitiator returns a boolean if a field has been set.
 
 ### GetTransactions
 

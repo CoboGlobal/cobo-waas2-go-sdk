@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **RequestId** | **string** | The request ID provided by you when creating the settlement request. | 
 **Status** | [**SettleRequestStatus**](SettleRequestStatus.md) |  | 
 **Settlements** | [**[]SettlementDetail**](SettlementDetail.md) |  | 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
+**Initiator** | Pointer to **string** | The initiator of this settlement request, usually the user&#39;s API key. | [optional] 
 
 ## Methods
 
@@ -128,6 +131,81 @@ and a boolean to check if the value has been set.
 
 SetSettlements sets Settlements field to given value.
 
+
+### GetCreatedTimestamp
+
+`func (o *PaymentSettlementEvent) GetCreatedTimestamp() int32`
+
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
+
+### GetCreatedTimestampOk
+
+`func (o *PaymentSettlementEvent) GetCreatedTimestampOk() (*int32, bool)`
+
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedTimestamp
+
+`func (o *PaymentSettlementEvent) SetCreatedTimestamp(v int32)`
+
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
+
+### HasCreatedTimestamp
+
+`func (o *PaymentSettlementEvent) HasCreatedTimestamp() bool`
+
+HasCreatedTimestamp returns a boolean if a field has been set.
+
+### GetUpdatedTimestamp
+
+`func (o *PaymentSettlementEvent) GetUpdatedTimestamp() int32`
+
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
+
+### GetUpdatedTimestampOk
+
+`func (o *PaymentSettlementEvent) GetUpdatedTimestampOk() (*int32, bool)`
+
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedTimestamp
+
+`func (o *PaymentSettlementEvent) SetUpdatedTimestamp(v int32)`
+
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
+
+### HasUpdatedTimestamp
+
+`func (o *PaymentSettlementEvent) HasUpdatedTimestamp() bool`
+
+HasUpdatedTimestamp returns a boolean if a field has been set.
+
+### GetInitiator
+
+`func (o *PaymentSettlementEvent) GetInitiator() string`
+
+GetInitiator returns the Initiator field if non-nil, zero value otherwise.
+
+### GetInitiatorOk
+
+`func (o *PaymentSettlementEvent) GetInitiatorOk() (*string, bool)`
+
+GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitiator
+
+`func (o *PaymentSettlementEvent) SetInitiator(v string)`
+
+SetInitiator sets Initiator field to given value.
+
+### HasInitiator
+
+`func (o *PaymentSettlementEvent) HasInitiator() bool`
+
+HasInitiator returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

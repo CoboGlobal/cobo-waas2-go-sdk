@@ -23,12 +23,20 @@ type SettlementDetail struct {
 	TokenId *string `json:"token_id,omitempty"`
 	// The ID of the blockchain network on which the settlement occurred.
 	ChainId *string `json:"chain_id,omitempty"`
+	// The Merchant ID associated with this settlement.
+	MerchantId *string `json:"merchant_id,omitempty"`
 	// The settlement amount.  - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency.  - If `token_id` is not specified, this represents the settlement amount in the specified fiat currency. 
 	Amount *string `json:"amount,omitempty"`
+	// The settled amount of this settlement detail.  - If `token_id` is specified, this represents the actual settled amount in the specified cryptocurrency.  - If `token_id` is not specified, this represents the actual settled amount in the specified fiat currency. 
+	SettledAmount *string `json:"settled_amount,omitempty"`
 	Status *SettleStatus `json:"status,omitempty"`
 	BankAccount *BankAccount `json:"bank_account,omitempty"`
 	// An array of transactions associated with this settlement request. Each transaction represents a separate blockchain operation related to the settlement process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
+	// The created time of the settlement, represented as a UNIX timestamp in seconds.
+	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
+	// The updated time of the settlement, represented as a UNIX timestamp in seconds.
+	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 }
 
 // NewSettlementDetail instantiates a new SettlementDetail object
@@ -144,6 +152,38 @@ func (o *SettlementDetail) SetChainId(v string) {
 	o.ChainId = &v
 }
 
+// GetMerchantId returns the MerchantId field value if set, zero value otherwise.
+func (o *SettlementDetail) GetMerchantId() string {
+	if o == nil || IsNil(o.MerchantId) {
+		var ret string
+		return ret
+	}
+	return *o.MerchantId
+}
+
+// GetMerchantIdOk returns a tuple with the MerchantId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetMerchantIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MerchantId) {
+		return nil, false
+	}
+	return o.MerchantId, true
+}
+
+// HasMerchantId returns a boolean if a field has been set.
+func (o *SettlementDetail) HasMerchantId() bool {
+	if o != nil && !IsNil(o.MerchantId) {
+		return true
+	}
+
+	return false
+}
+
+// SetMerchantId gets a reference to the given string and assigns it to the MerchantId field.
+func (o *SettlementDetail) SetMerchantId(v string) {
+	o.MerchantId = &v
+}
+
 // GetAmount returns the Amount field value if set, zero value otherwise.
 func (o *SettlementDetail) GetAmount() string {
 	if o == nil || IsNil(o.Amount) {
@@ -174,6 +214,38 @@ func (o *SettlementDetail) HasAmount() bool {
 // SetAmount gets a reference to the given string and assigns it to the Amount field.
 func (o *SettlementDetail) SetAmount(v string) {
 	o.Amount = &v
+}
+
+// GetSettledAmount returns the SettledAmount field value if set, zero value otherwise.
+func (o *SettlementDetail) GetSettledAmount() string {
+	if o == nil || IsNil(o.SettledAmount) {
+		var ret string
+		return ret
+	}
+	return *o.SettledAmount
+}
+
+// GetSettledAmountOk returns a tuple with the SettledAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetSettledAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.SettledAmount) {
+		return nil, false
+	}
+	return o.SettledAmount, true
+}
+
+// HasSettledAmount returns a boolean if a field has been set.
+func (o *SettlementDetail) HasSettledAmount() bool {
+	if o != nil && !IsNil(o.SettledAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettledAmount gets a reference to the given string and assigns it to the SettledAmount field.
+func (o *SettlementDetail) SetSettledAmount(v string) {
+	o.SettledAmount = &v
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
@@ -272,6 +344,70 @@ func (o *SettlementDetail) SetTransactions(v []PaymentTransaction) {
 	o.Transactions = v
 }
 
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *SettlementDetail) GetCreatedTimestamp() int32 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetCreatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		return nil, false
+	}
+	return o.CreatedTimestamp, true
+}
+
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *SettlementDetail) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
+func (o *SettlementDetail) SetCreatedTimestamp(v int32) {
+	o.CreatedTimestamp = &v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *SettlementDetail) GetUpdatedTimestamp() int32 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.UpdatedTimestamp
+}
+
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetUpdatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		return nil, false
+	}
+	return o.UpdatedTimestamp, true
+}
+
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *SettlementDetail) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
+func (o *SettlementDetail) SetUpdatedTimestamp(v int32) {
+	o.UpdatedTimestamp = &v
+}
+
 func (o SettlementDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -291,8 +427,14 @@ func (o SettlementDetail) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ChainId) {
 		toSerialize["chain_id"] = o.ChainId
 	}
+	if !IsNil(o.MerchantId) {
+		toSerialize["merchant_id"] = o.MerchantId
+	}
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount
+	}
+	if !IsNil(o.SettledAmount) {
+		toSerialize["settled_amount"] = o.SettledAmount
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
@@ -302,6 +444,12 @@ func (o SettlementDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Transactions) {
 		toSerialize["transactions"] = o.Transactions
+	}
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
+	}
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	}
 	return toSerialize, nil
 }

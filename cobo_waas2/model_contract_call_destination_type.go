@@ -41,8 +41,8 @@ func (v *ContractCallDestinationType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ContractCallDestinationType("unknown")
-    return nil
+	*v = ContractCallDestinationType("unknown")
+	return nil
 }
 
 // NewContractCallDestinationTypeFromValue returns a pointer to a valid ContractCallDestinationType
