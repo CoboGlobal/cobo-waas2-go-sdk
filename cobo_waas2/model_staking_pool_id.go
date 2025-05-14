@@ -63,8 +63,8 @@ func (v *StakingPoolId) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = StakingPoolId("unknown")
-    return nil
+	*v = StakingPoolId("unknown")
+	return nil
 }
 
 // NewStakingPoolIdFromValue returns a pointer to a valid StakingPoolId

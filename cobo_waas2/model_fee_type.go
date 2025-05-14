@@ -45,8 +45,8 @@ func (v *FeeType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = FeeType("unknown")
-    return nil
+	*v = FeeType("unknown")
+	return nil
 }
 
 // NewFeeTypeFromValue returns a pointer to a valid FeeType

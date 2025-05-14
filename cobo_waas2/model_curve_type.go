@@ -41,8 +41,8 @@ func (v *CurveType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = CurveType("unknown")
-    return nil
+	*v = CurveType("unknown")
+	return nil
 }
 
 // NewCurveTypeFromValue returns a pointer to a valid CurveType

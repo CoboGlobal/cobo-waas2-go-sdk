@@ -41,8 +41,8 @@ func (v *SelectedEntityType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = SelectedEntityType("unknown")
-    return nil
+	*v = SelectedEntityType("unknown")
+	return nil
 }
 
 // NewSelectedEntityTypeFromValue returns a pointer to a valid SelectedEntityType

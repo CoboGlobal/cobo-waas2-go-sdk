@@ -41,8 +41,8 @@ func (v *MPCVaultType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = MPCVaultType("unknown")
-    return nil
+	*v = MPCVaultType("unknown")
+	return nil
 }
 
 // NewMPCVaultTypeFromValue returns a pointer to a valid MPCVaultType

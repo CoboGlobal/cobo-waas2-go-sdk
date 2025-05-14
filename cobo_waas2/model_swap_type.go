@@ -41,8 +41,8 @@ func (v *SwapType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = SwapType("unknown")
-    return nil
+	*v = SwapType("unknown")
+	return nil
 }
 
 // NewSwapTypeFromValue returns a pointer to a valid SwapType

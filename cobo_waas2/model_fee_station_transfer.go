@@ -17,7 +17,7 @@ import (
 // checks if the FeeStationTransfer type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FeeStationTransfer{}
 
-// FeeStationTransfer The information about a token transfer.
+// FeeStationTransfer The information about a Fee Station top-up transaction.
 type FeeStationTransfer struct {
 	// The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`

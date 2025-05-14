@@ -43,8 +43,8 @@ func (v *TransactionExtraType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransactionExtraType("unknown")
-    return nil
+	*v = TransactionExtraType("unknown")
+	return nil
 }
 
 // NewTransactionExtraTypeFromValue returns a pointer to a valid TransactionExtraType

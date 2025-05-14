@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TxId** | **string** | The transaction ID. | 
 **TxHash** | Pointer to **string** | The transaction hash. | [optional] 
+**TokenId** | Pointer to **string** | The ID of the cryptocurrency. | [optional] 
 **FromAddress** | **string** | The source address of the transaction. | 
 **ToAddress** | **string** | The destination address of the transaction. | 
 **Amount** | **string** | The amount of cryptocurrency transferred, as a decimal string. | 
@@ -76,6 +77,31 @@ SetTxHash sets TxHash field to given value.
 `func (o *PaymentTransaction) HasTxHash() bool`
 
 HasTxHash returns a boolean if a field has been set.
+
+### GetTokenId
+
+`func (o *PaymentTransaction) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *PaymentTransaction) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *PaymentTransaction) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+### HasTokenId
+
+`func (o *PaymentTransaction) HasTokenId() bool`
+
+HasTokenId returns a boolean if a field has been set.
 
 ### GetFromAddress
 

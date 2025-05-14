@@ -10,9 +10,11 @@ Name | Type | Description | Notes
 **Memo** | Pointer to **string** | The memo. | [optional] 
 **WalletName** | Pointer to **string** | The wallet name. | [optional] 
 **WalletType** | Pointer to [**WalletType**](WalletType.md) |  | [optional] 
+**WalletSubtype** | Pointer to [**WalletSubtype**](WalletSubtype.md) |  | [optional] 
 **Label** | **string** | The address label. | 
 **ChainIds** | Pointer to **[]string** | A list of chain IDs. | [optional] 
 **Email** | Pointer to **string** | The email of the address owner. | [optional] 
+**Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
 
 ## Methods
 
@@ -168,6 +170,31 @@ SetWalletType sets WalletType field to given value.
 
 HasWalletType returns a boolean if a field has been set.
 
+### GetWalletSubtype
+
+`func (o *AddressBook) GetWalletSubtype() WalletSubtype`
+
+GetWalletSubtype returns the WalletSubtype field if non-nil, zero value otherwise.
+
+### GetWalletSubtypeOk
+
+`func (o *AddressBook) GetWalletSubtypeOk() (*WalletSubtype, bool)`
+
+GetWalletSubtypeOk returns a tuple with the WalletSubtype field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWalletSubtype
+
+`func (o *AddressBook) SetWalletSubtype(v WalletSubtype)`
+
+SetWalletSubtype sets WalletSubtype field to given value.
+
+### HasWalletSubtype
+
+`func (o *AddressBook) HasWalletSubtype() bool`
+
+HasWalletSubtype returns a boolean if a field has been set.
+
 ### GetLabel
 
 `func (o *AddressBook) GetLabel() string`
@@ -237,6 +264,31 @@ SetEmail sets Email field to given value.
 `func (o *AddressBook) HasEmail() bool`
 
 HasEmail returns a boolean if a field has been set.
+
+### GetEncoding
+
+`func (o *AddressBook) GetEncoding() AddressEncoding`
+
+GetEncoding returns the Encoding field if non-nil, zero value otherwise.
+
+### GetEncodingOk
+
+`func (o *AddressBook) GetEncodingOk() (*AddressEncoding, bool)`
+
+GetEncodingOk returns a tuple with the Encoding field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEncoding
+
+`func (o *AddressBook) SetEncoding(v AddressEncoding)`
+
+SetEncoding sets Encoding field to given value.
+
+### HasEncoding
+
+`func (o *AddressBook) HasEncoding() bool`
+
+HasEncoding returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

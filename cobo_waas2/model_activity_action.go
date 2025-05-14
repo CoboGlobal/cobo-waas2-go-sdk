@@ -63,8 +63,8 @@ func (v *ActivityAction) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ActivityAction("unknown")
-    return nil
+	*v = ActivityAction("unknown")
+	return nil
 }
 
 // NewActivityActionFromValue returns a pointer to a valid ActivityAction

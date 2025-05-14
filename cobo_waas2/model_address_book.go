@@ -30,12 +30,14 @@ type AddressBook struct {
 	// The wallet name.
 	WalletName *string `json:"wallet_name,omitempty"`
 	WalletType *WalletType `json:"wallet_type,omitempty"`
+	WalletSubtype *WalletSubtype `json:"wallet_subtype,omitempty"`
 	// The address label.
 	Label string `json:"label"`
 	// A list of chain IDs.
 	ChainIds []string `json:"chain_ids,omitempty"`
 	// The email of the address owner.
 	Email *string `json:"email,omitempty"`
+	Encoding *AddressEncoding `json:"encoding,omitempty"`
 }
 
 type _AddressBook AddressBook
@@ -229,6 +231,38 @@ func (o *AddressBook) SetWalletType(v WalletType) {
 	o.WalletType = &v
 }
 
+// GetWalletSubtype returns the WalletSubtype field value if set, zero value otherwise.
+func (o *AddressBook) GetWalletSubtype() WalletSubtype {
+	if o == nil || IsNil(o.WalletSubtype) {
+		var ret WalletSubtype
+		return ret
+	}
+	return *o.WalletSubtype
+}
+
+// GetWalletSubtypeOk returns a tuple with the WalletSubtype field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressBook) GetWalletSubtypeOk() (*WalletSubtype, bool) {
+	if o == nil || IsNil(o.WalletSubtype) {
+		return nil, false
+	}
+	return o.WalletSubtype, true
+}
+
+// HasWalletSubtype returns a boolean if a field has been set.
+func (o *AddressBook) HasWalletSubtype() bool {
+	if o != nil && !IsNil(o.WalletSubtype) {
+		return true
+	}
+
+	return false
+}
+
+// SetWalletSubtype gets a reference to the given WalletSubtype and assigns it to the WalletSubtype field.
+func (o *AddressBook) SetWalletSubtype(v WalletSubtype) {
+	o.WalletSubtype = &v
+}
+
 // GetLabel returns the Label field value
 func (o *AddressBook) GetLabel() string {
 	if o == nil {
@@ -317,6 +351,38 @@ func (o *AddressBook) SetEmail(v string) {
 	o.Email = &v
 }
 
+// GetEncoding returns the Encoding field value if set, zero value otherwise.
+func (o *AddressBook) GetEncoding() AddressEncoding {
+	if o == nil || IsNil(o.Encoding) {
+		var ret AddressEncoding
+		return ret
+	}
+	return *o.Encoding
+}
+
+// GetEncodingOk returns a tuple with the Encoding field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressBook) GetEncodingOk() (*AddressEncoding, bool) {
+	if o == nil || IsNil(o.Encoding) {
+		return nil, false
+	}
+	return o.Encoding, true
+}
+
+// HasEncoding returns a boolean if a field has been set.
+func (o *AddressBook) HasEncoding() bool {
+	if o != nil && !IsNil(o.Encoding) {
+		return true
+	}
+
+	return false
+}
+
+// SetEncoding gets a reference to the given AddressEncoding and assigns it to the Encoding field.
+func (o *AddressBook) SetEncoding(v AddressEncoding) {
+	o.Encoding = &v
+}
+
 func (o AddressBook) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -339,12 +405,18 @@ func (o AddressBook) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.WalletType) {
 		toSerialize["wallet_type"] = o.WalletType
 	}
+	if !IsNil(o.WalletSubtype) {
+		toSerialize["wallet_subtype"] = o.WalletSubtype
+	}
 	toSerialize["label"] = o.Label
 	if !IsNil(o.ChainIds) {
 		toSerialize["chain_ids"] = o.ChainIds
 	}
 	if !IsNil(o.Email) {
 		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.Encoding) {
+		toSerialize["encoding"] = o.Encoding
 	}
 	return toSerialize, nil
 }

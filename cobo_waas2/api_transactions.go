@@ -1534,6 +1534,8 @@ type ApiListTransactionsRequest struct {
 	tokenIds *string
 	assetIds *string
 	vaultId *string
+	walletType *WalletType
+	walletSubtype *WalletSubtype
 	projectId *string
 	minCreatedTimestamp *int64
 	maxCreatedTimestamp *int64
@@ -1609,19 +1611,31 @@ func (r ApiListTransactionsRequest) VaultId(vaultId string) ApiListTransactionsR
 	return r
 }
 
+// The wallet type.  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
+func (r ApiListTransactionsRequest) WalletType(walletType WalletType) ApiListTransactionsRequest {
+	r.walletType = &walletType
+	return r
+}
+
+// The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)  - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet}) 
+func (r ApiListTransactionsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiListTransactionsRequest {
+	r.walletSubtype = &walletSubtype
+	return r
+}
+
 // The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
 func (r ApiListTransactionsRequest) ProjectId(projectId string) ApiListTransactionsRequest {
 	r.projectId = &projectId
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If not provided, the default value is 90 days before the current time. This default value is subject to change. 
 func (r ApiListTransactionsRequest) MinCreatedTimestamp(minCreatedTimestamp int64) ApiListTransactionsRequest {
 	r.minCreatedTimestamp = &minCreatedTimestamp
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If not provided, the default value is the current time. This default value is subject to change. 
 func (r ApiListTransactionsRequest) MaxCreatedTimestamp(maxCreatedTimestamp int64) ApiListTransactionsRequest {
 	r.maxCreatedTimestamp = &maxCreatedTimestamp
 	return r
@@ -1726,6 +1740,12 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 	}
 	if r.vaultId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "vault_id", r.vaultId, "")
+	}
+	if r.walletType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_type", r.walletType, "")
+	}
+	if r.walletSubtype != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_subtype", r.walletSubtype, "")
 	}
 	if r.projectId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "project_id", r.projectId, "")

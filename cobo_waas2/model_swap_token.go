@@ -27,9 +27,9 @@ type SwapToken struct {
 	AssetId string `json:"asset_id"`
 	// The token address.
 	TokenAddress *string `json:"token_address,omitempty"`
-	// The minimum amount to swap.
+	// The minimum amount.
 	MinAmount *string `json:"min_amount,omitempty"`
-	// The maximum amount to swap.
+	// The maximum amount.
 	MaxAmount *string `json:"max_amount,omitempty"`
 }
 

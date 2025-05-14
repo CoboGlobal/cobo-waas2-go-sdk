@@ -51,8 +51,8 @@ func (v *MessageSignDestinationType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = MessageSignDestinationType("unknown")
-    return nil
+	*v = MessageSignDestinationType("unknown")
+	return nil
 }
 
 // NewMessageSignDestinationTypeFromValue returns a pointer to a valid MessageSignDestinationType

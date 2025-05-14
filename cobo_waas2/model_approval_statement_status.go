@@ -49,8 +49,8 @@ func (v *ApprovalStatementStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ApprovalStatementStatus("unknown")
-    return nil
+	*v = ApprovalStatementStatus("unknown")
+	return nil
 }
 
 // NewApprovalStatementStatusFromValue returns a pointer to a valid ApprovalStatementStatus

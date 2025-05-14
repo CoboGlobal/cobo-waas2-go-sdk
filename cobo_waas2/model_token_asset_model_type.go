@@ -41,8 +41,8 @@ func (v *TokenAssetModelType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TokenAssetModelType("unknown")
-    return nil
+	*v = TokenAssetModelType("unknown")
+	return nil
 }
 
 // NewTokenAssetModelTypeFromValue returns a pointer to a valid TokenAssetModelType

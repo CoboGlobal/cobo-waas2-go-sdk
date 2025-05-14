@@ -43,8 +43,8 @@ func (v *TSSRequestType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TSSRequestType("unknown")
-    return nil
+	*v = TSSRequestType("unknown")
+	return nil
 }
 
 // NewTSSRequestTypeFromValue returns a pointer to a valid TSSRequestType

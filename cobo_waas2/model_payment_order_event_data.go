@@ -50,6 +50,12 @@ type PaymentOrderEventData struct {
 	Status OrderStatus `json:"status"`
 	// The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT).
 	ReceivedTokenAmount string `json:"received_token_amount"`
+	// The created time of the order, represented as a UNIX timestamp in seconds.
+	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
+	// The updated time of the order, represented as a UNIX timestamp in seconds.
+	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
+	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process.
+	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 }
 
 type _PaymentOrderEventData PaymentOrderEventData
@@ -492,6 +498,102 @@ func (o *PaymentOrderEventData) SetReceivedTokenAmount(v string) {
 	o.ReceivedTokenAmount = v
 }
 
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetCreatedTimestamp() int32 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetCreatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		return nil, false
+	}
+	return o.CreatedTimestamp, true
+}
+
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
+func (o *PaymentOrderEventData) SetCreatedTimestamp(v int32) {
+	o.CreatedTimestamp = &v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetUpdatedTimestamp() int32 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.UpdatedTimestamp
+}
+
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetUpdatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		return nil, false
+	}
+	return o.UpdatedTimestamp, true
+}
+
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
+func (o *PaymentOrderEventData) SetUpdatedTimestamp(v int32) {
+	o.UpdatedTimestamp = &v
+}
+
+// GetTransactions returns the Transactions field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetTransactions() []PaymentTransaction {
+	if o == nil || IsNil(o.Transactions) {
+		var ret []PaymentTransaction
+		return ret
+	}
+	return o.Transactions
+}
+
+// GetTransactionsOk returns a tuple with the Transactions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetTransactionsOk() ([]PaymentTransaction, bool) {
+	if o == nil || IsNil(o.Transactions) {
+		return nil, false
+	}
+	return o.Transactions, true
+}
+
+// HasTransactions returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasTransactions() bool {
+	if o != nil && !IsNil(o.Transactions) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactions gets a reference to the given []PaymentTransaction and assigns it to the Transactions field.
+func (o *PaymentOrderEventData) SetTransactions(v []PaymentTransaction) {
+	o.Transactions = v
+}
+
 func (o PaymentOrderEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -524,6 +626,15 @@ func (o PaymentOrderEventData) ToMap() (map[string]interface{}, error) {
 	toSerialize["psp_order_code"] = o.PspOrderCode
 	toSerialize["status"] = o.Status
 	toSerialize["received_token_amount"] = o.ReceivedTokenAmount
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
+	}
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
+	if !IsNil(o.Transactions) {
+		toSerialize["transactions"] = o.Transactions
+	}
 	return toSerialize, nil
 }
 

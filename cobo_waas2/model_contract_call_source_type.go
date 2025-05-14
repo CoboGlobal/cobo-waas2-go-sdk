@@ -45,8 +45,8 @@ func (v *ContractCallSourceType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = ContractCallSourceType("unknown")
-    return nil
+	*v = ContractCallSourceType("unknown")
+	return nil
 }
 
 // NewContractCallSourceTypeFromValue returns a pointer to a valid ContractCallSourceType

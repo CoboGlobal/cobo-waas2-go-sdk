@@ -45,8 +45,8 @@ func (v *TransactionInitiatorType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransactionInitiatorType("unknown")
-    return nil
+	*v = TransactionInitiatorType("unknown")
+	return nil
 }
 
 // NewTransactionInitiatorTypeFromValue returns a pointer to a valid TransactionInitiatorType

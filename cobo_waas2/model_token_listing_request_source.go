@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TokenListingRequestSource Source of the token listing request
+// TokenListingRequestSource The source of the token listing request. - `API`: The request was created via the WaaS 2.0 API. - `Admin`: The request was created on Cobo Portal. 
 type TokenListingRequestSource string
 
 // List of TokenListingRequestSource
@@ -41,8 +41,8 @@ func (v *TokenListingRequestSource) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TokenListingRequestSource("unknown")
-    return nil
+	*v = TokenListingRequestSource("unknown")
+	return nil
 }
 
 // NewTokenListingRequestSourceFromValue returns a pointer to a valid TokenListingRequestSource

@@ -8,13 +8,13 @@ Method | HTTP request | Description
 [**CheckAddressValidity**](WalletsAPI.md#CheckAddressValidity) | **Get** /wallets/check_address_validity | Check address validity
 [**CheckAddressesValidity**](WalletsAPI.md#CheckAddressesValidity) | **Get** /wallets/check_addresses_validity | Check addresses validity
 [**CreateAddress**](WalletsAPI.md#CreateAddress) | **Post** /wallets/{wallet_id}/addresses | Create addresses in wallet
-[**CreateTokenListingRequest**](WalletsAPI.md#CreateTokenListingRequest) | **Post** /wallets/tokens/listing_requests | Submit token listing request
+[**CreateTokenListingRequest**](WalletsAPI.md#CreateTokenListingRequest) | **Post** /wallets/tokens/listing_requests | Create token listing request
 [**CreateWallet**](WalletsAPI.md#CreateWallet) | **Post** /wallets | Create wallet
 [**DeleteWalletById**](WalletsAPI.md#DeleteWalletById) | **Post** /wallets/{wallet_id}/delete | Delete wallet
 [**GetChainById**](WalletsAPI.md#GetChainById) | **Get** /wallets/chains/{chain_id} | Get chain information
 [**GetMaxTransferableValue**](WalletsAPI.md#GetMaxTransferableValue) | **Get** /wallets/{wallet_id}/max_transferable_value | Get maximum transferable value
 [**GetTokenById**](WalletsAPI.md#GetTokenById) | **Get** /wallets/tokens/{token_id} | Get token information
-[**GetTokenListingRequestByRequestId**](WalletsAPI.md#GetTokenListingRequestByRequestId) | **Get** /wallets/tokens/listing_requests/{request_id} | Get token listing request details
+[**GetTokenListingRequestByRequestId**](WalletsAPI.md#GetTokenListingRequestByRequestId) | **Get** /wallets/tokens/listing_requests/{request_id} | Get token listing request
 [**GetWalletById**](WalletsAPI.md#GetWalletById) | **Get** /wallets/{wallet_id} | Get wallet information
 [**ListAddressBalancesByToken**](WalletsAPI.md#ListAddressBalancesByToken) | **Get** /wallets/{wallet_id}/tokens/{token_id} | List address balances by token
 [**ListAddresses**](WalletsAPI.md#ListAddresses) | **Get** /wallets/{wallet_id}/addresses | List wallet addresses
@@ -24,7 +24,7 @@ Method | HTTP request | Description
 [**ListSupportedTokens**](WalletsAPI.md#ListSupportedTokens) | **Get** /wallets/tokens | List supported tokens
 [**ListTokenBalancesForAddress**](WalletsAPI.md#ListTokenBalancesForAddress) | **Get** /wallets/{wallet_id}/addresses/{address}/tokens | List token balances by address
 [**ListTokenBalancesForWallet**](WalletsAPI.md#ListTokenBalancesForWallet) | **Get** /wallets/{wallet_id}/tokens | List token balances by wallet
-[**ListTokenListingRequests**](WalletsAPI.md#ListTokenListingRequests) | **Get** /wallets/tokens/listing_requests | Get all token listing requests
+[**ListTokenListingRequests**](WalletsAPI.md#ListTokenListingRequests) | **Get** /wallets/tokens/listing_requests | List token listing requests
 [**ListUtxos**](WalletsAPI.md#ListUtxos) | **Get** /wallets/{wallet_id}/utxos | List UTXOs
 [**ListWallets**](WalletsAPI.md#ListWallets) | **Get** /wallets | List all wallets
 [**LockUtxos**](WalletsAPI.md#LockUtxos) | **Post** /wallets/{wallet_id}/utxos/lock | Lock UTXOs
@@ -354,7 +354,7 @@ Name | Type | Description  | Notes
 
 > CreateTokenListingRequest201Response CreateTokenListingRequest(ctx).CreateTokenListingRequestRequest(createTokenListingRequestRequest).Execute()
 
-Submit token listing request
+Create token listing request
 
 
 
@@ -406,7 +406,7 @@ Other parameters are passed through a pointer to a apiCreateTokenListingRequestR
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createTokenListingRequestRequest** | [**CreateTokenListingRequestRequest**](CreateTokenListingRequestRequest.md) | Request body for submitting a token listing request. &lt;note&gt;   wallet_type only supports &#x60;Custodial&#x60; and &#x60;MPC&#x60;.   wallet_subtype only supports &#x60;Asset&#x60;, &#x60;Web3&#x60;, and &#x60;Org-Controlled&#x60;. &lt;/note&gt;  | 
+ **createTokenListingRequestRequest** | [**CreateTokenListingRequestRequest**](CreateTokenListingRequestRequest.md) | Request body for submitting a token listing request.  | 
 
 ### Return type
 
@@ -834,7 +834,7 @@ Name | Type | Description  | Notes
 
 > TokenListing GetTokenListingRequestByRequestId(ctx, requestId).Execute()
 
-Get token listing request details
+Get token listing request
 
 
 
@@ -881,7 +881,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**requestId** | **string** | The unique identifier of the token listing request | 
+**requestId** | **string** | The unique identifier of the token listing request. | 
 
 ### Other Parameters
 
@@ -1698,7 +1698,7 @@ Name | Type | Description  | Notes
 
 > ListTokenListingRequests200Response ListTokenListingRequests(ctx).Limit(limit).Before(before).After(after).Status(status).Execute()
 
-Get all token listing requests
+List token listing requests
 
 
 
@@ -1756,7 +1756,7 @@ Name | Type | Description  | Notes
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
  **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
  **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
- **status** | [**TokenListingRequestStatus**](TokenListingRequestStatus.md) | Filter by request status | 
+ **status** | [**TokenListingRequestStatus**](TokenListingRequestStatus.md) | The current status of the token listing request. | 
 
 ### Return type
 

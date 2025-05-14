@@ -47,8 +47,8 @@ func (v *OrderStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = OrderStatus("unknown")
-    return nil
+	*v = OrderStatus("unknown")
+	return nil
 }
 
 // NewOrderStatusFromValue returns a pointer to a valid OrderStatus

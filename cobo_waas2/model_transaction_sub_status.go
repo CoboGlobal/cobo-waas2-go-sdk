@@ -59,6 +59,11 @@ const (
 	TRANSACTIONSUBSTATUS_REJECTED_TRAVEL_RULE_DUE_TO_UNSUPPORTED_TOKEN TransactionSubStatus = "RejectedTravelRuleDueToUnsupportedToken"
 	TRANSACTIONSUBSTATUS_SIGNATURE_VERIFICATION_SUCCESS TransactionSubStatus = "SignatureVerificationSuccess"
 	TRANSACTIONSUBSTATUS_SIGNATURE_VERIFICATION_FAILED TransactionSubStatus = "SignatureVerificationFailed"
+	TRANSACTIONSUBSTATUS_PENDING_COBO_CHECK TransactionSubStatus = "PendingCoboCheck"
+	TRANSACTIONSUBSTATUS_REJECTED_TRANSACTION_POLICY TransactionSubStatus = "RejectedTransactionPolicy"
+	TRANSACTIONSUBSTATUS_REJECTED_BY_SCREENING_APP TransactionSubStatus = "RejectedByScreeningApp"
+	TRANSACTIONSUBSTATUS_PENDING_SCREENING_APP_CHECK TransactionSubStatus = "PendingScreeningAppCheck"
+	TRANSACTIONSUBSTATUS_PENDING_COBO_TRAVEL_RULE_CHECK TransactionSubStatus = "PendingCoboTravelRuleCheck"
 )
 
 // All allowed values of TransactionSubStatus enum
@@ -104,6 +109,11 @@ var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"RejectedTravelRuleDueToUnsupportedToken",
 	"SignatureVerificationSuccess",
 	"SignatureVerificationFailed",
+	"PendingCoboCheck",
+	"RejectedTransactionPolicy",
+	"RejectedByScreeningApp",
+	"PendingScreeningAppCheck",
+	"PendingCoboTravelRuleCheck",
 }
 
 func (v *TransactionSubStatus) UnmarshalJSON(src []byte) error {
@@ -119,8 +129,8 @@ func (v *TransactionSubStatus) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransactionSubStatus("unknown")
-    return nil
+	*v = TransactionSubStatus("unknown")
+	return nil
 }
 
 // NewTransactionSubStatusFromValue returns a pointer to a valid TransactionSubStatus

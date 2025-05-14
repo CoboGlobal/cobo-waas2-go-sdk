@@ -654,8 +654,7 @@ paths:
   /wallets/tokens/listing_requests:
     get:
       description: |
-        Retrieve a list of all token listing requests.
-        Results can be filtered and paginated.
+        This operation lists all token listing requests in your organization. You can filter the results by request status.
       operationId: list_token_listing_requests
       parameters:
       - description: "The maximum number of objects to return. For most operations,\
@@ -701,7 +700,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: Filter by request status
+      - description: The current status of the token listing request.
         explode: true
         in: query
         name: status
@@ -733,13 +732,14 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: Get all token listing requests
+      summary: List token listing requests
       tags:
       - Wallets
     post:
       description: |
-        Submit a request to add a non-listed token.
-        The token must exist on the specified blockchain with a valid contract address.
+        This operation creates a token listing request. The token to be listed must already be deployed on the specified blockchain and have a valid contract address.
+
+        <note>Currently, tokens listed through this operation are only supported in wallets of type `Custodial` or `MPC`, and subtype `Asset`, `Web3`, or `Org-Controlled`.</note>
       operationId: create_token_listing_request
       requestBody:
         $ref: '#/components/requestBodies/createTokenListingRequestBody'
@@ -767,17 +767,16 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.create
-      summary: Submit token listing request
+      summary: Create token listing request
       tags:
       - Wallets
   /wallets/tokens/listing_requests/{request_id}:
     get:
       description: |
-        Retrieve detailed information about a specific token listing request
-        including its current status and any admin feedback.
+        This operation retrieves detailed information about a specific token listing request, including its current status.
       operationId: get_token_listing_request_by_request_id
       parameters:
-      - description: The unique identifier of the token listing request
+      - description: The unique identifier of the token listing request.
         example: 123e4567e89b12d3a456426614174000
         explode: false
         in: path
@@ -810,7 +809,7 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: Get token listing request details
+      summary: Get token listing request
       tags:
       - Wallets
   /wallets:
@@ -2052,6 +2051,8 @@ paths:
     get:
       description: |
         This operation verifies if a given address is valid for a list of chains.
+
+        <Note>You can specify up to 20 chain IDs in a single request.</Note>
       operationId: check_address_chains_validity
       parameters:
       - description: The wallet address.
@@ -3965,6 +3966,46 @@ paths:
           type: string
         style: form
       - description: |
+          The wallet type.
+
+          - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)
+
+          - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
+
+          - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
+
+          - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
+        explode: true
+        in: query
+        name: wallet_type
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletType'
+        style: form
+      - description: |
+          The wallet subtype.
+
+          - `Asset`: Custodial Wallets (Asset Wallets)
+
+          - `Web3`: Custodial Wallets (Web3 Wallets)
+
+          - `Main`: Exchange Wallets (Main Account)
+
+          - `Sub`: Exchange Wallets (Sub Account)
+
+          - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
+
+          - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
+
+          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
+        explode: true
+        in: query
+        name: wallet_subtype
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletSubtype'
+        style: form
+      - description: |
           The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: true
@@ -3975,9 +4016,10 @@ paths:
           format: uuid
           type: string
         style: form
-      - description: "The time when the transaction was created, in Unix timestamp\
-          \ format, measured in milliseconds. You can use this parameter to filter\
-          \ transactions created on or after the specified time."
+      - description: |
+          The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
+
+          If not provided, the default value is 90 days before the current time. This default value is subject to change.
         example: 1635744000000
         explode: true
         in: query
@@ -3987,9 +4029,10 @@ paths:
           format: int64
           type: integer
         style: form
-      - description: "The time when the transaction was created, in Unix timestamp\
-          \ format, measured in milliseconds. You can use this parameter to filter\
-          \ transactions created on or before the specified time."
+      - description: |
+          The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
+
+          If not provided, the default value is the current time. This default value is subject to change.
         example: 1635744000000
         explode: true
         in: query
@@ -7281,7 +7324,7 @@ paths:
   /fee_station/addresses:
     get:
       description: |
-        This operation retrieves a list of addresses within your Fee Station.
+        This operation retrieves a list of deposit addresses of your Fee Station, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
       operationId: list_fee_station_addresses
       parameters:
       - description: "A list of chain IDs, separated by comma. The chain ID is the\
@@ -7576,9 +7619,10 @@ paths:
           description: "A list of asset IDs, separated by comma."
           type: string
         style: form
-      - description: "The time when the transaction was created, in Unix timestamp\
-          \ format, measured in milliseconds. You can use this parameter to filter\
-          \ transactions created on or after the specified time."
+      - description: |
+          The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
+
+          If not provided, the default value is 90 days before the current time. This default value is subject to change.
         example: 1635744000000
         explode: true
         in: query
@@ -7588,9 +7632,10 @@ paths:
           format: int64
           type: integer
         style: form
-      - description: "The time when the transaction was created, in Unix timestamp\
-          \ format, measured in milliseconds. You can use this parameter to filter\
-          \ transactions created on or before the specified time."
+      - description: |
+          The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
+
+          If not provided, the default value is the current time. This default value is subject to change.
         example: 1635744000000
         explode: true
         in: query
@@ -7689,7 +7734,7 @@ paths:
   /fee_station/transactions/{transaction_id}:
     get:
       description: |
-        This operation retrieves detailed information about a specified Fee Station transaction, such as the transaction status, source address, destination address, and timestamp.
+        This operation retrieves detailed information about a specified Fee Station transaction record, such as the transaction status, source address, destination address, and timestamp.
       operationId: get_fee_station_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -7732,11 +7777,11 @@ paths:
   /fee_station/transactions/estimate_fee:
     post:
       description: |
-        This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
+        This operation estimates the gas fee required for a top-up transaction sent by [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction) to provide gas to the sender of the original transaction.
 
-        You need to specify the transaction information, including destination address, token ID.
+        You need to provide the token ID and transfer amount.
 
-        The response can contain different properties based on the transaction fee model used by the chain. For the legacy, EIP-1559, and UTXO fee models, Cobo also supports three different transaction speed levels: slow, recommended, and fast. For more information about estimating transaction fees, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
+        For more information about transaction fee models and how fees are calculated, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
       operationId: estimate_fee_station_fee
       requestBody:
         $ref: '#/components/requestBodies/estimateFeeStationFeeBody'
@@ -7764,7 +7809,7 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.estimate_fee
-      summary: Estimate transaction fee
+      summary: Estimate fee for Fee Station transaction
       tags:
       - FeeStation
   /payments/merchants:
@@ -8430,6 +8475,61 @@ paths:
       - OAuth2:
         - payment_orders_payin.update
       summary: Update pay-in order
+      tags:
+      - Payment
+  /payments/orders/address_info:
+    get:
+      description: |
+        This operation retrieves the detailed information about a specific pay-in address.
+      operationId: get_payment_order_address_info
+      parameters:
+      - description: "The token ID, which identifies the cryptocurrency. Supported\
+          \ values: \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`,\
+          \ `MATIC_USDC`, `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+          \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The receiving address.
+        example: 0x9876543210abcdef1234567890abcdef12345678
+        explode: true
+        in: query
+        name: address
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderAddressInfo'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_orders_payin.read
+      summary: Get pay-in order's receiving address info
       tags:
       - Payment
   /payments/exchange_rates/{token_id}/{currency}:
@@ -9474,9 +9574,10 @@ components:
         type: string
       style: form
     optionalMinCreatedTimestampParam:
-      description: "The time when the transaction was created, in Unix timestamp format,\
-        \ measured in milliseconds. You can use this parameter to filter transactions\
-        \ created on or after the specified time."
+      description: |
+        The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
+
+        If not provided, the default value is 90 days before the current time. This default value is subject to change.
       example: 1635744000000
       explode: true
       in: query
@@ -9487,9 +9588,10 @@ components:
         type: integer
       style: form
     optionalMaxCreatedTimestampParam:
-      description: "The time when the transaction was created, in Unix timestamp format,\
-        \ measured in milliseconds. You can use this parameter to filter transactions\
-        \ created on or before the specified time."
+      description: |
+        The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
+
+        If not provided, the default value is the current time. This default value is subject to change.
       example: 1635744000000
       explode: true
       in: query
@@ -10068,7 +10170,7 @@ components:
         type: string
       style: form
     payAmountRequiredParam:
-      description: The amount of pay token to swap.
+      description: The amount of pay token.
       example: "1.5"
       explode: true
       in: query
@@ -10078,7 +10180,7 @@ components:
         type: string
       style: form
     payAmountOptionalParam:
-      description: The amount of pay token to swap.
+      description: The amount of pay token.
       example: "1.5"
       explode: true
       in: query
@@ -10292,6 +10394,19 @@ components:
       schema:
         type: string
       style: simple
+    TokenIdOptionalParam:
+      description: "The token ID, which identifies the cryptocurrency. Supported values:\
+        \ \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`,\
+        \ `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`,\
+        \ `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+      example: ETH_USDT
+      explode: true
+      in: query
+      name: token_id
+      required: false
+      schema:
+        type: string
+      style: form
     WalletIdOptionalParam:
       description: The wallet ID.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -10345,6 +10460,17 @@ components:
       schema:
         type: string
       style: form
+    AddressOptionalParam:
+      description: |
+        The receiving address.
+      example: 0x9876543210abcdef1234567890abcdef12345678
+      explode: true
+      in: query
+      name: address
+      required: false
+      schema:
+        type: string
+      style: form
   requestBodies:
     createWalletBody:
       content:
@@ -10389,10 +10515,6 @@ components:
             $ref: '#/components/schemas/create_token_listing_request_request'
       description: |
         Request body for submitting a token listing request.
-        <note>
-          wallet_type only supports `Custodial` and `MPC`.
-          wallet_subtype only supports `Asset`, `Web3`, and `Org-Controlled`.
-        </note>
       required: true
     createKeyShareHolderGroupBody:
       content:
@@ -10635,7 +10757,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FeeStationTransfer'
-      description: The information about a token transfer.
+      description: The information about a Fee Station top-up transaction.
   responses:
     badRequestError:
       content:
@@ -11381,6 +11503,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Order'
+      description: The request was successful.
+    getPaymentOrderAddressInfoResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderAddressInfo'
       description: The request was successful.
     createRefundResponse:
       content:
@@ -12541,6 +12669,11 @@ components:
       - org_id
       type: object
     TokenListingRequestStatus:
+      description: |
+        The status of the token listing request.
+        - `Submitted`: The request has been submitted and is pending processing.
+        - `Succeeded`: The token has been successfully listed.
+        - `Failed`: The token listing request was rejected or failed to process.
       enum:
       - Submitted
       - Succeeded
@@ -12548,7 +12681,10 @@ components:
       example: Submitted
       type: string
     TokenListingRequestSource:
-      description: Source of the token listing request
+      description: |
+        The source of the token listing request.
+        - `API`: The request was created via the WaaS 2.0 API.
+        - `Admin`: The request was created on Cobo Portal.
       enum:
       - API
       - Admin
@@ -12864,7 +13000,7 @@ components:
           $ref: '#/components/schemas/CurveType'
       type: object
     TSSGroups:
-      description: The data for the TSS key share group ID.
+      description: The data for the TSS key share group.
       example:
         curve: SECP256K1
         root_pubkey: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
@@ -14016,6 +14152,11 @@ components:
       - RejectedTravelRuleDueToUnsupportedToken
       - SignatureVerificationSuccess
       - SignatureVerificationFailed
+      - PendingCoboCheck
+      - RejectedTransactionPolicy
+      - RejectedByScreeningApp
+      - PendingScreeningAppCheck
+      - PendingCoboTravelRuleCheck
       example: PendingDoubleCheck
       type: string
     TransactionTimeline:
@@ -17246,7 +17387,7 @@ components:
         type: object
       title: Tokens
     TokenListing:
-      description: Detailed information about a token listing request
+      description: Detailed information about a token listing request.
       example:
         feedback: Token has been added to the system
         wallet_subtype: Asset
@@ -17275,15 +17416,15 @@ components:
         status: Submitted
       properties:
         request_id:
-          description: Unique identifier of the token listing request
+          description: The unique identifier of the token listing request.
           example: 123e4567e89b12d3a456426614174000
           type: string
         chain_id:
-          description: chain_id of the blockchain where the token exists
+          description: The ID of the blockchain where the token is deployed.
           example: ETH
           type: string
         contract_address:
-          description: Contract address of the token
+          description: The token's contract address on the specified blockchain.
           example: 0x6B175474E89094C44Da98b954EedeAC495271d0F
           type: string
         wallet_type:
@@ -17297,18 +17438,19 @@ components:
         source:
           $ref: '#/components/schemas/TokenListingRequestSource'
         feedback:
-          description: Feedback provided by the admin for rejected requests
+          description: The feedback provided by Cobo when a token listing request
+            is rejected.
           example: Token has been added to the system
           type: string
         created_timestamp:
-          description: Timestamp when the request was created (in milliseconds since
-            Unix epoch)
+          description: "The time when the request was created in Unix timestamp format,\
+            \ measured in milliseconds."
           example: 1625097600000
           format: int64
           type: integer
         updated_timestamp:
-          description: Timestamp when the request was last updated (in milliseconds
-            since Unix epoch)
+          description: "The time when the request was last updated in Unix timestamp\
+            \ format, measured in milliseconds."
           example: 1625184000000
           format: int64
           type: integer
@@ -18949,12 +19091,14 @@ components:
     AddressBook:
       description: The information of an address book entry.
       example:
+        wallet_subtype: Asset
         address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
         org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         wallet_name: Example Wallet
         memo: 9d4773eb
         wallet_type: Custodial
         label: test
+        encoding: ENCODING_P2PKH
         entry_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         email: help@cobo.com
         chain_ids:
@@ -18985,6 +19129,8 @@ components:
           type: string
         wallet_type:
           $ref: '#/components/schemas/WalletType'
+        wallet_subtype:
+          $ref: '#/components/schemas/WalletSubtype'
         label:
           description: The address label.
           example: test
@@ -18999,6 +19145,8 @@ components:
           description: The email of the address owner.
           example: help@cobo.com
           type: string
+        encoding:
+          $ref: '#/components/schemas/AddressEncoding'
       required:
       - address
       - entry_id
@@ -19696,11 +19844,11 @@ components:
           format: uuid
           type: string
         pay_token_id:
-          description: The token symbol to swap from.
+          description: The token ID to pay.
           example: BTC
           type: string
         receive_token_id:
-          description: The token symbol to swap to.
+          description: The token ID to receive.
           example: ETH_WBTC
           type: string
         pay_amount:
@@ -19712,7 +19860,7 @@ components:
           example: "100"
           type: string
         fee_token_id:
-          description: The fee token symbol.
+          description: The fee token ID.
           example: BTC
           type: string
         fee_amount:
@@ -19769,11 +19917,11 @@ components:
           example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           type: string
         min_amount:
-          description: The minimum amount to swap.
+          description: The minimum amount.
           example: "1000"
           type: string
         max_amount:
-          description: The maximum amount to swap.
+          description: The maximum amount.
           example: "100000"
           type: string
       required:
@@ -19787,13 +19935,25 @@ components:
           description: The unique id of quote.
           example: 2ec094034044ffa50f4294d48363fef31eb5755fc783ba3837a03c91b4904659
           type: string
+        pay_token_id:
+          description: The token ID to pay.
+          example: BTC
+          type: string
         pay_amount:
           description: The amount of tokens to pay.
           example: "100"
           type: string
+        receive_token_id:
+          description: The token ID to receive.
+          example: ETH_WBTC
+          type: string
         receive_amount:
           description: The amount of tokens to receive.
           example: "100"
+          type: string
+        fee_token_id:
+          description: The fee token ID.
+          example: BTC
           type: string
         fee_amount:
           description: The amount of tokens to pay for fee.
@@ -19816,10 +19976,13 @@ components:
           type: integer
       required:
       - fee_amount
+      - fee_token_id
       - pay_amount
+      - pay_token_id
       - quote_expired_timestamp
       - quote_id
       - receive_amount
+      - receive_token_id
       type: object
     SwapType:
       description: |
@@ -19917,7 +20080,7 @@ components:
       example: Deposit
       type: string
     FeeStationTransfer:
-      description: The information about a token transfer.
+      description: The information about a Fee Station top-up transaction.
       example:
         token_id: ETH_USDT
         destination:
@@ -19963,11 +20126,14 @@ components:
     BankAccount:
       example:
         bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+        updated_timestamp: 1744689600
+        created_timestamp: 1744689600
         info:
           beneficiary_name: John Doe
           beneficiary_address: "123 Main St, Anytown, USA"
           account_number: "4111111111111111"
           bank_name: ABC Bank
+          bank_country: USA
           bank_address: "456 Bank Ave, Cityville, USA"
           swift_or_bic: ABCDEFGH
       properties:
@@ -19984,9 +20150,20 @@ components:
             beneficiary_address: "123 Main St, Anytown, USA"
             account_number: "4111111111111111"
             bank_name: ABC Bank
+            bank_country: USA
             bank_address: "456 Bank Ave, Cityville, USA"
             swift_or_bic: ABCDEFGH
           type: object
+        created_timestamp:
+          description: "The created time of the bank account, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the bank account, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
       required:
       - bank_account_id
       - info
@@ -20032,7 +20209,9 @@ components:
     Merchant:
       example:
         wallet_id: 123e4567-e89b-12d3-a456-426614174001
+        updated_timestamp: 1744689600
         name: Merchant-1
+        created_timestamp: 1744689600
         merchant_id: "1"
       properties:
         merchant_id:
@@ -20048,6 +20227,16 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174001
           format: uuid
           type: string
+        created_timestamp:
+          description: "The created time of the merchant, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the merchant, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
       required:
       - merchant_id
       - name
@@ -20057,10 +20246,31 @@ components:
       example:
         chain_id: ETH
         exchange_rate: "0.99"
+        created_timestamp: 1744689600
         merchant_id: "1001"
         expired_at: 1711324800
+        transactions:
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
         fee_amount: "2.00"
         token_id: ETH_USDT
+        updated_timestamp: 1744689600
         received_token_amount: "103.0305"
         order_amount: "100.00"
         merchant_order_code: M20240201001
@@ -20140,6 +20350,23 @@ components:
             \ 6 decimals for USDT)."
           example: "103.0305"
           type: string
+        created_timestamp:
+          description: "The created time of the order, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the order, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        transactions:
+          description: An array of transactions associated with this pay-in order.
+            Each transaction represents a separate blockchain operation related to
+            the settlement process.
+          items:
+            $ref: '#/components/schemas/PaymentTransaction'
+          type: array
       required:
       - chain_id
       - currency
@@ -20170,15 +20397,51 @@ components:
       - Underpaid
       example: Pending
       type: string
+    OrderAddressInfo:
+      example:
+        wallet_id: 123e4567-e89b-12d3-a456-426614174001
+        amount: "0.000001"
+        updated_timestamp: 1744689600
+        created_timestamp: 1744689600
+      properties:
+        wallet_id:
+          description: The ID of the linked wallet.
+          example: 123e4567-e89b-12d3-a456-426614174001
+          format: uuid
+          type: string
+        amount:
+          description: The amount of cryptocurrency received by the order's receiving
+            address.
+          example: "0.000001"
+          type: string
+        created_timestamp:
+          description: "The created time of the address, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the address, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+      required:
+      - amount
+      - created_timestamp
+      - updated_timestamp
+      - wallet_id
+      type: object
     Refund:
       example:
         amount: "0.0025"
-        token_id: ETH_USDT
+        refund_type: Merchant
         chain_id: ETH
+        initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b85b81dcc15f920e9d
         to_address: 0x9876543210abcdef1234567890abcdef12345678
+        created_timestamp: 1744689600
         merchant_id: M1001
         transactions:
         - amount: "0.15"
+          token_id: ETH_USDT
           updated_timestamp: 1610445878970
           tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
           to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20187,6 +20450,7 @@ components:
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
           status: Submitted
         - amount: "0.15"
+          token_id: ETH_USDT
           updated_timestamp: 1610445878970
           tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
           to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20194,8 +20458,11 @@ components:
           tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
           status: Submitted
-        request_id: 123e4567-e89b-12d3-a456-426614174004
         refund_id: R20250304-M1001-1001
+        token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        request_id: 123e4567-e89b-12d3-a456-426614174004
+        order_id: O20250304-M1001-1001
         status: Pending
       properties:
         request_id:
@@ -20205,6 +20472,10 @@ components:
         refund_id:
           description: The refund order ID.
           example: R20250304-M1001-1001
+          type: string
+        order_id:
+          description: The order ID corresponding to this refund.
+          example: O20250304-M1001-1001
           type: string
         merchant_id:
           description: The merchant ID.
@@ -20230,6 +20501,23 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/RefundStatus'
+        refund_type:
+          $ref: '#/components/schemas/RefundType'
+        created_timestamp:
+          description: "The created time of the refund order, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the refund order, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        initiator:
+          description: "The initiator of this refund order, usually the user's API\
+            \ key."
+          example: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b85b81dcc15f920e9d
+          type: string
         transactions:
           description: An array of transactions associated with this refund order.
             Each transaction represents a separate blockchain operation related to
@@ -20308,12 +20596,17 @@ components:
       example:
         settlement_request_id: S20250304-1001
         settlements:
-        - amount: "500.00"
+        - settled_amount: "500.00"
+          amount: "500.00"
           token_id: ETH_USDT
           chain_id: ETH
+          updated_timestamp: 1744689600
           currency: USD
+          created_timestamp: 1744689600
+          merchant_id: M1001
           transactions:
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20322,6 +20615,7 @@ components:
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20332,19 +20626,27 @@ components:
           status: Pending
           bank_account:
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
             info:
               beneficiary_name: John Doe
               beneficiary_address: "123 Main St, Anytown, USA"
               account_number: "4111111111111111"
               bank_name: ABC Bank
+              bank_country: USA
               bank_address: "456 Bank Ave, Cityville, USA"
               swift_or_bic: ABCDEFGH
-        - amount: "500.00"
+        - settled_amount: "500.00"
+          amount: "500.00"
           token_id: ETH_USDT
           chain_id: ETH
+          updated_timestamp: 1744689600
           currency: USD
+          created_timestamp: 1744689600
+          merchant_id: M1001
           transactions:
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20353,6 +20655,7 @@ components:
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20363,13 +20666,19 @@ components:
           status: Pending
           bank_account:
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
             info:
               beneficiary_name: John Doe
               beneficiary_address: "123 Main St, Anytown, USA"
               account_number: "4111111111111111"
               bank_name: ABC Bank
+              bank_country: USA
               bank_address: "456 Bank Ave, Cityville, USA"
               swift_or_bic: ABCDEFGH
+        updated_timestamp: 1744689600
+        initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        created_timestamp: 1744689600
         request_id: SETTLEMENT123
         status: Pending
       properties:
@@ -20388,6 +20697,21 @@ components:
           items:
             $ref: '#/components/schemas/SettlementDetail'
           type: array
+        created_timestamp:
+          description: "The created time of the settlement request, represented as\
+            \ a UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the settlement request, represented as\
+            \ a UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+        initiator:
+          description: "The initiator of this settlement request, usually the user's\
+            \ API key."
+          example: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          type: string
       required:
       - request_id
       - settlement_request_id
@@ -20396,12 +20720,17 @@ components:
       type: object
     SettlementDetail:
       example:
+        settled_amount: "500.00"
         amount: "500.00"
         token_id: ETH_USDT
         chain_id: ETH
+        updated_timestamp: 1744689600
         currency: USD
+        created_timestamp: 1744689600
+        merchant_id: M1001
         transactions:
         - amount: "0.15"
+          token_id: ETH_USDT
           updated_timestamp: 1610445878970
           tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
           to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20410,6 +20739,7 @@ components:
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
           status: Submitted
         - amount: "0.15"
+          token_id: ETH_USDT
           updated_timestamp: 1610445878970
           tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
           to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20420,11 +20750,14 @@ components:
         status: Pending
         bank_account:
           bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
           info:
             beneficiary_name: John Doe
             beneficiary_address: "123 Main St, Anytown, USA"
             account_number: "4111111111111111"
             bank_name: ABC Bank
+            bank_country: USA
             bank_address: "456 Bank Ave, Cityville, USA"
             swift_or_bic: ABCDEFGH
       properties:
@@ -20440,6 +20773,10 @@ components:
           description: The ID of the blockchain network on which the settlement occurred.
           example: ETH
           type: string
+        merchant_id:
+          description: The Merchant ID associated with this settlement.
+          example: M1001
+          type: string
         amount:
           description: |
             The settlement amount.
@@ -20447,6 +20784,15 @@ components:
             - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency.
 
             - If `token_id` is not specified, this represents the settlement amount in the specified fiat currency.
+          example: "500.00"
+          type: string
+        settled_amount:
+          description: |
+            The settled amount of this settlement detail.
+
+            - If `token_id` is specified, this represents the actual settled amount in the specified cryptocurrency.
+
+            - If `token_id` is not specified, this represents the actual settled amount in the specified fiat currency.
           example: "500.00"
           type: string
         status:
@@ -20460,12 +20806,25 @@ components:
           items:
             $ref: '#/components/schemas/PaymentTransaction'
           type: array
+        created_timestamp:
+          description: "The created time of the settlement, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the settlement, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
       type: object
     SettlementInfo:
       example:
+        settled_amount: "500.00"
         pending_currency_balance: "500.00"
         available_currency_balance: "500.00"
         token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        created_timestamp: 1744689600
         merchant_id: "123"
         available_amount: "500.00"
         pending_amount: "500.00"
@@ -20499,6 +20858,20 @@ components:
             \ fiat currency."
           example: "500.00"
           type: string
+        settled_amount:
+          description: "The amount already settled, in the specified cryptocurrency."
+          example: "500.00"
+          type: string
+        created_timestamp:
+          description: "The created time of the settlement, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the settlement, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
       required:
       - available_amount
       - token
@@ -20516,6 +20889,7 @@ components:
     PaymentTransaction:
       example:
         amount: "0.15"
+        token_id: ETH_USDT
         updated_timestamp: 1610445878970
         tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
         to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -20531,6 +20905,10 @@ components:
         tx_hash:
           description: The transaction hash.
           example: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency.
+          example: ETH_USDT
           type: string
         from_address:
           description: The source address of the transaction.
@@ -20567,6 +20945,652 @@ components:
       - tx_id
       - updated_timestamp
       type: object
+    TSSKeyGenRequest:
+      properties:
+        threshold:
+          description: The number of key share holders required to approve each operation
+            in TSS key share group.
+          example: 2
+          type: integer
+        node_ids:
+          items:
+            description: The node IDs of the key share holder.
+            example: "[\"coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi\",\"coboBTGDvjJG99pABegvPYmavrcTU3SkjTLHVdsko8dWBga4w\"\
+              ]"
+            type: string
+          type: array
+        curve:
+          $ref: '#/components/schemas/TSSCurve'
+        task_id:
+          description: The task ID.
+          example: "20231213122855000000000000000000"
+          type: string
+        biz_task_id:
+          description: The business task ID. This field contains the TSS request ID.
+          example: "20231213122855000000000000000000"
+          type: string
+      type: object
+    TSSKeyReshareRequest:
+      properties:
+        old_group_id:
+          description: The old TSS key share group ID.
+          example: mMedDioOKhTlhGyQRzMv
+          type: string
+        root_pub_key:
+          description: The The old TSS key share group's root extended public key.
+          example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          type: string
+        curve:
+          $ref: '#/components/schemas/TSSCurve'
+        used_node_ids:
+          items:
+            description: The node IDs of used key share holder.
+            example: "[\"coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi\",\"coboBTGDvjJG99pABegvPYmavrcTU3SkjTLHVdsko8dWBga4w\"\
+              ]"
+            type: string
+          type: array
+        old_threshold:
+          description: The number of key share holders required to approve each operation
+            in the old TSS key share group.
+          example: 2
+          type: integer
+        new_threshold:
+          description: The number of key share holders required to approve each operation
+            in the new TSS key share group.
+          example: 2
+          type: integer
+        new_node_ids:
+          items:
+            description: The node IDs of new key share holder.
+            example: "[\"coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi\",\"coboBTGDvjJG99pABegvPYmavrcTU3SkjTLHVdsko8dWBga4w\"\
+              ]"
+            type: string
+          type: array
+        task_id:
+          description: The task ID.
+          example: "20231213122855000000000000000000"
+          type: string
+        biz_task_id:
+          description: The business task ID. This field contains the TSS request ID.
+          example: "20231213122855000000000000000000"
+          type: string
+      type: object
+    TSSKeySignRequest:
+      properties:
+        group_id:
+          description: The TSS key share group ID.
+          example: mMedDioOKhTlhGyQRzMv
+          type: string
+        root_pub_key:
+          description: The The old TSS key share group's root extended public key.
+          example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          type: string
+        used_node_ids:
+          items:
+            description: The node IDs of the key share holder.
+            example: "[\"coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi\",\"coboBTGDvjJG99pABegvPYmavrcTU3SkjTLHVdsko8dWBga4w\"\
+              ]"
+            type: string
+          type: array
+        bip32_path_list:
+          items:
+            description: The BIP32 derivation paths.
+            example: "[\"m/44/0/2/0/0\"]"
+            type: string
+          type: array
+        msg_hash_list:
+          items:
+            description: The list of message hashes to sign.
+            example: "[\"0x10ED43C718714eb63d5aA57B78B54704E256024EFFFFFFFFFFFFFFFFFFFFFFFF\"\
+              ]"
+            type: string
+          type: array
+        tweak_list:
+          items:
+            description: The list of tweaks to apply.
+            example: "[\"0x00\"]"
+            type: string
+          type: array
+        signature_type:
+          $ref: '#/components/schemas/TSSSignatureType'
+        tss_protocol:
+          $ref: '#/components/schemas/TSSProtocol'
+        task_id:
+          description: The task ID.
+          example: "20231213122855000000000000000000"
+          type: string
+        biz_task_id:
+          description: The business task ID. This field contains the transaction ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          type: string
+      type: object
+    TSSKeyShareSignRequest:
+      properties:
+        node_id:
+          description: The node ID of the key share holder.
+          example: coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi
+          type: string
+        task_id:
+          description: The task ID.
+          example: "20231213122855000000000000000000"
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/TSSKeyShareSignDetail'
+          type: array
+        biz_task_id:
+          description: The business task ID. This field contains the key share sign
+            request ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          type: string
+      type: object
+    TSSKeyShareSignDetail:
+      properties:
+        group_id:
+          description: The TSS key share group ID.
+          example: mMedDioOKhTlhGyQRzMv
+          type: string
+        message:
+          description: The message to sign by key share.
+          type: string
+      type: object
+    TSSKeyGenExtra:
+      properties:
+        org:
+          $ref: '#/components/schemas/OrgInfo'
+        project:
+          $ref: '#/components/schemas/MPCProject'
+        vault:
+          $ref: '#/components/schemas/MPCVault'
+        target_key_share_holder_group:
+          $ref: '#/components/schemas/KeyShareHolderGroup'
+        tss_request:
+          $ref: '#/components/schemas/TSSRequest'
+      type: object
+    TSSKeyReshareExtra:
+      properties:
+        org:
+          $ref: '#/components/schemas/OrgInfo'
+        project:
+          $ref: '#/components/schemas/MPCProject'
+        vault:
+          $ref: '#/components/schemas/MPCVault'
+        source_key_share_holder_group:
+          $ref: '#/components/schemas/KeyShareHolderGroup'
+        target_key_share_holder_group:
+          $ref: '#/components/schemas/KeyShareHolderGroup'
+        tss_request:
+          $ref: '#/components/schemas/TSSRequest'
+      type: object
+    TSSKeySignExtra:
+      properties:
+        org:
+          $ref: '#/components/schemas/OrgInfo'
+        project:
+          $ref: '#/components/schemas/MPCProject'
+        vault:
+          $ref: '#/components/schemas/MPCVault'
+        wallet:
+          $ref: '#/components/schemas/MPCWalletInfo'
+        signer_key_share_holder_group:
+          $ref: '#/components/schemas/KeyShareHolderGroup'
+        source_addresses:
+          items:
+            $ref: '#/components/schemas/AddressInfo'
+          type: array
+        transaction:
+          $ref: '#/components/schemas/Transaction'
+      type: object
+    TSSKeyShareSignExtra:
+      properties:
+        org:
+          $ref: '#/components/schemas/OrgInfo'
+        project:
+          $ref: '#/components/schemas/MPCProject'
+        vault:
+          $ref: '#/components/schemas/MPCVault'
+        wallet:
+          $ref: '#/components/schemas/MPCWalletInfo'
+        validity_key_share_holder_groups:
+          items:
+            $ref: '#/components/schemas/KeyShareHolderGroup'
+          type: array
+      type: object
+    TSSGroup:
+      properties:
+        id:
+          description: The TSS key share group ID.
+          example: mMedDioOKhTlhGyQRzMv
+          type: string
+        canonical_group_id:
+          description: The canonical group ID.
+          type: string
+        protocol_group_id:
+          description: The protocol group ID.
+          type: string
+        protocol_type:
+          description: The protocol type.
+          type: string
+        created_timestamp:
+          description: "The group creation timestamp, in Unix timestamp format, measured\
+            \ in milliseconds."
+          example: 1701396866000
+          format: int64
+          type: integer
+        type:
+          $ref: '#/components/schemas/TSSGroupType'
+        root_extended_public_key:
+          description: The root extended public key.
+          example: xpub661MyMwAqRbcG4vPNi58VQJrXW8D9VzmauuRq2rTY3oUVnKGuLTxQxvvoEXgLvZ7N9GQXQkWVgKn1rzEUUEm4NdvrBKUqjpNJEnn2UL4rYq
+          type: string
+        chaincode:
+          description: The chaincode.
+          type: string
+        curve:
+          $ref: '#/components/schemas/TSSCurveType'
+        threshold:
+          description: The threshold.
+          type: integer
+        participants:
+          items:
+            $ref: '#/components/schemas/TSSParticipant'
+          type: array
+      type: object
+    TSSGroupType:
+      description: |
+        The elliptic curve type. Possible values include:
+
+        - 1 : The `ECDSA` group.
+        - 2 : The `EdDSA` group.
+      enum:
+      - 1
+      - 2
+      example: 1
+      type: integer
+      x-enum-varnames:
+      - ECDSA
+      - EdDSA
+    TSSCurve:
+      description: |
+        The elliptic curve type. Possible values include:
+
+        - 0 : The `SECP256K1` elliptic curve.
+        - 2 : The `ED25519` elliptic curve.
+      enum:
+      - 0
+      - 2
+      example: 0
+      type: integer
+      x-enum-varnames:
+      - SECP256K1
+      - ED25519
+    TSSCurveType:
+      description: |
+        The elliptic curve type. Possible values include:
+
+        - `secp256k1` : The `SECP256K1` elliptic curve.
+        - `ed25519` : The `ED25519` elliptic curve.
+      enum:
+      - secp256k1
+      - ed25519
+      example: secp256k1
+      type: string
+    TSSParticipant:
+      properties:
+        node_id:
+          description: The node ID.
+          example: coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi
+          type: string
+        share_id:
+          description: The share ID.
+          example: "619693302942100684578205955442284626185"
+          type: string
+        share_public_key:
+          description: The share public key.
+          example: 0x217223cdea6b19af34131447763a269d1dbef580bc85272a5bdfc59fa4940cca
+          type: string
+      type: object
+    TSSRequestTypeEenum:
+      description: |2-
+
+        The request type. - `KeyGen`: The key gen request. - `KeyReshare`: The key reshare request. - `KeySign`: The key sign request. - `KeyShareSign`: The key share sign request.
+      enum:
+      - KeyGen
+      - KeyReshare
+      - KeySign
+      - KeyShareSign
+      example: KeyGen
+      type: string
+    TSSStatus:
+      description: |
+        The status of the request. Possible values include:
+
+        - 100 : Undefined.
+        - 110 : Scheduling.
+        - 120 : Initializing.
+        - 130 : Approving.
+        - 140 : Processing.
+        - 160 : Declined.
+        - 170 : Failed.
+        - 180 : Canceled.
+        - 190 : Completed.
+      enum:
+      - 100
+      - 110
+      - 120
+      - 130
+      - 140
+      - 160
+      - 170
+      - 180
+      - 190
+      example: 190
+      type: integer
+      x-enum-varnames:
+      - UNDEFINED
+      - SCHEDULING
+      - INITIALIZING
+      - APPROVING
+      - PROCESSING
+      - DECLINED
+      - FAILED
+      - CANCELED
+      - COMPLETED
+    TSSKeyShareSignSignature:
+      properties:
+        group_id:
+          description: The TSS key share group ID.
+          example: mMedDioOKhTlhGyQRzMv
+          type: string
+        signed_msg:
+          description: The hexadecimal encoded signed message.
+          example: 0x10ED43C718714eb63d5aA57B78B54704E256024EFFFFFFFFFFFFFFFFFFFFFFFF
+          type: string
+        msg_hash:
+          description: The message hash.
+          example: 0x10ED43C718714eb63d5aA57B78B54704E256024EFFFFFFFFFFFFFFFFFFFFFFFF
+          type: string
+        signature:
+          description: The signature.
+          example: 0x10ED43C718714eb63d5aA57B78B54704E256024EFFFFFFFFFFFFFFFFFFFFFFFF
+          type: string
+      type: object
+    TSSKeyShareSignSignatures:
+      properties:
+        signatures:
+          items:
+            $ref: '#/components/schemas/TSSKeyShareSignSignature'
+          type: array
+      type: object
+    TSSSignatures:
+      properties:
+        signatures:
+          items:
+            $ref: '#/components/schemas/TSSSignature'
+          type: array
+        signature_type:
+          $ref: '#/components/schemas/TSSSignatureType'
+        tss_protocol:
+          $ref: '#/components/schemas/TSSProtocol'
+      type: object
+    TSSSignature:
+      properties:
+        bip32_path:
+          description: The BIP32 path.
+          example: m/44/0/2/0/0
+          type: string
+        msg_hash:
+          description: The message hash.
+          example: 0x10ED43C718714eb63d5aA57B78B54704E256024EFFFFFFFFFFFFFFFFFFFFFFFF
+          type: string
+        tweak:
+          description: The tweak.
+          example: 0x00
+          type: string
+        signature:
+          description: The signature.
+          example: 0x10ED43C718714eb63d5aA57B78B54704E256024EFFFFFFFFFFFFFFFFFFFFFFFF
+          type: string
+        signature_recovery:
+          description: The signature recovery.
+          example: 0x00
+          type: string
+      type: object
+    TSSSignatureType:
+      description: |
+        The type of signature. Possible values include:
+
+        - 1 : ECDSA signature
+        - 2 : EdDSA signature
+        - 3 : Schnorr signature
+      enum:
+      - 1
+      - 2
+      - 3
+      example: 1
+      type: integer
+      x-enum-varnames:
+      - ECDSA
+      - EdDSA
+      - Schnorr
+    TSSProtocol:
+      description: |
+        The type of TSS protocol. Possible values include:
+
+        - 1 : GG18
+        - 2 : Lindell
+        - 3 : EddsaTSS
+      enum:
+      - 1
+      - 2
+      - 3
+      example: 1
+      type: integer
+      x-enum-varnames:
+      - GG18
+      - Lindell
+      - EddsaTSS
+    TSSEvent:
+      description: The TSS Node event payload.
+      properties:
+        event_id:
+          description: The event ID.
+          example: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
+          format: uuid
+          type: string
+        created_timestamp:
+          description: "The time when the event occurred, in Unix timestamp format,\
+            \ measured in milliseconds."
+          example: 1701396866000
+          format: int64
+          type: integer
+        node_id:
+          description: The event publisher's TSS Node ID.
+          example: coboAbCdEfGhIjKlMnOpQrStUvWxYz1234567890abcdefghi
+          type: string
+        event_type:
+          $ref: '#/components/schemas/TSSEventType'
+        data:
+          $ref: '#/components/schemas/TSSEventData'
+      required:
+      - event_type
+      type: object
+    TSSEventType:
+      description: The event type.
+      enum:
+      - ping
+      - request.keygen.created
+      - request.keygen.updated
+      - request.keygen.failed
+      - request.keygen.succeeded
+      - request.keyreshare.created
+      - request.keyreshare.updated
+      - request.keyreshare.failed
+      - request.keyreshare.succeeded
+      - request.keysign.created
+      - request.keysign.updated
+      - request.keysign.failed
+      - request.keysign.succeeded
+      - request.keysharesign.created
+      - request.keysharesign.updated
+      - request.keysharesign.failed
+      - request.keysharesign.succeeded
+      example: request.keygen.succeeded
+      type: string
+    TSSEventData:
+      discriminator:
+        mapping:
+          KeyGen: '#/components/schemas/TSSKeyGenEventData'
+          KeyReshare: '#/components/schemas/TSSKeyReshareEventData'
+          KeySign: '#/components/schemas/TSSKeySignEventData'
+          KeyShareSign: '#/components/schemas/TSSKeyShareSignEventData'
+        propertyName: data_type
+      oneOf:
+      - $ref: '#/components/schemas/TSSKeyGenEventData'
+      - $ref: '#/components/schemas/TSSKeyReshareEventData'
+      - $ref: '#/components/schemas/TSSKeySignEventData'
+      - $ref: '#/components/schemas/TSSKeyShareSignEventData'
+    TSSEventDataType:
+      description: |2-
+
+        The data type of the event. - `KeyGen`: The key gen event data. - `KeyReshare`: The key reshare event data. - `KeySign`: The key sign event data. - `KeyShareSign`: The key share sign event data.
+      enum:
+      - KeyGen
+      - KeyReshare
+      - KeySign
+      - KeyShareSign
+      example: KeyGen
+      type: string
+    TSSBaseRequestEventData:
+      properties:
+        data_type:
+          $ref: '#/components/schemas/TSSEventDataType'
+        request_id:
+          description: The request ID.
+          example: 20231213122855000000000000000000:1
+          type: string
+        request_type:
+          $ref: '#/components/schemas/TSSRequestTypeEenum'
+        request_status:
+          $ref: '#/components/schemas/TSSStatus'
+        extra_info:
+          description: The extra info.
+          example: "{\"org\": {\"org_id\": \"1234567890\"}}"
+          type: string
+        failed_reason:
+          description: The failed reason.
+          type: string
+      required:
+      - data_type
+      type: object
+    TSSKeyGenEventData:
+      allOf:
+      - $ref: '#/components/schemas/TSSBaseRequestEventData'
+      - properties:
+          request_detail:
+            $ref: '#/components/schemas/TSSKeyGenRequest'
+          result:
+            $ref: '#/components/schemas/TSSGroup'
+        type: object
+    TSSKeyReshareEventData:
+      allOf:
+      - $ref: '#/components/schemas/TSSBaseRequestEventData'
+      - properties:
+          request_detail:
+            $ref: '#/components/schemas/TSSKeyReshareRequest'
+          result:
+            $ref: '#/components/schemas/TSSGroup'
+        type: object
+    TSSKeySignEventData:
+      allOf:
+      - $ref: '#/components/schemas/TSSBaseRequestEventData'
+      - properties:
+          request_detail:
+            $ref: '#/components/schemas/TSSKeySignRequest'
+          result:
+            $ref: '#/components/schemas/TSSSignatures'
+        type: object
+    TSSKeyShareSignEventData:
+      allOf:
+      - $ref: '#/components/schemas/TSSBaseRequestEventData'
+      - properties:
+          request_detail:
+            $ref: '#/components/schemas/TSSKeyShareSignRequest'
+          result:
+            $ref: '#/components/schemas/TSSKeyShareSignSignatures'
+        type: object
+    TSSCallbackRequest:
+      properties:
+        request_id:
+          description: he unique ID of the callback request.
+          example: 20231213122855000000000000000000:1
+          type: string
+        request_type:
+          $ref: '#/components/schemas/TSSCallbackRequestType'
+        request_detail:
+          description: Details specific to the request type. The structure varies
+            depending on the request type.  The content is a JSON-serialized string.
+          type: string
+        extra_info:
+          description: Additional contextual information.  The structure varies depending
+            on the request type. The content is a JSON-serialized string.
+          type: string
+      type: object
+    TSSCallbackRequestType:
+      description: |
+        The type of the request. Possible values include:
+
+        - 0 : Ping. Used for heartbeat monitoring.
+        - 1 : KeyGen. Creating new key shares for your MPC Wallets.
+        - 2 : KeySign. Signing transactions or messages.
+        - 3 : KeyReshare. Redistributing key shares among participants.
+        - 5 : KeyShareSign. Signing messages with key shares.
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 5
+      example: 1
+      type: integer
+      x-enum-varnames:
+      - PING
+      - KEYGEN
+      - KEYSIGN
+      - KEYRESHARE
+      - KEYSHARESIGN
+    TSSCallbackResponse:
+      properties:
+        request_id:
+          description: The unique ID of the callback request.
+          example: 20231213122855000000000000000000:1
+          type: string
+        status:
+          description: The response status code. 0 indicates success.  Any other value
+            indicates that an error occurred while processing the request in the callback
+            server.
+          example: 0
+          type: integer
+        action:
+          $ref: '#/components/schemas/TSSCallbackActionType'
+        error:
+          description: "The error message. - When status is not 0, Contains internal\
+            \ error messages from the callback server. - When status is 0 and action\
+            \ is REJECT, Contains the specific reason for the rejection."
+          example: internal error
+          type: string
+      type: object
+    TSSCallbackActionType:
+      description: |
+        The action to take. Possible values include:
+
+        - `APPROVE` : Approve the request and proceed with the operation.
+        - `REJECT` : Deny the request and stop the operation.
+      enum:
+      - APPROVE
+      - REJECT
+      example: APPROVE
+      type: string
     list_supported_chains_200_response:
       example:
         pagination:
@@ -20711,11 +21735,11 @@ components:
         wallet_subtype:
           $ref: '#/components/schemas/WalletSubtype'
         chain_id:
-          description: ID of the blockchain where the token exists
+          description: The ID of the blockchain where the token is deployed.
           example: ETH
           type: string
         contract_address:
-          description: Contract address of the token
+          description: The token's contract address on the specified blockchain.
           example: 0x6B175474E89094C44Da98b954EedeAC495271d0F
           type: string
       required:
@@ -20729,7 +21753,9 @@ components:
         request_id: 123e4567e89b12d3a456426614174000
       properties:
         request_id:
-          description: Unique identifier for the token listing request
+          description: "The unique identifier for the token listing request. You can\
+            \ use it to track the request status with the [Get token listing request](https://www.cobo.com/developers/v2/api-references/wallets/get-token-listing-request)\
+            \ operation."
           example: 123e4567e89b12d3a456426614174000
           type: string
       required:
@@ -23422,23 +24448,27 @@ components:
           total_count: 10000
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
-        - address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+        - wallet_subtype: Asset
+          address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
           org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           wallet_name: Example Wallet
           memo: 9d4773eb
           wallet_type: Custodial
           label: test
+          encoding: ENCODING_P2PKH
           entry_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           email: help@cobo.com
           chain_ids:
           - ETH
           - ETH
-        - address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+        - wallet_subtype: Asset
+          address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
           org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           wallet_name: Example Wallet
           memo: 9d4773eb
           wallet_type: Custodial
           label: test
+          encoding: ENCODING_P2PKH
           entry_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           email: help@cobo.com
           chain_ids:
@@ -23718,10 +24748,14 @@ components:
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
         - wallet_id: 123e4567-e89b-12d3-a456-426614174001
+          updated_timestamp: 1744689600
           name: Merchant-1
+          created_timestamp: 1744689600
           merchant_id: "1"
         - wallet_id: 123e4567-e89b-12d3-a456-426614174001
+          updated_timestamp: 1744689600
           name: Merchant-1
+          created_timestamp: 1744689600
           merchant_id: "1"
       properties:
         data:
@@ -23761,12 +24795,15 @@ components:
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
         - amount: "0.0025"
-          token_id: ETH_USDT
+          refund_type: Merchant
           chain_id: ETH
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b85b81dcc15f920e9d
           to_address: 0x9876543210abcdef1234567890abcdef12345678
+          created_timestamp: 1744689600
           merchant_id: M1001
           transactions:
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -23775,6 +24812,7 @@ components:
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -23782,16 +24820,22 @@ components:
             tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
-          request_id: 123e4567-e89b-12d3-a456-426614174004
           refund_id: R20250304-M1001-1001
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          request_id: 123e4567-e89b-12d3-a456-426614174004
+          order_id: O20250304-M1001-1001
           status: Pending
         - amount: "0.0025"
-          token_id: ETH_USDT
+          refund_type: Merchant
           chain_id: ETH
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b85b81dcc15f920e9d
           to_address: 0x9876543210abcdef1234567890abcdef12345678
+          created_timestamp: 1744689600
           merchant_id: M1001
           transactions:
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -23800,6 +24844,7 @@ components:
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
           - amount: "0.15"
+            token_id: ETH_USDT
             updated_timestamp: 1610445878970
             tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
             to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -23807,8 +24852,11 @@ components:
             tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
-          request_id: 123e4567-e89b-12d3-a456-426614174004
           refund_id: R20250304-M1001-1001
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          request_id: 123e4567-e89b-12d3-a456-426614174004
+          order_id: O20250304-M1001-1001
           status: Pending
       properties:
         data:
@@ -23891,10 +24939,31 @@ components:
         data:
         - chain_id: ETH
           exchange_rate: "0.99"
+          created_timestamp: 1744689600
           merchant_id: "1001"
           expired_at: 1711324800
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
           fee_amount: "2.00"
           token_id: ETH_USDT
+          updated_timestamp: 1744689600
           received_token_amount: "103.0305"
           order_amount: "100.00"
           merchant_order_code: M20240201001
@@ -23906,10 +24975,31 @@ components:
           status: Pending
         - chain_id: ETH
           exchange_rate: "0.99"
+          created_timestamp: 1744689600
           merchant_id: "1001"
           expired_at: 1711324800
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
           fee_amount: "2.00"
           token_id: ETH_USDT
+          updated_timestamp: 1744689600
           received_token_amount: "103.0305"
           order_amount: "100.00"
           merchant_order_code: M20240201001
@@ -24025,28 +25115,40 @@ components:
     get_settlement_info_by_ids_200_response:
       example:
         psp_token_balances:
-        - pending_currency_balance: "500.00"
+        - settled_amount: "500.00"
+          pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
           pending_amount: "500.00"
-        - pending_currency_balance: "500.00"
+        - settled_amount: "500.00"
+          pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
           pending_amount: "500.00"
         token_balances:
-        - pending_currency_balance: "500.00"
+        - settled_amount: "500.00"
+          pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
           pending_amount: "500.00"
-        - pending_currency_balance: "500.00"
+        - settled_amount: "500.00"
+          pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
           pending_amount: "500.00"
@@ -24069,12 +25171,17 @@ components:
         data:
         - settlement_request_id: S20250304-1001
           settlements:
-          - amount: "500.00"
+          - settled_amount: "500.00"
+            amount: "500.00"
             token_id: ETH_USDT
             chain_id: ETH
+            updated_timestamp: 1744689600
             currency: USD
+            created_timestamp: 1744689600
+            merchant_id: M1001
             transactions:
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24083,6 +25190,7 @@ components:
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24093,19 +25201,27 @@ components:
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              created_timestamp: 1744689600
               info:
                 beneficiary_name: John Doe
                 beneficiary_address: "123 Main St, Anytown, USA"
                 account_number: "4111111111111111"
                 bank_name: ABC Bank
+                bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
-          - amount: "500.00"
+          - settled_amount: "500.00"
+            amount: "500.00"
             token_id: ETH_USDT
             chain_id: ETH
+            updated_timestamp: 1744689600
             currency: USD
+            created_timestamp: 1744689600
+            merchant_id: M1001
             transactions:
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24114,6 +25230,7 @@ components:
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24124,23 +25241,34 @@ components:
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              created_timestamp: 1744689600
               info:
                 beneficiary_name: John Doe
                 beneficiary_address: "123 Main St, Anytown, USA"
                 account_number: "4111111111111111"
                 bank_name: ABC Bank
+                bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
+          updated_timestamp: 1744689600
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          created_timestamp: 1744689600
           request_id: SETTLEMENT123
           status: Pending
         - settlement_request_id: S20250304-1001
           settlements:
-          - amount: "500.00"
+          - settled_amount: "500.00"
+            amount: "500.00"
             token_id: ETH_USDT
             chain_id: ETH
+            updated_timestamp: 1744689600
             currency: USD
+            created_timestamp: 1744689600
+            merchant_id: M1001
             transactions:
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24149,6 +25277,7 @@ components:
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24159,19 +25288,27 @@ components:
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              created_timestamp: 1744689600
               info:
                 beneficiary_name: John Doe
                 beneficiary_address: "123 Main St, Anytown, USA"
                 account_number: "4111111111111111"
                 bank_name: ABC Bank
+                bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
-          - amount: "500.00"
+          - settled_amount: "500.00"
+            amount: "500.00"
             token_id: ETH_USDT
             chain_id: ETH
+            updated_timestamp: 1744689600
             currency: USD
+            created_timestamp: 1744689600
+            merchant_id: M1001
             transactions:
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24180,6 +25317,7 @@ components:
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
             - amount: "0.15"
+              token_id: ETH_USDT
               updated_timestamp: 1610445878970
               tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
               to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
@@ -24190,13 +25328,19 @@ components:
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              created_timestamp: 1744689600
               info:
                 beneficiary_name: John Doe
                 beneficiary_address: "123 Main St, Anytown, USA"
                 account_number: "4111111111111111"
                 bank_name: ABC Bank
+                bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
+          updated_timestamp: 1744689600
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          created_timestamp: 1744689600
           request_id: SETTLEMENT123
           status: Pending
       properties:

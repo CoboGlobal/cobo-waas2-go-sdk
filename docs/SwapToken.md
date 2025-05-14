@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **ChainId** | **string** | The chain id. | 
 **AssetId** | **string** | The asset id. | 
 **TokenAddress** | Pointer to **string** | The token address. | [optional] 
-**MinAmount** | Pointer to **string** | The minimum amount to swap. | [optional] 
-**MaxAmount** | Pointer to **string** | The maximum amount to swap. | [optional] 
+**MinAmount** | Pointer to **string** | The minimum amount. | [optional] 
+**MaxAmount** | Pointer to **string** | The maximum amount. | [optional] 
 
 ## Methods
 

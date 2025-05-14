@@ -25,6 +25,8 @@ type PaymentRefundEventData struct {
 	RequestId *string `json:"request_id,omitempty"`
 	// The refund order ID.
 	RefundId string `json:"refund_id"`
+	// The order ID corresponding to this refund.
+	OrderId *string `json:"order_id,omitempty"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
 	// The ID of the cryptocurrency used for refund.
@@ -36,6 +38,13 @@ type PaymentRefundEventData struct {
 	// The recipient's wallet address where the refund will be sent.
 	ToAddress string `json:"to_address"`
 	Status RefundStatus `json:"status"`
+	RefundType *RefundType `json:"refund_type,omitempty"`
+	// The created time of the refund order, represented as a UNIX timestamp in seconds.
+	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
+	// The updated time of the refund order, represented as a UNIX timestamp in seconds.
+	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
+	// The initiator of this refund order, usually the user's API key.
+	Initiator *string `json:"initiator,omitempty"`
 	// An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 }
@@ -144,6 +153,38 @@ func (o *PaymentRefundEventData) GetRefundIdOk() (*string, bool) {
 // SetRefundId sets field value
 func (o *PaymentRefundEventData) SetRefundId(v string) {
 	o.RefundId = v
+}
+
+// GetOrderId returns the OrderId field value if set, zero value otherwise.
+func (o *PaymentRefundEventData) GetOrderId() string {
+	if o == nil || IsNil(o.OrderId) {
+		var ret string
+		return ret
+	}
+	return *o.OrderId
+}
+
+// GetOrderIdOk returns a tuple with the OrderId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentRefundEventData) GetOrderIdOk() (*string, bool) {
+	if o == nil || IsNil(o.OrderId) {
+		return nil, false
+	}
+	return o.OrderId, true
+}
+
+// HasOrderId returns a boolean if a field has been set.
+func (o *PaymentRefundEventData) HasOrderId() bool {
+	if o != nil && !IsNil(o.OrderId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderId gets a reference to the given string and assigns it to the OrderId field.
+func (o *PaymentRefundEventData) SetOrderId(v string) {
+	o.OrderId = &v
 }
 
 // GetMerchantId returns the MerchantId field value if set, zero value otherwise.
@@ -298,6 +339,134 @@ func (o *PaymentRefundEventData) SetStatus(v RefundStatus) {
 	o.Status = v
 }
 
+// GetRefundType returns the RefundType field value if set, zero value otherwise.
+func (o *PaymentRefundEventData) GetRefundType() RefundType {
+	if o == nil || IsNil(o.RefundType) {
+		var ret RefundType
+		return ret
+	}
+	return *o.RefundType
+}
+
+// GetRefundTypeOk returns a tuple with the RefundType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentRefundEventData) GetRefundTypeOk() (*RefundType, bool) {
+	if o == nil || IsNil(o.RefundType) {
+		return nil, false
+	}
+	return o.RefundType, true
+}
+
+// HasRefundType returns a boolean if a field has been set.
+func (o *PaymentRefundEventData) HasRefundType() bool {
+	if o != nil && !IsNil(o.RefundType) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefundType gets a reference to the given RefundType and assigns it to the RefundType field.
+func (o *PaymentRefundEventData) SetRefundType(v RefundType) {
+	o.RefundType = &v
+}
+
+// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+func (o *PaymentRefundEventData) GetCreatedTimestamp() int32 {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentRefundEventData) GetCreatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedTimestamp) {
+		return nil, false
+	}
+	return o.CreatedTimestamp, true
+}
+
+// HasCreatedTimestamp returns a boolean if a field has been set.
+func (o *PaymentRefundEventData) HasCreatedTimestamp() bool {
+	if o != nil && !IsNil(o.CreatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
+func (o *PaymentRefundEventData) SetCreatedTimestamp(v int32) {
+	o.CreatedTimestamp = &v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
+func (o *PaymentRefundEventData) GetUpdatedTimestamp() int32 {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.UpdatedTimestamp
+}
+
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentRefundEventData) GetUpdatedTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.UpdatedTimestamp) {
+		return nil, false
+	}
+	return o.UpdatedTimestamp, true
+}
+
+// HasUpdatedTimestamp returns a boolean if a field has been set.
+func (o *PaymentRefundEventData) HasUpdatedTimestamp() bool {
+	if o != nil && !IsNil(o.UpdatedTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
+func (o *PaymentRefundEventData) SetUpdatedTimestamp(v int32) {
+	o.UpdatedTimestamp = &v
+}
+
+// GetInitiator returns the Initiator field value if set, zero value otherwise.
+func (o *PaymentRefundEventData) GetInitiator() string {
+	if o == nil || IsNil(o.Initiator) {
+		var ret string
+		return ret
+	}
+	return *o.Initiator
+}
+
+// GetInitiatorOk returns a tuple with the Initiator field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentRefundEventData) GetInitiatorOk() (*string, bool) {
+	if o == nil || IsNil(o.Initiator) {
+		return nil, false
+	}
+	return o.Initiator, true
+}
+
+// HasInitiator returns a boolean if a field has been set.
+func (o *PaymentRefundEventData) HasInitiator() bool {
+	if o != nil && !IsNil(o.Initiator) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitiator gets a reference to the given string and assigns it to the Initiator field.
+func (o *PaymentRefundEventData) SetInitiator(v string) {
+	o.Initiator = &v
+}
+
 // GetTransactions returns the Transactions field value if set, zero value otherwise.
 func (o *PaymentRefundEventData) GetTransactions() []PaymentTransaction {
 	if o == nil || IsNil(o.Transactions) {
@@ -345,6 +514,9 @@ func (o PaymentRefundEventData) ToMap() (map[string]interface{}, error) {
 		toSerialize["request_id"] = o.RequestId
 	}
 	toSerialize["refund_id"] = o.RefundId
+	if !IsNil(o.OrderId) {
+		toSerialize["order_id"] = o.OrderId
+	}
 	if !IsNil(o.MerchantId) {
 		toSerialize["merchant_id"] = o.MerchantId
 	}
@@ -353,6 +525,18 @@ func (o PaymentRefundEventData) ToMap() (map[string]interface{}, error) {
 	toSerialize["amount"] = o.Amount
 	toSerialize["to_address"] = o.ToAddress
 	toSerialize["status"] = o.Status
+	if !IsNil(o.RefundType) {
+		toSerialize["refund_type"] = o.RefundType
+	}
+	if !IsNil(o.CreatedTimestamp) {
+		toSerialize["created_timestamp"] = o.CreatedTimestamp
+	}
+	if !IsNil(o.UpdatedTimestamp) {
+		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
+	if !IsNil(o.Initiator) {
+		toSerialize["initiator"] = o.Initiator
+	}
 	if !IsNil(o.Transactions) {
 		toSerialize["transactions"] = o.Transactions
 	}

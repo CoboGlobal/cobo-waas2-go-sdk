@@ -51,8 +51,8 @@ func (v *WalletSubtype) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = WalletSubtype("unknown")
-    return nil
+	*v = WalletSubtype("unknown")
+	return nil
 }
 
 // NewWalletSubtypeFromValue returns a pointer to a valid WalletSubtype

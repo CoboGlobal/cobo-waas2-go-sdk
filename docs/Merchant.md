@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **MerchantId** | **string** | The merchant ID. | 
 **Name** | **string** | The merchant name. | 
 **WalletId** | **string** | The ID of the linked wallet. | 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
 
 ## Methods
 
@@ -86,6 +88,56 @@ and a boolean to check if the value has been set.
 
 SetWalletId sets WalletId field to given value.
 
+
+### GetCreatedTimestamp
+
+`func (o *Merchant) GetCreatedTimestamp() int32`
+
+GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
+
+### GetCreatedTimestampOk
+
+`func (o *Merchant) GetCreatedTimestampOk() (*int32, bool)`
+
+GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCreatedTimestamp
+
+`func (o *Merchant) SetCreatedTimestamp(v int32)`
+
+SetCreatedTimestamp sets CreatedTimestamp field to given value.
+
+### HasCreatedTimestamp
+
+`func (o *Merchant) HasCreatedTimestamp() bool`
+
+HasCreatedTimestamp returns a boolean if a field has been set.
+
+### GetUpdatedTimestamp
+
+`func (o *Merchant) GetUpdatedTimestamp() int32`
+
+GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
+
+### GetUpdatedTimestampOk
+
+`func (o *Merchant) GetUpdatedTimestampOk() (*int32, bool)`
+
+GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedTimestamp
+
+`func (o *Merchant) SetUpdatedTimestamp(v int32)`
+
+SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
+
+### HasUpdatedTimestamp
+
+`func (o *Merchant) HasUpdatedTimestamp() bool`
+
+HasUpdatedTimestamp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

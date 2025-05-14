@@ -43,8 +43,8 @@ func (v *TransactionApprovalResult) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransactionApprovalResult("unknown")
-    return nil
+	*v = TransactionApprovalResult("unknown")
+	return nil
 }
 
 // NewTransactionApprovalResultFromValue returns a pointer to a valid TransactionApprovalResult

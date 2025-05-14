@@ -39,8 +39,8 @@ func (v *TransactionResultType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = TransactionResultType("unknown")
-    return nil
+	*v = TransactionResultType("unknown")
+	return nil
 }
 
 // NewTransactionResultTypeFromValue returns a pointer to a valid TransactionResultType

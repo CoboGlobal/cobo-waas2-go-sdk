@@ -41,8 +41,8 @@ func (v *AutoFuelType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = AutoFuelType("unknown")
-    return nil
+	*v = AutoFuelType("unknown")
+	return nil
 }
 
 // NewAutoFuelTypeFromValue returns a pointer to a valid AutoFuelType

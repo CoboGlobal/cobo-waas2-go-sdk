@@ -21,10 +21,16 @@ var _ MappedNullable = &SwapQuote{}
 type SwapQuote struct {
 	// The unique id of quote.
 	QuoteId string `json:"quote_id"`
+	// The token ID to pay.
+	PayTokenId string `json:"pay_token_id"`
 	// The amount of tokens to pay.
 	PayAmount string `json:"pay_amount"`
+	// The token ID to receive.
+	ReceiveTokenId string `json:"receive_token_id"`
 	// The amount of tokens to receive.
 	ReceiveAmount string `json:"receive_amount"`
+	// The fee token ID.
+	FeeTokenId string `json:"fee_token_id"`
 	// The amount of tokens to pay for fee.
 	FeeAmount string `json:"fee_amount"`
 	// The minimum amount of tokens to receive if the pay amount is specified.
@@ -41,11 +47,14 @@ type _SwapQuote SwapQuote
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSwapQuote(quoteId string, payAmount string, receiveAmount string, feeAmount string, quoteExpiredTimestamp int32) *SwapQuote {
+func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int32) *SwapQuote {
 	this := SwapQuote{}
 	this.QuoteId = quoteId
+	this.PayTokenId = payTokenId
 	this.PayAmount = payAmount
+	this.ReceiveTokenId = receiveTokenId
 	this.ReceiveAmount = receiveAmount
+	this.FeeTokenId = feeTokenId
 	this.FeeAmount = feeAmount
 	this.QuoteExpiredTimestamp = quoteExpiredTimestamp
 	return &this
@@ -83,6 +92,30 @@ func (o *SwapQuote) SetQuoteId(v string) {
 	o.QuoteId = v
 }
 
+// GetPayTokenId returns the PayTokenId field value
+func (o *SwapQuote) GetPayTokenId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.PayTokenId
+}
+
+// GetPayTokenIdOk returns a tuple with the PayTokenId field value
+// and a boolean to check if the value has been set.
+func (o *SwapQuote) GetPayTokenIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PayTokenId, true
+}
+
+// SetPayTokenId sets field value
+func (o *SwapQuote) SetPayTokenId(v string) {
+	o.PayTokenId = v
+}
+
 // GetPayAmount returns the PayAmount field value
 func (o *SwapQuote) GetPayAmount() string {
 	if o == nil {
@@ -107,6 +140,30 @@ func (o *SwapQuote) SetPayAmount(v string) {
 	o.PayAmount = v
 }
 
+// GetReceiveTokenId returns the ReceiveTokenId field value
+func (o *SwapQuote) GetReceiveTokenId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ReceiveTokenId
+}
+
+// GetReceiveTokenIdOk returns a tuple with the ReceiveTokenId field value
+// and a boolean to check if the value has been set.
+func (o *SwapQuote) GetReceiveTokenIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ReceiveTokenId, true
+}
+
+// SetReceiveTokenId sets field value
+func (o *SwapQuote) SetReceiveTokenId(v string) {
+	o.ReceiveTokenId = v
+}
+
 // GetReceiveAmount returns the ReceiveAmount field value
 func (o *SwapQuote) GetReceiveAmount() string {
 	if o == nil {
@@ -129,6 +186,30 @@ func (o *SwapQuote) GetReceiveAmountOk() (*string, bool) {
 // SetReceiveAmount sets field value
 func (o *SwapQuote) SetReceiveAmount(v string) {
 	o.ReceiveAmount = v
+}
+
+// GetFeeTokenId returns the FeeTokenId field value
+func (o *SwapQuote) GetFeeTokenId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.FeeTokenId
+}
+
+// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value
+// and a boolean to check if the value has been set.
+func (o *SwapQuote) GetFeeTokenIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FeeTokenId, true
+}
+
+// SetFeeTokenId sets field value
+func (o *SwapQuote) SetFeeTokenId(v string) {
+	o.FeeTokenId = v
 }
 
 // GetFeeAmount returns the FeeAmount field value
@@ -254,8 +335,11 @@ func (o SwapQuote) MarshalJSON() ([]byte, error) {
 func (o SwapQuote) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["quote_id"] = o.QuoteId
+	toSerialize["pay_token_id"] = o.PayTokenId
 	toSerialize["pay_amount"] = o.PayAmount
+	toSerialize["receive_token_id"] = o.ReceiveTokenId
 	toSerialize["receive_amount"] = o.ReceiveAmount
+	toSerialize["fee_token_id"] = o.FeeTokenId
 	toSerialize["fee_amount"] = o.FeeAmount
 	if !IsNil(o.MinReceiveAmount) {
 		toSerialize["min_receive_amount"] = o.MinReceiveAmount
@@ -273,8 +357,11 @@ func (o *SwapQuote) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"quote_id",
+		"pay_token_id",
 		"pay_amount",
+		"receive_token_id",
 		"receive_amount",
+		"fee_token_id",
 		"fee_amount",
 		"quote_expired_timestamp",
 	}

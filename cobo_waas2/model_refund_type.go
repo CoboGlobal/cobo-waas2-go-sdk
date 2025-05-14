@@ -41,8 +41,8 @@ func (v *RefundType) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-    *v = RefundType("unknown")
-    return nil
+	*v = RefundType("unknown")
+	return nil
 }
 
 // NewRefundTypeFromValue returns a pointer to a valid RefundType
