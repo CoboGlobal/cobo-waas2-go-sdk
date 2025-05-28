@@ -13,31 +13,69 @@ import (
 	"fmt"
 )
 
-// TransactionCoboCategory The transaction category defined by Cobo. Possible values include:    - `AutoSweep`: An auto-sweep transaction.   - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your MPC Wallets.   - `AutoFuelingRefund`: A refund for an auto-fueling transaction.   - `SafeTxMessage`: A message signing transaction initiated by an MPC wallet to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction.   - `BillPayment`: A transaction to pay Cobo bills through Fee Station.   - `BillRefund`: A refund for a previously made bill payment.   - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station.   - `CommissionFeeRefund`: A refund of previously charged commission fees. 
+// TransactionCoboCategory The transaction category defined by Cobo. Possible values include:    - `AutoSweep`: An auto-sweep transaction.   - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your MPC Wallets.   - `AutoFuelingRefund`: A refund for an auto-fueling transaction.   - `SafeTxMessage`: A message signing transaction initiated by an MPC wallet to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction.   - `BillPayment`: A transaction to pay Cobo bills through Fee Station.   - `BillRefund`: A refund for a previously made bill payment.   - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station.   - `CommissionFeeRefund`: A refund of previously charged commission fees.   - `StakingBabylonBtcDelegation`: A transaction for delegating BTC in Babylon staking.   - `StakingBabylonBtcSignBabylon`: A transaction for signing Babylon operations with BTC.   - `StakingBabylonClaim`: A transaction for claiming rewards from Babylon staking.   - `StakingBabylonSlashing`: A transaction related to slashing penalties in Babylon staking.   - `StakingBabylonStake`: A transaction for staking assets in the Babylon platform.   - `StakingBabylonUnstake`: A transaction for unstaking assets from the Babylon platform.   - `StakingBabylonWithdraw`: A transaction for withdrawing assets from Babylon staking.   - `StakingBithiveClaim`: A transaction for claiming rewards from Bithive staking.   - `StakingBithiveStake`: A transaction for staking assets in the Bithive platform.   - `StakingBithiveUnstake`: A transaction for unstaking assets from the Bithive platform.   - `StakingBithiveWithdraw`: A transaction for withdrawing assets from Bithive staking.   - `StakingCoreStake`: A transaction for staking assets in the Core staking platform.   - `StakingCoreWithdraw`: A transaction for withdrawing assets from Core staking.   - `StakingEthClaim`: A transaction for claiming rewards from ETH staking.   - `StakingEthStake`: A transaction for staking ETH assets.   - `StakingEthUnstake`: A transaction for unstaking ETH assets.   - `StakingSkyfarmClaim`: A transaction for claiming rewards from Skyfarm staking.   - `StakingSkyfarmStake`: A transaction for staking assets in the Skyfarm platform.   - `StakingSkyfarmUnstake`: A transaction for unstaking assets from the Skyfarm platform. 
 type TransactionCoboCategory string
 
 // List of TransactionCoboCategory
 const (
-	TRANSACTIONCOBOCATEGORY_AUTO_SWEEP TransactionCoboCategory = "AutoSweep"
 	TRANSACTIONCOBOCATEGORY_AUTO_FUELING TransactionCoboCategory = "AutoFueling"
 	TRANSACTIONCOBOCATEGORY_AUTO_FUELING_REFUND TransactionCoboCategory = "AutoFuelingRefund"
-	TRANSACTIONCOBOCATEGORY_SAFE_TX_MESSAGE TransactionCoboCategory = "SafeTxMessage"
+	TRANSACTIONCOBOCATEGORY_AUTO_SWEEP TransactionCoboCategory = "AutoSweep"
 	TRANSACTIONCOBOCATEGORY_BILL_PAYMENT TransactionCoboCategory = "BillPayment"
 	TRANSACTIONCOBOCATEGORY_BILL_REFUND TransactionCoboCategory = "BillRefund"
 	TRANSACTIONCOBOCATEGORY_COMMISSION_FEE_CHARGE TransactionCoboCategory = "CommissionFeeCharge"
 	TRANSACTIONCOBOCATEGORY_COMMISSION_FEE_REFUND TransactionCoboCategory = "CommissionFeeRefund"
+	TRANSACTIONCOBOCATEGORY_SAFE_TX_MESSAGE TransactionCoboCategory = "SafeTxMessage"
+	TRANSACTIONCOBOCATEGORY_STAKING_BABYLON_BTC_DELEGATION TransactionCoboCategory = "StakingBabylonBtcDelegation"
+	TRANSACTIONCOBOCATEGORY_STAKING_BABYLON_BTC_SIGN_BABYLON TransactionCoboCategory = "StakingBabylonBtcSignBabylon"
+	TRANSACTIONCOBOCATEGORY_STAKING_BABYLON_CLAIM TransactionCoboCategory = "StakingBabylonClaim"
+	TRANSACTIONCOBOCATEGORY_STAKING_BABYLON_SLASHING TransactionCoboCategory = "StakingBabylonSlashing"
+	TRANSACTIONCOBOCATEGORY_STAKING_BABYLON_STAKE TransactionCoboCategory = "StakingBabylonStake"
+	TRANSACTIONCOBOCATEGORY_STAKING_BABYLON_UNSTAKE TransactionCoboCategory = "StakingBabylonUnstake"
+	TRANSACTIONCOBOCATEGORY_STAKING_BABYLON_WITHDRAW TransactionCoboCategory = "StakingBabylonWithdraw"
+	TRANSACTIONCOBOCATEGORY_STAKING_BITHIVE_CLAIM TransactionCoboCategory = "StakingBithiveClaim"
+	TRANSACTIONCOBOCATEGORY_STAKING_BITHIVE_STAKE TransactionCoboCategory = "StakingBithiveStake"
+	TRANSACTIONCOBOCATEGORY_STAKING_BITHIVE_UNSTAKE TransactionCoboCategory = "StakingBithiveUnstake"
+	TRANSACTIONCOBOCATEGORY_STAKING_BITHIVE_WITHDRAW TransactionCoboCategory = "StakingBithiveWithdraw"
+	TRANSACTIONCOBOCATEGORY_STAKING_CORE_STAKE TransactionCoboCategory = "StakingCoreStake"
+	TRANSACTIONCOBOCATEGORY_STAKING_CORE_WITHDRAW TransactionCoboCategory = "StakingCoreWithdraw"
+	TRANSACTIONCOBOCATEGORY_STAKING_ETH_CLAIM TransactionCoboCategory = "StakingEthClaim"
+	TRANSACTIONCOBOCATEGORY_STAKING_ETH_STAKE TransactionCoboCategory = "StakingEthStake"
+	TRANSACTIONCOBOCATEGORY_STAKING_ETH_UNSTAKE TransactionCoboCategory = "StakingEthUnstake"
+	TRANSACTIONCOBOCATEGORY_STAKING_SKYFARM_CLAIM TransactionCoboCategory = "StakingSkyfarmClaim"
+	TRANSACTIONCOBOCATEGORY_STAKING_SKYFARM_STAKE TransactionCoboCategory = "StakingSkyfarmStake"
+	TRANSACTIONCOBOCATEGORY_STAKING_SKYFARM_UNSTAKE TransactionCoboCategory = "StakingSkyfarmUnstake"
 )
 
 // All allowed values of TransactionCoboCategory enum
 var AllowedTransactionCoboCategoryEnumValues = []TransactionCoboCategory{
-	"AutoSweep",
 	"AutoFueling",
 	"AutoFuelingRefund",
-	"SafeTxMessage",
+	"AutoSweep",
 	"BillPayment",
 	"BillRefund",
 	"CommissionFeeCharge",
 	"CommissionFeeRefund",
+	"SafeTxMessage",
+	"StakingBabylonBtcDelegation",
+	"StakingBabylonBtcSignBabylon",
+	"StakingBabylonClaim",
+	"StakingBabylonSlashing",
+	"StakingBabylonStake",
+	"StakingBabylonUnstake",
+	"StakingBabylonWithdraw",
+	"StakingBithiveClaim",
+	"StakingBithiveStake",
+	"StakingBithiveUnstake",
+	"StakingBithiveWithdraw",
+	"StakingCoreStake",
+	"StakingCoreWithdraw",
+	"StakingEthClaim",
+	"StakingEthStake",
+	"StakingEthUnstake",
+	"StakingSkyfarmClaim",
+	"StakingSkyfarmStake",
+	"StakingSkyfarmUnstake",
 }
 
 func (v *TransactionCoboCategory) UnmarshalJSON(src []byte) error {

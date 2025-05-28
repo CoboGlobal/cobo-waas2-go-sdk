@@ -33,6 +33,8 @@ type UTXO struct {
 	IsLocked *bool `json:"is_locked,omitempty"`
 	// The number of confirmations for the UTXO.
 	ConfirmedNumber *int32 `json:"confirmed_number,omitempty"`
+	// Whether the UTXO is frozen.
+	IsFrozen *bool `json:"is_frozen,omitempty"`
 }
 
 // NewUTXO instantiates a new UTXO object
@@ -308,6 +310,38 @@ func (o *UTXO) SetConfirmedNumber(v int32) {
 	o.ConfirmedNumber = &v
 }
 
+// GetIsFrozen returns the IsFrozen field value if set, zero value otherwise.
+func (o *UTXO) GetIsFrozen() bool {
+	if o == nil || IsNil(o.IsFrozen) {
+		var ret bool
+		return ret
+	}
+	return *o.IsFrozen
+}
+
+// GetIsFrozenOk returns a tuple with the IsFrozen field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UTXO) GetIsFrozenOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsFrozen) {
+		return nil, false
+	}
+	return o.IsFrozen, true
+}
+
+// HasIsFrozen returns a boolean if a field has been set.
+func (o *UTXO) HasIsFrozen() bool {
+	if o != nil && !IsNil(o.IsFrozen) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsFrozen gets a reference to the given bool and assigns it to the IsFrozen field.
+func (o *UTXO) SetIsFrozen(v bool) {
+	o.IsFrozen = &v
+}
+
 func (o UTXO) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -341,6 +375,9 @@ func (o UTXO) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConfirmedNumber) {
 		toSerialize["confirmed_number"] = o.ConfirmedNumber
+	}
+	if !IsNil(o.IsFrozen) {
+		toSerialize["is_frozen"] = o.IsFrozen
 	}
 	return toSerialize, nil
 }

@@ -28,6 +28,20 @@ func Test_cobo_waas2_WalletsAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test WalletsAPIService BatchCheckUtxo", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var walletId string
+
+		resp, httpRes, err := apiClient.WalletsAPI.BatchCheckUtxo(ctx, walletId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test WalletsAPIService CheckAddressChainsValidity", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

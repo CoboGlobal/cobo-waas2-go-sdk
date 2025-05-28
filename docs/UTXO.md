@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **IsCoinbase** | Pointer to **bool** | Whether the UTXO comes from a coinbase transaction. | [optional] 
 **IsLocked** | Pointer to **bool** | Whether the UTXO is locked. | [optional] 
 **ConfirmedNumber** | Pointer to **int32** | The number of confirmations for the UTXO. | [optional] 
+**IsFrozen** | Pointer to **bool** | Whether the UTXO is frozen. | [optional] 
 
 ## Methods
 
@@ -231,6 +232,31 @@ SetConfirmedNumber sets ConfirmedNumber field to given value.
 `func (o *UTXO) HasConfirmedNumber() bool`
 
 HasConfirmedNumber returns a boolean if a field has been set.
+
+### GetIsFrozen
+
+`func (o *UTXO) GetIsFrozen() bool`
+
+GetIsFrozen returns the IsFrozen field if non-nil, zero value otherwise.
+
+### GetIsFrozenOk
+
+`func (o *UTXO) GetIsFrozenOk() (*bool, bool)`
+
+GetIsFrozenOk returns a tuple with the IsFrozen field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsFrozen
+
+`func (o *UTXO) SetIsFrozen(v bool)`
+
+SetIsFrozen sets IsFrozen field to given value.
+
+### HasIsFrozen
+
+`func (o *UTXO) HasIsFrozen() bool`
+
+HasIsFrozen returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

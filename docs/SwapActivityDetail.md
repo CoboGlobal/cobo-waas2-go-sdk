@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **CreatedTimestamp** | Pointer to **int32** | The time when the swap activity was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **Timeline** | Pointer to [**[]SwapActivityTimeline**](SwapActivityTimeline.md) |  | [optional] 
+**Approvers** | Pointer to [**[]SwapActivityApprovers**](SwapActivityApprovers.md) |  | [optional] 
 
 ## Methods
 
@@ -475,6 +476,31 @@ SetTimeline sets Timeline field to given value.
 `func (o *SwapActivityDetail) HasTimeline() bool`
 
 HasTimeline returns a boolean if a field has been set.
+
+### GetApprovers
+
+`func (o *SwapActivityDetail) GetApprovers() []SwapActivityApprovers`
+
+GetApprovers returns the Approvers field if non-nil, zero value otherwise.
+
+### GetApproversOk
+
+`func (o *SwapActivityDetail) GetApproversOk() (*[]SwapActivityApprovers, bool)`
+
+GetApproversOk returns a tuple with the Approvers field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetApprovers
+
+`func (o *SwapActivityDetail) SetApprovers(v []SwapActivityApprovers)`
+
+SetApprovers sets Approvers field to given value.
+
+### HasApprovers
+
+`func (o *SwapActivityDetail) HasApprovers() bool`
+
+HasApprovers returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

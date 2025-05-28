@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this settlement request. Each transaction represents a separate blockchain operation related to the settlement process. | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
+**CryptoAddressId** | Pointer to **string** | Unique identifier for the pre-approved crypto address, used to reference the address securely in requests. | [optional] 
 
 ## Methods
 
@@ -309,6 +310,31 @@ SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 `func (o *SettlementDetail) HasUpdatedTimestamp() bool`
 
 HasUpdatedTimestamp returns a boolean if a field has been set.
+
+### GetCryptoAddressId
+
+`func (o *SettlementDetail) GetCryptoAddressId() string`
+
+GetCryptoAddressId returns the CryptoAddressId field if non-nil, zero value otherwise.
+
+### GetCryptoAddressIdOk
+
+`func (o *SettlementDetail) GetCryptoAddressIdOk() (*string, bool)`
+
+GetCryptoAddressIdOk returns a tuple with the CryptoAddressId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCryptoAddressId
+
+`func (o *SettlementDetail) SetCryptoAddressId(v string)`
+
+SetCryptoAddressId sets CryptoAddressId field to given value.
+
+### HasCryptoAddressId
+
+`func (o *SettlementDetail) HasCryptoAddressId() bool`
+
+HasCryptoAddressId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -27,6 +27,8 @@ type EstimateTransferFeeParams struct {
 	TokenId string `json:"token_id"`
 	Destination *TransferDestination `json:"destination,omitempty"`
 	FeeType *FeeType `json:"fee_type,omitempty"`
+	// The ID of the transaction that this transaction replaced.
+	ReplacedTransactionId *string `json:"replaced_transaction_id,omitempty"`
 }
 
 type _EstimateTransferFeeParams EstimateTransferFeeParams
@@ -223,6 +225,38 @@ func (o *EstimateTransferFeeParams) SetFeeType(v FeeType) {
 	o.FeeType = &v
 }
 
+// GetReplacedTransactionId returns the ReplacedTransactionId field value if set, zero value otherwise.
+func (o *EstimateTransferFeeParams) GetReplacedTransactionId() string {
+	if o == nil || IsNil(o.ReplacedTransactionId) {
+		var ret string
+		return ret
+	}
+	return *o.ReplacedTransactionId
+}
+
+// GetReplacedTransactionIdOk returns a tuple with the ReplacedTransactionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EstimateTransferFeeParams) GetReplacedTransactionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ReplacedTransactionId) {
+		return nil, false
+	}
+	return o.ReplacedTransactionId, true
+}
+
+// HasReplacedTransactionId returns a boolean if a field has been set.
+func (o *EstimateTransferFeeParams) HasReplacedTransactionId() bool {
+	if o != nil && !IsNil(o.ReplacedTransactionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplacedTransactionId gets a reference to the given string and assigns it to the ReplacedTransactionId field.
+func (o *EstimateTransferFeeParams) SetReplacedTransactionId(v string) {
+	o.ReplacedTransactionId = &v
+}
+
 func (o EstimateTransferFeeParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -244,6 +278,9 @@ func (o EstimateTransferFeeParams) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.FeeType) {
 		toSerialize["fee_type"] = o.FeeType
+	}
+	if !IsNil(o.ReplacedTransactionId) {
+		toSerialize["replaced_transaction_id"] = o.ReplacedTransactionId
 	}
 	return toSerialize, nil
 }

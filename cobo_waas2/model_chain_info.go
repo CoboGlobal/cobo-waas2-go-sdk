@@ -33,6 +33,8 @@ type ChainInfo struct {
 	RequireMemo *bool `json:"require_memo,omitempty"`
 	// The number of confirmations required for an on-chain transaction, such as 64 for Ethereum.
 	ConfirmingThreshold *int32 `json:"confirming_threshold,omitempty"`
+	// The number of confirmations required for a coinbase transaction to be mature, such as 100 for BTC.
+	CoinbaseMaturity *int32 `json:"coinbase_maturity,omitempty"`
 }
 
 type _ChainInfo ChainInfo
@@ -271,6 +273,38 @@ func (o *ChainInfo) SetConfirmingThreshold(v int32) {
 	o.ConfirmingThreshold = &v
 }
 
+// GetCoinbaseMaturity returns the CoinbaseMaturity field value if set, zero value otherwise.
+func (o *ChainInfo) GetCoinbaseMaturity() int32 {
+	if o == nil || IsNil(o.CoinbaseMaturity) {
+		var ret int32
+		return ret
+	}
+	return *o.CoinbaseMaturity
+}
+
+// GetCoinbaseMaturityOk returns a tuple with the CoinbaseMaturity field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ChainInfo) GetCoinbaseMaturityOk() (*int32, bool) {
+	if o == nil || IsNil(o.CoinbaseMaturity) {
+		return nil, false
+	}
+	return o.CoinbaseMaturity, true
+}
+
+// HasCoinbaseMaturity returns a boolean if a field has been set.
+func (o *ChainInfo) HasCoinbaseMaturity() bool {
+	if o != nil && !IsNil(o.CoinbaseMaturity) {
+		return true
+	}
+
+	return false
+}
+
+// SetCoinbaseMaturity gets a reference to the given int32 and assigns it to the CoinbaseMaturity field.
+func (o *ChainInfo) SetCoinbaseMaturity(v int32) {
+	o.CoinbaseMaturity = &v
+}
+
 func (o ChainInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -299,6 +333,9 @@ func (o ChainInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConfirmingThreshold) {
 		toSerialize["confirming_threshold"] = o.ConfirmingThreshold
+	}
+	if !IsNil(o.CoinbaseMaturity) {
+		toSerialize["coinbase_maturity"] = o.CoinbaseMaturity
 	}
 	return toSerialize, nil
 }

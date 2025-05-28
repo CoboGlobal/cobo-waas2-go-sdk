@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **ExplorerAddressUrl** | Pointer to **string** | The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs. | [optional] 
 **RequireMemo** | Pointer to **bool** | Whether the chain requires a memo. | [optional] 
 **ConfirmingThreshold** | Pointer to **int32** | The number of confirmations required for an on-chain transaction, such as 64 for Ethereum. | [optional] 
+**CoinbaseMaturity** | Pointer to **int32** | The number of confirmations required for a coinbase transaction to be mature, such as 100 for BTC. | [optional] 
 
 ## Methods
 
@@ -200,6 +201,31 @@ SetConfirmingThreshold sets ConfirmingThreshold field to given value.
 `func (o *ChainInfo) HasConfirmingThreshold() bool`
 
 HasConfirmingThreshold returns a boolean if a field has been set.
+
+### GetCoinbaseMaturity
+
+`func (o *ChainInfo) GetCoinbaseMaturity() int32`
+
+GetCoinbaseMaturity returns the CoinbaseMaturity field if non-nil, zero value otherwise.
+
+### GetCoinbaseMaturityOk
+
+`func (o *ChainInfo) GetCoinbaseMaturityOk() (*int32, bool)`
+
+GetCoinbaseMaturityOk returns a tuple with the CoinbaseMaturity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCoinbaseMaturity
+
+`func (o *ChainInfo) SetCoinbaseMaturity(v int32)`
+
+SetCoinbaseMaturity sets CoinbaseMaturity field to given value.
+
+### HasCoinbaseMaturity
+
+`func (o *ChainInfo) HasCoinbaseMaturity() bool`
+
+HasCoinbaseMaturity returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -7,15 +7,15 @@ Name | Type | Description | Notes
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **TokenId** | Pointer to **string** | The ID of the cryptocurrency you want to settle. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | [optional] 
 **Currency** | Pointer to **string** | The fiat currency for settling the cryptocurrency. Currently, only &#x60;USD&#x60; is supported. | [optional] [default to "USD"]
-**Amount** | **string** | The settlement amount. - If &#x60;token_id&#x60; is specified, this represents the settlement amount in the specified cryptocurrency. - If &#x60;token_id&#x60; is not specified, this represents the settlement amount in the specified fiat currency. | 
-**BankAccountId** | **string** | The ID of the bank account where the settled funds will be deposited. | 
+**Amount** | Pointer to **string** | The settlement amount. - If &#x60;token_id&#x60; is specified, this represents the settlement amount in the specified cryptocurrency. - If &#x60;token_id&#x60; is not specified, this represents the settlement amount in the specified fiat currency. | [optional] 
+**BankAccountId** | Pointer to **string** | The ID of the bank account where the settled funds will be deposited. | [optional] 
 **SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
 
 ## Methods
 
 ### NewCreateSettlement
 
-`func NewCreateSettlement(amount string, bankAccountId string, ) *CreateSettlement`
+`func NewCreateSettlement() *CreateSettlement`
 
 NewCreateSettlement instantiates a new CreateSettlement object
 This constructor will assign default values to properties that have it defined,
@@ -124,6 +124,11 @@ and a boolean to check if the value has been set.
 
 SetAmount sets Amount field to given value.
 
+### HasAmount
+
+`func (o *CreateSettlement) HasAmount() bool`
+
+HasAmount returns a boolean if a field has been set.
 
 ### GetBankAccountId
 
@@ -144,6 +149,11 @@ and a boolean to check if the value has been set.
 
 SetBankAccountId sets BankAccountId field to given value.
 
+### HasBankAccountId
+
+`func (o *CreateSettlement) HasBankAccountId() bool`
+
+HasBankAccountId returns a boolean if a field has been set.
 
 ### GetSettlementType
 

@@ -27,6 +27,8 @@ type EstimateContractCallFeeParams struct {
 	Source ContractCallSource `json:"source"`
 	Destination ContractCallDestination `json:"destination"`
 	FeeType *FeeType `json:"fee_type,omitempty"`
+	// The ID of the transaction that this transaction replaced.
+	ReplacedTransactionId *string `json:"replaced_transaction_id,omitempty"`
 }
 
 type _EstimateContractCallFeeParams EstimateContractCallFeeParams
@@ -216,6 +218,38 @@ func (o *EstimateContractCallFeeParams) SetFeeType(v FeeType) {
 	o.FeeType = &v
 }
 
+// GetReplacedTransactionId returns the ReplacedTransactionId field value if set, zero value otherwise.
+func (o *EstimateContractCallFeeParams) GetReplacedTransactionId() string {
+	if o == nil || IsNil(o.ReplacedTransactionId) {
+		var ret string
+		return ret
+	}
+	return *o.ReplacedTransactionId
+}
+
+// GetReplacedTransactionIdOk returns a tuple with the ReplacedTransactionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EstimateContractCallFeeParams) GetReplacedTransactionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ReplacedTransactionId) {
+		return nil, false
+	}
+	return o.ReplacedTransactionId, true
+}
+
+// HasReplacedTransactionId returns a boolean if a field has been set.
+func (o *EstimateContractCallFeeParams) HasReplacedTransactionId() bool {
+	if o != nil && !IsNil(o.ReplacedTransactionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplacedTransactionId gets a reference to the given string and assigns it to the ReplacedTransactionId field.
+func (o *EstimateContractCallFeeParams) SetReplacedTransactionId(v string) {
+	o.ReplacedTransactionId = &v
+}
+
 func (o EstimateContractCallFeeParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -235,6 +269,9 @@ func (o EstimateContractCallFeeParams) ToMap() (map[string]interface{}, error) {
 	toSerialize["destination"] = o.Destination
 	if !IsNil(o.FeeType) {
 		toSerialize["fee_type"] = o.FeeType
+	}
+	if !IsNil(o.ReplacedTransactionId) {
+		toSerialize["replaced_transaction_id"] = o.ReplacedTransactionId
 	}
 	return toSerialize, nil
 }

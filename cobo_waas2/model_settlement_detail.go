@@ -37,6 +37,8 @@ type SettlementDetail struct {
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The updated time of the settlement, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
+	// Unique identifier for the pre-approved crypto address, used to reference the address securely in requests.
+	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
 }
 
 // NewSettlementDetail instantiates a new SettlementDetail object
@@ -408,6 +410,38 @@ func (o *SettlementDetail) SetUpdatedTimestamp(v int32) {
 	o.UpdatedTimestamp = &v
 }
 
+// GetCryptoAddressId returns the CryptoAddressId field value if set, zero value otherwise.
+func (o *SettlementDetail) GetCryptoAddressId() string {
+	if o == nil || IsNil(o.CryptoAddressId) {
+		var ret string
+		return ret
+	}
+	return *o.CryptoAddressId
+}
+
+// GetCryptoAddressIdOk returns a tuple with the CryptoAddressId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetCryptoAddressIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CryptoAddressId) {
+		return nil, false
+	}
+	return o.CryptoAddressId, true
+}
+
+// HasCryptoAddressId returns a boolean if a field has been set.
+func (o *SettlementDetail) HasCryptoAddressId() bool {
+	if o != nil && !IsNil(o.CryptoAddressId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCryptoAddressId gets a reference to the given string and assigns it to the CryptoAddressId field.
+func (o *SettlementDetail) SetCryptoAddressId(v string) {
+	o.CryptoAddressId = &v
+}
+
 func (o SettlementDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -450,6 +484,9 @@ func (o SettlementDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UpdatedTimestamp) {
 		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
+	if !IsNil(o.CryptoAddressId) {
+		toSerialize["crypto_address_id"] = o.CryptoAddressId
 	}
 	return toSerialize, nil
 }
