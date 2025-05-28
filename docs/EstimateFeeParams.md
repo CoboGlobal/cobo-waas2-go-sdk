@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **TokenId** | **string** | The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
 **Destination** | [**ContractCallDestination**](ContractCallDestination.md) |  | 
 **FeeType** | Pointer to [**FeeType**](FeeType.md) |  | [optional] [default to FEETYPE_EVM_EIP_1559]
+**ReplacedTransactionId** | Pointer to **string** | The ID of the transaction that this transaction replaced. | [optional] 
 **ChainId** | **string** | The chain ID of the chain on which the smart contract is deployed. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
 
 ## Methods
@@ -160,6 +161,31 @@ SetFeeType sets FeeType field to given value.
 `func (o *EstimateFeeParams) HasFeeType() bool`
 
 HasFeeType returns a boolean if a field has been set.
+
+### GetReplacedTransactionId
+
+`func (o *EstimateFeeParams) GetReplacedTransactionId() string`
+
+GetReplacedTransactionId returns the ReplacedTransactionId field if non-nil, zero value otherwise.
+
+### GetReplacedTransactionIdOk
+
+`func (o *EstimateFeeParams) GetReplacedTransactionIdOk() (*string, bool)`
+
+GetReplacedTransactionIdOk returns a tuple with the ReplacedTransactionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReplacedTransactionId
+
+`func (o *EstimateFeeParams) SetReplacedTransactionId(v string)`
+
+SetReplacedTransactionId sets ReplacedTransactionId field to given value.
+
+### HasReplacedTransactionId
+
+`func (o *EstimateFeeParams) HasReplacedTransactionId() bool`
+
+HasReplacedTransactionId returns a boolean if a field has been set.
 
 ### GetChainId
 

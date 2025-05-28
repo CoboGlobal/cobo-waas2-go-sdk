@@ -52,6 +52,8 @@ type APIClient struct {
 
 	AddressBooksAPI *AddressBooksAPIService
 
+	AppWorkflowsAPI *AppWorkflowsAPIService
+
 	DevelopersAPI *DevelopersAPIService
 
 	DevelopersWebhooksAPI *DevelopersWebhooksAPIService
@@ -96,6 +98,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AddressBooksAPI = (*AddressBooksAPIService)(&c.common)
+	c.AppWorkflowsAPI = (*AppWorkflowsAPIService)(&c.common)
 	c.DevelopersAPI = (*DevelopersAPIService)(&c.common)
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
 	c.FeeStationAPI = (*FeeStationAPIService)(&c.common)

@@ -80,6 +80,11 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AddressBooksAPI* | [**ListAddressBooks**](docs/AddressBooksAPI.md#listaddressbooks) | **Get** /address_books | List address book entries
+*AppWorkflowsAPI* | [**CreateApprovalRequest**](docs/AppWorkflowsAPI.md#createapprovalrequest) | **Post** /app/workflows/approval_requests | Request workflow approval
+*AppWorkflowsAPI* | [**GetApprovalRequestById**](docs/AppWorkflowsAPI.md#getapprovalrequestbyid) | **Get** /app/workflows/approval_requests/{approval_id} | Get approval request details
+*AppWorkflowsAPI* | [**ListAppWorkflows**](docs/AppWorkflowsAPI.md#listappworkflows) | **Get** /app/workflows | list app workflows
+*AppWorkflowsAPI* | [**ListApprovalRequests**](docs/AppWorkflowsAPI.md#listapprovalrequests) | **Get** /app/workflows/approval_requests | List approval requests
+*AppWorkflowsAPI* | [**RevokeApprovalRequest**](docs/AppWorkflowsAPI.md#revokeapprovalrequest) | **Post** /app/workflows/approval_requests/{approval_id}/revoke | Revoke approval request
 *DevelopersAPI* | [**GetApiKeyInfo**](docs/DevelopersAPI.md#getapikeyinfo) | **Get** /developers/api_key_info | Get API key information
 *DevelopersAPI* | [**ListCallbackMessages**](docs/DevelopersAPI.md#listcallbackmessages) | **Get** /developers/callback_messages | List all callback messages
 *DevelopersAPI* | [**RetryCallbackMessage**](docs/DevelopersAPI.md#retrycallbackmessage) | **Post** /developers/callback_messages/{message_id}/retry | Retry callback message
@@ -106,7 +111,6 @@ Class | Method | HTTP request | Description
 *PaymentAPI* | [**CreateRefund**](docs/PaymentAPI.md#createrefund) | **Post** /payments/refunds | Create refund order
 *PaymentAPI* | [**CreateSettlementRequest**](docs/PaymentAPI.md#createsettlementrequest) | **Post** /payments/settlement_requests | Create settlement request
 *PaymentAPI* | [**GetExchangeRate**](docs/PaymentAPI.md#getexchangerate) | **Get** /payments/exchange_rates/{token_id}/{currency} | Get exchange rate
-*PaymentAPI* | [**GetPaymentOrderAddressInfo**](docs/PaymentAPI.md#getpaymentorderaddressinfo) | **Get** /payments/orders/address_info | Get pay-in order&#39;s receiving address info
 *PaymentAPI* | [**GetPaymentOrderDetailById**](docs/PaymentAPI.md#getpaymentorderdetailbyid) | **Get** /payments/orders/{order_id} | Get pay-in order information
 *PaymentAPI* | [**GetRefundDetailById**](docs/PaymentAPI.md#getrefunddetailbyid) | **Get** /payments/refunds/{refund_id} | Get refund order information
 *PaymentAPI* | [**GetRefunds**](docs/PaymentAPI.md#getrefunds) | **Get** /payments/refunds | List all refund orders
@@ -164,6 +168,7 @@ Class | Method | HTTP request | Description
 *TravelRuleAPI* | [**ListSupportedCountries**](docs/TravelRuleAPI.md#listsupportedcountries) | **Get** /travel_rule/transaction/countries | List supported countries
 *TravelRuleAPI* | [**SubmitDepositTravelRuleInfo**](docs/TravelRuleAPI.md#submitdeposittravelruleinfo) | **Post** /travel_rule/transaction/deposit/travel_rule_info | Submit Travel Rule information for deposits
 *TravelRuleAPI* | [**SubmitWithdrawTravelRuleInfo**](docs/TravelRuleAPI.md#submitwithdrawtravelruleinfo) | **Post** /travel_rule/transaction/withdraw/travel_rule_info | Submit Travel Rule information for withdrawals
+*WalletsAPI* | [**BatchCheckUtxo**](docs/WalletsAPI.md#batchcheckutxo) | **Post** /wallets/{wallet_id}/utxos/batch_check | Batch check UTXOs
 *WalletsAPI* | [**CheckAddressChainsValidity**](docs/WalletsAPI.md#checkaddresschainsvalidity) | **Get** /wallets/check_address_chains_validity | Check address validity across chains
 *WalletsAPI* | [**CheckAddressValidity**](docs/WalletsAPI.md#checkaddressvalidity) | **Get** /wallets/check_address_validity | Check address validity
 *WalletsAPI* | [**CheckAddressesValidity**](docs/WalletsAPI.md#checkaddressesvalidity) | **Get** /wallets/check_addresses_validity | Check addresses validity
@@ -240,7 +245,15 @@ Class | Method | HTTP request | Description
  - [AmountStatus](docs/AmountStatus.md)
  - [ApiLogDetails](docs/ApiLogDetails.md)
  - [ApiLogSummary](docs/ApiLogSummary.md)
+ - [AppWorkflow](docs/AppWorkflow.md)
+ - [AppWorkflowField](docs/AppWorkflowField.md)
+ - [AppWorkflowPolicy](docs/AppWorkflowPolicy.md)
+ - [ApprovalEntry](docs/ApprovalEntry.md)
+ - [ApprovalRequest](docs/ApprovalRequest.md)
+ - [ApprovalRequestDetail](docs/ApprovalRequestDetail.md)
  - [ApprovalStatementStatus](docs/ApprovalStatementStatus.md)
+ - [ApprovalStatus](docs/ApprovalStatus.md)
+ - [ApprovalUser](docs/ApprovalUser.md)
  - [AssetBalance](docs/AssetBalance.md)
  - [AssetInfo](docs/AssetInfo.md)
  - [AutoFuelType](docs/AutoFuelType.md)
@@ -264,6 +277,9 @@ Class | Method | HTTP request | Description
  - [BaseEstimateStakingFee](docs/BaseEstimateStakingFee.md)
  - [BaseStakeExtra](docs/BaseStakeExtra.md)
  - [BaseStakeSource](docs/BaseStakeSource.md)
+ - [BatchCheckUtxo201Response](docs/BatchCheckUtxo201Response.md)
+ - [BatchCheckUtxoRequest](docs/BatchCheckUtxoRequest.md)
+ - [BatchUTXOParam](docs/BatchUTXOParam.md)
  - [BroadcastSignedTransactions201ResponseInner](docs/BroadcastSignedTransactions201ResponseInner.md)
  - [BroadcastSignedTransactionsRequest](docs/BroadcastSignedTransactionsRequest.md)
  - [CallbackMessage](docs/CallbackMessage.md)
@@ -288,6 +304,7 @@ Class | Method | HTTP request | Description
  - [CosmosContractCallDestination](docs/CosmosContractCallDestination.md)
  - [CosmosContractCallMessage](docs/CosmosContractCallMessage.md)
  - [CreateAddressRequest](docs/CreateAddressRequest.md)
+ - [CreateApprovalRequest201Response](docs/CreateApprovalRequest201Response.md)
  - [CreateBabylonAirdropRegistration201Response](docs/CreateBabylonAirdropRegistration201Response.md)
  - [CreateBabylonAirdropRegistrationRequest](docs/CreateBabylonAirdropRegistrationRequest.md)
  - [CreateBabylonStakingRegistration201Response](docs/CreateBabylonStakingRegistration201Response.md)
@@ -403,6 +420,7 @@ Class | Method | HTTP request | Description
  - [ListAddressBalancesByToken200Response](docs/ListAddressBalancesByToken200Response.md)
  - [ListAddressBooks200Response](docs/ListAddressBooks200Response.md)
  - [ListAddresses200Response](docs/ListAddresses200Response.md)
+ - [ListApprovalRequests200Response](docs/ListApprovalRequests200Response.md)
  - [ListAssetBalancesForExchangeWallet200Response](docs/ListAssetBalancesForExchangeWallet200Response.md)
  - [ListBabylonAirdropRegistrations200Response](docs/ListBabylonAirdropRegistrations200Response.md)
  - [ListBabylonEligibleAirdrops200Response](docs/ListBabylonEligibleAirdrops200Response.md)
@@ -461,7 +479,6 @@ Class | Method | HTTP request | Description
  - [MpcStakeSource](docs/MpcStakeSource.md)
  - [MpcTransferSource](docs/MpcTransferSource.md)
  - [Order](docs/Order.md)
- - [OrderAddressInfo](docs/OrderAddressInfo.md)
  - [OrderStatus](docs/OrderStatus.md)
  - [OrgInfo](docs/OrgInfo.md)
  - [Pagination](docs/Pagination.md)
@@ -469,6 +486,12 @@ Class | Method | HTTP request | Description
  - [PaymentRefundEventData](docs/PaymentRefundEventData.md)
  - [PaymentSettlementEvent](docs/PaymentSettlementEvent.md)
  - [PaymentTransaction](docs/PaymentTransaction.md)
+ - [PolicyAction](docs/PolicyAction.md)
+ - [PolicyActionContent](docs/PolicyActionContent.md)
+ - [PolicyActionType](docs/PolicyActionType.md)
+ - [PolicyCondition](docs/PolicyCondition.md)
+ - [PolicyFieldOperator](docs/PolicyFieldOperator.md)
+ - [PolicyFieldValueType](docs/PolicyFieldValueType.md)
  - [PoolDetails](docs/PoolDetails.md)
  - [PoolDetailsAllOfValidatorsInfo](docs/PoolDetailsAllOfValidatorsInfo.md)
  - [PoolSummary](docs/PoolSummary.md)
@@ -484,8 +507,11 @@ Class | Method | HTTP request | Description
  - [RefundStatus](docs/RefundStatus.md)
  - [RefundType](docs/RefundType.md)
  - [ReplaceType](docs/ReplaceType.md)
+ - [RequestApproval](docs/RequestApproval.md)
  - [RetryCallbackMessage201Response](docs/RetryCallbackMessage201Response.md)
  - [RetryWebhookEventById201Response](docs/RetryWebhookEventById201Response.md)
+ - [RevokeApprovalRequest201Response](docs/RevokeApprovalRequest201Response.md)
+ - [RevokeApprovalRequestRequest](docs/RevokeApprovalRequestRequest.md)
  - [RoleScopes](docs/RoleScopes.md)
  - [RootPubkey](docs/RootPubkey.md)
  - [SafeContractCallSource](docs/SafeContractCallSource.md)
@@ -524,9 +550,11 @@ Class | Method | HTTP request | Description
  - [SubWalletAssetBalance](docs/SubWalletAssetBalance.md)
  - [SubmitDepositTravelRuleInfo201Response](docs/SubmitDepositTravelRuleInfo201Response.md)
  - [SwapActivity](docs/SwapActivity.md)
+ - [SwapActivityApprovers](docs/SwapActivityApprovers.md)
  - [SwapActivityDetail](docs/SwapActivityDetail.md)
  - [SwapActivityStatus](docs/SwapActivityStatus.md)
  - [SwapActivityTimeline](docs/SwapActivityTimeline.md)
+ - [SwapApproversStatus](docs/SwapApproversStatus.md)
  - [SwapQuote](docs/SwapQuote.md)
  - [SwapToken](docs/SwapToken.md)
  - [SwapType](docs/SwapType.md)

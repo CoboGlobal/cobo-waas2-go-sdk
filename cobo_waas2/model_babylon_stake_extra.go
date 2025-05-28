@@ -26,6 +26,7 @@ type BabylonStakeExtra struct {
 	StakeBlockTime int64 `json:"stake_block_time"`
 	// Whether to automatically broadcast the transaction. The default value is `true`.  - `true`: Automatically broadcast the transaction. - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself. 
 	AutoBroadcast *bool `json:"auto_broadcast,omitempty"`
+	BabylonAddress *StakingSource `json:"babylon_address,omitempty"`
 }
 
 type _BabylonStakeExtra BabylonStakeExtra
@@ -154,6 +155,38 @@ func (o *BabylonStakeExtra) SetAutoBroadcast(v bool) {
 	o.AutoBroadcast = &v
 }
 
+// GetBabylonAddress returns the BabylonAddress field value if set, zero value otherwise.
+func (o *BabylonStakeExtra) GetBabylonAddress() StakingSource {
+	if o == nil || IsNil(o.BabylonAddress) {
+		var ret StakingSource
+		return ret
+	}
+	return *o.BabylonAddress
+}
+
+// GetBabylonAddressOk returns a tuple with the BabylonAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BabylonStakeExtra) GetBabylonAddressOk() (*StakingSource, bool) {
+	if o == nil || IsNil(o.BabylonAddress) {
+		return nil, false
+	}
+	return o.BabylonAddress, true
+}
+
+// HasBabylonAddress returns a boolean if a field has been set.
+func (o *BabylonStakeExtra) HasBabylonAddress() bool {
+	if o != nil && !IsNil(o.BabylonAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetBabylonAddress gets a reference to the given StakingSource and assigns it to the BabylonAddress field.
+func (o *BabylonStakeExtra) SetBabylonAddress(v StakingSource) {
+	o.BabylonAddress = &v
+}
+
 func (o BabylonStakeExtra) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -169,6 +202,9 @@ func (o BabylonStakeExtra) ToMap() (map[string]interface{}, error) {
 	toSerialize["stake_block_time"] = o.StakeBlockTime
 	if !IsNil(o.AutoBroadcast) {
 		toSerialize["auto_broadcast"] = o.AutoBroadcast
+	}
+	if !IsNil(o.BabylonAddress) {
+		toSerialize["babylon_address"] = o.BabylonAddress
 	}
 	return toSerialize, nil
 }

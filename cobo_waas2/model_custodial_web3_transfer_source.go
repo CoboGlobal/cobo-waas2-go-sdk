@@ -22,7 +22,7 @@ type CustodialWeb3TransferSource struct {
 	SourceType WalletSubtype `json:"source_type"`
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// The wallet address.  If you want to specify the UTXOs to be used, please provide the `included_utxos` property. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.  You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail. 
+	// The wallet address.  If you want to specify the UTXOs to be used, please provide the `included_utxos` property. When `included_utxos` is specified, only these specified UTXOs will be used for the transaction. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.  You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail. 
 	Address *string `json:"address,omitempty"`
 	IncludedUtxos []TransactionUtxo `json:"included_utxos,omitempty"`
 	ExcludedUtxos []TransactionUtxo `json:"excluded_utxos,omitempty"`

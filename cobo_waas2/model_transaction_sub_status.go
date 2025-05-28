@@ -63,6 +63,8 @@ const (
 	TRANSACTIONSUBSTATUS_REJECTED_TRANSACTION_POLICY TransactionSubStatus = "RejectedTransactionPolicy"
 	TRANSACTIONSUBSTATUS_REJECTED_BY_SCREENING_APP TransactionSubStatus = "RejectedByScreeningApp"
 	TRANSACTIONSUBSTATUS_PENDING_SCREENING_APP_CHECK TransactionSubStatus = "PendingScreeningAppCheck"
+	TRANSACTIONSUBSTATUS_PENDING_COBO_KYT_CHECK TransactionSubStatus = "PendingCoboKYTCheck"
+	TRANSACTIONSUBSTATUS_REJECTED_BY_COBO_KYT TransactionSubStatus = "RejectedByCoboKYT"
 	TRANSACTIONSUBSTATUS_PENDING_COBO_TRAVEL_RULE_CHECK TransactionSubStatus = "PendingCoboTravelRuleCheck"
 )
 
@@ -113,6 +115,8 @@ var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"RejectedTransactionPolicy",
 	"RejectedByScreeningApp",
 	"PendingScreeningAppCheck",
+	"PendingCoboKYTCheck",
+	"RejectedByCoboKYT",
 	"PendingCoboTravelRuleCheck",
 }
 

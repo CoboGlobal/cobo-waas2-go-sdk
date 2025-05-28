@@ -47,6 +47,7 @@ type SwapActivityDetail struct {
 	// The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 	Timeline []SwapActivityTimeline `json:"timeline,omitempty"`
+	Approvers []SwapActivityApprovers `json:"approvers,omitempty"`
 }
 
 // NewSwapActivityDetail instantiates a new SwapActivityDetail object
@@ -620,6 +621,38 @@ func (o *SwapActivityDetail) SetTimeline(v []SwapActivityTimeline) {
 	o.Timeline = v
 }
 
+// GetApprovers returns the Approvers field value if set, zero value otherwise.
+func (o *SwapActivityDetail) GetApprovers() []SwapActivityApprovers {
+	if o == nil || IsNil(o.Approvers) {
+		var ret []SwapActivityApprovers
+		return ret
+	}
+	return o.Approvers
+}
+
+// GetApproversOk returns a tuple with the Approvers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivityDetail) GetApproversOk() ([]SwapActivityApprovers, bool) {
+	if o == nil || IsNil(o.Approvers) {
+		return nil, false
+	}
+	return o.Approvers, true
+}
+
+// HasApprovers returns a boolean if a field has been set.
+func (o *SwapActivityDetail) HasApprovers() bool {
+	if o != nil && !IsNil(o.Approvers) {
+		return true
+	}
+
+	return false
+}
+
+// SetApprovers gets a reference to the given []SwapActivityApprovers and assigns it to the Approvers field.
+func (o *SwapActivityDetail) SetApprovers(v []SwapActivityApprovers) {
+	o.Approvers = v
+}
+
 func (o SwapActivityDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -680,6 +713,9 @@ func (o SwapActivityDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Timeline) {
 		toSerialize["timeline"] = o.Timeline
+	}
+	if !IsNil(o.Approvers) {
+		toSerialize["approvers"] = o.Approvers
 	}
 	return toSerialize, nil
 }
