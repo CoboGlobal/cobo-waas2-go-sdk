@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ExtraType** | [**TransactionExtraType**](TransactionExtraType.md) |  | 
-**StakeAmount** | Pointer to **string** | The original staking amount. | [optional] 
+**StakeAmount** | Pointer to **string** | The origin staking amount. | [optional] 
 **FinalityProviderPublicKey** | Pointer to **string** | The public key of the finality provider. | [optional] 
 **StakeBlockTime** | Pointer to **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | [optional] 
-**ParamVersion** | Pointer to **int64** | The version of Babylon global parameters. | [optional] 
+**ParamVersion** | Pointer to **int64** | The version of babylon global parameters. | [optional] 
 **WithdrawFromType** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
 **SlashFromType** | Pointer to [**ActivityType**](ActivityType.md) |  | [optional] 
 

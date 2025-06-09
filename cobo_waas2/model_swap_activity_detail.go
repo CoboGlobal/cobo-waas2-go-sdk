@@ -48,6 +48,7 @@ type SwapActivityDetail struct {
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 	Timeline []SwapActivityTimeline `json:"timeline,omitempty"`
 	Approvers []SwapActivityApprovers `json:"approvers,omitempty"`
+	Signers []SwapActivitySigners `json:"signers,omitempty"`
 }
 
 // NewSwapActivityDetail instantiates a new SwapActivityDetail object
@@ -653,6 +654,38 @@ func (o *SwapActivityDetail) SetApprovers(v []SwapActivityApprovers) {
 	o.Approvers = v
 }
 
+// GetSigners returns the Signers field value if set, zero value otherwise.
+func (o *SwapActivityDetail) GetSigners() []SwapActivitySigners {
+	if o == nil || IsNil(o.Signers) {
+		var ret []SwapActivitySigners
+		return ret
+	}
+	return o.Signers
+}
+
+// GetSignersOk returns a tuple with the Signers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivityDetail) GetSignersOk() ([]SwapActivitySigners, bool) {
+	if o == nil || IsNil(o.Signers) {
+		return nil, false
+	}
+	return o.Signers, true
+}
+
+// HasSigners returns a boolean if a field has been set.
+func (o *SwapActivityDetail) HasSigners() bool {
+	if o != nil && !IsNil(o.Signers) {
+		return true
+	}
+
+	return false
+}
+
+// SetSigners gets a reference to the given []SwapActivitySigners and assigns it to the Signers field.
+func (o *SwapActivityDetail) SetSigners(v []SwapActivitySigners) {
+	o.Signers = v
+}
+
 func (o SwapActivityDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -716,6 +749,9 @@ func (o SwapActivityDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Approvers) {
 		toSerialize["approvers"] = o.Approvers
+	}
+	if !IsNil(o.Signers) {
+		toSerialize["signers"] = o.Signers
 	}
 	return toSerialize, nil
 }

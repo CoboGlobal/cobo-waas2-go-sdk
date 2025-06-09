@@ -17,7 +17,7 @@ import (
 // checks if the TransactionSolContractDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionSolContractDestination{}
 
-// TransactionSolContractDestination The information about the transaction destination type `SOL_Contract`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
+// TransactionSolContractDestination The information about the transaction destination type `SOL_Contract`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 type TransactionSolContractDestination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
 	Instructions []TransactionSolContractInstruction `json:"instructions,omitempty"`

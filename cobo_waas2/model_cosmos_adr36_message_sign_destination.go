@@ -17,7 +17,7 @@ import (
 // checks if the CosmosAdr36MessageSignDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CosmosAdr36MessageSignDestination{}
 
-// CosmosAdr36MessageSignDestination The information about the destination `COSMOS_ADR_36_Signature`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+// CosmosAdr36MessageSignDestination The information about the destination `COSMOS_ADR_36`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 type CosmosAdr36MessageSignDestination struct {
 	DestinationType MessageSignDestinationType `json:"destination_type"`
 	// Message to be signed, in hexadecimal format.

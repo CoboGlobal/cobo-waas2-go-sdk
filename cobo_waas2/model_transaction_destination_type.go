@@ -19,6 +19,7 @@ type TransactionDestinationType string
 // List of TransactionDestinationType
 const (
 	TRANSACTIONDESTINATIONTYPE_ADDRESS TransactionDestinationType = "Address"
+	TRANSACTIONDESTINATIONTYPE_CUSTODIAL_WALLET TransactionDestinationType = "CustodialWallet"
 	TRANSACTIONDESTINATIONTYPE_EXCHANGE_WALLET TransactionDestinationType = "ExchangeWallet"
 	TRANSACTIONDESTINATIONTYPE_EVM_CONTRACT TransactionDestinationType = "EVM_Contract"
 	TRANSACTIONDESTINATIONTYPE_SOL_CONTRACT TransactionDestinationType = "SOL_Contract"
@@ -36,6 +37,7 @@ const (
 // All allowed values of TransactionDestinationType enum
 var AllowedTransactionDestinationTypeEnumValues = []TransactionDestinationType{
 	"Address",
+	"CustodialWallet",
 	"ExchangeWallet",
 	"EVM_Contract",
 	"SOL_Contract",

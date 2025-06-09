@@ -17,10 +17,10 @@ import (
 // checks if the TransactionCoreStakeInfo type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionCoreStakeInfo{}
 
-// TransactionCoreStakeInfo The extra information related to core staking operations.
+// TransactionCoreStakeInfo The core stake information.
 type TransactionCoreStakeInfo struct {
 	ExtraType TransactionExtraType `json:"extra_type"`
-	// The original staking amount.
+	// The origin staking amount.
 	StakeAmount *string `json:"stake_amount,omitempty"`
 	// The Unix timestamp (in seconds) when the staking position will be unlocked and available for withdrawal.
 	Timelock *int32 `json:"timelock,omitempty"`
@@ -28,7 +28,7 @@ type TransactionCoreStakeInfo struct {
 	ChangeAddress *string `json:"change_address,omitempty"`
 	// The validator's EVM address.
 	ValidatorAddress *string `json:"validator_address,omitempty"`
-	// The EVM address used to receive staking rewards.
+	// The EVM address to receive staking rewards.
 	RewardAddress *string `json:"reward_address,omitempty"`
 }
 

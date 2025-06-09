@@ -17,12 +17,12 @@ import (
 // checks if the TransactionTransferToWalletDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionTransferToWalletDestination{}
 
-// TransactionTransferToWalletDestination Information about the transaction destination type `ExchangeWallet`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
+// TransactionTransferToWalletDestination Information about the transaction destination type `CustodialWallet` or `ExchangeWallet`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Switch between the tabs to display the properties for different transaction destinations. 
 type TransactionTransferToWalletDestination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// The trading account type.
+	// The trading account type. Only available for `ExchangeWallet`.
 	TradingAccountType *string `json:"trading_account_type,omitempty"`
 	ExchangeId *ExchangeId `json:"exchange_id,omitempty"`
 	// The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`. 
