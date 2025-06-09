@@ -41,18 +41,6 @@
 
 * `WALLET_CHAIN_ENABLED` (value: `"wallet.chain.enabled"`)
 
-* `PAYMENT_TRANSACTION_CREATED` (value: `"payment.transaction.created"`)
-
-* `PAYMENT_TRANSACTION_LATE` (value: `"payment.transaction.late"`)
-
-* `PAYMENT_TRANSACTION_HELD` (value: `"payment.transaction.held"`)
-
-* `PAYMENT_STATUS_UPDATED` (value: `"payment.status.updated"`)
-
-* `PAYMENT_REFUND_STATUS_UPDATED` (value: `"payment.refund.status.updated"`)
-
-* `PAYMENT_SETTLEMENT_STATUS_UPDATED` (value: `"payment.settlement.status.updated"`)
-
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -35,6 +35,8 @@ type CreatePaymentOrderRequest struct {
 	PspOrderCode string `json:"psp_order_code"`
 	// The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. After this time: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredAt *int32 `json:"expired_at,omitempty"`
+	// Indicates whether to allocate a dedicated address for this order.  If false, a shared address from the address pool will be used. 
+	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
 }
 
 type _CreatePaymentOrderRequest CreatePaymentOrderRequest
@@ -281,6 +283,38 @@ func (o *CreatePaymentOrderRequest) SetExpiredAt(v int32) {
 	o.ExpiredAt = &v
 }
 
+// GetUseDedicatedAddress returns the UseDedicatedAddress field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetUseDedicatedAddress() bool {
+	if o == nil || IsNil(o.UseDedicatedAddress) {
+		var ret bool
+		return ret
+	}
+	return *o.UseDedicatedAddress
+}
+
+// GetUseDedicatedAddressOk returns a tuple with the UseDedicatedAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetUseDedicatedAddressOk() (*bool, bool) {
+	if o == nil || IsNil(o.UseDedicatedAddress) {
+		return nil, false
+	}
+	return o.UseDedicatedAddress, true
+}
+
+// HasUseDedicatedAddress returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasUseDedicatedAddress() bool {
+	if o != nil && !IsNil(o.UseDedicatedAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetUseDedicatedAddress gets a reference to the given bool and assigns it to the UseDedicatedAddress field.
+func (o *CreatePaymentOrderRequest) SetUseDedicatedAddress(v bool) {
+	o.UseDedicatedAddress = &v
+}
+
 func (o CreatePaymentOrderRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -304,6 +338,9 @@ func (o CreatePaymentOrderRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["psp_order_code"] = o.PspOrderCode
 	if !IsNil(o.ExpiredAt) {
 		toSerialize["expired_at"] = o.ExpiredAt
+	}
+	if !IsNil(o.UseDedicatedAddress) {
+		toSerialize["use_dedicated_address"] = o.UseDedicatedAddress
 	}
 	return toSerialize, nil
 }

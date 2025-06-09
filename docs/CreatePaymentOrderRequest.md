@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **MerchantOrderCode** | Pointer to **string** | A unique reference code assigned by the merchant to identify this order in their system. | [optional] 
 **PspOrderCode** | **string** | A unique reference code assigned by the developer to identify this order in their system. | 
 **ExpiredAt** | Pointer to **int32** | The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. After this time: - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] 
+**UseDedicatedAddress** | Pointer to **bool** | Indicates whether to allocate a dedicated address for this order.  If false, a shared address from the address pool will be used.  | [optional] 
 
 ## Methods
 
@@ -206,6 +207,31 @@ SetExpiredAt sets ExpiredAt field to given value.
 `func (o *CreatePaymentOrderRequest) HasExpiredAt() bool`
 
 HasExpiredAt returns a boolean if a field has been set.
+
+### GetUseDedicatedAddress
+
+`func (o *CreatePaymentOrderRequest) GetUseDedicatedAddress() bool`
+
+GetUseDedicatedAddress returns the UseDedicatedAddress field if non-nil, zero value otherwise.
+
+### GetUseDedicatedAddressOk
+
+`func (o *CreatePaymentOrderRequest) GetUseDedicatedAddressOk() (*bool, bool)`
+
+GetUseDedicatedAddressOk returns a tuple with the UseDedicatedAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUseDedicatedAddress
+
+`func (o *CreatePaymentOrderRequest) SetUseDedicatedAddress(v bool)`
+
+SetUseDedicatedAddress sets UseDedicatedAddress field to given value.
+
+### HasUseDedicatedAddress
+
+`func (o *CreatePaymentOrderRequest) HasUseDedicatedAddress() bool`
+
+HasUseDedicatedAddress returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
