@@ -199,6 +199,8 @@ docs/EvmEip1559FeeRate.md
 docs/EvmLegacyFeeBasePrice.md
 docs/EvmLegacyFeeRate.md
 docs/ExchangeId.md
+docs/ExchangePermissionToken201Response.md
+docs/ExchangePermissionTokenRequest.md
 docs/ExchangeTransferDestination.md
 docs/ExchangeTransferSource.md
 docs/ExchangeWalletInfo.md
@@ -321,6 +323,7 @@ docs/QueryGuardPubkey200ResponseAddressesInner.md
 docs/RawMessageSignDestination.md
 docs/RefreshAddressBalancesByToken200Response.md
 docs/RefreshAddressBalancesByTokenRequest.md
+docs/RefreshPermissionTokenRequest.md
 docs/RefreshToken2XXResponse.md
 docs/RefreshTokenRequest.md
 docs/Refund.md
@@ -735,6 +738,8 @@ model_evm_eip712_message_sign_destination.go
 model_evm_legacy_fee_base_price.go
 model_evm_legacy_fee_rate.go
 model_exchange_id.go
+model_exchange_permission_token_201_response.go
+model_exchange_permission_token_request.go
 model_exchange_transfer_destination.go
 model_exchange_transfer_source.go
 model_exchange_wallet_info.go
@@ -852,6 +857,7 @@ model_query_guard_pubkey_200_response_addresses_inner.go
 model_raw_message_sign_destination.go
 model_refresh_address_balances_by_token_200_response.go
 model_refresh_address_balances_by_token_request.go
+model_refresh_permission_token_request.go
 model_refresh_token_2_xx_response.go
 model_refresh_token_request.go
 model_refund.go
