@@ -4708,6 +4708,76 @@ paths:
       summary: Refresh Org Access Token
       tags:
       - OAuth
+  /oauth/permission_token/exchange:
+    post:
+      description: "<Note>This operation is only applicable to Cobo Portal Checkout\
+        \ SDK developers. To call this operation, you need to use the Cobo OAuth authentication\
+        \ method that requires an api key.</Note>\nThis operation allows Portal Checkout\
+        \ SDK to obtain a new Permission Access Token with a specified client ID,\
+        \ grant type and a Permission Refresh Token. \n\nFor security purposes, Permission\
+        \ Access Tokens expire after a certain period. Once they expire, the app needs\
+        \ to call this operation to get a new Permission Access Token and a new Permission\
+        \ Refresh Token.\n"
+      operationId: exchange_permission_token
+      requestBody:
+        $ref: '#/components/requestBodies/permissionTokenExchangeBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exchange_permission_token_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_token_4XX_response'
+          description: Unauthorized. Please provide valid credentials.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Exchange Permission Access Token by API Key
+      tags:
+      - OAuth
+  /oauth/permission_token/refresh:
+    post:
+      description: "<Note>This operation is only applicable to Cobo Portal Checkout\
+        \ SDK developers. To call this operation, you need to use the Cobo OAuth authentication\
+        \ method that requires an api key.</Note>\nThis operation allows Portal Checkout\
+        \ SDK to refresh a new Permission Access Token with a specified client ID,\
+        \ grant type and a Permission Refresh Token. \n\nFor security purposes, Permission\
+        \ Access Tokens expire after a certain period. Once they expire, the app needs\
+        \ to call this operation to get a new Permission Access Token and a new Permission\
+        \ Refresh Token.\n"
+      operationId: refresh_permission_token
+      requestBody:
+        $ref: '#/components/requestBodies/permissionTokenRefreshBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exchange_permission_token_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_token_4XX_response'
+          description: Unauthorized. Please provide valid credentials.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Refresh Permission Access Token by Permission Refresh Token
+      tags:
+      - OAuth
   /webhooks/endpoints:
     get:
       description: This operation retrieves the information of all webhook endpoints
@@ -11497,6 +11567,20 @@ components:
             $ref: '#/components/schemas/refresh_token_request'
       description: The request body for refreshing an Org Access Token.
       required: true
+    permissionTokenExchangeBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exchange_permission_token_request'
+      description: The request body for exchanging an Permission Access Token.
+      required: true
+    permissionTokenRefreshBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/refresh_permission_token_request'
+      description: The request body for refreshing an Permission Access Token.
+      required: true
     createPrimeBrokerUserAddressBody:
       content:
         application/json:
@@ -12166,6 +12250,12 @@ components:
           schema:
             $ref: '#/components/schemas/get_token_4XX_response'
       description: Unauthorized. Please provide valid credentials.
+    permissionTokenResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exchange_permission_token_201_response'
+      description: The request was successful.
     createUserAdressResponse:
       content:
         application/json:
@@ -24816,6 +24906,51 @@ components:
           example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
           type: string
       type: object
+    exchange_permission_token_request:
+      properties:
+        permission_type:
+          description: The OAuth permission type. Set the value as `payment_orders_payin`.
+          example: payment_orders_payin
+          type: string
+      required:
+      - permission_type
+      type: object
+    exchange_permission_token_201_response:
+      example:
+        access_token: AnCEPEp5Q8qjAOA1Lb6kVd2OlkCyJnMTeMPdLbPOM8cz176Eb5y7EJoUjJJ0vkzz
+        refresh_token: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
+        token_type: Bearer
+        expires_in: 43199
+      properties:
+        access_token:
+          description: The new Permission Access Token.
+          example: AnCEPEp5Q8qjAOA1Lb6kVd2OlkCyJnMTeMPdLbPOM8cz176Eb5y7EJoUjJJ0vkzz
+          type: string
+        token_type:
+          description: "The type of the tokens, which is Bearer."
+          example: Bearer
+          type: string
+        expires_in:
+          description: The time in seconds in which the new Permission Access Token
+            expires.
+          example: 43199
+          type: integer
+        refresh_token:
+          description: "The Refresh Token, used to obtain another Org Access Token\
+            \ when the new Permission Access Token expires. The expiration time for\
+            \ Refresh Tokens is currently set to 7 days and is subject to change."
+          example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
+          type: string
+      type: object
+    refresh_permission_token_request:
+      properties:
+        refresh_token:
+          description: The Refresh Token of the current Org Access Token.
+          example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
+          type: string
+      required:
+      - refresh_token
+      type: object
     list_webhook_endpoints_200_response:
       example:
         pagination:
@@ -27040,14 +27175,14 @@ components:
             this order in their system.
           example: P20240201001
           type: string
-        expired_at:
+        expired_in:
           description: |
-            The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. After this time:
+            The pay-in order will expire after approximately a certain number of seconds:
             - The order status becomes final and cannot be changed
             - The `received_token_amount` field will no longer be updated
             - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance.
             - A late payment will trigger a `transactionLate` webhook event.
-          example: 1711324800
+          example: 1800
           type: integer
         use_dedicated_address:
           description: "Indicates whether to allocate a dedicated address for this\

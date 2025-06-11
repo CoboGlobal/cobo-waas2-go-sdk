@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **FeeAmount** | **string** | The developer fee for the order in fiat currency. It is added to the base amount (&#x60;order_amount&#x60;) to determine the final charge. For example, if order_amount is \&quot;100.00\&quot; and fee_amount is \&quot;2.00\&quot;, the customer will be charged \&quot;102.00\&quot; in total, with \&quot;100.00\&quot; being settled to the merchant and \&quot;2.00\&quot; settled to the developer. Values must be greater than 0 and contain two decimal places. | 
 **MerchantOrderCode** | Pointer to **string** | A unique reference code assigned by the merchant to identify this order in their system. | [optional] 
 **PspOrderCode** | **string** | A unique reference code assigned by the developer to identify this order in their system. | 
-**ExpiredAt** | Pointer to **int32** | The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. After this time: - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] 
+**ExpiredIn** | Pointer to **int32** | The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] 
 **UseDedicatedAddress** | Pointer to **bool** | Indicates whether to allocate a dedicated address for this order.  If false, a shared address from the address pool will be used.  | [optional] 
 
 ## Methods
@@ -183,30 +183,30 @@ and a boolean to check if the value has been set.
 SetPspOrderCode sets PspOrderCode field to given value.
 
 
-### GetExpiredAt
+### GetExpiredIn
 
-`func (o *CreatePaymentOrderRequest) GetExpiredAt() int32`
+`func (o *CreatePaymentOrderRequest) GetExpiredIn() int32`
 
-GetExpiredAt returns the ExpiredAt field if non-nil, zero value otherwise.
+GetExpiredIn returns the ExpiredIn field if non-nil, zero value otherwise.
 
-### GetExpiredAtOk
+### GetExpiredInOk
 
-`func (o *CreatePaymentOrderRequest) GetExpiredAtOk() (*int32, bool)`
+`func (o *CreatePaymentOrderRequest) GetExpiredInOk() (*int32, bool)`
 
-GetExpiredAtOk returns a tuple with the ExpiredAt field if it's non-nil, zero value otherwise
+GetExpiredInOk returns a tuple with the ExpiredIn field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetExpiredAt
+### SetExpiredIn
 
-`func (o *CreatePaymentOrderRequest) SetExpiredAt(v int32)`
+`func (o *CreatePaymentOrderRequest) SetExpiredIn(v int32)`
 
-SetExpiredAt sets ExpiredAt field to given value.
+SetExpiredIn sets ExpiredIn field to given value.
 
-### HasExpiredAt
+### HasExpiredIn
 
-`func (o *CreatePaymentOrderRequest) HasExpiredAt() bool`
+`func (o *CreatePaymentOrderRequest) HasExpiredIn() bool`
 
-HasExpiredAt returns a boolean if a field has been set.
+HasExpiredIn returns a boolean if a field has been set.
 
 ### GetUseDedicatedAddress
 

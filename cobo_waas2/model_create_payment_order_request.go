@@ -33,8 +33,8 @@ type CreatePaymentOrderRequest struct {
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
-	// The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. After this time: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
-	ExpiredAt *int32 `json:"expired_at,omitempty"`
+	// The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
+	ExpiredIn *int32 `json:"expired_in,omitempty"`
 	// Indicates whether to allocate a dedicated address for this order.  If false, a shared address from the address pool will be used. 
 	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
 }
@@ -251,36 +251,36 @@ func (o *CreatePaymentOrderRequest) SetPspOrderCode(v string) {
 	o.PspOrderCode = v
 }
 
-// GetExpiredAt returns the ExpiredAt field value if set, zero value otherwise.
-func (o *CreatePaymentOrderRequest) GetExpiredAt() int32 {
-	if o == nil || IsNil(o.ExpiredAt) {
+// GetExpiredIn returns the ExpiredIn field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetExpiredIn() int32 {
+	if o == nil || IsNil(o.ExpiredIn) {
 		var ret int32
 		return ret
 	}
-	return *o.ExpiredAt
+	return *o.ExpiredIn
 }
 
-// GetExpiredAtOk returns a tuple with the ExpiredAt field value if set, nil otherwise
+// GetExpiredInOk returns a tuple with the ExpiredIn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreatePaymentOrderRequest) GetExpiredAtOk() (*int32, bool) {
-	if o == nil || IsNil(o.ExpiredAt) {
+func (o *CreatePaymentOrderRequest) GetExpiredInOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExpiredIn) {
 		return nil, false
 	}
-	return o.ExpiredAt, true
+	return o.ExpiredIn, true
 }
 
-// HasExpiredAt returns a boolean if a field has been set.
-func (o *CreatePaymentOrderRequest) HasExpiredAt() bool {
-	if o != nil && !IsNil(o.ExpiredAt) {
+// HasExpiredIn returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasExpiredIn() bool {
+	if o != nil && !IsNil(o.ExpiredIn) {
 		return true
 	}
 
 	return false
 }
 
-// SetExpiredAt gets a reference to the given int32 and assigns it to the ExpiredAt field.
-func (o *CreatePaymentOrderRequest) SetExpiredAt(v int32) {
-	o.ExpiredAt = &v
+// SetExpiredIn gets a reference to the given int32 and assigns it to the ExpiredIn field.
+func (o *CreatePaymentOrderRequest) SetExpiredIn(v int32) {
+	o.ExpiredIn = &v
 }
 
 // GetUseDedicatedAddress returns the UseDedicatedAddress field value if set, zero value otherwise.
@@ -336,8 +336,8 @@ func (o CreatePaymentOrderRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["merchant_order_code"] = o.MerchantOrderCode
 	}
 	toSerialize["psp_order_code"] = o.PspOrderCode
-	if !IsNil(o.ExpiredAt) {
-		toSerialize["expired_at"] = o.ExpiredAt
+	if !IsNil(o.ExpiredIn) {
+		toSerialize["expired_in"] = o.ExpiredIn
 	}
 	if !IsNil(o.UseDedicatedAddress) {
 		toSerialize["use_dedicated_address"] = o.UseDedicatedAddress
