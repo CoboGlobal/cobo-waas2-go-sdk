@@ -17,12 +17,12 @@ import (
 // checks if the PolicyCondition type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &PolicyCondition{}
 
-// PolicyCondition The information of an app workflow policy condition.
+// PolicyCondition A condition that defines under what circumstances the policy’s action should be triggered.
 type PolicyCondition struct {
-	// The app workflow field name.
+	// The field name.
 	Field string `json:"field"`
 	ValueType PolicyFieldValueType `json:"value_type"`
-	// The app workflow field value.
+	// The field value.
 	Value string `json:"value"`
 	Operator PolicyFieldOperator `json:"operator"`
 }

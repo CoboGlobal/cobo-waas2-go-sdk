@@ -39,6 +39,7 @@ type SettlementDetail struct {
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 	// Unique identifier for the pre-approved crypto address, used to reference the address securely in requests.
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
+	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
 }
 
 // NewSettlementDetail instantiates a new SettlementDetail object
@@ -442,6 +443,38 @@ func (o *SettlementDetail) SetCryptoAddressId(v string) {
 	o.CryptoAddressId = &v
 }
 
+// GetPayoutChannel returns the PayoutChannel field value if set, zero value otherwise.
+func (o *SettlementDetail) GetPayoutChannel() PayoutChannel {
+	if o == nil || IsNil(o.PayoutChannel) {
+		var ret PayoutChannel
+		return ret
+	}
+	return *o.PayoutChannel
+}
+
+// GetPayoutChannelOk returns a tuple with the PayoutChannel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetPayoutChannelOk() (*PayoutChannel, bool) {
+	if o == nil || IsNil(o.PayoutChannel) {
+		return nil, false
+	}
+	return o.PayoutChannel, true
+}
+
+// HasPayoutChannel returns a boolean if a field has been set.
+func (o *SettlementDetail) HasPayoutChannel() bool {
+	if o != nil && !IsNil(o.PayoutChannel) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayoutChannel gets a reference to the given PayoutChannel and assigns it to the PayoutChannel field.
+func (o *SettlementDetail) SetPayoutChannel(v PayoutChannel) {
+	o.PayoutChannel = &v
+}
+
 func (o SettlementDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -487,6 +520,9 @@ func (o SettlementDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CryptoAddressId) {
 		toSerialize["crypto_address_id"] = o.CryptoAddressId
+	}
+	if !IsNil(o.PayoutChannel) {
+		toSerialize["payout_channel"] = o.PayoutChannel
 	}
 	return toSerialize, nil
 }

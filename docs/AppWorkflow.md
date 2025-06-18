@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WorkflowId** | **string** | The workflow id. | 
-**OperationId** | **string** | The workflow operation id. | 
-**OperationName** | **string** | The workflow operation name. | 
+**WorkflowId** | **string** | The unique ID distinguishing the approval workflow instance among organizations. | 
+**OperationId** | **string** | The unique ID of the approval workflow. | 
+**OperationName** | **string** | The name of the approval workflow. | 
 **CurrentPolicies** | [**[]AppWorkflowPolicy**](AppWorkflowPolicy.md) |  | 
 
 ## Methods

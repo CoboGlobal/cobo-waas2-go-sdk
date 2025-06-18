@@ -97,7 +97,7 @@ Other parameters are passed through a pointer to a apiBatchCheckUtxoRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **batchCheckUtxoRequest** | [**BatchCheckUtxoRequest**](BatchCheckUtxoRequest.md) | The request body of the batch check UTXOs operation. | 
+ **batchCheckUtxoRequest** | [**BatchCheckUtxoRequest**](BatchCheckUtxoRequest.md) | The request body of the Batch check UTXOs operation. | 
 
 ### Return type
 

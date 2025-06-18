@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **CreatedTimestamp** | Pointer to **int32** | The created time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
 **CryptoAddressId** | Pointer to **string** | Unique identifier for the pre-approved crypto address, used to reference the address securely in requests. | [optional] 
+**PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
 
 ## Methods
 
@@ -335,6 +336,31 @@ SetCryptoAddressId sets CryptoAddressId field to given value.
 `func (o *SettlementDetail) HasCryptoAddressId() bool`
 
 HasCryptoAddressId returns a boolean if a field has been set.
+
+### GetPayoutChannel
+
+`func (o *SettlementDetail) GetPayoutChannel() PayoutChannel`
+
+GetPayoutChannel returns the PayoutChannel field if non-nil, zero value otherwise.
+
+### GetPayoutChannelOk
+
+`func (o *SettlementDetail) GetPayoutChannelOk() (*PayoutChannel, bool)`
+
+GetPayoutChannelOk returns a tuple with the PayoutChannel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayoutChannel
+
+`func (o *SettlementDetail) SetPayoutChannel(v PayoutChannel)`
+
+SetPayoutChannel sets PayoutChannel field to given value.
+
+### HasPayoutChannel
+
+`func (o *SettlementDetail) HasPayoutChannel() bool`
+
+HasPayoutChannel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ApprovalId** | **string** |  | 
-**RequestId** | **string** |  | 
+**ApprovalId** | **string** | The system-generated unique ID of the approval request. | 
+**RequestId** | **string** | An identifier provided by you when requesting the approval. | 
 **Fields** | [**[]AppWorkflowField**](AppWorkflowField.md) |  | 
 **Status** | [**ApprovalStatus**](ApprovalStatus.md) |  | 
 **InitiatedTimestamp** | **int64** | The time when the approval was initiated, in Unix timestamp format, measured in milliseconds. | 

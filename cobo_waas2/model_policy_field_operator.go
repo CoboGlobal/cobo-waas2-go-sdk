@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// PolicyFieldOperator The app policy action type. Possible values include:    - `>`: The operator is bigger.   - '>=': The operator is bigger or equal    - '<': The operator is smaller.   - `<=`: The operator is smaller or equal.   - `=`: The operator is equal. 
+// PolicyFieldOperator The policy field operator. Possible values include:    - `>`: Greater than.   - `>=`: Greater than or equal.   - `<`: Less than.   - `<=`: Less than or equal.   - `=`: Equal. 
 type PolicyFieldOperator string
 
 // List of PolicyFieldOperator

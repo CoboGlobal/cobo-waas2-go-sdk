@@ -112,7 +112,6 @@ docs/CreateBabylonAirdropRegistration201Response.md
 docs/CreateBabylonAirdropRegistrationRequest.md
 docs/CreateBabylonStakingRegistration201Response.md
 docs/CreateBabylonStakingRegistrationRequest.md
-docs/CreateBankAccountRequest.md
 docs/CreateClaimActivity.md
 docs/CreateClaimActivityRequest.md
 docs/CreateCustodialWalletParams.md
@@ -147,7 +146,9 @@ docs/CreateWebhookEndpointRequest.md
 docs/CreateWithdrawActivity.md
 docs/CreateWithdrawActivityRequest.md
 docs/CreatedWalletInfo.md
+docs/CryptoAddress.md
 docs/CurveType.md
+docs/CustodialTransferDestination.md
 docs/CustodialTransferSource.md
 docs/CustodialWalletInfo.md
 docs/CustodialWeb3ContractCallSource.md
@@ -193,6 +194,8 @@ docs/EvmEip1559FeeRate.md
 docs/EvmLegacyFeeBasePrice.md
 docs/EvmLegacyFeeRate.md
 docs/ExchangeId.md
+docs/ExchangePermissionToken201Response.md
+docs/ExchangePermissionTokenRequest.md
 docs/ExchangeTransferDestination.md
 docs/ExchangeTransferSource.md
 docs/ExchangeWalletInfo.md
@@ -294,6 +297,7 @@ docs/PaymentOrderEventData.md
 docs/PaymentRefundEventData.md
 docs/PaymentSettlementEvent.md
 docs/PaymentTransaction.md
+docs/PayoutChannel.md
 docs/PolicyAction.md
 docs/PolicyActionContent.md
 docs/PolicyActionType.md
@@ -310,6 +314,7 @@ docs/QueryGuardPubkey200ResponseAddressesInner.md
 docs/RawMessageSignDestination.md
 docs/RefreshAddressBalancesByToken200Response.md
 docs/RefreshAddressBalancesByTokenRequest.md
+docs/RefreshPermissionTokenRequest.md
 docs/RefreshToken2XXResponse.md
 docs/RefreshTokenRequest.md
 docs/Refund.md
@@ -359,6 +364,7 @@ docs/StakingsAPI.md
 docs/StakingsExtra.md
 docs/SubWalletAssetBalance.md
 docs/SubmitDepositTravelRuleInfo201Response.md
+docs/SupportedToken.md
 docs/SwapActivity.md
 docs/SwapActivityApprovers.md
 docs/SwapActivityDetail.md
@@ -637,7 +643,6 @@ model_create_babylon_airdrop_registration_201_response.go
 model_create_babylon_airdrop_registration_request.go
 model_create_babylon_staking_registration_201_response.go
 model_create_babylon_staking_registration_request.go
-model_create_bank_account_request.go
 model_create_claim_activity.go
 model_create_claim_activity_request.go
 model_create_custodial_wallet_params.go
@@ -672,7 +677,9 @@ model_create_webhook_endpoint_request.go
 model_create_withdraw_activity.go
 model_create_withdraw_activity_request.go
 model_created_wallet_info.go
+model_crypto_address.go
 model_curve_type.go
+model_custodial_transfer_destination.go
 model_custodial_transfer_source.go
 model_custodial_wallet_info.go
 model_custodial_web3_contract_call_source.go
@@ -716,6 +723,8 @@ model_evm_eip712_message_sign_destination.go
 model_evm_legacy_fee_base_price.go
 model_evm_legacy_fee_rate.go
 model_exchange_id.go
+model_exchange_permission_token_201_response.go
+model_exchange_permission_token_request.go
 model_exchange_transfer_destination.go
 model_exchange_transfer_source.go
 model_exchange_wallet_info.go
@@ -814,6 +823,7 @@ model_payment_order_event_data.go
 model_payment_refund_event_data.go
 model_payment_settlement_event.go
 model_payment_transaction.go
+model_payout_channel.go
 model_policy_action.go
 model_policy_action_content.go
 model_policy_action_type.go
@@ -829,6 +839,7 @@ model_query_guard_pubkey_200_response_addresses_inner.go
 model_raw_message_sign_destination.go
 model_refresh_address_balances_by_token_200_response.go
 model_refresh_address_balances_by_token_request.go
+model_refresh_permission_token_request.go
 model_refresh_token_2_xx_response.go
 model_refresh_token_request.go
 model_refund.go
@@ -877,6 +888,7 @@ model_stakings.go
 model_stakings_extra.go
 model_sub_wallet_asset_balance.go
 model_submit_deposit_travel_rule_info_201_response.go
+model_supported_token.go
 model_swap_activity.go
 model_swap_activity_approvers.go
 model_swap_activity_detail.go

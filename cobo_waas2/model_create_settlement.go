@@ -28,6 +28,11 @@ type CreateSettlement struct {
 	// The ID of the bank account where the settled funds will be deposited.
 	BankAccountId *string `json:"bank_account_id,omitempty"`
 	SettlementType *SettlementType `json:"settlement_type,omitempty"`
+	// The ID of the pre-approved crypto address used for Crypto settlements.  - This field is only applicable when `payout_channel` is set to `Crypto`. - If `payout_channel` is `OffRamp`, this field will be ignored. - The value must refer to a valid address that has been pre-configured and approved for the given token. 
+	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
+	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
+	// A list of unique order IDs to be included in this settlement.  - This field is only applicable when `settlement_type` is set to `Merchant`. - If provided, the settlement will only apply to the specified orders. - The settlement `amount` must exactly match the total eligible amount from these orders. - This ensures consistency between the declared amount and the actual order-level data being settled. 
+	OrderIds []string `json:"order_ids,omitempty"`
 }
 
 // NewCreateSettlement instantiates a new CreateSettlement object
@@ -243,6 +248,102 @@ func (o *CreateSettlement) SetSettlementType(v SettlementType) {
 	o.SettlementType = &v
 }
 
+// GetCryptoAddressId returns the CryptoAddressId field value if set, zero value otherwise.
+func (o *CreateSettlement) GetCryptoAddressId() string {
+	if o == nil || IsNil(o.CryptoAddressId) {
+		var ret string
+		return ret
+	}
+	return *o.CryptoAddressId
+}
+
+// GetCryptoAddressIdOk returns a tuple with the CryptoAddressId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlement) GetCryptoAddressIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CryptoAddressId) {
+		return nil, false
+	}
+	return o.CryptoAddressId, true
+}
+
+// HasCryptoAddressId returns a boolean if a field has been set.
+func (o *CreateSettlement) HasCryptoAddressId() bool {
+	if o != nil && !IsNil(o.CryptoAddressId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCryptoAddressId gets a reference to the given string and assigns it to the CryptoAddressId field.
+func (o *CreateSettlement) SetCryptoAddressId(v string) {
+	o.CryptoAddressId = &v
+}
+
+// GetPayoutChannel returns the PayoutChannel field value if set, zero value otherwise.
+func (o *CreateSettlement) GetPayoutChannel() PayoutChannel {
+	if o == nil || IsNil(o.PayoutChannel) {
+		var ret PayoutChannel
+		return ret
+	}
+	return *o.PayoutChannel
+}
+
+// GetPayoutChannelOk returns a tuple with the PayoutChannel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlement) GetPayoutChannelOk() (*PayoutChannel, bool) {
+	if o == nil || IsNil(o.PayoutChannel) {
+		return nil, false
+	}
+	return o.PayoutChannel, true
+}
+
+// HasPayoutChannel returns a boolean if a field has been set.
+func (o *CreateSettlement) HasPayoutChannel() bool {
+	if o != nil && !IsNil(o.PayoutChannel) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayoutChannel gets a reference to the given PayoutChannel and assigns it to the PayoutChannel field.
+func (o *CreateSettlement) SetPayoutChannel(v PayoutChannel) {
+	o.PayoutChannel = &v
+}
+
+// GetOrderIds returns the OrderIds field value if set, zero value otherwise.
+func (o *CreateSettlement) GetOrderIds() []string {
+	if o == nil || IsNil(o.OrderIds) {
+		var ret []string
+		return ret
+	}
+	return o.OrderIds
+}
+
+// GetOrderIdsOk returns a tuple with the OrderIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlement) GetOrderIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.OrderIds) {
+		return nil, false
+	}
+	return o.OrderIds, true
+}
+
+// HasOrderIds returns a boolean if a field has been set.
+func (o *CreateSettlement) HasOrderIds() bool {
+	if o != nil && !IsNil(o.OrderIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderIds gets a reference to the given []string and assigns it to the OrderIds field.
+func (o *CreateSettlement) SetOrderIds(v []string) {
+	o.OrderIds = v
+}
+
 func (o CreateSettlement) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -270,6 +371,15 @@ func (o CreateSettlement) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SettlementType) {
 		toSerialize["settlement_type"] = o.SettlementType
+	}
+	if !IsNil(o.CryptoAddressId) {
+		toSerialize["crypto_address_id"] = o.CryptoAddressId
+	}
+	if !IsNil(o.PayoutChannel) {
+		toSerialize["payout_channel"] = o.PayoutChannel
+	}
+	if !IsNil(o.OrderIds) {
+		toSerialize["order_ids"] = o.OrderIds
 	}
 	return toSerialize, nil
 }
