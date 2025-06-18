@@ -25,9 +25,9 @@ type PaymentOrderEventData struct {
 	OrderId string `json:"order_id"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The ID of the cryptocurrency used for payment.
+	//  The ID of the cryptocurrency used for payment. Supported tokens:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// The ID of the blockchain network where the payment transaction should be made.
+	//  The ID of the blockchain network where the payment transaction should be made. Supported chains:  - USDC: `ETH`, `ARBITRUM`, `SOL`, `BASE`, `MATIC`, `BSC` - USDT: `TRON`, `ETH`, `ARBITRUM`, `SOL`, `BASE`, `MATIC`, `BSC` 
 	ChainId string `json:"chain_id"`
 	// The cryptocurrency amount to be paid for this order.
 	PayableAmount string `json:"payable_amount"`

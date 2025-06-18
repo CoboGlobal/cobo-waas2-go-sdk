@@ -28,18 +28,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
-	t.Run("Test PaymentAPIService CreateBankAccount", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.CreateBankAccount(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService CreateMerchant", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -181,6 +169,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService ListCryptoAddresses", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListCryptoAddresses(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService ListMerchants", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -205,11 +205,11 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService ListSettlementRequests", func(t *testing.T) {
+	t.Run("Test PaymentAPIService ListPaymentSupportedTokens", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.PaymentAPI.ListSettlementRequests(ctx).Execute()
+		resp, httpRes, err := apiClient.PaymentAPI.ListPaymentSupportedTokens(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -217,13 +217,11 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService UpdateBankAccountById", func(t *testing.T) {
+	t.Run("Test PaymentAPIService ListSettlementRequests", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var bankAccountId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.UpdateBankAccountById(ctx, bankAccountId).Execute()
+		resp, httpRes, err := apiClient.PaymentAPI.ListSettlementRequests(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

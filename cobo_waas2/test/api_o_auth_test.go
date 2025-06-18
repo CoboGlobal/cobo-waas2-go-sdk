@@ -28,11 +28,35 @@ func Test_cobo_waas2_OAuthAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test OAuthAPIService ExchangePermissionToken", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.OAuthAPI.ExchangePermissionToken(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test OAuthAPIService GetToken", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.OAuthAPI.GetToken(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test OAuthAPIService RefreshPermissionToken", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.OAuthAPI.RefreshPermissionToken(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

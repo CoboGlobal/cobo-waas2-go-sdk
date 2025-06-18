@@ -28,7 +28,7 @@ type ApiBatchCheckUtxoRequest struct {
 	batchCheckUtxoRequest *BatchCheckUtxoRequest
 }
 
-// The request body of the batch check UTXOs operation.
+// The request body of the Batch check UTXOs operation.
 func (r ApiBatchCheckUtxoRequest) BatchCheckUtxoRequest(batchCheckUtxoRequest BatchCheckUtxoRequest) ApiBatchCheckUtxoRequest {
 	r.batchCheckUtxoRequest = &batchCheckUtxoRequest
 	return r
@@ -41,9 +41,8 @@ func (r ApiBatchCheckUtxoRequest) Execute() (*BatchCheckUtxo201Response, *http.R
 /*
 BatchCheckUtxo Batch check UTXOs
 
-The operation check a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
-
-<Note>This operation is applicable to MPC and Custodial Web3 Wallets. This interface can only withdraw a maximum of 100 utxos</Note>
+This operation verifies the existence and details of specified unspent transaction outputs (UTXOs) for a given wallet and token. A maximum of 100 UTXOs can be verified per request.
+<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3454,7 +3453,7 @@ ListUtxos List UTXOs
 
 The operation retrieves a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
 
-<Note>This operation is applicable to MPC and Custodial Web3 Wallets.</Note>
+<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

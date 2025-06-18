@@ -27,7 +27,7 @@ type ApiCreateApprovalRequestRequest struct {
 	requestApproval *RequestApproval
 }
 
-// The request body to app workflow approval.
+// The request body to request workflow approval.
 func (r ApiCreateApprovalRequestRequest) RequestApproval(requestApproval RequestApproval) ApiCreateApprovalRequestRequest {
 	r.requestApproval = &requestApproval
 	return r
@@ -40,7 +40,9 @@ func (r ApiCreateApprovalRequestRequest) Execute() (*CreateApprovalRequest201Res
 /*
 CreateApprovalRequest Request workflow approval
 
-This operation is request approval from app workflow with idempotency checks.
+This operation triggers a specified workflow and generates a new approval request.
+
+<Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -164,11 +166,13 @@ func (r ApiGetApprovalRequestByIdRequest) Execute() (*ApprovalRequestDetail, *ht
 /*
 GetApprovalRequestById Get approval request details
 
-This operation is retrieves approval request from app workflow.
+This operation retrieves the details of a specific approval request.
+
+<Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param approvalId The approval ID that is used to track a workflow approval request.
+ @param approvalId The system-generated unique ID of the approval request.
  @return ApiGetApprovalRequestByIdRequest
 */
 func (a *AppWorkflowsAPIService) GetApprovalRequestById(ctx context.Context, approvalId string) ApiGetApprovalRequestByIdRequest {
@@ -286,9 +290,11 @@ func (r ApiListAppWorkflowsRequest) Execute() ([]AppWorkflow, *http.Response, er
 }
 
 /*
-ListAppWorkflows list app workflows
+ListAppWorkflows List app workflows
 
-This operation is list app workflows of app.
+This operation retrieves all approval workflows of an Cobo Portal App.
+<Note>You need to [configure approval workflow](https://www.cobo.com/developers/v2/apps/configure-workflow) in the app Manifest file first.</Note>
+<Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -406,7 +412,7 @@ type ApiListApprovalRequestsRequest struct {
 	after *string
 }
 
-// The operation ID that is used to track a workflow. The operation ID is provided by you and must be unique within your app.
+// The unique ID of the approval workflow.
 func (r ApiListApprovalRequestsRequest) OperationId(operationId string) ApiListApprovalRequestsRequest {
 	r.operationId = &operationId
 	return r
@@ -437,7 +443,9 @@ func (r ApiListApprovalRequestsRequest) Execute() (*ListApprovalRequests200Respo
 /*
 ListApprovalRequests List approval requests
 
-This operation is retrieves list approval requests from app workflow.
+This operation retrieves a list of approval requests.
+
+<Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -569,7 +577,7 @@ type ApiRevokeApprovalRequestRequest struct {
 	revokeApprovalRequestRequest *RevokeApprovalRequestRequest
 }
 
-// The revoke request body to app workflow approval.
+// The request body to revoke an approval request.
 func (r ApiRevokeApprovalRequestRequest) RevokeApprovalRequestRequest(revokeApprovalRequestRequest RevokeApprovalRequestRequest) ApiRevokeApprovalRequestRequest {
 	r.revokeApprovalRequestRequest = &revokeApprovalRequestRequest
 	return r
@@ -582,11 +590,13 @@ func (r ApiRevokeApprovalRequestRequest) Execute() (*RevokeApprovalRequest201Res
 /*
 RevokeApprovalRequest Revoke approval request
 
-This operation is revoke approval request from app workflow.
+This operation revokes a pending approval request.
+
+<Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param approvalId The approval ID that is used to track a workflow approval request.
+ @param approvalId The system-generated unique ID of the approval request.
  @return ApiRevokeApprovalRequestRequest
 */
 func (a *AppWorkflowsAPIService) RevokeApprovalRequest(ctx context.Context, approvalId string) ApiRevokeApprovalRequestRequest {

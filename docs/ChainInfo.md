@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **ExplorerAddressUrl** | Pointer to **string** | The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs. | [optional] 
 **RequireMemo** | Pointer to **bool** | Whether the chain requires a memo. | [optional] 
 **ConfirmingThreshold** | Pointer to **int32** | The number of confirmations required for an on-chain transaction, such as 64 for Ethereum. | [optional] 
-**CoinbaseMaturity** | Pointer to **int32** | The number of confirmations required for a coinbase transaction to be mature, such as 100 for BTC. | [optional] 
+**CoinbaseMaturity** | Pointer to **int32** | The number of confirmations required before a coinbase transaction is considered mature and can be spent, for example, 100 confirmations for BTC. | [optional] 
 
 ## Methods
 

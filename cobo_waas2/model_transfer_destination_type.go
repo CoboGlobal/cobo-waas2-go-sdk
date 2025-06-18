@@ -19,12 +19,14 @@ type TransferDestinationType string
 // List of TransferDestinationType
 const (
 	TRANSFERDESTINATIONTYPE_ADDRESS TransferDestinationType = "Address"
+	TRANSFERDESTINATIONTYPE_CUSTODIAL_WALLET TransferDestinationType = "CustodialWallet"
 	TRANSFERDESTINATIONTYPE_EXCHANGE_WALLET TransferDestinationType = "ExchangeWallet"
 )
 
 // All allowed values of TransferDestinationType enum
 var AllowedTransferDestinationTypeEnumValues = []TransferDestinationType{
 	"Address",
+	"CustodialWallet",
 	"ExchangeWallet",
 }
 

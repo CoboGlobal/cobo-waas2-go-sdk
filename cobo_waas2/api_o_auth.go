@@ -20,6 +20,142 @@ import (
 // OAuthAPIService OAuthAPI service
 type OAuthAPIService service
 
+type ApiExchangePermissionTokenRequest struct {
+	ctx context.Context
+	ApiService *OAuthAPIService
+	exchangePermissionTokenRequest *ExchangePermissionTokenRequest
+}
+
+// The request body for exchanging an Permission Access Token.
+func (r ApiExchangePermissionTokenRequest) ExchangePermissionTokenRequest(exchangePermissionTokenRequest ExchangePermissionTokenRequest) ApiExchangePermissionTokenRequest {
+	r.exchangePermissionTokenRequest = &exchangePermissionTokenRequest
+	return r
+}
+
+func (r ApiExchangePermissionTokenRequest) Execute() (*ExchangePermissionToken201Response, *http.Response, error) {
+	return r.ApiService.ExchangePermissionTokenExecute(r)
+}
+
+/*
+ExchangePermissionToken Exchange Permission Access Token by API Key
+
+<Note>This operation is only applicable to Cobo Portal Checkout SDK developers. To call this operation, you need to use the Cobo OAuth authentication method that requires an api key.</Note>
+This operation allows Portal Checkout SDK to obtain a new Permission Access Token with a specified client ID, grant type and a Permission Refresh Token. 
+
+For security purposes, Permission Access Tokens expire after a certain period. Once they expire, the app needs to call this operation to get a new Permission Access Token and a new Permission Refresh Token.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiExchangePermissionTokenRequest
+*/
+func (a *OAuthAPIService) ExchangePermissionToken(ctx context.Context) ApiExchangePermissionTokenRequest {
+	return ApiExchangePermissionTokenRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ExchangePermissionToken201Response
+func (a *OAuthAPIService) ExchangePermissionTokenExecute(r ApiExchangePermissionTokenRequest) (*ExchangePermissionToken201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExchangePermissionToken201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.ExchangePermissionToken")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/oauth/permission_token/exchange"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.exchangePermissionTokenRequest == nil {
+		return localVarReturnValue, nil, reportError("exchangePermissionTokenRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.exchangePermissionTokenRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v GetToken4XXResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetTokenRequest struct {
 	ctx context.Context
 	ApiService *OAuthAPIService
@@ -121,6 +257,142 @@ func (a *OAuthAPIService) GetTokenExecute(r ApiGetTokenRequest) (*GetToken2XXRes
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v GetToken4XXResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRefreshPermissionTokenRequest struct {
+	ctx context.Context
+	ApiService *OAuthAPIService
+	refreshPermissionTokenRequest *RefreshPermissionTokenRequest
+}
+
+// The request body for refreshing an Permission Access Token.
+func (r ApiRefreshPermissionTokenRequest) RefreshPermissionTokenRequest(refreshPermissionTokenRequest RefreshPermissionTokenRequest) ApiRefreshPermissionTokenRequest {
+	r.refreshPermissionTokenRequest = &refreshPermissionTokenRequest
+	return r
+}
+
+func (r ApiRefreshPermissionTokenRequest) Execute() (*ExchangePermissionToken201Response, *http.Response, error) {
+	return r.ApiService.RefreshPermissionTokenExecute(r)
+}
+
+/*
+RefreshPermissionToken Refresh Permission Access Token by Permission Refresh Token
+
+<Note>This operation is only applicable to Cobo Portal Checkout SDK developers. To call this operation, you need to use the Cobo OAuth authentication method that requires an api key.</Note>
+This operation allows Portal Checkout SDK to refresh a new Permission Access Token with a specified client ID, grant type and a Permission Refresh Token. 
+
+For security purposes, Permission Access Tokens expire after a certain period. Once they expire, the app needs to call this operation to get a new Permission Access Token and a new Permission Refresh Token.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRefreshPermissionTokenRequest
+*/
+func (a *OAuthAPIService) RefreshPermissionToken(ctx context.Context) ApiRefreshPermissionTokenRequest {
+	return ApiRefreshPermissionTokenRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ExchangePermissionToken201Response
+func (a *OAuthAPIService) RefreshPermissionTokenExecute(r ApiRefreshPermissionTokenRequest) (*ExchangePermissionToken201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExchangePermissionToken201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.RefreshPermissionToken")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/oauth/permission_token/refresh"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.refreshPermissionTokenRequest == nil {
+		return localVarReturnValue, nil, reportError("refreshPermissionTokenRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.refreshPermissionTokenRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

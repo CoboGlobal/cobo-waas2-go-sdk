@@ -1,13 +1,11 @@
-# TransferDestinationType
+# PayoutChannel
 
 ## Enum
 
 
-* `ADDRESS` (value: `"Address"`)
+* `CRYPTO` (value: `"Crypto"`)
 
-* `CUSTODIAL_WALLET` (value: `"CustodialWallet"`)
-
-* `EXCHANGE_WALLET` (value: `"ExchangeWallet"`)
+* `OFF_RAMP` (value: `"OffRamp"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

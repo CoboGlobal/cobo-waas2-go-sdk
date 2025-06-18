@@ -12,14 +12,14 @@ Name | Type | Description | Notes
 **ForceInternal** | Pointer to **bool** | Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - &#x60;true&#x60;: The transaction request must be executed as a Cobo Loop transfer.   - &#x60;false&#x60;: The transaction request may not be executed as a Cobo Loop transfer.    Please do not set both &#x60;force_internal&#x60; and &#x60;force_external&#x60; as &#x60;true&#x60;.  | [optional] 
 **ForceExternal** | Pointer to **bool** | Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - &#x60;true&#x60;: The transaction request must not be executed as a Cobo Loop transfer.   - &#x60;false&#x60;: The transaction request can be executed as a Cobo Loop transfer.  Please do not set both &#x60;force_internal&#x60; and &#x60;force_external&#x60; as &#x60;true&#x60;.  | [optional] 
 **WalletId** | **string** | The wallet ID. | 
-**TradingAccountType** | **string** | The trading account type. | 
 **Amount** | **string** | The transfer amount. For example, if you trade 1.5 BTC, then the value is &#x60;1.5&#x60;.  | 
+**TradingAccountType** | **string** | The trading account type. | 
 
 ## Methods
 
 ### NewTransferDestination
 
-`func NewTransferDestination(destinationType TransferDestinationType, walletId string, tradingAccountType string, amount string, ) *TransferDestination`
+`func NewTransferDestination(destinationType TransferDestinationType, walletId string, amount string, tradingAccountType string, ) *TransferDestination`
 
 NewTransferDestination instantiates a new TransferDestination object
 This constructor will assign default values to properties that have it defined,
@@ -224,26 +224,6 @@ and a boolean to check if the value has been set.
 SetWalletId sets WalletId field to given value.
 
 
-### GetTradingAccountType
-
-`func (o *TransferDestination) GetTradingAccountType() string`
-
-GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
-
-### GetTradingAccountTypeOk
-
-`func (o *TransferDestination) GetTradingAccountTypeOk() (*string, bool)`
-
-GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTradingAccountType
-
-`func (o *TransferDestination) SetTradingAccountType(v string)`
-
-SetTradingAccountType sets TradingAccountType field to given value.
-
-
 ### GetAmount
 
 `func (o *TransferDestination) GetAmount() string`
@@ -262,6 +242,26 @@ and a boolean to check if the value has been set.
 `func (o *TransferDestination) SetAmount(v string)`
 
 SetAmount sets Amount field to given value.
+
+
+### GetTradingAccountType
+
+`func (o *TransferDestination) GetTradingAccountType() string`
+
+GetTradingAccountType returns the TradingAccountType field if non-nil, zero value otherwise.
+
+### GetTradingAccountTypeOk
+
+`func (o *TransferDestination) GetTradingAccountTypeOk() (*string, bool)`
+
+GetTradingAccountTypeOk returns a tuple with the TradingAccountType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTradingAccountType
+
+`func (o *TransferDestination) SetTradingAccountType(v string)`
+
+SetTradingAccountType sets TradingAccountType field to given value.
 
 
 

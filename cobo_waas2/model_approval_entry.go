@@ -17,7 +17,7 @@ import (
 // checks if the ApprovalEntry type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApprovalEntry{}
 
-// ApprovalEntry The information of an app workflow approval entry.
+// ApprovalEntry The information of an approval request.
 type ApprovalEntry struct {
 	Status ApprovalStatus `json:"status"`
 	// The time when the approval was created, in Unix timestamp format, measured in milliseconds.

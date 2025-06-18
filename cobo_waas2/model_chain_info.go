@@ -33,7 +33,7 @@ type ChainInfo struct {
 	RequireMemo *bool `json:"require_memo,omitempty"`
 	// The number of confirmations required for an on-chain transaction, such as 64 for Ethereum.
 	ConfirmingThreshold *int32 `json:"confirming_threshold,omitempty"`
-	// The number of confirmations required for a coinbase transaction to be mature, such as 100 for BTC.
+	// The number of confirmations required before a coinbase transaction is considered mature and can be spent, for example, 100 confirmations for BTC.
 	CoinbaseMaturity *int32 `json:"coinbase_maturity,omitempty"`
 }
 

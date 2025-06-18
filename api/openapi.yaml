@@ -1056,7 +1056,7 @@ paths:
       description: |
         The operation retrieves a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
 
-        <Note>This operation is applicable to MPC and Custodial Web3 Wallets.</Note>
+        <Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
       operationId: list_utxos
       parameters:
       - description: The wallet ID.
@@ -1161,9 +1161,8 @@ paths:
   /wallets/{wallet_id}/utxos/batch_check:
     post:
       description: |
-        The operation check a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
-
-        <Note>This operation is applicable to MPC and Custodial Web3 Wallets. This interface can only withdraw a maximum of 100 utxos</Note>
+        This operation verifies the existence and details of specified unspent transaction outputs (UTXOs) for a given wallet and token. A maximum of 100 UTXOs can be verified per request.
+        <Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
       operationId: batch_check_utxo
       parameters:
       - description: The wallet ID.
@@ -4500,6 +4499,76 @@ paths:
       summary: Refresh Org Access Token
       tags:
       - OAuth
+  /oauth/permission_token/exchange:
+    post:
+      description: "<Note>This operation is only applicable to Cobo Portal Checkout\
+        \ SDK developers. To call this operation, you need to use the Cobo OAuth authentication\
+        \ method that requires an api key.</Note>\nThis operation allows Portal Checkout\
+        \ SDK to obtain a new Permission Access Token with a specified client ID,\
+        \ grant type and a Permission Refresh Token. \n\nFor security purposes, Permission\
+        \ Access Tokens expire after a certain period. Once they expire, the app needs\
+        \ to call this operation to get a new Permission Access Token and a new Permission\
+        \ Refresh Token.\n"
+      operationId: exchange_permission_token
+      requestBody:
+        $ref: '#/components/requestBodies/permissionTokenExchangeBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exchange_permission_token_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_token_4XX_response'
+          description: Unauthorized. Please provide valid credentials.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Exchange Permission Access Token by API Key
+      tags:
+      - OAuth
+  /oauth/permission_token/refresh:
+    post:
+      description: "<Note>This operation is only applicable to Cobo Portal Checkout\
+        \ SDK developers. To call this operation, you need to use the Cobo OAuth authentication\
+        \ method that requires an api key.</Note>\nThis operation allows Portal Checkout\
+        \ SDK to refresh a new Permission Access Token with a specified client ID,\
+        \ grant type and a Permission Refresh Token. \n\nFor security purposes, Permission\
+        \ Access Tokens expire after a certain period. Once they expire, the app needs\
+        \ to call this operation to get a new Permission Access Token and a new Permission\
+        \ Refresh Token.\n"
+      operationId: refresh_permission_token
+      requestBody:
+        $ref: '#/components/requestBodies/permissionTokenRefreshBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/exchange_permission_token_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_token_4XX_response'
+          description: Unauthorized. Please provide valid credentials.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Refresh Permission Access Token by Permission Refresh Token
+      tags:
+      - OAuth
   /webhooks/endpoints:
     get:
       description: This operation retrieves the information of all webhook endpoints
@@ -7490,7 +7559,9 @@ paths:
   /app/workflows:
     get:
       description: |
-        This operation is list app workflows of app.
+        This operation retrieves all approval workflows of an Cobo Portal App.
+        <Note>You need to [configure approval workflow](https://www.cobo.com/developers/v2/apps/configure-workflow) in the app Manifest file first.</Note>
+        <Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
       operationId: list_app_workflows
       responses:
         "200":
@@ -7500,7 +7571,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/AppWorkflow'
                 type: array
-          description: A list of app workflows have been successfully configured.
+          description: A list of approval workflows successfully retrieved
         "4XX":
           content:
             application/json:
@@ -7518,17 +7589,18 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - app_governance_policy.read
-      summary: list app workflows
+      summary: List app workflows
       tags:
       - AppWorkflows
   /app/workflows/approval_requests:
     get:
       description: |
-        This operation is retrieves list approval requests from app workflow.
+        This operation retrieves a list of approval requests.
+
+        <Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
       operationId: list_approval_requests
       parameters:
-      - description: The operation ID that is used to track a workflow. The operation
-          ID is provided by you and must be unique within your app.
+      - description: The unique ID of the approval workflow.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: true
         in: query
@@ -7575,7 +7647,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/list_approval_requests_200_response'
-          description: A list of approval request have been successfully retrieved.
+          description: A list of approval requests have been successfully retrieved.
         "4XX":
           content:
             application/json:
@@ -7598,7 +7670,9 @@ paths:
       - AppWorkflows
     post:
       description: |
-        This operation is request approval from app workflow with idempotency checks.
+        This operation triggers a specified workflow and generates a new approval request.
+
+        <Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
       operationId: create_approval_request
       requestBody:
         $ref: '#/components/requestBodies/requestApprovalBody'
@@ -7632,10 +7706,12 @@ paths:
   /app/workflows/approval_requests/{approval_id}:
     get:
       description: |
-        This operation is retrieves approval request from app workflow.
+        This operation retrieves the details of a specific approval request.
+
+        <Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
       operationId: get_approval_request_by_id
       parameters:
-      - description: The approval ID that is used to track a workflow approval request.
+      - description: The system-generated unique ID of the approval request.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -7651,7 +7727,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApprovalRequestDetail'
-          description: The information about an app workflow approval.
+          description: The information about an approval request.
         "4XX":
           content:
             application/json:
@@ -7675,10 +7751,12 @@ paths:
   /app/workflows/approval_requests/{approval_id}/revoke:
     post:
       description: |
-        This operation is revoke approval request from app workflow.
+        This operation revokes a pending approval request.
+
+        <Note>To use the approval workflow operations, you must use the Cobo OAuth authentication method ([Org Access Token](https://www.cobo.com/developers/v2/apps/org-access-tokens)).</Note>
       operationId: revoke_approval_request
       parameters:
-      - description: The approval ID that is used to track a workflow approval request.
+      - description: The system-generated unique ID of the approval request.
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: false
         in: path
@@ -8045,7 +8123,7 @@ paths:
   /payments/bank_accounts:
     get:
       description: |
-        This operation retrieves the information of all bank accounts registered.
+        This operation retrieves the information of all bank accounts you have registered for payment settlement. Contact our support team at [help@cobo.com](mailto:help@cobo.com) to register a new bank account.
       operationId: list_bank_accounts
       responses:
         "200":
@@ -8074,87 +8152,6 @@ paths:
       - OAuth2:
         - payment_merchant.read
       summary: List all bank accounts
-      tags:
-      - Payment
-    post:
-      description: |
-        This operation registers a bank account for payment settlement.
-
-        Upon successful registration, the bank account details can be retrieved using the assigned bank account ID.
-      operationId: create_bank_account
-      requestBody:
-        $ref: '#/components/requestBodies/createBankAccountBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BankAccount'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_merchant.create
-      summary: Create bank account
-      tags:
-      - Payment
-  /payments/bank_accounts/{bank_account_id}:
-    put:
-      description: |
-        This operation updates the information of an existing bank account.
-      operationId: update_bank_account_by_id
-      parameters:
-      - description: The bank account ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: bank_account_id
-        required: true
-        schema:
-          description: The bank account ID.
-          format: uuid
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/updateBankAccountBody'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BankAccount'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_merchant.update
-      summary: Update bank account
       tags:
       - Payment
   /payments/orders:
@@ -8200,6 +8197,15 @@ paths:
         explode: true
         in: query
         name: merchant_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The PSP order ID.
+        example: P20240201001
+        explode: true
+        in: query
+        name: psp_order_id
         required: false
         schema:
           type: string
@@ -8600,6 +8606,87 @@ paths:
       - OAuth2:
         - payment_settlement.read
       summary: Get settlement request information
+      tags:
+      - Payment
+  /payments/crypto_addresses:
+    get:
+      description: |
+        Retrieve a list of cryptocurrency addresses previously created for a given `token_id`.
+      operationId: list_crypto_addresses
+      parameters:
+      - description: "The token ID, which identifies the cryptocurrency. Supported\
+          \ values: \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`,\
+          \ `MATIC_USDC`, `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+          \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CryptoAddress'
+                type: array
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.read
+      summary: List crypto addresses
+      tags:
+      - Payment
+  /payments/supported_tokens:
+    get:
+      description: |
+        This operation retrieves the information of all supported tokens.
+      operationId: list_payment_supported_tokens
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SupportedToken'
+                type: array
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.read
+      summary: List all supported tokens
       tags:
       - Payment
 components:
@@ -10069,7 +10156,7 @@ components:
         type: integer
       style: form
     ApprovalIdParam:
-      description: The approval ID that is used to track a workflow approval request.
+      description: The system-generated unique ID of the approval request.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -10080,8 +10167,7 @@ components:
         type: string
       style: simple
     ApprovalOperationIdParam:
-      description: The operation ID that is used to track a workflow. The operation
-        ID is provided by you and must be unique within your app.
+      description: The unique ID of the approval workflow.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: true
       in: query
@@ -10288,6 +10374,16 @@ components:
       schema:
         type: string
       style: form
+    PspOrderIdOptionalParam:
+      description: The PSP order ID.
+      example: P20240201001
+      explode: true
+      in: query
+      name: psp_order_id
+      required: false
+      schema:
+        type: string
+      style: form
   requestBodies:
     createWalletBody:
       content:
@@ -10338,7 +10434,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/batch_check_utxo_request'
-      description: The request body of the batch check UTXOs operation.
+      description: The request body of the Batch check UTXOs operation.
     createKeyShareHolderGroupBody:
       content:
         application/json:
@@ -10490,6 +10586,20 @@ components:
             $ref: '#/components/schemas/refresh_token_request'
       description: The request body for refreshing an Org Access Token.
       required: true
+    permissionTokenExchangeBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exchange_permission_token_request'
+      description: The request body for exchanging an Permission Access Token.
+      required: true
+    permissionTokenRefreshBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/refresh_permission_token_request'
+      description: The request body for refreshing an Permission Access Token.
+      required: true
     createPrimeBrokerUserAddressBody:
       content:
         application/json:
@@ -10543,13 +10653,57 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_bank_account_request'
+            properties:
+              info:
+                additionalProperties: true
+                description: |
+                  JSON-formatted bank account details. The object should include the following fields:
+                  - beneficiary_name: Name of the account holder
+                  - beneficiary_address: Address of the account holder
+                  - account_number: Bank account number
+                  - bank_name: Name of the bank
+                  - bank_address: Address of the bank
+                  - iban: (Optional) International Bank Account Number
+                  - swift_or_bic: SWIFT or BIC code of the bank
+                example:
+                  beneficiary_name: John Doe
+                  beneficiary_address: "123 Main St, Anytown, USA"
+                  account_number: "4111111111111111"
+                  bank_name: ABC Bank
+                  bank_address: "456 Bank Ave, Cityville, USA"
+                  swift_or_bic: ABCDEFGH
+                type: object
+            required:
+            - info
+            type: object
       description: The request body to register a bank account.
     updateBankAccountBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_bank_account_request'
+            properties:
+              info:
+                additionalProperties: true
+                description: |
+                  JSON-formatted bank account details. The object should include the following fields:
+                  - beneficiary_name: Name of the account holder
+                  - beneficiary_address: Address of the account holder
+                  - account_number: Bank account number
+                  - bank_name: Name of the bank
+                  - bank_address: Address of the bank
+                  - iban: (Optional) International Bank Account Number
+                  - swift_or_bic: SWIFT or BIC code of the bank
+                example:
+                  beneficiary_name: John Doe
+                  beneficiary_address: "123 Main St, Anytown, USA"
+                  account_number: "4111111111111111"
+                  bank_name: ABC Bank
+                  bank_address: "456 Bank Ave, Cityville, USA"
+                  swift_or_bic: ABCDEFGH
+                type: object
+            required:
+            - info
+            type: object
       description: The request body for updating an existing bank account.
     createPaymentOrderBody:
       content:
@@ -10575,6 +10729,38 @@ components:
           schema:
             $ref: '#/components/schemas/create_settlement_request_request'
       description: The request body to create a settlement request.
+    createCryptoAddressBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              token_id:
+                description: |
+                  The token ID that identifies the cryptocurrency and its corresponding blockchain.
+
+                  **Supported values**:
+                    - **USDC**: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+                    - **USDT**: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+                example: ETH_USDT
+                type: string
+              address:
+                description: |
+                  The actual blockchain address to be used for payouts or transfers.
+                  It must be a valid address on the blockchain associated with the specified `token_id`.
+                example: 0xabc123456789def0000000000000000000000000
+                type: string
+              label:
+                description: |
+                  An optional label or alias to help identify the address's purpose.
+                  For example: `'Main Payout Wallet'`, `'Cold Storage'`.
+                  This field is for internal reference only.
+                example: Main Payout Wallet
+                type: string
+            required:
+            - address
+            - token_id
+            type: object
+      description: The request body to create a crypto address.
     estimateFeeStationFeeBody:
       content:
         application/json:
@@ -10586,13 +10772,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RequestApproval'
-      description: The request body to app workflow approval.
+      description: The request body to request workflow approval.
     revokeApprovalRequestBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/revoke_approval_request_request'
-      description: The revoke request body to app workflow approval.
+      description: The request body to revoke an approval request.
   responses:
     badRequestError:
       content:
@@ -11171,6 +11357,12 @@ components:
           schema:
             $ref: '#/components/schemas/get_token_4XX_response'
       description: Unauthorized. Please provide valid credentials.
+    permissionTokenResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exchange_permission_token_201_response'
+      description: The request was successful.
     createUserAdressResponse:
       content:
         application/json:
@@ -11399,6 +11591,22 @@ components:
           schema:
             $ref: '#/components/schemas/Settlement'
       description: The request was successful.
+    listCryptoAddressesResponse:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/CryptoAddress'
+            type: array
+      description: The request was successful.
+    listSupportedTokensResponse:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/SupportedToken'
+            type: array
+      description: The request was successful.
     getFeeStationTokenBalancesResponse:
       content:
         application/json:
@@ -11416,7 +11624,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApprovalRequestDetail'
-      description: The information about an app workflow approval.
+      description: The information about an approval request.
     listAppWorkflowsResponse:
       content:
         application/json:
@@ -11424,13 +11632,13 @@ components:
             items:
               $ref: '#/components/schemas/AppWorkflow'
             type: array
-      description: A list of app workflows have been successfully configured.
+      description: A list of approval workflows successfully retrieved
     listApprovalRequestsResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/list_approval_requests_200_response'
-      description: A list of approval request have been successfully retrieved.
+      description: A list of approval requests have been successfully retrieved.
     requestApprovalResponse:
       content:
         application/json:
@@ -11714,8 +11922,9 @@ components:
           format: int32
           type: integer
         coinbase_maturity:
-          description: "The number of confirmations required for a coinbase transaction\
-            \ to be mature, such as 100 for BTC."
+          description: "The number of confirmations required before a coinbase transaction\
+            \ is considered mature and can be spent, for example, 100 confirmations\
+            \ for BTC."
           example: 15
           format: int32
           type: integer
@@ -14376,6 +14585,7 @@ components:
         The transaction destination type. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
       enum:
       - Address
+      - CustodialWallet
       - ExchangeWallet
       - EVM_Contract
       - SOL_Contract
@@ -14806,7 +15016,7 @@ components:
       type: object
     TransactionTransferToWalletDestination:
       description: |
-        Information about the transaction destination type `ExchangeWallet`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+        Information about the transaction destination type `CustodialWallet` or `ExchangeWallet`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
         Switch between the tabs to display the properties for different transaction destinations.
       properties:
@@ -14818,7 +15028,7 @@ components:
           format: uuid
           type: string
         trading_account_type:
-          description: The trading account type.
+          description: The trading account type. Only available for `ExchangeWallet`.
           example: Asset
           type: string
         exchange_id:
@@ -14832,7 +15042,7 @@ components:
       - amount
       - destination_type
       - wallet_id
-      title: ExchangeWallet
+      title: Wallet
       type: object
     TransactionBIP322Destination:
       description: |
@@ -15530,10 +15740,10 @@ components:
         \ A transaction for staking assets in the Babylon platform.\n  - `StakingBabylonUnstake`:\
         \ A transaction for unstaking assets from the Babylon platform.\n  - `StakingBabylonWithdraw`:\
         \ A transaction for withdrawing assets from Babylon staking.\n  - `StakingBithiveClaim`:\
-        \ A transaction for claiming rewards from Bithive staking.\n  - `StakingBithiveStake`:\
-        \ A transaction for staking assets in the Bithive platform.\n  - `StakingBithiveUnstake`:\
-        \ A transaction for unstaking assets from the Bithive platform.\n  - `StakingBithiveWithdraw`:\
-        \ A transaction for withdrawing assets from Bithive staking.\n  - `StakingCoreStake`:\
+        \ A transaction for claiming rewards from BitHive staking.\n  - `StakingBithiveStake`:\
+        \ A transaction for staking assets in the BitHive platform.\n  - `StakingBithiveUnstake`:\
+        \ A transaction for unstaking assets from the BitHive platform.\n  - `StakingBithiveWithdraw`:\
+        \ A transaction for withdrawing assets from BitHive staking.\n  - `StakingCoreStake`:\
         \ A transaction for staking assets in the Core staking platform.\n  - `StakingCoreWithdraw`:\
         \ A transaction for withdrawing assets from Core staking.\n  - `StakingEthClaim`:\
         \ A transaction for claiming rewards from ETH staking.\n  - `StakingEthStake`:\
@@ -16119,6 +16329,32 @@ components:
       - destination_type
       title: Address
       type: object
+    CustodialTransferDestination:
+      description: |
+        The information about the transaction destination type `CustodialWallet`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
+
+        An Custodial Wallet  can only receive asset transfers from another Custodial Wallet by using Loop.
+
+        Switch between the tabs to display the properties for different transaction destinations.
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransferDestinationType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        amount:
+          description: |
+            The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`.
+          example: "1.5"
+          type: string
+      required:
+      - amount
+      - destination_type
+      - wallet_id
+      title: CustodialWallet
+      type: object
     ExchangeTransferDestination:
       description: |
         The information about the transaction destination type `ExchangeWallet`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -16157,6 +16393,7 @@ components:
         Each destination type requires a different set of properties. Switch between the above tabs for details.
       enum:
       - Address
+      - CustodialWallet
       - ExchangeWallet
       example: Address
       type: string
@@ -16164,10 +16401,12 @@ components:
       discriminator:
         mapping:
           Address: '#/components/schemas/AddressTransferDestination'
+          CustodialWallet: '#/components/schemas/CustodialTransferDestination'
           ExchangeWallet: '#/components/schemas/ExchangeTransferDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/AddressTransferDestination'
+      - $ref: '#/components/schemas/CustodialTransferDestination'
       - $ref: '#/components/schemas/ExchangeTransferDestination'
     TransferParams:
       description: The information about a token transfer.
@@ -20048,9 +20287,9 @@ components:
       example: New
       type: string
     AppWorkflow:
-      description: The information of an app workflow approval user entry.
+      description: The information of an approval workflow
       example:
-        operation_name: test@cobo.com
+        operation_name: Make Batch Payout
         workflow_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         operation_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         current_policies:
@@ -20066,14 +20305,14 @@ components:
               threshold: 15
               type: PART_APPROVAL
           conditions:
-          - value_type: Pending
+          - value_type: INT
             field: amount
             value: "11.23"
-            operator: Pending
-          - value_type: Pending
+            operator: =
+          - value_type: INT
             field: amount
             value: "11.23"
-            operator: Pending
+            operator: =
         - action:
             action_type: Pending
             content:
@@ -20086,26 +20325,27 @@ components:
               threshold: 15
               type: PART_APPROVAL
           conditions:
-          - value_type: Pending
+          - value_type: INT
             field: amount
             value: "11.23"
-            operator: Pending
-          - value_type: Pending
+            operator: =
+          - value_type: INT
             field: amount
             value: "11.23"
-            operator: Pending
+            operator: =
       properties:
         workflow_id:
-          description: The workflow id.
+          description: The unique ID distinguishing the approval workflow instance
+            among organizations.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         operation_id:
-          description: The workflow operation id.
+          description: The unique ID of the approval workflow.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         operation_name:
-          description: The workflow operation name.
-          example: test@cobo.com
+          description: The name of the approval workflow.
+          example: Make Batch Payout
           type: string
         current_policies:
           items:
@@ -20118,14 +20358,14 @@ components:
       - workflow_id
       type: object
     ApprovalRequest:
-      description: The information of an app workflow approval.
+      description: The information of an approval request.
       example:
         initiated_timestamp: 1610445878970
         fields:
-        - value_type: Pending
+        - value_type: INT
           field: amount
           value: "11.23"
-        - value_type: Pending
+        - value_type: INT
           field: amount
           value: "11.23"
         request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -20133,9 +20373,11 @@ components:
         status: Pending
       properties:
         approval_id:
+          description: The system-generated unique ID of the approval request.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         request_id:
+          description: An identifier provided by you when requesting the approval.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         fields:
@@ -20158,33 +20400,33 @@ components:
       - status
       type: object
     ApprovalRequestDetail:
-      description: The information of an app workflow approval detail.
+      description: The information of an approval request detail.
       example:
         initiator:
-          name: test
+          name: John Smith
           created_timestamp: 1610445878970
-          email: test@cobo.com
+          email: john.smith@example.com
           status: Pending
         approved_list:
         - approval_users:
-          - name: test
+          - name: John Smith
             created_timestamp: 1610445878970
-            email: test@cobo.com
+            email: john.smith@example.com
             status: Pending
-          - name: test
+          - name: John Smith
             created_timestamp: 1610445878970
-            email: test@cobo.com
+            email: john.smith@example.com
             status: Pending
           created_timestamp: 1610445878970
           status: Pending
         - approval_users:
-          - name: test
+          - name: John Smith
             created_timestamp: 1610445878970
-            email: test@cobo.com
+            email: john.smith@example.com
             status: Pending
-          - name: test
+          - name: John Smith
             created_timestamp: 1610445878970
-            email: test@cobo.com
+            email: john.smith@example.com
             status: Pending
           created_timestamp: 1610445878970
           status: Pending
@@ -20193,6 +20435,7 @@ components:
         modified_timestamp: 1610445878970
       properties:
         approval_id:
+          description: The system-generated unique ID of the approval request.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         initiator:
@@ -20215,16 +20458,16 @@ components:
       - timestamp
       type: object
     ApprovalEntry:
-      description: The information of an app workflow approval entry.
+      description: The information of an approval request.
       example:
         approval_users:
-        - name: test
+        - name: John Smith
           created_timestamp: 1610445878970
-          email: test@cobo.com
+          email: john.smith@example.com
           status: Pending
-        - name: test
+        - name: John Smith
           created_timestamp: 1610445878970
-          email: test@cobo.com
+          email: john.smith@example.com
           status: Pending
         created_timestamp: 1610445878970
         status: Pending
@@ -20249,7 +20492,7 @@ components:
     ApprovalStatus:
       description: "The approval status. Possible values include: \n  - `Pending`:\
         \ The approval is pending.\n  - `Completed`: The approval is completed. \n\
-        \  - `Failed`: The approval is failed.\n  - `Revoked`: The approval is revoked.\
+        \  - `Failed`: The approval is rejected.\n  - `Revoked`: The approval is revoked.\
         \ \n"
       enum:
       - Pending
@@ -20259,20 +20502,20 @@ components:
       example: Pending
       type: string
     ApprovalUser:
-      description: The information of an app workflow approval user entry.
+      description: The information of the user.
       example:
-        name: test
+        name: John Smith
         created_timestamp: 1610445878970
-        email: test@cobo.com
+        email: john.smith@example.com
         status: Pending
       properties:
         email:
-          description: The approval user email.
-          example: test@cobo.com
+          description: The user email.
+          example: john.smith@example.com
           type: string
         name:
-          description: The approval user name.
-          example: test
+          description: The user name.
+          example: John Smith
           type: string
         status:
           $ref: '#/components/schemas/ApprovalStatus'
@@ -20288,20 +20531,20 @@ components:
       - status
       type: object
     AppWorkflowField:
-      description: The information of an app workflow field.
+      description: The information of a workflow field.
       example:
-        value_type: Pending
+        value_type: INT
         field: amount
         value: "11.23"
       properties:
         field:
-          description: The app workflow field name.
+          description: The workflow field name.
           example: amount
           type: string
         value_type:
           $ref: '#/components/schemas/PolicyFieldValueType'
         value:
-          description: The app workflow field value.
+          description: The workflow field value.
           example: "11.23"
           type: string
       required:
@@ -20310,7 +20553,9 @@ components:
       - value_type
       type: object
     AppWorkflowPolicy:
-      description: The information of an app workflow policy entry.
+      description: "The current approval workflow policy, consisting of one or more\
+        \ conditions and an associated action. When the conditions are met, the action\
+        \ is triggered."
       example:
         action:
           action_type: Pending
@@ -20324,14 +20569,14 @@ components:
             threshold: 15
             type: PART_APPROVAL
         conditions:
-        - value_type: Pending
+        - value_type: INT
           field: amount
           value: "11.23"
-          operator: Pending
-        - value_type: Pending
+          operator: =
+        - value_type: INT
           field: amount
           value: "11.23"
-          operator: Pending
+          operator: =
       properties:
         action:
           $ref: '#/components/schemas/PolicyAction'
@@ -20343,8 +20588,7 @@ components:
       - action
       type: object
     PolicyAction:
-      description: "The information of an app workflow policy action, content is valuable\
-        \ when action_type is Quorum."
+      description: The action to be executed when the policy conditions are satisfied.
       example:
         action_type: Pending
         content:
@@ -20365,9 +20609,9 @@ components:
       - action_type
       type: object
     PolicyActionType:
-      description: "The app policy action type. Possible values include: \n  - `Reject`:\
-        \ The action is reject.\n  - `Accept`: The action is accept. \n  - `Quorum`:\
-        \ The action is multiple people approval.\n"
+      description: "The approval action type. Possible values include: \n  - `Reject`:\
+        \ The action rejects the request.\n  - `Accept`: The action approves the request.\n\
+        \  - `Quorum`: The action requires approval from multiple participants.\n"
       enum:
       - Reject
       - Accept
@@ -20375,21 +20619,22 @@ components:
       example: Pending
       type: string
     PolicyCondition:
-      description: The information of an app workflow policy condition.
+      description: A condition that defines under what circumstances the policy’s
+        action should be triggered.
       example:
-        value_type: Pending
+        value_type: INT
         field: amount
         value: "11.23"
-        operator: Pending
+        operator: =
       properties:
         field:
-          description: The app workflow field name.
+          description: The field name.
           example: amount
           type: string
         value_type:
           $ref: '#/components/schemas/PolicyFieldValueType'
         value:
-          description: The app workflow field value.
+          description: The field value.
           example: "11.23"
           type: string
         operator:
@@ -20401,61 +20646,60 @@ components:
       - value_type
       type: object
     PolicyFieldOperator:
-      description: "The app policy action type. Possible values include: \n  - `>`:\
-        \ The operator is bigger.\n  - '>=': The operator is bigger or equal \n  -\
-        \ '<': The operator is smaller.\n  - `<=`: The operator is smaller or equal.\n\
-        \  - `=`: The operator is equal.\n"
+      description: "The policy field operator. Possible values include: \n  - `>`:\
+        \ Greater than.\n  - `>=`: Greater than or equal.\n  - `<`: Less than.\n \
+        \ - `<=`: Less than or equal.\n  - `=`: Equal.\n"
       enum:
       - '>'
       - '>='
       - <
       - <=
       - =
-      example: Pending
+      example: =
       type: string
     PolicyFieldValueType:
-      description: "The app field value type. Possible values include: \n  - `INT`:\
-        \ The file value type is int.\n  - `Float2`: The field value type is float\
-        \ with two decimal places. \n"
+      description: "The field value type. Possible values include: \n- `INT`: The\
+        \ field value is an integer.\n- `Float2`: The field value is a float with\
+        \ two decimal places.\n"
       enum:
       - INT
       - Float2
-      example: Pending
+      example: INT
       type: string
     RequestApproval:
-      description: The information about a request that approve an operation.
+      description: The information about a approval request.
       example:
         guard_template: guard_template
         operation_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         fields:
-        - value_type: Pending
+        - value_type: INT
           field: amount
           value: "11.23"
-        - value_type: Pending
+        - value_type: INT
           field: amount
           value: "11.23"
         request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        initiator_email: aa@cobo.com
+        initiator_email: johnsmith@example.com
       properties:
         operation_id:
-          description: The operation id of workflow approval request.
+          description: The unique ID of the approval workflow.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         request_id:
-          description: The request id of workflow approval request.
+          description: An identifier provided by you to track this request.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         initiator_email:
-          description: The initiator email of workflow approval request.
-          example: aa@cobo.com
+          description: The email of the user who requested the approval.
+          example: johnsmith@example.com
           type: string
         fields:
           items:
             $ref: '#/components/schemas/AppWorkflowField'
           type: array
         guard_template:
-          description: "The guard template content of workflow approval request, need\
-            \ to connect cobo."
+          description: "The template of a Cobo Guard message. Please connect [help@cobo.com](mailto:help@cobo.com)\
+            \ to get the template content."
           type: string
       required:
       - fields
@@ -20595,6 +20839,30 @@ components:
           type: string
         settlement_type:
           $ref: '#/components/schemas/SettlementType'
+        crypto_address_id:
+          description: |
+            The ID of the pre-approved crypto address used for Crypto settlements.
+
+            - This field is only applicable when `payout_channel` is set to `Crypto`.
+            - If `payout_channel` is `OffRamp`, this field will be ignored.
+            - The value must refer to a valid address that has been pre-configured and approved for the given token.
+          example: addr_ethusdt_20250506T123456_ab12cd
+          type: string
+        payout_channel:
+          $ref: '#/components/schemas/PayoutChannel'
+        order_ids:
+          description: |
+            A list of unique order IDs to be included in this settlement.
+
+            - This field is only applicable when `settlement_type` is set to `Merchant`.
+            - If provided, the settlement will only apply to the specified orders.
+            - The settlement `amount` must exactly match the total eligible amount from these orders.
+            - This ensures consistency between the declared amount and the actual order-level data being settled.
+          items:
+            description: Unique identifier of a single order
+            example: O20250304-M1001-1001
+            type: string
+          type: array
       type: object
     Merchant:
       example:
@@ -20680,12 +20948,17 @@ components:
           example: "1001"
           type: string
         token_id:
-          description: The ID of the cryptocurrency used for payment.
+          description: "\nThe ID of the cryptocurrency used for payment. Supported\
+            \ tokens: \n- USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`,\
+            \ `MATIC_USDC`, `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
           example: ETH_USDT
           type: string
         chain_id:
-          description: The ID of the blockchain network where the payment transaction
-            should be made.
+          description: "\nThe ID of the blockchain network where the payment transaction\
+            \ should be made. Supported chains: \n- USDC: `ETH`, `ARBITRUM`, `SOL`,\
+            \ `BASE`, `MATIC`, `BSC`\n- USDT: `TRON`, `ETH`, `ARBITRUM`, `SOL`, `BASE`,\
+            \ `MATIC`, `BSC`\n"
           example: ETH
           type: string
         payable_amount:
@@ -20953,13 +21226,8 @@ components:
       example:
         settlement_request_id: S20250304-1001
         settlements:
-        - settled_amount: "500.00"
-          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-          amount: "500.00"
-          token_id: ETH_USDT
+        - amount: "500.00"
           chain_id: ETH
-          updated_timestamp: 1744689600
-          currency: USD
           created_timestamp: 1744689600
           merchant_id: M1001
           transactions:
@@ -20981,6 +21249,12 @@ components:
             tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
+          settled_amount: "500.00"
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          currency: USD
           status: Pending
           bank_account:
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -20994,13 +21268,8 @@ components:
               bank_country: USA
               bank_address: "456 Bank Ave, Cityville, USA"
               swift_or_bic: ABCDEFGH
-        - settled_amount: "500.00"
-          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-          amount: "500.00"
-          token_id: ETH_USDT
+        - amount: "500.00"
           chain_id: ETH
-          updated_timestamp: 1744689600
-          currency: USD
           created_timestamp: 1744689600
           merchant_id: M1001
           transactions:
@@ -21022,6 +21291,12 @@ components:
             tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
+          settled_amount: "500.00"
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          currency: USD
           status: Pending
           bank_account:
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -21079,13 +21354,8 @@ components:
       type: object
     SettlementDetail:
       example:
-        settled_amount: "500.00"
-        crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
         amount: "500.00"
-        token_id: ETH_USDT
         chain_id: ETH
-        updated_timestamp: 1744689600
-        currency: USD
         created_timestamp: 1744689600
         merchant_id: M1001
         transactions:
@@ -21107,6 +21377,12 @@ components:
           tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
           status: Submitted
+        settled_amount: "500.00"
+        crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+        token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        payout_channel: Crypto
+        currency: USD
         status: Pending
         bank_account:
           bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -21181,6 +21457,8 @@ components:
             \ to reference the address securely in requests."
           example: addr_ethusdt_20250429T134512_a8c31f
           type: string
+        payout_channel:
+          $ref: '#/components/schemas/PayoutChannel'
       type: object
     SettlementInfo:
       example:
@@ -21309,6 +21587,126 @@ components:
       - to_address
       - tx_id
       - updated_timestamp
+      type: object
+    CryptoAddress:
+      example:
+        address: 0xabc123456789def0000000000000000000000000
+        token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        address_id: addr_ethusdt_20250429T134512_a8c31f
+        created_timestamp: 1744689600
+        label: Main Payout Wallet
+      properties:
+        token_id:
+          description: "The token identifier (e.g., ETH_USDT, TRON_USDT) that this\
+            \ address is associated with."
+          example: ETH_USDT
+          type: string
+        address_id:
+          description: "Unique identifier for the pre-approved crypto address, used\
+            \ to reference the address securely in requests. This ID is returned by\
+            \ the system and should be used instead of the raw blockchain address\
+            \ in API calls."
+          example: addr_ethusdt_20250429T134512_a8c31f
+          type: string
+        address:
+          description: The actual blockchain address to which funds will be transferred.
+            This is for display purposes only; external clients should always use
+            address_id to refer to the address in secure operations.
+          example: 0xabc123456789def0000000000000000000000000
+          type: string
+        label:
+          description: "A human-readable label or alias for the crypto address, set\
+            \ by the merchant or platform operator. This field is optional and intended\
+            \ to help distinguish addresses by usage or purpose (e.g., \"Main Payout\
+            \ Wallet\", \"Cold Wallet\")."
+          example: Main Payout Wallet
+          type: string
+        created_timestamp:
+          description: "The created time of the crypto address, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the crypto address, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+      required:
+      - address
+      - address_id
+      - token_id
+      type: object
+    PayoutChannel:
+      description: |
+        PayoutChannel defines the method by which settlement funds are paid out:
+        - `Crypto`: Funds will be settled to a pre-approved blockchain crypto address. (Requires crypto_address_id to be specified.)
+        - `OffRamp`: Funds will be settled through an off-ramp to a fiat bank account. (Requires bank_account_id to be specified.)
+      enum:
+      - Crypto
+      - OffRamp
+      example: Crypto
+      type: string
+    SupportedToken:
+      example:
+        symbol: USDT
+        token_id: ETH_USDT
+        chain_id: ETH
+        name: Tether USD
+        token_icon_url: https://example.com/icons/usdt.png
+        token_address: 0xdac17f958d2ee523a2206206994597c13d831ec7
+        decimal: 6
+        chain_symbol: ETH
+        chain_icon_url: https://example.com/icons/eth.png
+      properties:
+        token_id:
+          description: Unique identifier of the token
+          example: ETH_USDT
+          type: string
+        name:
+          description: Full name of the token
+          example: Tether USD
+          type: string
+        symbol:
+          description: Symbol representation of the token
+          example: USDT
+          type: string
+        decimal:
+          description: Number of decimal places for the token
+          example: 6
+          type: integer
+        token_address:
+          description: Contract address of the token (may be null for native coins)
+          example: 0xdac17f958d2ee523a2206206994597c13d831ec7
+          nullable: true
+          type: string
+        chain_id:
+          description: Identifier of the blockchain where the token exists
+          example: ETH
+          type: string
+        chain_symbol:
+          description: Symbol of the underlying blockchain
+          example: ETH
+          nullable: true
+          type: string
+        chain_icon_url:
+          description: URL to the blockchain's icon image
+          example: https://example.com/icons/eth.png
+          nullable: true
+          type: string
+        token_icon_url:
+          description: URL to the token's icon image
+          example: https://example.com/icons/usdt.png
+          nullable: true
+          type: string
+      required:
+      - chain_id
+      - chain_symbol
+      - decimal
+      - name
+      - symbol
+      - token_address
+      - token_id
       type: object
     TSSKeyGenRequest:
       properties:
@@ -23439,6 +23837,51 @@ components:
           example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
           type: string
       type: object
+    exchange_permission_token_request:
+      properties:
+        permission_type:
+          description: The OAuth permission type. Set the value as `payment_orders_payin`.
+          example: payment_orders_payin
+          type: string
+      required:
+      - permission_type
+      type: object
+    exchange_permission_token_201_response:
+      example:
+        access_token: AnCEPEp5Q8qjAOA1Lb6kVd2OlkCyJnMTeMPdLbPOM8cz176Eb5y7EJoUjJJ0vkzz
+        refresh_token: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
+        token_type: Bearer
+        expires_in: 43199
+      properties:
+        access_token:
+          description: The new Permission Access Token.
+          example: AnCEPEp5Q8qjAOA1Lb6kVd2OlkCyJnMTeMPdLbPOM8cz176Eb5y7EJoUjJJ0vkzz
+          type: string
+        token_type:
+          description: "The type of the tokens, which is Bearer."
+          example: Bearer
+          type: string
+        expires_in:
+          description: The time in seconds in which the new Permission Access Token
+            expires.
+          example: 43199
+          type: integer
+        refresh_token:
+          description: "The Refresh Token, used to obtain another Org Access Token\
+            \ when the new Permission Access Token expires. The expiration time for\
+            \ Refresh Tokens is currently set to 7 days and is subject to change."
+          example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
+          type: string
+      type: object
+    refresh_permission_token_request:
+      properties:
+        refresh_token:
+          description: The Refresh Token of the current Org Access Token.
+          example: rK49jI0zt49gsttzscscik15Asmlpu1TdcxqguJJS8B9f6ilJEC0y3PbVqwsEAw5
+          type: string
+      required:
+      - refresh_token
+      type: object
     list_webhook_endpoints_200_response:
       example:
         pagination:
@@ -25161,10 +25604,10 @@ components:
         data:
         - initiated_timestamp: 1610445878970
           fields:
-          - value_type: Pending
+          - value_type: INT
             field: amount
             value: "11.23"
-          - value_type: Pending
+          - value_type: INT
             field: amount
             value: "11.23"
           request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -25172,10 +25615,10 @@ components:
           status: Pending
         - initiated_timestamp: 1610445878970
           fields:
-          - value_type: Pending
+          - value_type: INT
             field: amount
             value: "11.23"
-          - value_type: Pending
+          - value_type: INT
             field: amount
             value: "11.23"
           request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -25194,6 +25637,8 @@ components:
         approval_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
       properties:
         approval_id:
+          description: The system-generated unique ID of the approval request. You
+            can use this ID to query the approval request status or revoke the request.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           format: uuid
           type: string
@@ -25203,8 +25648,8 @@ components:
     revoke_approval_request_request:
       properties:
         initiator_email:
-          description: The initiator email of workflow approval request.
-          example: aa@cobo.com
+          description: The email of the user who requested the approval.
+          example: johnsmith@example.com
           type: string
       required:
       - initiator_email
@@ -25215,6 +25660,7 @@ components:
         status: Pending
       properties:
         approval_id:
+          description: The system-generated unique ID of the approval request.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           format: uuid
           type: string
@@ -25382,36 +25828,27 @@ components:
             Use this to track refunds against specific payments.
           example: R20250304-M1001-1001
           type: string
+        charge_merchant_fee:
+          description: |
+            Indicates whether the merchant should bear the transaction fee for the refund.  If true, the fee will be deducted from merchant's account balance.
+          example: false
+          type: boolean
+        merchant_fee_amount:
+          description: |
+            The amount of the transaction fee that the merchant will bear for the refund.  This is only applicable if `charge_merchant_fee` is set to true.
+          example: "0.0001"
+          type: string
+        merchant_fee_token_id:
+          description: |
+            The ID of the cryptocurrency used for the transaction fee.  This is only applicable if `charge_merchant_fee` is set to true.
+          example: ETH_USDT
+          type: string
       required:
       - payable_amount
       - refund_type
       - request_id
       - to_address
       - token_id
-      type: object
-    create_bank_account_request:
-      properties:
-        info:
-          additionalProperties: true
-          description: |
-            JSON-formatted bank account details. The object should include the following fields:
-            - beneficiary_name: Name of the account holder
-            - beneficiary_address: Address of the account holder
-            - account_number: Bank account number
-            - bank_name: Name of the bank
-            - bank_address: Address of the bank
-            - iban: (Optional) International Bank Account Number
-            - swift_or_bic: SWIFT or BIC code of the bank
-          example:
-            beneficiary_name: John Doe
-            beneficiary_address: "123 Main St, Anytown, USA"
-            account_number: "4111111111111111"
-            bank_name: ABC Bank
-            bank_address: "456 Bank Ave, Cityville, USA"
-            swift_or_bic: ABCDEFGH
-          type: object
-      required:
-      - info
       type: object
     list_payment_orders_200_response:
       example:
@@ -25543,14 +25980,14 @@ components:
             this order in their system.
           example: P20240201001
           type: string
-        expired_at:
+        expired_in:
           description: |
-            The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. After this time:
+            The pay-in order will expire after approximately a certain number of seconds:
             - The order status becomes final and cannot be changed
             - The `received_token_amount` field will no longer be updated
             - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance.
             - A late payment will trigger a `transactionLate` webhook event.
-          example: 1711324800
+          example: 1800
           type: integer
       required:
       - fee_amount
@@ -25654,13 +26091,8 @@ components:
         data:
         - settlement_request_id: S20250304-1001
           settlements:
-          - settled_amount: "500.00"
-            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-            amount: "500.00"
-            token_id: ETH_USDT
+          - amount: "500.00"
             chain_id: ETH
-            updated_timestamp: 1744689600
-            currency: USD
             created_timestamp: 1744689600
             merchant_id: M1001
             transactions:
@@ -25682,6 +26114,12 @@ components:
               tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
+            settled_amount: "500.00"
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_channel: Crypto
+            currency: USD
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25695,13 +26133,8 @@ components:
                 bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
-          - settled_amount: "500.00"
-            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-            amount: "500.00"
-            token_id: ETH_USDT
+          - amount: "500.00"
             chain_id: ETH
-            updated_timestamp: 1744689600
-            currency: USD
             created_timestamp: 1744689600
             merchant_id: M1001
             transactions:
@@ -25723,6 +26156,12 @@ components:
               tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
+            settled_amount: "500.00"
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_channel: Crypto
+            currency: USD
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25743,13 +26182,8 @@ components:
           status: Pending
         - settlement_request_id: S20250304-1001
           settlements:
-          - settled_amount: "500.00"
-            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-            amount: "500.00"
-            token_id: ETH_USDT
+          - amount: "500.00"
             chain_id: ETH
-            updated_timestamp: 1744689600
-            currency: USD
             created_timestamp: 1744689600
             merchant_id: M1001
             transactions:
@@ -25771,6 +26205,12 @@ components:
               tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
+            settled_amount: "500.00"
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_channel: Crypto
+            currency: USD
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25784,13 +26224,8 @@ components:
                 bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
-          - settled_amount: "500.00"
-            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-            amount: "500.00"
-            token_id: ETH_USDT
+          - amount: "500.00"
             chain_id: ETH
-            updated_timestamp: 1744689600
-            currency: USD
             created_timestamp: 1744689600
             merchant_id: M1001
             transactions:
@@ -25812,6 +26247,12 @@ components:
               tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
               status: Submitted
+            settled_amount: "500.00"
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_channel: Crypto
+            currency: USD
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25904,6 +26345,7 @@ components:
       discriminator:
         mapping:
           Address: '#/components/schemas/TransactionTransferToAddressDestination'
+          CustodialWallet: '#/components/schemas/TransactionTransferToWalletDestination'
           ExchangeWallet: '#/components/schemas/TransactionTransferToWalletDestination'
           EVM_Contract: '#/components/schemas/TransactionEvmContractDestination'
           SOL_Contract: '#/components/schemas/TransactionSolContractDestination'
@@ -26205,7 +26647,8 @@ components:
       - $ref: '#/components/schemas/SelfCustodyWallet'
       - $ref: '#/components/schemas/TravelRuleWithdrawExchangesOrVASP'
     PolicyAction_content:
-      description: The information of an app workflow policy quorum action content.
+      description: The definition of the quorum action. This property is applicable
+        only when `action_type` is `Quorum`.
       example:
         user_ids:
         - f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -26217,27 +26660,29 @@ components:
         type: PART_APPROVAL
       properties:
         type:
-          description: "The quorum action content type. Possible values include: \n\
-            \  - `FULL_APPROVAL`: The content type is approved by all persons.\n \
-            \ - `PART_APPROVAL`: The content type is approved by some persons.\n"
+          description: "The quorum type. Possible values include: \n  - `FULL_APPROVAL`:\
+            \ Requires approval from all participants.\n  - `PART_APPROVAL`: Requires\
+            \ approval from a specified number of participants.\n"
           enum:
           - FULL_APPROVAL
           - PART_APPROVAL
           example: PART_APPROVAL
           type: string
         roles:
+          description: "The roles included in the quorum. Possible values include\
+            \ `admin`, `spender`, `operator`, and `approver`."
           items:
-            description: "The role, such as admin,spender,operator."
             example: admin
             type: string
           type: array
         user_ids:
+          description: The ID of the users included in the quorum.
           items:
             example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             type: string
           type: array
         threshold:
-          description: "The number of persons need approved, such as 2."
+          description: The number of approvers required to meet the quorum.
           example: 15
           format: int32
           type: integer

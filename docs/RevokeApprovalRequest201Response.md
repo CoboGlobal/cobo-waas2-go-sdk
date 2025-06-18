@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ApprovalId** | **string** |  | 
+**ApprovalId** | **string** | The system-generated unique ID of the approval request. | 
 **Status** | Pointer to [**ApprovalStatus**](ApprovalStatus.md) |  | [optional] 
 
 ## Methods

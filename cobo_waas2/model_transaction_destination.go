@@ -212,6 +212,18 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'CustodialWallet'
+	if jsonDict["destination_type"] == "CustodialWallet" {
+		// try to unmarshal JSON data into TransactionTransferToWalletDestination
+		err = json.Unmarshal(data, &dst.TransactionTransferToWalletDestination)
+		if err == nil {
+			return nil // data stored in dst.TransactionTransferToWalletDestination, return on the first match
+		} else {
+			dst.TransactionTransferToWalletDestination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionTransferToWalletDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'DepositToAddress'
 	if jsonDict["destination_type"] == "DepositToAddress" {
 		// try to unmarshal JSON data into TransactionDepositToAddressDestination

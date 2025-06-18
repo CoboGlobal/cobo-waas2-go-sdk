@@ -16,6 +16,7 @@ import (
 // TransferDestination - struct for TransferDestination
 type TransferDestination struct {
 	AddressTransferDestination *AddressTransferDestination
+	CustodialTransferDestination *CustodialTransferDestination
 	ExchangeTransferDestination *ExchangeTransferDestination
 }
 
@@ -23,6 +24,13 @@ type TransferDestination struct {
 func AddressTransferDestinationAsTransferDestination(v *AddressTransferDestination) TransferDestination {
 	return TransferDestination{
 		AddressTransferDestination: v,
+	}
+}
+
+// CustodialTransferDestinationAsTransferDestination is a convenience function that returns CustodialTransferDestination wrapped in TransferDestination
+func CustodialTransferDestinationAsTransferDestination(v *CustodialTransferDestination) TransferDestination {
+	return TransferDestination{
+		CustodialTransferDestination: v,
 	}
 }
 
@@ -56,6 +64,18 @@ func (dst *TransferDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'CustodialWallet'
+	if jsonDict["destination_type"] == "CustodialWallet" {
+		// try to unmarshal JSON data into CustodialTransferDestination
+		err = json.Unmarshal(data, &dst.CustodialTransferDestination)
+		if err == nil {
+			return nil // data stored in dst.CustodialTransferDestination, return on the first match
+		} else {
+			dst.CustodialTransferDestination = nil
+			return fmt.Errorf("failed to unmarshal TransferDestination as CustodialTransferDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ExchangeWallet'
 	if jsonDict["destination_type"] == "ExchangeWallet" {
 		// try to unmarshal JSON data into ExchangeTransferDestination
@@ -80,6 +100,18 @@ func (dst *TransferDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'CustodialTransferDestination'
+	if jsonDict["destination_type"] == "CustodialTransferDestination" {
+		// try to unmarshal JSON data into CustodialTransferDestination
+		err = json.Unmarshal(data, &dst.CustodialTransferDestination)
+		if err == nil {
+			return nil // data stored in dst.CustodialTransferDestination, return on the first match
+		} else {
+			dst.CustodialTransferDestination = nil
+			return fmt.Errorf("failed to unmarshal TransferDestination as CustodialTransferDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ExchangeTransferDestination'
 	if jsonDict["destination_type"] == "ExchangeTransferDestination" {
 		// try to unmarshal JSON data into ExchangeTransferDestination
@@ -101,6 +133,10 @@ func (src TransferDestination) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.AddressTransferDestination)
 	}
 
+	if src.CustodialTransferDestination != nil {
+		return json.Marshal(&src.CustodialTransferDestination)
+	}
+
 	if src.ExchangeTransferDestination != nil {
 		return json.Marshal(&src.ExchangeTransferDestination)
 	}
@@ -115,6 +151,10 @@ func (obj *TransferDestination) GetActualInstance() (interface{}) {
 	}
 	if obj.AddressTransferDestination != nil {
 		return obj.AddressTransferDestination
+	}
+
+	if obj.CustodialTransferDestination != nil {
+		return obj.CustodialTransferDestination
 	}
 
 	if obj.ExchangeTransferDestination != nil {
