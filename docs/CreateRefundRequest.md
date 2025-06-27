@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **RequestId** | **string** | The request ID that is used to track a refund request. The request ID is provided by you and must be unique. | 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **PayableAmount** | **string** | The amount to refund in cryptocurrency. | 
-**ToAddress** | **string** | The address where the refunded cryptocurrency will be sent. | 
+**ToAddress** | Pointer to **string** | The address where the refunded cryptocurrency will be sent. | [optional] 
 **TokenId** | **string** | The ID of the cryptocurrency used for refund. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
 **RefundType** | [**RefundType**](RefundType.md) |  | 
 **OrderId** | Pointer to **string** | The ID of the original pay-in order associated with this refund. Use this to track refunds against specific payments. | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewCreateRefundRequest
 
-`func NewCreateRefundRequest(requestId string, payableAmount string, toAddress string, tokenId string, refundType RefundType, ) *CreateRefundRequest`
+`func NewCreateRefundRequest(requestId string, payableAmount string, tokenId string, refundType RefundType, ) *CreateRefundRequest`
 
 NewCreateRefundRequest instantiates a new CreateRefundRequest object
 This constructor will assign default values to properties that have it defined,
@@ -118,6 +118,11 @@ and a boolean to check if the value has been set.
 
 SetToAddress sets ToAddress field to given value.
 
+### HasToAddress
+
+`func (o *CreateRefundRequest) HasToAddress() bool`
+
+HasToAddress returns a boolean if a field has been set.
 
 ### GetTokenId
 

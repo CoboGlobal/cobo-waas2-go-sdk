@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **AppInitiator** | Pointer to **string** | The initiator of the app activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator. | [optional] 
 **RequestId** | Pointer to **string** | The request id of the swap activity. | [optional] 
 **Destination** | Pointer to [**AddressTransferDestination**](AddressTransferDestination.md) |  | [optional] 
+**Fee** | Pointer to [**EstimatedFee**](EstimatedFee.md) |  | [optional] 
 
 ## Methods
 
@@ -169,6 +170,31 @@ SetDestination sets Destination field to given value.
 `func (o *CreateSwapActivityRequest) HasDestination() bool`
 
 HasDestination returns a boolean if a field has been set.
+
+### GetFee
+
+`func (o *CreateSwapActivityRequest) GetFee() EstimatedFee`
+
+GetFee returns the Fee field if non-nil, zero value otherwise.
+
+### GetFeeOk
+
+`func (o *CreateSwapActivityRequest) GetFeeOk() (*EstimatedFee, bool)`
+
+GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFee
+
+`func (o *CreateSwapActivityRequest) SetFee(v EstimatedFee)`
+
+SetFee sets Fee field to given value.
+
+### HasFee
+
+`func (o *CreateSwapActivityRequest) HasFee() bool`
+
+HasFee returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

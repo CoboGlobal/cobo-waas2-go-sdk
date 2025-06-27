@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **MerchantId** | **string** | The merchant ID. | 
 **Name** | **string** | The merchant name. | 
 **WalletId** | **string** | The ID of the linked wallet. | 
+**DeveloperFeeRate** | Pointer to **string** | Developer fee rate for this token. For example, 0.01 represents a 1% fee.  | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
 
@@ -88,6 +89,31 @@ and a boolean to check if the value has been set.
 
 SetWalletId sets WalletId field to given value.
 
+
+### GetDeveloperFeeRate
+
+`func (o *Merchant) GetDeveloperFeeRate() string`
+
+GetDeveloperFeeRate returns the DeveloperFeeRate field if non-nil, zero value otherwise.
+
+### GetDeveloperFeeRateOk
+
+`func (o *Merchant) GetDeveloperFeeRateOk() (*string, bool)`
+
+GetDeveloperFeeRateOk returns a tuple with the DeveloperFeeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeveloperFeeRate
+
+`func (o *Merchant) SetDeveloperFeeRate(v string)`
+
+SetDeveloperFeeRate sets DeveloperFeeRate field to given value.
+
+### HasDeveloperFeeRate
+
+`func (o *Merchant) HasDeveloperFeeRate() bool`
+
+HasDeveloperFeeRate returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

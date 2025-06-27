@@ -40,6 +40,7 @@ type SettlementDetail struct {
 	// Unique identifier for the pre-approved crypto address, used to reference the address securely in requests.
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
+	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 }
 
 // NewSettlementDetail instantiates a new SettlementDetail object
@@ -475,6 +476,38 @@ func (o *SettlementDetail) SetPayoutChannel(v PayoutChannel) {
 	o.PayoutChannel = &v
 }
 
+// GetAcquiringType returns the AcquiringType field value if set, zero value otherwise.
+func (o *SettlementDetail) GetAcquiringType() AcquiringType {
+	if o == nil || IsNil(o.AcquiringType) {
+		var ret AcquiringType
+		return ret
+	}
+	return *o.AcquiringType
+}
+
+// GetAcquiringTypeOk returns a tuple with the AcquiringType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetAcquiringTypeOk() (*AcquiringType, bool) {
+	if o == nil || IsNil(o.AcquiringType) {
+		return nil, false
+	}
+	return o.AcquiringType, true
+}
+
+// HasAcquiringType returns a boolean if a field has been set.
+func (o *SettlementDetail) HasAcquiringType() bool {
+	if o != nil && !IsNil(o.AcquiringType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcquiringType gets a reference to the given AcquiringType and assigns it to the AcquiringType field.
+func (o *SettlementDetail) SetAcquiringType(v AcquiringType) {
+	o.AcquiringType = &v
+}
+
 func (o SettlementDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -523,6 +556,9 @@ func (o SettlementDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PayoutChannel) {
 		toSerialize["payout_channel"] = o.PayoutChannel
+	}
+	if !IsNil(o.AcquiringType) {
+		toSerialize["acquiring_type"] = o.AcquiringType
 	}
 	return toSerialize, nil
 }

@@ -25,6 +25,8 @@ type Merchant struct {
 	Name string `json:"name"`
 	// The ID of the linked wallet.
 	WalletId string `json:"wallet_id"`
+	// Developer fee rate for this token. For example, 0.01 represents a 1% fee. 
+	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
 	// The created time of the merchant, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The updated time of the merchant, represented as a UNIX timestamp in seconds.
@@ -125,6 +127,38 @@ func (o *Merchant) SetWalletId(v string) {
 	o.WalletId = v
 }
 
+// GetDeveloperFeeRate returns the DeveloperFeeRate field value if set, zero value otherwise.
+func (o *Merchant) GetDeveloperFeeRate() string {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		var ret string
+		return ret
+	}
+	return *o.DeveloperFeeRate
+}
+
+// GetDeveloperFeeRateOk returns a tuple with the DeveloperFeeRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Merchant) GetDeveloperFeeRateOk() (*string, bool) {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		return nil, false
+	}
+	return o.DeveloperFeeRate, true
+}
+
+// HasDeveloperFeeRate returns a boolean if a field has been set.
+func (o *Merchant) HasDeveloperFeeRate() bool {
+	if o != nil && !IsNil(o.DeveloperFeeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeveloperFeeRate gets a reference to the given string and assigns it to the DeveloperFeeRate field.
+func (o *Merchant) SetDeveloperFeeRate(v string) {
+	o.DeveloperFeeRate = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *Merchant) GetCreatedTimestamp() int32 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -202,6 +236,9 @@ func (o Merchant) ToMap() (map[string]interface{}, error) {
 	toSerialize["merchant_id"] = o.MerchantId
 	toSerialize["name"] = o.Name
 	toSerialize["wallet_id"] = o.WalletId
+	if !IsNil(o.DeveloperFeeRate) {
+		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
+	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}

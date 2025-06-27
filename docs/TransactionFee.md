@@ -12,10 +12,17 @@ Name | Type | Description | Notes
 **GasUsed** | Pointer to **string** | The gas units used in the transaction. | [optional] 
 **MaxFeePerGas** | Pointer to **string** | The maximum gas fee per gas unit used on the chain, in wei. | [optional] 
 **MaxPriorityFeePerGas** | Pointer to **string** | The maximum priority fee per gas unit used, in wei. The maximum priority fee represents the highest amount of miner tips that you are willing to pay for your transaction. | [optional] 
-**GasLimit** | Pointer to **string** | The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies. | [optional] 
+**GasLimit** | Pointer to **string** | This defines the maximum amount of computational effort that a transaction is allowed to consume. It&#39;s a way to cap the resources that a transaction can use, ensuring it doesn&#39;t consume excessive network resources. | [optional] 
 **GasPrice** | Pointer to **string** | The gas price, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions per gas unit used. | [optional] 
 **MaxFeeAmount** | Pointer to **string** | The maximum fee that you are willing to pay for the transaction. Provide the value without applying precision. The transaction will fail if the transaction fee exceeds the maximum fee. | [optional] 
 **FeeRate** | Pointer to **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | [optional] 
+**BaseFee** | Pointer to **string** | The fundamental fee required for each transaction. It is charged to prevent spam transactions and network congestion, ensuring that only meaningful transactions consume network resources. | [optional] 
+**RentAmount** | Pointer to **string** | The fee charged as rent for maintaining the state of accounts on the blockchain. This rent ensures accounts are stored on-chain over the long term and that there&#39;s sufficient balance to sustain the account state. | [optional] 
+**ComputeUnitPrice** | Pointer to **string** | The cost per compute unit. Transactions consume computational resources measured in compute units, and this price helps determine the cost of executing transactions, especially complex ones involving smart contracts. | [optional] 
+**ComputeUnitLimit** | Pointer to **string** | The maximum number of compute units allowed for a transaction. This limits the resources any single transaction can consume, preventing excessive resource usage that could impact network performance negatively. | [optional] 
+**GasBase** | Pointer to **string** | This is the minimum fee required to include a transaction in a block. It is determined by the network&#39;s congestion level, which adjusts to maintain a target block utilization rate. The base fee is burned, reducing the total supply of Filecoin over time. | [optional] 
+**GasPremium** | Pointer to **string** | An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee. | [optional] 
+**GasFeeCap** | Pointer to **string** | The gas_fee_cap is a user-defined limit on how much they are willing to pay per unit of gas. | [optional] 
 
 ## Methods
 
@@ -330,6 +337,181 @@ SetFeeRate sets FeeRate field to given value.
 `func (o *TransactionFee) HasFeeRate() bool`
 
 HasFeeRate returns a boolean if a field has been set.
+
+### GetBaseFee
+
+`func (o *TransactionFee) GetBaseFee() string`
+
+GetBaseFee returns the BaseFee field if non-nil, zero value otherwise.
+
+### GetBaseFeeOk
+
+`func (o *TransactionFee) GetBaseFeeOk() (*string, bool)`
+
+GetBaseFeeOk returns a tuple with the BaseFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBaseFee
+
+`func (o *TransactionFee) SetBaseFee(v string)`
+
+SetBaseFee sets BaseFee field to given value.
+
+### HasBaseFee
+
+`func (o *TransactionFee) HasBaseFee() bool`
+
+HasBaseFee returns a boolean if a field has been set.
+
+### GetRentAmount
+
+`func (o *TransactionFee) GetRentAmount() string`
+
+GetRentAmount returns the RentAmount field if non-nil, zero value otherwise.
+
+### GetRentAmountOk
+
+`func (o *TransactionFee) GetRentAmountOk() (*string, bool)`
+
+GetRentAmountOk returns a tuple with the RentAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRentAmount
+
+`func (o *TransactionFee) SetRentAmount(v string)`
+
+SetRentAmount sets RentAmount field to given value.
+
+### HasRentAmount
+
+`func (o *TransactionFee) HasRentAmount() bool`
+
+HasRentAmount returns a boolean if a field has been set.
+
+### GetComputeUnitPrice
+
+`func (o *TransactionFee) GetComputeUnitPrice() string`
+
+GetComputeUnitPrice returns the ComputeUnitPrice field if non-nil, zero value otherwise.
+
+### GetComputeUnitPriceOk
+
+`func (o *TransactionFee) GetComputeUnitPriceOk() (*string, bool)`
+
+GetComputeUnitPriceOk returns a tuple with the ComputeUnitPrice field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetComputeUnitPrice
+
+`func (o *TransactionFee) SetComputeUnitPrice(v string)`
+
+SetComputeUnitPrice sets ComputeUnitPrice field to given value.
+
+### HasComputeUnitPrice
+
+`func (o *TransactionFee) HasComputeUnitPrice() bool`
+
+HasComputeUnitPrice returns a boolean if a field has been set.
+
+### GetComputeUnitLimit
+
+`func (o *TransactionFee) GetComputeUnitLimit() string`
+
+GetComputeUnitLimit returns the ComputeUnitLimit field if non-nil, zero value otherwise.
+
+### GetComputeUnitLimitOk
+
+`func (o *TransactionFee) GetComputeUnitLimitOk() (*string, bool)`
+
+GetComputeUnitLimitOk returns a tuple with the ComputeUnitLimit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetComputeUnitLimit
+
+`func (o *TransactionFee) SetComputeUnitLimit(v string)`
+
+SetComputeUnitLimit sets ComputeUnitLimit field to given value.
+
+### HasComputeUnitLimit
+
+`func (o *TransactionFee) HasComputeUnitLimit() bool`
+
+HasComputeUnitLimit returns a boolean if a field has been set.
+
+### GetGasBase
+
+`func (o *TransactionFee) GetGasBase() string`
+
+GetGasBase returns the GasBase field if non-nil, zero value otherwise.
+
+### GetGasBaseOk
+
+`func (o *TransactionFee) GetGasBaseOk() (*string, bool)`
+
+GetGasBaseOk returns a tuple with the GasBase field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGasBase
+
+`func (o *TransactionFee) SetGasBase(v string)`
+
+SetGasBase sets GasBase field to given value.
+
+### HasGasBase
+
+`func (o *TransactionFee) HasGasBase() bool`
+
+HasGasBase returns a boolean if a field has been set.
+
+### GetGasPremium
+
+`func (o *TransactionFee) GetGasPremium() string`
+
+GetGasPremium returns the GasPremium field if non-nil, zero value otherwise.
+
+### GetGasPremiumOk
+
+`func (o *TransactionFee) GetGasPremiumOk() (*string, bool)`
+
+GetGasPremiumOk returns a tuple with the GasPremium field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGasPremium
+
+`func (o *TransactionFee) SetGasPremium(v string)`
+
+SetGasPremium sets GasPremium field to given value.
+
+### HasGasPremium
+
+`func (o *TransactionFee) HasGasPremium() bool`
+
+HasGasPremium returns a boolean if a field has been set.
+
+### GetGasFeeCap
+
+`func (o *TransactionFee) GetGasFeeCap() string`
+
+GetGasFeeCap returns the GasFeeCap field if non-nil, zero value otherwise.
+
+### GetGasFeeCapOk
+
+`func (o *TransactionFee) GetGasFeeCapOk() (*string, bool)`
+
+GetGasFeeCapOk returns a tuple with the GasFeeCap field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGasFeeCap
+
+`func (o *TransactionFee) SetGasFeeCap(v string)`
+
+SetGasFeeCap sets GasFeeCap field to given value.
+
+### HasGasFeeCap
+
+`func (o *TransactionFee) HasGasFeeCap() bool`
+
+HasGasFeeCap returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

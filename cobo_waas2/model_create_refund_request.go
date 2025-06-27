@@ -26,7 +26,7 @@ type CreateRefundRequest struct {
 	// The amount to refund in cryptocurrency.
 	PayableAmount string `json:"payable_amount"`
 	// The address where the refunded cryptocurrency will be sent.
-	ToAddress string `json:"to_address"`
+	ToAddress *string `json:"to_address,omitempty"`
 	// The ID of the cryptocurrency used for refund. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
 	RefundType RefundType `json:"refund_type"`
@@ -46,11 +46,10 @@ type _CreateRefundRequest CreateRefundRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateRefundRequest(requestId string, payableAmount string, toAddress string, tokenId string, refundType RefundType) *CreateRefundRequest {
+func NewCreateRefundRequest(requestId string, payableAmount string, tokenId string, refundType RefundType) *CreateRefundRequest {
 	this := CreateRefundRequest{}
 	this.RequestId = requestId
 	this.PayableAmount = payableAmount
-	this.ToAddress = toAddress
 	this.TokenId = tokenId
 	this.RefundType = refundType
 	return &this
@@ -144,28 +143,36 @@ func (o *CreateRefundRequest) SetPayableAmount(v string) {
 	o.PayableAmount = v
 }
 
-// GetToAddress returns the ToAddress field value
+// GetToAddress returns the ToAddress field value if set, zero value otherwise.
 func (o *CreateRefundRequest) GetToAddress() string {
-	if o == nil {
+	if o == nil || IsNil(o.ToAddress) {
 		var ret string
 		return ret
 	}
-
-	return o.ToAddress
+	return *o.ToAddress
 }
 
-// GetToAddressOk returns a tuple with the ToAddress field value
+// GetToAddressOk returns a tuple with the ToAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateRefundRequest) GetToAddressOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ToAddress) {
 		return nil, false
 	}
-	return &o.ToAddress, true
+	return o.ToAddress, true
 }
 
-// SetToAddress sets field value
+// HasToAddress returns a boolean if a field has been set.
+func (o *CreateRefundRequest) HasToAddress() bool {
+	if o != nil && !IsNil(o.ToAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetToAddress gets a reference to the given string and assigns it to the ToAddress field.
 func (o *CreateRefundRequest) SetToAddress(v string) {
-	o.ToAddress = v
+	o.ToAddress = &v
 }
 
 // GetTokenId returns the TokenId field value
@@ -359,7 +366,9 @@ func (o CreateRefundRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["merchant_id"] = o.MerchantId
 	}
 	toSerialize["payable_amount"] = o.PayableAmount
-	toSerialize["to_address"] = o.ToAddress
+	if !IsNil(o.ToAddress) {
+		toSerialize["to_address"] = o.ToAddress
+	}
 	toSerialize["token_id"] = o.TokenId
 	toSerialize["refund_type"] = o.RefundType
 	if !IsNil(o.OrderId) {
@@ -384,7 +393,6 @@ func (o *CreateRefundRequest) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"request_id",
 		"payable_amount",
-		"to_address",
 		"token_id",
 		"refund_type",
 	}

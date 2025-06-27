@@ -19,6 +19,8 @@ var _ MappedNullable = &UpdateMerchantByIdRequest{}
 type UpdateMerchantByIdRequest struct {
 	// The merchant name.
 	Name *string `json:"name,omitempty"`
+	// The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \"0.1\" means 10%).
+	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
 }
 
 // NewUpdateMerchantByIdRequest instantiates a new UpdateMerchantByIdRequest object
@@ -70,6 +72,38 @@ func (o *UpdateMerchantByIdRequest) SetName(v string) {
 	o.Name = &v
 }
 
+// GetDeveloperFeeRate returns the DeveloperFeeRate field value if set, zero value otherwise.
+func (o *UpdateMerchantByIdRequest) GetDeveloperFeeRate() string {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		var ret string
+		return ret
+	}
+	return *o.DeveloperFeeRate
+}
+
+// GetDeveloperFeeRateOk returns a tuple with the DeveloperFeeRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateMerchantByIdRequest) GetDeveloperFeeRateOk() (*string, bool) {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		return nil, false
+	}
+	return o.DeveloperFeeRate, true
+}
+
+// HasDeveloperFeeRate returns a boolean if a field has been set.
+func (o *UpdateMerchantByIdRequest) HasDeveloperFeeRate() bool {
+	if o != nil && !IsNil(o.DeveloperFeeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeveloperFeeRate gets a reference to the given string and assigns it to the DeveloperFeeRate field.
+func (o *UpdateMerchantByIdRequest) SetDeveloperFeeRate(v string) {
+	o.DeveloperFeeRate = &v
+}
+
 func (o UpdateMerchantByIdRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -82,6 +116,9 @@ func (o UpdateMerchantByIdRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.DeveloperFeeRate) {
+		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
 	}
 	return toSerialize, nil
 }

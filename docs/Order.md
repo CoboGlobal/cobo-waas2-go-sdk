@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **CreatedTimestamp** | Pointer to **int32** | The created time of the order, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the order, represented as a UNIX timestamp in seconds. | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process. | [optional] 
+**SettlementStatus** | Pointer to [**SettleStatus**](SettleStatus.md) |  | [optional] 
 
 ## Methods
 
@@ -431,6 +432,31 @@ SetTransactions sets Transactions field to given value.
 `func (o *Order) HasTransactions() bool`
 
 HasTransactions returns a boolean if a field has been set.
+
+### GetSettlementStatus
+
+`func (o *Order) GetSettlementStatus() SettleStatus`
+
+GetSettlementStatus returns the SettlementStatus field if non-nil, zero value otherwise.
+
+### GetSettlementStatusOk
+
+`func (o *Order) GetSettlementStatusOk() (*SettleStatus, bool)`
+
+GetSettlementStatusOk returns a tuple with the SettlementStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettlementStatus
+
+`func (o *Order) SetSettlementStatus(v SettleStatus)`
+
+SetSettlementStatus sets SettlementStatus field to given value.
+
+### HasSettlementStatus
+
+`func (o *Order) HasSettlementStatus() bool`
+
+HasSettlementStatus returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

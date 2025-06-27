@@ -1379,6 +1379,157 @@ func (a *TransactionsAPIService) GetTransactionByIdExecute(r ApiGetTransactionBy
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiListApprovalDetailsRequest struct {
+	ctx context.Context
+	ApiService *TransactionsAPIService
+	transactionIds *string
+	coboIds *string
+	requestId *string
+}
+
+// A list of transaction IDs, separated by comma.
+func (r ApiListApprovalDetailsRequest) TransactionIds(transactionIds string) ApiListApprovalDetailsRequest {
+	r.transactionIds = &transactionIds
+	return r
+}
+
+// A list of Cobo IDs, separated by comma. A Cobo ID can be used to track a transaction.
+func (r ApiListApprovalDetailsRequest) CoboIds(coboIds string) ApiListApprovalDetailsRequest {
+	r.coboIds = &coboIds
+	return r
+}
+
+// A list of request IDs, separated by comma.
+func (r ApiListApprovalDetailsRequest) RequestId(requestId string) ApiListApprovalDetailsRequest {
+	r.requestId = &requestId
+	return r
+}
+
+func (r ApiListApprovalDetailsRequest) Execute() (*ListApprovalDetails200Response, *http.Response, error) {
+	return r.ApiService.ListApprovalDetailsExecute(r)
+}
+
+/*
+ListApprovalDetails List transaction approval details
+
+This operation retrieves detailed approval information for a specified transaction.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListApprovalDetailsRequest
+*/
+func (a *TransactionsAPIService) ListApprovalDetails(ctx context.Context) ApiListApprovalDetailsRequest {
+	return ApiListApprovalDetailsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListApprovalDetails200Response
+func (a *TransactionsAPIService) ListApprovalDetailsExecute(r ApiListApprovalDetailsRequest) (*ListApprovalDetails200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListApprovalDetails200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.ListApprovalDetails")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/transactions/approval/details"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.transactionIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "transaction_ids", r.transactionIds, "")
+	}
+	if r.coboIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cobo_ids", r.coboIds, "")
+	}
+	if r.requestId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListTransactionApprovalDetailsRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
@@ -1444,6 +1595,149 @@ func (a *TransactionsAPIService) ListTransactionApprovalDetailsExecute(r ApiList
 	}
 	if r.coboIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "cobo_ids", r.coboIds, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListTransactionTemplatesRequest struct {
+	ctx context.Context
+	ApiService *TransactionsAPIService
+	transactionType *string
+	templateVersion *string
+}
+
+// The transaction type. Possible values include:    - &#x60;DEPOSIT&#x60;: A deposit transaction.   - &#x60;WITHDRAW&#x60;: A withdrawal transaction. 
+func (r ApiListTransactionTemplatesRequest) TransactionType(transactionType string) ApiListTransactionTemplatesRequest {
+	r.transactionType = &transactionType
+	return r
+}
+
+// The version of the template used for the transaction approval.
+func (r ApiListTransactionTemplatesRequest) TemplateVersion(templateVersion string) ApiListTransactionTemplatesRequest {
+	r.templateVersion = &templateVersion
+	return r
+}
+
+func (r ApiListTransactionTemplatesRequest) Execute() (*ListTransactionTemplates200Response, *http.Response, error) {
+	return r.ApiService.ListTransactionTemplatesExecute(r)
+}
+
+/*
+ListTransactionTemplates list transaction templates
+
+This operation retrieves transaction templates based on the specified transaction type and template version.
+The response includes a list of templates that can be used for creating transactions approval message.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListTransactionTemplatesRequest
+*/
+func (a *TransactionsAPIService) ListTransactionTemplates(ctx context.Context) ApiListTransactionTemplatesRequest {
+	return ApiListTransactionTemplatesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListTransactionTemplates200Response
+func (a *TransactionsAPIService) ListTransactionTemplatesExecute(r ApiListTransactionTemplatesRequest) (*ListTransactionTemplates200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListTransactionTemplates200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.ListTransactionTemplates")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/transactions/templates"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.transactionType == nil {
+		return localVarReturnValue, nil, reportError("transactionType is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "transaction_type", r.transactionType, "")
+	if r.templateVersion != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "template_version", r.templateVersion, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1771,7 +2065,7 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 	if r.direction != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "direction", r.direction, "")
 	} else {
-		var defaultValue string = ""
+		var defaultValue string = "ASC"
 		r.direction = &defaultValue
 	}
 	// to determine the Content-Type header

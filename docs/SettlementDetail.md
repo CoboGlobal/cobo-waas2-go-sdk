@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
 **CryptoAddressId** | Pointer to **string** | Unique identifier for the pre-approved crypto address, used to reference the address securely in requests. | [optional] 
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
+**AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
 
 ## Methods
 
@@ -361,6 +362,31 @@ SetPayoutChannel sets PayoutChannel field to given value.
 `func (o *SettlementDetail) HasPayoutChannel() bool`
 
 HasPayoutChannel returns a boolean if a field has been set.
+
+### GetAcquiringType
+
+`func (o *SettlementDetail) GetAcquiringType() AcquiringType`
+
+GetAcquiringType returns the AcquiringType field if non-nil, zero value otherwise.
+
+### GetAcquiringTypeOk
+
+`func (o *SettlementDetail) GetAcquiringTypeOk() (*AcquiringType, bool)`
+
+GetAcquiringTypeOk returns a tuple with the AcquiringType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcquiringType
+
+`func (o *SettlementDetail) SetAcquiringType(v AcquiringType)`
+
+SetAcquiringType sets AcquiringType field to given value.
+
+### HasAcquiringType
+
+`func (o *SettlementDetail) HasAcquiringType() bool`
+
+HasAcquiringType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

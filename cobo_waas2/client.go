@@ -64,6 +64,8 @@ type APIClient struct {
 
 	OAuthAPI *OAuthAPIService
 
+	OrganizationsAPI *OrganizationsAPIService
+
 	PaymentAPI *PaymentAPIService
 
 	PrimeBrokerAPI *PrimeBrokerAPIService
@@ -71,6 +73,8 @@ type APIClient struct {
 	StakingsAPI *StakingsAPIService
 
 	SwapsAPI *SwapsAPIService
+
+	TokenizationAPI *TokenizationAPIService
 
 	TransactionsAPI *TransactionsAPIService
 
@@ -108,10 +112,12 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.FeeStationAPI = (*FeeStationAPIService)(&c.common)
 	c.GraphQLAPI = (*GraphQLAPIService)(&c.common)
 	c.OAuthAPI = (*OAuthAPIService)(&c.common)
+	c.OrganizationsAPI = (*OrganizationsAPIService)(&c.common)
 	c.PaymentAPI = (*PaymentAPIService)(&c.common)
 	c.PrimeBrokerAPI = (*PrimeBrokerAPIService)(&c.common)
 	c.StakingsAPI = (*StakingsAPIService)(&c.common)
 	c.SwapsAPI = (*SwapsAPIService)(&c.common)
+	c.TokenizationAPI = (*TokenizationAPIService)(&c.common)
 	c.TransactionsAPI = (*TransactionsAPIService)(&c.common)
 	c.TravelRuleAPI = (*TravelRuleAPIService)(&c.common)
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)

@@ -18,6 +18,9 @@ Name | Type | Description | Notes
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
 **Initiator** | Pointer to **string** | The initiator of this refund order, usually the user&#39;s API key. | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process. | [optional] 
+**ChargeMerchantFee** | Pointer to **bool** | Indicates whether the merchant should bear the transaction fee for the refund.  If true, the fee will be deducted from merchant&#39;s account balance.  | [optional] 
+**MerchantFeeAmount** | Pointer to **string** | The amount of the transaction fee that the merchant will bear for the refund.  This is only applicable if &#x60;charge_merchant_fee&#x60; is set to true.  | [optional] 
+**MerchantFeeTokenId** | Pointer to **string** | The ID of the cryptocurrency used for the transaction fee.  This is only applicable if &#x60;charge_merchant_fee&#x60; is set to true.  | [optional] 
 
 ## Methods
 
@@ -357,6 +360,81 @@ SetTransactions sets Transactions field to given value.
 `func (o *Refund) HasTransactions() bool`
 
 HasTransactions returns a boolean if a field has been set.
+
+### GetChargeMerchantFee
+
+`func (o *Refund) GetChargeMerchantFee() bool`
+
+GetChargeMerchantFee returns the ChargeMerchantFee field if non-nil, zero value otherwise.
+
+### GetChargeMerchantFeeOk
+
+`func (o *Refund) GetChargeMerchantFeeOk() (*bool, bool)`
+
+GetChargeMerchantFeeOk returns a tuple with the ChargeMerchantFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChargeMerchantFee
+
+`func (o *Refund) SetChargeMerchantFee(v bool)`
+
+SetChargeMerchantFee sets ChargeMerchantFee field to given value.
+
+### HasChargeMerchantFee
+
+`func (o *Refund) HasChargeMerchantFee() bool`
+
+HasChargeMerchantFee returns a boolean if a field has been set.
+
+### GetMerchantFeeAmount
+
+`func (o *Refund) GetMerchantFeeAmount() string`
+
+GetMerchantFeeAmount returns the MerchantFeeAmount field if non-nil, zero value otherwise.
+
+### GetMerchantFeeAmountOk
+
+`func (o *Refund) GetMerchantFeeAmountOk() (*string, bool)`
+
+GetMerchantFeeAmountOk returns a tuple with the MerchantFeeAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMerchantFeeAmount
+
+`func (o *Refund) SetMerchantFeeAmount(v string)`
+
+SetMerchantFeeAmount sets MerchantFeeAmount field to given value.
+
+### HasMerchantFeeAmount
+
+`func (o *Refund) HasMerchantFeeAmount() bool`
+
+HasMerchantFeeAmount returns a boolean if a field has been set.
+
+### GetMerchantFeeTokenId
+
+`func (o *Refund) GetMerchantFeeTokenId() string`
+
+GetMerchantFeeTokenId returns the MerchantFeeTokenId field if non-nil, zero value otherwise.
+
+### GetMerchantFeeTokenIdOk
+
+`func (o *Refund) GetMerchantFeeTokenIdOk() (*string, bool)`
+
+GetMerchantFeeTokenIdOk returns a tuple with the MerchantFeeTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMerchantFeeTokenId
+
+`func (o *Refund) SetMerchantFeeTokenId(v string)`
+
+SetMerchantFeeTokenId sets MerchantFeeTokenId field to given value.
+
+### HasMerchantFeeTokenId
+
+`func (o *Refund) HasMerchantFeeTokenId() bool`
+
+HasMerchantFeeTokenId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
