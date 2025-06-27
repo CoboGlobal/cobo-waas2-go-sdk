@@ -17,7 +17,9 @@ import (
 type TransactionRequestFee struct {
 	TransactionRequestEvmEip1559Fee *TransactionRequestEvmEip1559Fee
 	TransactionRequestEvmLegacyFee *TransactionRequestEvmLegacyFee
+	TransactionRequestFILFee *TransactionRequestFILFee
 	TransactionRequestFixedFee *TransactionRequestFixedFee
+	TransactionRequestSOLFee *TransactionRequestSOLFee
 	TransactionRequestUtxoFee *TransactionRequestUtxoFee
 }
 
@@ -35,10 +37,24 @@ func TransactionRequestEvmLegacyFeeAsTransactionRequestFee(v *TransactionRequest
 	}
 }
 
+// TransactionRequestFILFeeAsTransactionRequestFee is a convenience function that returns TransactionRequestFILFee wrapped in TransactionRequestFee
+func TransactionRequestFILFeeAsTransactionRequestFee(v *TransactionRequestFILFee) TransactionRequestFee {
+	return TransactionRequestFee{
+		TransactionRequestFILFee: v,
+	}
+}
+
 // TransactionRequestFixedFeeAsTransactionRequestFee is a convenience function that returns TransactionRequestFixedFee wrapped in TransactionRequestFee
 func TransactionRequestFixedFeeAsTransactionRequestFee(v *TransactionRequestFixedFee) TransactionRequestFee {
 	return TransactionRequestFee{
 		TransactionRequestFixedFee: v,
+	}
+}
+
+// TransactionRequestSOLFeeAsTransactionRequestFee is a convenience function that returns TransactionRequestSOLFee wrapped in TransactionRequestFee
+func TransactionRequestSOLFeeAsTransactionRequestFee(v *TransactionRequestSOLFee) TransactionRequestFee {
+	return TransactionRequestFee{
+		TransactionRequestSOLFee: v,
 	}
 }
 
@@ -84,6 +100,18 @@ func (dst *TransactionRequestFee) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'FIL'
+	if jsonDict["fee_type"] == "FIL" {
+		// try to unmarshal JSON data into TransactionRequestFILFee
+		err = json.Unmarshal(data, &dst.TransactionRequestFILFee)
+		if err == nil {
+			return nil // data stored in dst.TransactionRequestFILFee, return on the first match
+		} else {
+			dst.TransactionRequestFILFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionRequestFee as TransactionRequestFILFee: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'Fixed'
 	if jsonDict["fee_type"] == "Fixed" {
 		// try to unmarshal JSON data into TransactionRequestFixedFee
@@ -93,6 +121,18 @@ func (dst *TransactionRequestFee) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionRequestFixedFee = nil
 			return fmt.Errorf("failed to unmarshal TransactionRequestFee as TransactionRequestFixedFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'SOL'
+	if jsonDict["fee_type"] == "SOL" {
+		// try to unmarshal JSON data into TransactionRequestSOLFee
+		err = json.Unmarshal(data, &dst.TransactionRequestSOLFee)
+		if err == nil {
+			return nil // data stored in dst.TransactionRequestSOLFee, return on the first match
+		} else {
+			dst.TransactionRequestSOLFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionRequestFee as TransactionRequestSOLFee: %s", err.Error())
 		}
 	}
 
@@ -132,6 +172,18 @@ func (dst *TransactionRequestFee) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'TransactionRequestFILFee'
+	if jsonDict["fee_type"] == "TransactionRequestFILFee" {
+		// try to unmarshal JSON data into TransactionRequestFILFee
+		err = json.Unmarshal(data, &dst.TransactionRequestFILFee)
+		if err == nil {
+			return nil // data stored in dst.TransactionRequestFILFee, return on the first match
+		} else {
+			dst.TransactionRequestFILFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionRequestFee as TransactionRequestFILFee: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TransactionRequestFixedFee'
 	if jsonDict["fee_type"] == "TransactionRequestFixedFee" {
 		// try to unmarshal JSON data into TransactionRequestFixedFee
@@ -141,6 +193,18 @@ func (dst *TransactionRequestFee) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionRequestFixedFee = nil
 			return fmt.Errorf("failed to unmarshal TransactionRequestFee as TransactionRequestFixedFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TransactionRequestSOLFee'
+	if jsonDict["fee_type"] == "TransactionRequestSOLFee" {
+		// try to unmarshal JSON data into TransactionRequestSOLFee
+		err = json.Unmarshal(data, &dst.TransactionRequestSOLFee)
+		if err == nil {
+			return nil // data stored in dst.TransactionRequestSOLFee, return on the first match
+		} else {
+			dst.TransactionRequestSOLFee = nil
+			return fmt.Errorf("failed to unmarshal TransactionRequestFee as TransactionRequestSOLFee: %s", err.Error())
 		}
 	}
 
@@ -169,8 +233,16 @@ func (src TransactionRequestFee) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionRequestEvmLegacyFee)
 	}
 
+	if src.TransactionRequestFILFee != nil {
+		return json.Marshal(&src.TransactionRequestFILFee)
+	}
+
 	if src.TransactionRequestFixedFee != nil {
 		return json.Marshal(&src.TransactionRequestFixedFee)
+	}
+
+	if src.TransactionRequestSOLFee != nil {
+		return json.Marshal(&src.TransactionRequestSOLFee)
 	}
 
 	if src.TransactionRequestUtxoFee != nil {
@@ -193,8 +265,16 @@ func (obj *TransactionRequestFee) GetActualInstance() (interface{}) {
 		return obj.TransactionRequestEvmLegacyFee
 	}
 
+	if obj.TransactionRequestFILFee != nil {
+		return obj.TransactionRequestFILFee
+	}
+
 	if obj.TransactionRequestFixedFee != nil {
 		return obj.TransactionRequestFixedFee
+	}
+
+	if obj.TransactionRequestSOLFee != nil {
+		return obj.TransactionRequestSOLFee
 	}
 
 	if obj.TransactionRequestUtxoFee != nil {

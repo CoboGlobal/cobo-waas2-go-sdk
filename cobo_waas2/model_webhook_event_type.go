@@ -37,6 +37,8 @@ const (
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_SUCCEEDED WebhookEventType = "fee_station.transaction.succeeded"
 	WEBHOOKEVENTTYPE_WALLET_TOKEN_ENABLED WebhookEventType = "wallet.token.enabled"
 	WEBHOOKEVENTTYPE_WALLET_CHAIN_ENABLED WebhookEventType = "wallet.chain.enabled"
+	WEBHOOKEVENTTYPE_WALLET_MPC_BALANCE_UPDATED WebhookEventType = "wallet.mpc.balance.updated"
+	WEBHOOKEVENTTYPE_WALLET_WEB3_BALANCE_UPDATED WebhookEventType = "wallet.web3.balance.updated"
 )
 
 // All allowed values of WebhookEventType enum
@@ -60,6 +62,8 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"fee_station.transaction.succeeded",
 	"wallet.token.enabled",
 	"wallet.chain.enabled",
+	"wallet.mpc.balance.updated",
+	"wallet.web3.balance.updated",
 }
 
 func (v *WebhookEventType) UnmarshalJSON(src []byte) error {

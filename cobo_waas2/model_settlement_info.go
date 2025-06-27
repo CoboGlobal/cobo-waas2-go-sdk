@@ -33,6 +33,7 @@ type SettlementInfo struct {
 	PendingCurrencyBalance *string `json:"pending_currency_balance,omitempty"`
 	// The amount already settled, in the specified cryptocurrency.
 	SettledAmount *string `json:"settled_amount,omitempty"`
+	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 	// The created time of the settlement, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The updated time of the settlement, represented as a UNIX timestamp in seconds.
@@ -275,6 +276,38 @@ func (o *SettlementInfo) SetSettledAmount(v string) {
 	o.SettledAmount = &v
 }
 
+// GetAcquiringType returns the AcquiringType field value if set, zero value otherwise.
+func (o *SettlementInfo) GetAcquiringType() AcquiringType {
+	if o == nil || IsNil(o.AcquiringType) {
+		var ret AcquiringType
+		return ret
+	}
+	return *o.AcquiringType
+}
+
+// GetAcquiringTypeOk returns a tuple with the AcquiringType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementInfo) GetAcquiringTypeOk() (*AcquiringType, bool) {
+	if o == nil || IsNil(o.AcquiringType) {
+		return nil, false
+	}
+	return o.AcquiringType, true
+}
+
+// HasAcquiringType returns a boolean if a field has been set.
+func (o *SettlementInfo) HasAcquiringType() bool {
+	if o != nil && !IsNil(o.AcquiringType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcquiringType gets a reference to the given AcquiringType and assigns it to the AcquiringType field.
+func (o *SettlementInfo) SetAcquiringType(v AcquiringType) {
+	o.AcquiringType = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *SettlementInfo) GetCreatedTimestamp() int32 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -367,6 +400,9 @@ func (o SettlementInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SettledAmount) {
 		toSerialize["settled_amount"] = o.SettledAmount
+	}
+	if !IsNil(o.AcquiringType) {
+		toSerialize["acquiring_type"] = o.AcquiringType
 	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp

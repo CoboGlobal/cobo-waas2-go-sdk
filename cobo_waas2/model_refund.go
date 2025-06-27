@@ -45,6 +45,12 @@ type Refund struct {
 	Initiator *string `json:"initiator,omitempty"`
 	// An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
+	// Indicates whether the merchant should bear the transaction fee for the refund.  If true, the fee will be deducted from merchant's account balance. 
+	ChargeMerchantFee *bool `json:"charge_merchant_fee,omitempty"`
+	// The amount of the transaction fee that the merchant will bear for the refund.  This is only applicable if `charge_merchant_fee` is set to true. 
+	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
+	// The ID of the cryptocurrency used for the transaction fee.  This is only applicable if `charge_merchant_fee` is set to true. 
+	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
 }
 
 type _Refund Refund
@@ -472,6 +478,102 @@ func (o *Refund) SetTransactions(v []PaymentTransaction) {
 	o.Transactions = v
 }
 
+// GetChargeMerchantFee returns the ChargeMerchantFee field value if set, zero value otherwise.
+func (o *Refund) GetChargeMerchantFee() bool {
+	if o == nil || IsNil(o.ChargeMerchantFee) {
+		var ret bool
+		return ret
+	}
+	return *o.ChargeMerchantFee
+}
+
+// GetChargeMerchantFeeOk returns a tuple with the ChargeMerchantFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Refund) GetChargeMerchantFeeOk() (*bool, bool) {
+	if o == nil || IsNil(o.ChargeMerchantFee) {
+		return nil, false
+	}
+	return o.ChargeMerchantFee, true
+}
+
+// HasChargeMerchantFee returns a boolean if a field has been set.
+func (o *Refund) HasChargeMerchantFee() bool {
+	if o != nil && !IsNil(o.ChargeMerchantFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetChargeMerchantFee gets a reference to the given bool and assigns it to the ChargeMerchantFee field.
+func (o *Refund) SetChargeMerchantFee(v bool) {
+	o.ChargeMerchantFee = &v
+}
+
+// GetMerchantFeeAmount returns the MerchantFeeAmount field value if set, zero value otherwise.
+func (o *Refund) GetMerchantFeeAmount() string {
+	if o == nil || IsNil(o.MerchantFeeAmount) {
+		var ret string
+		return ret
+	}
+	return *o.MerchantFeeAmount
+}
+
+// GetMerchantFeeAmountOk returns a tuple with the MerchantFeeAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Refund) GetMerchantFeeAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.MerchantFeeAmount) {
+		return nil, false
+	}
+	return o.MerchantFeeAmount, true
+}
+
+// HasMerchantFeeAmount returns a boolean if a field has been set.
+func (o *Refund) HasMerchantFeeAmount() bool {
+	if o != nil && !IsNil(o.MerchantFeeAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetMerchantFeeAmount gets a reference to the given string and assigns it to the MerchantFeeAmount field.
+func (o *Refund) SetMerchantFeeAmount(v string) {
+	o.MerchantFeeAmount = &v
+}
+
+// GetMerchantFeeTokenId returns the MerchantFeeTokenId field value if set, zero value otherwise.
+func (o *Refund) GetMerchantFeeTokenId() string {
+	if o == nil || IsNil(o.MerchantFeeTokenId) {
+		var ret string
+		return ret
+	}
+	return *o.MerchantFeeTokenId
+}
+
+// GetMerchantFeeTokenIdOk returns a tuple with the MerchantFeeTokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Refund) GetMerchantFeeTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MerchantFeeTokenId) {
+		return nil, false
+	}
+	return o.MerchantFeeTokenId, true
+}
+
+// HasMerchantFeeTokenId returns a boolean if a field has been set.
+func (o *Refund) HasMerchantFeeTokenId() bool {
+	if o != nil && !IsNil(o.MerchantFeeTokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetMerchantFeeTokenId gets a reference to the given string and assigns it to the MerchantFeeTokenId field.
+func (o *Refund) SetMerchantFeeTokenId(v string) {
+	o.MerchantFeeTokenId = &v
+}
+
 func (o Refund) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -511,6 +613,15 @@ func (o Refund) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Transactions) {
 		toSerialize["transactions"] = o.Transactions
+	}
+	if !IsNil(o.ChargeMerchantFee) {
+		toSerialize["charge_merchant_fee"] = o.ChargeMerchantFee
+	}
+	if !IsNil(o.MerchantFeeAmount) {
+		toSerialize["merchant_fee_amount"] = o.MerchantFeeAmount
+	}
+	if !IsNil(o.MerchantFeeTokenId) {
+		toSerialize["merchant_fee_token_id"] = o.MerchantFeeTokenId
 	}
 	return toSerialize, nil
 }

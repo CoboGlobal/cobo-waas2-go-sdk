@@ -181,6 +181,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService GetTopUpAddress", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetTopUpAddress(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService ListBankAccounts", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -253,6 +265,30 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService ListTopUpPayerAccounts", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListTopUpPayerAccounts(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService ListTopUpPayers", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListTopUpPayers(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService UpdateBankAccountById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -288,6 +324,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var orderId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.UpdatePaymentOrder(ctx, orderId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService UpdateRefundById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var refundId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.UpdateRefundById(ctx, refundId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

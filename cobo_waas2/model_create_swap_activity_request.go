@@ -30,6 +30,7 @@ type CreateSwapActivityRequest struct {
 	// The request id of the swap activity.
 	RequestId *string `json:"request_id,omitempty"`
 	Destination *AddressTransferDestination `json:"destination,omitempty"`
+	Fee *EstimatedFee `json:"fee,omitempty"`
 }
 
 type _CreateSwapActivityRequest CreateSwapActivityRequest
@@ -229,6 +230,38 @@ func (o *CreateSwapActivityRequest) SetDestination(v AddressTransferDestination)
 	o.Destination = &v
 }
 
+// GetFee returns the Fee field value if set, zero value otherwise.
+func (o *CreateSwapActivityRequest) GetFee() EstimatedFee {
+	if o == nil || IsNil(o.Fee) {
+		var ret EstimatedFee
+		return ret
+	}
+	return *o.Fee
+}
+
+// GetFeeOk returns a tuple with the Fee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSwapActivityRequest) GetFeeOk() (*EstimatedFee, bool) {
+	if o == nil || IsNil(o.Fee) {
+		return nil, false
+	}
+	return o.Fee, true
+}
+
+// HasFee returns a boolean if a field has been set.
+func (o *CreateSwapActivityRequest) HasFee() bool {
+	if o != nil && !IsNil(o.Fee) {
+		return true
+	}
+
+	return false
+}
+
+// SetFee gets a reference to the given EstimatedFee and assigns it to the Fee field.
+func (o *CreateSwapActivityRequest) SetFee(v EstimatedFee) {
+	o.Fee = &v
+}
+
 func (o CreateSwapActivityRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -252,6 +285,9 @@ func (o CreateSwapActivityRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Destination) {
 		toSerialize["destination"] = o.Destination
+	}
+	if !IsNil(o.Fee) {
+		toSerialize["fee"] = o.Fee
 	}
 	return toSerialize, nil
 }

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The merchant name. | 
 **WalletId** | **string** | The ID of the wallet linked to the merchant. | 
+**DeveloperFeeRate** | Pointer to **string** | The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \&quot;0.1\&quot; means 10%). | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetWalletId sets WalletId field to given value.
 
+
+### GetDeveloperFeeRate
+
+`func (o *CreateMerchantRequest) GetDeveloperFeeRate() string`
+
+GetDeveloperFeeRate returns the DeveloperFeeRate field if non-nil, zero value otherwise.
+
+### GetDeveloperFeeRateOk
+
+`func (o *CreateMerchantRequest) GetDeveloperFeeRateOk() (*string, bool)`
+
+GetDeveloperFeeRateOk returns a tuple with the DeveloperFeeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeveloperFeeRate
+
+`func (o *CreateMerchantRequest) SetDeveloperFeeRate(v string)`
+
+SetDeveloperFeeRate sets DeveloperFeeRate field to given value.
+
+### HasDeveloperFeeRate
+
+`func (o *CreateMerchantRequest) HasDeveloperFeeRate() bool`
+
+HasDeveloperFeeRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -57,6 +57,14 @@
 
 * `STAKING_SKYFARM_UNSTAKE` (value: `"StakingSkyfarmUnstake"`)
 
+* `SCREEN_APP_REFUND` (value: `"ScreenAppRefund"`)
+
+* `SCREEN_APP_ISOLATE` (value: `"ScreenAppIsolate"`)
+
+* `COMPLIANCE_REFUND` (value: `"ComplianceRefund"`)
+
+* `COMPLIANCE_ISOLATE` (value: `"ComplianceIsolate"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

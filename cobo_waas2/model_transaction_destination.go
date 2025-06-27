@@ -22,7 +22,6 @@ type TransactionDestination struct {
 	TransactionDepositToAddressDestination *TransactionDepositToAddressDestination
 	TransactionDepositToWalletDestination *TransactionDepositToWalletDestination
 	TransactionEvmContractDestination *TransactionEvmContractDestination
-	TransactionMessageSignBTCEIP191Destination *TransactionMessageSignBTCEIP191Destination
 	TransactionMessageSignEIP191Destination *TransactionMessageSignEIP191Destination
 	TransactionMessageSignEIP712Destination *TransactionMessageSignEIP712Destination
 	TransactionRawMessageSignDestination *TransactionRawMessageSignDestination
@@ -77,13 +76,6 @@ func TransactionDepositToWalletDestinationAsTransactionDestination(v *Transactio
 func TransactionEvmContractDestinationAsTransactionDestination(v *TransactionEvmContractDestination) TransactionDestination {
 	return TransactionDestination{
 		TransactionEvmContractDestination: v,
-	}
-}
-
-// TransactionMessageSignBTCEIP191DestinationAsTransactionDestination is a convenience function that returns TransactionMessageSignBTCEIP191Destination wrapped in TransactionDestination
-func TransactionMessageSignBTCEIP191DestinationAsTransactionDestination(v *TransactionMessageSignBTCEIP191Destination) TransactionDestination {
-	return TransactionDestination{
-		TransactionMessageSignBTCEIP191Destination: v,
 	}
 }
 
@@ -173,18 +165,6 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionBIP322Destination = nil
 			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionBIP322Destination: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'BTC_EIP_191_Signature'
-	if jsonDict["destination_type"] == "BTC_EIP_191_Signature" {
-		// try to unmarshal JSON data into TransactionMessageSignBTCEIP191Destination
-		err = json.Unmarshal(data, &dst.TransactionMessageSignBTCEIP191Destination)
-		if err == nil {
-			return nil // data stored in dst.TransactionMessageSignBTCEIP191Destination, return on the first match
-		} else {
-			dst.TransactionMessageSignBTCEIP191Destination = nil
-			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionMessageSignBTCEIP191Destination: %s", err.Error())
 		}
 	}
 
@@ -404,18 +384,6 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'TransactionMessageSignBTCEIP191Destination'
-	if jsonDict["destination_type"] == "TransactionMessageSignBTCEIP191Destination" {
-		// try to unmarshal JSON data into TransactionMessageSignBTCEIP191Destination
-		err = json.Unmarshal(data, &dst.TransactionMessageSignBTCEIP191Destination)
-		if err == nil {
-			return nil // data stored in dst.TransactionMessageSignBTCEIP191Destination, return on the first match
-		} else {
-			dst.TransactionMessageSignBTCEIP191Destination = nil
-			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionMessageSignBTCEIP191Destination: %s", err.Error())
-		}
-	}
-
 	// check if the discriminator value is 'TransactionMessageSignEIP191Destination'
 	if jsonDict["destination_type"] == "TransactionMessageSignEIP191Destination" {
 		// try to unmarshal JSON data into TransactionMessageSignEIP191Destination
@@ -521,10 +489,6 @@ func (src TransactionDestination) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionEvmContractDestination)
 	}
 
-	if src.TransactionMessageSignBTCEIP191Destination != nil {
-		return json.Marshal(&src.TransactionMessageSignBTCEIP191Destination)
-	}
-
 	if src.TransactionMessageSignEIP191Destination != nil {
 		return json.Marshal(&src.TransactionMessageSignEIP191Destination)
 	}
@@ -583,10 +547,6 @@ func (obj *TransactionDestination) GetActualInstance() (interface{}) {
 
 	if obj.TransactionEvmContractDestination != nil {
 		return obj.TransactionEvmContractDestination
-	}
-
-	if obj.TransactionMessageSignBTCEIP191Destination != nil {
-		return obj.TransactionMessageSignBTCEIP191Destination
 	}
 
 	if obj.TransactionMessageSignEIP191Destination != nil {

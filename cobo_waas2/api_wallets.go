@@ -1412,6 +1412,144 @@ func (a *WalletsAPIService) GetMaxTransferableValueExecute(r ApiGetMaxTransferab
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetMaxTransferableValueWithFeeModelRequest struct {
+	ctx context.Context
+	ApiService *WalletsAPIService
+	walletId string
+	getMaxTransferableValueWithFeeModelRequest *GetMaxTransferableValueWithFeeModelRequest
+}
+
+// The request body to get max transferable value within a specified wallet.
+func (r ApiGetMaxTransferableValueWithFeeModelRequest) GetMaxTransferableValueWithFeeModelRequest(getMaxTransferableValueWithFeeModelRequest GetMaxTransferableValueWithFeeModelRequest) ApiGetMaxTransferableValueWithFeeModelRequest {
+	r.getMaxTransferableValueWithFeeModelRequest = &getMaxTransferableValueWithFeeModelRequest
+	return r
+}
+
+func (r ApiGetMaxTransferableValueWithFeeModelRequest) Execute() (*MaxTransferableValue, *http.Response, error) {
+	return r.ApiService.GetMaxTransferableValueWithFeeModelExecute(r)
+}
+
+/*
+GetMaxTransferableValueWithFeeModel Get maximum transferable value with fee model
+
+This operation retrieves the maximum amount that you can transfer from a wallet or a specified wallet address, along with the corresponding transaction fee.
+
+You must specify `to_address` in your query because it affects the transaction fee.
+
+<Note>This operation is applicable to Custodial Wallets and MPC Wallets only.</Note>
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param walletId The wallet ID.
+ @return ApiGetMaxTransferableValueWithFeeModelRequest
+*/
+func (a *WalletsAPIService) GetMaxTransferableValueWithFeeModel(ctx context.Context, walletId string) ApiGetMaxTransferableValueWithFeeModelRequest {
+	return ApiGetMaxTransferableValueWithFeeModelRequest{
+		ApiService: a,
+		ctx: ctx,
+		walletId: walletId,
+	}
+}
+
+// Execute executes the request
+//  @return MaxTransferableValue
+func (a *WalletsAPIService) GetMaxTransferableValueWithFeeModelExecute(r ApiGetMaxTransferableValueWithFeeModelRequest) (*MaxTransferableValue, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *MaxTransferableValue
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WalletsAPIService.GetMaxTransferableValueWithFeeModel")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/wallets/{wallet_id}/max_transferable_value_with_fee_model"
+	localVarPath = strings.Replace(localVarPath, "{"+"wallet_id"+"}", url.PathEscape(parameterValueToString(r.walletId, "walletId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.getMaxTransferableValueWithFeeModelRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetTokenByIdRequest struct {
 	ctx context.Context
 	ApiService *WalletsAPIService
@@ -2322,6 +2460,7 @@ type ApiListEnabledTokensRequest struct {
 	walletType *WalletType
 	walletSubtype *WalletSubtype
 	chainIds *string
+	tokenIds *string
 	limit *int32
 	before *string
 	after *string
@@ -2342,6 +2481,12 @@ func (r ApiListEnabledTokensRequest) WalletSubtype(walletSubtype WalletSubtype) 
 // A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 func (r ApiListEnabledTokensRequest) ChainIds(chainIds string) ApiListEnabledTokensRequest {
 	r.chainIds = &chainIds
+	return r
+}
+
+// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+func (r ApiListEnabledTokensRequest) TokenIds(tokenIds string) ApiListEnabledTokensRequest {
+	r.tokenIds = &tokenIds
 	return r
 }
 
@@ -2414,6 +2559,9 @@ func (a *WalletsAPIService) ListEnabledTokensExecute(r ApiListEnabledTokensReque
 	}
 	if r.chainIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "chain_ids", r.chainIds, "")
+	}
+	if r.tokenIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_ids", r.tokenIds, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
