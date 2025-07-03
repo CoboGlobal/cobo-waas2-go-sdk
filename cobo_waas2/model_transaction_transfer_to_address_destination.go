@@ -24,9 +24,9 @@ type TransactionTransferToAddressDestination struct {
 	UtxoOutputs []TransactionTransferToAddressDestinationUtxoOutputsInner `json:"utxo_outputs,omitempty"`
 	// The address used to receive the remaining funds or change from the transaction.
 	ChangeAddress *string `json:"change_address,omitempty"`
-	// Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must be executed as a Cobo Loop transfer.   - `false`: The transaction request may not be executed as a Cobo Loop transfer. 
+	// Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must be executed as a Cobo Loop transfer.   - `false`: The transaction request may not be executed as a Cobo Loop transfer.  If both `force_internal` and `force_external` are set to `false`, the system uses Cobo Loop by default if possible; otherwise, it proceeds with an on-chain transfer. 
 	ForceInternal *bool `json:"force_internal,omitempty"`
-	// Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must not be executed as a Cobo Loop transfer.   - `false`: The transaction request can be executed as a Cobo Loop transfer. 
+	// Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must not be executed as a Cobo Loop transfer.   - `false`: The transaction request can be executed as a Cobo Loop transfer.  If both `force_internal` and `force_external` are set to `false`, the system uses Cobo Loop by default if possible; otherwise, it proceeds with an on-chain transfer. 
 	ForceExternal *bool `json:"force_external,omitempty"`
 }
 

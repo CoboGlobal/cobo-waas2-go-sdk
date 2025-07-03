@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | The merchant name. | [optional] 
+**DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to this merchant. Expressed as a string in decimal format where \&quot;0.1\&quot; represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions. | [optional] 
 
 ## Methods
 
@@ -49,6 +50,31 @@ SetName sets Name field to given value.
 `func (o *UpdateMerchantByIdRequest) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetDeveloperFeeRate
+
+`func (o *UpdateMerchantByIdRequest) GetDeveloperFeeRate() string`
+
+GetDeveloperFeeRate returns the DeveloperFeeRate field if non-nil, zero value otherwise.
+
+### GetDeveloperFeeRateOk
+
+`func (o *UpdateMerchantByIdRequest) GetDeveloperFeeRateOk() (*string, bool)`
+
+GetDeveloperFeeRateOk returns a tuple with the DeveloperFeeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeveloperFeeRate
+
+`func (o *UpdateMerchantByIdRequest) SetDeveloperFeeRate(v string)`
+
+SetDeveloperFeeRate sets DeveloperFeeRate field to given value.
+
+### HasDeveloperFeeRate
+
+`func (o *UpdateMerchantByIdRequest) HasDeveloperFeeRate() bool`
+
+HasDeveloperFeeRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

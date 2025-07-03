@@ -11,8 +11,9 @@ Name | Type | Description | Notes
 **PendingAmount** | Pointer to **string** | The amount unavailable for settlement or refund, in the specified cryptocurrency. | [optional] 
 **PendingCurrencyBalance** | Pointer to **string** | The amount unavailable for settlement or refund, in the specified fiat currency. | [optional] 
 **SettledAmount** | Pointer to **string** | The amount already settled, in the specified cryptocurrency. | [optional] 
-**CreatedTimestamp** | Pointer to **int32** | The created time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
+**AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The creation time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The last update time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
 
 ## Methods
 
@@ -202,6 +203,31 @@ SetSettledAmount sets SettledAmount field to given value.
 `func (o *SettlementInfo) HasSettledAmount() bool`
 
 HasSettledAmount returns a boolean if a field has been set.
+
+### GetAcquiringType
+
+`func (o *SettlementInfo) GetAcquiringType() AcquiringType`
+
+GetAcquiringType returns the AcquiringType field if non-nil, zero value otherwise.
+
+### GetAcquiringTypeOk
+
+`func (o *SettlementInfo) GetAcquiringTypeOk() (*AcquiringType, bool)`
+
+GetAcquiringTypeOk returns a tuple with the AcquiringType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcquiringType
+
+`func (o *SettlementInfo) SetAcquiringType(v AcquiringType)`
+
+SetAcquiringType sets AcquiringType field to given value.
+
+### HasAcquiringType
+
+`func (o *SettlementInfo) HasAcquiringType() bool`
+
+HasAcquiringType returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

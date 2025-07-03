@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// FeeType The fee model. Possible values include: - `Fixed`: The fixed fee model.  - `EVM_EIP_1559`: The EIP-1559 fee model. - `EVM_Legacy`: The legacy fee model. - `UTXO`: The fee model used in UTXO-based blockchains, such as Bitcoin.  Each fee model requires a different set of properties. Switch between the above tabs for details.  To learn more about the fee models, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models). 
+// FeeType The fee model. Possible values include: - `Fixed`: The fixed fee model.  - `EVM_EIP_1559`: The EIP-1559 fee model. - `EVM_Legacy`: The legacy fee model. - `UTXO`: The fee model used in UTXO-based blockchains, such as Bitcoin. - `SOL`: The fee model used in Solana. - `FIL`: The fee model used in Filecoin.   Each fee model requires a different set of properties. Switch between the above tabs for details.  To learn more about the fee models, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models). 
 type FeeType string
 
 // List of FeeType
@@ -22,6 +22,8 @@ const (
 	FEETYPE_EVM_EIP_1559 FeeType = "EVM_EIP_1559"
 	FEETYPE_EVM_LEGACY FeeType = "EVM_Legacy"
 	FEETYPE_UTXO FeeType = "UTXO"
+	FEETYPE_SOL FeeType = "SOL"
+	FEETYPE_FIL FeeType = "FIL"
 )
 
 // All allowed values of FeeType enum
@@ -30,6 +32,8 @@ var AllowedFeeTypeEnumValues = []FeeType{
 	"EVM_EIP_1559",
 	"EVM_Legacy",
 	"UTXO",
+	"SOL",
+	"FIL",
 }
 
 func (v *FeeType) UnmarshalJSON(src []byte) error {

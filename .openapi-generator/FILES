@@ -10,6 +10,7 @@ api_developers.go
 api_developers_webhooks.go
 api_fee_station.go
 api_o_auth.go
+api_organizations.go
 api_payment.go
 api_prime_broker.go
 api_stakings.go
@@ -26,6 +27,8 @@ crypto/helper.go
 crypto/secp256k1.go
 crypto/signer.go
 demo/server_demo.go
+docs/Account.md
+docs/AcquiringType.md
 docs/Activity.md
 docs/ActivityAction.md
 docs/ActivityExtra.md
@@ -75,6 +78,8 @@ docs/BabylonStakingExtra.md
 docs/BabylonStakingRegistration.md
 docs/BabylonValidator.md
 docs/Balance.md
+docs/BalanceUpdateInfo.md
+docs/BalanceUpdateInfoEventData.md
 docs/BankAccount.md
 docs/BaseContractCallSource.md
 docs/BaseEstimateStakingFee.md
@@ -176,8 +181,12 @@ docs/EstimatedEvmEip1559Fee.md
 docs/EstimatedEvmEip1559FeeSlow.md
 docs/EstimatedEvmLegacyFee.md
 docs/EstimatedEvmLegacyFeeSlow.md
+docs/EstimatedFILFee.md
+docs/EstimatedFILFeeSlow.md
 docs/EstimatedFee.md
 docs/EstimatedFixedFee.md
+docs/EstimatedSOLFee.md
+docs/EstimatedSOLFeeSlow.md
 docs/EstimatedUtxoFee.md
 docs/EstimatedUtxoFeeSlow.md
 docs/EthStakeEstimatedFee.md
@@ -200,6 +209,8 @@ docs/ExchangeTransferDestination.md
 docs/ExchangeTransferSource.md
 docs/ExchangeWalletInfo.md
 docs/ExtendedTokenInfo.md
+docs/FILBase.md
+docs/FILPrice.md
 docs/FeeAmount.md
 docs/FeeGasLimit.md
 docs/FeeRate.md
@@ -219,6 +230,10 @@ docs/GetStakingEstimationFeeRequest.md
 docs/GetToken2XXResponse.md
 docs/GetToken4XXResponse.md
 docs/GetTransactionLimitation200Response.md
+docs/GraphQLError.md
+docs/GraphQLErrorLocationsInner.md
+docs/GraphQLRequest.md
+docs/GraphQLResponse.md
 docs/GuardPubkeyStatus.md
 docs/KeyShareHolder.md
 docs/KeyShareHolderGroup.md
@@ -256,6 +271,8 @@ docs/ListTokenBalancesForAddress200Response.md
 docs/ListTokenBalancesForFeeStation200Response.md
 docs/ListTokenBalancesForFeeStation200ResponseDataInner.md
 docs/ListTokenListingRequests200Response.md
+docs/ListTopUpPayers200Response.md
+docs/ListTopUpPayers200ResponseDataInner.md
 docs/ListTransactionApprovalDetails200Response.md
 docs/ListTransactions200Response.md
 docs/ListTssRequests200Response.md
@@ -291,7 +308,9 @@ docs/OAuthAPI.md
 docs/Order.md
 docs/OrderStatus.md
 docs/OrgInfo.md
+docs/OrganizationsAPI.md
 docs/Pagination.md
+docs/PayerAccount.md
 docs/PaymentAPI.md
 docs/PaymentOrderEventData.md
 docs/PaymentRefundEventData.md
@@ -328,6 +347,8 @@ docs/RevokeApprovalRequest201Response.md
 docs/RevokeApprovalRequestRequest.md
 docs/RoleScopes.md
 docs/RootPubkey.md
+docs/SOLBase.md
+docs/SOLComputeUnit.md
 docs/SafeContractCallSource.md
 docs/SafeTransferSource.md
 docs/SafeTxDecodedData.md
@@ -368,10 +389,12 @@ docs/SupportedToken.md
 docs/SwapActivity.md
 docs/SwapActivityApprovers.md
 docs/SwapActivityDetail.md
+docs/SwapActivitySigners.md
 docs/SwapActivityStatus.md
 docs/SwapActivityTimeline.md
 docs/SwapApproversStatus.md
 docs/SwapQuote.md
+docs/SwapSingingStatus.md
 docs/SwapToken.md
 docs/SwapType.md
 docs/TSSBaseRequestEventData.md
@@ -422,6 +445,7 @@ docs/TokenListingEventData.md
 docs/TokenListingRequestSource.md
 docs/TokenListingRequestStatus.md
 docs/TokensEventData.md
+docs/TopUpAddress.md
 docs/Transaction.md
 docs/TransactionApprovalDetail.md
 docs/TransactionApprovalResult.md
@@ -456,13 +480,13 @@ docs/TransactionEvmLegacyFee.md
 docs/TransactionExchangeWalletSource.md
 docs/TransactionExtra.md
 docs/TransactionExtraType.md
+docs/TransactionFILFee.md
 docs/TransactionFee.md
 docs/TransactionFeeStationWalletSource.md
 docs/TransactionFixedFee.md
 docs/TransactionFuelingInfo.md
 docs/TransactionInitiatorType.md
 docs/TransactionMPCWalletSource.md
-docs/TransactionMessageSignBTCEIP191Destination.md
 docs/TransactionMessageSignEIP191Destination.md
 docs/TransactionMessageSignEIP712Destination.md
 docs/TransactionProcessType.md
@@ -473,13 +497,16 @@ docs/TransactionRbfSource.md
 docs/TransactionReplacement.md
 docs/TransactionRequestEvmEip1559Fee.md
 docs/TransactionRequestEvmLegacyFee.md
+docs/TransactionRequestFILFee.md
 docs/TransactionRequestFee.md
 docs/TransactionRequestFixedFee.md
+docs/TransactionRequestSOLFee.md
 docs/TransactionRequestUtxoFee.md
 docs/TransactionResend.md
 docs/TransactionResult.md
 docs/TransactionResultType.md
 docs/TransactionRoleApprovalDetail.md
+docs/TransactionSOLFee.md
 docs/TransactionSelectedUtxo.md
 docs/TransactionSignatureResult.md
 docs/TransactionSigner.md
@@ -534,7 +561,9 @@ docs/UpdateMpcProjectByIdRequest.md
 docs/UpdateMpcVaultByIdRequest.md
 docs/UpdateMpcWalletParams.md
 docs/UpdatePaymentOrderRequest.md
+docs/UpdateRefundByIdRequest.md
 docs/UpdateSmartContractWalletParams.md
+docs/UpdateTopUpAddress.md
 docs/UpdateWalletParams.md
 docs/UpdateWebhookEndpointByIdRequest.md
 docs/UtxoFeeBasePrice.md
@@ -559,6 +588,8 @@ docs/WebhookEventType.md
 git_push.sh
 go.mod
 go.sum
+model_account.go
+model_acquiring_type.go
 model_activity.go
 model_activity_action.go
 model_activity_extra.go
@@ -603,6 +634,8 @@ model_babylon_staking_extra.go
 model_babylon_staking_registration.go
 model_babylon_validator.go
 model_balance.go
+model_balance_update_info.go
+model_balance_update_info_event_data.go
 model_bank_account.go
 model_base_contract_call_source.go
 model_base_estimate_staking_fee.go
@@ -706,7 +739,11 @@ model_estimated_evm_eip1559_fee_slow.go
 model_estimated_evm_legacy_fee.go
 model_estimated_evm_legacy_fee_slow.go
 model_estimated_fee.go
+model_estimated_fil_fee.go
+model_estimated_fil_fee_slow.go
 model_estimated_fixed_fee.go
+model_estimated_sol_fee.go
+model_estimated_sol_fee_slow.go
 model_estimated_utxo_fee.go
 model_estimated_utxo_fee_slow.go
 model_eth_stake_estimated_fee.go
@@ -737,6 +774,8 @@ model_fee_station_destination.go
 model_fee_station_transaction_type.go
 model_fee_station_transfer.go
 model_fee_type.go
+model_fil_base.go
+model_fil_price.go
 model_fixed_fee_rate.go
 model_get_api_key_info_200_response.go
 model_get_exchange_rate_200_response.go
@@ -747,6 +786,10 @@ model_get_staking_estimation_fee_request.go
 model_get_token_2_xx_response.go
 model_get_token_4_xx_response.go
 model_get_transaction_limitation_200_response.go
+model_graph_ql_error.go
+model_graph_ql_error_locations_inner.go
+model_graph_ql_request.go
+model_graph_ql_response.go
 model_guard_pubkey_status.go
 model_key_share_holder.go
 model_key_share_holder_group.go
@@ -784,6 +827,8 @@ model_list_token_balances_for_address_200_response.go
 model_list_token_balances_for_fee_station_200_response.go
 model_list_token_balances_for_fee_station_200_response_data_inner.go
 model_list_token_listing_requests_200_response.go
+model_list_top_up_payers_200_response.go
+model_list_top_up_payers_200_response_data_inner.go
 model_list_transaction_approval_details_200_response.go
 model_list_transactions_200_response.go
 model_list_tss_requests_200_response.go
@@ -819,6 +864,7 @@ model_order.go
 model_order_status.go
 model_org_info.go
 model_pagination.go
+model_payer_account.go
 model_payment_order_event_data.go
 model_payment_refund_event_data.go
 model_payment_settlement_event.go
@@ -876,6 +922,8 @@ model_smart_contract_initiator.go
 model_smart_contract_wallet_info.go
 model_smart_contract_wallet_operation_type.go
 model_smart_contract_wallet_type.go
+model_sol_base.go
+model_sol_compute_unit.go
 model_sol_contract_call_account.go
 model_sol_contract_call_destination.go
 model_sol_contract_call_instruction.go
@@ -892,10 +940,12 @@ model_supported_token.go
 model_swap_activity.go
 model_swap_activity_approvers.go
 model_swap_activity_detail.go
+model_swap_activity_signers.go
 model_swap_activity_status.go
 model_swap_activity_timeline.go
 model_swap_approvers_status.go
 model_swap_quote.go
+model_swap_singing_status.go
 model_swap_token.go
 model_swap_type.go
 model_token_asset_model_type.go
@@ -906,6 +956,7 @@ model_token_listing_event_data.go
 model_token_listing_request_source.go
 model_token_listing_request_status.go
 model_tokens_event_data.go
+model_top_up_address.go
 model_transaction.go
 model_transaction_approval_detail.go
 model_transaction_approval_result.go
@@ -942,10 +993,10 @@ model_transaction_extra.go
 model_transaction_extra_type.go
 model_transaction_fee.go
 model_transaction_fee_station_wallet_source.go
+model_transaction_fil_fee.go
 model_transaction_fixed_fee.go
 model_transaction_fueling_info.go
 model_transaction_initiator_type.go
-model_transaction_message_sign_btceip191_destination.go
 model_transaction_message_sign_eip191_destination.go
 model_transaction_message_sign_eip712_destination.go
 model_transaction_mpc_wallet_source.go
@@ -958,7 +1009,9 @@ model_transaction_replacement.go
 model_transaction_request_evm_eip1559_fee.go
 model_transaction_request_evm_legacy_fee.go
 model_transaction_request_fee.go
+model_transaction_request_fil_fee.go
 model_transaction_request_fixed_fee.go
+model_transaction_request_sol_fee.go
 model_transaction_request_utxo_fee.go
 model_transaction_resend.go
 model_transaction_result.go
@@ -971,6 +1024,7 @@ model_transaction_smart_contract_safe_wallet_source.go
 model_transaction_sol_contract_account.go
 model_transaction_sol_contract_destination.go
 model_transaction_sol_contract_instruction.go
+model_transaction_sol_fee.go
 model_transaction_source.go
 model_transaction_source_type.go
 model_transaction_status.go
@@ -1055,7 +1109,9 @@ model_update_mpc_project_by_id_request.go
 model_update_mpc_vault_by_id_request.go
 model_update_mpc_wallet_params.go
 model_update_payment_order_request.go
+model_update_refund_by_id_request.go
 model_update_smart_contract_wallet_params.go
+model_update_top_up_address.go
 model_update_wallet_params.go
 model_update_webhook_endpoint_by_id_request.go
 model_utxo.go
@@ -1081,6 +1137,7 @@ test/api_developers_test.go
 test/api_developers_webhooks_test.go
 test/api_fee_station_test.go
 test/api_o_auth_test.go
+test/api_organizations_test.go
 test/api_payment_test.go
 test/api_prime_broker_test.go
 test/api_stakings_test.go

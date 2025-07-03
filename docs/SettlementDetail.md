@@ -7,16 +7,17 @@ Name | Type | Description | Notes
 **Currency** | Pointer to **string** | The fiat currency for the settlement. | [optional] 
 **TokenId** | Pointer to **string** | The ID of the cryptocurrency settled. | [optional] 
 **ChainId** | Pointer to **string** | The ID of the blockchain network on which the settlement occurred. | [optional] 
-**MerchantId** | Pointer to **string** | The Merchant ID associated with this settlement. | [optional] 
-**Amount** | Pointer to **string** | The settlement amount.  - If &#x60;token_id&#x60; is specified, this represents the settlement amount in the specified cryptocurrency.  - If &#x60;token_id&#x60; is not specified, this represents the settlement amount in the specified fiat currency.  | [optional] 
-**SettledAmount** | Pointer to **string** | The settled amount of this settlement detail.  - If &#x60;token_id&#x60; is specified, this represents the actual settled amount in the specified cryptocurrency.  - If &#x60;token_id&#x60; is not specified, this represents the actual settled amount in the specified fiat currency.  | [optional] 
+**MerchantId** | Pointer to **string** | The ID of the merchant associated with this settlement. | [optional] 
+**Amount** | Pointer to **string** | The settlement amount. - If &#x60;payout_channel&#x60; is set to &#x60;Crypto&#x60;, this represents the settlement amount in the specified cryptocurrency. - If &#x60;payout_channel&#x60; is set to &#x60;OffRamp&#x60;, this represents the settlement amount in the specified fiat currency.  | [optional] 
+**SettledAmount** | Pointer to **string** | The settled amount of this settlement detail.  - If &#x60;payout_channel&#x60; is set to &#x60;Crypto&#x60;, this represents the actual settled amount in the specified cryptocurrency.  - If &#x60;payout_channel&#x60; is set to &#x60;OffRamp&#x60;, this represents the actual settled amount in the specified fiat currency.  | [optional] 
 **Status** | Pointer to [**SettleStatus**](SettleStatus.md) |  | [optional] 
 **BankAccount** | Pointer to [**BankAccount**](BankAccount.md) |  | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this settlement request. Each transaction represents a separate blockchain operation related to the settlement process. | [optional] 
-**CreatedTimestamp** | Pointer to **int32** | The created time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
-**CryptoAddressId** | Pointer to **string** | Unique identifier for the pre-approved crypto address, used to reference the address securely in requests. | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The creation time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The last update time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
+**CryptoAddressId** | Pointer to **string** | The ID of the crypto address used for crypto withdrawal. | [optional] 
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
+**AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
 
 ## Methods
 
@@ -361,6 +362,31 @@ SetPayoutChannel sets PayoutChannel field to given value.
 `func (o *SettlementDetail) HasPayoutChannel() bool`
 
 HasPayoutChannel returns a boolean if a field has been set.
+
+### GetAcquiringType
+
+`func (o *SettlementDetail) GetAcquiringType() AcquiringType`
+
+GetAcquiringType returns the AcquiringType field if non-nil, zero value otherwise.
+
+### GetAcquiringTypeOk
+
+`func (o *SettlementDetail) GetAcquiringTypeOk() (*AcquiringType, bool)`
+
+GetAcquiringTypeOk returns a tuple with the AcquiringType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcquiringType
+
+`func (o *SettlementDetail) SetAcquiringType(v AcquiringType)`
+
+SetAcquiringType sets AcquiringType field to given value.
+
+### HasAcquiringType
+
+`func (o *SettlementDetail) HasAcquiringType() bool`
+
+HasAcquiringType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

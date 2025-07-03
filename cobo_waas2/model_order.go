@@ -48,12 +48,13 @@ type Order struct {
 	Status OrderStatus `json:"status"`
 	// The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT).
 	ReceivedTokenAmount string `json:"received_token_amount"`
-	// The created time of the order, represented as a UNIX timestamp in seconds.
+	// The creation time of the order, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The updated time of the order, represented as a UNIX timestamp in seconds.
+	// The last update time of the order, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process.
+	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
+	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
 }
 
 type _Order Order
@@ -567,6 +568,38 @@ func (o *Order) SetTransactions(v []PaymentTransaction) {
 	o.Transactions = v
 }
 
+// GetSettlementStatus returns the SettlementStatus field value if set, zero value otherwise.
+func (o *Order) GetSettlementStatus() SettleStatus {
+	if o == nil || IsNil(o.SettlementStatus) {
+		var ret SettleStatus
+		return ret
+	}
+	return *o.SettlementStatus
+}
+
+// GetSettlementStatusOk returns a tuple with the SettlementStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Order) GetSettlementStatusOk() (*SettleStatus, bool) {
+	if o == nil || IsNil(o.SettlementStatus) {
+		return nil, false
+	}
+	return o.SettlementStatus, true
+}
+
+// HasSettlementStatus returns a boolean if a field has been set.
+func (o *Order) HasSettlementStatus() bool {
+	if o != nil && !IsNil(o.SettlementStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettlementStatus gets a reference to the given SettleStatus and assigns it to the SettlementStatus field.
+func (o *Order) SetSettlementStatus(v SettleStatus) {
+	o.SettlementStatus = &v
+}
+
 func (o Order) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -606,6 +639,9 @@ func (o Order) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Transactions) {
 		toSerialize["transactions"] = o.Transactions
+	}
+	if !IsNil(o.SettlementStatus) {
+		toSerialize["settlement_status"] = o.SettlementStatus
 	}
 	return toSerialize, nil
 }

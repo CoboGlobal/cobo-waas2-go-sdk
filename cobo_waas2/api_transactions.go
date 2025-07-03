@@ -1771,7 +1771,7 @@ func (a *TransactionsAPIService) ListTransactionsExecute(r ApiListTransactionsRe
 	if r.direction != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "direction", r.direction, "")
 	} else {
-		var defaultValue string = ""
+		var defaultValue string = "ASC"
 		r.direction = &defaultValue
 	}
 	// to determine the Content-Type header

@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessToken** | Pointer to **string** | The new Permission Access Token. | [optional] 
-**TokenType** | Pointer to **string** | The type of the tokens, which is Bearer. | [optional] 
-**ExpiresIn** | Pointer to **int32** | The time in seconds in which the new Permission Access Token expires. | [optional] 
-**RefreshToken** | Pointer to **string** | The Refresh Token, used to obtain another Org Access Token when the new Permission Access Token expires. The expiration time for Refresh Tokens is currently set to 7 days and is subject to change. | [optional] 
+**AccessToken** | Pointer to **string** | The Access Token. | [optional] 
+**TokenType** | Pointer to **string** | The token type. This is always &#x60;Bearer&#x60;. | [optional] 
+**ExpiresIn** | Pointer to **int32** | The time in seconds until the Access Token expires. This is always &#x60;3600&#x60;, indicating the token expires 1 hour after issuance. | [optional] 
+**RefreshToken** | Pointer to **string** | The Refresh Token. Use it to obtain a new Access Token when the current one expires. The Refresh Token is valid for 7 days. | [optional] 
 
 ## Methods
 

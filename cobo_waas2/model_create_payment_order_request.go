@@ -33,8 +33,10 @@ type CreatePaymentOrderRequest struct {
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
-	// The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
+	// The number of seconds after which the pay-in order will expire. After expiration: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
+	// Whether to allocate a dedicated address for this order.  - `true`: A dedicated address will be allocated for this order. - `false`: A shared address from the address pool will be used. 
+	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
 }
 
 type _CreatePaymentOrderRequest CreatePaymentOrderRequest
@@ -281,6 +283,38 @@ func (o *CreatePaymentOrderRequest) SetExpiredIn(v int32) {
 	o.ExpiredIn = &v
 }
 
+// GetUseDedicatedAddress returns the UseDedicatedAddress field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetUseDedicatedAddress() bool {
+	if o == nil || IsNil(o.UseDedicatedAddress) {
+		var ret bool
+		return ret
+	}
+	return *o.UseDedicatedAddress
+}
+
+// GetUseDedicatedAddressOk returns a tuple with the UseDedicatedAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetUseDedicatedAddressOk() (*bool, bool) {
+	if o == nil || IsNil(o.UseDedicatedAddress) {
+		return nil, false
+	}
+	return o.UseDedicatedAddress, true
+}
+
+// HasUseDedicatedAddress returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasUseDedicatedAddress() bool {
+	if o != nil && !IsNil(o.UseDedicatedAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetUseDedicatedAddress gets a reference to the given bool and assigns it to the UseDedicatedAddress field.
+func (o *CreatePaymentOrderRequest) SetUseDedicatedAddress(v bool) {
+	o.UseDedicatedAddress = &v
+}
+
 func (o CreatePaymentOrderRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -304,6 +338,9 @@ func (o CreatePaymentOrderRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["psp_order_code"] = o.PspOrderCode
 	if !IsNil(o.ExpiredIn) {
 		toSerialize["expired_in"] = o.ExpiredIn
+	}
+	if !IsNil(o.UseDedicatedAddress) {
+		toSerialize["use_dedicated_address"] = o.UseDedicatedAddress
 	}
 	return toSerialize, nil
 }

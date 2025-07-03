@@ -4,15 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
-**TokenId** | Pointer to **string** | The ID of the cryptocurrency you want to settle. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | [optional] 
-**Currency** | Pointer to **string** | The fiat currency for settling the cryptocurrency. Currently, only &#x60;USD&#x60; is supported. | [optional] [default to "USD"]
-**Amount** | Pointer to **string** | The settlement amount. - If &#x60;token_id&#x60; is specified, this represents the settlement amount in the specified cryptocurrency. - If &#x60;token_id&#x60; is not specified, this represents the settlement amount in the specified fiat currency. | [optional] 
-**BankAccountId** | Pointer to **string** | The ID of the bank account where the settled funds will be deposited. | [optional] 
-**SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
-**CryptoAddressId** | Pointer to **string** | The ID of the pre-approved crypto address used for Crypto settlements.  - This field is only applicable when &#x60;payout_channel&#x60; is set to &#x60;Crypto&#x60;. - If &#x60;payout_channel&#x60; is &#x60;OffRamp&#x60;, this field will be ignored. - The value must refer to a valid address that has been pre-configured and approved for the given token.  | [optional] 
-**PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
-**OrderIds** | Pointer to **[]string** | A list of unique order IDs to be included in this settlement.  - This field is only applicable when &#x60;settlement_type&#x60; is set to &#x60;Merchant&#x60;. - If provided, the settlement will only apply to the specified orders. - The settlement &#x60;amount&#x60; must exactly match the total eligible amount from these orders. - This ensures consistency between the declared amount and the actual order-level data being settled.  | [optional] 
+**MerchantId** | Pointer to **string** | The merchant ID. Specify this field when &#x60;settlement_type&#x60; is set to &#x60;Merchant&#x60;. | [optional] 
+**TokenId** | Pointer to **string** | The ID of the cryptocurrency you want to settle. Specify this field when &#x60;payout_channel&#x60; is set to &#x60;Crypto&#x60;. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | [optional] 
+**Currency** | Pointer to **string** | The fiat currency for settling the cryptocurrency. Currently, only &#x60;USD&#x60; is supported. Specify this field when &#x60;payout_channel&#x60; is set to &#x60;OffRamp&#x60;. | [optional] 
+**Amount** | Pointer to **string** | The settlement amount. - If &#x60;payout_channel&#x60; is set to &#x60;Crypto&#x60;, this represents the settlement amount in the specified cryptocurrency. - If &#x60;payout_channel&#x60; is set to &#x60;OffRamp&#x60;, this represents the settlement amount in the specified fiat currency.  | [optional] 
+**BankAccountId** | Pointer to **string** | The ID of the bank account where the settled funds will be deposited. This field is only applicable when &#x60;payout_channel&#x60; is set to &#x60;OffRamp&#x60;. Call [List all bank accounts](/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts.  | [optional] 
+**CryptoAddressId** | Pointer to **string** | The ID of the crypto address used for crypto withdrawal. Specify this field when &#x60;payout_channel&#x60; is set to &#x60;Crypto&#x60;.  Call [List all crypto addresses](/v2/api-references/payments/list-all-crypto-addresses) to retrieve registered crypto addresses.  | [optional] 
+**OrderIds** | Pointer to **[]string** | A list of order IDs to be included in this settlement. If provided, the settlement request will settle the merchant funds received from the specified orders, and the &#x60;amount&#x60; field will be ignored.   This field is only applicable when &#x60;settlement_type&#x60; is set to &#x60;Merchant&#x60;.   | [optional] 
 
 ## Methods
 
@@ -158,31 +156,6 @@ SetBankAccountId sets BankAccountId field to given value.
 
 HasBankAccountId returns a boolean if a field has been set.
 
-### GetSettlementType
-
-`func (o *CreateSettlement) GetSettlementType() SettlementType`
-
-GetSettlementType returns the SettlementType field if non-nil, zero value otherwise.
-
-### GetSettlementTypeOk
-
-`func (o *CreateSettlement) GetSettlementTypeOk() (*SettlementType, bool)`
-
-GetSettlementTypeOk returns a tuple with the SettlementType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSettlementType
-
-`func (o *CreateSettlement) SetSettlementType(v SettlementType)`
-
-SetSettlementType sets SettlementType field to given value.
-
-### HasSettlementType
-
-`func (o *CreateSettlement) HasSettlementType() bool`
-
-HasSettlementType returns a boolean if a field has been set.
-
 ### GetCryptoAddressId
 
 `func (o *CreateSettlement) GetCryptoAddressId() string`
@@ -207,31 +180,6 @@ SetCryptoAddressId sets CryptoAddressId field to given value.
 `func (o *CreateSettlement) HasCryptoAddressId() bool`
 
 HasCryptoAddressId returns a boolean if a field has been set.
-
-### GetPayoutChannel
-
-`func (o *CreateSettlement) GetPayoutChannel() PayoutChannel`
-
-GetPayoutChannel returns the PayoutChannel field if non-nil, zero value otherwise.
-
-### GetPayoutChannelOk
-
-`func (o *CreateSettlement) GetPayoutChannelOk() (*PayoutChannel, bool)`
-
-GetPayoutChannelOk returns a tuple with the PayoutChannel field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPayoutChannel
-
-`func (o *CreateSettlement) SetPayoutChannel(v PayoutChannel)`
-
-SetPayoutChannel sets PayoutChannel field to given value.
-
-### HasPayoutChannel
-
-`func (o *CreateSettlement) HasPayoutChannel() bool`
-
-HasPayoutChannel returns a boolean if a field has been set.
 
 ### GetOrderIds
 

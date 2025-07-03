@@ -19,7 +19,7 @@ var _ MappedNullable = &RefreshPermissionTokenRequest{}
 
 // RefreshPermissionTokenRequest struct for RefreshPermissionTokenRequest
 type RefreshPermissionTokenRequest struct {
-	// The Refresh Token of the current Org Access Token.
+	// The Refresh Token of the current Access Token.
 	RefreshToken string `json:"refresh_token"`
 }
 

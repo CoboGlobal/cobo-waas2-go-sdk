@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **RequestId** | **string** | The request ID provided by you when creating the settlement request. | 
 **Status** | [**SettleRequestStatus**](SettleRequestStatus.md) |  | 
 **Settlements** | [**[]SettlementDetail**](SettlementDetail.md) |  | 
-**CreatedTimestamp** | Pointer to **int32** | The created time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
-**Initiator** | Pointer to **string** | The initiator of this settlement request, usually the user&#39;s API key. | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The creation time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The last update time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
+**Initiator** | Pointer to **string** |  The initiator of this settlement request. Can return either an API key or the Payment Management App&#39;s ID.  - Format &#x60;api_key_&lt;API_KEY&gt;&#x60;: Indicates the settlement request was initiated via the Payment API using the API key. - Format &#x60;app_&lt;APP_ID&gt;&#x60;: Indicates the settlement request was initiated through the Payment Management App using the App ID.  | [optional] 
 
 ## Methods
 

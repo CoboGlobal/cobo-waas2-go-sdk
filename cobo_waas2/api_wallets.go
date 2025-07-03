@@ -2323,6 +2323,7 @@ type ApiListEnabledTokensRequest struct {
 	walletType *WalletType
 	walletSubtype *WalletSubtype
 	chainIds *string
+	tokenIds *string
 	limit *int32
 	before *string
 	after *string
@@ -2343,6 +2344,12 @@ func (r ApiListEnabledTokensRequest) WalletSubtype(walletSubtype WalletSubtype) 
 // A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 func (r ApiListEnabledTokensRequest) ChainIds(chainIds string) ApiListEnabledTokensRequest {
 	r.chainIds = &chainIds
+	return r
+}
+
+// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+func (r ApiListEnabledTokensRequest) TokenIds(tokenIds string) ApiListEnabledTokensRequest {
+	r.tokenIds = &tokenIds
 	return r
 }
 
@@ -2373,7 +2380,7 @@ ListEnabledTokens List enabled tokens
 
 This operation retrieves all the tokens that can be used by your organization. 
 
-You can filter the result by wallet type, subtype, and chain IDs. If you do not specify a wallet type, this operation returns a combination of tokens that can be used by your organization for each wallet type.
+You can filter the result by wallet type, subtype, chain IDs, and token IDs. If you do not specify a wallet type, this operation returns a combination of tokens that can be used by your organization for each wallet type.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2415,6 +2422,9 @@ func (a *WalletsAPIService) ListEnabledTokensExecute(r ApiListEnabledTokensReque
 	}
 	if r.chainIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "chain_ids", r.chainIds, "")
+	}
+	if r.tokenIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_ids", r.tokenIds, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

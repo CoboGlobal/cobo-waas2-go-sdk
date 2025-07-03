@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ChainId** | Pointer to **string** | The ID of the chain on which the smart contract is deployed. | [optional] 
+**ChainId** | Pointer to **string** | The ID of the chain on which the smart contract is issued. | [optional] 
 **Address** | Pointer to **string** | The address of the smart contract. | [optional] 
 **Name** | Pointer to **string** | The name of the smart contract. | [optional] 
 **ImplAddress** | Pointer to **string** | The address of the implementation smart contract. This property is applicable only when the specified smart contract is a proxy contract. | [optional] 

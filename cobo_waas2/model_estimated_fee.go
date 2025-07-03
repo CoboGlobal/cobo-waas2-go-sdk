@@ -17,7 +17,9 @@ import (
 type EstimatedFee struct {
 	EstimatedEvmEip1559Fee *EstimatedEvmEip1559Fee
 	EstimatedEvmLegacyFee *EstimatedEvmLegacyFee
+	EstimatedFILFee *EstimatedFILFee
 	EstimatedFixedFee *EstimatedFixedFee
+	EstimatedSOLFee *EstimatedSOLFee
 	EstimatedUtxoFee *EstimatedUtxoFee
 }
 
@@ -35,10 +37,24 @@ func EstimatedEvmLegacyFeeAsEstimatedFee(v *EstimatedEvmLegacyFee) EstimatedFee 
 	}
 }
 
+// EstimatedFILFeeAsEstimatedFee is a convenience function that returns EstimatedFILFee wrapped in EstimatedFee
+func EstimatedFILFeeAsEstimatedFee(v *EstimatedFILFee) EstimatedFee {
+	return EstimatedFee{
+		EstimatedFILFee: v,
+	}
+}
+
 // EstimatedFixedFeeAsEstimatedFee is a convenience function that returns EstimatedFixedFee wrapped in EstimatedFee
 func EstimatedFixedFeeAsEstimatedFee(v *EstimatedFixedFee) EstimatedFee {
 	return EstimatedFee{
 		EstimatedFixedFee: v,
+	}
+}
+
+// EstimatedSOLFeeAsEstimatedFee is a convenience function that returns EstimatedSOLFee wrapped in EstimatedFee
+func EstimatedSOLFeeAsEstimatedFee(v *EstimatedSOLFee) EstimatedFee {
+	return EstimatedFee{
+		EstimatedSOLFee: v,
 	}
 }
 
@@ -84,6 +100,18 @@ func (dst *EstimatedFee) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'FIL'
+	if jsonDict["fee_type"] == "FIL" {
+		// try to unmarshal JSON data into EstimatedFILFee
+		err = json.Unmarshal(data, &dst.EstimatedFILFee)
+		if err == nil {
+			return nil // data stored in dst.EstimatedFILFee, return on the first match
+		} else {
+			dst.EstimatedFILFee = nil
+			return fmt.Errorf("failed to unmarshal EstimatedFee as EstimatedFILFee: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'Fixed'
 	if jsonDict["fee_type"] == "Fixed" {
 		// try to unmarshal JSON data into EstimatedFixedFee
@@ -93,6 +121,18 @@ func (dst *EstimatedFee) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.EstimatedFixedFee = nil
 			return fmt.Errorf("failed to unmarshal EstimatedFee as EstimatedFixedFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'SOL'
+	if jsonDict["fee_type"] == "SOL" {
+		// try to unmarshal JSON data into EstimatedSOLFee
+		err = json.Unmarshal(data, &dst.EstimatedSOLFee)
+		if err == nil {
+			return nil // data stored in dst.EstimatedSOLFee, return on the first match
+		} else {
+			dst.EstimatedSOLFee = nil
+			return fmt.Errorf("failed to unmarshal EstimatedFee as EstimatedSOLFee: %s", err.Error())
 		}
 	}
 
@@ -132,6 +172,18 @@ func (dst *EstimatedFee) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'EstimatedFILFee'
+	if jsonDict["fee_type"] == "EstimatedFILFee" {
+		// try to unmarshal JSON data into EstimatedFILFee
+		err = json.Unmarshal(data, &dst.EstimatedFILFee)
+		if err == nil {
+			return nil // data stored in dst.EstimatedFILFee, return on the first match
+		} else {
+			dst.EstimatedFILFee = nil
+			return fmt.Errorf("failed to unmarshal EstimatedFee as EstimatedFILFee: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'EstimatedFixedFee'
 	if jsonDict["fee_type"] == "EstimatedFixedFee" {
 		// try to unmarshal JSON data into EstimatedFixedFee
@@ -141,6 +193,18 @@ func (dst *EstimatedFee) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.EstimatedFixedFee = nil
 			return fmt.Errorf("failed to unmarshal EstimatedFee as EstimatedFixedFee: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'EstimatedSOLFee'
+	if jsonDict["fee_type"] == "EstimatedSOLFee" {
+		// try to unmarshal JSON data into EstimatedSOLFee
+		err = json.Unmarshal(data, &dst.EstimatedSOLFee)
+		if err == nil {
+			return nil // data stored in dst.EstimatedSOLFee, return on the first match
+		} else {
+			dst.EstimatedSOLFee = nil
+			return fmt.Errorf("failed to unmarshal EstimatedFee as EstimatedSOLFee: %s", err.Error())
 		}
 	}
 
@@ -169,8 +233,16 @@ func (src EstimatedFee) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.EstimatedEvmLegacyFee)
 	}
 
+	if src.EstimatedFILFee != nil {
+		return json.Marshal(&src.EstimatedFILFee)
+	}
+
 	if src.EstimatedFixedFee != nil {
 		return json.Marshal(&src.EstimatedFixedFee)
+	}
+
+	if src.EstimatedSOLFee != nil {
+		return json.Marshal(&src.EstimatedSOLFee)
 	}
 
 	if src.EstimatedUtxoFee != nil {
@@ -193,8 +265,16 @@ func (obj *EstimatedFee) GetActualInstance() (interface{}) {
 		return obj.EstimatedEvmLegacyFee
 	}
 
+	if obj.EstimatedFILFee != nil {
+		return obj.EstimatedFILFee
+	}
+
 	if obj.EstimatedFixedFee != nil {
 		return obj.EstimatedFixedFee
+	}
+
+	if obj.EstimatedSOLFee != nil {
+		return obj.EstimatedSOLFee
 	}
 
 	if obj.EstimatedUtxoFee != nil {

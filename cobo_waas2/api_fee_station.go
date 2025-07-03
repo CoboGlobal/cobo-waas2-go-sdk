@@ -655,7 +655,7 @@ func (a *FeeStationAPIService) ListFeeStationTransactionsExecute(r ApiListFeeSta
 	if r.direction != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "direction", r.direction, "")
 	} else {
-		var defaultValue string = ""
+		var defaultValue string = "ASC"
 		r.direction = &defaultValue
 	}
 	// to determine the Content-Type header

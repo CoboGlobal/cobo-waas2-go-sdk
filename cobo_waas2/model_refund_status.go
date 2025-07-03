@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// RefundStatus The current status of the refund order. For information about transaction status, see [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status).  - `Pending`: The refund order has been created but the transaction has not been initiated. - `Processing`: The refund order is currently being processed, with at least one refund transaction in progress. - `Completed`: All refund transactions have been completed successfully. - `PartiallyCompleted`: Some refund transactions have been completed successfully, while others have failed. - `Failed`: All refund transactions have failed. 
+// RefundStatus The current status of the refund order. For information about transaction status, see [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status).  - `Pending`: The refund order has been created but the transaction has not been initiated. - `Processing`: The refund order is currently being processed, with at least one refund transaction in progress. - `Completed`: All refund transactions have been completed successfully. - `PartiallyCompleted`: Some refund transactions have been completed successfully, while others have failed. - `Failed`: All refund transactions have failed. - `PendingConfirmation`: The refund order has been completed but the address to send is pending confirmation. 
 type RefundStatus string
 
 // List of RefundStatus
@@ -23,6 +23,7 @@ const (
 	REFUNDSTATUS_COMPLETED RefundStatus = "Completed"
 	REFUNDSTATUS_PARTIALLY_COMPLETED RefundStatus = "PartiallyCompleted"
 	REFUNDSTATUS_FAILED RefundStatus = "Failed"
+	REFUNDSTATUS_PENDING_CONFIRMATION RefundStatus = "PendingConfirmation"
 )
 
 // All allowed values of RefundStatus enum
@@ -32,6 +33,7 @@ var AllowedRefundStatusEnumValues = []RefundStatus{
 	"Completed",
 	"PartiallyCompleted",
 	"Failed",
+	"PendingConfirmation",
 }
 
 func (v *RefundStatus) UnmarshalJSON(src []byte) error {

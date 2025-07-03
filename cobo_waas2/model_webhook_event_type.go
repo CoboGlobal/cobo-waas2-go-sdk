@@ -37,8 +37,11 @@ const (
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_SUCCEEDED WebhookEventType = "fee_station.transaction.succeeded"
 	WEBHOOKEVENTTYPE_WALLET_TOKEN_ENABLED WebhookEventType = "wallet.token.enabled"
 	WEBHOOKEVENTTYPE_WALLET_CHAIN_ENABLED WebhookEventType = "wallet.chain.enabled"
+	WEBHOOKEVENTTYPE_WALLET_MPC_BALANCE_UPDATED WebhookEventType = "wallet.mpc.balance.updated"
+	WEBHOOKEVENTTYPE_WALLET_WEB3_BALANCE_UPDATED WebhookEventType = "wallet.web3.balance.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_CREATED WebhookEventType = "payment.transaction.created"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_LATE WebhookEventType = "payment.transaction.late"
+	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_COMPLETED WebhookEventType = "payment.transaction.completed"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_HELD WebhookEventType = "payment.transaction.held"
 	WEBHOOKEVENTTYPE_PAYMENT_STATUS_UPDATED WebhookEventType = "payment.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_REFUND_STATUS_UPDATED WebhookEventType = "payment.refund.status.updated"
@@ -66,8 +69,11 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"fee_station.transaction.succeeded",
 	"wallet.token.enabled",
 	"wallet.chain.enabled",
+	"wallet.mpc.balance.updated",
+	"wallet.web3.balance.updated",
 	"payment.transaction.created",
 	"payment.transaction.late",
+	"payment.transaction.completed",
 	"payment.transaction.held",
 	"payment.status.updated",
 	"payment.refund.status.updated",
