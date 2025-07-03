@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **UpdatedTimestamp** | Pointer to **int32** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **Timeline** | Pointer to [**[]SwapActivityTimeline**](SwapActivityTimeline.md) |  | [optional] 
 **Approvers** | Pointer to [**[]SwapActivityApprovers**](SwapActivityApprovers.md) |  | [optional] 
+**Signers** | Pointer to [**[]SwapActivitySigners**](SwapActivitySigners.md) |  | [optional] 
 
 ## Methods
 
@@ -501,6 +502,31 @@ SetApprovers sets Approvers field to given value.
 `func (o *SwapActivityDetail) HasApprovers() bool`
 
 HasApprovers returns a boolean if a field has been set.
+
+### GetSigners
+
+`func (o *SwapActivityDetail) GetSigners() []SwapActivitySigners`
+
+GetSigners returns the Signers field if non-nil, zero value otherwise.
+
+### GetSignersOk
+
+`func (o *SwapActivityDetail) GetSignersOk() (*[]SwapActivitySigners, bool)`
+
+GetSignersOk returns a tuple with the Signers field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSigners
+
+`func (o *SwapActivityDetail) SetSigners(v []SwapActivitySigners)`
+
+SetSigners sets Signers field to given value.
+
+### HasSigners
+
+`func (o *SwapActivityDetail) HasSigners() bool`
+
+HasSigners returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

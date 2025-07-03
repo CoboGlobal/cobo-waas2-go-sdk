@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **Destination** | [**ContractCallDestination**](ContractCallDestination.md) |  | 
 **FeeType** | Pointer to [**FeeType**](FeeType.md) |  | [optional] [default to FEETYPE_EVM_EIP_1559]
 **ReplacedTransactionId** | Pointer to **string** | The ID of the transaction that this transaction replaced. | [optional] 
-**ChainId** | **string** | The chain ID of the chain on which the smart contract is deployed. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
+**ChainId** | **string** | The chain ID of the chain on which the smart contract is issued. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
 
 ## Methods
 

@@ -17,7 +17,7 @@ var _ MappedNullable = &TransactionEvmCalldataInfo{}
 
 // TransactionEvmCalldataInfo struct for TransactionEvmCalldataInfo
 type TransactionEvmCalldataInfo struct {
-	// The ID of the chain on which the smart contract is deployed.
+	// The ID of the chain on which the smart contract is issued.
 	ChainId *string `json:"chain_id,omitempty"`
 	// The address of the smart contract.
 	Address *string `json:"address,omitempty"`

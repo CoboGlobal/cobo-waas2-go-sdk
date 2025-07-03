@@ -45,6 +45,10 @@ const (
 	TRANSACTIONCOBOCATEGORY_STAKING_SKYFARM_CLAIM TransactionCoboCategory = "StakingSkyfarmClaim"
 	TRANSACTIONCOBOCATEGORY_STAKING_SKYFARM_STAKE TransactionCoboCategory = "StakingSkyfarmStake"
 	TRANSACTIONCOBOCATEGORY_STAKING_SKYFARM_UNSTAKE TransactionCoboCategory = "StakingSkyfarmUnstake"
+	TRANSACTIONCOBOCATEGORY_SCREEN_APP_REFUND TransactionCoboCategory = "ScreenAppRefund"
+	TRANSACTIONCOBOCATEGORY_SCREEN_APP_ISOLATE TransactionCoboCategory = "ScreenAppIsolate"
+	TRANSACTIONCOBOCATEGORY_COMPLIANCE_REFUND TransactionCoboCategory = "ComplianceRefund"
+	TRANSACTIONCOBOCATEGORY_COMPLIANCE_ISOLATE TransactionCoboCategory = "ComplianceIsolate"
 )
 
 // All allowed values of TransactionCoboCategory enum
@@ -76,6 +80,10 @@ var AllowedTransactionCoboCategoryEnumValues = []TransactionCoboCategory{
 	"StakingSkyfarmClaim",
 	"StakingSkyfarmStake",
 	"StakingSkyfarmUnstake",
+	"ScreenAppRefund",
+	"ScreenAppIsolate",
+	"ComplianceRefund",
+	"ComplianceIsolate",
 }
 
 func (v *TransactionCoboCategory) UnmarshalJSON(src []byte) error {

@@ -6,20 +6,20 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | **string** | The request ID that is used to track a refund request. The request ID is provided by you and must be unique. | 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
-**PayableAmount** | **string** | The amount to refund in cryptocurrency. | 
-**ToAddress** | **string** | The address where the refunded cryptocurrency will be sent. | 
+**PayableAmount** | **string** | The amount to refund in cryptocurrency. The amount must be a positive integer with up to two decimal places. | 
+**ToAddress** | Pointer to **string** | The address where the refunded cryptocurrency will be sent. | [optional] 
 **TokenId** | **string** | The ID of the cryptocurrency used for refund. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
 **RefundType** | [**RefundType**](RefundType.md) |  | 
 **OrderId** | Pointer to **string** | The ID of the original pay-in order associated with this refund. Use this to track refunds against specific payments. | [optional] 
-**ChargeMerchantFee** | Pointer to **bool** | Indicates whether the merchant should bear the transaction fee for the refund.  If true, the fee will be deducted from merchant&#39;s account balance.  | [optional] 
-**MerchantFeeAmount** | Pointer to **string** | The amount of the transaction fee that the merchant will bear for the refund.  This is only applicable if &#x60;charge_merchant_fee&#x60; is set to true.  | [optional] 
-**MerchantFeeTokenId** | Pointer to **string** | The ID of the cryptocurrency used for the transaction fee.  This is only applicable if &#x60;charge_merchant_fee&#x60; is set to true.  | [optional] 
+**ChargeMerchantFee** | Pointer to **bool** | Whether to charge developer fee to the merchant.     - &#x60;true&#x60;: The fee amount (specified in &#x60;merchant_fee_amount&#x60;) will be deducted from the merchant&#39;s balance and added to the developer&#39;s balance    - &#x60;false&#x60;: The merchant is not charged any developer fee  When enabled, ensure both &#x60;merchant_fee_amount&#x60; and &#x60;merchant_fee_token_id&#x60; are properly specified.  | [optional] 
+**MerchantFeeAmount** | Pointer to **string** | The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by &#x60;merchant_fee_token_id&#x60;. Required when &#x60;charge_merchant_fee&#x60; is &#x60;true&#x60;. Must be:   - A positive integer with up to two decimal places.   - Less than the refund amount  | [optional] 
+**MerchantFeeTokenId** | Pointer to **string** | The ID of the cryptocurrency used for the developer fee. It must be the same as &#x60;token_id&#x60;. Supported values:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | [optional] 
 
 ## Methods
 
 ### NewCreateRefundRequest
 
-`func NewCreateRefundRequest(requestId string, payableAmount string, toAddress string, tokenId string, refundType RefundType, ) *CreateRefundRequest`
+`func NewCreateRefundRequest(requestId string, payableAmount string, tokenId string, refundType RefundType, ) *CreateRefundRequest`
 
 NewCreateRefundRequest instantiates a new CreateRefundRequest object
 This constructor will assign default values to properties that have it defined,
@@ -118,6 +118,11 @@ and a boolean to check if the value has been set.
 
 SetToAddress sets ToAddress field to given value.
 
+### HasToAddress
+
+`func (o *CreateRefundRequest) HasToAddress() bool`
+
+HasToAddress returns a boolean if a field has been set.
 
 ### GetTokenId
 

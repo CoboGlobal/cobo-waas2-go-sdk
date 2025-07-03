@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentOrderEventData{}
 
 // PaymentOrderEventData struct for PaymentOrderEventData
 type PaymentOrderEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `BalanceUpdateInfo`: The balance update event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data.
 	DataType string `json:"data_type"`
 	// The order ID.
 	OrderId string `json:"order_id"`
@@ -50,12 +50,13 @@ type PaymentOrderEventData struct {
 	Status OrderStatus `json:"status"`
 	// The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT).
 	ReceivedTokenAmount string `json:"received_token_amount"`
-	// The created time of the order, represented as a UNIX timestamp in seconds.
+	// The creation time of the order, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The updated time of the order, represented as a UNIX timestamp in seconds.
+	// The last update time of the order, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process.
+	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
+	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
 }
 
 type _PaymentOrderEventData PaymentOrderEventData
@@ -594,6 +595,38 @@ func (o *PaymentOrderEventData) SetTransactions(v []PaymentTransaction) {
 	o.Transactions = v
 }
 
+// GetSettlementStatus returns the SettlementStatus field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetSettlementStatus() SettleStatus {
+	if o == nil || IsNil(o.SettlementStatus) {
+		var ret SettleStatus
+		return ret
+	}
+	return *o.SettlementStatus
+}
+
+// GetSettlementStatusOk returns a tuple with the SettlementStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetSettlementStatusOk() (*SettleStatus, bool) {
+	if o == nil || IsNil(o.SettlementStatus) {
+		return nil, false
+	}
+	return o.SettlementStatus, true
+}
+
+// HasSettlementStatus returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasSettlementStatus() bool {
+	if o != nil && !IsNil(o.SettlementStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettlementStatus gets a reference to the given SettleStatus and assigns it to the SettlementStatus field.
+func (o *PaymentOrderEventData) SetSettlementStatus(v SettleStatus) {
+	o.SettlementStatus = &v
+}
+
 func (o PaymentOrderEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -634,6 +667,9 @@ func (o PaymentOrderEventData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Transactions) {
 		toSerialize["transactions"] = o.Transactions
+	}
+	if !IsNil(o.SettlementStatus) {
+		toSerialize["settlement_status"] = o.SettlementStatus
 	}
 	return toSerialize, nil
 }

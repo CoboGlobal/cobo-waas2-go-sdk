@@ -23,6 +23,8 @@ type CreateMerchantRequest struct {
 	Name string `json:"name"`
 	// The ID of the wallet linked to the merchant.
 	WalletId string `json:"wallet_id"`
+	// The developer fee rate applied to this merchant. Expressed as a string in decimal format where \"0.1\" represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions.
+	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
 }
 
 type _CreateMerchantRequest CreateMerchantRequest
@@ -94,6 +96,38 @@ func (o *CreateMerchantRequest) SetWalletId(v string) {
 	o.WalletId = v
 }
 
+// GetDeveloperFeeRate returns the DeveloperFeeRate field value if set, zero value otherwise.
+func (o *CreateMerchantRequest) GetDeveloperFeeRate() string {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		var ret string
+		return ret
+	}
+	return *o.DeveloperFeeRate
+}
+
+// GetDeveloperFeeRateOk returns a tuple with the DeveloperFeeRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateMerchantRequest) GetDeveloperFeeRateOk() (*string, bool) {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		return nil, false
+	}
+	return o.DeveloperFeeRate, true
+}
+
+// HasDeveloperFeeRate returns a boolean if a field has been set.
+func (o *CreateMerchantRequest) HasDeveloperFeeRate() bool {
+	if o != nil && !IsNil(o.DeveloperFeeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeveloperFeeRate gets a reference to the given string and assigns it to the DeveloperFeeRate field.
+func (o *CreateMerchantRequest) SetDeveloperFeeRate(v string) {
+	o.DeveloperFeeRate = &v
+}
+
 func (o CreateMerchantRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +140,9 @@ func (o CreateMerchantRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
 	toSerialize["wallet_id"] = o.WalletId
+	if !IsNil(o.DeveloperFeeRate) {
+		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
+	}
 	return toSerialize, nil
 }
 

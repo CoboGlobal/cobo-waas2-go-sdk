@@ -11,6 +11,10 @@
 
 * `UTXO` (value: `"UTXO"`)
 
+* `SOL` (value: `"SOL"`)
+
+* `FIL` (value: `"FIL"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -23,23 +23,24 @@ type SettlementDetail struct {
 	TokenId *string `json:"token_id,omitempty"`
 	// The ID of the blockchain network on which the settlement occurred.
 	ChainId *string `json:"chain_id,omitempty"`
-	// The Merchant ID associated with this settlement.
+	// The ID of the merchant associated with this settlement.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The settlement amount.  - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency.  - If `token_id` is not specified, this represents the settlement amount in the specified fiat currency. 
+	// The settlement amount. - If `payout_channel` is set to `Crypto`, this represents the settlement amount in the specified cryptocurrency. - If `payout_channel` is set to `OffRamp`, this represents the settlement amount in the specified fiat currency. 
 	Amount *string `json:"amount,omitempty"`
-	// The settled amount of this settlement detail.  - If `token_id` is specified, this represents the actual settled amount in the specified cryptocurrency.  - If `token_id` is not specified, this represents the actual settled amount in the specified fiat currency. 
+	// The settled amount of this settlement detail.  - If `payout_channel` is set to `Crypto`, this represents the actual settled amount in the specified cryptocurrency.  - If `payout_channel` is set to `OffRamp`, this represents the actual settled amount in the specified fiat currency. 
 	SettledAmount *string `json:"settled_amount,omitempty"`
 	Status *SettleStatus `json:"status,omitempty"`
 	BankAccount *BankAccount `json:"bank_account,omitempty"`
 	// An array of transactions associated with this settlement request. Each transaction represents a separate blockchain operation related to the settlement process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
-	// The created time of the settlement, represented as a UNIX timestamp in seconds.
+	// The creation time of the settlement, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The updated time of the settlement, represented as a UNIX timestamp in seconds.
+	// The last update time of the settlement, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// Unique identifier for the pre-approved crypto address, used to reference the address securely in requests.
+	// The ID of the crypto address used for crypto withdrawal.
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
+	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 }
 
 // NewSettlementDetail instantiates a new SettlementDetail object
@@ -475,6 +476,38 @@ func (o *SettlementDetail) SetPayoutChannel(v PayoutChannel) {
 	o.PayoutChannel = &v
 }
 
+// GetAcquiringType returns the AcquiringType field value if set, zero value otherwise.
+func (o *SettlementDetail) GetAcquiringType() AcquiringType {
+	if o == nil || IsNil(o.AcquiringType) {
+		var ret AcquiringType
+		return ret
+	}
+	return *o.AcquiringType
+}
+
+// GetAcquiringTypeOk returns a tuple with the AcquiringType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetAcquiringTypeOk() (*AcquiringType, bool) {
+	if o == nil || IsNil(o.AcquiringType) {
+		return nil, false
+	}
+	return o.AcquiringType, true
+}
+
+// HasAcquiringType returns a boolean if a field has been set.
+func (o *SettlementDetail) HasAcquiringType() bool {
+	if o != nil && !IsNil(o.AcquiringType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcquiringType gets a reference to the given AcquiringType and assigns it to the AcquiringType field.
+func (o *SettlementDetail) SetAcquiringType(v AcquiringType) {
+	o.AcquiringType = &v
+}
+
 func (o SettlementDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -523,6 +556,9 @@ func (o SettlementDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PayoutChannel) {
 		toSerialize["payout_channel"] = o.PayoutChannel
+	}
+	if !IsNil(o.AcquiringType) {
+		toSerialize["acquiring_type"] = o.AcquiringType
 	}
 	return toSerialize, nil
 }

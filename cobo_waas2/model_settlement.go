@@ -25,11 +25,11 @@ type Settlement struct {
 	RequestId string `json:"request_id"`
 	Status SettleRequestStatus `json:"status"`
 	Settlements []SettlementDetail `json:"settlements"`
-	// The created time of the settlement request, represented as a UNIX timestamp in seconds.
+	// The creation time of the settlement request, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The updated time of the settlement request, represented as a UNIX timestamp in seconds.
+	// The last update time of the settlement request, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// The initiator of this settlement request, usually the user's API key.
+	//  The initiator of this settlement request. Can return either an API key or the Payment Management App's ID.  - Format `api_key_<API_KEY>`: Indicates the settlement request was initiated via the Payment API using the API key. - Format `app_<APP_ID>`: Indicates the settlement request was initiated through the Payment Management App using the App ID. 
 	Initiator *string `json:"initiator,omitempty"`
 }
 

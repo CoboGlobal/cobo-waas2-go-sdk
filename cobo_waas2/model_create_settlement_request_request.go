@@ -21,6 +21,9 @@ var _ MappedNullable = &CreateSettlementRequestRequest{}
 type CreateSettlementRequestRequest struct {
 	// The request ID that is used to track a settlement request. The request ID is provided by you and must be unique.
 	RequestId string `json:"request_id"`
+	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
+	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
+	SettlementType *SettlementType `json:"settlement_type,omitempty"`
 	Settlements []CreateSettlement `json:"settlements"`
 }
 
@@ -69,6 +72,102 @@ func (o *CreateSettlementRequestRequest) SetRequestId(v string) {
 	o.RequestId = v
 }
 
+// GetAcquiringType returns the AcquiringType field value if set, zero value otherwise.
+func (o *CreateSettlementRequestRequest) GetAcquiringType() AcquiringType {
+	if o == nil || IsNil(o.AcquiringType) {
+		var ret AcquiringType
+		return ret
+	}
+	return *o.AcquiringType
+}
+
+// GetAcquiringTypeOk returns a tuple with the AcquiringType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlementRequestRequest) GetAcquiringTypeOk() (*AcquiringType, bool) {
+	if o == nil || IsNil(o.AcquiringType) {
+		return nil, false
+	}
+	return o.AcquiringType, true
+}
+
+// HasAcquiringType returns a boolean if a field has been set.
+func (o *CreateSettlementRequestRequest) HasAcquiringType() bool {
+	if o != nil && !IsNil(o.AcquiringType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcquiringType gets a reference to the given AcquiringType and assigns it to the AcquiringType field.
+func (o *CreateSettlementRequestRequest) SetAcquiringType(v AcquiringType) {
+	o.AcquiringType = &v
+}
+
+// GetPayoutChannel returns the PayoutChannel field value if set, zero value otherwise.
+func (o *CreateSettlementRequestRequest) GetPayoutChannel() PayoutChannel {
+	if o == nil || IsNil(o.PayoutChannel) {
+		var ret PayoutChannel
+		return ret
+	}
+	return *o.PayoutChannel
+}
+
+// GetPayoutChannelOk returns a tuple with the PayoutChannel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlementRequestRequest) GetPayoutChannelOk() (*PayoutChannel, bool) {
+	if o == nil || IsNil(o.PayoutChannel) {
+		return nil, false
+	}
+	return o.PayoutChannel, true
+}
+
+// HasPayoutChannel returns a boolean if a field has been set.
+func (o *CreateSettlementRequestRequest) HasPayoutChannel() bool {
+	if o != nil && !IsNil(o.PayoutChannel) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayoutChannel gets a reference to the given PayoutChannel and assigns it to the PayoutChannel field.
+func (o *CreateSettlementRequestRequest) SetPayoutChannel(v PayoutChannel) {
+	o.PayoutChannel = &v
+}
+
+// GetSettlementType returns the SettlementType field value if set, zero value otherwise.
+func (o *CreateSettlementRequestRequest) GetSettlementType() SettlementType {
+	if o == nil || IsNil(o.SettlementType) {
+		var ret SettlementType
+		return ret
+	}
+	return *o.SettlementType
+}
+
+// GetSettlementTypeOk returns a tuple with the SettlementType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlementRequestRequest) GetSettlementTypeOk() (*SettlementType, bool) {
+	if o == nil || IsNil(o.SettlementType) {
+		return nil, false
+	}
+	return o.SettlementType, true
+}
+
+// HasSettlementType returns a boolean if a field has been set.
+func (o *CreateSettlementRequestRequest) HasSettlementType() bool {
+	if o != nil && !IsNil(o.SettlementType) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettlementType gets a reference to the given SettlementType and assigns it to the SettlementType field.
+func (o *CreateSettlementRequestRequest) SetSettlementType(v SettlementType) {
+	o.SettlementType = &v
+}
+
 // GetSettlements returns the Settlements field value
 func (o *CreateSettlementRequestRequest) GetSettlements() []CreateSettlement {
 	if o == nil {
@@ -104,6 +203,15 @@ func (o CreateSettlementRequestRequest) MarshalJSON() ([]byte, error) {
 func (o CreateSettlementRequestRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
+	if !IsNil(o.AcquiringType) {
+		toSerialize["acquiring_type"] = o.AcquiringType
+	}
+	if !IsNil(o.PayoutChannel) {
+		toSerialize["payout_channel"] = o.PayoutChannel
+	}
+	if !IsNil(o.SettlementType) {
+		toSerialize["settlement_type"] = o.SettlementType
+	}
 	toSerialize["settlements"] = o.Settlements
 	return toSerialize, nil
 }

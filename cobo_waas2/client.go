@@ -62,6 +62,8 @@ type APIClient struct {
 
 	OAuthAPI *OAuthAPIService
 
+	OrganizationsAPI *OrganizationsAPIService
+
 	PaymentAPI *PaymentAPIService
 
 	PrimeBrokerAPI *PrimeBrokerAPIService
@@ -103,6 +105,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
 	c.FeeStationAPI = (*FeeStationAPIService)(&c.common)
 	c.OAuthAPI = (*OAuthAPIService)(&c.common)
+	c.OrganizationsAPI = (*OrganizationsAPIService)(&c.common)
 	c.PaymentAPI = (*PaymentAPIService)(&c.common)
 	c.PrimeBrokerAPI = (*PrimeBrokerAPIService)(&c.common)
 	c.StakingsAPI = (*StakingsAPIService)(&c.common)

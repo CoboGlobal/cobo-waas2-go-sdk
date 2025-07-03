@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SettleStatus The current status of the settlement: - `Pending`: The settlement has been created and is awaiting processing. - `Processing`: The settlement is being processed. - `Completed`: The funds have been successfully deposited into the bank account. - `PartiallyCompleted`: Some settlement transactions have been completed successfully, while others have failed. - `Failed`: The settlement could not be completed due to an error. 
+// SettleStatus The current status of settlement. - `Pending`: The settlement has been created and is awaiting processing. - `Processing`: The settlement is being processed. - `Completed`: The funds have been successfully deposited into the bank account. - `PartiallyCompleted`: Some settlement transactions have been completed successfully, while others have failed. - `Failed`: The settlement could not be completed due to an error. 
 type SettleStatus string
 
 // List of SettleStatus

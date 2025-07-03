@@ -25,9 +25,11 @@ type Merchant struct {
 	Name string `json:"name"`
 	// The ID of the linked wallet.
 	WalletId string `json:"wallet_id"`
-	// The created time of the merchant, represented as a UNIX timestamp in seconds.
+	// The developer fee rate applied to this merchant. Expressed as a string in decimal format where \"0.1\" represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions.
+	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
+	// The creation time of the merchant, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The updated time of the merchant, represented as a UNIX timestamp in seconds.
+	// The last update time of the merchant, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 }
 
@@ -125,6 +127,38 @@ func (o *Merchant) SetWalletId(v string) {
 	o.WalletId = v
 }
 
+// GetDeveloperFeeRate returns the DeveloperFeeRate field value if set, zero value otherwise.
+func (o *Merchant) GetDeveloperFeeRate() string {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		var ret string
+		return ret
+	}
+	return *o.DeveloperFeeRate
+}
+
+// GetDeveloperFeeRateOk returns a tuple with the DeveloperFeeRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Merchant) GetDeveloperFeeRateOk() (*string, bool) {
+	if o == nil || IsNil(o.DeveloperFeeRate) {
+		return nil, false
+	}
+	return o.DeveloperFeeRate, true
+}
+
+// HasDeveloperFeeRate returns a boolean if a field has been set.
+func (o *Merchant) HasDeveloperFeeRate() bool {
+	if o != nil && !IsNil(o.DeveloperFeeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeveloperFeeRate gets a reference to the given string and assigns it to the DeveloperFeeRate field.
+func (o *Merchant) SetDeveloperFeeRate(v string) {
+	o.DeveloperFeeRate = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *Merchant) GetCreatedTimestamp() int32 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -202,6 +236,9 @@ func (o Merchant) ToMap() (map[string]interface{}, error) {
 	toSerialize["merchant_id"] = o.MerchantId
 	toSerialize["name"] = o.Name
 	toSerialize["wallet_id"] = o.WalletId
+	if !IsNil(o.DeveloperFeeRate) {
+		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
+	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}

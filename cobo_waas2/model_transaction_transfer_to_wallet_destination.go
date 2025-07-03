@@ -22,7 +22,7 @@ type TransactionTransferToWalletDestination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// The trading account type. Only available for `ExchangeWallet`.
+	// The trading account type. This field is only applicable when `destination_type` is `ExchangeWallet`.
 	TradingAccountType *string `json:"trading_account_type,omitempty"`
 	ExchangeId *ExchangeId `json:"exchange_id,omitempty"`
 	// The transfer amount. For example, if you trade 1.5 BTC, then the value is `1.5`. 

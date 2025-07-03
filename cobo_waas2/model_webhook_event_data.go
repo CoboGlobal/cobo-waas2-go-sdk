@@ -16,6 +16,7 @@ import (
 // WebhookEventData - struct for WebhookEventData
 type WebhookEventData struct {
 	AddressesEventData *AddressesEventData
+	BalanceUpdateInfoEventData *BalanceUpdateInfoEventData
 	ChainsEventData *ChainsEventData
 	MPCVaultEventData *MPCVaultEventData
 	PaymentOrderEventData *PaymentOrderEventData
@@ -32,6 +33,13 @@ type WebhookEventData struct {
 func AddressesEventDataAsWebhookEventData(v *AddressesEventData) WebhookEventData {
 	return WebhookEventData{
 		AddressesEventData: v,
+	}
+}
+
+// BalanceUpdateInfoEventDataAsWebhookEventData is a convenience function that returns BalanceUpdateInfoEventData wrapped in WebhookEventData
+func BalanceUpdateInfoEventDataAsWebhookEventData(v *BalanceUpdateInfoEventData) WebhookEventData {
+	return WebhookEventData{
+		BalanceUpdateInfoEventData: v,
 	}
 }
 
@@ -125,6 +133,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.AddressesEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as AddressesEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'BalanceUpdateInfo'
+	if jsonDict["data_type"] == "BalanceUpdateInfo" {
+		// try to unmarshal JSON data into BalanceUpdateInfoEventData
+		err = json.Unmarshal(data, &dst.BalanceUpdateInfoEventData)
+		if err == nil {
+			return nil // data stored in dst.BalanceUpdateInfoEventData, return on the first match
+		} else {
+			dst.BalanceUpdateInfoEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as BalanceUpdateInfoEventData: %s", err.Error())
 		}
 	}
 
@@ -260,6 +280,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'BalanceUpdateInfoEventData'
+	if jsonDict["data_type"] == "BalanceUpdateInfoEventData" {
+		// try to unmarshal JSON data into BalanceUpdateInfoEventData
+		err = json.Unmarshal(data, &dst.BalanceUpdateInfoEventData)
+		if err == nil {
+			return nil // data stored in dst.BalanceUpdateInfoEventData, return on the first match
+		} else {
+			dst.BalanceUpdateInfoEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as BalanceUpdateInfoEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ChainsEventData'
 	if jsonDict["data_type"] == "ChainsEventData" {
 		// try to unmarshal JSON data into ChainsEventData
@@ -389,6 +421,10 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.AddressesEventData)
 	}
 
+	if src.BalanceUpdateInfoEventData != nil {
+		return json.Marshal(&src.BalanceUpdateInfoEventData)
+	}
+
 	if src.ChainsEventData != nil {
 		return json.Marshal(&src.ChainsEventData)
 	}
@@ -439,6 +475,10 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 	}
 	if obj.AddressesEventData != nil {
 		return obj.AddressesEventData
+	}
+
+	if obj.BalanceUpdateInfoEventData != nil {
+		return obj.BalanceUpdateInfoEventData
 	}
 
 	if obj.ChainsEventData != nil {

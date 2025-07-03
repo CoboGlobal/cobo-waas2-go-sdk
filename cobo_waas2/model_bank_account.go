@@ -23,9 +23,9 @@ type BankAccount struct {
 	BankAccountId string `json:"bank_account_id"`
 	// JSON-formatted bank account details.
 	Info map[string]interface{} `json:"info"`
-	// The created time of the bank account, represented as a UNIX timestamp in seconds.
+	// The creation time of the bank account, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The updated time of the bank account, represented as a UNIX timestamp in seconds.
+	// The last update time of the bank account, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 }
 

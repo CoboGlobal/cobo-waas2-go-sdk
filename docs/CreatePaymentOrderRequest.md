@@ -11,7 +11,8 @@ Name | Type | Description | Notes
 **FeeAmount** | **string** | The developer fee for the order in fiat currency. It is added to the base amount (&#x60;order_amount&#x60;) to determine the final charge. For example, if order_amount is \&quot;100.00\&quot; and fee_amount is \&quot;2.00\&quot;, the customer will be charged \&quot;102.00\&quot; in total, with \&quot;100.00\&quot; being settled to the merchant and \&quot;2.00\&quot; settled to the developer. Values must be greater than 0 and contain two decimal places. | 
 **MerchantOrderCode** | Pointer to **string** | A unique reference code assigned by the merchant to identify this order in their system. | [optional] 
 **PspOrderCode** | **string** | A unique reference code assigned by the developer to identify this order in their system. | 
-**ExpiredIn** | Pointer to **int32** | The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] 
+**ExpiredIn** | Pointer to **int32** | The number of seconds after which the pay-in order will expire. After expiration: - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] 
+**UseDedicatedAddress** | Pointer to **bool** | Whether to allocate a dedicated address for this order.  - &#x60;true&#x60;: A dedicated address will be allocated for this order. - &#x60;false&#x60;: A shared address from the address pool will be used.  | [optional] 
 
 ## Methods
 
@@ -206,6 +207,31 @@ SetExpiredIn sets ExpiredIn field to given value.
 `func (o *CreatePaymentOrderRequest) HasExpiredIn() bool`
 
 HasExpiredIn returns a boolean if a field has been set.
+
+### GetUseDedicatedAddress
+
+`func (o *CreatePaymentOrderRequest) GetUseDedicatedAddress() bool`
+
+GetUseDedicatedAddress returns the UseDedicatedAddress field if non-nil, zero value otherwise.
+
+### GetUseDedicatedAddressOk
+
+`func (o *CreatePaymentOrderRequest) GetUseDedicatedAddressOk() (*bool, bool)`
+
+GetUseDedicatedAddressOk returns a tuple with the UseDedicatedAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUseDedicatedAddress
+
+`func (o *CreatePaymentOrderRequest) SetUseDedicatedAddress(v bool)`
+
+SetUseDedicatedAddress sets UseDedicatedAddress field to given value.
+
+### HasUseDedicatedAddress
+
+`func (o *CreatePaymentOrderRequest) HasUseDedicatedAddress() bool`
+
+HasUseDedicatedAddress returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

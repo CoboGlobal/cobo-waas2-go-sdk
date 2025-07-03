@@ -41,9 +41,15 @@
 
 * `WALLET_CHAIN_ENABLED` (value: `"wallet.chain.enabled"`)
 
+* `WALLET_MPC_BALANCE_UPDATED` (value: `"wallet.mpc.balance.updated"`)
+
+* `WALLET_WEB3_BALANCE_UPDATED` (value: `"wallet.web3.balance.updated"`)
+
 * `PAYMENT_TRANSACTION_CREATED` (value: `"payment.transaction.created"`)
 
 * `PAYMENT_TRANSACTION_LATE` (value: `"payment.transaction.late"`)
+
+* `PAYMENT_TRANSACTION_COMPLETED` (value: `"payment.transaction.completed"`)
 
 * `PAYMENT_TRANSACTION_HELD` (value: `"payment.transaction.held"`)
 

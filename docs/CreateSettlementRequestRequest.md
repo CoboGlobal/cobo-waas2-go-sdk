@@ -5,6 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | **string** | The request ID that is used to track a settlement request. The request ID is provided by you and must be unique. | 
+**AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
+**PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
+**SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
 **Settlements** | [**[]CreateSettlement**](CreateSettlement.md) |  | 
 
 ## Methods
@@ -45,6 +48,81 @@ and a boolean to check if the value has been set.
 
 SetRequestId sets RequestId field to given value.
 
+
+### GetAcquiringType
+
+`func (o *CreateSettlementRequestRequest) GetAcquiringType() AcquiringType`
+
+GetAcquiringType returns the AcquiringType field if non-nil, zero value otherwise.
+
+### GetAcquiringTypeOk
+
+`func (o *CreateSettlementRequestRequest) GetAcquiringTypeOk() (*AcquiringType, bool)`
+
+GetAcquiringTypeOk returns a tuple with the AcquiringType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcquiringType
+
+`func (o *CreateSettlementRequestRequest) SetAcquiringType(v AcquiringType)`
+
+SetAcquiringType sets AcquiringType field to given value.
+
+### HasAcquiringType
+
+`func (o *CreateSettlementRequestRequest) HasAcquiringType() bool`
+
+HasAcquiringType returns a boolean if a field has been set.
+
+### GetPayoutChannel
+
+`func (o *CreateSettlementRequestRequest) GetPayoutChannel() PayoutChannel`
+
+GetPayoutChannel returns the PayoutChannel field if non-nil, zero value otherwise.
+
+### GetPayoutChannelOk
+
+`func (o *CreateSettlementRequestRequest) GetPayoutChannelOk() (*PayoutChannel, bool)`
+
+GetPayoutChannelOk returns a tuple with the PayoutChannel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayoutChannel
+
+`func (o *CreateSettlementRequestRequest) SetPayoutChannel(v PayoutChannel)`
+
+SetPayoutChannel sets PayoutChannel field to given value.
+
+### HasPayoutChannel
+
+`func (o *CreateSettlementRequestRequest) HasPayoutChannel() bool`
+
+HasPayoutChannel returns a boolean if a field has been set.
+
+### GetSettlementType
+
+`func (o *CreateSettlementRequestRequest) GetSettlementType() SettlementType`
+
+GetSettlementType returns the SettlementType field if non-nil, zero value otherwise.
+
+### GetSettlementTypeOk
+
+`func (o *CreateSettlementRequestRequest) GetSettlementTypeOk() (*SettlementType, bool)`
+
+GetSettlementTypeOk returns a tuple with the SettlementType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettlementType
+
+`func (o *CreateSettlementRequestRequest) SetSettlementType(v SettlementType)`
+
+SetSettlementType sets SettlementType field to given value.
+
+### HasSettlementType
+
+`func (o *CreateSettlementRequestRequest) HasSettlementType() bool`
+
+HasSettlementType returns a boolean if a field has been set.
 
 ### GetSettlements
 

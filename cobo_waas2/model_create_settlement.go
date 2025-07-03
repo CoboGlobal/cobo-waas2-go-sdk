@@ -17,21 +17,19 @@ var _ MappedNullable = &CreateSettlement{}
 
 // CreateSettlement struct for CreateSettlement
 type CreateSettlement struct {
-	// The merchant ID.
+	// The merchant ID. Specify this field when `settlement_type` is set to `Merchant`.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The ID of the cryptocurrency you want to settle. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency you want to settle. Specify this field when `payout_channel` is set to `Crypto`. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId *string `json:"token_id,omitempty"`
-	// The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported.
+	// The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported. Specify this field when `payout_channel` is set to `OffRamp`.
 	Currency *string `json:"currency,omitempty"`
-	// The settlement amount. - If `token_id` is specified, this represents the settlement amount in the specified cryptocurrency. - If `token_id` is not specified, this represents the settlement amount in the specified fiat currency.
+	// The settlement amount. - If `payout_channel` is set to `Crypto`, this represents the settlement amount in the specified cryptocurrency. - If `payout_channel` is set to `OffRamp`, this represents the settlement amount in the specified fiat currency. 
 	Amount *string `json:"amount,omitempty"`
-	// The ID of the bank account where the settled funds will be deposited.
+	// The ID of the bank account where the settled funds will be deposited. This field is only applicable when `payout_channel` is set to `OffRamp`. Call [List all bank accounts](/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts. 
 	BankAccountId *string `json:"bank_account_id,omitempty"`
-	SettlementType *SettlementType `json:"settlement_type,omitempty"`
-	// The ID of the pre-approved crypto address used for Crypto settlements.  - This field is only applicable when `payout_channel` is set to `Crypto`. - If `payout_channel` is `OffRamp`, this field will be ignored. - The value must refer to a valid address that has been pre-configured and approved for the given token. 
+	// The ID of the crypto address used for crypto withdrawal. Specify this field when `payout_channel` is set to `Crypto`.  Call [List all crypto addresses](/v2/api-references/payments/list-all-crypto-addresses) to retrieve registered crypto addresses. 
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
-	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
-	// A list of unique order IDs to be included in this settlement.  - This field is only applicable when `settlement_type` is set to `Merchant`. - If provided, the settlement will only apply to the specified orders. - The settlement `amount` must exactly match the total eligible amount from these orders. - This ensures consistency between the declared amount and the actual order-level data being settled. 
+	// A list of order IDs to be included in this settlement. If provided, the settlement request will settle the merchant funds received from the specified orders, and the `amount` field will be ignored.   This field is only applicable when `settlement_type` is set to `Merchant`.  
 	OrderIds []string `json:"order_ids,omitempty"`
 }
 
@@ -41,8 +39,6 @@ type CreateSettlement struct {
 // will change when the set of required properties is changed
 func NewCreateSettlement() *CreateSettlement {
 	this := CreateSettlement{}
-	var currency string = "USD"
-	this.Currency = &currency
 	return &this
 }
 
@@ -51,8 +47,6 @@ func NewCreateSettlement() *CreateSettlement {
 // but it doesn't guarantee that properties required by API are set
 func NewCreateSettlementWithDefaults() *CreateSettlement {
 	this := CreateSettlement{}
-	var currency string = "USD"
-	this.Currency = &currency
 	return &this
 }
 
@@ -216,38 +210,6 @@ func (o *CreateSettlement) SetBankAccountId(v string) {
 	o.BankAccountId = &v
 }
 
-// GetSettlementType returns the SettlementType field value if set, zero value otherwise.
-func (o *CreateSettlement) GetSettlementType() SettlementType {
-	if o == nil || IsNil(o.SettlementType) {
-		var ret SettlementType
-		return ret
-	}
-	return *o.SettlementType
-}
-
-// GetSettlementTypeOk returns a tuple with the SettlementType field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateSettlement) GetSettlementTypeOk() (*SettlementType, bool) {
-	if o == nil || IsNil(o.SettlementType) {
-		return nil, false
-	}
-	return o.SettlementType, true
-}
-
-// HasSettlementType returns a boolean if a field has been set.
-func (o *CreateSettlement) HasSettlementType() bool {
-	if o != nil && !IsNil(o.SettlementType) {
-		return true
-	}
-
-	return false
-}
-
-// SetSettlementType gets a reference to the given SettlementType and assigns it to the SettlementType field.
-func (o *CreateSettlement) SetSettlementType(v SettlementType) {
-	o.SettlementType = &v
-}
-
 // GetCryptoAddressId returns the CryptoAddressId field value if set, zero value otherwise.
 func (o *CreateSettlement) GetCryptoAddressId() string {
 	if o == nil || IsNil(o.CryptoAddressId) {
@@ -278,38 +240,6 @@ func (o *CreateSettlement) HasCryptoAddressId() bool {
 // SetCryptoAddressId gets a reference to the given string and assigns it to the CryptoAddressId field.
 func (o *CreateSettlement) SetCryptoAddressId(v string) {
 	o.CryptoAddressId = &v
-}
-
-// GetPayoutChannel returns the PayoutChannel field value if set, zero value otherwise.
-func (o *CreateSettlement) GetPayoutChannel() PayoutChannel {
-	if o == nil || IsNil(o.PayoutChannel) {
-		var ret PayoutChannel
-		return ret
-	}
-	return *o.PayoutChannel
-}
-
-// GetPayoutChannelOk returns a tuple with the PayoutChannel field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateSettlement) GetPayoutChannelOk() (*PayoutChannel, bool) {
-	if o == nil || IsNil(o.PayoutChannel) {
-		return nil, false
-	}
-	return o.PayoutChannel, true
-}
-
-// HasPayoutChannel returns a boolean if a field has been set.
-func (o *CreateSettlement) HasPayoutChannel() bool {
-	if o != nil && !IsNil(o.PayoutChannel) {
-		return true
-	}
-
-	return false
-}
-
-// SetPayoutChannel gets a reference to the given PayoutChannel and assigns it to the PayoutChannel field.
-func (o *CreateSettlement) SetPayoutChannel(v PayoutChannel) {
-	o.PayoutChannel = &v
 }
 
 // GetOrderIds returns the OrderIds field value if set, zero value otherwise.
@@ -369,14 +299,8 @@ func (o CreateSettlement) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.BankAccountId) {
 		toSerialize["bank_account_id"] = o.BankAccountId
 	}
-	if !IsNil(o.SettlementType) {
-		toSerialize["settlement_type"] = o.SettlementType
-	}
 	if !IsNil(o.CryptoAddressId) {
 		toSerialize["crypto_address_id"] = o.CryptoAddressId
-	}
-	if !IsNil(o.PayoutChannel) {
-		toSerialize["payout_channel"] = o.PayoutChannel
 	}
 	if !IsNil(o.OrderIds) {
 		toSerialize["order_ids"] = o.OrderIds
