@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**DeleteWalletById**](WalletsAPI.md#DeleteWalletById) | **Post** /wallets/{wallet_id}/delete | Delete wallet
 [**GetChainById**](WalletsAPI.md#GetChainById) | **Get** /wallets/chains/{chain_id} | Get chain information
 [**GetMaxTransferableValue**](WalletsAPI.md#GetMaxTransferableValue) | **Get** /wallets/{wallet_id}/max_transferable_value | Get maximum transferable value
+[**GetMaxTransferableValueWithFeeModel**](WalletsAPI.md#GetMaxTransferableValueWithFeeModel) | **Post** /wallets/{wallet_id}/max_transferable_value_with_fee_model | Estimate maximum transferable value
 [**GetTokenById**](WalletsAPI.md#GetTokenById) | **Get** /wallets/tokens/{token_id} | Get token information
 [**GetTokenListingRequestByRequestId**](WalletsAPI.md#GetTokenListingRequestByRequestId) | **Get** /wallets/tokens/listing_requests/{request_id} | Get token listing request
 [**GetWalletById**](WalletsAPI.md#GetWalletById) | **Get** /wallets/{wallet_id} | Get wallet information
@@ -826,6 +827,88 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetMaxTransferableValueWithFeeModel
+
+> MaxTransferableValue GetMaxTransferableValueWithFeeModel(ctx, walletId).GetMaxTransferableValueWithFeeModelRequest(getMaxTransferableValueWithFeeModelRequest).Execute()
+
+Estimate maximum transferable value
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	getMaxTransferableValueWithFeeModelRequest := *coboWaas2.NewGetMaxTransferableValueWithFeeModelRequest("ETH_USDT", coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")}, "2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.WalletsAPI.GetMaxTransferableValueWithFeeModel(ctx, walletId).GetMaxTransferableValueWithFeeModelRequest(getMaxTransferableValueWithFeeModelRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.GetMaxTransferableValueWithFeeModel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMaxTransferableValueWithFeeModel`: MaxTransferableValue
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.GetMaxTransferableValueWithFeeModel`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**walletId** | **string** | The wallet ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMaxTransferableValueWithFeeModelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **getMaxTransferableValueWithFeeModelRequest** | [**GetMaxTransferableValueWithFeeModelRequest**](GetMaxTransferableValueWithFeeModelRequest.md) | The request body for retrieving the maximum transferable value from a specified wallet. | 
+
+### Return type
+
+[**MaxTransferableValue**](MaxTransferableValue.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

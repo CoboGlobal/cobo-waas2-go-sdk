@@ -13,19 +13,21 @@ import (
 	"fmt"
 )
 
-// AutoFuelType The mode of transaction fee payment using Fee Station. Currently, Fee Station supports EVM-compatible and TRON transactions initiated from MPC Wallets (Organization-Controlled). For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction). - `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees. - `PassiveAutoFuel`: Use Fee Station only when the source address balance is insufficient to cover the transaction fees.  Please note that the TRON chain does not support `PassiveAutoFuel` due to its fee delegation mechanism. 
+// AutoFuelType The mode of transaction fee payment using Fee Station. Currently, Fee Station supports EVM-compatible and TRON transactions initiated from MPC Wallets (Organization-Controlled) and Custodial Wallets (Web3 Wallets). For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction). - `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees. - `PassiveAutoFuel`: Use Fee Station only when the source address balance is insufficient to cover the transaction fees. - `UsePortalPreference`: Use fueling strategy based on Portal configuration.  Please note that the TRON chain does not support `PassiveAutoFuel` due to its fee delegation mechanism. 
 type AutoFuelType string
 
 // List of AutoFuelType
 const (
 	AUTOFUELTYPE_PASSIVE_AUTO_FUEL AutoFuelType = "PassiveAutoFuel"
 	AUTOFUELTYPE_PRO_ACTIVE_AUTO_FUEL AutoFuelType = "ProActiveAutoFuel"
+	AUTOFUELTYPE_USE_PORTAL_PREFERENCE AutoFuelType = "UsePortalPreference"
 )
 
 // All allowed values of AutoFuelType enum
 var AllowedAutoFuelTypeEnumValues = []AutoFuelType{
 	"PassiveAutoFuel",
 	"ProActiveAutoFuel",
+	"UsePortalPreference",
 }
 
 func (v *AutoFuelType) UnmarshalJSON(src []byte) error {

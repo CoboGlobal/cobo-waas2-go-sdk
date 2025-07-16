@@ -15,7 +15,7 @@ import (
 // checks if the UtxoFeeBasePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UtxoFeeBasePrice{}
 
-// UtxoFeeBasePrice The transaction fee rate for UTXO-based chains (such as Bitcoin).
+// UtxoFeeBasePrice struct for UtxoFeeBasePrice
 type UtxoFeeBasePrice struct {
 	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate *string `json:"fee_rate,omitempty"`

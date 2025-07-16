@@ -24,6 +24,7 @@ const (
 	TRANSACTIONSUBSTATUS_PENDING_RISK_CONTROL_CHECK TransactionSubStatus = "PendingRiskControlCheck"
 	TRANSACTIONSUBSTATUS_PENDING_APPROVER_CHECK TransactionSubStatus = "PendingApproverCheck"
 	TRANSACTIONSUBSTATUS_REJECTED_COBO_CHECK TransactionSubStatus = "RejectedCoboCheck"
+	TRANSACTIONSUBSTATUS_REJECTED_BY_COBO TransactionSubStatus = "RejectedByCobo"
 	TRANSACTIONSUBSTATUS_REJECTED_WHITE_LIST TransactionSubStatus = "RejectedWhiteList"
 	TRANSACTIONSUBSTATUS_REJECTED_DOUBLE_CHECK TransactionSubStatus = "RejectedDoubleCheck"
 	TRANSACTIONSUBSTATUS_REJECTED_SPENDER_AUTH TransactionSubStatus = "RejectedSpenderAuth"
@@ -76,6 +77,7 @@ var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"PendingRiskControlCheck",
 	"PendingApproverCheck",
 	"RejectedCoboCheck",
+	"RejectedByCobo",
 	"RejectedWhiteList",
 	"RejectedDoubleCheck",
 	"RejectedSpenderAuth",

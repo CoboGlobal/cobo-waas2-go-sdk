@@ -15,11 +15,11 @@ import (
 // checks if the MaxTransferableValue type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MaxTransferableValue{}
 
-// MaxTransferableValue The maximum amount you can transfer from the wallet or the specified wallet address, along with the corresponding transaction fee.
+// MaxTransferableValue The maximum transferable value from the wallet or the specified address, along with the estimated transaction fee.
 type MaxTransferableValue struct {
 	// The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId *string `json:"token_id,omitempty"`
-	// The maximum amount you can transfer from the wallet or the specified wallet address.
+	// The maximum transferable value from the wallet or the specified address.
 	MaxTransferableValue *string `json:"max_transferable_value,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
 }

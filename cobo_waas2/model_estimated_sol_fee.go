@@ -20,7 +20,7 @@ var _ MappedNullable = &EstimatedSOLFee{}
 // EstimatedSOLFee The estimated transaction fee based on the sol fee model.
 type EstimatedSOLFee struct {
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId string `json:"token_id"`
 	Slow *EstimatedSOLFeeSlow `json:"slow,omitempty"`
 	Recommended EstimatedSOLFeeSlow `json:"recommended"`

@@ -17,14 +17,14 @@ import (
 // checks if the TransactionRequestSOLFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionRequestSOLFee{}
 
-// TransactionRequestSOLFee The preset properties to limit transaction fee.  In the SOL fee model, the calculation method for the fee is: fee = base_fee + compute_unit_price * compute_unit_limit + rent_amount, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify the compute_unit_price, compute_unit_limit.   Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionRequestSOLFee The preset properties to limit transaction fee.  In the Solana fee model, the transaction fee is calculated by adding the base fee to the product of the compute unit limit and the compute unit price. This can be expressed as: Transaction fee = base fee + (CU limit * CU price). For more information about the Solana fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify CU price and CU limit to adjust the priority and resource allocation of your transaction.  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionRequestSOLFee struct {
-	// The cost per compute unit. Transactions consume computational resources measured in compute units, and this price helps determine the cost of executing transactions, especially complex ones involving smart contracts.
+	// The price paid per compute unit. This value determines the priority fee for the transaction, allowing you to increase inclusion probability in congested conditions.
 	ComputeUnitPrice string `json:"compute_unit_price"`
-	// The maximum number of compute units allowed for a transaction. This limits the resources any single transaction can consume, preventing excessive resource usage that could impact network performance negatively.
+	// The maximum number of compute units your transaction is allowed to consume. It sets an upper bound on computational resource usage to prevent overload.
 	ComputeUnitLimit string `json:"compute_unit_limit"`
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId string `json:"token_id"`
 }
 

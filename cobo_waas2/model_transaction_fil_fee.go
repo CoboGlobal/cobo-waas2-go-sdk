@@ -17,20 +17,20 @@ import (
 // checks if the TransactionFILFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionFILFee{}
 
-// TransactionFILFee The transaction fee actually charged by the chain that uses the FIL fee model.  In the Fil fee model, the calculation method for the fee is: fee = gas_fee_cap * gas_limit, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionFILFee The transaction fee actually charged by the chain that uses the Filecoin fee model.  In this model, the fee is calculated as: fee = base fee * gas used + gas premium * gas limit. For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionFILFee struct {
-	// This is the minimum fee required to include a transaction in a block. It is determined by the network's congestion level, which adjusts to maintain a target block utilization rate. The base fee is burned, reducing the total supply of Filecoin over time.
+	// The minimum fee required for a transaction to be included in a block. The base fee is dynamically adjusted based on network congestion to maintain target block utilization. It is burned rather than paid to miners, reducing the total Filecoin supply over time.
 	GasBase *string `json:"gas_base,omitempty"`
-	// An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee.
+	// An optional tip you can include to prioritize your transaction. The gas premium incentivizes miners to include your transaction sooner than those offering only the base fee.
 	GasPremium *string `json:"gas_premium,omitempty"`
-	// The gas_fee_cap is a user-defined limit on how much they are willing to pay per unit of gas.
+	// The maximum gas price you are willing to pay per unit of gas.
 	GasFeeCap *string `json:"gas_fee_cap,omitempty"`
-	// This defines the maximum amount of computational effort that a transaction is allowed to consume. It's a way to cap the resources that a transaction can use, ensuring it doesn't consume excessive network resources.
+	// The maximum amount of gas your transaction is allowed to consume.
 	GasLimit *string `json:"gas_limit,omitempty"`
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId *string `json:"token_id,omitempty"`
-	// The transaction fee.
+	// The actually charged transaction fee.
 	FeeUsed *string `json:"fee_used,omitempty"`
 	// The estimated transaction fee.
 	EstimatedFeeUsed *string `json:"estimated_fee_used,omitempty"`

@@ -15,7 +15,7 @@ import (
 // checks if the MaxFeeAmount type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MaxFeeAmount{}
 
-// MaxFeeAmount The maximum transaction fee.
+// MaxFeeAmount struct for MaxFeeAmount
 type MaxFeeAmount struct {
 	// The maximum fee that you are willing to pay for the transaction. Provide the value without applying precision. The transaction will fail if the transaction fee exceeds the maximum fee.
 	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`

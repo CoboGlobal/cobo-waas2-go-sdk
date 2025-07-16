@@ -1,0 +1,265 @@
+# TokenizationTokenInfo
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**TokenId** | **string** | The unique token identifier. | 
+**ChainId** | **string** | The chain ID of the tokenization contract. | 
+**TokenAddress** | Pointer to **string** | The address of the token contract. | [optional] 
+**TokenName** | Pointer to **string** | The name of the token. | [optional] 
+**TokenSymbol** | **string** | The unique token symbol. | 
+**Decimals** | **int32** | The number of decimals of the token. | 
+**AllowlistActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. | [optional] 
+**Status** | [**TokenizationStatus**](TokenizationStatus.md) |  | 
+**TotalSupply** | Pointer to **string** | The total supply of the token. | [optional] 
+**Holdings** | Pointer to **string** | The amount of tokens held by the organization. | [optional] 
+
+## Methods
+
+### NewTokenizationTokenInfo
+
+`func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, decimals int32, status TokenizationStatus, ) *TokenizationTokenInfo`
+
+NewTokenizationTokenInfo instantiates a new TokenizationTokenInfo object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewTokenizationTokenInfoWithDefaults
+
+`func NewTokenizationTokenInfoWithDefaults() *TokenizationTokenInfo`
+
+NewTokenizationTokenInfoWithDefaults instantiates a new TokenizationTokenInfo object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetTokenId
+
+`func (o *TokenizationTokenInfo) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *TokenizationTokenInfo) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *TokenizationTokenInfo) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+
+### GetChainId
+
+`func (o *TokenizationTokenInfo) GetChainId() string`
+
+GetChainId returns the ChainId field if non-nil, zero value otherwise.
+
+### GetChainIdOk
+
+`func (o *TokenizationTokenInfo) GetChainIdOk() (*string, bool)`
+
+GetChainIdOk returns a tuple with the ChainId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChainId
+
+`func (o *TokenizationTokenInfo) SetChainId(v string)`
+
+SetChainId sets ChainId field to given value.
+
+
+### GetTokenAddress
+
+`func (o *TokenizationTokenInfo) GetTokenAddress() string`
+
+GetTokenAddress returns the TokenAddress field if non-nil, zero value otherwise.
+
+### GetTokenAddressOk
+
+`func (o *TokenizationTokenInfo) GetTokenAddressOk() (*string, bool)`
+
+GetTokenAddressOk returns a tuple with the TokenAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenAddress
+
+`func (o *TokenizationTokenInfo) SetTokenAddress(v string)`
+
+SetTokenAddress sets TokenAddress field to given value.
+
+### HasTokenAddress
+
+`func (o *TokenizationTokenInfo) HasTokenAddress() bool`
+
+HasTokenAddress returns a boolean if a field has been set.
+
+### GetTokenName
+
+`func (o *TokenizationTokenInfo) GetTokenName() string`
+
+GetTokenName returns the TokenName field if non-nil, zero value otherwise.
+
+### GetTokenNameOk
+
+`func (o *TokenizationTokenInfo) GetTokenNameOk() (*string, bool)`
+
+GetTokenNameOk returns a tuple with the TokenName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenName
+
+`func (o *TokenizationTokenInfo) SetTokenName(v string)`
+
+SetTokenName sets TokenName field to given value.
+
+### HasTokenName
+
+`func (o *TokenizationTokenInfo) HasTokenName() bool`
+
+HasTokenName returns a boolean if a field has been set.
+
+### GetTokenSymbol
+
+`func (o *TokenizationTokenInfo) GetTokenSymbol() string`
+
+GetTokenSymbol returns the TokenSymbol field if non-nil, zero value otherwise.
+
+### GetTokenSymbolOk
+
+`func (o *TokenizationTokenInfo) GetTokenSymbolOk() (*string, bool)`
+
+GetTokenSymbolOk returns a tuple with the TokenSymbol field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenSymbol
+
+`func (o *TokenizationTokenInfo) SetTokenSymbol(v string)`
+
+SetTokenSymbol sets TokenSymbol field to given value.
+
+
+### GetDecimals
+
+`func (o *TokenizationTokenInfo) GetDecimals() int32`
+
+GetDecimals returns the Decimals field if non-nil, zero value otherwise.
+
+### GetDecimalsOk
+
+`func (o *TokenizationTokenInfo) GetDecimalsOk() (*int32, bool)`
+
+GetDecimalsOk returns a tuple with the Decimals field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDecimals
+
+`func (o *TokenizationTokenInfo) SetDecimals(v int32)`
+
+SetDecimals sets Decimals field to given value.
+
+
+### GetAllowlistActivated
+
+`func (o *TokenizationTokenInfo) GetAllowlistActivated() bool`
+
+GetAllowlistActivated returns the AllowlistActivated field if non-nil, zero value otherwise.
+
+### GetAllowlistActivatedOk
+
+`func (o *TokenizationTokenInfo) GetAllowlistActivatedOk() (*bool, bool)`
+
+GetAllowlistActivatedOk returns a tuple with the AllowlistActivated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowlistActivated
+
+`func (o *TokenizationTokenInfo) SetAllowlistActivated(v bool)`
+
+SetAllowlistActivated sets AllowlistActivated field to given value.
+
+### HasAllowlistActivated
+
+`func (o *TokenizationTokenInfo) HasAllowlistActivated() bool`
+
+HasAllowlistActivated returns a boolean if a field has been set.
+
+### GetStatus
+
+`func (o *TokenizationTokenInfo) GetStatus() TokenizationStatus`
+
+GetStatus returns the Status field if non-nil, zero value otherwise.
+
+### GetStatusOk
+
+`func (o *TokenizationTokenInfo) GetStatusOk() (*TokenizationStatus, bool)`
+
+GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatus
+
+`func (o *TokenizationTokenInfo) SetStatus(v TokenizationStatus)`
+
+SetStatus sets Status field to given value.
+
+
+### GetTotalSupply
+
+`func (o *TokenizationTokenInfo) GetTotalSupply() string`
+
+GetTotalSupply returns the TotalSupply field if non-nil, zero value otherwise.
+
+### GetTotalSupplyOk
+
+`func (o *TokenizationTokenInfo) GetTotalSupplyOk() (*string, bool)`
+
+GetTotalSupplyOk returns a tuple with the TotalSupply field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTotalSupply
+
+`func (o *TokenizationTokenInfo) SetTotalSupply(v string)`
+
+SetTotalSupply sets TotalSupply field to given value.
+
+### HasTotalSupply
+
+`func (o *TokenizationTokenInfo) HasTotalSupply() bool`
+
+HasTotalSupply returns a boolean if a field has been set.
+
+### GetHoldings
+
+`func (o *TokenizationTokenInfo) GetHoldings() string`
+
+GetHoldings returns the Holdings field if non-nil, zero value otherwise.
+
+### GetHoldingsOk
+
+`func (o *TokenizationTokenInfo) GetHoldingsOk() (*string, bool)`
+
+GetHoldingsOk returns a tuple with the Holdings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHoldings
+
+`func (o *TokenizationTokenInfo) SetHoldings(v string)`
+
+SetHoldings sets Holdings field to given value.
+
+### HasHoldings
+
+`func (o *TokenizationTokenInfo) HasHoldings() bool`
+
+HasHoldings returns a boolean if a field has been set.
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

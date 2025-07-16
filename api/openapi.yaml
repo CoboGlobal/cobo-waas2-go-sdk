@@ -1426,6 +1426,55 @@ paths:
       summary: Get maximum transferable value
       tags:
       - Wallets
+  /wallets/{wallet_id}/max_transferable_value_with_fee_model:
+    post:
+      description: |
+        This operation estimates the maximum transferable value from a wallet or a specific wallet address, based on the specified fee settings.
+
+        The `to_address` property is required because it affects the fee calculation.
+
+        <Note>This operation is applicable to Custodial Wallets (Web3 Wallets) and MPC Wallets only.</Note>
+      operationId: get_max_transferable_value_with_fee_model
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/maxTransferableValueRequestBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaxTransferableValue'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: Estimate maximum transferable value
+      tags:
+      - Wallets
   /wallets/{wallet_id}/addresses:
     get:
       description: |
@@ -4344,101 +4393,6 @@ paths:
       summary: Sign and broadcast transaction
       tags:
       - Transactions
-  /transactions/{transaction_id}/approval_detail:
-    get:
-      description: |
-        This operation retrieves detailed approval information about a specified transaction.
-      operationId: get_transaction_approval_detail
-      parameters:
-      - description: The transaction ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: transaction_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionApprovalDetail'
-          description: The information about a transaction approval detail.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - transaction.read
-      summary: Get transaction approval details
-      tags:
-      - Transactions
-  /transactions/approval_details:
-    get:
-      description: |
-        This operation retrieves detailed approval information for all transactions.
-      operationId: list_transaction_approval_details
-      parameters:
-      - description: "A list of transaction IDs, separated by comma."
-        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
-        explode: true
-        in: query
-        name: transaction_ids
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: "A list of Cobo IDs, separated by comma. A Cobo ID can be used\
-          \ to track a transaction."
-        example: "20231213122855000000000000000000,20231213122955000000000000000000"
-        explode: true
-        in: query
-        name: cobo_ids
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_transaction_approval_details_200_response'
-          description: The information about transaction approval detail.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - transaction.read
-      summary: List transaction approval details
-      tags:
-      - Transactions
   /oauth/token:
     get:
       description: "<Note>This operation is only applicable to Cobo Portal App developers.\
@@ -4546,7 +4500,7 @@ paths:
       description: |
         This operation acquires an Access Token and a Refresh Token for the Checkout SDK.
 
-        For security purposes, an Access Token expires after a certain period. Once it expires, you need to call the [Refresh Access Token](/v2/api-references/oauth/refresh-access-token) operation to get a new Access Token and a new Refresh Token.
+        For security purposes, an Access Token expires after a certain period. Once it expires, you need to call the [Refresh Access Token](https://www.cobo.com/developers/v2/api-references/oauth/refresh-access-token) operation to get a new Access Token and a new Refresh Token.
       operationId: exchange_permission_token
       requestBody:
         $ref: '#/components/requestBodies/permissionTokenExchangeBody'
@@ -9857,6 +9811,26 @@ components:
       schema:
         type: string
       style: form
+    optionalRequestIDsParam:
+      description: "A list of request IDs, separated by comma."
+      example: "web_send_by_user_327_1610444045047,web_send_by_user_327_1610444045048"
+      explode: true
+      in: query
+      name: request_ids
+      required: false
+      schema:
+        type: string
+      style: form
+    optionalTemplateVersionParam:
+      description: The version of the template used for the transaction approval.
+      example: 1.0.0
+      explode: true
+      in: query
+      name: template_version
+      required: false
+      schema:
+        type: string
+      style: form
     webhookEventIdParam:
       description: "The event ID. You can obtain a list of event IDs by calling [List\
         \ all events](https://www.cobo.com/developers/v2/api-references/developers--webhooks/list-all-events)."
@@ -10715,6 +10689,55 @@ components:
       schema:
         $ref: '#/components/schemas/AcquiringType'
       style: form
+    tokenizationActivityIdPathParam:
+      description: The ID of the activity.
+      example: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
+      explode: false
+      in: path
+      name: activity_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
+    tokenizationTokenStandardOptionalParam:
+      description: Filter by token standard
+      example: ERC20
+      explode: true
+      in: query
+      name: token_standard
+      required: false
+      schema:
+        $ref: '#/components/schemas/TokenizationTokenStandard'
+      style: form
+    tokenizationStatusOptionalParam:
+      description: Filter by token status
+      example: Confirmed
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        $ref: '#/components/schemas/TokenizationStatus'
+      style: form
+    tokenizationActivityTypeOptionalParam:
+      description: Filter by tokenization activity type.
+      explode: true
+      in: query
+      name: activity_type
+      required: false
+      schema:
+        $ref: '#/components/schemas/TokenizationOperationType'
+      style: form
+    tokenizationActivityStatusOptionalParam:
+      description: Filter by tokenization activity status.
+      explode: true
+      in: query
+      name: activity_status
+      required: false
+      schema:
+        $ref: '#/components/schemas/TokenizationActivityStatus'
+      style: form
   requestBodies:
     createWalletBody:
       content:
@@ -10770,33 +10793,9 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              token_id:
-                description: "The token ID of the transferred token. You can retrieve\
-                  \ the IDs of all the tokens you can use by calling [List enabled\
-                  \ tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).\
-                  \ For transfers from Exchange Wallets, this property value represents\
-                  \ the asset ID."
-                example: ETH_USDT
-                type: string
-              fee:
-                $ref: '#/components/schemas/TransactionRequestFee'
-              to_address:
-                description: The recipient's address.
-                example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
-                type: string
-              from_address:
-                description: "The sender's address. For EVM addresses in MPC Wallets,\
-                  \ this parameter is required."
-                example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
-                type: string
-            required:
-            - fee
-            - to_address
-            - token_id
-            type: object
-      description: The request body to get max transferable value within a specified
-        wallet.
+            $ref: '#/components/schemas/get_max_transferable_value_with_fee_model_request'
+      description: The request body for retrieving the maximum transferable value
+        from a specified wallet.
     createKeyShareHolderGroupBody:
       content:
         application/json:
@@ -11004,6 +11003,33 @@ components:
             type: object
       description: The request body for creating a swap activity.
       required: true
+    estimateSwapFeeBody:
+      content:
+        application/json:
+          schema:
+            properties:
+              wallet_id:
+                description: The unique identifier of the wallet to pay.
+                example: 123e4567-e89b-12d3-a456-426614174000
+                type: string
+              address:
+                description: "The wallet address, required when the wallet is not\
+                  \ a custodial wallet."
+                example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+                type: string
+              quote_id:
+                description: The unique identifier of the quote.
+                example: 123e4567-e89b-12d3-a456-426614174001
+                format: uuid
+                type: string
+              fee_type:
+                $ref: '#/components/schemas/FeeType'
+            required:
+            - quote_id
+            - wallet_id
+            type: object
+      description: The request body for estimating the fee of a swap activity.
+      required: true
     graphQLRequestBody:
       content:
         application/json:
@@ -11139,12 +11165,38 @@ components:
             - token_id
             type: object
       description: The request body to create a crypto address.
-    updateTopUpAddressBody:
+    createForceSweepBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UpdateTopUpAddress'
-      description: The request body to update top up address.
+            description: The information about the request to force sweep.
+            properties:
+              request_id:
+                description: The request id of the force sweep.
+                example: 123e4567-e89b-12d3-a456-426614174002
+                type: string
+              wallet_id:
+                description: "The wallet ID to force sweep, which is the unique identifier\
+                  \ of a wallet."
+                example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                format: uuid
+                type: string
+              token_id:
+                description: "The token ID to force sweep, which is the unique identifier\
+                  \ of a token."
+                example: ETH_USDT
+                type: string
+              amount:
+                description: The amount of needing force sweep.
+                example: "10.5"
+                type: string
+            required:
+            - amount
+            - request_id
+            - token_id
+            - wallet_id
+            type: object
+      description: The request body to force sweep.
     estimateFeeStationFeeBody:
       content:
         application/json:
@@ -11163,6 +11215,77 @@ components:
           schema:
             $ref: '#/components/schemas/revoke_approval_request_request'
       description: The request body to revoke an approval request.
+    tokenizationUpdateAllowlistAddressesBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationUpdateAllowlistAddressesRequest'
+      description: Request body for managing multiple allowlist addresses (adding
+        or removing).
+    tokenizationUpdateBlocklistAddressesBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationUpdateBlocklistAddressesRequest'
+      description: Request body for managing multiple blocklist addresses (adding
+        or removing).
+    tokenizationBurnTokenBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationBurnTokenRequest'
+      description: Request body for burning tokens
+    tokenizationIssueTokenBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationIssuedTokenRequest'
+      description: The request body to issue a new token.
+      required: true
+    tokenizationEstimateFeeBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationEstimateFeeRequest'
+      description: The request body to estimate tokenization operation fee.
+      required: true
+    tokenizationMintTokenBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationMintTokenRequest'
+      description: The request body for minting tokens
+      required: true
+    tokenizationPauseTokenBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationPauseTokenRequest'
+      description: Request body for pausing tokens
+    tokenizationUnpauseTokenBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationUnpauseTokenRequest'
+      description: Request body for unpausing tokens
+    tokenizationAllowlistActivationBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationAllowlistActivationRequest'
+      description: Request body for updating the allowlist activation setting.
+    tokenizationContractCallBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationContractCallRequest'
+      description: Request body for contract call
+    updateTopUpAddressBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateTopUpAddress'
+      description: The request body to update top up address.
   responses:
     badRequestError:
       content:
@@ -11569,8 +11692,29 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/list_transaction_approval_details_200_response'
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/TransactionApprovalDetail'
+                type: array
+            type: object
       description: The information about transaction approval detail.
+    listApprovalDetailsResponse:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ApprovalDetail'
+            type: array
+      description: The information about transaction approval detail.
+    getTemplatesResponse:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/ApprovalTemplate'
+            type: array
+      description: Response containing a list of transaction approval templates.
     createWebhookEndpointResponse:
       content:
         application/json:
@@ -11887,6 +12031,12 @@ components:
           schema:
             $ref: '#/components/schemas/SwapQuote'
       description: The swap quote has been successfully retrieved.
+    estimateSwapFeeResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EstimatedFee'
+      description: Successfully retrieved the estimated fee for swap activity.
     graphqlResponse:
       content:
         application/json:
@@ -12078,6 +12228,103 @@ components:
           schema:
             $ref: '#/components/schemas/revoke_approval_request_201_response'
       description: The request workflow approval was successful.
+    listTokenizationActivitiesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationListActivitiesResponse'
+      description: List of tokenization activities retrieved successfully
+    getTokenizationActivityResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationActivityInfo'
+      description: Activity details retrieved successfully
+    estimateTokenizationFeeResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EstimatedFee'
+      description: Successfully retrieved the estimated fee for token issuance.
+    getTokenizationAllowlistActivationResponse:
+      content:
+        application/json:
+          schema:
+            description: The response schema for retrieving the allowlist activation
+              status.
+            properties:
+              activated:
+                description: Indicates whether the allowlist feature is activated
+                  for the token.
+                example: true
+                type: boolean
+            required:
+            - activated
+            type: object
+      description: Successful response with the allowlist activation status.
+    getTokenizationInfoResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationTokenDetailInfo'
+      description: Successfully retrieved token information
+    listTokenizationAllowlistAddressesResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/TokenizationAllowlistAddressNote'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            required:
+            - data
+            - pagination
+            title: TokenizationAllowlistAddressesResponse
+            type: object
+      description: Successful response with the list of allowlist addresses.
+    listTokenizationBlocklistAddressesResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/TokenizationBlocklistAddressNote'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            required:
+            - data
+            - pagination
+            type: object
+      description: Successful response with the list of blocklist addresses.
+    listTokenizationHoldingsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationListHoldingsResponse'
+      description: Successfully retrieved token holdings information
+    listTokenizationInfoResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationListTokenInfoResponse'
+      description: Successful response with the list of token information.
+    tokenizationOperationResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationOperationResponse'
+      description: Tokenization operation transaction created successfully
+    listTokenizationSupportedChainsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenizationListEnabledChainsResponse'
+      description: List of tokenization supported chains retrieved successfully
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -12821,8 +13068,8 @@ components:
       - tx_hash
       type: object
     MaxTransferableValue:
-      description: "The maximum amount you can transfer from the wallet or the specified\
-        \ wallet address, along with the corresponding transaction fee."
+      description: "The maximum transferable value from the wallet or the specified\
+        \ address, along with the estimated transaction fee."
       example:
         token_id: ETH
         fee:
@@ -12838,8 +13085,8 @@ components:
           example: ETH
           type: string
         max_transferable_value:
-          description: The maximum amount you can transfer from the wallet or the
-            specified wallet address.
+          description: The maximum transferable value from the wallet or the specified
+            address.
           example: "3.0"
           type: string
         fee:
@@ -13740,7 +13987,6 @@ components:
           type: string
       type: object
     MaxFeeAmount:
-      description: The maximum transaction fee.
       properties:
         max_fee_amount:
           description: The maximum fee that you are willing to pay for the transaction.
@@ -13759,7 +14005,6 @@ components:
           type: string
       type: object
     EvmEip1559FeeBasePrice:
-      description: The transaction gas price based on the EIP-1559 fee model.
       properties:
         max_fee_per_gas:
           description: "The maximum gas fee per gas unit used on the chain, in wei."
@@ -13773,7 +14018,6 @@ components:
           type: string
       type: object
     EvmLegacyFeeBasePrice:
-      description: The transaction gas price based on the legacy fee model.
       properties:
         gas_price:
           description: "The gas price, in wei. The gas price represents the amount\
@@ -13783,7 +14027,6 @@ components:
           type: string
       type: object
     UtxoFeeBasePrice:
-      description: The transaction fee rate for UTXO-based chains (such as Bitcoin).
       properties:
         fee_rate:
           description: The fee rate in sat/vByte. The fee rate represents the satoshis
@@ -13798,7 +14041,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: ETH
           type: string
         slow:
@@ -13831,7 +14074,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: ETH
           type: string
         slow:
@@ -13861,7 +14104,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: BTC
           type: string
         slow:
@@ -13891,7 +14134,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: TRON
             type: string
         type: object
@@ -13928,33 +14171,29 @@ components:
       description: The transaction base fee based on the SOL fee model.
       properties:
         base_fee:
-          description: "The fundamental fee required for each transaction. It is charged\
-            \ to prevent spam transactions and network congestion, ensuring that only\
-            \ meaningful transactions consume network resources."
+          description: "A fixed fee charged per signature. The default is 5,000 lamports\
+            \ per signature."
           example: "0.000005"
           type: string
         rent_amount:
-          description: The fee charged as rent for maintaining the state of accounts
-            on the blockchain. This rent ensures accounts are stored on-chain over
-            the long term and that there's sufficient balance to sustain the account
-            state.
+          description: The rent fee charged by the network to store non–rent-exempt
+            accounts on-chain. It is deducted periodically until the account maintains
+            the minimum balance required for rent exemption.
           example: '0.00001 '
           type: string
       type: object
     SOLComputeUnit:
-      description: The transaction gas price based on the SOL fee model.
       properties:
         compute_unit_price:
-          description: "The cost per compute unit. Transactions consume computational\
-            \ resources measured in compute units, and this price helps determine\
-            \ the cost of executing transactions, especially complex ones involving\
-            \ smart contracts."
+          description: "The price paid per compute unit. This value determines the\
+            \ priority fee for the transaction, allowing you to increase inclusion\
+            \ probability in congested conditions."
           example: "0.0001"
           type: string
         compute_unit_limit:
-          description: "The maximum number of compute units allowed for a transaction.\
-            \ This limits the resources any single transaction can consume, preventing\
-            \ excessive resource usage that could impact network performance negatively."
+          description: The maximum number of compute units your transaction is allowed
+            to consume. It sets an upper bound on computational resource usage to
+            prevent overload.
           example: "200000"
           type: string
       type: object
@@ -13962,33 +14201,27 @@ components:
       description: The transaction gas base based on the FIL fee model.
       properties:
         gas_base:
-          description: "This is the minimum fee required to include a transaction\
-            \ in a block. It is determined by the network's congestion level, which\
-            \ adjusts to maintain a target block utilization rate. The base fee is\
-            \ burned, reducing the total supply of Filecoin over time."
+          description: "The minimum fee required for a transaction to be included\
+            \ in a block. The base fee is dynamically adjusted based on network congestion\
+            \ to maintain target block utilization. It is burned rather than paid\
+            \ to miners, reducing the total Filecoin supply over time."
           example: "0.0002"
           type: string
       type: object
     FILPrice:
-      description: The transaction gas price based on the FIL fee model.
       properties:
         gas_premium:
-          description: An optional additional fee that users can include to prioritize
-            their transactions over others. It acts like a tip to incentivize miners
-            to select and include your transaction over transactions with only the
-            base fee.
+          description: An optional tip you can include to prioritize your transaction.
+            The gas premium incentivizes miners to include your transaction sooner
+            than those offering only the base fee.
           example: "0.0001"
           type: string
         gas_fee_cap:
-          description: The gas_fee_cap is a user-defined limit on how much they are
-            willing to pay per unit of gas.
+          description: The maximum gas price you are willing to pay per unit of gas.
           example: "0.00035"
           type: string
         gas_limit:
-          description: "This defines the maximum amount of computational effort that\
-            \ a transaction is allowed to consume. It's a way to cap the resources\
-            \ that a transaction can use, ensuring it doesn't consume excessive network\
-            \ resources."
+          description: The maximum amount of gas your transaction is allowed to consume.
           example: "500"
           type: string
       type: object
@@ -13998,7 +14231,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: TRON
             type: string
           is_loop:
@@ -14028,7 +14261,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: ETH
           type: string
         slow:
@@ -14049,7 +14282,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: ETH
           type: string
         slow:
@@ -14070,7 +14303,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: BTC
           type: string
         slow:
@@ -14091,7 +14324,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: ETH
           type: string
         slow:
@@ -14104,7 +14337,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: SOL (Estimated)
+      title: SOL
       type: object
     EstimatedFILFee:
       description: The estimated transaction fee based on the fil fee model.
@@ -14112,7 +14345,7 @@ components:
         fee_type:
           $ref: '#/components/schemas/FeeType'
         token_id:
-          description: The token ID of the transaction fee.
+          description: The token used to pay the transaction fee.
           example: ETH
           type: string
         slow:
@@ -14125,7 +14358,7 @@ components:
       - fee_type
       - recommended
       - token_id
-      title: FIL (Estimated)
+      title: FIL
       type: object
     EstimatedFee:
       discriminator:
@@ -14150,7 +14383,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: TRON
             type: string
         type: object
@@ -14178,7 +14411,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: ETH
             type: string
           gas_limit:
@@ -14212,7 +14445,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: ETH
             type: string
           gas_limit:
@@ -14244,7 +14477,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: BTC
             type: string
           max_fee_amount:
@@ -14274,22 +14507,25 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: ETH
             type: string
         type: object
       - $ref: '#/components/schemas/SOLComputeUnit'
-      description: "The preset properties to limit transaction fee.\n\nIn the SOL\
-        \ fee model, the calculation method for the fee is: fee = base_fee + compute_unit_price\
-        \ * compute_unit_limit + rent_amount, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).\n\
-        \nYou can specify the compute_unit_price, compute_unit_limit. \n\nSwitch between\
-        \ the tabs to display the properties for different transaction fee models.\n"
+      description: |
+        The preset properties to limit transaction fee.
+
+        In the Solana fee model, the transaction fee is calculated by adding the base fee to the product of the compute unit limit and the compute unit price. This can be expressed as: Transaction fee = base fee + (CU limit * CU price). For more information about the Solana fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+
+        You can specify CU price and CU limit to adjust the priority and resource allocation of your transaction.
+
+        Switch between the tabs to display the properties for different transaction fee models.
       required:
       - compute_unit_limit
       - compute_unit_price
       - fee_type
       - token_id
-      title: SOL (Preset)
+      title: SOL
       type: object
     TransactionRequestFILFee:
       allOf:
@@ -14297,7 +14533,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: ETH
             type: string
         type: object
@@ -14305,7 +14541,9 @@ components:
       description: |
         The preset properties to limit transaction fee.
 
-        In the Fil fee model, the calculation method for the fee is: fee = gas_fee_cap * gas_limit, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        In the Filecoin fee model, the transaction fee is calculated using the minimum of your specified gas fee cap and the sum of the base fee and gas premium, then multiplied by the gas limit. This can be expressed as: Transaction fee = min(gas fee cap, base fee + gas premium) * gas limit. For more information about the Filecoin fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+
+        You can specify the gas fee cap, gas premium, and gas limit to control fee behavior and prioritization.
 
         Switch between the tabs to display the properties for different transaction fee models.
       required:
@@ -14313,7 +14551,7 @@ components:
       - gas_fee_cap
       - gas_premium
       - token_id
-      title: FIL (Preset)
+      title: FIL
       type: object
     TransactionRequestFee:
       discriminator:
@@ -14851,6 +15089,7 @@ components:
       - PendingRiskControlCheck
       - PendingApproverCheck
       - RejectedCoboCheck
+      - RejectedByCobo
       - RejectedWhiteList
       - RejectedDoubleCheck
       - RejectedSpenderAuth
@@ -15879,11 +16118,11 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: TRON
             type: string
           fee_used:
-            description: The transaction fee.
+            description: The actually charged transaction fee.
             example: "0.1"
             type: string
           estimated_fee_used:
@@ -15905,7 +16144,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: ETH
             type: string
           effective_gas_price:
@@ -15915,7 +16154,7 @@ components:
             example: "100000000"
             type: string
           fee_used:
-            description: The transaction fee.
+            description: The actually charged transaction fee.
             example: "0.1"
             type: string
           estimated_fee_used:
@@ -15954,11 +16193,11 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: ETH
             type: string
           fee_used:
-            description: The transaction fee.
+            description: The actually charged transaction fee.
             example: "0.1"
             type: string
           estimated_fee_used:
@@ -15987,11 +16226,11 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
+            description: The token used to pay the transaction fee.
             example: BTC
             type: string
           fee_used:
-            description: The transaction fee.
+            description: The actually charged transaction fee.
             example: "0.1"
             type: string
           estimated_fee_used:
@@ -16022,11 +16261,11 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
-            example: BTC
+            description: The token used to pay the transaction fee.
+            example: SOL
             type: string
           fee_used:
-            description: The transaction fee.
+            description: The actually charged transaction fee.
             example: "0.1"
             type: string
           estimated_fee_used:
@@ -16037,9 +16276,9 @@ components:
       - $ref: '#/components/schemas/SOLBase'
       - $ref: '#/components/schemas/SOLComputeUnit'
       description: |
-        The transaction fee actually charged by the chain that uses the SOL fee model.
+        The transaction fee actually charged by the chain that uses the Solana fee model.
 
-        In the SOL fee model, the calculation method for the fee is: fee = base_fee + compute_unit_price * compute_unit_limit + rent_amount, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        In this model, the fee is calculated as: fee = base fee + (compute unit price * compute unit limit) + rent (if applicable). For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         Switch between the tabs to display the properties for different transaction fee models.
       required:
@@ -16052,11 +16291,11 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token ID of the transaction fee.
-            example: BTC
+            description: The token used to pay the transaction fee.
+            example: FIL
             type: string
           fee_used:
-            description: The transaction fee.
+            description: The actually charged transaction fee.
             example: "0.1"
             type: string
           estimated_fee_used:
@@ -16067,9 +16306,9 @@ components:
       - $ref: '#/components/schemas/FILBase'
       - $ref: '#/components/schemas/FILPrice'
       description: |
-        The transaction fee actually charged by the chain that uses the FIL fee model.
+        The transaction fee actually charged by the chain that uses the Filecoin fee model.
 
-        In the Fil fee model, the calculation method for the fee is: fee = gas_fee_cap * gas_limit, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        In this model, the fee is calculated as: fee = base fee * gas used + gas premium * gas limit. For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         Switch between the tabs to display the properties for different transaction fee models.
       required:
@@ -16178,94 +16417,20 @@ components:
       type: string
     AutoFuelType:
       description: |
-        The mode of transaction fee payment using Fee Station. Currently, Fee Station supports EVM-compatible and TRON transactions initiated from MPC Wallets (Organization-Controlled). For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).
+        The mode of transaction fee payment using Fee Station. Currently, Fee Station supports EVM-compatible and TRON transactions initiated from MPC Wallets (Organization-Controlled) and Custodial Wallets (Web3 Wallets). For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).
         - `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees.
         - `PassiveAutoFuel`: Use Fee Station only when the source address balance is insufficient to cover the transaction fees.
+        - `UsePortalPreference`: Use fueling strategy based on Portal configuration.
 
         Please note that the TRON chain does not support `PassiveAutoFuel` due to its fee delegation mechanism.
       enum:
       - PassiveAutoFuel
       - ProActiveAutoFuel
+      - UsePortalPreference
       example: PassiveAutoFuel
       type: string
     TransactionApprovalDetail:
       description: The approval detail data for transaction.
-      example:
-        transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
-        approver:
-          result: Approved
-          review_threshold: 1
-          complete_time: complete_time
-          user_details:
-          - result: Approved
-            signature: signature
-            name: tom
-            language: en
-            message: message
-            extra_message: extra_message
-            email: tom@gmail.com
-            message_version: 1.0.1
-            pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-          - result: Approved
-            signature: signature
-            name: tom
-            language: en
-            message: message
-            extra_message: extra_message
-            email: tom@gmail.com
-            message_version: 1.0.1
-            pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-          initiator: tom@gmail.com
-        address_owner:
-          result: Approved
-          review_threshold: 1
-          complete_time: complete_time
-          user_details:
-          - result: Approved
-            signature: signature
-            name: tom
-            language: en
-            message: message
-            extra_message: extra_message
-            email: tom@gmail.com
-            message_version: 1.0.1
-            pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-          - result: Approved
-            signature: signature
-            name: tom
-            language: en
-            message: message
-            extra_message: extra_message
-            email: tom@gmail.com
-            message_version: 1.0.1
-            pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-          initiator: tom@gmail.com
-        spender:
-          result: Approved
-          review_threshold: 1
-          complete_time: complete_time
-          user_details:
-          - result: Approved
-            signature: signature
-            name: tom
-            language: en
-            message: message
-            extra_message: extra_message
-            email: tom@gmail.com
-            message_version: 1.0.1
-            pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-          - result: Approved
-            signature: signature
-            name: tom
-            language: en
-            message: message
-            extra_message: extra_message
-            email: tom@gmail.com
-            message_version: 1.0.1
-            pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-          initiator: tom@gmail.com
-        cobo_id: "20231213122855000000000000000000"
-        request_id: web_send_by_user_327_1610444045047
       properties:
         transaction_id:
           description: The transaction ID.
@@ -16300,30 +16465,6 @@ components:
       type: string
     TransactionRoleApprovalDetail:
       description: The role approval data for transaction.
-      example:
-        result: Approved
-        review_threshold: 1
-        complete_time: complete_time
-        user_details:
-        - result: Approved
-          signature: signature
-          name: tom
-          language: en
-          message: message
-          extra_message: extra_message
-          email: tom@gmail.com
-          message_version: 1.0.1
-          pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-        - result: Approved
-          signature: signature
-          name: tom
-          language: en
-          message: message
-          extra_message: extra_message
-          email: tom@gmail.com
-          message_version: 1.0.1
-          pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-        initiator: tom@gmail.com
       properties:
         result:
           $ref: '#/components/schemas/TransactionApprovalResult'
@@ -16345,16 +16486,6 @@ components:
       type: object
     TransactionUserApprovalDetail:
       description: The user approval data for transaction.
-      example:
-        result: Approved
-        signature: signature
-        name: tom
-        language: en
-        message: message
-        extra_message: extra_message
-        email: tom@gmail.com
-        message_version: 1.0.1
-        pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
       properties:
         name:
           description: The name of the user who audited this message.
@@ -16716,6 +16847,156 @@ components:
       - extra_type
       title: CoreStakeInfo
       type: object
+    ApprovalDetail:
+      description: The approval detail data for transaction.
+      properties:
+        transaction_id:
+          description: The transaction ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          format: uuid
+          type: string
+        cobo_id:
+          description: "The Cobo ID, which can be used to track a transaction."
+          example: "20231213122855000000000000000000"
+          type: string
+        request_id:
+          description: The request ID that is used to track a transaction request.
+            The request ID is provided by you and must be unique within your organization.
+          example: web_send_by_user_327_1610444045047
+          type: string
+        broker_user:
+          $ref: '#/components/schemas/RoleDetail'
+        spender:
+          $ref: '#/components/schemas/RoleDetail'
+        approver:
+          $ref: '#/components/schemas/RoleDetail'
+      type: object
+    RoleDetail:
+      description: Transaction approval details response schema.
+      properties:
+        result:
+          $ref: '#/components/schemas/ApprovalTransactionResult'
+        threshold:
+          description: The threshold for the transaction approval.
+          example: 2
+          type: integer
+        user_details:
+          items:
+            $ref: '#/components/schemas/ApprovalUserDetail'
+          type: array
+      type: object
+    ApprovalResult:
+      description: "The single approval result. Possible values include: \n  - `1`:\
+        \ The transaction is pending approval.\n  - `2`: The transaction is approved.\n\
+        \  - `3`: The transaction is rejected.\n"
+      enum:
+      - 1
+      - 2
+      - 3
+      example: 1
+      type: integer
+      x-enum-varnames:
+      - PENDING
+      - APPROVED
+      - REJECTED
+    ApprovalShowInfo:
+      description: |
+        Extra information for transaction approval details.
+      properties:
+        org_name:
+          description: The name of the organization that the transaction belongs to.
+          example: Cobo
+          type: string
+        wallet_name:
+          description: The name of the wallet that the transaction belongs to.
+          example: Cobo Wallet
+          type: string
+        environment:
+          description: The environment in which the transaction is processed.
+          example: Prod
+          type: string
+        from_address_label:
+          description: The label of the address from which the transaction is initiated.
+          example: Main Address
+          type: string
+        to_address_label:
+          description: The label of the address to which the transaction is sent.
+          example: Exchange Address
+          type: string
+      type: object
+    ApprovalTemplate:
+      description: The template for transaction approval details.
+      properties:
+        business_key:
+          description: The business key that is used to identify the transaction.
+          example: transaction_withdrawal
+          type: string
+        template_text:
+          description: The template text that is used for the transaction approval.
+          example: "{{user_name}} requests to withdraw {{amount}} {{currency}} from\
+            \ the account."
+          type: string
+        template_version:
+          description: The version of the template used for the transaction approval.
+          example: 1.0.0
+          type: string
+      type: object
+    ApprovalTransactionResult:
+      description: "The transaction approval result. Possible values include: \n \
+        \ - `-1`: The transaction is rejected.\n  - `0`: The transaction is pending\
+        \ approval.\n  - `1`: The transaction is approved.\n"
+      enum:
+      - -1
+      - 0
+      - 1
+      example: 1
+      type: integer
+      x-enum-varnames:
+      - REJECTED
+      - PENDING
+      - APPROVED
+    ApprovalUserDetail:
+      description: |
+        The user detail for a transaction approval. This includes the user's email, public key, signature, statement UUID, result of the approval, creation time, template version, header title, whether it is for signing, and additional information to show.
+      properties:
+        user_email:
+          description: The email address of the user who approved the transaction.
+          example: example@gmail.com
+          type: string
+        pubkey:
+          description: The public key of the user who approved the transaction.
+          example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          type: string
+        signature:
+          description: The signature of the transaction approval.
+          example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          type: string
+        statement_uuid:
+          description: The UUID of the statement associated with the transaction approval.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          format: uuid
+          type: string
+        result:
+          $ref: '#/components/schemas/ApprovalResult'
+        created_time:
+          description: The timestamp when the approval was created.
+          example: 1610444045
+          type: integer
+        template_version:
+          description: The version of the template used for the transaction approval.
+          example: 1.0.0
+          type: string
+        header_title:
+          description: The title of the header for the transaction approval.
+          example: Transaction Approval
+          type: string
+        is_for_sign:
+          description: Indicates whether the approval is for signing.
+          example: true
+          type: boolean
+        show_info:
+          $ref: '#/components/schemas/ApprovalShowInfo'
+      type: object
     CustodialTransferSource:
       description: |
         The information about the transaction source types `Asset`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -16741,7 +17022,8 @@ components:
       description: |
         The information about the transaction source types `Web3`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
-        You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+        - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
+        - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
 
         Switch between the tabs to display the properties for different transaction sources.
       properties:
@@ -16754,11 +17036,14 @@ components:
           type: string
         address:
           description: |
-            The wallet address.
+            Indicates the wallet address to be used as the source of funds.
+            - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
+              For RBF transactions, please note the following:
+                - If the original transaction did not specify `included_utxos`, the RBF transaction may omit `address`, `included_utxos`, or both.
+                - If the original transaction specified `included_utxos`, the RBF transaction must specify either `address` or `included_utxos`, or both.
+                - The `address` or `included_utxos` in the RBF transaction may differ from those in the original transaction.
 
-            If you want to specify the UTXOs to be used, please provide the `included_utxos` property. When `included_utxos` is specified, only these specified UTXOs will be used for the transaction. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.
-
-            You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+            - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           type: string
         included_utxos:
@@ -16778,7 +17063,8 @@ components:
       description: |
         The information about the transaction source types `Org-Controlled` and `User-Controlled`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 
-        You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+        - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
+        - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
 
         Switch between the tabs to display the properties for different transaction sources.
       example:
@@ -16810,10 +17096,14 @@ components:
           type: string
         address:
           description: |
-            The wallet address.
-            If you want to specify the UTXOs to be used, please provide the `included_utxos` property. When `included_utxos` is specified, only these specified UTXOs will be used for the transaction. If you specify both the `address` and `included_utxos` properties, the specified included UTXOs must belong to the address. It is recommended to specify no more than 100 included UTXOs to ensure optimal transaction processing.
+            Indicates the wallet address to be used as the source of funds.
+            - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
+              For RBF transactions, please note the following:
+                - If the original transaction did not specify `included_utxos`, the RBF transaction may omit `address`, `included_utxos`, or both.
+                - If the original transaction specified `included_utxos`, the RBF transaction must specify either `address` or `included_utxos`, or both.
+                - The `address` or `included_utxos` in the RBF transaction may differ from those in the original transaction.
 
-            You need to provide either the `address` or `included_utxos` property. If neither property is provided, the transfer will fail.
+            - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           type: string
         included_utxos:
@@ -18005,7 +18295,7 @@ components:
           type: string
         created_timestamp:
           description: |
-            The time when the event type was triggered, in Unix timestamp format (milliseconds).
+            The time when the event was triggered, in Unix timestamp format (milliseconds).
             - The value remains unchanged across retries.
             - The default webhook timeout is 2 seconds.
           example: 1701396866000
@@ -18045,9 +18335,10 @@ components:
             \ data.\n- `MPCVault`: The MPC vault event data.\n- `Chains`: The enabled\
             \ chain event data.\n- `Tokens`: The enabled token event data.\n- `TokenListing`:\
             \ The token listing event data.\n      \n- `PaymentOrder`: The payment\
-            \ order event data.\n- `BalanceUpdateInfo`: The balance update event data.\n\
-            - `PaymentRefund`: The payment refund event data.\n- `PaymentSettlement`:\
-            \ The payment settlement event data."
+            \ order event data.\n- `PaymentRefund`: The payment refund event data.\n\
+            - `PaymentSettlement`: The payment settlement event data.\n- `BalanceUpdateInfo`:\
+            \ The balance update event data.\n- `SuspendedToken`: The token suspension\
+            \ event data."
           enum:
           - Transaction
           - TSSRequest
@@ -18057,10 +18348,11 @@ components:
           - Chains
           - Tokens
           - TokenListing
-          - BalanceUpdateInfo
           - PaymentOrder
           - PaymentRefund
           - PaymentSettlement
+          - BalanceUpdateInfo
+          - SuspendedToken
           example: Transaction
           type: string
       required:
@@ -18078,6 +18370,7 @@ components:
           Tokens: '#/components/schemas/TokensEventData'
           TokenListing: '#/components/schemas/TokenListingEventData'
           BalanceUpdateInfo: '#/components/schemas/BalanceUpdateInfoEventData'
+          SuspendedToken: '#/components/schemas/SuspendedTokenEventData'
           PaymentOrder: '#/components/schemas/PaymentOrderEventData'
           PaymentRefund: '#/components/schemas/PaymentRefundEventData'
           PaymentSettlement: '#/components/schemas/PaymentSettlementEvent'
@@ -18092,6 +18385,7 @@ components:
       - $ref: '#/components/schemas/TokensEventData'
       - $ref: '#/components/schemas/TokenListingEventData'
       - $ref: '#/components/schemas/BalanceUpdateInfoEventData'
+      - $ref: '#/components/schemas/SuspendedTokenEventData'
       - $ref: '#/components/schemas/PaymentOrderEventData'
       - $ref: '#/components/schemas/PaymentRefundEventData'
       - $ref: '#/components/schemas/PaymentSettlementEvent'
@@ -18264,6 +18558,30 @@ components:
         - tokens
         type: object
       title: Tokens
+    SuspendedTokenEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          token_ids:
+            description: "A list of token IDs, separated by comma."
+            type: string
+          operation_type:
+            $ref: '#/components/schemas/SuspendedTokenOperationType'
+        required:
+        - operation_type
+        - token_ids
+        type: object
+      title: SuspendedToken
+    SuspendedTokenOperationType:
+      description: |
+        The operation type applied to the list of suspended tokens:
+        - Added: The token was added to the suspension list.
+        - Removed: The token was removed from the suspension list.
+      enum:
+      - Added
+      - Removed
+      example: Added
+      type: string
     TokenListing:
       description: Detailed information about a token listing request.
       example:
@@ -18392,6 +18710,10 @@ components:
       - wallet.chain.enabled
       - wallet.mpc.balance.updated
       - wallet.web3.balance.updated
+      - wallet.token.disabled
+      - wallet.chain.disabled
+      - token.suspended.deposit
+      - token.suspended.withdraw
       - payment.transaction.created
       - payment.transaction.late
       - payment.transaction.completed
@@ -18537,7 +18859,7 @@ components:
           type: string
         created_timestamp:
           description: |
-            The time when the event type was triggered, in Unix timestamp format (milliseconds).
+            The time when the event was triggered, in Unix timestamp format (milliseconds).
             - The value remains unchanged across retries.
             - The default webhook timeout is 2 seconds.
           example: 1701396866000
@@ -20778,6 +21100,12 @@ components:
             \ timestamp format, measured in milliseconds."
           example: 1677587393000
           type: integer
+        network_fee:
+          $ref: '#/components/schemas/TransactionRequestFee'
+        destination_address:
+          description: the destination address of web3/mpc wallets.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
       type: object
     SwapActivityDetail:
       allOf:
@@ -21649,7 +21977,7 @@ components:
           type: string
         amount:
           description: |
-            The settlement amount.
+            The settlement amount. When settling merchant balance from orders (`acquiring_type` is `Order` and `settlement_type` is `Merchant`), do not specify this field as the settlement amount will be automatically calculated based on the order amounts.
             - If `payout_channel` is set to `Crypto`, this represents the settlement amount in the specified cryptocurrency.
             - If `payout_channel` is set to `OffRamp`, this represents the settlement amount in the specified fiat currency.
           example: "500.00"
@@ -21669,13 +21997,12 @@ components:
           example: addr_ethusdt_20250506T123456_ab12cd
           type: string
         order_ids:
-          description: "A list of order IDs to be included in this settlement. If\
-            \ provided, the settlement request will settle the merchant funds received\
-            \ from the specified orders, and the `amount` field will be ignored. \n\
-            \nThis field is only applicable when `settlement_type` is set to `Merchant`.\
-            \ \n"
           items:
-            description: The order ID.
+            description: "\nThe order ID to be included in this settlement.\n\nThis\
+              \ field is only applicable when `settlement_type` is set to `Merchant`.\
+              \ If provided, the settlement request will settle the merchant funds\
+              \ received from the specified orders. You should not specify both `order_ids`\
+              \ and `amount`. \n    \n    \n"
             example: O20250304-M1001-1001
             type: string
           type: array
@@ -22699,9 +23026,8 @@ components:
           example: "0.01"
           type: string
         min_amount:
-          description: "The minimum top-up amount allowed for this address. Top-ups\
-            \ below this threshold will not be credited to merchant funds, but to\
-            \ developer funds instead."
+          description: The minimum top-up amount allowed for this address. Top-ups
+            below this threshold will not be credited to merchant or developer funds.
           example: "0.1"
           type: string
         created_timestamp:
@@ -23392,6 +23718,902 @@ components:
       - REJECT
       example: APPROVE
       type: string
+    TokenizationActivityInfo:
+      properties:
+        activity_id:
+          description: The ID of the activity.
+          example: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
+          format: uuid
+          type: string
+        token_id:
+          description: The token ID.
+          example: BTC
+          type: string
+        type:
+          $ref: '#/components/schemas/TokenizationOperationType'
+        status:
+          $ref: '#/components/schemas/TokenizationActivityStatus'
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        initiator:
+          description: The initiator of the activity.
+          example: steve@example.com
+          type: string
+        initiator_type:
+          $ref: '#/components/schemas/TransactionInitiatorType'
+        transaction_ids:
+          description: The IDs of the corresponding transactions of the activity.
+          items:
+            example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+            type: string
+          type: array
+        created_timestamp:
+          description: The creation timestamp of the activity in milliseconds since
+            the Unix epoch.
+          example: 1678886400000
+          format: int64
+          type: integer
+        updated_timestamp:
+          description: The last update timestamp of the activity in milliseconds since
+            the Unix epoch.
+          example: 1678886400000
+          format: int64
+          type: integer
+      required:
+      - activity_id
+      - initiator
+      - initiator_type
+      - source
+      - status
+      - token_id
+      - transaction_ids  - created_timestamp
+      - type
+      - updated_timestamp
+      type: object
+    TokenizationActivityStatus:
+      description: The status of the tokenization activity.
+      enum:
+      - Processing
+      - Success
+      - Failed
+      type: string
+    TokenizationAllowlistAddressNote:
+      properties:
+        address:
+          description: The allowed address.
+          example: 0xabcdef...
+          type: string
+        note:
+          description: The note for the allowed address.
+          example: Trusted address
+          type: string
+        created_timestamp:
+          description: "The time when the allowlist address was created, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+      required:
+      - address
+      title: AllowlistAddressNote
+      type: object
+    TokenizationBlocklistAddressNote:
+      properties:
+        address:
+          description: The allowed address.
+          example: 0xabcdef...
+          type: string
+        note:
+          description: The note for the allowed address.
+          example: Trusted address
+          type: string
+        created_timestamp:
+          description: "The time when the blocklist address was created, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+      required:
+      - address
+      title: BlocklistAddressNote
+      type: object
+    TokenizationAddressPermission:
+      properties:
+        execution_address:
+          description: The execution address.
+          example: 0x0406db8351aa6839169bb363f63c2c808fee8f99
+          type: string
+        permissions:
+          description: List of permissions granted to this address.
+          example:
+          - UpgradeContract
+          - PauseContract
+          items:
+            $ref: '#/components/schemas/TokenizationTokenPermissionType'
+          type: array
+        created_timestamp:
+          description: "The time when the permission was created, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+      required:
+      - execution_address
+      - permissions
+      type: object
+    TokenizationUpdateAllowlistAddressesParams:
+      properties:
+        action:
+          $ref: '#/components/schemas/TokenizationUpdateAddressAction'
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        addresses:
+          description: "A list of addresses to manage. For 'add' operations, notes\
+            \ can be provided. For 'remove' operations, notes are ignored."
+          example:
+          - address: 0x789abc...
+            note: reason for allowing
+          - address: 0xdef012...
+          items:
+            $ref: '#/components/schemas/TokenizationUpdateAllowlistAddressesParams_addresses_inner'
+          type: array
+      required:
+      - action
+      - addresses
+      - source
+      type: object
+    TokenizationUpdateAllowlistAddressesRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationUpdateAllowlistAddressesParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationUpdateBlocklistAddressesParams:
+      properties:
+        action:
+          $ref: '#/components/schemas/TokenizationUpdateAddressAction'
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        addresses:
+          description: "A list of addresses to manage. For 'add' operations, notes\
+            \ can be provided. For 'remove' operations, notes are ignored."
+          example:
+          - address: 0x789abc...
+            note: reason for blocklisting
+          - address: 0xdef012...
+          items:
+            $ref: '#/components/schemas/TokenizationUpdateBlocklistAddressesParams_addresses_inner'
+          type: array
+      required:
+      - action
+      - addresses
+      - source
+      type: object
+    TokenizationUpdateBlocklistAddressesRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationUpdateBlocklistAddressesParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationBurnTokenParams:
+      properties:
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        burns:
+          description: "Details for each token burn, including amount and address\
+            \ to burn from."
+          items:
+            $ref: '#/components/schemas/TokenizationBurnTokenParams_burns_inner'
+          type: array
+      required:
+      - burns
+      - source
+      type: object
+    TokenizationBurnTokenRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationBurnTokenParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationAllowlistActivationParams:
+      properties:
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        activation:
+          description: Whether to activate the allowlist feature for the token.
+          example: true
+          type: boolean
+      required:
+      - activation
+      - source
+      type: object
+    TokenizationAllowlistActivationRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationAllowlistActivationParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationIssueTokenParams:
+      properties:
+        chain_id:
+          description: The chain ID where the token will be issued.
+          example: ETH
+          type: string
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        token_params:
+          $ref: '#/components/schemas/TokenizationIssueTokenParams_token_params'
+      required:
+      - chain_id
+      - source
+      - token_params
+      type: object
+    TokenizationIssuedTokenRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationIssueTokenParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          app_initiator:
+            description: |
+              The address of the app initiator.
+            example: 0x1234567890
+            type: string
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationStatus:
+      description: The status of the token.
+      enum:
+      - Processing
+      - Active
+      - Failed
+      - Pausing
+      example: Active
+      type: string
+    TokenizationERC20TokenParams:
+      properties:
+        standard:
+          $ref: '#/components/schemas/TokenizationTokenStandard'
+        name:
+          description: The name of the token.
+          example: My Awesome Token
+          type: string
+        symbol:
+          description: The symbol of the token.
+          example: MAT
+          type: string
+        decimals:
+          description: The number of decimals for the token (0-18).
+          example: 18
+          format: int32
+          maximum: 18
+          minimum: 0
+          type: integer
+        allowlist_activated:
+          default: false
+          description: "Whether the allowlist feature is activated for the token.\
+            \ When activated, only addresses in the allowlist can perform token operations."
+          example: false
+          type: boolean
+        permissions:
+          $ref: '#/components/schemas/TokenizationTokenPermissionParams'
+      required:
+      - decimals
+      - name
+      - standard
+      - symbol
+      type: object
+    TokenizationEstimateFeeRequest:
+      properties:
+        operation_params:
+          $ref: '#/components/schemas/TokenizationEstimateFeeRequest_operation_params'
+      required:
+      - operation_params
+      type: object
+    TokenizationHoldingInfo:
+      properties:
+        wallet_id:
+          description: The unique identifier of the wallet holding the token.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        wallet_name:
+          description: The name of the wallet.
+          example: Main Wallet
+          type: string
+        address:
+          description: The address holding the token.
+          example: 0x051A924H4dCb264226d7B036C2893a0D344
+          type: string
+        balance:
+          description: The token balance held by this address.
+          example: "1000.50"
+          type: string
+        address_label:
+          description: The label of the address.
+          example: Treasury Address
+          type: string
+      required:
+      - address
+      - balance
+      - wallet_id
+      type: object
+    TokenizationListActivitiesResponse:
+      properties:
+        data:
+          description: The list of tokenization activities.
+          items:
+            $ref: '#/components/schemas/TokenizationActivityInfo'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      type: object
+    TokenizationListHoldingsResponse:
+      properties:
+        data:
+          description: List of token holdings.
+          items:
+            $ref: '#/components/schemas/TokenizationHoldingInfo'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      type: object
+    TokenizationListTokenInfoResponse:
+      properties:
+        data:
+          description: List tokens.
+          items:
+            $ref: '#/components/schemas/TokenizationTokenInfo'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      type: object
+    TokenizationMintTokenParams:
+      properties:
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        mints:
+          description: "Details for each token mint, including amount and address\
+            \ to mint to."
+          items:
+            $ref: '#/components/schemas/TokenizationMintTokenParams_mints_inner'
+          type: array
+      required:
+      - mints
+      - source
+      type: object
+    TokenizationMintTokenRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationMintTokenParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationPauseTokenParams:
+      properties:
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+      required:
+      - source
+      type: object
+    TokenizationPauseTokenRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationPauseTokenParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationUnpauseTokenParams:
+      properties:
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+      required:
+      - source
+      type: object
+    TokenizationUnpauseTokenRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationUnpauseTokenParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationMpcOperationSource:
+      properties:
+        source_type:
+          $ref: '#/components/schemas/TokenizationOperationSourceType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address to interact with the token contract from.
+          example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          type: string
+      required:
+      - address
+      - source_type
+      - wallet_id
+      type: object
+    TokenizationOperationResponse:
+      properties:
+        activity_id:
+          description: The ID of the activity related to the tokenization operation.
+          example: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
+          format: uuid
+          type: string
+      required:
+      - activity_id
+      type: object
+    TokenizationOperationSourceType:
+      description: "The wallet source type. Possible values include:\n- `Org-Controlled`:\
+        \ MPC Wallets (Organization-Controlled Wallets).\n- `Web3`: Custodial Wallets\
+        \ (Web3 Wallets). \n"
+      enum:
+      - Org-Controlled
+      - Web3
+      example: Org-Controlled
+      type: string
+    TokenizationTokenDetailInfo:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationTokenInfo'
+      - properties:
+          permissions:
+            description: List of execution addresses and their permissions.
+            items:
+              $ref: '#/components/schemas/TokenizationAddressPermission'
+            type: array
+        type: object
+    TokenizationTokenInfo:
+      properties:
+        token_id:
+          description: The unique token identifier.
+          example: ETH_CUSD2
+          type: string
+        chain_id:
+          description: The chain ID of the tokenization contract.
+          example: ETH
+          type: string
+        token_address:
+          description: The address of the token contract.
+          example: 0x1234567890123456789012345678901234567890
+          type: string
+        token_name:
+          description: The name of the token.
+          example: CUSD
+          type: string
+        token_symbol:
+          description: The unique token symbol.
+          example: CUSD
+          type: string
+        decimals:
+          description: The number of decimals of the token.
+          example: 18
+          type: integer
+        allowlist_activated:
+          description: Whether the allowlist feature is activated for the token.
+          example: false
+          type: boolean
+        status:
+          $ref: '#/components/schemas/TokenizationStatus'
+        total_supply:
+          description: The total supply of the token.
+          example: "133399"
+          type: string
+        holdings:
+          description: The amount of tokens held by the organization.
+          example: "12399"
+          type: string
+      required:
+      - chain_id
+      - decimals
+      - status
+      - token_id
+      - token_symbol
+      type: object
+    TokenizationTokenOperationSource:
+      discriminator:
+        mapping:
+          Org-Controlled: '#/components/schemas/TokenizationMpcOperationSource'
+          Web3: '#/components/schemas/TokenizationWeb3OperationSource'
+        propertyName: source_type
+      oneOf:
+      - $ref: '#/components/schemas/TokenizationMpcOperationSource'
+      - $ref: '#/components/schemas/TokenizationWeb3OperationSource'
+    TokenizationTokenPermission:
+      properties:
+        permission_type:
+          $ref: '#/components/schemas/TokenizationTokenPermissionType'
+        name:
+          description: The display name of the permission.
+          example: Mint Tokens
+          type: string
+        description:
+          description: Detailed description of what this permission allows.
+          example: Mint new tokens to a specified address.
+          type: string
+        enabled:
+          description: Whether this permission is currently enabled.
+          example: true
+          type: boolean
+      required:
+      - description
+      - enabled
+      - name
+      - permission_type
+      type: object
+    TokenizationTokenPermissionParams:
+      description: "Role-based permission settings for token contract. If not provided,\
+        \ all permissions will be granted to the issuance wallet by default."
+      properties:
+        admin:
+          description: List of addresses for the admin role.
+          example:
+          - 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          items:
+            description: Wallet address
+            example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            type: string
+          type: array
+        minter:
+          description: List of addresses for the minter role.
+          example:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          items:
+            description: Wallet address
+            example: 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            type: string
+          type: array
+        burner:
+          description: List of addresses for the burner role.
+          example:
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          - 0x9cb2f210662eE543904023756Ibd247d45C9g8g8
+          items:
+            description: Wallet address
+            example: 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            type: string
+          type: array
+        manager:
+          description: List of addresses for the manager role.
+          example:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          items:
+            description: Wallet address
+            example: 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            type: string
+          type: array
+        pauser:
+          description: List of addresses for the pauser role.
+          example:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          items:
+            description: Wallet address
+            example: 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            type: string
+          type: array
+        salvager:
+          description: List of addresses for the salvager role.
+          example:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          items:
+            description: Wallet address
+            example: 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            type: string
+          type: array
+        upgrader:
+          description: List of addresses for the upgrader role.
+          example:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          items:
+            description: Wallet address
+            example: 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            type: string
+          type: array
+      type: object
+    TokenizationTokenPermissionType:
+      description: The type of permission for token operations.
+      enum:
+      - ManagePermissions
+      - ManageAccessAndControls
+      - MintTokens
+      - BurnTokens
+      - RecoverTokens
+      - UpgradeContract
+      - PauseContract
+      example: MintTokens
+      type: string
+    TokenizationTokenPermissionsResponse:
+      properties:
+        permissions:
+          description: List of available token permissions.
+          items:
+            $ref: '#/components/schemas/TokenizationTokenPermission'
+          type: array
+        total_count:
+          description: Total number of permissions.
+          example: 7
+          type: integer
+      required:
+      - permissions
+      - total_count
+      type: object
+    TokenizationTokenStandard:
+      description: The standard of token to create.
+      enum:
+      - ERC20
+      example: ERC20
+      type: string
+    TokenizationOperationType:
+      description: The type of tokenization operation.
+      enum:
+      - Issue
+      - Mint
+      - Burn
+      - Pause
+      - Unpause
+      - UpdateAllowlistAddresses
+      - UpdateBlocklistAddresses
+      - ToggleAllowlist
+      - ContractCall
+      example: Issue
+      type: string
+    TokenizationWeb3OperationSource:
+      properties:
+        source_type:
+          $ref: '#/components/schemas/TokenizationOperationSourceType'
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address to interact with the token contract from.
+          example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          type: string
+      required:
+      - address
+      - source_type
+      - wallet_id
+      type: object
+    TokenizationEvmContractCallParams:
+      description: The information about the EVM contract call.
+      properties:
+        type:
+          $ref: '#/components/schemas/TokenizationContractCallType'
+        calldata:
+          description: |
+            The data that is used to invoke a specific function or method within the specified contract at the destination address.
+          example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+          type: string
+        value:
+          description: |
+            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
+          example: "1.5"
+          type: string
+      required:
+      - calldata
+      type: object
+    TokenizationContractCallRequest:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationContractCallParams'
+      - $ref: '#/components/schemas/TokenizationAppInitiator'
+      - properties:
+          fee:
+            $ref: '#/components/schemas/TransactionRequestFee'
+        required:
+        - fee
+        type: object
+    TokenizationContractCallParams:
+      description: The information about the contract call.
+      properties:
+        source:
+          $ref: '#/components/schemas/TokenizationTokenOperationSource'
+        data:
+          $ref: '#/components/schemas/TokenizationContractCallParams_data'
+      required:
+      - calldata
+      type: object
+    TokenizationAppInitiator:
+      properties:
+        app_initiator:
+          description: "The initiator of the tokenization activity. If you do not\
+            \ specify this property, the WaaS service will automatically designate\
+            \ the API key as the initiator."
+          example: steve@example.com
+          type: string
+      type: object
+    TokenizationIssueEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationIssueTokenParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+        required:
+        - operation_type
+        type: object
+      title: TokenizationIssueEstimateFeeParams
+    TokenizationMintEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationMintTokenParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationBurnEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationBurnTokenParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationPauseEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationPauseTokenParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationUnpauseEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationUnpauseTokenParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationUpdateAllowlistAddressesEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationUpdateAllowlistAddressesParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationUpdateBlocklistAddressesEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationUpdateBlocklistAddressesParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationToggleAllowlistEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationAllowlistActivationParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationContractCallEstimateFeeParams:
+      allOf:
+      - $ref: '#/components/schemas/TokenizationContractCallParams'
+      - properties:
+          operation_type:
+            $ref: '#/components/schemas/TokenizationOperationType'
+          token_id:
+            description: The ID of the token.
+            example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+        required:
+        - operation_type
+        - token_id
+        type: object
+    TokenizationUpdateAddressAction:
+      description: The operation to perform on the blocklist or allowlist addresses
+        list.
+      enum:
+      - Grant
+      - Revoke
+      type: string
+    TokenizationListEnabledChainsResponse:
+      properties:
+        data:
+          description: The list of tokenization supported chains.
+          items:
+            description: The chain id.
+            example: ETH
+            type: string
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      type: object
+    TokenizationContractCallType:
+      description: The type of contract call.
+      enum:
+      - EVM_Contract
+      example: EVM_Contract
+      type: string
     list_supported_chains_200_response:
       example:
         pagination:
@@ -23720,6 +24942,31 @@ components:
             - `false`: The operation has not been executed.
           example: true
           type: boolean
+      type: object
+    get_max_transferable_value_with_fee_model_request:
+      properties:
+        token_id:
+          description: "The token ID of the transferred token. You can retrieve the\
+            \ IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).\
+            \ For transfers from Exchange Wallets, this property value represents\
+            \ the asset ID."
+          example: ETH_USDT
+          type: string
+        fee:
+          $ref: '#/components/schemas/TransactionRequestFee'
+        to_address:
+          description: The recipient's address.
+          example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          type: string
+        from_address:
+          description: The sender's address. This property is required when using
+            an EVM address in an MPC Wallet.
+          example: 2N2xFZtbCFB6Nb3Pj9Sxsx5mX2fxX3yEgkE
+          type: string
+      required:
+      - fee
+      - to_address
+      - token_id
       type: object
     list_addresses_200_response:
       example:
@@ -24615,165 +25862,6 @@ components:
       required:
       - request_id
       - transaction_id
-      type: object
-    list_transaction_approval_details_200_response:
-      example:
-        data:
-        - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
-          approver:
-            result: Approved
-            review_threshold: 1
-            complete_time: complete_time
-            user_details:
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            initiator: tom@gmail.com
-          address_owner:
-            result: Approved
-            review_threshold: 1
-            complete_time: complete_time
-            user_details:
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            initiator: tom@gmail.com
-          spender:
-            result: Approved
-            review_threshold: 1
-            complete_time: complete_time
-            user_details:
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            initiator: tom@gmail.com
-          cobo_id: "20231213122855000000000000000000"
-          request_id: web_send_by_user_327_1610444045047
-        - transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
-          approver:
-            result: Approved
-            review_threshold: 1
-            complete_time: complete_time
-            user_details:
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            initiator: tom@gmail.com
-          address_owner:
-            result: Approved
-            review_threshold: 1
-            complete_time: complete_time
-            user_details:
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            initiator: tom@gmail.com
-          spender:
-            result: Approved
-            review_threshold: 1
-            complete_time: complete_time
-            user_details:
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            - result: Approved
-              signature: signature
-              name: tom
-              language: en
-              message: message
-              extra_message: extra_message
-              email: tom@gmail.com
-              message_version: 1.0.1
-              pubkey: 96db1b3c68c3a3497bffb7e257a3900b0e86575c968a346a6696d1676fa8c5a6431b46c867134bd5fb8a9b5f787fa0c534d7c7664f1e52c432ce64326cc4cc1d
-            initiator: tom@gmail.com
-          cobo_id: "20231213122855000000000000000000"
-          request_id: web_send_by_user_327_1610444045047
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/TransactionApprovalDetail'
-          type: array
       type: object
     get_token_2XX_response:
       example:
@@ -27026,7 +28114,7 @@ components:
           type: string
         currency:
           default: USD
-          description: The fiat currency of the order.
+          description: "The fiat currency of the order. Currently, only `USD` is supported."
           example: USD
           type: string
         order_amount:
@@ -27046,17 +28134,19 @@ components:
           type: string
         merchant_order_code:
           description: A unique reference code assigned by the merchant to identify
-            this order in their system.
+            this order in their system. The code should have a maximum length of 128
+            characters.
           example: M20240201001
           type: string
         psp_order_code:
-          description: A unique reference code assigned by the developer to identify
-            this order in their system.
+          description: |
+            A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters.
           example: P20240201001
           type: string
         expired_in:
+          default: 1800
           description: |
-            The number of seconds after which the pay-in order will expire. After expiration:
+            The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. After expiration:
             - The order status becomes final and cannot be changed
             - The `received_token_amount` field will no longer be updated
             - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance.
@@ -27932,6 +29022,97 @@ components:
       required:
       - type
       type: object
+    TokenizationUpdateAllowlistAddressesParams_addresses_inner:
+      properties:
+        address:
+          description: The address to add or remove.
+          example: 0x789abc...
+          type: string
+        note:
+          description: "An optional note for the address, primarily used when adding."
+          example: Allowed address for trusted partner
+          type: string
+      required:
+      - address
+      type: object
+    TokenizationUpdateBlocklistAddressesParams_addresses_inner:
+      properties:
+        address:
+          description: The address to add or remove.
+          example: 0x789abc...
+          type: string
+        note:
+          description: "An optional note for the address, primarily used when adding."
+          example: Blocklist address for malicious activity
+          type: string
+      required:
+      - address
+      type: object
+    TokenizationBurnTokenParams_burns_inner:
+      properties:
+        amount:
+          description: The amount of tokens to burn from this source.
+          example: "0.99"
+          type: string
+        from_address:
+          description: The address to burn tokens from for this source.
+          example: 0x051A924H4dCb264226d7B036C2893a0D344
+          type: string
+      required:
+      - amount
+      - from_address
+      type: object
+    TokenizationIssueTokenParams_token_params:
+      discriminator:
+        mapping:
+          ERC20: '#/components/schemas/TokenizationERC20TokenParams'
+        propertyName: standard
+      oneOf:
+      - $ref: '#/components/schemas/TokenizationERC20TokenParams'
+    TokenizationEstimateFeeRequest_operation_params:
+      discriminator:
+        mapping:
+          Issue: '#/components/schemas/TokenizationIssueEstimateFeeParams'
+          Mint: '#/components/schemas/TokenizationMintEstimateFeeParams'
+          Burn: '#/components/schemas/TokenizationBurnEstimateFeeParams'
+          Pause: '#/components/schemas/TokenizationPauseEstimateFeeParams'
+          Unpause: '#/components/schemas/TokenizationUnpauseEstimateFeeParams'
+          UpdateAllowlistAddresses: '#/components/schemas/TokenizationUpdateAllowlistAddressesEstimateFeeParams'
+          UpdateBlocklistAddresses: '#/components/schemas/TokenizationUpdateBlocklistAddressesEstimateFeeParams'
+          ToggleAllowlist: '#/components/schemas/TokenizationToggleAllowlistEstimateFeeParams'
+          ContractCall: '#/components/schemas/TokenizationContractCallEstimateFeeParams'
+        propertyName: operation_type
+      oneOf:
+      - $ref: '#/components/schemas/TokenizationIssueEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationMintEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationBurnEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationPauseEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationUnpauseEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationUpdateAllowlistAddressesEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationUpdateBlocklistAddressesEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationToggleAllowlistEstimateFeeParams'
+      - $ref: '#/components/schemas/TokenizationContractCallEstimateFeeParams'
+    TokenizationMintTokenParams_mints_inner:
+      properties:
+        amount:
+          description: The amount of tokens to mint for this recipient.
+          example: "0.99"
+          type: string
+        to_address:
+          description: The address to mint tokens to for this recipient.
+          example: 0x051A924H4dCb264226d7B036C2893a0D344
+          type: string
+      required:
+      - amount
+      - to_address
+      type: object
+    TokenizationContractCallParams_data:
+      discriminator:
+        mapping:
+          EVM_Contract: '#/components/schemas/TokenizationEvmContractCallParams'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/TokenizationEvmContractCallParams'
   securitySchemes:
     CoboAuth:
       description: |
@@ -28005,5 +29186,7 @@ components:
             payment_merchant.create: Create payment merchant
             payment_merchant.read: Read payment merchant information
             payment_merchant.update: Update payment merchant
+            payment_force_sweep.create: Create payment force sweep request
+            payment_force_sweep.read: Read payment force sweep request information
           tokenUrl: https://auth.cobo.com/oauth/token
       type: oauth2

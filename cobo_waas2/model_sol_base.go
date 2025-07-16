@@ -17,9 +17,9 @@ var _ MappedNullable = &SOLBase{}
 
 // SOLBase The transaction base fee based on the SOL fee model.
 type SOLBase struct {
-	// The fundamental fee required for each transaction. It is charged to prevent spam transactions and network congestion, ensuring that only meaningful transactions consume network resources.
+	// A fixed fee charged per signature. The default is 5,000 lamports per signature.
 	BaseFee *string `json:"base_fee,omitempty"`
-	// The fee charged as rent for maintaining the state of accounts on the blockchain. This rent ensures accounts are stored on-chain over the long term and that there's sufficient balance to sustain the account state.
+	// The rent fee charged by the network to store non–rent-exempt accounts on-chain. It is deducted periodically until the account maintains the minimum balance required for rent exemption.
 	RentAmount *string `json:"rent_amount,omitempty"`
 }
 

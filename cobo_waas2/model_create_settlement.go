@@ -23,13 +23,12 @@ type CreateSettlement struct {
 	TokenId *string `json:"token_id,omitempty"`
 	// The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported. Specify this field when `payout_channel` is set to `OffRamp`.
 	Currency *string `json:"currency,omitempty"`
-	// The settlement amount. - If `payout_channel` is set to `Crypto`, this represents the settlement amount in the specified cryptocurrency. - If `payout_channel` is set to `OffRamp`, this represents the settlement amount in the specified fiat currency. 
+	// The settlement amount. When settling merchant balance from orders (`acquiring_type` is `Order` and `settlement_type` is `Merchant`), do not specify this field as the settlement amount will be automatically calculated based on the order amounts. - If `payout_channel` is set to `Crypto`, this represents the settlement amount in the specified cryptocurrency. - If `payout_channel` is set to `OffRamp`, this represents the settlement amount in the specified fiat currency. 
 	Amount *string `json:"amount,omitempty"`
 	// The ID of the bank account where the settled funds will be deposited. This field is only applicable when `payout_channel` is set to `OffRamp`. Call [List all bank accounts](/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts. 
 	BankAccountId *string `json:"bank_account_id,omitempty"`
 	// The ID of the crypto address used for crypto withdrawal. Specify this field when `payout_channel` is set to `Crypto`.  Call [List all crypto addresses](/v2/api-references/payments/list-all-crypto-addresses) to retrieve registered crypto addresses. 
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
-	// A list of order IDs to be included in this settlement. If provided, the settlement request will settle the merchant funds received from the specified orders, and the `amount` field will be ignored.   This field is only applicable when `settlement_type` is set to `Merchant`.  
 	OrderIds []string `json:"order_ids,omitempty"`
 }
 

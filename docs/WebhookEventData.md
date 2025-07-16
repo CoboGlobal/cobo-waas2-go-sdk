@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | **string** | The request ID provided by you when creating the settlement request. | 
@@ -56,6 +56,8 @@ Name | Type | Description | Notes
 **Address** | **string** | The wallet address. | 
 **WalletUuid** | **string** | The wallet ID. | 
 **Balance** | [**Balance**](Balance.md) |  | 
+**TokenIds** | **string** | A list of token IDs, separated by comma. | 
+**OperationType** | [**SuspendedTokenOperationType**](SuspendedTokenOperationType.md) |  | 
 **OrderId** | **string** | The ID of the pay-in order corresponding to this refund. | 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **PayableAmount** | **string** | The cryptocurrency amount to be paid for this order. | 
@@ -84,7 +86,7 @@ Name | Type | Description | Notes
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status SettleRequestStatus, chainId string, tokenId string, source TokenListingRequestSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int32, updatedTimestamp int32, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status SettleRequestStatus, chainId string, tokenId string, source TokenListingRequestSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int32, updatedTimestamp int32, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -1297,6 +1299,46 @@ and a boolean to check if the value has been set.
 `func (o *WebhookEventData) SetBalance(v Balance)`
 
 SetBalance sets Balance field to given value.
+
+
+### GetTokenIds
+
+`func (o *WebhookEventData) GetTokenIds() string`
+
+GetTokenIds returns the TokenIds field if non-nil, zero value otherwise.
+
+### GetTokenIdsOk
+
+`func (o *WebhookEventData) GetTokenIdsOk() (*string, bool)`
+
+GetTokenIdsOk returns a tuple with the TokenIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenIds
+
+`func (o *WebhookEventData) SetTokenIds(v string)`
+
+SetTokenIds sets TokenIds field to given value.
+
+
+### GetOperationType
+
+`func (o *WebhookEventData) GetOperationType() SuspendedTokenOperationType`
+
+GetOperationType returns the OperationType field if non-nil, zero value otherwise.
+
+### GetOperationTypeOk
+
+`func (o *WebhookEventData) GetOperationTypeOk() (*SuspendedTokenOperationType, bool)`
+
+GetOperationTypeOk returns a tuple with the OperationType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOperationType
+
+`func (o *WebhookEventData) SetOperationType(v SuspendedTokenOperationType)`
+
+SetOperationType sets OperationType field to given value.
 
 
 ### GetOrderId
