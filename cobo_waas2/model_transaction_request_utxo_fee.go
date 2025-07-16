@@ -22,7 +22,7 @@ type TransactionRequestUtxoFee struct {
 	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate *string `json:"fee_rate,omitempty"`
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId string `json:"token_id"`
 	// The maximum fee that you are willing to pay for the transaction. Provide the value without applying precision. The transaction will fail if the transaction fee exceeds the maximum fee.
 	MaxFeeAmount *string `json:"max_fee_amount,omitempty"`

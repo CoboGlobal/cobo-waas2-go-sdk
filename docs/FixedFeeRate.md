@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeAmount** | Pointer to **string** | The transaction fee that you need to pay for the transaction. | [optional] 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**TokenId** | **string** | The token ID of the transaction fee. | 
+**TokenId** | **string** | The token used to pay the transaction fee. | 
 
 ## Methods
 

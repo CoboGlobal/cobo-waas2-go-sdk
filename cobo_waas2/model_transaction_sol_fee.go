@@ -17,20 +17,20 @@ import (
 // checks if the TransactionSOLFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionSOLFee{}
 
-// TransactionSOLFee The transaction fee actually charged by the chain that uses the SOL fee model.  In the SOL fee model, the calculation method for the fee is: fee = base_fee + compute_unit_price * compute_unit_limit + rent_amount, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionSOLFee The transaction fee actually charged by the chain that uses the Solana fee model.  In this model, the fee is calculated as: fee = base fee + (compute unit price * compute unit limit) + rent (if applicable). For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionSOLFee struct {
-	// The fundamental fee required for each transaction. It is charged to prevent spam transactions and network congestion, ensuring that only meaningful transactions consume network resources.
+	// A fixed fee charged per signature. The default is 5,000 lamports per signature.
 	BaseFee *string `json:"base_fee,omitempty"`
-	// The fee charged as rent for maintaining the state of accounts on the blockchain. This rent ensures accounts are stored on-chain over the long term and that there's sufficient balance to sustain the account state.
+	// The rent fee charged by the network to store non–rent-exempt accounts on-chain. It is deducted periodically until the account maintains the minimum balance required for rent exemption.
 	RentAmount *string `json:"rent_amount,omitempty"`
-	// The cost per compute unit. Transactions consume computational resources measured in compute units, and this price helps determine the cost of executing transactions, especially complex ones involving smart contracts.
+	// The price paid per compute unit. This value determines the priority fee for the transaction, allowing you to increase inclusion probability in congested conditions.
 	ComputeUnitPrice *string `json:"compute_unit_price,omitempty"`
-	// The maximum number of compute units allowed for a transaction. This limits the resources any single transaction can consume, preventing excessive resource usage that could impact network performance negatively.
+	// The maximum number of compute units your transaction is allowed to consume. It sets an upper bound on computational resource usage to prevent overload.
 	ComputeUnitLimit *string `json:"compute_unit_limit,omitempty"`
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId *string `json:"token_id,omitempty"`
-	// The transaction fee.
+	// The actually charged transaction fee.
 	FeeUsed *string `json:"fee_used,omitempty"`
 	// The estimated transaction fee.
 	EstimatedFeeUsed *string `json:"estimated_fee_used,omitempty"`

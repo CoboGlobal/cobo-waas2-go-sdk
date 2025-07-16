@@ -22,7 +22,7 @@ type EstimatedFixedFee struct {
 	// The transaction fee that you need to pay for the transaction.
 	FeeAmount string `json:"fee_amount"`
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId string `json:"token_id"`
 	// Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - `true`: The transaction was executed as a Cobo Loop transfer. - `false`: The transaction was not executed as a Cobo Loop transfer. 
 	IsLoop *bool `json:"is_loop,omitempty"`

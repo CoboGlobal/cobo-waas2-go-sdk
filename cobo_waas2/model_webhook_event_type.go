@@ -39,6 +39,10 @@ const (
 	WEBHOOKEVENTTYPE_WALLET_CHAIN_ENABLED WebhookEventType = "wallet.chain.enabled"
 	WEBHOOKEVENTTYPE_WALLET_MPC_BALANCE_UPDATED WebhookEventType = "wallet.mpc.balance.updated"
 	WEBHOOKEVENTTYPE_WALLET_WEB3_BALANCE_UPDATED WebhookEventType = "wallet.web3.balance.updated"
+	WEBHOOKEVENTTYPE_WALLET_TOKEN_DISABLED WebhookEventType = "wallet.token.disabled"
+	WEBHOOKEVENTTYPE_WALLET_CHAIN_DISABLED WebhookEventType = "wallet.chain.disabled"
+	WEBHOOKEVENTTYPE_TOKEN_SUSPENDED_DEPOSIT WebhookEventType = "token.suspended.deposit"
+	WEBHOOKEVENTTYPE_TOKEN_SUSPENDED_WITHDRAW WebhookEventType = "token.suspended.withdraw"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_CREATED WebhookEventType = "payment.transaction.created"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_LATE WebhookEventType = "payment.transaction.late"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_COMPLETED WebhookEventType = "payment.transaction.completed"
@@ -71,6 +75,10 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"wallet.chain.enabled",
 	"wallet.mpc.balance.updated",
 	"wallet.web3.balance.updated",
+	"wallet.token.disabled",
+	"wallet.chain.disabled",
+	"token.suspended.deposit",
+	"token.suspended.withdraw",
 	"payment.transaction.created",
 	"payment.transaction.late",
 	"payment.transaction.completed",

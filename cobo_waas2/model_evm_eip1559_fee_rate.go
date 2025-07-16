@@ -20,7 +20,7 @@ var _ MappedNullable = &EvmEip1559FeeRate{}
 // EvmEip1559FeeRate The transaction fee rate based on the EIP-1559 fee model.
 type EvmEip1559FeeRate struct {
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId string `json:"token_id"`
 	Slow *EvmEip1559FeeBasePrice `json:"slow,omitempty"`
 	Recommended EvmEip1559FeeBasePrice `json:"recommended"`

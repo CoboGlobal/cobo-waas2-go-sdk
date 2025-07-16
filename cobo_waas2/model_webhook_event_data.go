@@ -22,6 +22,7 @@ type WebhookEventData struct {
 	PaymentOrderEventData *PaymentOrderEventData
 	PaymentRefundEventData *PaymentRefundEventData
 	PaymentSettlementEvent *PaymentSettlementEvent
+	SuspendedTokenEventData *SuspendedTokenEventData
 	TSSRequestWebhookEventData *TSSRequestWebhookEventData
 	TokenListingEventData *TokenListingEventData
 	TokensEventData *TokensEventData
@@ -75,6 +76,13 @@ func PaymentRefundEventDataAsWebhookEventData(v *PaymentRefundEventData) Webhook
 func PaymentSettlementEventAsWebhookEventData(v *PaymentSettlementEvent) WebhookEventData {
 	return WebhookEventData{
 		PaymentSettlementEvent: v,
+	}
+}
+
+// SuspendedTokenEventDataAsWebhookEventData is a convenience function that returns SuspendedTokenEventData wrapped in WebhookEventData
+func SuspendedTokenEventDataAsWebhookEventData(v *SuspendedTokenEventData) WebhookEventData {
+	return WebhookEventData{
+		SuspendedTokenEventData: v,
 	}
 }
 
@@ -205,6 +213,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentSettlementEvent = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentSettlementEvent: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'SuspendedToken'
+	if jsonDict["data_type"] == "SuspendedToken" {
+		// try to unmarshal JSON data into SuspendedTokenEventData
+		err = json.Unmarshal(data, &dst.SuspendedTokenEventData)
+		if err == nil {
+			return nil // data stored in dst.SuspendedTokenEventData, return on the first match
+		} else {
+			dst.SuspendedTokenEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as SuspendedTokenEventData: %s", err.Error())
 		}
 	}
 
@@ -352,6 +372,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'SuspendedTokenEventData'
+	if jsonDict["data_type"] == "SuspendedTokenEventData" {
+		// try to unmarshal JSON data into SuspendedTokenEventData
+		err = json.Unmarshal(data, &dst.SuspendedTokenEventData)
+		if err == nil {
+			return nil // data stored in dst.SuspendedTokenEventData, return on the first match
+		} else {
+			dst.SuspendedTokenEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as SuspendedTokenEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TSSRequestWebhookEventData'
 	if jsonDict["data_type"] == "TSSRequestWebhookEventData" {
 		// try to unmarshal JSON data into TSSRequestWebhookEventData
@@ -445,6 +477,10 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.PaymentSettlementEvent)
 	}
 
+	if src.SuspendedTokenEventData != nil {
+		return json.Marshal(&src.SuspendedTokenEventData)
+	}
+
 	if src.TSSRequestWebhookEventData != nil {
 		return json.Marshal(&src.TSSRequestWebhookEventData)
 	}
@@ -499,6 +535,10 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 
 	if obj.PaymentSettlementEvent != nil {
 		return obj.PaymentSettlementEvent
+	}
+
+	if obj.SuspendedTokenEventData != nil {
+		return obj.SuspendedTokenEventData
 	}
 
 	if obj.TSSRequestWebhookEventData != nil {
