@@ -33,7 +33,7 @@ type TopUpAddress struct {
 	Chain *string `json:"chain,omitempty"`
 	// The developer fee rate applied to top-up transactions made to this address. Expressed as a decimal string where \"0.1\" represents 10%.
 	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
-	// The minimum top-up amount allowed for this address. Top-ups below this threshold will not be credited to merchant funds, but to developer funds instead.
+	// The minimum top-up amount allowed for this address. Top-ups below this threshold will not be credited to merchant or developer funds.
 	MinAmount string `json:"min_amount"`
 	// The creation time of the top-up address, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`

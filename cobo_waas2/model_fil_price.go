@@ -15,13 +15,13 @@ import (
 // checks if the FILPrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FILPrice{}
 
-// FILPrice The transaction gas price based on the FIL fee model.
+// FILPrice The transaction gas price configuration based on the Filecoin fee model.
 type FILPrice struct {
-	// An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee.
+	// An optional tip you can include to prioritize your transaction. The gas premium incentivizes miners to include your transaction sooner than those offering only the base fee.
 	GasPremium *string `json:"gas_premium,omitempty"`
-	// The gas_fee_cap is a user-defined limit on how much they are willing to pay per unit of gas.
+	// The maximum gas price you are willing to pay per unit of gas.
 	GasFeeCap *string `json:"gas_fee_cap,omitempty"`
-	// This defines the maximum amount of computational effort that a transaction is allowed to consume. It's a way to cap the resources that a transaction can use, ensuring it doesn't consume excessive network resources.
+	// The maximum amount of gas your transaction is allowed to consume.
 	GasLimit *string `json:"gas_limit,omitempty"`
 }
 

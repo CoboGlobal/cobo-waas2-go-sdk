@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. | 
 **Chain** | Pointer to **string** | The chain ID. | [optional] 
 **DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to top-up transactions made to this address. Expressed as a decimal string where \&quot;0.1\&quot; represents 10%. | [optional] 
-**MinAmount** | **string** | The minimum top-up amount allowed for this address. Top-ups below this threshold will not be credited to merchant funds, but to developer funds instead. | 
+**MinAmount** | **string** | The minimum top-up amount allowed for this address. Top-ups below this threshold will not be credited to merchant or developer funds. | 
 **CreatedTimestamp** | Pointer to **int32** | The creation time of the top-up address, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The last update time of the top-up address, represented as a UNIX timestamp in seconds. | [optional] 
 

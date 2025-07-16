@@ -24,9 +24,9 @@ type TransactionEvmLegacyFee struct {
 	// The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies.
 	GasLimit *string `json:"gas_limit,omitempty"`
 	FeeType FeeType `json:"fee_type"`
-	// The token ID of the transaction fee.
+	// The token used to pay the transaction fee.
 	TokenId *string `json:"token_id,omitempty"`
-	// The transaction fee.
+	// The actually charged transaction fee.
 	FeeUsed *string `json:"fee_used,omitempty"`
 	// The estimated transaction fee.
 	EstimatedFeeUsed *string `json:"estimated_fee_used,omitempty"`

@@ -23,7 +23,7 @@ type WebhookEvent struct {
 	EventId *string `json:"event_id,omitempty"`
 	// The webhook endpoint URL.
 	Url string `json:"url"`
-	// The time when the event type was triggered, in Unix timestamp format (milliseconds). - The value remains unchanged across retries. - The default webhook timeout is 2 seconds. 
+	// The time when the event was triggered, in Unix timestamp format (milliseconds). - The value remains unchanged across retries. - The default webhook timeout is 2 seconds. 
 	CreatedTimestamp int64 `json:"created_timestamp"`
 	Type WebhookEventType `json:"type"`
 	Data WebhookEventData `json:"data"`

@@ -21,7 +21,7 @@ var _ MappedNullable = &WebhookEventLog{}
 type WebhookEventLog struct {
 	// The event log ID.
 	Id string `json:"id"`
-	// The time when the event type was triggered, in Unix timestamp format (milliseconds). - The value remains unchanged across retries. - The default webhook timeout is 2 seconds. 
+	// The time when the event was triggered, in Unix timestamp format (milliseconds). - The value remains unchanged across retries. - The default webhook timeout is 2 seconds. 
 	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The request headers of the webhook event.
 	RequestHeaders map[string]interface{} `json:"request_headers"`

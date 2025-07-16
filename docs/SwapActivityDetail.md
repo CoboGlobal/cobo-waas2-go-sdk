@@ -20,6 +20,8 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** | The description of the swap activity. | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The time when the swap activity was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
+**NetworkFee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+**DestinationAddress** | Pointer to **string** | the destination address of web3/mpc wallets. | [optional] 
 **Timeline** | Pointer to [**[]SwapActivityTimeline**](SwapActivityTimeline.md) |  | [optional] 
 **Approvers** | Pointer to [**[]SwapActivityApprovers**](SwapActivityApprovers.md) |  | [optional] 
 **Signers** | Pointer to [**[]SwapActivitySigners**](SwapActivitySigners.md) |  | [optional] 
@@ -452,6 +454,56 @@ SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 `func (o *SwapActivityDetail) HasUpdatedTimestamp() bool`
 
 HasUpdatedTimestamp returns a boolean if a field has been set.
+
+### GetNetworkFee
+
+`func (o *SwapActivityDetail) GetNetworkFee() TransactionRequestFee`
+
+GetNetworkFee returns the NetworkFee field if non-nil, zero value otherwise.
+
+### GetNetworkFeeOk
+
+`func (o *SwapActivityDetail) GetNetworkFeeOk() (*TransactionRequestFee, bool)`
+
+GetNetworkFeeOk returns a tuple with the NetworkFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNetworkFee
+
+`func (o *SwapActivityDetail) SetNetworkFee(v TransactionRequestFee)`
+
+SetNetworkFee sets NetworkFee field to given value.
+
+### HasNetworkFee
+
+`func (o *SwapActivityDetail) HasNetworkFee() bool`
+
+HasNetworkFee returns a boolean if a field has been set.
+
+### GetDestinationAddress
+
+`func (o *SwapActivityDetail) GetDestinationAddress() string`
+
+GetDestinationAddress returns the DestinationAddress field if non-nil, zero value otherwise.
+
+### GetDestinationAddressOk
+
+`func (o *SwapActivityDetail) GetDestinationAddressOk() (*string, bool)`
+
+GetDestinationAddressOk returns a tuple with the DestinationAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDestinationAddress
+
+`func (o *SwapActivityDetail) SetDestinationAddress(v string)`
+
+SetDestinationAddress sets DestinationAddress field to given value.
+
+### HasDestinationAddress
+
+`func (o *SwapActivityDetail) HasDestinationAddress() bool`
+
+HasDestinationAddress returns a boolean if a field has been set.
 
 ### GetTimeline
 
