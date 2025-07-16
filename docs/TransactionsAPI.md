@@ -12,7 +12,9 @@ Method | HTTP request | Description
 [**CreateTransferTransaction**](TransactionsAPI.md#CreateTransferTransaction) | **Post** /transactions/transfer | Transfer token
 [**DropTransactionById**](TransactionsAPI.md#DropTransactionById) | **Post** /transactions/{transaction_id}/drop | Drop transaction
 [**EstimateFee**](TransactionsAPI.md#EstimateFee) | **Post** /transactions/estimate_fee | Estimate transaction fee
+[**GetTransactionApprovalDetail**](TransactionsAPI.md#GetTransactionApprovalDetail) | **Get** /transactions/{transaction_id}/approval_detail | Get transaction approval details
 [**GetTransactionById**](TransactionsAPI.md#GetTransactionById) | **Get** /transactions/{transaction_id} | Get transaction information
+[**ListTransactionApprovalDetails**](TransactionsAPI.md#ListTransactionApprovalDetails) | **Get** /transactions/approval_details | List transaction approval details
 [**ListTransactions**](TransactionsAPI.md#ListTransactions) | **Get** /transactions | List all transactions
 [**ResendTransactionById**](TransactionsAPI.md#ResendTransactionById) | **Post** /transactions/{transaction_id}/resend | Resend transaction
 [**SignAndBroadcastTransactionById**](TransactionsAPI.md#SignAndBroadcastTransactionById) | **Post** /transactions/{transaction_id}/sign_and_broadcast | Sign and broadcast transaction
@@ -642,6 +644,86 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetTransactionApprovalDetail
+
+> TransactionApprovalDetail GetTransactionApprovalDetail(ctx, transactionId).Execute()
+
+Get transaction approval details
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	transactionId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.GetTransactionApprovalDetail(ctx, transactionId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.GetTransactionApprovalDetail``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetTransactionApprovalDetail`: TransactionApprovalDetail
+	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.GetTransactionApprovalDetail`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**transactionId** | **string** | The transaction ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTransactionApprovalDetailRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**TransactionApprovalDetail**](TransactionApprovalDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetTransactionById
 
 > TransactionDetail GetTransactionById(ctx, transactionId).Execute()
@@ -707,6 +789,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**TransactionDetail**](TransactionDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListTransactionApprovalDetails
+
+> ListTransactionApprovalDetails200Response ListTransactionApprovalDetails(ctx).TransactionIds(transactionIds).CoboIds(coboIds).Execute()
+
+List transaction approval details
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	transactionIds := "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+	coboIds := "20231213122855000000000000000000,20231213122955000000000000000000"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.TransactionsAPI.ListTransactionApprovalDetails(ctx).TransactionIds(transactionIds).CoboIds(coboIds).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.ListTransactionApprovalDetails``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListTransactionApprovalDetails`: ListTransactionApprovalDetails200Response
+	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.ListTransactionApprovalDetails`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListTransactionApprovalDetailsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **transactionIds** | **string** | A list of transaction IDs, separated by comma. | 
+ **coboIds** | **string** | A list of Cobo IDs, separated by comma. A Cobo ID can be used to track a transaction. | 
+
+### Return type
+
+[**ListTransactionApprovalDetails200Response**](ListTransactionApprovalDetails200Response.md)
 
 ### Authorization
 

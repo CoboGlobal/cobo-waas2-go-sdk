@@ -15,7 +15,7 @@ import (
 // checks if the FILBase type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FILBase{}
 
-// FILBase The transaction gas base based on the FIL fee model.
+// FILBase struct for FILBase
 type FILBase struct {
 	// The minimum fee required for a transaction to be included in a block. The base fee is dynamically adjusted based on network congestion to maintain target block utilization. It is burned rather than paid to miners, reducing the total Filecoin supply over time.
 	GasBase *string `json:"gas_base,omitempty"`
