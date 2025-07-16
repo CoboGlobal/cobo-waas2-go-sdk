@@ -280,6 +280,7 @@ docs/ListTokenBalancesForFeeStation200ResponseDataInner.md
 docs/ListTokenListingRequests200Response.md
 docs/ListTopUpPayers200Response.md
 docs/ListTopUpPayers200ResponseDataInner.md
+docs/ListTransactionApprovalDetails200Response.md
 docs/ListTransactions200Response.md
 docs/ListTssRequests200Response.md
 docs/ListUtxos200Response.md
@@ -909,6 +910,7 @@ model_list_token_balances_for_fee_station_200_response_data_inner.go
 model_list_token_listing_requests_200_response.go
 model_list_top_up_payers_200_response.go
 model_list_top_up_payers_200_response_data_inner.go
+model_list_transaction_approval_details_200_response.go
 model_list_transactions_200_response.go
 model_list_tss_requests_200_response.go
 model_list_utxos_200_response.go

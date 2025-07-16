@@ -15,7 +15,7 @@ import (
 // checks if the SOLBase type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SOLBase{}
 
-// SOLBase The transaction base fee based on the SOL fee model.
+// SOLBase struct for SOLBase
 type SOLBase struct {
 	// A fixed fee charged per signature. The default is 5,000 lamports per signature.
 	BaseFee *string `json:"base_fee,omitempty"`
