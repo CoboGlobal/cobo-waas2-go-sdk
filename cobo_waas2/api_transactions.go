@@ -1384,7 +1384,7 @@ type ApiListApprovalDetailsRequest struct {
 	ApiService *TransactionsAPIService
 	transactionIds *string
 	coboIds *string
-	requestId *string
+	requestIds *string
 }
 
 // A list of transaction IDs, separated by comma.
@@ -1400,12 +1400,12 @@ func (r ApiListApprovalDetailsRequest) CoboIds(coboIds string) ApiListApprovalDe
 }
 
 // A list of request IDs, separated by comma.
-func (r ApiListApprovalDetailsRequest) RequestId(requestId string) ApiListApprovalDetailsRequest {
-	r.requestId = &requestId
+func (r ApiListApprovalDetailsRequest) RequestIds(requestIds string) ApiListApprovalDetailsRequest {
+	r.requestIds = &requestIds
 	return r
 }
 
-func (r ApiListApprovalDetailsRequest) Execute() (*ListApprovalDetails200Response, *http.Response, error) {
+func (r ApiListApprovalDetailsRequest) Execute() ([]ApprovalDetail, *http.Response, error) {
 	return r.ApiService.ListApprovalDetailsExecute(r)
 }
 
@@ -1426,13 +1426,13 @@ func (a *TransactionsAPIService) ListApprovalDetails(ctx context.Context) ApiLis
 }
 
 // Execute executes the request
-//  @return ListApprovalDetails200Response
-func (a *TransactionsAPIService) ListApprovalDetailsExecute(r ApiListApprovalDetailsRequest) (*ListApprovalDetails200Response, *http.Response, error) {
+//  @return []ApprovalDetail
+func (a *TransactionsAPIService) ListApprovalDetailsExecute(r ApiListApprovalDetailsRequest) ([]ApprovalDetail, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListApprovalDetails200Response
+		localVarReturnValue  []ApprovalDetail
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.ListApprovalDetails")
@@ -1452,8 +1452,8 @@ func (a *TransactionsAPIService) ListApprovalDetailsExecute(r ApiListApprovalDet
 	if r.coboIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "cobo_ids", r.coboIds, "")
 	}
-	if r.requestId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
+	if r.requestIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "request_ids", r.requestIds, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1674,13 +1674,13 @@ func (a *TransactionsAPIService) ListTransactionApprovalDetailsExecute(r ApiList
 type ApiListTransactionTemplatesRequest struct {
 	ctx context.Context
 	ApiService *TransactionsAPIService
-	transactionType *string
+	templateKey *string
 	templateVersion *string
 }
 
-// The transaction type. Possible values include:    - &#x60;DEPOSIT&#x60;: A deposit transaction.   - &#x60;WITHDRAW&#x60;: A withdrawal transaction. 
-func (r ApiListTransactionTemplatesRequest) TransactionType(transactionType string) ApiListTransactionTemplatesRequest {
-	r.transactionType = &transactionType
+// The key of the transaction template to be used for creating a transaction approval message. 
+func (r ApiListTransactionTemplatesRequest) TemplateKey(templateKey string) ApiListTransactionTemplatesRequest {
+	r.templateKey = &templateKey
 	return r
 }
 
@@ -1690,7 +1690,7 @@ func (r ApiListTransactionTemplatesRequest) TemplateVersion(templateVersion stri
 	return r
 }
 
-func (r ApiListTransactionTemplatesRequest) Execute() (*ListTransactionTemplates200Response, *http.Response, error) {
+func (r ApiListTransactionTemplatesRequest) Execute() ([]ApprovalTemplate, *http.Response, error) {
 	return r.ApiService.ListTransactionTemplatesExecute(r)
 }
 
@@ -1712,13 +1712,13 @@ func (a *TransactionsAPIService) ListTransactionTemplates(ctx context.Context) A
 }
 
 // Execute executes the request
-//  @return ListTransactionTemplates200Response
-func (a *TransactionsAPIService) ListTransactionTemplatesExecute(r ApiListTransactionTemplatesRequest) (*ListTransactionTemplates200Response, *http.Response, error) {
+//  @return []ApprovalTemplate
+func (a *TransactionsAPIService) ListTransactionTemplatesExecute(r ApiListTransactionTemplatesRequest) ([]ApprovalTemplate, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListTransactionTemplates200Response
+		localVarReturnValue  []ApprovalTemplate
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TransactionsAPIService.ListTransactionTemplates")
@@ -1731,11 +1731,11 @@ func (a *TransactionsAPIService) ListTransactionTemplatesExecute(r ApiListTransa
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.transactionType == nil {
-		return localVarReturnValue, nil, reportError("transactionType is required and must be specified")
+	if r.templateKey == nil {
+		return localVarReturnValue, nil, reportError("templateKey is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "transaction_type", r.transactionType, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "template_key", r.templateKey, "")
 	if r.templateVersion != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "template_version", r.templateVersion, "")
 	}

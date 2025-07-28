@@ -7,9 +7,9 @@ Name | Type | Description | Notes
 **TransactionId** | Pointer to **string** | The transaction ID. | [optional] 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
-**Result** | Pointer to [**ApprovalTransactionResult**](ApprovalTransactionResult.md) |  | [optional] 
-**Threshold** | Pointer to **int32** | The threshold for the transaction approval. | [optional] 
-**UserDetails** | Pointer to [**[]ApprovalUserDetail**](ApprovalUserDetail.md) |  | [optional] 
+**BrokerUser** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
+**Spender** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
+**Approver** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
 
 ## Methods
 
@@ -105,80 +105,80 @@ SetRequestId sets RequestId field to given value.
 
 HasRequestId returns a boolean if a field has been set.
 
-### GetResult
+### GetBrokerUser
 
-`func (o *ApprovalDetail) GetResult() ApprovalTransactionResult`
+`func (o *ApprovalDetail) GetBrokerUser() RoleDetail`
 
-GetResult returns the Result field if non-nil, zero value otherwise.
+GetBrokerUser returns the BrokerUser field if non-nil, zero value otherwise.
 
-### GetResultOk
+### GetBrokerUserOk
 
-`func (o *ApprovalDetail) GetResultOk() (*ApprovalTransactionResult, bool)`
+`func (o *ApprovalDetail) GetBrokerUserOk() (*RoleDetail, bool)`
 
-GetResultOk returns a tuple with the Result field if it's non-nil, zero value otherwise
+GetBrokerUserOk returns a tuple with the BrokerUser field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetResult
+### SetBrokerUser
 
-`func (o *ApprovalDetail) SetResult(v ApprovalTransactionResult)`
+`func (o *ApprovalDetail) SetBrokerUser(v RoleDetail)`
 
-SetResult sets Result field to given value.
+SetBrokerUser sets BrokerUser field to given value.
 
-### HasResult
+### HasBrokerUser
 
-`func (o *ApprovalDetail) HasResult() bool`
+`func (o *ApprovalDetail) HasBrokerUser() bool`
 
-HasResult returns a boolean if a field has been set.
+HasBrokerUser returns a boolean if a field has been set.
 
-### GetThreshold
+### GetSpender
 
-`func (o *ApprovalDetail) GetThreshold() int32`
+`func (o *ApprovalDetail) GetSpender() RoleDetail`
 
-GetThreshold returns the Threshold field if non-nil, zero value otherwise.
+GetSpender returns the Spender field if non-nil, zero value otherwise.
 
-### GetThresholdOk
+### GetSpenderOk
 
-`func (o *ApprovalDetail) GetThresholdOk() (*int32, bool)`
+`func (o *ApprovalDetail) GetSpenderOk() (*RoleDetail, bool)`
 
-GetThresholdOk returns a tuple with the Threshold field if it's non-nil, zero value otherwise
+GetSpenderOk returns a tuple with the Spender field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetThreshold
+### SetSpender
 
-`func (o *ApprovalDetail) SetThreshold(v int32)`
+`func (o *ApprovalDetail) SetSpender(v RoleDetail)`
 
-SetThreshold sets Threshold field to given value.
+SetSpender sets Spender field to given value.
 
-### HasThreshold
+### HasSpender
 
-`func (o *ApprovalDetail) HasThreshold() bool`
+`func (o *ApprovalDetail) HasSpender() bool`
 
-HasThreshold returns a boolean if a field has been set.
+HasSpender returns a boolean if a field has been set.
 
-### GetUserDetails
+### GetApprover
 
-`func (o *ApprovalDetail) GetUserDetails() []ApprovalUserDetail`
+`func (o *ApprovalDetail) GetApprover() RoleDetail`
 
-GetUserDetails returns the UserDetails field if non-nil, zero value otherwise.
+GetApprover returns the Approver field if non-nil, zero value otherwise.
 
-### GetUserDetailsOk
+### GetApproverOk
 
-`func (o *ApprovalDetail) GetUserDetailsOk() (*[]ApprovalUserDetail, bool)`
+`func (o *ApprovalDetail) GetApproverOk() (*RoleDetail, bool)`
 
-GetUserDetailsOk returns a tuple with the UserDetails field if it's non-nil, zero value otherwise
+GetApproverOk returns a tuple with the Approver field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUserDetails
+### SetApprover
 
-`func (o *ApprovalDetail) SetUserDetails(v []ApprovalUserDetail)`
+`func (o *ApprovalDetail) SetApprover(v RoleDetail)`
 
-SetUserDetails sets UserDetails field to given value.
+SetApprover sets Approver field to given value.
 
-### HasUserDetails
+### HasApprover
 
-`func (o *ApprovalDetail) HasUserDetails() bool`
+`func (o *ApprovalDetail) HasApprover() bool`
 
-HasUserDetails returns a boolean if a field has been set.
+HasApprover returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

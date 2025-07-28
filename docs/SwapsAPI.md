@@ -5,6 +5,7 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateSwapActivity**](SwapsAPI.md#CreateSwapActivity) | **Post** /swaps/swap | Create Swap Activity
+[**EstimateSwapFee**](SwapsAPI.md#EstimateSwapFee) | **Post** /swaps/estimate_fee | Estimate Swap Fee
 [**GetSwapActivity**](SwapsAPI.md#GetSwapActivity) | **Get** /swaps/activities/{activity_id} | Get Swap Activity Details
 [**GetSwapQuote**](SwapsAPI.md#GetSwapQuote) | **Get** /swaps/quote | Get Current Swap Rate
 [**ListSwapActivities**](SwapsAPI.md#ListSwapActivities) | **Get** /swaps/activities | List Swap Activities
@@ -73,6 +74,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**SwapActivityDetail**](SwapActivityDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## EstimateSwapFee
+
+> EstimatedFee EstimateSwapFee(ctx).SwapEstimateFee(swapEstimateFee).Execute()
+
+Estimate Swap Fee
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	swapEstimateFee := *coboWaas2.NewSwapEstimateFee("123e4567-e89b-12d3-a456-426614174000", "123e4567-e89b-12d3-a456-426614174001")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.SwapsAPI.EstimateSwapFee(ctx).SwapEstimateFee(swapEstimateFee).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SwapsAPI.EstimateSwapFee``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `EstimateSwapFee`: EstimatedFee
+	fmt.Fprintf(os.Stdout, "Response from `SwapsAPI.EstimateSwapFee`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiEstimateSwapFeeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **swapEstimateFee** | [**SwapEstimateFee**](SwapEstimateFee.md) | The request body for estimating the fee of a swap activity. | 
+
+### Return type
+
+[**EstimatedFee**](EstimatedFee.md)
 
 ### Authorization
 

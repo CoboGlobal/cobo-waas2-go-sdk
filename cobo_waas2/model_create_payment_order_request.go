@@ -49,7 +49,7 @@ func NewCreatePaymentOrderRequest(merchantId string, tokenId string, orderAmount
 	this := CreatePaymentOrderRequest{}
 	this.MerchantId = merchantId
 	this.TokenId = tokenId
-	var currency string = "USD"
+	var currency string = ""
 	this.Currency = &currency
 	this.OrderAmount = orderAmount
 	this.FeeAmount = feeAmount
@@ -62,7 +62,7 @@ func NewCreatePaymentOrderRequest(merchantId string, tokenId string, orderAmount
 // but it doesn't guarantee that properties required by API are set
 func NewCreatePaymentOrderRequestWithDefaults() *CreatePaymentOrderRequest {
 	this := CreatePaymentOrderRequest{}
-	var currency string = "USD"
+	var currency string = ""
 	this.Currency = &currency
 	return &this
 }

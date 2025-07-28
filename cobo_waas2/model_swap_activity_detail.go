@@ -46,6 +46,9 @@ type SwapActivityDetail struct {
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
+	NetworkFee *TransactionRequestFee `json:"network_fee,omitempty"`
+	// the destination address of web3/mpc wallets.
+	DestinationAddress *string `json:"destination_address,omitempty"`
 	Timeline []SwapActivityTimeline `json:"timeline,omitempty"`
 	Approvers []SwapActivityApprovers `json:"approvers,omitempty"`
 	Signers []SwapActivitySigners `json:"signers,omitempty"`
@@ -590,6 +593,70 @@ func (o *SwapActivityDetail) SetUpdatedTimestamp(v int32) {
 	o.UpdatedTimestamp = &v
 }
 
+// GetNetworkFee returns the NetworkFee field value if set, zero value otherwise.
+func (o *SwapActivityDetail) GetNetworkFee() TransactionRequestFee {
+	if o == nil || IsNil(o.NetworkFee) {
+		var ret TransactionRequestFee
+		return ret
+	}
+	return *o.NetworkFee
+}
+
+// GetNetworkFeeOk returns a tuple with the NetworkFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivityDetail) GetNetworkFeeOk() (*TransactionRequestFee, bool) {
+	if o == nil || IsNil(o.NetworkFee) {
+		return nil, false
+	}
+	return o.NetworkFee, true
+}
+
+// HasNetworkFee returns a boolean if a field has been set.
+func (o *SwapActivityDetail) HasNetworkFee() bool {
+	if o != nil && !IsNil(o.NetworkFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetNetworkFee gets a reference to the given TransactionRequestFee and assigns it to the NetworkFee field.
+func (o *SwapActivityDetail) SetNetworkFee(v TransactionRequestFee) {
+	o.NetworkFee = &v
+}
+
+// GetDestinationAddress returns the DestinationAddress field value if set, zero value otherwise.
+func (o *SwapActivityDetail) GetDestinationAddress() string {
+	if o == nil || IsNil(o.DestinationAddress) {
+		var ret string
+		return ret
+	}
+	return *o.DestinationAddress
+}
+
+// GetDestinationAddressOk returns a tuple with the DestinationAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivityDetail) GetDestinationAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.DestinationAddress) {
+		return nil, false
+	}
+	return o.DestinationAddress, true
+}
+
+// HasDestinationAddress returns a boolean if a field has been set.
+func (o *SwapActivityDetail) HasDestinationAddress() bool {
+	if o != nil && !IsNil(o.DestinationAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetDestinationAddress gets a reference to the given string and assigns it to the DestinationAddress field.
+func (o *SwapActivityDetail) SetDestinationAddress(v string) {
+	o.DestinationAddress = &v
+}
+
 // GetTimeline returns the Timeline field value if set, zero value otherwise.
 func (o *SwapActivityDetail) GetTimeline() []SwapActivityTimeline {
 	if o == nil || IsNil(o.Timeline) {
@@ -743,6 +810,12 @@ func (o SwapActivityDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UpdatedTimestamp) {
 		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
+	if !IsNil(o.NetworkFee) {
+		toSerialize["network_fee"] = o.NetworkFee
+	}
+	if !IsNil(o.DestinationAddress) {
+		toSerialize["destination_address"] = o.DestinationAddress
 	}
 	if !IsNil(o.Timeline) {
 		toSerialize["timeline"] = o.Timeline

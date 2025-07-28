@@ -23,10 +23,9 @@ type ApprovalDetail struct {
 	CoboId *string `json:"cobo_id,omitempty"`
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
 	RequestId *string `json:"request_id,omitempty"`
-	Result *ApprovalTransactionResult `json:"result,omitempty"`
-	// The threshold for the transaction approval.
-	Threshold *int32 `json:"threshold,omitempty"`
-	UserDetails []ApprovalUserDetail `json:"user_details,omitempty"`
+	BrokerUser *RoleDetail `json:"broker_user,omitempty"`
+	Spender *RoleDetail `json:"spender,omitempty"`
+	Approver *RoleDetail `json:"approver,omitempty"`
 }
 
 // NewApprovalDetail instantiates a new ApprovalDetail object
@@ -142,100 +141,100 @@ func (o *ApprovalDetail) SetRequestId(v string) {
 	o.RequestId = &v
 }
 
-// GetResult returns the Result field value if set, zero value otherwise.
-func (o *ApprovalDetail) GetResult() ApprovalTransactionResult {
-	if o == nil || IsNil(o.Result) {
-		var ret ApprovalTransactionResult
+// GetBrokerUser returns the BrokerUser field value if set, zero value otherwise.
+func (o *ApprovalDetail) GetBrokerUser() RoleDetail {
+	if o == nil || IsNil(o.BrokerUser) {
+		var ret RoleDetail
 		return ret
 	}
-	return *o.Result
+	return *o.BrokerUser
 }
 
-// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// GetBrokerUserOk returns a tuple with the BrokerUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApprovalDetail) GetResultOk() (*ApprovalTransactionResult, bool) {
-	if o == nil || IsNil(o.Result) {
+func (o *ApprovalDetail) GetBrokerUserOk() (*RoleDetail, bool) {
+	if o == nil || IsNil(o.BrokerUser) {
 		return nil, false
 	}
-	return o.Result, true
+	return o.BrokerUser, true
 }
 
-// HasResult returns a boolean if a field has been set.
-func (o *ApprovalDetail) HasResult() bool {
-	if o != nil && !IsNil(o.Result) {
+// HasBrokerUser returns a boolean if a field has been set.
+func (o *ApprovalDetail) HasBrokerUser() bool {
+	if o != nil && !IsNil(o.BrokerUser) {
 		return true
 	}
 
 	return false
 }
 
-// SetResult gets a reference to the given ApprovalTransactionResult and assigns it to the Result field.
-func (o *ApprovalDetail) SetResult(v ApprovalTransactionResult) {
-	o.Result = &v
+// SetBrokerUser gets a reference to the given RoleDetail and assigns it to the BrokerUser field.
+func (o *ApprovalDetail) SetBrokerUser(v RoleDetail) {
+	o.BrokerUser = &v
 }
 
-// GetThreshold returns the Threshold field value if set, zero value otherwise.
-func (o *ApprovalDetail) GetThreshold() int32 {
-	if o == nil || IsNil(o.Threshold) {
-		var ret int32
+// GetSpender returns the Spender field value if set, zero value otherwise.
+func (o *ApprovalDetail) GetSpender() RoleDetail {
+	if o == nil || IsNil(o.Spender) {
+		var ret RoleDetail
 		return ret
 	}
-	return *o.Threshold
+	return *o.Spender
 }
 
-// GetThresholdOk returns a tuple with the Threshold field value if set, nil otherwise
+// GetSpenderOk returns a tuple with the Spender field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApprovalDetail) GetThresholdOk() (*int32, bool) {
-	if o == nil || IsNil(o.Threshold) {
+func (o *ApprovalDetail) GetSpenderOk() (*RoleDetail, bool) {
+	if o == nil || IsNil(o.Spender) {
 		return nil, false
 	}
-	return o.Threshold, true
+	return o.Spender, true
 }
 
-// HasThreshold returns a boolean if a field has been set.
-func (o *ApprovalDetail) HasThreshold() bool {
-	if o != nil && !IsNil(o.Threshold) {
+// HasSpender returns a boolean if a field has been set.
+func (o *ApprovalDetail) HasSpender() bool {
+	if o != nil && !IsNil(o.Spender) {
 		return true
 	}
 
 	return false
 }
 
-// SetThreshold gets a reference to the given int32 and assigns it to the Threshold field.
-func (o *ApprovalDetail) SetThreshold(v int32) {
-	o.Threshold = &v
+// SetSpender gets a reference to the given RoleDetail and assigns it to the Spender field.
+func (o *ApprovalDetail) SetSpender(v RoleDetail) {
+	o.Spender = &v
 }
 
-// GetUserDetails returns the UserDetails field value if set, zero value otherwise.
-func (o *ApprovalDetail) GetUserDetails() []ApprovalUserDetail {
-	if o == nil || IsNil(o.UserDetails) {
-		var ret []ApprovalUserDetail
+// GetApprover returns the Approver field value if set, zero value otherwise.
+func (o *ApprovalDetail) GetApprover() RoleDetail {
+	if o == nil || IsNil(o.Approver) {
+		var ret RoleDetail
 		return ret
 	}
-	return o.UserDetails
+	return *o.Approver
 }
 
-// GetUserDetailsOk returns a tuple with the UserDetails field value if set, nil otherwise
+// GetApproverOk returns a tuple with the Approver field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApprovalDetail) GetUserDetailsOk() ([]ApprovalUserDetail, bool) {
-	if o == nil || IsNil(o.UserDetails) {
+func (o *ApprovalDetail) GetApproverOk() (*RoleDetail, bool) {
+	if o == nil || IsNil(o.Approver) {
 		return nil, false
 	}
-	return o.UserDetails, true
+	return o.Approver, true
 }
 
-// HasUserDetails returns a boolean if a field has been set.
-func (o *ApprovalDetail) HasUserDetails() bool {
-	if o != nil && !IsNil(o.UserDetails) {
+// HasApprover returns a boolean if a field has been set.
+func (o *ApprovalDetail) HasApprover() bool {
+	if o != nil && !IsNil(o.Approver) {
 		return true
 	}
 
 	return false
 }
 
-// SetUserDetails gets a reference to the given []ApprovalUserDetail and assigns it to the UserDetails field.
-func (o *ApprovalDetail) SetUserDetails(v []ApprovalUserDetail) {
-	o.UserDetails = v
+// SetApprover gets a reference to the given RoleDetail and assigns it to the Approver field.
+func (o *ApprovalDetail) SetApprover(v RoleDetail) {
+	o.Approver = &v
 }
 
 func (o ApprovalDetail) MarshalJSON() ([]byte, error) {
@@ -257,14 +256,14 @@ func (o ApprovalDetail) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RequestId) {
 		toSerialize["request_id"] = o.RequestId
 	}
-	if !IsNil(o.Result) {
-		toSerialize["result"] = o.Result
+	if !IsNil(o.BrokerUser) {
+		toSerialize["broker_user"] = o.BrokerUser
 	}
-	if !IsNil(o.Threshold) {
-		toSerialize["threshold"] = o.Threshold
+	if !IsNil(o.Spender) {
+		toSerialize["spender"] = o.Spender
 	}
-	if !IsNil(o.UserDetails) {
-		toSerialize["user_details"] = o.UserDetails
+	if !IsNil(o.Approver) {
+		toSerialize["approver"] = o.Approver
 	}
 	return toSerialize, nil
 }

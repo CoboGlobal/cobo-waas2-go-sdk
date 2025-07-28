@@ -33,6 +33,10 @@ type SettlementInfo struct {
 	PendingCurrencyBalance *string `json:"pending_currency_balance,omitempty"`
 	// The amount already settled, in the specified cryptocurrency.
 	SettledAmount *string `json:"settled_amount,omitempty"`
+	// The balance available for settlement or refund, in the specified fiat currency.
+	AvailableBalance *string `json:"available_balance,omitempty"`
+	// The balance total for settlement or refund, in the specified fiat currency.
+	TotalBalance *string `json:"total_balance,omitempty"`
 	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 	// The created time of the settlement, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
@@ -276,6 +280,70 @@ func (o *SettlementInfo) SetSettledAmount(v string) {
 	o.SettledAmount = &v
 }
 
+// GetAvailableBalance returns the AvailableBalance field value if set, zero value otherwise.
+func (o *SettlementInfo) GetAvailableBalance() string {
+	if o == nil || IsNil(o.AvailableBalance) {
+		var ret string
+		return ret
+	}
+	return *o.AvailableBalance
+}
+
+// GetAvailableBalanceOk returns a tuple with the AvailableBalance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementInfo) GetAvailableBalanceOk() (*string, bool) {
+	if o == nil || IsNil(o.AvailableBalance) {
+		return nil, false
+	}
+	return o.AvailableBalance, true
+}
+
+// HasAvailableBalance returns a boolean if a field has been set.
+func (o *SettlementInfo) HasAvailableBalance() bool {
+	if o != nil && !IsNil(o.AvailableBalance) {
+		return true
+	}
+
+	return false
+}
+
+// SetAvailableBalance gets a reference to the given string and assigns it to the AvailableBalance field.
+func (o *SettlementInfo) SetAvailableBalance(v string) {
+	o.AvailableBalance = &v
+}
+
+// GetTotalBalance returns the TotalBalance field value if set, zero value otherwise.
+func (o *SettlementInfo) GetTotalBalance() string {
+	if o == nil || IsNil(o.TotalBalance) {
+		var ret string
+		return ret
+	}
+	return *o.TotalBalance
+}
+
+// GetTotalBalanceOk returns a tuple with the TotalBalance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementInfo) GetTotalBalanceOk() (*string, bool) {
+	if o == nil || IsNil(o.TotalBalance) {
+		return nil, false
+	}
+	return o.TotalBalance, true
+}
+
+// HasTotalBalance returns a boolean if a field has been set.
+func (o *SettlementInfo) HasTotalBalance() bool {
+	if o != nil && !IsNil(o.TotalBalance) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalBalance gets a reference to the given string and assigns it to the TotalBalance field.
+func (o *SettlementInfo) SetTotalBalance(v string) {
+	o.TotalBalance = &v
+}
+
 // GetAcquiringType returns the AcquiringType field value if set, zero value otherwise.
 func (o *SettlementInfo) GetAcquiringType() AcquiringType {
 	if o == nil || IsNil(o.AcquiringType) {
@@ -400,6 +468,12 @@ func (o SettlementInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SettledAmount) {
 		toSerialize["settled_amount"] = o.SettledAmount
+	}
+	if !IsNil(o.AvailableBalance) {
+		toSerialize["available_balance"] = o.AvailableBalance
+	}
+	if !IsNil(o.TotalBalance) {
+		toSerialize["total_balance"] = o.TotalBalance
 	}
 	if !IsNil(o.AcquiringType) {
 		toSerialize["acquiring_type"] = o.AcquiringType

@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **FeeUsed** | Pointer to **string** | The transaction fee. | [optional] 
 **EstimatedFeeUsed** | Pointer to **string** | The estimated transaction fee. | [optional] 
+**GasUsed** | Pointer to **string** | The gas units used in the transaction. | [optional] 
 
 ## Methods
 
@@ -226,6 +227,31 @@ SetEstimatedFeeUsed sets EstimatedFeeUsed field to given value.
 `func (o *TransactionFILFee) HasEstimatedFeeUsed() bool`
 
 HasEstimatedFeeUsed returns a boolean if a field has been set.
+
+### GetGasUsed
+
+`func (o *TransactionFILFee) GetGasUsed() string`
+
+GetGasUsed returns the GasUsed field if non-nil, zero value otherwise.
+
+### GetGasUsedOk
+
+`func (o *TransactionFILFee) GetGasUsedOk() (*string, bool)`
+
+GetGasUsedOk returns a tuple with the GasUsed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGasUsed
+
+`func (o *TransactionFILFee) SetGasUsed(v string)`
+
+SetGasUsed sets GasUsed field to given value.
+
+### HasGasUsed
+
+`func (o *TransactionFILFee) HasGasUsed() bool`
+
+HasGasUsed returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

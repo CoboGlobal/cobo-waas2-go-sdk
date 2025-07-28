@@ -17,7 +17,6 @@ import (
 type TokenizationEstimateFeeRequestOperationParams struct {
 	TokenizationBurnEstimateFeeParams *TokenizationBurnEstimateFeeParams
 	TokenizationContractCallEstimateFeeParams *TokenizationContractCallEstimateFeeParams
-	TokenizationDeployEstimateFeeParams *TokenizationDeployEstimateFeeParams
 	TokenizationIssueEstimateFeeParams *TokenizationIssueEstimateFeeParams
 	TokenizationMintEstimateFeeParams *TokenizationMintEstimateFeeParams
 	TokenizationPauseEstimateFeeParams *TokenizationPauseEstimateFeeParams
@@ -38,13 +37,6 @@ func TokenizationBurnEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationP
 func TokenizationContractCallEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationParams(v *TokenizationContractCallEstimateFeeParams) TokenizationEstimateFeeRequestOperationParams {
 	return TokenizationEstimateFeeRequestOperationParams{
 		TokenizationContractCallEstimateFeeParams: v,
-	}
-}
-
-// TokenizationDeployEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationParams is a convenience function that returns TokenizationDeployEstimateFeeParams wrapped in TokenizationEstimateFeeRequestOperationParams
-func TokenizationDeployEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationParams(v *TokenizationDeployEstimateFeeParams) TokenizationEstimateFeeRequestOperationParams {
-	return TokenizationEstimateFeeRequestOperationParams{
-		TokenizationDeployEstimateFeeParams: v,
 	}
 }
 
@@ -129,18 +121,6 @@ func (dst *TokenizationEstimateFeeRequestOperationParams) UnmarshalJSON(data []b
 		} else {
 			dst.TokenizationContractCallEstimateFeeParams = nil
 			return fmt.Errorf("failed to unmarshal TokenizationEstimateFeeRequestOperationParams as TokenizationContractCallEstimateFeeParams: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'Deploy'
-	if jsonDict["operation_type"] == "Deploy" {
-		// try to unmarshal JSON data into TokenizationDeployEstimateFeeParams
-		err = json.Unmarshal(data, &dst.TokenizationDeployEstimateFeeParams)
-		if err == nil {
-			return nil // data stored in dst.TokenizationDeployEstimateFeeParams, return on the first match
-		} else {
-			dst.TokenizationDeployEstimateFeeParams = nil
-			return fmt.Errorf("failed to unmarshal TokenizationEstimateFeeRequestOperationParams as TokenizationDeployEstimateFeeParams: %s", err.Error())
 		}
 	}
 
@@ -252,18 +232,6 @@ func (dst *TokenizationEstimateFeeRequestOperationParams) UnmarshalJSON(data []b
 		}
 	}
 
-	// check if the discriminator value is 'TokenizationDeployEstimateFeeParams'
-	if jsonDict["operation_type"] == "TokenizationDeployEstimateFeeParams" {
-		// try to unmarshal JSON data into TokenizationDeployEstimateFeeParams
-		err = json.Unmarshal(data, &dst.TokenizationDeployEstimateFeeParams)
-		if err == nil {
-			return nil // data stored in dst.TokenizationDeployEstimateFeeParams, return on the first match
-		} else {
-			dst.TokenizationDeployEstimateFeeParams = nil
-			return fmt.Errorf("failed to unmarshal TokenizationEstimateFeeRequestOperationParams as TokenizationDeployEstimateFeeParams: %s", err.Error())
-		}
-	}
-
 	// check if the discriminator value is 'TokenizationIssueEstimateFeeParams'
 	if jsonDict["operation_type"] == "TokenizationIssueEstimateFeeParams" {
 		// try to unmarshal JSON data into TokenizationIssueEstimateFeeParams
@@ -361,10 +329,6 @@ func (src TokenizationEstimateFeeRequestOperationParams) MarshalJSON() ([]byte, 
 		return json.Marshal(&src.TokenizationContractCallEstimateFeeParams)
 	}
 
-	if src.TokenizationDeployEstimateFeeParams != nil {
-		return json.Marshal(&src.TokenizationDeployEstimateFeeParams)
-	}
-
 	if src.TokenizationIssueEstimateFeeParams != nil {
 		return json.Marshal(&src.TokenizationIssueEstimateFeeParams)
 	}
@@ -407,10 +371,6 @@ func (obj *TokenizationEstimateFeeRequestOperationParams) GetActualInstance() (i
 
 	if obj.TokenizationContractCallEstimateFeeParams != nil {
 		return obj.TokenizationContractCallEstimateFeeParams
-	}
-
-	if obj.TokenizationDeployEstimateFeeParams != nil {
-		return obj.TokenizationDeployEstimateFeeParams
 	}
 
 	if obj.TokenizationIssueEstimateFeeParams != nil {

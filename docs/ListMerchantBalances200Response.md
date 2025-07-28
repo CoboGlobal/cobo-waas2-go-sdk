@@ -1,52 +1,52 @@
-# ListApprovalDetails200Response
+# ListMerchantBalances200Response
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**[]ApprovalDetail**](ApprovalDetail.md) |  | [optional] 
+**Data** | Pointer to [**[]MerchantBalance**](MerchantBalance.md) |  | [optional] 
 
 ## Methods
 
-### NewListApprovalDetails200Response
+### NewListMerchantBalances200Response
 
-`func NewListApprovalDetails200Response() *ListApprovalDetails200Response`
+`func NewListMerchantBalances200Response() *ListMerchantBalances200Response`
 
-NewListApprovalDetails200Response instantiates a new ListApprovalDetails200Response object
+NewListMerchantBalances200Response instantiates a new ListMerchantBalances200Response object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewListApprovalDetails200ResponseWithDefaults
+### NewListMerchantBalances200ResponseWithDefaults
 
-`func NewListApprovalDetails200ResponseWithDefaults() *ListApprovalDetails200Response`
+`func NewListMerchantBalances200ResponseWithDefaults() *ListMerchantBalances200Response`
 
-NewListApprovalDetails200ResponseWithDefaults instantiates a new ListApprovalDetails200Response object
+NewListMerchantBalances200ResponseWithDefaults instantiates a new ListMerchantBalances200Response object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *ListApprovalDetails200Response) GetData() []ApprovalDetail`
+`func (o *ListMerchantBalances200Response) GetData() []MerchantBalance`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *ListApprovalDetails200Response) GetDataOk() (*[]ApprovalDetail, bool)`
+`func (o *ListMerchantBalances200Response) GetDataOk() (*[]MerchantBalance, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *ListApprovalDetails200Response) SetData(v []ApprovalDetail)`
+`func (o *ListMerchantBalances200Response) SetData(v []MerchantBalance)`
 
 SetData sets Data field to given value.
 
 ### HasData
 
-`func (o *ListApprovalDetails200Response) HasData() bool`
+`func (o *ListMerchantBalances200Response) HasData() bool`
 
 HasData returns a boolean if a field has been set.
 
