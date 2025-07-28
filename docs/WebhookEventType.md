@@ -45,6 +45,30 @@
 
 * `WALLET_WEB3_BALANCE_UPDATED` (value: `"wallet.web3.balance.updated"`)
 
+* `WALLET_TOKEN_DISABLED` (value: `"wallet.token.disabled"`)
+
+* `WALLET_CHAIN_DISABLED` (value: `"wallet.chain.disabled"`)
+
+* `TOKEN_SUSPENDED_DEPOSIT` (value: `"token.suspended.deposit"`)
+
+* `TOKEN_SUSPENDED_WITHDRAW` (value: `"token.suspended.withdraw"`)
+
+* `PAYMENT_TRANSACTION_CREATED` (value: `"payment.transaction.created"`)
+
+* `PAYMENT_TRANSACTION_LATE` (value: `"payment.transaction.late"`)
+
+* `PAYMENT_TRANSACTION_COMPLETED` (value: `"payment.transaction.completed"`)
+
+* `PAYMENT_TRANSACTION_HELD` (value: `"payment.transaction.held"`)
+
+* `PAYMENT_STATUS_UPDATED` (value: `"payment.status.updated"`)
+
+* `PAYMENT_REFUND_STATUS_UPDATED` (value: `"payment.refund.status.updated"`)
+
+* `PAYMENT_SETTLEMENT_STATUS_UPDATED` (value: `"payment.settlement.status.updated"`)
+
+* `PAYMENT_ADDRESS_UPDATED` (value: `"payment.address.updated"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

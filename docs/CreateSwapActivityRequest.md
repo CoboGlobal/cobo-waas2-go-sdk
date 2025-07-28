@@ -5,12 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **WalletId** | **string** | The unique identifier of the wallet to pay. | 
-**Address** | Pointer to **string** | The wallet address. | [optional] 
+**Address** | Pointer to **string** | The wallet address, required when the wallet is not a custodial wallet. | [optional] 
 **QuoteId** | **string** | The unique identifier of the quote. | 
 **AppInitiator** | Pointer to **string** | The initiator of the app activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator. | [optional] 
 **RequestId** | Pointer to **string** | The request id of the swap activity. | [optional] 
-**Destination** | Pointer to [**AddressTransferDestination**](AddressTransferDestination.md) |  | [optional] 
-**Fee** | Pointer to [**EstimatedFee**](EstimatedFee.md) |  | [optional] 
+**ReceiverAddress** | Pointer to **string** | The address of the receiver. | [optional] 
+**Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
 
 ## Methods
 
@@ -146,47 +146,47 @@ SetRequestId sets RequestId field to given value.
 
 HasRequestId returns a boolean if a field has been set.
 
-### GetDestination
+### GetReceiverAddress
 
-`func (o *CreateSwapActivityRequest) GetDestination() AddressTransferDestination`
+`func (o *CreateSwapActivityRequest) GetReceiverAddress() string`
 
-GetDestination returns the Destination field if non-nil, zero value otherwise.
+GetReceiverAddress returns the ReceiverAddress field if non-nil, zero value otherwise.
 
-### GetDestinationOk
+### GetReceiverAddressOk
 
-`func (o *CreateSwapActivityRequest) GetDestinationOk() (*AddressTransferDestination, bool)`
+`func (o *CreateSwapActivityRequest) GetReceiverAddressOk() (*string, bool)`
 
-GetDestinationOk returns a tuple with the Destination field if it's non-nil, zero value otherwise
+GetReceiverAddressOk returns a tuple with the ReceiverAddress field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDestination
+### SetReceiverAddress
 
-`func (o *CreateSwapActivityRequest) SetDestination(v AddressTransferDestination)`
+`func (o *CreateSwapActivityRequest) SetReceiverAddress(v string)`
 
-SetDestination sets Destination field to given value.
+SetReceiverAddress sets ReceiverAddress field to given value.
 
-### HasDestination
+### HasReceiverAddress
 
-`func (o *CreateSwapActivityRequest) HasDestination() bool`
+`func (o *CreateSwapActivityRequest) HasReceiverAddress() bool`
 
-HasDestination returns a boolean if a field has been set.
+HasReceiverAddress returns a boolean if a field has been set.
 
 ### GetFee
 
-`func (o *CreateSwapActivityRequest) GetFee() EstimatedFee`
+`func (o *CreateSwapActivityRequest) GetFee() TransactionRequestFee`
 
 GetFee returns the Fee field if non-nil, zero value otherwise.
 
 ### GetFeeOk
 
-`func (o *CreateSwapActivityRequest) GetFeeOk() (*EstimatedFee, bool)`
+`func (o *CreateSwapActivityRequest) GetFeeOk() (*TransactionRequestFee, bool)`
 
 GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFee
 
-`func (o *CreateSwapActivityRequest) SetFee(v EstimatedFee)`
+`func (o *CreateSwapActivityRequest) SetFee(v TransactionRequestFee)`
 
 SetFee sets Fee field to given value.
 

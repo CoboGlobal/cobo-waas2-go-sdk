@@ -25,6 +25,9 @@ const (
 	TOKENIZATIONTOKENPERMISSIONTYPE_RECOVER_TOKENS TokenizationTokenPermissionType = "RecoverTokens"
 	TOKENIZATIONTOKENPERMISSIONTYPE_UPGRADE_CONTRACT TokenizationTokenPermissionType = "UpgradeContract"
 	TOKENIZATIONTOKENPERMISSIONTYPE_PAUSE_CONTRACT TokenizationTokenPermissionType = "PauseContract"
+	TOKENIZATIONTOKENPERMISSIONTYPE_FREEZE_ACCOUNTS TokenizationTokenPermissionType = "FreezeAccounts"
+	TOKENIZATIONTOKENPERMISSIONTYPE_UPDATE_METADATA TokenizationTokenPermissionType = "UpdateMetadata"
+	TOKENIZATIONTOKENPERMISSIONTYPE_PERMANENT_DELEGATE TokenizationTokenPermissionType = "PermanentDelegate"
 )
 
 // All allowed values of TokenizationTokenPermissionType enum
@@ -36,6 +39,9 @@ var AllowedTokenizationTokenPermissionTypeEnumValues = []TokenizationTokenPermis
 	"RecoverTokens",
 	"UpgradeContract",
 	"PauseContract",
+	"FreezeAccounts",
+	"UpdateMetadata",
+	"PermanentDelegate",
 }
 
 func (v *TokenizationTokenPermissionType) UnmarshalJSON(src []byte) error {

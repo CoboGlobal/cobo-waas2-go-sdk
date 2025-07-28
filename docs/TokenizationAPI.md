@@ -130,7 +130,7 @@ import (
 )
 
 func main() {
-	tokenizationEstimateFeeRequest := *coboWaas2.NewTokenizationEstimateFeeRequest(coboWaas2.TokenizationEstimateFeeRequest_operation_params{TokenizationBurnEstimateFeeParams: coboWaas2.NewTokenizationBurnEstimateFeeParams(coboWaas2.TokenizationTokenOperationSource{TokenizationMpcOperationSource: coboWaas2.NewTokenizationMpcOperationSource(coboWaas2.TokenizationOperationSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, []coboWaas2.TokenizationBurnTokenParamsBurnsInner{*coboWaas2.NewTokenizationBurnTokenParamsBurnsInner("0.99", "0x051A924H4dCb264226d7B036C2893a0D344")}, coboWaas2.TokenizationOperationType("Deploy"), "8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8")})
+	tokenizationEstimateFeeRequest := *coboWaas2.NewTokenizationEstimateFeeRequest(coboWaas2.TokenizationEstimateFeeRequest_operation_params{TokenizationBurnEstimateFeeParams: coboWaas2.NewTokenizationBurnEstimateFeeParams(coboWaas2.TokenizationTokenOperationSource{TokenizationMpcOperationSource: coboWaas2.NewTokenizationMpcOperationSource(coboWaas2.TokenizationOperationSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, []coboWaas2.TokenizationBurnTokenParamsBurnsInner{*coboWaas2.NewTokenizationBurnTokenParamsBurnsInner("0.99", "0x051A924H4dCb264226d7B036C2893a0D344")}, coboWaas2.TokenizationOperationType("Issue"), "8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8")})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -611,7 +611,7 @@ import (
 
 func main() {
 	tokenId := "ETH_USDT"
-	activityType := coboWaas2.TokenizationOperationType("Deploy")
+	activityType := coboWaas2.TokenizationOperationType("Issue")
 	activityStatus := coboWaas2.TokenizationActivityStatus("Processing")
 	limit := int32(10)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"

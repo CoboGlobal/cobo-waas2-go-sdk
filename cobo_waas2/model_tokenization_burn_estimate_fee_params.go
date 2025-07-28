@@ -25,6 +25,8 @@ type TokenizationBurnEstimateFeeParams struct {
 	OperationType TokenizationOperationType `json:"operation_type"`
 	// The ID of the token.
 	TokenId string `json:"token_id"`
+	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
+	RequestId *string `json:"request_id,omitempty"`
 }
 
 type _TokenizationBurnEstimateFeeParams TokenizationBurnEstimateFeeParams
@@ -146,6 +148,38 @@ func (o *TokenizationBurnEstimateFeeParams) SetTokenId(v string) {
 	o.TokenId = v
 }
 
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *TokenizationBurnEstimateFeeParams) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenizationBurnEstimateFeeParams) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *TokenizationBurnEstimateFeeParams) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *TokenizationBurnEstimateFeeParams) SetRequestId(v string) {
+	o.RequestId = &v
+}
+
 func (o TokenizationBurnEstimateFeeParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -160,6 +194,9 @@ func (o TokenizationBurnEstimateFeeParams) ToMap() (map[string]interface{}, erro
 	toSerialize["burns"] = o.Burns
 	toSerialize["operation_type"] = o.OperationType
 	toSerialize["token_id"] = o.TokenId
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	return toSerialize, nil
 }
 

@@ -40,6 +40,18 @@ func Test_cobo_waas2_SwapsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test SwapsAPIService EstimateSwapFee", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.SwapsAPI.EstimateSwapFee(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test SwapsAPIService GetSwapActivity", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **Name** | **string** | The name of the token. | 
 **Symbol** | **string** | The symbol of the token. | 
 **Decimals** | **int32** | The number of decimals for the token (0-18). | 
-**AllowlistActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations. | [optional] [default to false]
-**Permissions** | Pointer to [**TokenizationTokenPermissionParams**](TokenizationTokenPermissionParams.md) |  | [optional] 
+**TokenAccessActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations. | [optional] [default to false]
+**Permissions** | Pointer to [**TokenizationSolTokenPermissionParams**](TokenizationSolTokenPermissionParams.md) |  | [optional] 
 
 ## Methods
 
@@ -110,47 +110,47 @@ and a boolean to check if the value has been set.
 SetDecimals sets Decimals field to given value.
 
 
-### GetAllowlistActivated
+### GetTokenAccessActivated
 
-`func (o *TokenizationIssueTokenParamsTokenParams) GetAllowlistActivated() bool`
+`func (o *TokenizationIssueTokenParamsTokenParams) GetTokenAccessActivated() bool`
 
-GetAllowlistActivated returns the AllowlistActivated field if non-nil, zero value otherwise.
+GetTokenAccessActivated returns the TokenAccessActivated field if non-nil, zero value otherwise.
 
-### GetAllowlistActivatedOk
+### GetTokenAccessActivatedOk
 
-`func (o *TokenizationIssueTokenParamsTokenParams) GetAllowlistActivatedOk() (*bool, bool)`
+`func (o *TokenizationIssueTokenParamsTokenParams) GetTokenAccessActivatedOk() (*bool, bool)`
 
-GetAllowlistActivatedOk returns a tuple with the AllowlistActivated field if it's non-nil, zero value otherwise
+GetTokenAccessActivatedOk returns a tuple with the TokenAccessActivated field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAllowlistActivated
+### SetTokenAccessActivated
 
-`func (o *TokenizationIssueTokenParamsTokenParams) SetAllowlistActivated(v bool)`
+`func (o *TokenizationIssueTokenParamsTokenParams) SetTokenAccessActivated(v bool)`
 
-SetAllowlistActivated sets AllowlistActivated field to given value.
+SetTokenAccessActivated sets TokenAccessActivated field to given value.
 
-### HasAllowlistActivated
+### HasTokenAccessActivated
 
-`func (o *TokenizationIssueTokenParamsTokenParams) HasAllowlistActivated() bool`
+`func (o *TokenizationIssueTokenParamsTokenParams) HasTokenAccessActivated() bool`
 
-HasAllowlistActivated returns a boolean if a field has been set.
+HasTokenAccessActivated returns a boolean if a field has been set.
 
 ### GetPermissions
 
-`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissions() TokenizationTokenPermissionParams`
+`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissions() TokenizationSolTokenPermissionParams`
 
 GetPermissions returns the Permissions field if non-nil, zero value otherwise.
 
 ### GetPermissionsOk
 
-`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissionsOk() (*TokenizationTokenPermissionParams, bool)`
+`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissionsOk() (*TokenizationSolTokenPermissionParams, bool)`
 
 GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPermissions
 
-`func (o *TokenizationIssueTokenParamsTokenParams) SetPermissions(v TokenizationTokenPermissionParams)`
+`func (o *TokenizationIssueTokenParamsTokenParams) SetPermissions(v TokenizationSolTokenPermissionParams)`
 
 SetPermissions sets Permissions field to given value.
 

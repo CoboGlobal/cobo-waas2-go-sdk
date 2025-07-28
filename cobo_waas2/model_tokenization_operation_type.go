@@ -18,7 +18,6 @@ type TokenizationOperationType string
 
 // List of TokenizationOperationType
 const (
-	TOKENIZATIONOPERATIONTYPE_DEPLOY TokenizationOperationType = "Deploy"
 	TOKENIZATIONOPERATIONTYPE_ISSUE TokenizationOperationType = "Issue"
 	TOKENIZATIONOPERATIONTYPE_MINT TokenizationOperationType = "Mint"
 	TOKENIZATIONOPERATIONTYPE_BURN TokenizationOperationType = "Burn"
@@ -32,7 +31,6 @@ const (
 
 // All allowed values of TokenizationOperationType enum
 var AllowedTokenizationOperationTypeEnumValues = []TokenizationOperationType{
-	"Deploy",
 	"Issue",
 	"Mint",
 	"Burn",

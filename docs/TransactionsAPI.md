@@ -592,7 +592,7 @@ import (
 )
 
 func main() {
-	estimateFeeParams := coboWaas2.EstimateFeeParams{EstimateContractCallFeeParams: coboWaas2.NewEstimateContractCallFeeParams(coboWaas2.EstimateFeeRequestType("Transfer"), "ETH", coboWaas2.ContractCallSource{CustodialWeb3ContractCallSource: coboWaas2.NewCustodialWeb3ContractCallSource(coboWaas2.ContractCallSourceType("Web3"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.ContractCallDestination{EvmContractCallDestination: coboWaas2.NewEvmContractCallDestination(coboWaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", "0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO")})}
+	estimateFeeParams := coboWaas2.EstimateFeeParams{EstimateContractCallFeeParams: coboWaas2.NewEstimateContractCallFeeParams(coboWaas2.EstimateFeeRequestType("Transfer"), "ETH", coboWaas2.ContractCallSource{CustodialWeb3ContractCallSource: coboWaas2.NewCustodialWeb3ContractCallSource(coboWaas2.ContractCallSourceType("Web3"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")})}
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -808,7 +808,7 @@ Name | Type | Description  | Notes
 
 ## ListApprovalDetails
 
-> ListApprovalDetails200Response ListApprovalDetails(ctx).TransactionIds(transactionIds).CoboIds(coboIds).RequestId(requestId).Execute()
+> []ApprovalDetail ListApprovalDetails(ctx).TransactionIds(transactionIds).CoboIds(coboIds).RequestIds(requestIds).Execute()
 
 List transaction approval details
 
@@ -830,7 +830,7 @@ import (
 func main() {
 	transactionIds := "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
 	coboIds := "20231213122855000000000000000000,20231213122955000000000000000000"
-	requestId := "web_send_by_user_327_1610444045047,web_send_by_user_327_1610444045048"
+	requestIds := "web_send_by_user_327_1610444045047,web_send_by_user_327_1610444045048"
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -843,12 +843,12 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.TransactionsAPI.ListApprovalDetails(ctx).TransactionIds(transactionIds).CoboIds(coboIds).RequestId(requestId).Execute()
+	resp, r, err := apiClient.TransactionsAPI.ListApprovalDetails(ctx).TransactionIds(transactionIds).CoboIds(coboIds).RequestIds(requestIds).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.ListApprovalDetails``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListApprovalDetails`: ListApprovalDetails200Response
+	// response from `ListApprovalDetails`: []ApprovalDetail
 	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.ListApprovalDetails`: %v\n", resp)
 }
 ```
@@ -866,11 +866,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **transactionIds** | **string** | A list of transaction IDs, separated by comma. | 
  **coboIds** | **string** | A list of Cobo IDs, separated by comma. A Cobo ID can be used to track a transaction. | 
- **requestId** | **string** | A list of request IDs, separated by comma. | 
+ **requestIds** | **string** | A list of request IDs, separated by comma. | 
 
 ### Return type
 
-[**ListApprovalDetails200Response**](ListApprovalDetails200Response.md)
+[**[]ApprovalDetail**](ApprovalDetail.md)
 
 ### Authorization
 
@@ -966,7 +966,7 @@ Name | Type | Description  | Notes
 
 ## ListTransactionTemplates
 
-> ListTransactionTemplates200Response ListTransactionTemplates(ctx).TransactionType(transactionType).TemplateVersion(templateVersion).Execute()
+> []ApprovalTemplate ListTransactionTemplates(ctx).TemplateKey(templateKey).TemplateVersion(templateVersion).Execute()
 
 list transaction templates
 
@@ -986,7 +986,7 @@ import (
 )
 
 func main() {
-	transactionType := "DEPOSIT"
+	templateKey := "withdrawal"
 	templateVersion := "1.0.0"
 
 	configuration := coboWaas2.NewConfiguration()
@@ -1000,12 +1000,12 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.TransactionsAPI.ListTransactionTemplates(ctx).TransactionType(transactionType).TemplateVersion(templateVersion).Execute()
+	resp, r, err := apiClient.TransactionsAPI.ListTransactionTemplates(ctx).TemplateKey(templateKey).TemplateVersion(templateVersion).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.ListTransactionTemplates``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListTransactionTemplates`: ListTransactionTemplates200Response
+	// response from `ListTransactionTemplates`: []ApprovalTemplate
 	fmt.Fprintf(os.Stdout, "Response from `TransactionsAPI.ListTransactionTemplates`: %v\n", resp)
 }
 ```
@@ -1021,12 +1021,12 @@ Other parameters are passed through a pointer to a apiListTransactionTemplatesRe
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **transactionType** | **string** | The transaction type. Possible values include:    - &#x60;DEPOSIT&#x60;: A deposit transaction.   - &#x60;WITHDRAW&#x60;: A withdrawal transaction.  | 
+ **templateKey** | **string** | The key of the transaction template to be used for creating a transaction approval message.  | 
  **templateVersion** | **string** | The version of the template used for the transaction approval. | 
 
 ### Return type
 
-[**ListTransactionTemplates200Response**](ListTransactionTemplates200Response.md)
+[**[]ApprovalTemplate**](ApprovalTemplate.md)
 
 ### Authorization
 

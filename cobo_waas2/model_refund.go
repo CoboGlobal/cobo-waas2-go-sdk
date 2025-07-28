@@ -45,11 +45,11 @@ type Refund struct {
 	Initiator *string `json:"initiator,omitempty"`
 	// An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
-	// Indicates whether the merchant should bear the transaction fee for the refund.  If true, the fee will be deducted from merchant's account balance. 
+	// Whether to charge developer fee to the merchant.  - `true`: The fee amount (specified in `merchant_fee_amount`) will be deducted from the merchant's balance and added to the developer's balance - `false`: The merchant is not charged any developer fee. 
 	ChargeMerchantFee *bool `json:"charge_merchant_fee,omitempty"`
-	// The amount of the transaction fee that the merchant will bear for the refund.  This is only applicable if `charge_merchant_fee` is set to true. 
+	// The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by `merchant_fee_token_id`.
 	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
-	// The ID of the cryptocurrency used for the transaction fee.  This is only applicable if `charge_merchant_fee` is set to true. 
+	// The ID of the cryptocurrency used for the developer fee.
 	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
 }
 

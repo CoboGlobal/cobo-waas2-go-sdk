@@ -21,7 +21,7 @@ var _ MappedNullable = &CreateSwapActivityRequest{}
 type CreateSwapActivityRequest struct {
 	// The unique identifier of the wallet to pay.
 	WalletId string `json:"wallet_id"`
-	// The wallet address.
+	// The wallet address, required when the wallet is not a custodial wallet.
 	Address *string `json:"address,omitempty"`
 	// The unique identifier of the quote.
 	QuoteId string `json:"quote_id"`
@@ -29,8 +29,9 @@ type CreateSwapActivityRequest struct {
 	AppInitiator *string `json:"app_initiator,omitempty"`
 	// The request id of the swap activity.
 	RequestId *string `json:"request_id,omitempty"`
-	Destination *AddressTransferDestination `json:"destination,omitempty"`
-	Fee *EstimatedFee `json:"fee,omitempty"`
+	// The address of the receiver.
+	ReceiverAddress *string `json:"receiver_address,omitempty"`
+	Fee *TransactionRequestFee `json:"fee,omitempty"`
 }
 
 type _CreateSwapActivityRequest CreateSwapActivityRequest
@@ -198,42 +199,42 @@ func (o *CreateSwapActivityRequest) SetRequestId(v string) {
 	o.RequestId = &v
 }
 
-// GetDestination returns the Destination field value if set, zero value otherwise.
-func (o *CreateSwapActivityRequest) GetDestination() AddressTransferDestination {
-	if o == nil || IsNil(o.Destination) {
-		var ret AddressTransferDestination
+// GetReceiverAddress returns the ReceiverAddress field value if set, zero value otherwise.
+func (o *CreateSwapActivityRequest) GetReceiverAddress() string {
+	if o == nil || IsNil(o.ReceiverAddress) {
+		var ret string
 		return ret
 	}
-	return *o.Destination
+	return *o.ReceiverAddress
 }
 
-// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
+// GetReceiverAddressOk returns a tuple with the ReceiverAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateSwapActivityRequest) GetDestinationOk() (*AddressTransferDestination, bool) {
-	if o == nil || IsNil(o.Destination) {
+func (o *CreateSwapActivityRequest) GetReceiverAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.ReceiverAddress) {
 		return nil, false
 	}
-	return o.Destination, true
+	return o.ReceiverAddress, true
 }
 
-// HasDestination returns a boolean if a field has been set.
-func (o *CreateSwapActivityRequest) HasDestination() bool {
-	if o != nil && !IsNil(o.Destination) {
+// HasReceiverAddress returns a boolean if a field has been set.
+func (o *CreateSwapActivityRequest) HasReceiverAddress() bool {
+	if o != nil && !IsNil(o.ReceiverAddress) {
 		return true
 	}
 
 	return false
 }
 
-// SetDestination gets a reference to the given AddressTransferDestination and assigns it to the Destination field.
-func (o *CreateSwapActivityRequest) SetDestination(v AddressTransferDestination) {
-	o.Destination = &v
+// SetReceiverAddress gets a reference to the given string and assigns it to the ReceiverAddress field.
+func (o *CreateSwapActivityRequest) SetReceiverAddress(v string) {
+	o.ReceiverAddress = &v
 }
 
 // GetFee returns the Fee field value if set, zero value otherwise.
-func (o *CreateSwapActivityRequest) GetFee() EstimatedFee {
+func (o *CreateSwapActivityRequest) GetFee() TransactionRequestFee {
 	if o == nil || IsNil(o.Fee) {
-		var ret EstimatedFee
+		var ret TransactionRequestFee
 		return ret
 	}
 	return *o.Fee
@@ -241,7 +242,7 @@ func (o *CreateSwapActivityRequest) GetFee() EstimatedFee {
 
 // GetFeeOk returns a tuple with the Fee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateSwapActivityRequest) GetFeeOk() (*EstimatedFee, bool) {
+func (o *CreateSwapActivityRequest) GetFeeOk() (*TransactionRequestFee, bool) {
 	if o == nil || IsNil(o.Fee) {
 		return nil, false
 	}
@@ -257,8 +258,8 @@ func (o *CreateSwapActivityRequest) HasFee() bool {
 	return false
 }
 
-// SetFee gets a reference to the given EstimatedFee and assigns it to the Fee field.
-func (o *CreateSwapActivityRequest) SetFee(v EstimatedFee) {
+// SetFee gets a reference to the given TransactionRequestFee and assigns it to the Fee field.
+func (o *CreateSwapActivityRequest) SetFee(v TransactionRequestFee) {
 	o.Fee = &v
 }
 
@@ -283,8 +284,8 @@ func (o CreateSwapActivityRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RequestId) {
 		toSerialize["request_id"] = o.RequestId
 	}
-	if !IsNil(o.Destination) {
-		toSerialize["destination"] = o.Destination
+	if !IsNil(o.ReceiverAddress) {
+		toSerialize["receiver_address"] = o.ReceiverAddress
 	}
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee

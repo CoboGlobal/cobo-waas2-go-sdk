@@ -3,8 +3,6 @@
 ## Enum
 
 
-* `DEPLOY` (value: `"Deploy"`)
-
 * `ISSUE` (value: `"Issue"`)
 
 * `MINT` (value: `"Mint"`)

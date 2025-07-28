@@ -19,11 +19,13 @@ type TokenizationContractCallType string
 // List of TokenizationContractCallType
 const (
 	TOKENIZATIONCONTRACTCALLTYPE_EVM_CONTRACT TokenizationContractCallType = "EVM_Contract"
+	TOKENIZATIONCONTRACTCALLTYPE_SOL_CONTRACT TokenizationContractCallType = "SOL_Contract"
 )
 
 // All allowed values of TokenizationContractCallType enum
 var AllowedTokenizationContractCallTypeEnumValues = []TokenizationContractCallType{
 	"EVM_Contract",
+	"SOL_Contract",
 }
 
 func (v *TokenizationContractCallType) UnmarshalJSON(src []byte) error {

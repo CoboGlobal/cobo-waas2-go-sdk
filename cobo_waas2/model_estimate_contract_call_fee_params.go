@@ -25,7 +25,7 @@ type EstimateContractCallFeeParams struct {
 	// The chain ID of the chain on which the smart contract is issued. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 	ChainId string `json:"chain_id"`
 	Source ContractCallSource `json:"source"`
-	Destination ContractCallDestination `json:"destination"`
+	Destination *ContractCallDestination `json:"destination,omitempty"`
 	FeeType *FeeType `json:"fee_type,omitempty"`
 	// The ID of the transaction that this transaction replaced.
 	ReplacedTransactionId *string `json:"replaced_transaction_id,omitempty"`
@@ -37,12 +37,11 @@ type _EstimateContractCallFeeParams EstimateContractCallFeeParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEstimateContractCallFeeParams(requestType EstimateFeeRequestType, chainId string, source ContractCallSource, destination ContractCallDestination) *EstimateContractCallFeeParams {
+func NewEstimateContractCallFeeParams(requestType EstimateFeeRequestType, chainId string, source ContractCallSource) *EstimateContractCallFeeParams {
 	this := EstimateContractCallFeeParams{}
 	this.RequestType = requestType
 	this.ChainId = chainId
 	this.Source = source
-	this.Destination = destination
 	var feeType FeeType = FEETYPE_EVM_EIP_1559
 	this.FeeType = &feeType
 	return &this
@@ -162,28 +161,36 @@ func (o *EstimateContractCallFeeParams) SetSource(v ContractCallSource) {
 	o.Source = v
 }
 
-// GetDestination returns the Destination field value
+// GetDestination returns the Destination field value if set, zero value otherwise.
 func (o *EstimateContractCallFeeParams) GetDestination() ContractCallDestination {
-	if o == nil {
+	if o == nil || IsNil(o.Destination) {
 		var ret ContractCallDestination
 		return ret
 	}
-
-	return o.Destination
+	return *o.Destination
 }
 
-// GetDestinationOk returns a tuple with the Destination field value
+// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EstimateContractCallFeeParams) GetDestinationOk() (*ContractCallDestination, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Destination) {
 		return nil, false
 	}
-	return &o.Destination, true
+	return o.Destination, true
 }
 
-// SetDestination sets field value
+// HasDestination returns a boolean if a field has been set.
+func (o *EstimateContractCallFeeParams) HasDestination() bool {
+	if o != nil && !IsNil(o.Destination) {
+		return true
+	}
+
+	return false
+}
+
+// SetDestination gets a reference to the given ContractCallDestination and assigns it to the Destination field.
 func (o *EstimateContractCallFeeParams) SetDestination(v ContractCallDestination) {
-	o.Destination = v
+	o.Destination = &v
 }
 
 // GetFeeType returns the FeeType field value if set, zero value otherwise.
@@ -266,7 +273,9 @@ func (o EstimateContractCallFeeParams) ToMap() (map[string]interface{}, error) {
 	toSerialize["request_type"] = o.RequestType
 	toSerialize["chain_id"] = o.ChainId
 	toSerialize["source"] = o.Source
-	toSerialize["destination"] = o.Destination
+	if !IsNil(o.Destination) {
+		toSerialize["destination"] = o.Destination
+	}
 	if !IsNil(o.FeeType) {
 		toSerialize["fee_type"] = o.FeeType
 	}
@@ -284,7 +293,6 @@ func (o *EstimateContractCallFeeParams) UnmarshalJSON(data []byte) (err error) {
 		"request_type",
 		"chain_id",
 		"source",
-		"destination",
 	}
 
 	allProperties := make(map[string]interface{})
