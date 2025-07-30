@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **RequestType** | [**EstimateFeeRequestType**](EstimateFeeRequestType.md) |  | 
 **ChainId** | **string** | The chain ID of the chain on which the smart contract is issued. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
 **Source** | [**ContractCallSource**](ContractCallSource.md) |  | 
-**Destination** | [**ContractCallDestination**](ContractCallDestination.md) |  | 
+**Destination** | Pointer to [**ContractCallDestination**](ContractCallDestination.md) |  | [optional] 
 **FeeType** | Pointer to [**FeeType**](FeeType.md) |  | [optional] [default to FEETYPE_EVM_EIP_1559]
 **ReplacedTransactionId** | Pointer to **string** | The ID of the transaction that this transaction replaced. | [optional] 
 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewEstimateContractCallFeeParams
 
-`func NewEstimateContractCallFeeParams(requestType EstimateFeeRequestType, chainId string, source ContractCallSource, destination ContractCallDestination, ) *EstimateContractCallFeeParams`
+`func NewEstimateContractCallFeeParams(requestType EstimateFeeRequestType, chainId string, source ContractCallSource, ) *EstimateContractCallFeeParams`
 
 NewEstimateContractCallFeeParams instantiates a new EstimateContractCallFeeParams object
 This constructor will assign default values to properties that have it defined,
@@ -135,6 +135,11 @@ and a boolean to check if the value has been set.
 
 SetDestination sets Destination field to given value.
 
+### HasDestination
+
+`func (o *EstimateContractCallFeeParams) HasDestination() bool`
+
+HasDestination returns a boolean if a field has been set.
 
 ### GetFeeType
 

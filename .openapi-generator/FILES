@@ -227,6 +227,9 @@ docs/FeeStationTransactionType.md
 docs/FeeStationTransfer.md
 docs/FeeType.md
 docs/FixedFeeRate.md
+docs/ForcedSweep.md
+docs/ForcedSweepRequest.md
+docs/ForcedSweepStatus.md
 docs/GetApiKeyInfo200Response.md
 docs/GetExchangeRate200Response.md
 docs/GetMaxTransferableValueWithFeeModelRequest.md
@@ -260,6 +263,7 @@ docs/ListBabylonEligibleStakings200ResponseDataInner.md
 docs/ListBabylonStakingRegistrations200Response.md
 docs/ListCallbackMessages200Response.md
 docs/ListExchanges200ResponseInner.md
+docs/ListForcedSweepRequests200Response.md
 docs/ListKeyShareHolderGroups200Response.md
 docs/ListKeyShareHolders200Response.md
 docs/ListMerchants200Response.md
@@ -319,10 +323,12 @@ docs/OrganizationsAPI.md
 docs/Pagination.md
 docs/PayerAccount.md
 docs/PaymentAPI.md
+docs/PaymentAddressUpdateEventData.md
 docs/PaymentOrderEventData.md
 docs/PaymentRefundEventData.md
 docs/PaymentSettlementEvent.md
 docs/PaymentTransaction.md
+docs/PaymentTransactionEventData.md
 docs/PayoutChannel.md
 docs/PolicyAction.md
 docs/PolicyActionContent.md
@@ -857,6 +863,9 @@ model_fee_type.go
 model_fil_base.go
 model_fil_price.go
 model_fixed_fee_rate.go
+model_forced_sweep.go
+model_forced_sweep_request.go
+model_forced_sweep_status.go
 model_get_api_key_info_200_response.go
 model_get_exchange_rate_200_response.go
 model_get_max_transferable_value_with_fee_model_request.go
@@ -890,6 +899,7 @@ model_list_babylon_eligible_stakings_200_response_data_inner.go
 model_list_babylon_staking_registrations_200_response.go
 model_list_callback_messages_200_response.go
 model_list_exchanges_200_response_inner.go
+model_list_forced_sweep_requests_200_response.go
 model_list_key_share_holder_groups_200_response.go
 model_list_key_share_holders_200_response.go
 model_list_merchants_200_response.go
@@ -946,10 +956,12 @@ model_order_status.go
 model_org_info.go
 model_pagination.go
 model_payer_account.go
+model_payment_address_update_event_data.go
 model_payment_order_event_data.go
 model_payment_refund_event_data.go
 model_payment_settlement_event.go
 model_payment_transaction.go
+model_payment_transaction_event_data.go
 model_payout_channel.go
 model_policy_action.go
 model_policy_action_content.go

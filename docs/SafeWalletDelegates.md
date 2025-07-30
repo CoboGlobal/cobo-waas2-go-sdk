@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **RequestType** | [**EstimateFeeRequestType**](EstimateFeeRequestType.md) |  | 
 **Address** | Pointer to **string** | The address of the recipient. | [optional] 
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
-**Calldata** | Pointer to **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | [optional] 
+**Calldata** | Pointer to **string** | The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.  | [optional] 
 **TokenId** | **string** | The token ID. | 
 **Amount** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;. | [optional] 
 

@@ -21,7 +21,7 @@ var _ MappedNullable = &CreatePaymentOrderRequest{}
 type CreatePaymentOrderRequest struct {
 	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
-	// The ID of the cryptocurrency used for payment. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency used for payment. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
 	// The fiat currency of the order. Currently, only `USD` is supported.
 	Currency *string `json:"currency,omitempty"`
@@ -49,7 +49,7 @@ func NewCreatePaymentOrderRequest(merchantId string, tokenId string, orderAmount
 	this := CreatePaymentOrderRequest{}
 	this.MerchantId = merchantId
 	this.TokenId = tokenId
-	var currency string = "USD"
+	var currency string = ""
 	this.Currency = &currency
 	this.OrderAmount = orderAmount
 	this.FeeAmount = feeAmount
@@ -64,7 +64,7 @@ func NewCreatePaymentOrderRequest(merchantId string, tokenId string, orderAmount
 // but it doesn't guarantee that properties required by API are set
 func NewCreatePaymentOrderRequestWithDefaults() *CreatePaymentOrderRequest {
 	this := CreatePaymentOrderRequest{}
-	var currency string = "USD"
+	var currency string = ""
 	this.Currency = &currency
 	var expiredIn int32 = 1800
 	this.ExpiredIn = &expiredIn
