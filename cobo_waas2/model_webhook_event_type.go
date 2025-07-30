@@ -50,6 +50,7 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_STATUS_UPDATED WebhookEventType = "payment.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_REFUND_STATUS_UPDATED WebhookEventType = "payment.refund.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_SETTLEMENT_STATUS_UPDATED WebhookEventType = "payment.settlement.status.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_ADDRESS_UPDATED WebhookEventType = "payment.address.updated"
 )
 
 // All allowed values of WebhookEventType enum
@@ -86,6 +87,7 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.status.updated",
 	"payment.refund.status.updated",
 	"payment.settlement.status.updated",
+	"payment.address.updated",
 }
 
 func (v *WebhookEventType) UnmarshalJSON(src []byte) error {

@@ -590,7 +590,7 @@ import (
 )
 
 func main() {
-	estimateFeeParams := coboWaas2.EstimateFeeParams{EstimateContractCallFeeParams: coboWaas2.NewEstimateContractCallFeeParams(coboWaas2.EstimateFeeRequestType("Transfer"), "ETH", coboWaas2.ContractCallSource{CustodialWeb3ContractCallSource: coboWaas2.NewCustodialWeb3ContractCallSource(coboWaas2.ContractCallSourceType("Web3"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.ContractCallDestination{EvmContractCallDestination: coboWaas2.NewEvmContractCallDestination(coboWaas2.ContractCallDestinationType("EVM_Contract"), "0x0406db8351aa6839169bb363f63c2c808fee8f99", "0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO")})}
+	estimateFeeParams := coboWaas2.EstimateFeeParams{EstimateContractCallFeeParams: coboWaas2.NewEstimateContractCallFeeParams(coboWaas2.EstimateFeeRequestType("Transfer"), "ETH", coboWaas2.ContractCallSource{CustodialWeb3ContractCallSource: coboWaas2.NewCustodialWeb3ContractCallSource(coboWaas2.ContractCallSourceType("Web3"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")})}
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

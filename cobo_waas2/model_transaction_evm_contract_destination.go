@@ -24,7 +24,7 @@ type TransactionEvmContractDestination struct {
 	Address string `json:"address"`
 	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Value *string `json:"value,omitempty"`
-	// The data that is used to invoke a specific function or method within the specified contract at the destination address. 
+	// The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters. 
 	Calldata string `json:"calldata"`
 	CalldataInfo *TransactionEvmCalldataInfo `json:"calldata_info,omitempty"`
 }

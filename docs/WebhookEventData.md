@@ -4,23 +4,23 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The payment address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
-**RequestId** | **string** | The request ID provided by you when creating the settlement request. | 
+**RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
 **WalletId** | **string** | For deposit transactions, this property represents the wallet ID of the transaction destination. For transactions of other types, this property represents the wallet ID of the transaction source. | 
-**Type** | Pointer to [**MPCVaultType**](MPCVaultType.md) |  | [optional] 
-**Status** | [**SettleRequestStatus**](SettleRequestStatus.md) |  | 
+**Type** | Pointer to [**TransactionType**](TransactionType.md) |  | [optional] 
+**Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
 **SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
 **FailedReason** | Pointer to **string** | (This property is applicable to approval failures and signature failures only) The reason why the transaction failed. | [optional] 
-**ChainId** | **string** | The ID of the blockchain network on which the refund transaction occurs. | 
-**TokenId** | **string** | The ID of the cryptocurrency used for refund. | 
+**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
+**TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
 **AssetId** | Pointer to **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | [optional] 
-**Source** | [**TokenListingRequestSource**](TokenListingRequestSource.md) |  | 
+**Source** | [**TransactionSource**](TransactionSource.md) |  | 
 **Destination** | [**TransactionDestination**](TransactionDestination.md) |  | 
 **Result** | Pointer to [**TransactionResult**](TransactionResult.md) |  | [optional] 
 **Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
-**Initiator** | Pointer to **string** |  The initiator of this settlement request. Can return either an API key or the Payment Management App&#39;s ID.  - Format &#x60;api_key_&lt;API_KEY&gt;&#x60;: Indicates the settlement request was initiated via the Payment API using the API key. - Format &#x60;app_&lt;APP_ID&gt;&#x60;: Indicates the settlement request was initiated through the Payment Management App using the App ID.  | [optional] 
+**Initiator** | Pointer to **string** | The transaction initiator. | [optional] 
 **InitiatorType** | [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | 
 **ConfirmedNum** | Pointer to **int32** | The number of confirmations this transaction has received. | [optional] 
 **ConfirmingThreshold** | Pointer to **int32** | The minimum number of confirmations required to deem a transaction secure. The common threshold is 6 for a Bitcoin transaction. | [optional] 
@@ -29,13 +29,13 @@ Name | Type | Description | Notes
 **RawTxInfo** | Pointer to [**TransactionRawTxInfo**](TransactionRawTxInfo.md) |  | [optional] 
 **Replacement** | Pointer to [**TransactionReplacement**](TransactionReplacement.md) |  | [optional] 
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
-**Description** | Pointer to **string** | The description of the TSS request. | [optional] 
+**Description** | Pointer to **string** | The description for your transaction. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
 **CoboCategory** | Pointer to **[]string** | The transaction category defined by Cobo. Possible values include:  - &#x60;AutoSweep&#x60;: An auto-sweep transaction. - &#x60;AutoFueling&#x60;: A transaction where Fee Station pays transaction fees to an address within your wallet. - &#x60;AutoFuelingRefund&#x60;: A refund for an auto-fueling transaction. - &#x60;SafeTxMessage&#x60;: A message signing transaction to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction. - &#x60;BillPayment&#x60;: A transaction to pay Cobo bills through Fee Station. - &#x60;BillRefund&#x60;: A refund for a previously made bill payment. - &#x60;CommissionFeeCharge&#x60;: A transaction to charge commission fees via Fee Station. - &#x60;CommissionFeeRefund&#x60;: A refund of previously charged commission fees.  | [optional] 
 **Extra** | Pointer to **[]string** | A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the &#x60;extra_type&#x60; field in the JSON object (for example, \&quot;BabylonBusinessInfo\&quot;, \&quot;BtcAddressInfo\&quot;).  | [optional] 
 **FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
-**CreatedTimestamp** | **int32** | The creation time of the settlement request, represented as a UNIX timestamp in seconds. | 
-**UpdatedTimestamp** | **int32** | The last update time of the settlement request, represented as a UNIX timestamp in seconds. | 
+**CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
+**UpdatedTimestamp** | **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | 
 **TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
 **SourceKeyShareHolderGroup** | Pointer to [**SourceGroup**](SourceGroup.md) |  | [optional] 
 **TargetKeyShareHolderGroupId** | Pointer to **string** | The target key share holder group ID. | [optional] 
@@ -58,7 +58,7 @@ Name | Type | Description | Notes
 **Balance** | [**Balance**](Balance.md) |  | 
 **TokenIds** | **string** | A list of token IDs, separated by comma. | 
 **OperationType** | [**SuspendedTokenOperationType**](SuspendedTokenOperationType.md) |  | 
-**OrderId** | **string** | The ID of the pay-in order corresponding to this refund. | 
+**OrderId** | **string** | Unique identifier of a single order | 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **PayableAmount** | **string** | The cryptocurrency amount to be paid for this order. | 
 **ReceiveAddress** | **string** | The recipient wallet address to be used for the payment transaction. | 
@@ -81,12 +81,18 @@ Name | Type | Description | Notes
 **MerchantFeeTokenId** | Pointer to **string** | The ID of the cryptocurrency used for the developer fee. This is only applicable if &#x60;charge_merchant_fee&#x60; is set to true. | [optional] 
 **SettlementRequestId** | **string** | The settlement request ID generated by Cobo. | 
 **Settlements** | [**[]SettlementDetail**](SettlementDetail.md) |  | 
+**AcquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
+**PayerId** | **string** | Unique payer identifier on the Cobo side, auto-generated by the system.  | 
+**CustomPayerId** | **string** | Unique user identifier on the merchant side, used to assign a dedicated deposit address.  | 
+**Chain** | **string** | Blockchain network identifier, e.g., &#39;ETH&#39; for Ethereum, &#39;TRON&#39; for Tron.  | 
+**PreviousAddress** | **string** | The previous deposit address that was assigned before update.  | 
+**UpdatedAddress** | **string** | The new updated deposit address assigned to the user.  | 
 
 ## Methods
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status SettleRequestStatus, chainId string, tokenId string, source TokenListingRequestSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int32, updatedTimestamp int32, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status TransactionStatus, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -208,20 +214,20 @@ SetWalletId sets WalletId field to given value.
 
 ### GetType
 
-`func (o *WebhookEventData) GetType() MPCVaultType`
+`func (o *WebhookEventData) GetType() TransactionType`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *WebhookEventData) GetTypeOk() (*MPCVaultType, bool)`
+`func (o *WebhookEventData) GetTypeOk() (*TransactionType, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *WebhookEventData) SetType(v MPCVaultType)`
+`func (o *WebhookEventData) SetType(v TransactionType)`
 
 SetType sets Type field to given value.
 
@@ -233,20 +239,20 @@ HasType returns a boolean if a field has been set.
 
 ### GetStatus
 
-`func (o *WebhookEventData) GetStatus() SettleRequestStatus`
+`func (o *WebhookEventData) GetStatus() TransactionStatus`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *WebhookEventData) GetStatusOk() (*SettleRequestStatus, bool)`
+`func (o *WebhookEventData) GetStatusOk() (*TransactionStatus, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *WebhookEventData) SetStatus(v SettleRequestStatus)`
+`func (o *WebhookEventData) SetStatus(v TransactionStatus)`
 
 SetStatus sets Status field to given value.
 
@@ -368,20 +374,20 @@ HasAssetId returns a boolean if a field has been set.
 
 ### GetSource
 
-`func (o *WebhookEventData) GetSource() TokenListingRequestSource`
+`func (o *WebhookEventData) GetSource() TransactionSource`
 
 GetSource returns the Source field if non-nil, zero value otherwise.
 
 ### GetSourceOk
 
-`func (o *WebhookEventData) GetSourceOk() (*TokenListingRequestSource, bool)`
+`func (o *WebhookEventData) GetSourceOk() (*TransactionSource, bool)`
 
 GetSourceOk returns a tuple with the Source field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSource
 
-`func (o *WebhookEventData) SetSource(v TokenListingRequestSource)`
+`func (o *WebhookEventData) SetSource(v TransactionSource)`
 
 SetSource sets Source field to given value.
 
@@ -803,40 +809,40 @@ HasFuelingInfo returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 
-`func (o *WebhookEventData) GetCreatedTimestamp() int32`
+`func (o *WebhookEventData) GetCreatedTimestamp() int64`
 
 GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
 ### GetCreatedTimestampOk
 
-`func (o *WebhookEventData) GetCreatedTimestampOk() (*int32, bool)`
+`func (o *WebhookEventData) GetCreatedTimestampOk() (*int64, bool)`
 
 GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedTimestamp
 
-`func (o *WebhookEventData) SetCreatedTimestamp(v int32)`
+`func (o *WebhookEventData) SetCreatedTimestamp(v int64)`
 
 SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
 
 ### GetUpdatedTimestamp
 
-`func (o *WebhookEventData) GetUpdatedTimestamp() int32`
+`func (o *WebhookEventData) GetUpdatedTimestamp() int64`
 
 GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
 
 ### GetUpdatedTimestampOk
 
-`func (o *WebhookEventData) GetUpdatedTimestampOk() (*int32, bool)`
+`func (o *WebhookEventData) GetUpdatedTimestampOk() (*int64, bool)`
 
 GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUpdatedTimestamp
 
-`func (o *WebhookEventData) SetUpdatedTimestamp(v int32)`
+`func (o *WebhookEventData) SetUpdatedTimestamp(v int64)`
 
 SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
@@ -1844,6 +1850,126 @@ and a boolean to check if the value has been set.
 `func (o *WebhookEventData) SetSettlements(v []SettlementDetail)`
 
 SetSettlements sets Settlements field to given value.
+
+
+### GetAcquiringType
+
+`func (o *WebhookEventData) GetAcquiringType() AcquiringType`
+
+GetAcquiringType returns the AcquiringType field if non-nil, zero value otherwise.
+
+### GetAcquiringTypeOk
+
+`func (o *WebhookEventData) GetAcquiringTypeOk() (*AcquiringType, bool)`
+
+GetAcquiringTypeOk returns a tuple with the AcquiringType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcquiringType
+
+`func (o *WebhookEventData) SetAcquiringType(v AcquiringType)`
+
+SetAcquiringType sets AcquiringType field to given value.
+
+
+### GetPayerId
+
+`func (o *WebhookEventData) GetPayerId() string`
+
+GetPayerId returns the PayerId field if non-nil, zero value otherwise.
+
+### GetPayerIdOk
+
+`func (o *WebhookEventData) GetPayerIdOk() (*string, bool)`
+
+GetPayerIdOk returns a tuple with the PayerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayerId
+
+`func (o *WebhookEventData) SetPayerId(v string)`
+
+SetPayerId sets PayerId field to given value.
+
+
+### GetCustomPayerId
+
+`func (o *WebhookEventData) GetCustomPayerId() string`
+
+GetCustomPayerId returns the CustomPayerId field if non-nil, zero value otherwise.
+
+### GetCustomPayerIdOk
+
+`func (o *WebhookEventData) GetCustomPayerIdOk() (*string, bool)`
+
+GetCustomPayerIdOk returns a tuple with the CustomPayerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomPayerId
+
+`func (o *WebhookEventData) SetCustomPayerId(v string)`
+
+SetCustomPayerId sets CustomPayerId field to given value.
+
+
+### GetChain
+
+`func (o *WebhookEventData) GetChain() string`
+
+GetChain returns the Chain field if non-nil, zero value otherwise.
+
+### GetChainOk
+
+`func (o *WebhookEventData) GetChainOk() (*string, bool)`
+
+GetChainOk returns a tuple with the Chain field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChain
+
+`func (o *WebhookEventData) SetChain(v string)`
+
+SetChain sets Chain field to given value.
+
+
+### GetPreviousAddress
+
+`func (o *WebhookEventData) GetPreviousAddress() string`
+
+GetPreviousAddress returns the PreviousAddress field if non-nil, zero value otherwise.
+
+### GetPreviousAddressOk
+
+`func (o *WebhookEventData) GetPreviousAddressOk() (*string, bool)`
+
+GetPreviousAddressOk returns a tuple with the PreviousAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviousAddress
+
+`func (o *WebhookEventData) SetPreviousAddress(v string)`
+
+SetPreviousAddress sets PreviousAddress field to given value.
+
+
+### GetUpdatedAddress
+
+`func (o *WebhookEventData) GetUpdatedAddress() string`
+
+GetUpdatedAddress returns the UpdatedAddress field if non-nil, zero value otherwise.
+
+### GetUpdatedAddressOk
+
+`func (o *WebhookEventData) GetUpdatedAddressOk() (*string, bool)`
+
+GetUpdatedAddressOk returns a tuple with the UpdatedAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedAddress
+
+`func (o *WebhookEventData) SetUpdatedAddress(v string)`
+
+SetUpdatedAddress sets UpdatedAddress field to given value.
 
 
 

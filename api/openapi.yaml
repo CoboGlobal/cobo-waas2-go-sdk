@@ -3697,7 +3697,7 @@ paths:
 
         You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
-        <Note>Currently, this operation only applies to the transactions from MPC Wallets or Smart Contract Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
+        <Note>Currently, this operation only applies to the transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
 
         <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
       operationId: create_contract_call_transaction
@@ -4593,7 +4593,7 @@ paths:
   /oauth/permission_token/exchange:
     post:
       description: |
-        This operation acquires an Access Token and a Refresh Token for the Checkout SDK.
+        This operation acquires an Access Token and a Refresh Token for the [Checkout SDK](https://www.cobo.com/developers/v2_cn/payments/checkout-sdk).
 
         For security purposes, an Access Token expires after a certain period. Once it expires, you need to call the [Refresh Access Token](https://www.cobo.com/developers/v2/api-references/oauth/refresh-access-token) operation to get a new Access Token and a new Refresh Token.
       operationId: exchange_permission_token
@@ -4624,7 +4624,7 @@ paths:
   /oauth/permission_token/refresh:
     post:
       description: |
-        This operation refreshes the Access Token and Refresh Token for the Checkout SDK.
+        This operation refreshes the Access Token and Refresh Token for the [Checkout SDK](https://www.cobo.com/developers/v2_cn/payments/checkout-sdk).
 
         For security purposes, an Access Token expires after a certain period. Once it expires, you need to call this operation to get a new Access Token and Refresh Token.
       operationId: refresh_permission_token
@@ -8534,7 +8534,7 @@ paths:
       parameters:
       - description: |
           The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-            - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
             - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
         example: ETH_USDT
         explode: false
@@ -8794,7 +8794,7 @@ paths:
       parameters:
       - description: |
           The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-            - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
             - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
         example: ETH_USDT
         explode: true
@@ -8884,7 +8884,7 @@ paths:
         style: form
       - description: |
           The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-            - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
             - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
         example: ETH_USDT
         explode: true
@@ -8929,6 +8929,39 @@ paths:
       - OAuth2:
         - payment_merchant.read
       summary: Get top-up address
+      tags:
+      - Payment
+    put:
+      description: |
+        Update the top-up address for a payer under a specific merchant and token.
+      operationId: update_top_up_address
+      requestBody:
+        $ref: '#/components/requestBodies/updateTopUpAddressBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopUpAddress'
+          description: Top-up address updated successfully.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.update
+      summary: Update top-up address
       tags:
       - Payment
   /payments/topup/payers:
@@ -9013,6 +9046,113 @@ paths:
       - OAuth2:
         - payment_orders_payin.read
       summary: List payers
+      tags:
+      - Payment
+  /payments/force_sweep_requests:
+    get:
+      description: |
+        This operation retrieves the information of force_sweep requests.
+      operationId: list_forced_sweep_requests
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The request ID.
+        example: random_request_id
+        explode: true
+        in: query
+        name: request_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_forced_sweep_requests_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_forced_sweep.read
+      summary: List force sweep requests
+      tags:
+      - Payment
+    post:
+      description: "This operation creates a force sweep request to settle or refund\
+        \ available balances. \n"
+      operationId: create_forced_sweep_request
+      requestBody:
+        $ref: '#/components/requestBodies/createForceSweepBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForcedSweep'
+          description: Force sweep request created successfully.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_forced_sweep.create
+      summary: Create force sweep request
       tags:
       - Payment
 components:
@@ -10654,7 +10794,7 @@ components:
     TokenIdRequiredParam:
       description: |
         The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-          - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+          - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
           - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
       example: ETH_USDT
       explode: false
@@ -10667,7 +10807,7 @@ components:
     TokenIdQueryRequiredParam:
       description: |
         The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-          - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+          - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
           - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
       example: ETH_USDT
       explode: true
@@ -10680,7 +10820,7 @@ components:
     TokenIdOptionalParam:
       description: |
         The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-          - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+          - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
           - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
       example: ETH_USDT
       explode: true
@@ -11239,7 +11379,7 @@ components:
                   The token ID that identifies the cryptocurrency and its corresponding blockchain.
 
                   **Supported values**:
-                    - **USDC**: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+                    - **USDC**: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
                     - **USDT**: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
                 example: ETH_USDT
                 type: string
@@ -11264,33 +11404,7 @@ components:
       content:
         application/json:
           schema:
-            description: The information about the request to force sweep.
-            properties:
-              request_id:
-                description: The request id of the force sweep.
-                example: 123e4567-e89b-12d3-a456-426614174002
-                type: string
-              wallet_id:
-                description: "The wallet ID to force sweep, which is the unique identifier\
-                  \ of a wallet."
-                example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-                format: uuid
-                type: string
-              token_id:
-                description: "The token ID to force sweep, which is the unique identifier\
-                  \ of a token."
-                example: ETH_USDT
-                type: string
-              amount:
-                description: The amount of needing force sweep.
-                example: "10.5"
-                type: string
-            required:
-            - amount
-            - request_id
-            - token_id
-            - wallet_id
-            type: object
+            $ref: '#/components/schemas/ForcedSweepRequest'
       description: The request body to force sweep.
     estimateFeeStationFeeBody:
       content:
@@ -12273,6 +12387,18 @@ components:
               pagination:
                 $ref: '#/components/schemas/Pagination'
             type: object
+      description: The request was successful.
+    createForcedSweepResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ForcedSweep'
+      description: Force sweep request created successfully.
+    listForcedSweepsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_forced_sweep_requests_200_response'
       description: The request was successful.
     getFeeStationTokenBalancesResponse:
       content:
@@ -13510,7 +13636,7 @@ components:
           type: string
         calldata:
           description: |
-            The data that is used to invoke a specific function or method within the specified contract at the destination address.
+            The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.
           example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           type: string
       required:
@@ -15738,7 +15864,7 @@ components:
           type: string
         calldata:
           description: |
-            The data that is used to invoke a specific function or method within the specified contract at the destination address.
+            The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.
           example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           type: string
         calldata_info:
@@ -16508,7 +16634,7 @@ components:
         The mode of transaction fee payment using Fee Station. Currently, Fee Station supports EVM-compatible and TRON transactions initiated from MPC Wallets (Organization-Controlled) and Custodial Wallets (Web3 Wallets). For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).
         - `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees.
         - `PassiveAutoFuel`: Use Fee Station only when the source address balance is insufficient to cover the transaction fees.
-        - `UsePortalPreference`: Use fueling strategy based on Portal configuration.
+        - `UsePortalPreference`: Use payment preferences set on Cobo Portal.
 
         Please note that the TRON chain does not support `PassiveAutoFuel` due to its fee delegation mechanism.
       enum:
@@ -17223,6 +17349,8 @@ components:
         - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
         - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
 
+        For detailed rules on `address` and `included_utxos` in both regular and RBF transactions, see [Address and included_utxos usage](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations#address-and-included-utxos-usage).
+
         Switch between the tabs to display the properties for different transaction sources.
       properties:
         source_type:
@@ -17236,12 +17364,9 @@ components:
           description: |
             Indicates the wallet address to be used as the source of funds.
             - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
-              For RBF transactions, please note the following:
-                - If the original transaction did not specify `included_utxos`, the RBF transaction may omit `address`, `included_utxos`, or both.
-                - If the original transaction specified `included_utxos`, the RBF transaction must specify either `address` or `included_utxos`, or both.
-                - The `address` or `included_utxos` in the RBF transaction may differ from those in the original transaction.
-
             - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
+
+            For detailed rules on `address` and `included_utxos` in both regular and RBF transactions, see [Address and included_utxos usage](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations#address-and-included-utxos-usage).
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           type: string
         included_utxos:
@@ -17263,6 +17388,8 @@ components:
 
         - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
         - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
+
+        For detailed rules on `address` and `included_utxos` in both regular and RBF transactions, see [Address and included_utxos usage](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations#address-and-included-utxos-usage).
 
         Switch between the tabs to display the properties for different transaction sources.
       example:
@@ -17296,12 +17423,9 @@ components:
           description: |
             Indicates the wallet address to be used as the source of funds.
             - For UTXO-based chains: both `address` and `included_utxos` are optional. If both `address` and `included_utxos` are provided, the UTXOs must belong to the specified address. If neither `address` nor `included_utxos` is provided, the system will select UTXOs from the wallet associated with `wallet_id`.
-              For RBF transactions, please note the following:
-                - If the original transaction did not specify `included_utxos`, the RBF transaction may omit `address`, `included_utxos`, or both.
-                - If the original transaction specified `included_utxos`, the RBF transaction must specify either `address` or `included_utxos`, or both.
-                - The `address` or `included_utxos` in the RBF transaction may differ from those in the original transaction.
-
             - For account-based chains: You need to provide `address` otherwise the token transfer will fail. However, when estimating fees for a transfer, `address` is not required.
+
+            For detailed rules on `address` and `included_utxos` in both regular and RBF transactions, see [Address and included_utxos usage](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations#address-and-included-utxos-usage).
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           type: string
         included_utxos:
@@ -17767,7 +17891,6 @@ components:
           type: string
       required:
       - chain_id
-      - destination
       - request_type
       - source
       title: ContractCall
@@ -17885,7 +18008,7 @@ components:
           type: string
         calldata:
           description: |
-            The data that is used to invoke a specific function or method within the specified contract at the destination address.
+            The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.
           example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           type: string
       required:
@@ -18534,9 +18657,10 @@ components:
             \ chain event data.\n- `Tokens`: The enabled token event data.\n- `TokenListing`:\
             \ The token listing event data.\n      \n- `PaymentOrder`: The payment\
             \ order event data.\n- `PaymentRefund`: The payment refund event data.\n\
-            - `PaymentSettlement`: The payment settlement event data.\n- `BalanceUpdateInfo`:\
-            \ The balance update event data.\n- `SuspendedToken`: The token suspension\
-            \ event data."
+            - `PaymentSettlement`: The payment settlement event data.\n- `PaymentTransaction`:\
+            \ The payment transaction event data.\n- `PaymentAddressUpdate`: The payment\
+            \ address update event data.\n- `BalanceUpdateInfo`: The balance update\
+            \ event data.\n- `SuspendedToken`: The token suspension event data."
           enum:
           - Transaction
           - TSSRequest
@@ -18549,6 +18673,8 @@ components:
           - PaymentOrder
           - PaymentRefund
           - PaymentSettlement
+          - PaymentTransaction
+          - PaymentAddressUpdate
           - BalanceUpdateInfo
           - SuspendedToken
           example: Transaction
@@ -18572,6 +18698,8 @@ components:
           PaymentOrder: '#/components/schemas/PaymentOrderEventData'
           PaymentRefund: '#/components/schemas/PaymentRefundEventData'
           PaymentSettlement: '#/components/schemas/PaymentSettlementEvent'
+          PaymentTransaction: '#/components/schemas/PaymentTransactionEventData'
+          PaymentAddressUpdate: '#/components/schemas/PaymentAddressUpdateEventData'
         propertyName: data_type
       oneOf:
       - $ref: '#/components/schemas/TransactionWebhookEventData'
@@ -18587,6 +18715,8 @@ components:
       - $ref: '#/components/schemas/PaymentOrderEventData'
       - $ref: '#/components/schemas/PaymentRefundEventData'
       - $ref: '#/components/schemas/PaymentSettlementEvent'
+      - $ref: '#/components/schemas/PaymentTransactionEventData'
+      - $ref: '#/components/schemas/PaymentAddressUpdateEventData'
     TransactionWebhookEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -18883,6 +19013,73 @@ components:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - $ref: '#/components/schemas/Settlement'
       title: Payment refund Event Data
+    PaymentTransactionEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - $ref: '#/components/schemas/Transaction'
+      - properties:
+          acquiring_type:
+            $ref: '#/components/schemas/AcquiringType'
+          order_id:
+            description: Unique identifier of a single order
+            example: O20250304-M1001-1001
+            type: string
+          psp_order_code:
+            description: A unique reference code assigned by the developer to identify
+              this order in their system.
+            example: P20240201001
+            type: string
+          payer_id:
+            description: |
+              Unique payer identifier on the Cobo side, auto-generated by the system.
+            example: P20250619T0310056d7aa
+            type: string
+          custom_payer_id:
+            description: |
+              Unique user identifier on the merchant side, used to assign a dedicated deposit address.
+            example: user_abc_10001
+            type: string
+        required:
+        - acquiring_type
+        type: object
+      title: Payment transaction Event Data
+    PaymentAddressUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          custom_payer_id:
+            description: |
+              Unique user identifier on the merchant side, used to assign a dedicated deposit address.
+            example: user_abc_10001
+            type: string
+          payer_id:
+            description: |
+              Unique payer identifier on the Cobo side, auto-generated by the system.
+            example: P20250619T0310056d7aa
+            type: string
+          chain:
+            description: |
+              Blockchain network identifier, e.g., 'ETH' for Ethereum, 'TRON' for Tron.
+            example: ETH
+            type: string
+          previous_address:
+            description: |
+              The previous deposit address that was assigned before update.
+            example: 0xAbC123...DEF
+            type: string
+          updated_address:
+            description: |
+              The new updated deposit address assigned to the user.
+            example: 0x789xyz...456
+            type: string
+        required:
+        - chain
+        - custom_payer_id
+        - payer_id
+        - previous_address
+        - updated_address
+        type: object
+      title: Payment address update Event Data
     WebhookEventType:
       description: "The event type. To learn the trigger condition of each event type,\
         \ refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type)."
@@ -18919,6 +19116,7 @@ components:
       - payment.status.updated
       - payment.refund.status.updated
       - payment.settlement.status.updated
+      - payment.address.updated
       example: wallets.transaction.created
       type: string
     WebhookEventStatus:
@@ -22162,7 +22360,7 @@ components:
         token_id:
           description: "The ID of the cryptocurrency you want to settle. Specify this\
             \ field when `payout_channel` is set to `Crypto`. Supported values: \n\
-            - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`,\
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`,\
             \ `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`,\
             \ `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
           example: ETH_USDT
@@ -22196,11 +22394,12 @@ components:
           type: string
         order_ids:
           items:
-            description: "\nThe order ID to be included in this settlement.\n\nThis\
-              \ field is only applicable when `settlement_type` is set to `Merchant`.\
-              \ If provided, the settlement request will settle the merchant funds\
-              \ received from the specified orders. You should not specify both `order_ids`\
-              \ and `amount`. \n    \n    \n"
+            description: "\nThe order ID to be included in this settlement.\n\n- If\
+              \ provided: Settles merchant funds received from this specific order\n\
+              - If empty: Settles merchant funds received from all unsettled orders\
+              \ of the specified merchant\n\n**Usage conditions**\n- Only applicable\
+              \ when `settlement_type` is set to `Merchant`\n- Cannot be used together\
+              \ with `order_ids` or `amount` parameters\n\n    \n"
             example: O20250304-M1001-1001
             type: string
           type: array
@@ -22298,8 +22497,8 @@ components:
           type: string
         token_id:
           description: "\nThe ID of the cryptocurrency used for payment. Supported\
-            \ tokens: \n- USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`,\
-            \ `MATIC_USDC`, `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+            \ tokens: \n- USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`,\
+            \ `MATIC_USDC2`, `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
             \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
           example: ETH_USDT
           type: string
@@ -22847,6 +23046,7 @@ components:
     SettlementInfo:
       example:
         settled_amount: "500.00"
+        total_balance: "500.00"
         pending_currency_balance: "500.00"
         available_currency_balance: "500.00"
         token_id: ETH_USDT
@@ -22854,6 +23054,7 @@ components:
         created_timestamp: 1744689600
         merchant_id: "123"
         available_amount: "500.00"
+        available_balance: "500.00"
         acquiring_type: Order
         pending_amount: "500.00"
       properties:
@@ -22888,6 +23089,16 @@ components:
           type: string
         settled_amount:
           description: "The amount already settled, in the specified cryptocurrency."
+          example: "500.00"
+          type: string
+        available_balance:
+          description: "The balance available for settlement or refund, in the specified\
+            \ fiat currency."
+          example: "500.00"
+          type: string
+        total_balance:
+          description: "The balance total for settlement or refund, in the specified\
+            \ fiat currency."
           example: "500.00"
           type: string
         acquiring_type:
@@ -23248,6 +23459,10 @@ components:
       type: object
     UpdateTopUpAddress:
       description: The request body to update top up address.
+      example:
+        token_id: ETH_USDT
+        custom_payer_id: payer_0001
+        merchant_id: M1001
       properties:
         merchant_id:
           description: The merchant ID.
@@ -23256,7 +23471,7 @@ components:
         token_id:
           description: |
             The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-              - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+              - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
               - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
           example: ETH_USDT
           type: string
@@ -23270,6 +23485,104 @@ components:
       - merchant_id
       - token_id
       type: object
+    ForcedSweepRequest:
+      description: The information about the request to force sweep.
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        amount: "10.5"
+        token_id: ETH_USDT
+        request_id: 123e4567-e89b-12d3-a456-426614174002
+      properties:
+        request_id:
+          description: The request id of the force sweep.
+          example: 123e4567-e89b-12d3-a456-426614174002
+          type: string
+        wallet_id:
+          description: "The wallet ID to force sweep, which is the unique identifier\
+            \ of a wallet."
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        token_id:
+          description: "The token ID to force sweep, which is the unique identifier\
+            \ of a token."
+          example: ETH_USDT
+          type: string
+        amount:
+          description: The amount of needing force sweep.
+          example: "10.5"
+          type: string
+      required:
+      - amount
+      - request_id
+      - token_id
+      - wallet_id
+      type: object
+    ForcedSweep:
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        amount: "10.5"
+        token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        forced_sweep_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        created_timestamp: 1744689600
+        request_id: 123e4567-e89b-12d3-a456-426614174002
+        status: Pending
+      properties:
+        forced_sweep_id:
+          description: The force sweep ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          format: uuid
+          type: string
+        request_id:
+          description: The request ID provided by you when creating the force sweep
+            request.
+          example: 123e4567-e89b-12d3-a456-426614174002
+          type: string
+        wallet_id:
+          description: "The wallet ID to force sweep, which is the unique identifier\
+            \ of a wallet."
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        token_id:
+          description: "The token ID to force sweep, which is the unique identifier\
+            \ of a token."
+          example: ETH_USDT
+          type: string
+        amount:
+          description: The amount of needing force sweep.
+          example: "10.5"
+          type: string
+        status:
+          $ref: '#/components/schemas/ForcedSweepStatus'
+        created_timestamp:
+          description: "The created time of the force sweep request, represented as\
+            \ a UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the force sweep request, represented as\
+            \ a UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+      required:
+      - forced_sweep_id
+      - request_id
+      - status
+      type: object
+    ForcedSweepStatus:
+      description: |
+        The current status of the force sweep request:
+        - `Pending`: The force sweep request has been created and is awaiting processing.
+        - `Processing`: The force sweep request is currently being processed.
+        - `Completed`: All requested force sweep have been completed.
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      example: Pending
+      type: string
     TSSKeyGenRequest:
       properties:
         threshold:
@@ -24622,7 +24935,7 @@ components:
           $ref: '#/components/schemas/TokenizationContractCallType'
         calldata:
           description: |
-            The data that is used to invoke a specific function or method within the specified contract at the destination address.
+            The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.
           example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           type: string
         value:
@@ -28317,9 +28630,9 @@ components:
           type: string
         token_id:
           description: "The ID of the cryptocurrency used for refund. Supported values:\
-            \ \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`,\
-            \ `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`,\
-            \ `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+            \ \n  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`,\
+            \ `MATIC_USDC2`, `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
           example: ETH_USDT
           type: string
         refund_type:
@@ -28348,7 +28661,7 @@ components:
         merchant_fee_token_id:
           description: |
             The ID of the cryptocurrency used for the developer fee. It must be the same as `token_id`. Supported values:
-              - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+              - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
               - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
           example: ETH_USDT
           type: string
@@ -28464,13 +28777,13 @@ components:
           type: string
         token_id:
           description: "The ID of the cryptocurrency used for payment. Supported values:\
-            \ \n  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`,\
-            \ `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`,\
-            \ `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+            \ \n  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`,\
+            \ `MATIC_USDC2`, `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
           example: ETH_USDT
           type: string
         currency:
-          default: USD
+          default: ""
           description: "The fiat currency of the order. Currently, only `USD` is supported."
           example: USD
           type: string
@@ -28564,6 +28877,7 @@ components:
       example:
         psp_token_balances:
         - settled_amount: "500.00"
+          total_balance: "500.00"
           pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
@@ -28571,9 +28885,11 @@ components:
           created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
+          available_balance: "500.00"
           acquiring_type: Order
           pending_amount: "500.00"
         - settled_amount: "500.00"
+          total_balance: "500.00"
           pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
@@ -28581,10 +28897,12 @@ components:
           created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
+          available_balance: "500.00"
           acquiring_type: Order
           pending_amount: "500.00"
         token_balances:
         - settled_amount: "500.00"
+          total_balance: "500.00"
           pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
@@ -28592,9 +28910,11 @@ components:
           created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
+          available_balance: "500.00"
           acquiring_type: Order
           pending_amount: "500.00"
         - settled_amount: "500.00"
+          total_balance: "500.00"
           pending_currency_balance: "500.00"
           available_currency_balance: "500.00"
           token_id: ETH_USDT
@@ -28602,6 +28922,7 @@ components:
           created_timestamp: 1744689600
           merchant_id: "123"
           available_amount: "500.00"
+          available_balance: "500.00"
           acquiring_type: Order
           pending_amount: "500.00"
       properties:
@@ -28956,6 +29277,37 @@ components:
         data:
           items:
             $ref: '#/components/schemas/list_top_up_payers_200_response_data_inner'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    list_forced_sweep_requests_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          amount: "10.5"
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          forced_sweep_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          created_timestamp: 1744689600
+          request_id: 123e4567-e89b-12d3-a456-426614174002
+          status: Pending
+        - wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          amount: "10.5"
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          forced_sweep_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          created_timestamp: 1744689600
+          request_id: 123e4567-e89b-12d3-a456-426614174002
+          status: Pending
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ForcedSweep'
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
