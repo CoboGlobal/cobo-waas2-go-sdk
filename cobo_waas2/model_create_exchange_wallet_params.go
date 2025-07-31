@@ -23,6 +23,8 @@ type CreateExchangeWalletParams struct {
 	Name string `json:"name"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
+	// Enable the auto sweep feature for the wallet. This parameter only applies to MPC and Web3 wallets.
+	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	ExchangeId ExchangeId `json:"exchange_id"`
 	// The API key of your exchange account.
 	Apikey string `json:"apikey"`
@@ -135,6 +137,38 @@ func (o *CreateExchangeWalletParams) GetWalletSubtypeOk() (*WalletSubtype, bool)
 // SetWalletSubtype sets field value
 func (o *CreateExchangeWalletParams) SetWalletSubtype(v WalletSubtype) {
 	o.WalletSubtype = v
+}
+
+// GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
+func (o *CreateExchangeWalletParams) GetEnableAutoSweep() bool {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableAutoSweep
+}
+
+// GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateExchangeWalletParams) GetEnableAutoSweepOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		return nil, false
+	}
+	return o.EnableAutoSweep, true
+}
+
+// HasEnableAutoSweep returns a boolean if a field has been set.
+func (o *CreateExchangeWalletParams) HasEnableAutoSweep() bool {
+	if o != nil && !IsNil(o.EnableAutoSweep) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAutoSweep gets a reference to the given bool and assigns it to the EnableAutoSweep field.
+func (o *CreateExchangeWalletParams) SetEnableAutoSweep(v bool) {
+	o.EnableAutoSweep = &v
 }
 
 // GetExchangeId returns the ExchangeId field value
@@ -382,6 +416,9 @@ func (o CreateExchangeWalletParams) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["wallet_type"] = o.WalletType
 	toSerialize["wallet_subtype"] = o.WalletSubtype
+	if !IsNil(o.EnableAutoSweep) {
+		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
+	}
 	toSerialize["exchange_id"] = o.ExchangeId
 	toSerialize["apikey"] = o.Apikey
 	toSerialize["secret"] = o.Secret

@@ -65,6 +65,8 @@ tags:
   name: Payment
 - description: Operations related to tokenization.
   name: Tokenization
+- description: Operations related to auto sweep.
+  name: AutoSweep
 paths:
   /organizations/info:
     get:
@@ -9090,6 +9092,15 @@ paths:
         schema:
           type: string
         style: form
+      - description: "A list of  statuses of order, refund or settle request."
+        example: "Pending,Processing"
+        explode: true
+        in: query
+        name: statuses
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -9459,6 +9470,15 @@ paths:
         explode: true
         in: query
         name: psp_order_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of  statuses of order, refund or settle request."
+        example: "Pending,Processing"
+        explode: true
+        in: query
+        name: statuses
         required: false
         schema:
           type: string
@@ -10565,6 +10585,100 @@ paths:
       - OAuth2:
         - payment_balance.read
       summary: Get psp balance
+      tags:
+      - Payment
+  /payments/settlement_details:
+    get:
+      description: |
+        This operation retrieves the information of all settlement details. You can filter the result by merchant ID or status.
+      operationId: list_settlement_details
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data before the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C.  If you set `before` to the ID of Object C (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object A.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n\
+          - If you set it to `infinity`, the last page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "This parameter specifies an object ID as a starting point for\
+          \ pagination, retrieving data after the specified object relative to the\
+          \ current dataset.  \n\nSuppose the current data is ordered as Object A,\
+          \ Object B, and Object C. If you set `after` to the ID of Object A (`RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk`),\
+          \ the response will include Object B and Object C.  \n\n**Notes**:  \n-\
+          \ If you set both `after` and `before`, an error will occur.\n- If you leave\
+          \ both `before` and `after` empty, the first page of data is returned.\n"
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The merchant ID.
+        example: M1001
+        explode: true
+        in: query
+        name: merchant_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of  statuses of order, refund or settle request."
+        example: "Pending,Processing"
+        explode: true
+        in: query
+        name: statuses
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_settlement_details_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: List all settlement details
       tags:
       - Payment
   /tokenization/activities:
@@ -11698,6 +11812,82 @@ paths:
       summary: List tokenization supported chains
       tags:
       - Tokenization
+  /auto_sweep/sweep_to_addresses:
+    get:
+      description: |
+        This operation retrieves a list of sweep to addresses within your wallet.
+      operationId: list_wallet_sweep_to_addresses
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_wallet_sweep_to_addresses_200_response'
+          description: Successfully listed sweep to addresses
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: List wallet sweep to addresses
+      tags:
+      - AutoSweep
+    post:
+      description: |
+        This operation create a new sweep to address for the wallet. The old sweep to address will become invalid.
+      operationId: create_wallet_sweep_to_addresses
+      requestBody:
+        $ref: '#/components/requestBodies/createSweepAddressBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SweepToAddress'
+          description: Successfully create sweep to addresses
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.create
+      summary: create wallet sweep to addresses
+      tags:
+      - AutoSweep
 components:
   parameters:
     sortByParam:
@@ -13513,6 +13703,16 @@ components:
       schema:
         type: string
       style: form
+    PaymentStatusesParam:
+      description: "A list of  statuses of order, refund or settle request."
+      example: "Pending,Processing"
+      explode: true
+      in: query
+      name: statuses
+      required: false
+      schema:
+        type: string
+      style: form
     tokenizationActivityIdPathParam:
       description: The ID of the activity.
       example: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
@@ -13970,6 +14170,13 @@ components:
           schema:
             $ref: '#/components/schemas/UpdateTopUpAddress'
       description: The request body to update top up address.
+    createSweepAddressBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateSweepToAddress'
+      description: The request body to generates a new sweep to addresses within a
+        specified wallet.
   responses:
     badRequestError:
       content:
@@ -14872,6 +15079,12 @@ components:
           schema:
             $ref: '#/components/schemas/list_merchant_balances_200_response'
       description: The request was successful.
+    listSettlementDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_settlement_details_200_response'
+      description: The request was successful.
     getFeeStationTokenBalancesResponse:
       content:
         application/json:
@@ -14982,6 +15195,18 @@ components:
           schema:
             $ref: '#/components/schemas/TokenizationListEnabledChainsResponse'
       description: List of tokenization supported chains retrieved successfully
+    getSweepToAddressesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_wallet_sweep_to_addresses_200_response'
+      description: Successfully listed sweep to addresses
+    createSweepToAddressResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SweepToAddress'
+      description: Successfully create sweep to addresses
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -15565,6 +15790,7 @@ components:
         org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         name: Example Wallet
         wallet_type: Custodial
+        enable_auto_sweep: true
       properties:
         wallet_id:
           description: The wallet ID.
@@ -15583,6 +15809,9 @@ components:
           description: The ID of the owning organization.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet
+          type: boolean
       required:
       - name
       - org_id
@@ -15832,6 +16061,7 @@ components:
         wallet_subtype: Asset
         name: My WaaS 2.0 Wallet
         wallet_type: Custodial
+        enable_auto_sweep: true
       properties:
         name:
           description: The wallet name.
@@ -15841,6 +16071,10 @@ components:
           $ref: '#/components/schemas/WalletType'
         wallet_subtype:
           $ref: '#/components/schemas/WalletSubtype'
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet. This parameter
+            only applies to MPC and Web3 wallets.
+          type: boolean
       required:
       - name
       - wallet_subtype
@@ -15989,6 +16223,7 @@ components:
       example:
         name: My WaaS 2.0 Wallet
         wallet_type: Custodial
+        enable_auto_sweep: true
       properties:
         wallet_type:
           $ref: '#/components/schemas/WalletType'
@@ -15996,6 +16231,9 @@ components:
           description: The wallet name.
           example: My WaaS 2.0 Wallet
           type: string
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet
+          type: boolean
       required:
       - name
       - wallet_type
@@ -16010,6 +16248,9 @@ components:
           description: The wallet name.
           example: My WaaS 2.0 Wallet
           type: string
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet
+          type: boolean
       required:
       - name
       - wallet_type
@@ -25531,7 +25772,8 @@ components:
       example:
         settlement_request_id: S20250304-1001
         settlements:
-        - amount: "500.00"
+        - settlement_request_id: S20250304-1001
+          amount: "500.00"
           chain_id: ETH
           created_timestamp: 1744689600
           merchant_id: M1001
@@ -25574,7 +25816,8 @@ components:
               bank_country: USA
               bank_address: "456 Bank Ave, Cityville, USA"
               swift_or_bic: ABCDEFGH
-        - amount: "500.00"
+        - settlement_request_id: S20250304-1001
+          amount: "500.00"
           chain_id: ETH
           created_timestamp: 1744689600
           merchant_id: M1001
@@ -25661,6 +25904,7 @@ components:
       type: object
     SettlementDetail:
       example:
+        settlement_request_id: S20250304-1001
         amount: "500.00"
         chain_id: ETH
         created_timestamp: 1744689600
@@ -25769,6 +26013,10 @@ components:
           $ref: '#/components/schemas/PayoutChannel'
         acquiring_type:
           $ref: '#/components/schemas/AcquiringType'
+        settlement_request_id:
+          description: The settlement request ID generated by Cobo.
+          example: S20250304-1001
+          type: string
       type: object
     SettlementInfo:
       example:
@@ -28610,6 +28858,57 @@ components:
       - merchant_id
       - token_id
       type: object
+    SweepToAddress:
+      description: The sweep to address information.
+      example:
+        address: 0x0000000000000000000000000000000000000000
+        chain_id: ETH
+        status: Valid
+      properties:
+        address:
+          description: The wallet address.
+          example: 0x0000000000000000000000000000000000000000
+          type: string
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain.\
+            \ You can retrieve the IDs of all the chains you can use by calling [List\
+            \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+          example: ETH
+          type: string
+        status:
+          $ref: '#/components/schemas/SweepToAddressStatus'
+      required:
+      - address
+      - chain_id
+      type: object
+    SweepToAddressStatus:
+      enum:
+      - Valid
+      - Invalid
+      example: Valid
+      type: string
+    CreateSweepToAddress:
+      description: The information of create sweep to address.
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        chain_id: ETH
+      properties:
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain.\
+            \ You can retrieve the IDs of all the chains you can use by calling [List\
+            \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+          example: ETH
+          type: string
+      required:
+      - chain_id
+      - wallet_id
+      title: The request body to generates a new sweep to addresses within a specified
+        wallet.
+      type: object
     list_supported_chains_200_response:
       example:
         pagination:
@@ -28792,11 +29091,13 @@ components:
           org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           name: Example Wallet
           wallet_type: Custodial
+          enable_auto_sweep: true
         - wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           wallet_subtype: Asset
           org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           name: Example Wallet
           wallet_type: Custodial
+          enable_auto_sweep: true
       properties:
         data:
           items:
@@ -32556,7 +32857,8 @@ components:
         data:
         - settlement_request_id: S20250304-1001
           settlements:
-          - amount: "500.00"
+          - settlement_request_id: S20250304-1001
+            amount: "500.00"
             chain_id: ETH
             created_timestamp: 1744689600
             merchant_id: M1001
@@ -32599,7 +32901,8 @@ components:
                 bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
-          - amount: "500.00"
+          - settlement_request_id: S20250304-1001
+            amount: "500.00"
             chain_id: ETH
             created_timestamp: 1744689600
             merchant_id: M1001
@@ -32649,7 +32952,8 @@ components:
           status: Pending
         - settlement_request_id: S20250304-1001
           settlements:
-          - amount: "500.00"
+          - settlement_request_id: S20250304-1001
+            amount: "500.00"
             chain_id: ETH
             created_timestamp: 1744689600
             merchant_id: M1001
@@ -32692,7 +32996,8 @@ components:
                 bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
-          - amount: "500.00"
+          - settlement_request_id: S20250304-1001
+            amount: "500.00"
             chain_id: ETH
             created_timestamp: 1744689600
             merchant_id: M1001
@@ -33050,6 +33355,109 @@ components:
             $ref: '#/components/schemas/MerchantBalance'
           type: array
       type: object
+    list_settlement_details_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - settlement_request_id: S20250304-1001
+          amount: "500.00"
+          chain_id: ETH
+          created_timestamp: 1744689600
+          merchant_id: M1001
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          settled_amount: "500.00"
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          currency: USD
+          acquiring_type: Order
+          status: Pending
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
+        - settlement_request_id: S20250304-1001
+          amount: "500.00"
+          chain_id: ETH
+          created_timestamp: 1744689600
+          merchant_id: M1001
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          settled_amount: "500.00"
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          currency: USD
+          acquiring_type: Order
+          status: Pending
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SettlementDetail'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
     list_tokenization_blocklist_addresses_200_response:
       example:
         pagination:
@@ -33111,6 +33519,21 @@ components:
           type: boolean
       required:
       - activated
+      type: object
+    list_wallet_sweep_to_addresses_200_response:
+      example:
+        data:
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+          status: Valid
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+          status: Valid
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SweepToAddress'
+          type: array
       type: object
     EstimatedEvmEip1559Fee_slow:
       allOf:
