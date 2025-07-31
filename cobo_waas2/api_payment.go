@@ -1585,6 +1585,7 @@ type ApiGetRefundsRequest struct {
 	after *string
 	merchantId *string
 	requestId *string
+	statuses *string
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -1614,6 +1615,12 @@ func (r ApiGetRefundsRequest) MerchantId(merchantId string) ApiGetRefundsRequest
 // The request ID.
 func (r ApiGetRefundsRequest) RequestId(requestId string) ApiGetRefundsRequest {
 	r.requestId = &requestId
+	return r
+}
+
+// A list of  statuses of order, refund or settle request.
+func (r ApiGetRefundsRequest) Statuses(statuses string) ApiGetRefundsRequest {
+	r.statuses = &statuses
 	return r
 }
 
@@ -1675,6 +1682,9 @@ func (a *PaymentAPIService) GetRefundsExecute(r ApiGetRefundsRequest) (*GetRefun
 	}
 	if r.requestId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
+	}
+	if r.statuses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2937,6 +2947,7 @@ type ApiListPaymentOrdersRequest struct {
 	after *string
 	merchantId *string
 	pspOrderId *string
+	statuses *string
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -2966,6 +2977,12 @@ func (r ApiListPaymentOrdersRequest) MerchantId(merchantId string) ApiListPaymen
 // The PSP order ID.
 func (r ApiListPaymentOrdersRequest) PspOrderId(pspOrderId string) ApiListPaymentOrdersRequest {
 	r.pspOrderId = &pspOrderId
+	return r
+}
+
+// A list of  statuses of order, refund or settle request.
+func (r ApiListPaymentOrdersRequest) Statuses(statuses string) ApiListPaymentOrdersRequest {
+	r.statuses = &statuses
 	return r
 }
 
@@ -3027,6 +3044,9 @@ func (a *PaymentAPIService) ListPaymentOrdersExecute(r ApiListPaymentOrdersReque
 	}
 	if r.pspOrderId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "psp_order_id", r.pspOrderId, "")
+	}
+	if r.statuses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3291,6 +3311,180 @@ func (a *PaymentAPIService) ListPaymentWalletBalancesExecute(r ApiListPaymentWal
 		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_ids", r.walletIds, "")
 	}
 	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListSettlementDetailsRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	limit *int32
+	before *string
+	after *string
+	merchantId *string
+	statuses *string
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListSettlementDetailsRequest) Limit(limit int32) ApiListSettlementDetailsRequest {
+	r.limit = &limit
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
+func (r ApiListSettlementDetailsRequest) Before(before string) ApiListSettlementDetailsRequest {
+	r.before = &before
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+func (r ApiListSettlementDetailsRequest) After(after string) ApiListSettlementDetailsRequest {
+	r.after = &after
+	return r
+}
+
+// The merchant ID.
+func (r ApiListSettlementDetailsRequest) MerchantId(merchantId string) ApiListSettlementDetailsRequest {
+	r.merchantId = &merchantId
+	return r
+}
+
+// A list of  statuses of order, refund or settle request.
+func (r ApiListSettlementDetailsRequest) Statuses(statuses string) ApiListSettlementDetailsRequest {
+	r.statuses = &statuses
+	return r
+}
+
+func (r ApiListSettlementDetailsRequest) Execute() (*ListSettlementDetails200Response, *http.Response, error) {
+	return r.ApiService.ListSettlementDetailsExecute(r)
+}
+
+/*
+ListSettlementDetails List all settlement details
+
+This operation retrieves the information of all settlement details. You can filter the result by merchant ID or status.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListSettlementDetailsRequest
+*/
+func (a *PaymentAPIService) ListSettlementDetails(ctx context.Context) ApiListSettlementDetailsRequest {
+	return ApiListSettlementDetailsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListSettlementDetails200Response
+func (a *PaymentAPIService) ListSettlementDetailsExecute(r ApiListSettlementDetailsRequest) (*ListSettlementDetails200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListSettlementDetails200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.ListSettlementDetails")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/settlement_details"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
+	if r.statuses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Name** | **string** | The wallet name. | 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
+**EnableAutoSweep** | Pointer to **bool** | Enable the auto sweep feature for the wallet. This parameter only applies to MPC and Web3 wallets. | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetWalletSubtype sets WalletSubtype field to given value.
 
+
+### GetEnableAutoSweep
+
+`func (o *CreateCustodialWalletParams) GetEnableAutoSweep() bool`
+
+GetEnableAutoSweep returns the EnableAutoSweep field if non-nil, zero value otherwise.
+
+### GetEnableAutoSweepOk
+
+`func (o *CreateCustodialWalletParams) GetEnableAutoSweepOk() (*bool, bool)`
+
+GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnableAutoSweep
+
+`func (o *CreateCustodialWalletParams) SetEnableAutoSweep(v bool)`
+
+SetEnableAutoSweep sets EnableAutoSweep field to given value.
+
+### HasEnableAutoSweep
+
+`func (o *CreateCustodialWalletParams) HasEnableAutoSweep() bool`
+
+HasEnableAutoSweep returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

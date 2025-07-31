@@ -23,6 +23,8 @@ type CreateMpcWalletParams struct {
 	Name string `json:"name"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
+	// Enable the auto sweep feature for the wallet. This parameter only applies to MPC and Web3 wallets.
+	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	// The ID of the owning vault. You can call [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults) to retrieve all vault IDs under your organization.
 	VaultId string `json:"vault_id"`
 }
@@ -122,6 +124,38 @@ func (o *CreateMpcWalletParams) SetWalletSubtype(v WalletSubtype) {
 	o.WalletSubtype = v
 }
 
+// GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
+func (o *CreateMpcWalletParams) GetEnableAutoSweep() bool {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableAutoSweep
+}
+
+// GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateMpcWalletParams) GetEnableAutoSweepOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		return nil, false
+	}
+	return o.EnableAutoSweep, true
+}
+
+// HasEnableAutoSweep returns a boolean if a field has been set.
+func (o *CreateMpcWalletParams) HasEnableAutoSweep() bool {
+	if o != nil && !IsNil(o.EnableAutoSweep) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAutoSweep gets a reference to the given bool and assigns it to the EnableAutoSweep field.
+func (o *CreateMpcWalletParams) SetEnableAutoSweep(v bool) {
+	o.EnableAutoSweep = &v
+}
+
 // GetVaultId returns the VaultId field value
 func (o *CreateMpcWalletParams) GetVaultId() string {
 	if o == nil {
@@ -159,6 +193,9 @@ func (o CreateMpcWalletParams) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["wallet_type"] = o.WalletType
 	toSerialize["wallet_subtype"] = o.WalletSubtype
+	if !IsNil(o.EnableAutoSweep) {
+		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
+	}
 	toSerialize["vault_id"] = o.VaultId
 	return toSerialize, nil
 }

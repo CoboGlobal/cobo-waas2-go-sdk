@@ -6,6 +6,7 @@ README.md
 api/openapi.yaml
 api_address_books.go
 api_app_workflows.go
+api_auto_sweep.go
 api_developers.go
 api_developers_webhooks.go
 api_fee_station.go
@@ -72,6 +73,7 @@ docs/ApprovalUserDetail.md
 docs/AssetBalance.md
 docs/AssetInfo.md
 docs/AutoFuelType.md
+docs/AutoSweepAPI.md
 docs/BTCBIP137MessageSignDestination.md
 docs/BTCBIP322MessageSignDestination.md
 docs/BTCEIP191MessageSignDestination.md
@@ -151,6 +153,7 @@ docs/CreateStakeActivity201Response.md
 docs/CreateStakeActivityExtra.md
 docs/CreateStakeActivityRequest.md
 docs/CreateSwapActivityRequest.md
+docs/CreateSweepToAddress.md
 docs/CreateTokenListingRequest201Response.md
 docs/CreateTokenListingRequestRequest.md
 docs/CreateTransferTransaction201Response.md
@@ -280,6 +283,7 @@ docs/ListMpcProjects200Response.md
 docs/ListMpcVaults200Response.md
 docs/ListPaymentOrders200Response.md
 docs/ListPaymentWalletBalances200Response.md
+docs/ListSettlementDetails200Response.md
 docs/ListSettlementRequests200Response.md
 docs/ListStakingActivities200Response.md
 docs/ListStakingPools200Response.md
@@ -302,6 +306,7 @@ docs/ListTransactionApprovalDetails200Response.md
 docs/ListTransactions200Response.md
 docs/ListTssRequests200Response.md
 docs/ListUtxos200Response.md
+docs/ListWalletSweepToAddresses200Response.md
 docs/ListWallets200Response.md
 docs/ListWebhookEndpoints200Response.md
 docs/ListWebhookEventDefinitions200ResponseInner.md
@@ -432,6 +437,8 @@ docs/SwapSingingStatus.md
 docs/SwapToken.md
 docs/SwapType.md
 docs/SwapsAPI.md
+docs/SweepToAddress.md
+docs/SweepToAddressStatus.md
 docs/TSSBaseRequestEventData.md
 docs/TSSCallbackActionType.md
 docs/TSSCallbackRequest.md
@@ -811,6 +818,7 @@ model_create_stake_activity_201_response.go
 model_create_stake_activity_extra.go
 model_create_stake_activity_request.go
 model_create_swap_activity_request.go
+model_create_sweep_to_address.go
 model_create_token_listing_request_201_response.go
 model_create_token_listing_request_request.go
 model_create_transfer_transaction_201_response.go
@@ -936,6 +944,7 @@ model_list_mpc_projects_200_response.go
 model_list_mpc_vaults_200_response.go
 model_list_payment_orders_200_response.go
 model_list_payment_wallet_balances_200_response.go
+model_list_settlement_details_200_response.go
 model_list_settlement_requests_200_response.go
 model_list_staking_activities_200_response.go
 model_list_staking_pools_200_response.go
@@ -958,6 +967,7 @@ model_list_transaction_approval_details_200_response.go
 model_list_transactions_200_response.go
 model_list_tss_requests_200_response.go
 model_list_utxos_200_response.go
+model_list_wallet_sweep_to_addresses_200_response.go
 model_list_wallets_200_response.go
 model_list_webhook_endpoints_200_response.go
 model_list_webhook_event_definitions_200_response_inner.go
@@ -1082,6 +1092,8 @@ model_swap_quote.go
 model_swap_singing_status.go
 model_swap_token.go
 model_swap_type.go
+model_sweep_to_address.go
+model_sweep_to_address_status.go
 model_token_asset_model_type.go
 model_token_balance.go
 model_token_info.go
@@ -1335,6 +1347,7 @@ model_webhook_event_type.go
 response.go
 test/api_address_books_test.go
 test/api_app_workflows_test.go
+test/api_auto_sweep_test.go
 test/api_developers_test.go
 test/api_developers_webhooks_test.go
 test/api_fee_station_test.go

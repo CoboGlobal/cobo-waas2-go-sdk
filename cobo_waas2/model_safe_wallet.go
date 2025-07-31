@@ -27,6 +27,8 @@ type SafeWallet struct {
 	Name string `json:"name"`
 	// The ID of the owning organization.
 	OrgId string `json:"org_id"`
+	// Enable the auto sweep feature for the wallet
+	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	// The ID of the chain on which the wallet operates.
 	ChainId *string `json:"chain_id,omitempty"`
 	SmartContractWalletType SmartContractWalletType `json:"smart_contract_wallet_type"`
@@ -186,6 +188,38 @@ func (o *SafeWallet) GetOrgIdOk() (*string, bool) {
 // SetOrgId sets field value
 func (o *SafeWallet) SetOrgId(v string) {
 	o.OrgId = v
+}
+
+// GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
+func (o *SafeWallet) GetEnableAutoSweep() bool {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableAutoSweep
+}
+
+// GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SafeWallet) GetEnableAutoSweepOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		return nil, false
+	}
+	return o.EnableAutoSweep, true
+}
+
+// HasEnableAutoSweep returns a boolean if a field has been set.
+func (o *SafeWallet) HasEnableAutoSweep() bool {
+	if o != nil && !IsNil(o.EnableAutoSweep) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAutoSweep gets a reference to the given bool and assigns it to the EnableAutoSweep field.
+func (o *SafeWallet) SetEnableAutoSweep(v bool) {
+	o.EnableAutoSweep = &v
 }
 
 // GetChainId returns the ChainId field value if set, zero value otherwise.
@@ -419,6 +453,9 @@ func (o SafeWallet) ToMap() (map[string]interface{}, error) {
 	toSerialize["wallet_subtype"] = o.WalletSubtype
 	toSerialize["name"] = o.Name
 	toSerialize["org_id"] = o.OrgId
+	if !IsNil(o.EnableAutoSweep) {
+		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
+	}
 	if !IsNil(o.ChainId) {
 		toSerialize["chain_id"] = o.ChainId
 	}

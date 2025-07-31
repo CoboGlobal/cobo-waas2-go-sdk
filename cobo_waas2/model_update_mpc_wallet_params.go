@@ -22,6 +22,8 @@ type UpdateMpcWalletParams struct {
 	WalletType WalletType `json:"wallet_type"`
 	// The wallet name.
 	Name string `json:"name"`
+	// Enable the auto sweep feature for the wallet
+	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 }
 
 type _UpdateMpcWalletParams UpdateMpcWalletParams
@@ -93,6 +95,38 @@ func (o *UpdateMpcWalletParams) SetName(v string) {
 	o.Name = v
 }
 
+// GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
+func (o *UpdateMpcWalletParams) GetEnableAutoSweep() bool {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableAutoSweep
+}
+
+// GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateMpcWalletParams) GetEnableAutoSweepOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		return nil, false
+	}
+	return o.EnableAutoSweep, true
+}
+
+// HasEnableAutoSweep returns a boolean if a field has been set.
+func (o *UpdateMpcWalletParams) HasEnableAutoSweep() bool {
+	if o != nil && !IsNil(o.EnableAutoSweep) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAutoSweep gets a reference to the given bool and assigns it to the EnableAutoSweep field.
+func (o *UpdateMpcWalletParams) SetEnableAutoSweep(v bool) {
+	o.EnableAutoSweep = &v
+}
+
 func (o UpdateMpcWalletParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -105,6 +139,9 @@ func (o UpdateMpcWalletParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["wallet_type"] = o.WalletType
 	toSerialize["name"] = o.Name
+	if !IsNil(o.EnableAutoSweep) {
+		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
+	}
 	return toSerialize, nil
 }
 

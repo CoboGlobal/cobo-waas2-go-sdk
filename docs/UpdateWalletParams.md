@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **Name** | **string** | The wallet name. | 
+**EnableAutoSweep** | Pointer to **bool** | Enable the auto sweep feature for the wallet | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+
+### GetEnableAutoSweep
+
+`func (o *UpdateWalletParams) GetEnableAutoSweep() bool`
+
+GetEnableAutoSweep returns the EnableAutoSweep field if non-nil, zero value otherwise.
+
+### GetEnableAutoSweepOk
+
+`func (o *UpdateWalletParams) GetEnableAutoSweepOk() (*bool, bool)`
+
+GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnableAutoSweep
+
+`func (o *UpdateWalletParams) SetEnableAutoSweep(v bool)`
+
+SetEnableAutoSweep sets EnableAutoSweep field to given value.
+
+### HasEnableAutoSweep
+
+`func (o *UpdateWalletParams) HasEnableAutoSweep() bool`
+
+HasEnableAutoSweep returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
