@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TokenId** | **string** | The token identifier (e.g., ETH_USDT, TRON_USDT) that this address is associated with. | 
-**AddressId** | **string** | Unique identifier for the pre-approved crypto address, used to reference the address securely in requests. This ID is returned by the system and should be used instead of the raw blockchain address in API calls. | 
+**CryptoAddressId** | **string** | Unique identifier for the pre-approved crypto address, used to reference the address securely in requests. This ID is returned by the system and should be used instead of the raw blockchain address in API calls. | 
 **Address** | **string** | The actual blockchain address to which funds will be transferred. This is for display purposes only; external clients should always use address_id to refer to the address in secure operations. | 
 **Label** | Pointer to **string** | A human-readable label or alias for the crypto address, set by the merchant or platform operator. This field is optional and intended to help distinguish addresses by usage or purpose (e.g., \&quot;Main Payout Wallet\&quot;, \&quot;Cold Wallet\&quot;). | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the crypto address, represented as a UNIX timestamp in seconds. | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewCryptoAddress
 
-`func NewCryptoAddress(tokenId string, addressId string, address string, ) *CryptoAddress`
+`func NewCryptoAddress(tokenId string, cryptoAddressId string, address string, ) *CryptoAddress`
 
 NewCryptoAddress instantiates a new CryptoAddress object
 This constructor will assign default values to properties that have it defined,
@@ -50,24 +50,24 @@ and a boolean to check if the value has been set.
 SetTokenId sets TokenId field to given value.
 
 
-### GetAddressId
+### GetCryptoAddressId
 
-`func (o *CryptoAddress) GetAddressId() string`
+`func (o *CryptoAddress) GetCryptoAddressId() string`
 
-GetAddressId returns the AddressId field if non-nil, zero value otherwise.
+GetCryptoAddressId returns the CryptoAddressId field if non-nil, zero value otherwise.
 
-### GetAddressIdOk
+### GetCryptoAddressIdOk
 
-`func (o *CryptoAddress) GetAddressIdOk() (*string, bool)`
+`func (o *CryptoAddress) GetCryptoAddressIdOk() (*string, bool)`
 
-GetAddressIdOk returns a tuple with the AddressId field if it's non-nil, zero value otherwise
+GetCryptoAddressIdOk returns a tuple with the CryptoAddressId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAddressId
+### SetCryptoAddressId
 
-`func (o *CryptoAddress) SetAddressId(v string)`
+`func (o *CryptoAddress) SetCryptoAddressId(v string)`
 
-SetAddressId sets AddressId field to given value.
+SetCryptoAddressId sets CryptoAddressId field to given value.
 
 
 ### GetAddress

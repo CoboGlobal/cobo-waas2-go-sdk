@@ -33,6 +33,9 @@ type PaymentSettlementEvent struct {
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 	// The initiator of this settlement request, usually the user's API key.
 	Initiator *string `json:"initiator,omitempty"`
+	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
+	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
+	SettlementType *SettlementType `json:"settlement_type,omitempty"`
 }
 
 type _PaymentSettlementEvent PaymentSettlementEvent
@@ -275,6 +278,102 @@ func (o *PaymentSettlementEvent) SetInitiator(v string) {
 	o.Initiator = &v
 }
 
+// GetAcquiringType returns the AcquiringType field value if set, zero value otherwise.
+func (o *PaymentSettlementEvent) GetAcquiringType() AcquiringType {
+	if o == nil || IsNil(o.AcquiringType) {
+		var ret AcquiringType
+		return ret
+	}
+	return *o.AcquiringType
+}
+
+// GetAcquiringTypeOk returns a tuple with the AcquiringType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSettlementEvent) GetAcquiringTypeOk() (*AcquiringType, bool) {
+	if o == nil || IsNil(o.AcquiringType) {
+		return nil, false
+	}
+	return o.AcquiringType, true
+}
+
+// HasAcquiringType returns a boolean if a field has been set.
+func (o *PaymentSettlementEvent) HasAcquiringType() bool {
+	if o != nil && !IsNil(o.AcquiringType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcquiringType gets a reference to the given AcquiringType and assigns it to the AcquiringType field.
+func (o *PaymentSettlementEvent) SetAcquiringType(v AcquiringType) {
+	o.AcquiringType = &v
+}
+
+// GetPayoutChannel returns the PayoutChannel field value if set, zero value otherwise.
+func (o *PaymentSettlementEvent) GetPayoutChannel() PayoutChannel {
+	if o == nil || IsNil(o.PayoutChannel) {
+		var ret PayoutChannel
+		return ret
+	}
+	return *o.PayoutChannel
+}
+
+// GetPayoutChannelOk returns a tuple with the PayoutChannel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSettlementEvent) GetPayoutChannelOk() (*PayoutChannel, bool) {
+	if o == nil || IsNil(o.PayoutChannel) {
+		return nil, false
+	}
+	return o.PayoutChannel, true
+}
+
+// HasPayoutChannel returns a boolean if a field has been set.
+func (o *PaymentSettlementEvent) HasPayoutChannel() bool {
+	if o != nil && !IsNil(o.PayoutChannel) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayoutChannel gets a reference to the given PayoutChannel and assigns it to the PayoutChannel field.
+func (o *PaymentSettlementEvent) SetPayoutChannel(v PayoutChannel) {
+	o.PayoutChannel = &v
+}
+
+// GetSettlementType returns the SettlementType field value if set, zero value otherwise.
+func (o *PaymentSettlementEvent) GetSettlementType() SettlementType {
+	if o == nil || IsNil(o.SettlementType) {
+		var ret SettlementType
+		return ret
+	}
+	return *o.SettlementType
+}
+
+// GetSettlementTypeOk returns a tuple with the SettlementType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSettlementEvent) GetSettlementTypeOk() (*SettlementType, bool) {
+	if o == nil || IsNil(o.SettlementType) {
+		return nil, false
+	}
+	return o.SettlementType, true
+}
+
+// HasSettlementType returns a boolean if a field has been set.
+func (o *PaymentSettlementEvent) HasSettlementType() bool {
+	if o != nil && !IsNil(o.SettlementType) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettlementType gets a reference to the given SettlementType and assigns it to the SettlementType field.
+func (o *PaymentSettlementEvent) SetSettlementType(v SettlementType) {
+	o.SettlementType = &v
+}
+
 func (o PaymentSettlementEvent) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -298,6 +397,15 @@ func (o PaymentSettlementEvent) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
+	}
+	if !IsNil(o.AcquiringType) {
+		toSerialize["acquiring_type"] = o.AcquiringType
+	}
+	if !IsNil(o.PayoutChannel) {
+		toSerialize["payout_channel"] = o.PayoutChannel
+	}
+	if !IsNil(o.SettlementType) {
+		toSerialize["settlement_type"] = o.SettlementType
 	}
 	return toSerialize, nil
 }

@@ -22,7 +22,7 @@ type CryptoAddress struct {
 	// The token identifier (e.g., ETH_USDT, TRON_USDT) that this address is associated with.
 	TokenId string `json:"token_id"`
 	// Unique identifier for the pre-approved crypto address, used to reference the address securely in requests. This ID is returned by the system and should be used instead of the raw blockchain address in API calls.
-	AddressId string `json:"address_id"`
+	CryptoAddressId string `json:"crypto_address_id"`
 	// The actual blockchain address to which funds will be transferred. This is for display purposes only; external clients should always use address_id to refer to the address in secure operations.
 	Address string `json:"address"`
 	// A human-readable label or alias for the crypto address, set by the merchant or platform operator. This field is optional and intended to help distinguish addresses by usage or purpose (e.g., \"Main Payout Wallet\", \"Cold Wallet\").
@@ -39,10 +39,10 @@ type _CryptoAddress CryptoAddress
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCryptoAddress(tokenId string, addressId string, address string) *CryptoAddress {
+func NewCryptoAddress(tokenId string, cryptoAddressId string, address string) *CryptoAddress {
 	this := CryptoAddress{}
 	this.TokenId = tokenId
-	this.AddressId = addressId
+	this.CryptoAddressId = cryptoAddressId
 	this.Address = address
 	return &this
 }
@@ -79,28 +79,28 @@ func (o *CryptoAddress) SetTokenId(v string) {
 	o.TokenId = v
 }
 
-// GetAddressId returns the AddressId field value
-func (o *CryptoAddress) GetAddressId() string {
+// GetCryptoAddressId returns the CryptoAddressId field value
+func (o *CryptoAddress) GetCryptoAddressId() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.AddressId
+	return o.CryptoAddressId
 }
 
-// GetAddressIdOk returns a tuple with the AddressId field value
+// GetCryptoAddressIdOk returns a tuple with the CryptoAddressId field value
 // and a boolean to check if the value has been set.
-func (o *CryptoAddress) GetAddressIdOk() (*string, bool) {
+func (o *CryptoAddress) GetCryptoAddressIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.AddressId, true
+	return &o.CryptoAddressId, true
 }
 
-// SetAddressId sets field value
-func (o *CryptoAddress) SetAddressId(v string) {
-	o.AddressId = v
+// SetCryptoAddressId sets field value
+func (o *CryptoAddress) SetCryptoAddressId(v string) {
+	o.CryptoAddressId = v
 }
 
 // GetAddress returns the Address field value
@@ -234,7 +234,7 @@ func (o CryptoAddress) MarshalJSON() ([]byte, error) {
 func (o CryptoAddress) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["token_id"] = o.TokenId
-	toSerialize["address_id"] = o.AddressId
+	toSerialize["crypto_address_id"] = o.CryptoAddressId
 	toSerialize["address"] = o.Address
 	if !IsNil(o.Label) {
 		toSerialize["label"] = o.Label
@@ -254,7 +254,7 @@ func (o *CryptoAddress) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"token_id",
-		"address_id",
+		"crypto_address_id",
 		"address",
 	}
 
