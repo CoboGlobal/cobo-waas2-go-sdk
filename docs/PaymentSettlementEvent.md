@@ -12,6 +12,9 @@ Name | Type | Description | Notes
 **CreatedTimestamp** | Pointer to **int32** | The created time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
 **Initiator** | Pointer to **string** | The initiator of this settlement request, usually the user&#39;s API key. | [optional] 
+**AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
+**PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
+**SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
 
 ## Methods
 
@@ -206,6 +209,81 @@ SetInitiator sets Initiator field to given value.
 `func (o *PaymentSettlementEvent) HasInitiator() bool`
 
 HasInitiator returns a boolean if a field has been set.
+
+### GetAcquiringType
+
+`func (o *PaymentSettlementEvent) GetAcquiringType() AcquiringType`
+
+GetAcquiringType returns the AcquiringType field if non-nil, zero value otherwise.
+
+### GetAcquiringTypeOk
+
+`func (o *PaymentSettlementEvent) GetAcquiringTypeOk() (*AcquiringType, bool)`
+
+GetAcquiringTypeOk returns a tuple with the AcquiringType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcquiringType
+
+`func (o *PaymentSettlementEvent) SetAcquiringType(v AcquiringType)`
+
+SetAcquiringType sets AcquiringType field to given value.
+
+### HasAcquiringType
+
+`func (o *PaymentSettlementEvent) HasAcquiringType() bool`
+
+HasAcquiringType returns a boolean if a field has been set.
+
+### GetPayoutChannel
+
+`func (o *PaymentSettlementEvent) GetPayoutChannel() PayoutChannel`
+
+GetPayoutChannel returns the PayoutChannel field if non-nil, zero value otherwise.
+
+### GetPayoutChannelOk
+
+`func (o *PaymentSettlementEvent) GetPayoutChannelOk() (*PayoutChannel, bool)`
+
+GetPayoutChannelOk returns a tuple with the PayoutChannel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayoutChannel
+
+`func (o *PaymentSettlementEvent) SetPayoutChannel(v PayoutChannel)`
+
+SetPayoutChannel sets PayoutChannel field to given value.
+
+### HasPayoutChannel
+
+`func (o *PaymentSettlementEvent) HasPayoutChannel() bool`
+
+HasPayoutChannel returns a boolean if a field has been set.
+
+### GetSettlementType
+
+`func (o *PaymentSettlementEvent) GetSettlementType() SettlementType`
+
+GetSettlementType returns the SettlementType field if non-nil, zero value otherwise.
+
+### GetSettlementTypeOk
+
+`func (o *PaymentSettlementEvent) GetSettlementTypeOk() (*SettlementType, bool)`
+
+GetSettlementTypeOk returns a tuple with the SettlementType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSettlementType
+
+`func (o *PaymentSettlementEvent) SetSettlementType(v SettlementType)`
+
+SetSettlementType sets SettlementType field to given value.
+
+### HasSettlementType
+
+`func (o *PaymentSettlementEvent) HasSettlementType() bool`
+
+HasSettlementType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

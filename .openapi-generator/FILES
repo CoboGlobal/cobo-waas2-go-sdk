@@ -174,6 +174,7 @@ docs/CustodialWalletInfo.md
 docs/CustodialWeb3ContractCallSource.md
 docs/CustodialWeb3MessageSignSource.md
 docs/CustodialWeb3TransferSource.md
+docs/DeleteCryptoAddress201Response.md
 docs/DeleteGuardPubkey201Response.md
 docs/DeleteKeyShareHolderGroupById201Response.md
 docs/DeleteWalletById201Response.md
@@ -839,6 +840,7 @@ model_custodial_wallet_info.go
 model_custodial_web3_contract_call_source.go
 model_custodial_web3_message_sign_source.go
 model_custodial_web3_transfer_source.go
+model_delete_crypto_address_201_response.go
 model_delete_guard_pubkey_201_response.go
 model_delete_key_share_holder_group_by_id_201_response.go
 model_delete_wallet_by_id_201_response.go
