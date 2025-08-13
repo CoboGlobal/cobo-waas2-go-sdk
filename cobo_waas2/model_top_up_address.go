@@ -17,7 +17,7 @@ import (
 // checks if the TopUpAddress type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TopUpAddress{}
 
-// TopUpAddress The details of a top-up address
+// TopUpAddress struct for TopUpAddress
 type TopUpAddress struct {
 	// The dedicated top-up address assigned to a specific payer under a merchant on a specified chain.
 	Address string `json:"address"`

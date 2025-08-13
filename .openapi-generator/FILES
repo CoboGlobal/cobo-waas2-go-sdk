@@ -125,6 +125,7 @@ docs/CreateBabylonStakingRegistration201Response.md
 docs/CreateBabylonStakingRegistrationRequest.md
 docs/CreateClaimActivity.md
 docs/CreateClaimActivityRequest.md
+docs/CreateCryptoAddressRequest.md
 docs/CreateCustodialWalletParams.md
 docs/CreateExchangeWalletParams.md
 docs/CreateKeyShareHolder.md
@@ -165,6 +166,7 @@ docs/CustodialWalletInfo.md
 docs/CustodialWeb3ContractCallSource.md
 docs/CustodialWeb3MessageSignSource.md
 docs/CustodialWeb3TransferSource.md
+docs/DeleteCryptoAddress201Response.md
 docs/DeleteGuardPubkey201Response.md
 docs/DeleteKeyShareHolderGroupById201Response.md
 docs/DeleteWalletById201Response.md
@@ -270,6 +272,7 @@ docs/ListMerchants200Response.md
 docs/ListMpcProjects200Response.md
 docs/ListMpcVaults200Response.md
 docs/ListPaymentOrders200Response.md
+docs/ListSettlementDetails200Response.md
 docs/ListSettlementRequests200Response.md
 docs/ListStakingActivities200Response.md
 docs/ListStakingPools200Response.md
@@ -764,6 +767,7 @@ model_create_babylon_staking_registration_201_response.go
 model_create_babylon_staking_registration_request.go
 model_create_claim_activity.go
 model_create_claim_activity_request.go
+model_create_crypto_address_request.go
 model_create_custodial_wallet_params.go
 model_create_exchange_wallet_params.go
 model_create_key_share_holder.go
@@ -804,6 +808,7 @@ model_custodial_wallet_info.go
 model_custodial_web3_contract_call_source.go
 model_custodial_web3_message_sign_source.go
 model_custodial_web3_transfer_source.go
+model_delete_crypto_address_201_response.go
 model_delete_guard_pubkey_201_response.go
 model_delete_key_share_holder_group_by_id_201_response.go
 model_delete_wallet_by_id_201_response.go
@@ -906,6 +911,7 @@ model_list_merchants_200_response.go
 model_list_mpc_projects_200_response.go
 model_list_mpc_vaults_200_response.go
 model_list_payment_orders_200_response.go
+model_list_settlement_details_200_response.go
 model_list_settlement_requests_200_response.go
 model_list_staking_activities_200_response.go
 model_list_staking_pools_200_response.go

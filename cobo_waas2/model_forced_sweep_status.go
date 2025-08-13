@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ForcedSweepStatus The current status of the force sweep request: - `Pending`: The force sweep request has been created and is awaiting processing. - `Processing`: The force sweep request is currently being processed. - `Completed`: All requested force sweep have been completed. 
+// ForcedSweepStatus The current status of the forced sweep: - `Pending`: The forced sweep has been created and is awaiting processing. - `Processing`: The forced sweep is currently being processed. - `Completed`: The requested forced sweep has been completed. 
 type ForcedSweepStatus string
 
 // List of ForcedSweepStatus

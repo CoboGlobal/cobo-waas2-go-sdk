@@ -146,13 +146,145 @@ func (a *PaymentAPIService) CancelRefundByIdExecute(r ApiCancelRefundByIdRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateCryptoAddressRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	createCryptoAddressRequest *CreateCryptoAddressRequest
+}
+
+// The request body to create a crypto address.
+func (r ApiCreateCryptoAddressRequest) CreateCryptoAddressRequest(createCryptoAddressRequest CreateCryptoAddressRequest) ApiCreateCryptoAddressRequest {
+	r.createCryptoAddressRequest = &createCryptoAddressRequest
+	return r
+}
+
+func (r ApiCreateCryptoAddressRequest) Execute() (*CryptoAddress, *http.Response, error) {
+	return r.ApiService.CreateCryptoAddressExecute(r)
+}
+
+/*
+CreateCryptoAddress Create crypto address
+
+Create a new cryptocurrency address for receiving payouts or transfers. 
+The address must match the specified `token_id`'s blockchain. 
+Optionally, a label can be provided to help categorize the address internally.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateCryptoAddressRequest
+*/
+func (a *PaymentAPIService) CreateCryptoAddress(ctx context.Context) ApiCreateCryptoAddressRequest {
+	return ApiCreateCryptoAddressRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return CryptoAddress
+func (a *PaymentAPIService) CreateCryptoAddressExecute(r ApiCreateCryptoAddressRequest) (*CryptoAddress, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CryptoAddress
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.CreateCryptoAddress")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/crypto_addresses"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createCryptoAddressRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateForcedSweepRequestRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
 	forcedSweepRequest *ForcedSweepRequest
 }
 
-// The request body to force sweep.
+// The request body for forced sweep.
 func (r ApiCreateForcedSweepRequestRequest) ForcedSweepRequest(forcedSweepRequest ForcedSweepRequest) ApiCreateForcedSweepRequestRequest {
 	r.forcedSweepRequest = &forcedSweepRequest
 	return r
@@ -163,9 +295,9 @@ func (r ApiCreateForcedSweepRequestRequest) Execute() (*ForcedSweep, *http.Respo
 }
 
 /*
-CreateForcedSweepRequest Create force sweep request
+CreateForcedSweepRequest Create forced sweep
 
-This operation creates a force sweep request to settle or refund available balances. 
+This operation creates a forced sweep to transfer funds from addresses within a specified wallet to its designated sweep-to address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -800,6 +932,142 @@ func (a *PaymentAPIService) CreateSettlementRequestExecute(r ApiCreateSettlement
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiDeleteCryptoAddressRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	cryptoAddressId string
+}
+
+func (r ApiDeleteCryptoAddressRequest) Execute() (*DeleteCryptoAddress201Response, *http.Response, error) {
+	return r.ApiService.DeleteCryptoAddressExecute(r)
+}
+
+/*
+DeleteCryptoAddress Delete crypto address
+
+This operation deletes a crypto address.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param cryptoAddressId The crypto address ID.
+ @return ApiDeleteCryptoAddressRequest
+*/
+func (a *PaymentAPIService) DeleteCryptoAddress(ctx context.Context, cryptoAddressId string) ApiDeleteCryptoAddressRequest {
+	return ApiDeleteCryptoAddressRequest{
+		ApiService: a,
+		ctx: ctx,
+		cryptoAddressId: cryptoAddressId,
+	}
+}
+
+// Execute executes the request
+//  @return DeleteCryptoAddress201Response
+func (a *PaymentAPIService) DeleteCryptoAddressExecute(r ApiDeleteCryptoAddressRequest) (*DeleteCryptoAddress201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeleteCryptoAddress201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.DeleteCryptoAddress")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/crypto_addresses/{crypto_address_id}/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"crypto_address_id"+"}", url.PathEscape(parameterValueToString(r.cryptoAddressId, "cryptoAddressId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetExchangeRateRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
@@ -1187,6 +1455,7 @@ type ApiGetRefundsRequest struct {
 	after *string
 	merchantId *string
 	requestId *string
+	statuses *string
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -1216,6 +1485,12 @@ func (r ApiGetRefundsRequest) MerchantId(merchantId string) ApiGetRefundsRequest
 // The request ID.
 func (r ApiGetRefundsRequest) RequestId(requestId string) ApiGetRefundsRequest {
 	r.requestId = &requestId
+	return r
+}
+
+// A list of  statuses of order, refund or settle request.
+func (r ApiGetRefundsRequest) Statuses(statuses string) ApiGetRefundsRequest {
+	r.statuses = &statuses
 	return r
 }
 
@@ -1277,6 +1552,9 @@ func (a *PaymentAPIService) GetRefundsExecute(r ApiGetRefundsRequest) (*GetRefun
 	}
 	if r.requestId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
+	}
+	if r.statuses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1510,7 +1788,7 @@ func (r ApiGetSettlementInfoByIdsRequest) Execute() (*GetSettlementInfoByIds200R
 /*
 GetSettlementInfoByIds Get withdrawable balances
 
-This operation retrieves the current withdrawable balances of specified merchants or the developer.
+This operation retrieves the balances of specified merchants or the developer.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2077,9 +2355,9 @@ func (r ApiListForcedSweepRequestsRequest) Execute() (*ListForcedSweepRequests20
 }
 
 /*
-ListForcedSweepRequests List force sweep requests
+ListForcedSweepRequests List forced sweeps
 
-This operation retrieves the information of force_sweep requests.
+This operation retrieves the information of all forced sweeps.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2387,6 +2665,7 @@ type ApiListPaymentOrdersRequest struct {
 	after *string
 	merchantId *string
 	pspOrderId *string
+	statuses *string
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -2416,6 +2695,12 @@ func (r ApiListPaymentOrdersRequest) MerchantId(merchantId string) ApiListPaymen
 // A unique reference code assigned by the developer to identify this order in their system.
 func (r ApiListPaymentOrdersRequest) PspOrderId(pspOrderId string) ApiListPaymentOrdersRequest {
 	r.pspOrderId = &pspOrderId
+	return r
+}
+
+// A list of  statuses of order, refund or settle request.
+func (r ApiListPaymentOrdersRequest) Statuses(statuses string) ApiListPaymentOrdersRequest {
+	r.statuses = &statuses
 	return r
 }
 
@@ -2477,6 +2762,9 @@ func (a *PaymentAPIService) ListPaymentOrdersExecute(r ApiListPaymentOrdersReque
 	}
 	if r.pspOrderId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "psp_order_id", r.pspOrderId, "")
+	}
+	if r.statuses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2599,6 +2887,180 @@ func (a *PaymentAPIService) ListPaymentSupportedTokensExecute(r ApiListPaymentSu
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListSettlementDetailsRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	limit *int32
+	before *string
+	after *string
+	merchantId *string
+	statuses *string
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListSettlementDetailsRequest) Limit(limit int32) ApiListSettlementDetailsRequest {
+	r.limit = &limit
+	return r
+}
+
+// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+func (r ApiListSettlementDetailsRequest) Before(before string) ApiListSettlementDetailsRequest {
+	r.before = &before
+	return r
+}
+
+// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+func (r ApiListSettlementDetailsRequest) After(after string) ApiListSettlementDetailsRequest {
+	r.after = &after
+	return r
+}
+
+// The merchant ID.
+func (r ApiListSettlementDetailsRequest) MerchantId(merchantId string) ApiListSettlementDetailsRequest {
+	r.merchantId = &merchantId
+	return r
+}
+
+// A list of  statuses of order, refund or settle request.
+func (r ApiListSettlementDetailsRequest) Statuses(statuses string) ApiListSettlementDetailsRequest {
+	r.statuses = &statuses
+	return r
+}
+
+func (r ApiListSettlementDetailsRequest) Execute() (*ListSettlementDetails200Response, *http.Response, error) {
+	return r.ApiService.ListSettlementDetailsExecute(r)
+}
+
+/*
+ListSettlementDetails List all settlement details
+
+This operation retrieves the information of all settlement details. You can filter the result by merchant ID or status.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListSettlementDetailsRequest
+*/
+func (a *PaymentAPIService) ListSettlementDetails(ctx context.Context) ApiListSettlementDetailsRequest {
+	return ApiListSettlementDetailsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListSettlementDetails200Response
+func (a *PaymentAPIService) ListSettlementDetailsExecute(r ApiListSettlementDetailsRequest) (*ListSettlementDetails200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListSettlementDetails200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.ListSettlementDetails")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/settlement_details"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
+	if r.statuses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "statuses", r.statuses, "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -3423,7 +3885,7 @@ type ApiUpdateTopUpAddressRequest struct {
 	updateTopUpAddress *UpdateTopUpAddress
 }
 
-// The request body to update top up address.
+// The request body to update top-up address.
 func (r ApiUpdateTopUpAddressRequest) UpdateTopUpAddress(updateTopUpAddress UpdateTopUpAddress) ApiUpdateTopUpAddressRequest {
 	r.updateTopUpAddress = &updateTopUpAddress
 	return r
@@ -3436,7 +3898,7 @@ func (r ApiUpdateTopUpAddressRequest) Execute() (*TopUpAddress, *http.Response, 
 /*
 UpdateTopUpAddress Update top-up address
 
-Update the top-up address for a payer under a specific merchant and token.
+This operation updates the dedicated top-up address assigned to a specific payer under a merchant on a specified chain.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
