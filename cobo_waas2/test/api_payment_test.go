@@ -42,6 +42,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService CreateCryptoAddress", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.CreateCryptoAddress(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService CreateForcedSweepRequest", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -95,6 +107,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.CreateSettlementRequest(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService DeleteCryptoAddress", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var cryptoAddressId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.DeleteCryptoAddress(ctx, cryptoAddressId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -260,6 +286,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.ListPaymentSupportedTokens(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService ListSettlementDetails", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListSettlementDetails(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

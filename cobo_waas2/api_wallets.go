@@ -1283,6 +1283,7 @@ func (r ApiGetMaxTransferableValueRequest) Execute() (*MaxTransferableValue, *ht
 /*
 GetMaxTransferableValue Get maximum transferable value
 
+<Warning>This operation is planned for deprecation. We recommend using  [Estimate maximum transferable value](https://www.cobo.com/developers/v2/api-references/wallets/estimate-maximum-transferable-value) instead.</Warning>
 This operation retrieves the maximum amount that you can transfer from a wallet or a specified wallet address, along with the corresponding transaction fee.
 
 You must specify `to_address` in your query because it affects the transaction fee.
