@@ -23,7 +23,7 @@ type ApprovalDetail struct {
 	CoboId *string `json:"cobo_id,omitempty"`
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
 	RequestId *string `json:"request_id,omitempty"`
-	BrokerUser *RoleDetail `json:"broker_user,omitempty"`
+	AddressOwner *RoleDetail `json:"address_owner,omitempty"`
 	Spender *RoleDetail `json:"spender,omitempty"`
 	Approver *RoleDetail `json:"approver,omitempty"`
 }
@@ -141,36 +141,36 @@ func (o *ApprovalDetail) SetRequestId(v string) {
 	o.RequestId = &v
 }
 
-// GetBrokerUser returns the BrokerUser field value if set, zero value otherwise.
-func (o *ApprovalDetail) GetBrokerUser() RoleDetail {
-	if o == nil || IsNil(o.BrokerUser) {
+// GetAddressOwner returns the AddressOwner field value if set, zero value otherwise.
+func (o *ApprovalDetail) GetAddressOwner() RoleDetail {
+	if o == nil || IsNil(o.AddressOwner) {
 		var ret RoleDetail
 		return ret
 	}
-	return *o.BrokerUser
+	return *o.AddressOwner
 }
 
-// GetBrokerUserOk returns a tuple with the BrokerUser field value if set, nil otherwise
+// GetAddressOwnerOk returns a tuple with the AddressOwner field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApprovalDetail) GetBrokerUserOk() (*RoleDetail, bool) {
-	if o == nil || IsNil(o.BrokerUser) {
+func (o *ApprovalDetail) GetAddressOwnerOk() (*RoleDetail, bool) {
+	if o == nil || IsNil(o.AddressOwner) {
 		return nil, false
 	}
-	return o.BrokerUser, true
+	return o.AddressOwner, true
 }
 
-// HasBrokerUser returns a boolean if a field has been set.
-func (o *ApprovalDetail) HasBrokerUser() bool {
-	if o != nil && !IsNil(o.BrokerUser) {
+// HasAddressOwner returns a boolean if a field has been set.
+func (o *ApprovalDetail) HasAddressOwner() bool {
+	if o != nil && !IsNil(o.AddressOwner) {
 		return true
 	}
 
 	return false
 }
 
-// SetBrokerUser gets a reference to the given RoleDetail and assigns it to the BrokerUser field.
-func (o *ApprovalDetail) SetBrokerUser(v RoleDetail) {
-	o.BrokerUser = &v
+// SetAddressOwner gets a reference to the given RoleDetail and assigns it to the AddressOwner field.
+func (o *ApprovalDetail) SetAddressOwner(v RoleDetail) {
+	o.AddressOwner = &v
 }
 
 // GetSpender returns the Spender field value if set, zero value otherwise.
@@ -256,8 +256,8 @@ func (o ApprovalDetail) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RequestId) {
 		toSerialize["request_id"] = o.RequestId
 	}
-	if !IsNil(o.BrokerUser) {
-		toSerialize["broker_user"] = o.BrokerUser
+	if !IsNil(o.AddressOwner) {
+		toSerialize["address_owner"] = o.AddressOwner
 	}
 	if !IsNil(o.Spender) {
 		toSerialize["spender"] = o.Spender

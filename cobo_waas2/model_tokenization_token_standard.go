@@ -19,11 +19,13 @@ type TokenizationTokenStandard string
 // List of TokenizationTokenStandard
 const (
 	TOKENIZATIONTOKENSTANDARD_ERC20 TokenizationTokenStandard = "ERC20"
+	TOKENIZATIONTOKENSTANDARD_SPL_TOKEN2022 TokenizationTokenStandard = "SPLToken2022"
 )
 
 // All allowed values of TokenizationTokenStandard enum
 var AllowedTokenizationTokenStandardEnumValues = []TokenizationTokenStandard{
 	"ERC20",
+	"SPLToken2022",
 }
 
 func (v *TokenizationTokenStandard) UnmarshalJSON(src []byte) error {

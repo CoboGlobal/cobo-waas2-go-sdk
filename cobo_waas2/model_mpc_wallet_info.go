@@ -27,6 +27,8 @@ type MPCWalletInfo struct {
 	Name string `json:"name"`
 	// The ID of the owning organization.
 	OrgId string `json:"org_id"`
+	// Enable the auto sweep feature for the wallet
+	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	// The project ID.
 	ProjectId *string `json:"project_id,omitempty"`
 	// The project name.
@@ -182,6 +184,38 @@ func (o *MPCWalletInfo) SetOrgId(v string) {
 	o.OrgId = v
 }
 
+// GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
+func (o *MPCWalletInfo) GetEnableAutoSweep() bool {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableAutoSweep
+}
+
+// GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MPCWalletInfo) GetEnableAutoSweepOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		return nil, false
+	}
+	return o.EnableAutoSweep, true
+}
+
+// HasEnableAutoSweep returns a boolean if a field has been set.
+func (o *MPCWalletInfo) HasEnableAutoSweep() bool {
+	if o != nil && !IsNil(o.EnableAutoSweep) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAutoSweep gets a reference to the given bool and assigns it to the EnableAutoSweep field.
+func (o *MPCWalletInfo) SetEnableAutoSweep(v bool) {
+	o.EnableAutoSweep = &v
+}
+
 // GetProjectId returns the ProjectId field value if set, zero value otherwise.
 func (o *MPCWalletInfo) GetProjectId() string {
 	if o == nil || IsNil(o.ProjectId) {
@@ -317,6 +351,9 @@ func (o MPCWalletInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize["wallet_subtype"] = o.WalletSubtype
 	toSerialize["name"] = o.Name
 	toSerialize["org_id"] = o.OrgId
+	if !IsNil(o.EnableAutoSweep) {
+		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
+	}
 	if !IsNil(o.ProjectId) {
 		toSerialize["project_id"] = o.ProjectId
 	}

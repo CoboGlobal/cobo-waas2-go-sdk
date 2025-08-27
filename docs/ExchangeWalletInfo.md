@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Name** | **string** | The wallet name. | 
 **OrgId** | **string** | The ID of the owning organization. | 
+**EnableAutoSweep** | Pointer to **bool** | Enable the auto sweep feature for the wallet | [optional] 
 **Apikey** | **string** | The API key of your exchange account. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **MainWalletId** | Pointer to **string** | The wallet ID of the Main Account associated with the Sub Account. This property is returned only if you are creating or querying an Exchange Wallet (Sub Account). | [optional] 
@@ -131,6 +132,31 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+
+### GetEnableAutoSweep
+
+`func (o *ExchangeWalletInfo) GetEnableAutoSweep() bool`
+
+GetEnableAutoSweep returns the EnableAutoSweep field if non-nil, zero value otherwise.
+
+### GetEnableAutoSweepOk
+
+`func (o *ExchangeWalletInfo) GetEnableAutoSweepOk() (*bool, bool)`
+
+GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnableAutoSweep
+
+`func (o *ExchangeWalletInfo) SetEnableAutoSweep(v bool)`
+
+SetEnableAutoSweep sets EnableAutoSweep field to given value.
+
+### HasEnableAutoSweep
+
+`func (o *ExchangeWalletInfo) HasEnableAutoSweep() bool`
+
+HasEnableAutoSweep returns a boolean if a field has been set.
 
 ### GetApikey
 

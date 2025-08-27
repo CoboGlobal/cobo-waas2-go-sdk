@@ -19,7 +19,7 @@ var _ MappedNullable = &DeleteCryptoAddress201Response{}
 
 // DeleteCryptoAddress201Response struct for DeleteCryptoAddress201Response
 type DeleteCryptoAddress201Response struct {
-	// The crypto address ID.
+	// The ID of the deleted crypto address.
 	CryptoAddressId string `json:"crypto_address_id"`
 }
 

@@ -21,7 +21,7 @@ var _ MappedNullable = &TokenizationUpdateBlocklistAddressesParamsAddressesInner
 type TokenizationUpdateBlocklistAddressesParamsAddressesInner struct {
 	// The address to add or remove.
 	Address string `json:"address"`
-	// An optional note for the address, primarily used when adding.
+	// An optional note for the address, primarily used when adding addresses.
 	Note *string `json:"note,omitempty"`
 }
 

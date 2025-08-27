@@ -5,14 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | Pointer to [**TokenizationContractCallType**](TokenizationContractCallType.md) |  | [optional] 
-**Calldata** | **string** | The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.  | 
+**Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
+**Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
 
 ## Methods
 
 ### NewTokenizationContractCallParamsData
 
-`func NewTokenizationContractCallParamsData(calldata string, ) *TokenizationContractCallParamsData`
+`func NewTokenizationContractCallParamsData(calldata string, instructions []SolContractCallInstruction, ) *TokenizationContractCallParamsData`
 
 NewTokenizationContractCallParamsData instantiates a new TokenizationContractCallParamsData object
 This constructor will assign default values to properties that have it defined,
@@ -96,6 +97,26 @@ SetValue sets Value field to given value.
 `func (o *TokenizationContractCallParamsData) HasValue() bool`
 
 HasValue returns a boolean if a field has been set.
+
+### GetInstructions
+
+`func (o *TokenizationContractCallParamsData) GetInstructions() []SolContractCallInstruction`
+
+GetInstructions returns the Instructions field if non-nil, zero value otherwise.
+
+### GetInstructionsOk
+
+`func (o *TokenizationContractCallParamsData) GetInstructionsOk() (*[]SolContractCallInstruction, bool)`
+
+GetInstructionsOk returns a tuple with the Instructions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInstructions
+
+`func (o *TokenizationContractCallParamsData) SetInstructions(v []SolContractCallInstruction)`
+
+SetInstructions sets Instructions field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

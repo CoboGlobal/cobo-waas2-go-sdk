@@ -16,12 +16,20 @@ import (
 // TokenizationContractCallParamsData - struct for TokenizationContractCallParamsData
 type TokenizationContractCallParamsData struct {
 	TokenizationEvmContractCallParams *TokenizationEvmContractCallParams
+	TokenizationSolContractCallParams *TokenizationSolContractCallParams
 }
 
 // TokenizationEvmContractCallParamsAsTokenizationContractCallParamsData is a convenience function that returns TokenizationEvmContractCallParams wrapped in TokenizationContractCallParamsData
 func TokenizationEvmContractCallParamsAsTokenizationContractCallParamsData(v *TokenizationEvmContractCallParams) TokenizationContractCallParamsData {
 	return TokenizationContractCallParamsData{
 		TokenizationEvmContractCallParams: v,
+	}
+}
+
+// TokenizationSolContractCallParamsAsTokenizationContractCallParamsData is a convenience function that returns TokenizationSolContractCallParams wrapped in TokenizationContractCallParamsData
+func TokenizationSolContractCallParamsAsTokenizationContractCallParamsData(v *TokenizationSolContractCallParams) TokenizationContractCallParamsData {
+	return TokenizationContractCallParamsData{
+		TokenizationSolContractCallParams: v,
 	}
 }
 
@@ -48,6 +56,18 @@ func (dst *TokenizationContractCallParamsData) UnmarshalJSON(data []byte) error 
 		}
 	}
 
+	// check if the discriminator value is 'SOL_Contract'
+	if jsonDict["type"] == "SOL_Contract" {
+		// try to unmarshal JSON data into TokenizationSolContractCallParams
+		err = json.Unmarshal(data, &dst.TokenizationSolContractCallParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationSolContractCallParams, return on the first match
+		} else {
+			dst.TokenizationSolContractCallParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationContractCallParamsData as TokenizationSolContractCallParams: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TokenizationEvmContractCallParams'
 	if jsonDict["type"] == "TokenizationEvmContractCallParams" {
 		// try to unmarshal JSON data into TokenizationEvmContractCallParams
@@ -60,6 +80,18 @@ func (dst *TokenizationContractCallParamsData) UnmarshalJSON(data []byte) error 
 		}
 	}
 
+	// check if the discriminator value is 'TokenizationSolContractCallParams'
+	if jsonDict["type"] == "TokenizationSolContractCallParams" {
+		// try to unmarshal JSON data into TokenizationSolContractCallParams
+		err = json.Unmarshal(data, &dst.TokenizationSolContractCallParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationSolContractCallParams, return on the first match
+		} else {
+			dst.TokenizationSolContractCallParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationContractCallParamsData as TokenizationSolContractCallParams: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
@@ -67,6 +99,10 @@ func (dst *TokenizationContractCallParamsData) UnmarshalJSON(data []byte) error 
 func (src TokenizationContractCallParamsData) MarshalJSON() ([]byte, error) {
 	if src.TokenizationEvmContractCallParams != nil {
 		return json.Marshal(&src.TokenizationEvmContractCallParams)
+	}
+
+	if src.TokenizationSolContractCallParams != nil {
+		return json.Marshal(&src.TokenizationSolContractCallParams)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -79,6 +115,10 @@ func (obj *TokenizationContractCallParamsData) GetActualInstance() (interface{})
 	}
 	if obj.TokenizationEvmContractCallParams != nil {
 		return obj.TokenizationEvmContractCallParams
+	}
+
+	if obj.TokenizationSolContractCallParams != nil {
+		return obj.TokenizationSolContractCallParams
 	}
 
 	// all schemas are nil

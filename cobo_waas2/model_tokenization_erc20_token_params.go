@@ -27,7 +27,7 @@ type TokenizationERC20TokenParams struct {
 	// The number of decimals for the token (0-18).
 	Decimals int32 `json:"decimals"`
 	// Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations.
-	AllowlistActivated *bool `json:"allowlist_activated,omitempty"`
+	TokenAccessActivated *bool `json:"token_access_activated,omitempty"`
 	Permissions *TokenizationTokenPermissionParams `json:"permissions,omitempty"`
 }
 
@@ -43,8 +43,8 @@ func NewTokenizationERC20TokenParams(standard TokenizationTokenStandard, name st
 	this.Name = name
 	this.Symbol = symbol
 	this.Decimals = decimals
-	var allowlistActivated bool = false
-	this.AllowlistActivated = &allowlistActivated
+	var tokenAccessActivated bool = false
+	this.TokenAccessActivated = &tokenAccessActivated
 	return &this
 }
 
@@ -53,8 +53,8 @@ func NewTokenizationERC20TokenParams(standard TokenizationTokenStandard, name st
 // but it doesn't guarantee that properties required by API are set
 func NewTokenizationERC20TokenParamsWithDefaults() *TokenizationERC20TokenParams {
 	this := TokenizationERC20TokenParams{}
-	var allowlistActivated bool = false
-	this.AllowlistActivated = &allowlistActivated
+	var tokenAccessActivated bool = false
+	this.TokenAccessActivated = &tokenAccessActivated
 	return &this
 }
 
@@ -154,36 +154,36 @@ func (o *TokenizationERC20TokenParams) SetDecimals(v int32) {
 	o.Decimals = v
 }
 
-// GetAllowlistActivated returns the AllowlistActivated field value if set, zero value otherwise.
-func (o *TokenizationERC20TokenParams) GetAllowlistActivated() bool {
-	if o == nil || IsNil(o.AllowlistActivated) {
+// GetTokenAccessActivated returns the TokenAccessActivated field value if set, zero value otherwise.
+func (o *TokenizationERC20TokenParams) GetTokenAccessActivated() bool {
+	if o == nil || IsNil(o.TokenAccessActivated) {
 		var ret bool
 		return ret
 	}
-	return *o.AllowlistActivated
+	return *o.TokenAccessActivated
 }
 
-// GetAllowlistActivatedOk returns a tuple with the AllowlistActivated field value if set, nil otherwise
+// GetTokenAccessActivatedOk returns a tuple with the TokenAccessActivated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationERC20TokenParams) GetAllowlistActivatedOk() (*bool, bool) {
-	if o == nil || IsNil(o.AllowlistActivated) {
+func (o *TokenizationERC20TokenParams) GetTokenAccessActivatedOk() (*bool, bool) {
+	if o == nil || IsNil(o.TokenAccessActivated) {
 		return nil, false
 	}
-	return o.AllowlistActivated, true
+	return o.TokenAccessActivated, true
 }
 
-// HasAllowlistActivated returns a boolean if a field has been set.
-func (o *TokenizationERC20TokenParams) HasAllowlistActivated() bool {
-	if o != nil && !IsNil(o.AllowlistActivated) {
+// HasTokenAccessActivated returns a boolean if a field has been set.
+func (o *TokenizationERC20TokenParams) HasTokenAccessActivated() bool {
+	if o != nil && !IsNil(o.TokenAccessActivated) {
 		return true
 	}
 
 	return false
 }
 
-// SetAllowlistActivated gets a reference to the given bool and assigns it to the AllowlistActivated field.
-func (o *TokenizationERC20TokenParams) SetAllowlistActivated(v bool) {
-	o.AllowlistActivated = &v
+// SetTokenAccessActivated gets a reference to the given bool and assigns it to the TokenAccessActivated field.
+func (o *TokenizationERC20TokenParams) SetTokenAccessActivated(v bool) {
+	o.TokenAccessActivated = &v
 }
 
 // GetPermissions returns the Permissions field value if set, zero value otherwise.
@@ -232,8 +232,8 @@ func (o TokenizationERC20TokenParams) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["symbol"] = o.Symbol
 	toSerialize["decimals"] = o.Decimals
-	if !IsNil(o.AllowlistActivated) {
-		toSerialize["allowlist_activated"] = o.AllowlistActivated
+	if !IsNil(o.TokenAccessActivated) {
+		toSerialize["token_access_activated"] = o.TokenAccessActivated
 	}
 	if !IsNil(o.Permissions) {
 		toSerialize["permissions"] = o.Permissions

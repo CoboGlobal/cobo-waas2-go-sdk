@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Name** | **string** | The wallet name. | 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
+**EnableAutoSweep** | Pointer to **bool** | Enable the auto sweep feature for the wallet. This parameter only applies to MPC and Web3 wallets. | [optional] 
 **VaultId** | **string** | The ID of the owning vault. You can call [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults) to retrieve all vault IDs under your organization. | 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **Apikey** | **string** | The API key of your exchange account. | 
@@ -95,6 +96,31 @@ and a boolean to check if the value has been set.
 
 SetWalletSubtype sets WalletSubtype field to given value.
 
+
+### GetEnableAutoSweep
+
+`func (o *CreateWalletParams) GetEnableAutoSweep() bool`
+
+GetEnableAutoSweep returns the EnableAutoSweep field if non-nil, zero value otherwise.
+
+### GetEnableAutoSweepOk
+
+`func (o *CreateWalletParams) GetEnableAutoSweepOk() (*bool, bool)`
+
+GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnableAutoSweep
+
+`func (o *CreateWalletParams) SetEnableAutoSweep(v bool)`
+
+SetEnableAutoSweep sets EnableAutoSweep field to given value.
+
+### HasEnableAutoSweep
+
+`func (o *CreateWalletParams) HasEnableAutoSweep() bool`
+
+HasEnableAutoSweep returns a boolean if a field has been set.
 
 ### GetVaultId
 
