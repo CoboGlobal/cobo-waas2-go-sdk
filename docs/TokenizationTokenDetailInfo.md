@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **TokenName** | Pointer to **string** | The name of the token. | [optional] 
 **TokenSymbol** | **string** | The unique token symbol. | 
 **Decimals** | **int32** | The number of decimals of the token. | 
-**AllowlistActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. | [optional] 
+**TokenAccessActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. | [optional] 
 **Status** | [**TokenizationStatus**](TokenizationStatus.md) |  | 
 **TotalSupply** | Pointer to **string** | The total supply of the token. | [optional] 
 **Holdings** | Pointer to **string** | The amount of tokens held by the organization. | [optional] 
@@ -165,30 +165,30 @@ and a boolean to check if the value has been set.
 SetDecimals sets Decimals field to given value.
 
 
-### GetAllowlistActivated
+### GetTokenAccessActivated
 
-`func (o *TokenizationTokenDetailInfo) GetAllowlistActivated() bool`
+`func (o *TokenizationTokenDetailInfo) GetTokenAccessActivated() bool`
 
-GetAllowlistActivated returns the AllowlistActivated field if non-nil, zero value otherwise.
+GetTokenAccessActivated returns the TokenAccessActivated field if non-nil, zero value otherwise.
 
-### GetAllowlistActivatedOk
+### GetTokenAccessActivatedOk
 
-`func (o *TokenizationTokenDetailInfo) GetAllowlistActivatedOk() (*bool, bool)`
+`func (o *TokenizationTokenDetailInfo) GetTokenAccessActivatedOk() (*bool, bool)`
 
-GetAllowlistActivatedOk returns a tuple with the AllowlistActivated field if it's non-nil, zero value otherwise
+GetTokenAccessActivatedOk returns a tuple with the TokenAccessActivated field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAllowlistActivated
+### SetTokenAccessActivated
 
-`func (o *TokenizationTokenDetailInfo) SetAllowlistActivated(v bool)`
+`func (o *TokenizationTokenDetailInfo) SetTokenAccessActivated(v bool)`
 
-SetAllowlistActivated sets AllowlistActivated field to given value.
+SetTokenAccessActivated sets TokenAccessActivated field to given value.
 
-### HasAllowlistActivated
+### HasTokenAccessActivated
 
-`func (o *TokenizationTokenDetailInfo) HasAllowlistActivated() bool`
+`func (o *TokenizationTokenDetailInfo) HasTokenAccessActivated() bool`
 
-HasAllowlistActivated returns a boolean if a field has been set.
+HasTokenAccessActivated returns a boolean if a field has been set.
 
 ### GetStatus
 

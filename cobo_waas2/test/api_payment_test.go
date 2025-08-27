@@ -143,6 +143,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService GetPayerBalanceByAddress", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetPayerBalanceByAddress(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService GetPaymentOrderDetailById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -150,6 +162,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var orderId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.GetPaymentOrderDetailById(ctx, orderId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService GetPspBalance", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetPspBalance(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -257,6 +281,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService ListMerchantBalances", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListMerchantBalances(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService ListMerchants", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -286,6 +322,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.ListPaymentSupportedTokens(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService ListPaymentWalletBalances", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListPaymentWalletBalances(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Address** | **string** | The allowed address. | 
-**Note** | Pointer to **string** | The note for the allowed address. | [optional] 
-**CreatedTimestamp** | Pointer to **int64** | The time when the allowlist address was created, in Unix timestamp format, measured in milliseconds. | [optional] 
+**Address** | **string** | The address on the allowlist. | 
+**Note** | Pointer to **string** | The note for the address on the allowlist. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The time when the address was added to the allowlist, in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 

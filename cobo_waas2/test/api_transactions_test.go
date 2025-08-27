@@ -156,11 +156,35 @@ func Test_cobo_waas2_TransactionsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test TransactionsAPIService ListApprovalDetails", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TransactionsAPI.ListApprovalDetails(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test TransactionsAPIService ListTransactionApprovalDetails", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.TransactionsAPI.ListTransactionApprovalDetails(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TransactionsAPIService ListTransactionTemplates", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TransactionsAPI.ListTransactionTemplates(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

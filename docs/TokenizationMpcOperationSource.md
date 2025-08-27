@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**TokenizationOperationSourceType**](TokenizationOperationSourceType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**Address** | **string** | The wallet address to interact with the token contract from. | 
+**Address** | **string** | The wallet address used to interact with the token contract. | 
 
 ## Methods
 

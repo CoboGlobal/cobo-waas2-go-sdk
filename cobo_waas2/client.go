@@ -54,6 +54,8 @@ type APIClient struct {
 
 	AppWorkflowsAPI *AppWorkflowsAPIService
 
+	AutoSweepAPI *AutoSweepAPIService
+
 	DevelopersAPI *DevelopersAPIService
 
 	DevelopersWebhooksAPI *DevelopersWebhooksAPIService
@@ -69,6 +71,8 @@ type APIClient struct {
 	PrimeBrokerAPI *PrimeBrokerAPIService
 
 	StakingsAPI *StakingsAPIService
+
+	TokenizationAPI *TokenizationAPIService
 
 	TransactionsAPI *TransactionsAPIService
 
@@ -101,6 +105,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	// API Services
 	c.AddressBooksAPI = (*AddressBooksAPIService)(&c.common)
 	c.AppWorkflowsAPI = (*AppWorkflowsAPIService)(&c.common)
+	c.AutoSweepAPI = (*AutoSweepAPIService)(&c.common)
 	c.DevelopersAPI = (*DevelopersAPIService)(&c.common)
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
 	c.FeeStationAPI = (*FeeStationAPIService)(&c.common)
@@ -109,6 +114,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.PaymentAPI = (*PaymentAPIService)(&c.common)
 	c.PrimeBrokerAPI = (*PrimeBrokerAPIService)(&c.common)
 	c.StakingsAPI = (*StakingsAPIService)(&c.common)
+	c.TokenizationAPI = (*TokenizationAPIService)(&c.common)
 	c.TransactionsAPI = (*TransactionsAPIService)(&c.common)
 	c.TravelRuleAPI = (*TravelRuleAPIService)(&c.common)
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)

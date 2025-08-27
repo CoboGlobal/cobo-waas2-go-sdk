@@ -15,7 +15,7 @@ import (
 // checks if the TokenizationTokenPermissionParams type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TokenizationTokenPermissionParams{}
 
-// TokenizationTokenPermissionParams Role-based permission settings for token contract. If not provided, all permissions will be granted to the issuance wallet by default.
+// TokenizationTokenPermissionParams Role-based permission settings for token contract. If not provided, all permissions will be granted to the issuing wallet by default.
 type TokenizationTokenPermissionParams struct {
 	// List of addresses for the admin role.
 	Admin []string `json:"admin,omitempty"`

@@ -17,6 +17,12 @@
 
 * `PAUSE_CONTRACT` (value: `"PauseContract"`)
 
+* `FREEZE_ACCOUNTS` (value: `"FreezeAccounts"`)
+
+* `UPDATE_METADATA` (value: `"UpdateMetadata"`)
+
+* `PERMANENT_DELEGATE` (value: `"PermanentDelegate"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

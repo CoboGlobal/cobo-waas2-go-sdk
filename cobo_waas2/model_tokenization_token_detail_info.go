@@ -32,7 +32,7 @@ type TokenizationTokenDetailInfo struct {
 	// The number of decimals of the token.
 	Decimals int32 `json:"decimals"`
 	// Whether the allowlist feature is activated for the token.
-	AllowlistActivated *bool `json:"allowlist_activated,omitempty"`
+	TokenAccessActivated *bool `json:"token_access_activated,omitempty"`
 	Status TokenizationStatus `json:"status"`
 	// The total supply of the token.
 	TotalSupply *string `json:"total_supply,omitempty"`
@@ -226,36 +226,36 @@ func (o *TokenizationTokenDetailInfo) SetDecimals(v int32) {
 	o.Decimals = v
 }
 
-// GetAllowlistActivated returns the AllowlistActivated field value if set, zero value otherwise.
-func (o *TokenizationTokenDetailInfo) GetAllowlistActivated() bool {
-	if o == nil || IsNil(o.AllowlistActivated) {
+// GetTokenAccessActivated returns the TokenAccessActivated field value if set, zero value otherwise.
+func (o *TokenizationTokenDetailInfo) GetTokenAccessActivated() bool {
+	if o == nil || IsNil(o.TokenAccessActivated) {
 		var ret bool
 		return ret
 	}
-	return *o.AllowlistActivated
+	return *o.TokenAccessActivated
 }
 
-// GetAllowlistActivatedOk returns a tuple with the AllowlistActivated field value if set, nil otherwise
+// GetTokenAccessActivatedOk returns a tuple with the TokenAccessActivated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenDetailInfo) GetAllowlistActivatedOk() (*bool, bool) {
-	if o == nil || IsNil(o.AllowlistActivated) {
+func (o *TokenizationTokenDetailInfo) GetTokenAccessActivatedOk() (*bool, bool) {
+	if o == nil || IsNil(o.TokenAccessActivated) {
 		return nil, false
 	}
-	return o.AllowlistActivated, true
+	return o.TokenAccessActivated, true
 }
 
-// HasAllowlistActivated returns a boolean if a field has been set.
-func (o *TokenizationTokenDetailInfo) HasAllowlistActivated() bool {
-	if o != nil && !IsNil(o.AllowlistActivated) {
+// HasTokenAccessActivated returns a boolean if a field has been set.
+func (o *TokenizationTokenDetailInfo) HasTokenAccessActivated() bool {
+	if o != nil && !IsNil(o.TokenAccessActivated) {
 		return true
 	}
 
 	return false
 }
 
-// SetAllowlistActivated gets a reference to the given bool and assigns it to the AllowlistActivated field.
-func (o *TokenizationTokenDetailInfo) SetAllowlistActivated(v bool) {
-	o.AllowlistActivated = &v
+// SetTokenAccessActivated gets a reference to the given bool and assigns it to the TokenAccessActivated field.
+func (o *TokenizationTokenDetailInfo) SetTokenAccessActivated(v bool) {
+	o.TokenAccessActivated = &v
 }
 
 // GetStatus returns the Status field value
@@ -398,8 +398,8 @@ func (o TokenizationTokenDetailInfo) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["token_symbol"] = o.TokenSymbol
 	toSerialize["decimals"] = o.Decimals
-	if !IsNil(o.AllowlistActivated) {
-		toSerialize["allowlist_activated"] = o.AllowlistActivated
+	if !IsNil(o.TokenAccessActivated) {
+		toSerialize["token_access_activated"] = o.TokenAccessActivated
 	}
 	toSerialize["status"] = o.Status
 	if !IsNil(o.TotalSupply) {

@@ -61,6 +61,10 @@ tags:
   name: FeeStation
 - description: Operations related to payment.
   name: Payment
+- description: Operations related to tokenization.
+  name: Tokenization
+- description: Operations related to auto sweep.
+  name: AutoSweep
 paths:
   /organizations/info:
     get:
@@ -4489,6 +4493,124 @@ paths:
       summary: List transaction approval details
       tags:
       - Transactions
+  /transactions/approval/details:
+    get:
+      description: |
+        This operation retrieves detailed approval information for a specified transaction.
+      operationId: list_approval_details
+      parameters:
+      - description: "A list of transaction IDs, separated by comma."
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+        explode: true
+        in: query
+        name: transaction_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of Cobo IDs, separated by comma. A Cobo ID can be used\
+          \ to track a transaction."
+        example: "20231213122855000000000000000000,20231213122955000000000000000000"
+        explode: true
+        in: query
+        name: cobo_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of request IDs, separated by comma."
+        example: "web_send_by_user_327_1610444045047,web_send_by_user_327_1610444045048"
+        explode: true
+        in: query
+        name: request_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApprovalDetail'
+                type: array
+          description: The information about transaction approval detail.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: List transaction approval details
+      tags:
+      - Transactions
+  /transactions/templates:
+    get:
+      description: |
+        This operation retrieves transaction templates based on the specified transaction type and template version.
+        The response includes a list of templates that can be used for creating transactions approval message.
+      operationId: list_transaction_templates
+      parameters:
+      - description: |
+          The key of the transaction template to be used for creating a transaction approval message.
+        example: withdrawal
+        explode: true
+        in: query
+        name: template_key
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The version of the template used for the transaction approval.
+        example: 1.0.0
+        explode: true
+        in: query
+        name: template_version
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApprovalTemplate'
+                type: array
+          description: Response containing a list of transaction approval templates.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: list transaction templates
+      tags:
+      - Transactions
   /oauth/token:
     get:
       description: "<Note>This operation is only applicable to Cobo Portal App developers.\
@@ -8100,7 +8222,11 @@ paths:
         schema:
           type: string
         style: form
-      - description: "A list of  statuses of order, refund or settle request."
+      - description: |
+          A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
+           - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
+           - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
+           - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
         example: "Pending,Processing"
         explode: true
         in: query
@@ -8215,7 +8341,7 @@ paths:
       - Payment
     put:
       description: |
-        This operation updates a specified refund order.
+        This operation updates a specified refund order by modifying its recipient address. You can only update the recipient address for refund orders that have not been processed yet.
       operationId: update_refund_by_id
       parameters:
       - description: The refund order ID.
@@ -8254,13 +8380,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - payment_orders_refund.update
-      summary: Update refund order information
+      summary: Update refund order
       tags:
       - Payment
   /payments/refunds/{refund_id}/cancel:
     put:
       description: |
-        This operation cancels a specified refund order.
+        This operation cancels a specified refund order. You can only cancel refund orders that have not been processed yet.
       operationId: cancel_refund_by_id
       parameters:
       - description: The refund order ID.
@@ -8391,7 +8517,11 @@ paths:
         schema:
           type: string
         style: form
-      - description: "A list of  statuses of order, refund or settle request."
+      - description: |
+          A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
+           - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
+           - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
+           - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
         example: "Pending,Processing"
         explode: true
         in: query
@@ -8853,9 +8983,10 @@ paths:
       tags:
       - Payment
     post:
-      description: "Create a new cryptocurrency address for receiving payouts or transfers.\
-        \ \nThe address must match the specified `token_id`'s blockchain. \nOptionally,\
-        \ a label can be provided to help categorize the address internally.\n"
+      description: |
+        This operation registers a crypto address for crypto withdrawal.
+
+        The registered address can later be referenced by its ID when creating settlement requests.
       operationId: create_crypto_address
       requestBody:
         $ref: '#/components/requestBodies/createCryptoAddressBody'
@@ -8889,7 +9020,7 @@ paths:
   /payments/crypto_addresses/{crypto_address_id}/delete:
     post:
       description: |
-        This operation deletes a crypto address.
+        This operation unregisters a crypto address from being used for crypto withdrawals.
       operationId: delete_crypto_address
       parameters:
       - description: The crypto address ID.
@@ -9221,7 +9352,7 @@ paths:
       security:
       - CoboAuth: []
       - OAuth2:
-        - payment_forced_sweep.read
+        - payment_force_sweep.read
       summary: List forced sweeps
       tags:
       - Payment
@@ -9254,7 +9385,7 @@ paths:
       security:
       - CoboAuth: []
       - OAuth2:
-        - payment_forced_sweep.create
+        - payment_force_sweep.create
       summary: Create forced sweep
       tags:
       - Payment
@@ -9305,7 +9436,11 @@ paths:
         schema:
           type: string
         style: form
-      - description: "A list of  statuses of order, refund or settle request."
+      - description: |
+          A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
+           - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
+           - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
+           - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
         example: "Pending,Processing"
         explode: true
         in: query
@@ -9341,6 +9476,1586 @@ paths:
       summary: List all settlement details
       tags:
       - Payment
+  /payments/balance/payment_wallets:
+    get:
+      description: |
+        This operation retrieves the information of payment wallet balances.
+      operationId: list_payment_wallet_balances
+      parameters:
+      - description: A list of wallet IDs to query.
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d472"
+        explode: true
+        in: query
+        name: wallet_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_payment_wallet_balances_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: List payment wallet balances
+      tags:
+      - Payment
+  /payments/balance/merchants:
+    get:
+      description: |
+        This operation retrieves the information of merchant balances.
+      operationId: list_merchant_balances
+      parameters:
+      - description: A list of merchant IDs to query.
+        example: "M1001,M1002,M1003"
+        explode: true
+        in: query
+        name: merchant_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: |
+          AcquiringType defines the acquisition logic used in the payment flow:
+          - `Order`: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis.
+          - `TopUp`: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models.
+        explode: true
+        in: query
+        name: acquiring_type
+        required: true
+        schema:
+          $ref: '#/components/schemas/AcquiringType'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_merchant_balances_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: List merchant balances
+      tags:
+      - Payment
+  /payments/balance/psp:
+    get:
+      description: |
+        This operation retrieves the information of psp balance.
+      operationId: get_psp_balance
+      parameters:
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PspBalance'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: Get psp balance
+      tags:
+      - Payment
+  /payments/balance/payer/address:
+    get:
+      description: |
+        This operation retrieves aggregated balance details for a specific token and payer, with amounts grouped by address.
+      operationId: get_payer_balance_by_address
+      parameters:
+      - description: The merchant ID.
+        example: M1001
+        explode: true
+        in: query
+        name: merchant_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: "Unique payer identifier on the Cobo side, auto-generated by\
+          \ the system."
+        example: P20250619T0310056d7aa
+        explode: true
+        in: query
+        name: payer_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayerBalanceByAddress'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: Get payer balance by address
+      tags:
+      - Payment
+  /auto_sweep/sweep_to_addresses:
+    get:
+      description: |
+        This operation retrieves a list of sweep to addresses within your wallet.
+      operationId: list_wallet_sweep_to_addresses
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_wallet_sweep_to_addresses_200_response'
+          description: Successfully listed sweep to addresses
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: List wallet sweep to addresses
+      tags:
+      - AutoSweep
+    post:
+      description: |
+        This operation create a new sweep to address for the wallet. The old sweep to address will become invalid.
+      operationId: create_wallet_sweep_to_addresses
+      requestBody:
+        $ref: '#/components/requestBodies/createSweepAddressBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SweepToAddress'
+          description: Successfully create sweep to addresses
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.create
+      summary: create wallet sweep to addresses
+      tags:
+      - AutoSweep
+  /auto_sweep/tasks:
+    get:
+      description: |
+        This operation retrieves a list of auto sweep task.
+      operationId: list_auto_sweep_task
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "The token ID, which is the unique identifier of a token. You\
+          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
+          \ tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of auto sweep task IDs, separated by comma."
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,1ddca562-8434-41c9-8809-d437bad9c868"
+        explode: true
+        in: query
+        name: task_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
+
+          If not provided, the default value is 90 days before the current time. This default value is subject to change.
+        example: 1635744000000
+        explode: true
+        in: query
+        name: min_created_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: |
+          The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
+
+          If not provided, the default value is the current time. This default value is subject to change.
+        example: 1635744000000
+        explode: true
+        in: query
+        name: max_created_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_auto_sweep_task_200_response'
+          description: Successfully listed auto sweep tasks
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: List wallet auto sweep task
+      tags:
+      - AutoSweep
+    post:
+      description: |
+        This operation create a new auto sweep task.
+      operationId: create_auto_sweep_task
+      requestBody:
+        $ref: '#/components/requestBodies/createAutoSweepTaskBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutoSweepTask'
+          description: Successfully create auto sweep task
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.create
+      summary: create auto sweep task
+      tags:
+      - AutoSweep
+  /auto_sweep/tasks/{task_id}:
+    get:
+      description: |
+        This operation retrieves detailed information about a specified auto sweep task.
+      operationId: get_auto_sweep_task_by_id
+      parameters:
+      - description: The auto sweep task ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: task_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutoSweepTask'
+          description: The information about a auto sweep task.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: Get auto sweep task information
+      tags:
+      - AutoSweep
+  /tokenization/activities:
+    get:
+      description: |
+        This operation retrieves a list of tokenization activities.
+      operationId: list_tokenization_activities
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token. You\
+          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
+          \ tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter by tokenization activity type.
+        explode: true
+        in: query
+        name: activity_type
+        required: false
+        schema:
+          $ref: '#/components/schemas/TokenizationOperationType'
+        style: form
+      - description: Filter by tokenization activity status.
+        explode: true
+        in: query
+        name: activity_status
+        required: false
+        schema:
+          $ref: '#/components/schemas/TokenizationActivityStatus'
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationListActivitiesResponse'
+          description: Successfully retrieved the list of tokenization activities.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: List tokenization activities
+      tags:
+      - Tokenization
+  /tokenization/activities/{activity_id}:
+    get:
+      description: |
+        This operation retrieves the detailed information for a specific tokenization activity by its ID.
+      operationId: get_tokenization_activity
+      parameters:
+      - description: The ID of the activity.
+        example: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationActivityInfo'
+          description: Successfully retrieved Activity details.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Get tokenization activity details
+      tags:
+      - Tokenization
+  /tokenization/estimate_fee:
+    post:
+      description: |
+        This operation estimates the fee required for tokenization operations.
+        For EVM-based chains, this calculates the gas cost for the specified operation.
+      operationId: estimate_tokenization_fee
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationEstimateFeeBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimatedFee'
+          description: Successfully retrieved the estimated fee for token issuance.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Estimate tokenization operation fee
+      tags:
+      - Tokenization
+  /tokenization/tokens:
+    get:
+      description: |
+        This operation retrieves a list of tokens issued by the organization.
+        Returns issued token information including total supply, holdings, and token status.
+      operationId: list_issued_tokens
+      parameters:
+      - description: "The chain ID, which is the unique identifier of a blockchain.\
+          \ You can retrieve the IDs of all the chains you can use by calling [List\
+          \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+        example: ETH
+        explode: true
+        in: query
+        name: chain_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The token ID, which is the unique identifier of a token. You\
+          \ can retrieve the IDs of all the tokens you can use by calling [List enabled\
+          \ tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter by token standard.
+        example: ERC20
+        explode: true
+        in: query
+        name: token_standard
+        required: false
+        schema:
+          $ref: '#/components/schemas/TokenizationTokenStandard'
+        style: form
+      - description: Filter by token status.
+        example: Confirmed
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/TokenizationStatus'
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationListTokenInfoResponse'
+          description: Successful response with the list of token information.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: List issued tokens
+      tags:
+      - Tokenization
+    post:
+      description: |
+        This operation issues a new token contract. It supports various blockchain platforms.
+
+        For EVM-based chains, this involves issuing a new smart contract from a template.
+      operationId: issue_token
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationIssueTokenBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Issue token
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}:
+    get:
+      description: |
+        This operation retrieves the detailed information for a specific issued token by its ID.
+      operationId: get_tokenization_info
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationTokenDetailInfo'
+          description: Successfully retrieved token information.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Get token details
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/mint:
+    post:
+      description: |
+        This operation mints new tokens to a specified address.
+        Creates a mint transaction that will increase the token supply.
+      operationId: mint_tokenization
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationMintTokenBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Mint tokens
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/burn:
+    post:
+      description: |
+        This operation burns tokens from a specified address.
+        Creates a burn transaction that will decrease the token supply.
+      operationId: burn_tokenization
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationBurnTokenBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Burn tokens
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/pause:
+    post:
+      description: |
+        This operation pauses the token contract, temporarily halting token operations and transfers.
+      operationId: pause_tokenization
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationPauseTokenBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Pause token contract
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/unpause:
+    post:
+      description: |
+        This operation unpauses the token contract, resuming token operations and transfers.
+      operationId: unpause_tokenization
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationUnpauseTokenBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Unpause token contract
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/holdings:
+    get:
+      description: |
+        This operation retrieves the holdings information for a specific issued token,
+        showing which wallets hold the token and their respective balances.
+      operationId: list_tokenization_holdings
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationListHoldingsResponse'
+          description: Successfully retrieved token holdings information.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Get token holdings information
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/blocklist/addresses:
+    get:
+      description: |
+        This operation lists addresses on the blocklist.
+      operationId: list_tokenization_blocklist_addresses
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_tokenization_blocklist_addresses_200_response'
+          description: Successfully retrieved addresses on the blocklist.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Lists addresses on blocklist
+      tags:
+      - Tokenization
+    post:
+      description: |
+        This operation updates addresses on the blocklist.
+      operationId: update_tokenization_blocklist_addresses
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationUpdateBlocklistAddressesBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Update addresses on blocklist
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/allowlist/addresses:
+    get:
+      description: |
+        This operation lists addresses on the allowlist.
+      operationId: list_tokenization_allowlist_addresses
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationAllowlistAddressesResponse'
+          description: Successfully retrieved addresses on the allowlist.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: List addresses on allowlist
+      tags:
+      - Tokenization
+    post:
+      description: |
+        This operation updates addresses on the allowlist.
+      operationId: update_tokenization_allowlist_addresses
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationUpdateAllowlistAddressesBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Update addresses on allowlist
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/allowlist/activation:
+    get:
+      description: |
+        This operation retrieves the allowlist activation status of the token contract.
+      operationId: get_tokenization_allowlist_activation
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_tokenization_allowlist_activation_200_response'
+          description: Successfully retrieved the allowlist activation status.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Get allowlist activation status
+      tags:
+      - Tokenization
+    post:
+      description: |
+        This operation activates or deactivates the allowlist.
+      operationId: update_tokenization_allowlist_activation
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationAllowlistActivationBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Activate or deactivate allowlist
+      tags:
+      - Tokenization
+  /tokenization/tokens/{token_id}/contract_call:
+    post:
+      description: |
+        This operation performs a contract call on the token contract.
+      operationId: tokenization_contract_call
+      parameters:
+      - description: "The token ID, which is the unique identifier of a token."
+        example: ETH_USDT
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/tokenizationContractCallBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationOperationResponse'
+          description: Tokenization operation transaction created successfully
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Call token contract
+      tags:
+      - Tokenization
+  /tokenization/enabled_chains:
+    get:
+      description: |
+        This operation retrieves a list of tokenization supported chains.
+      operationId: list_tokenization_supported_chains
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizationListEnabledChainsResponse'
+          description: Successfully retrieved the list of tokenization supported chains.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: List supported chains for tokenization
+      tags:
+      - Tokenization
 components:
   parameters:
     sortByParam:
@@ -10252,6 +11967,17 @@ components:
       schema:
         type: string
       style: form
+    requiredTemplateKeyParam:
+      description: |
+        The key of the transaction template to be used for creating a transaction approval message.
+      example: withdrawal
+      explode: true
+      in: query
+      name: template_key
+      required: true
+      schema:
+        type: string
+      style: form
     webhookEventIdParam:
       description: "The event ID. You can obtain a list of event IDs by calling [List\
         \ all events](https://www.cobo.com/developers/v2/api-references/developers--webhooks/list-all-events)."
@@ -10977,6 +12703,17 @@ components:
       schema:
         type: string
       style: simple
+    PayerIdRequiredParam:
+      description: "Unique payer identifier on the Cobo side, auto-generated by the\
+        \ system."
+      example: P20250619T0310056d7aa
+      explode: true
+      in: query
+      name: payer_id
+      required: true
+      schema:
+        type: string
+      style: form
     TokenIdRequiredParam:
       description: |
         The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
@@ -11111,7 +12848,11 @@ components:
         $ref: '#/components/schemas/AcquiringType'
       style: form
     PaymentStatusesParam:
-      description: "A list of  statuses of order, refund or settle request."
+      description: |
+        A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
+         - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
+         - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
+         - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
       example: "Pending,Processing"
       explode: true
       in: query
@@ -11131,6 +12872,28 @@ components:
         description: The crypto address ID.
         type: string
       style: simple
+    AcquiringTypeRequiredParam:
+      description: |
+        AcquiringType defines the acquisition logic used in the payment flow:
+        - `Order`: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis.
+        - `TopUp`: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models.
+      explode: true
+      in: query
+      name: acquiring_type
+      required: true
+      schema:
+        $ref: '#/components/schemas/AcquiringType'
+      style: form
+    WalletIdRequiredParam:
+      description: A list of wallet IDs to query.
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d472"
+      explode: true
+      in: query
+      name: wallet_ids
+      required: false
+      schema:
+        type: string
+      style: form
     tokenizationActivityIdPathParam:
       description: The ID of the activity.
       example: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
@@ -11143,7 +12906,7 @@ components:
         type: string
       style: simple
     tokenizationTokenStandardOptionalParam:
-      description: Filter by token standard
+      description: Filter by token standard.
       example: ERC20
       explode: true
       in: query
@@ -11153,7 +12916,7 @@ components:
         $ref: '#/components/schemas/TokenizationTokenStandard'
       style: form
     tokenizationStatusOptionalParam:
-      description: Filter by token status
+      description: Filter by token status.
       example: Confirmed
       explode: true
       in: query
@@ -11180,6 +12943,27 @@ components:
       schema:
         $ref: '#/components/schemas/TokenizationActivityStatus'
       style: form
+    optionalTaskIdListParam:
+      description: "A list of auto sweep task IDs, separated by comma."
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,1ddca562-8434-41c9-8809-d437bad9c868"
+      explode: true
+      in: query
+      name: task_ids
+      required: false
+      schema:
+        type: string
+      style: form
+    taskIdParam:
+      description: The auto sweep task ID.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: false
+      in: path
+      name: task_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
   requestBodies:
     createWalletBody:
       content:
@@ -11581,7 +13365,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/create_crypto_address_request'
-      description: The request body to create a crypto address.
+      description: The request body to register a crypto address.
     createForceSweepBody:
       content:
         application/json:
@@ -11611,21 +13395,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationUpdateAllowlistAddressesRequest'
-      description: Request body for managing multiple allowlist addresses (adding
-        or removing).
+      description: The request body for adding or removing multiple addresses on the
+        allowlist.
     tokenizationUpdateBlocklistAddressesBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationUpdateBlocklistAddressesRequest'
-      description: Request body for managing multiple blocklist addresses (adding
-        or removing).
+      description: The request body for adding or removing multiple addresses on the
+        blocklist.
     tokenizationBurnTokenBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationBurnTokenRequest'
-      description: Request body for burning tokens
+      description: The request body for burning tokens.
     tokenizationIssueTokenBody:
       content:
         application/json:
@@ -11645,38 +13429,52 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationMintTokenRequest'
-      description: The request body for minting tokens
+      description: The request body for minting tokens.
       required: true
     tokenizationPauseTokenBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationPauseTokenRequest'
-      description: Request body for pausing tokens
+      description: The request body for pausing tokens.
     tokenizationUnpauseTokenBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationUnpauseTokenRequest'
-      description: Request body for unpausing tokens
+      description: The request body for unpausing tokens.
     tokenizationAllowlistActivationBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationAllowlistActivationRequest'
-      description: Request body for updating the allowlist activation setting.
+      description: The request body for activating or deactivating the allowlist.
     tokenizationContractCallBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationContractCallRequest'
-      description: Request body for contract call
+      description: The request body for contract call.
     updateTopUpAddressBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UpdateTopUpAddress'
       description: The request body to update top-up address.
+    createSweepAddressBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateSweepToAddress'
+      description: The request body to generates a new sweep to addresses within a
+        specified wallet.
+    createAutoSweepTaskBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateAutoSweepTask'
+      description: The request body to generates a new sweep to addresses within a
+        specified wallet.
   responses:
     badRequestError:
       content:
@@ -12594,6 +14392,30 @@ components:
           schema:
             $ref: '#/components/schemas/list_settlement_details_200_response'
       description: The request was successful.
+    listPaymentWalletBalancesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_payment_wallet_balances_200_response'
+      description: The request was successful.
+    getPspBalanceResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PspBalance'
+      description: The request was successful.
+    getPayerBalanceByAddressResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PayerBalanceByAddress'
+      description: The request was successful.
+    listMerchantBalancesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_merchant_balances_200_response'
+      description: The request was successful.
     getFeeStationTokenBalancesResponse:
       content:
         application/json:
@@ -12643,13 +14465,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationListActivitiesResponse'
-      description: List of tokenization activities retrieved successfully
+      description: Successfully retrieved the list of tokenization activities.
     getTokenizationActivityResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationActivityInfo'
-      description: Activity details retrieved successfully
+      description: Successfully retrieved Activity details.
     estimateTokenizationFeeResponse:
       content:
         application/json:
@@ -12660,63 +14482,32 @@ components:
       content:
         application/json:
           schema:
-            description: The response schema for retrieving the allowlist activation
-              status.
-            properties:
-              activated:
-                description: Indicates whether the allowlist feature is activated
-                  for the token.
-                example: true
-                type: boolean
-            required:
-            - activated
-            type: object
-      description: Successful response with the allowlist activation status.
+            $ref: '#/components/schemas/get_tokenization_allowlist_activation_200_response'
+      description: Successfully retrieved the allowlist activation status.
     getTokenizationInfoResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationTokenDetailInfo'
-      description: Successfully retrieved token information
+      description: Successfully retrieved token information.
     listTokenizationAllowlistAddressesResponse:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/TokenizationAllowlistAddressNote'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            required:
-            - data
-            - pagination
-            title: TokenizationAllowlistAddressesResponse
-            type: object
-      description: Successful response with the list of allowlist addresses.
+            $ref: '#/components/schemas/TokenizationAllowlistAddressesResponse'
+      description: Successfully retrieved addresses on the allowlist.
     listTokenizationBlocklistAddressesResponse:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/TokenizationBlocklistAddressNote'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            required:
-            - data
-            - pagination
-            type: object
-      description: Successful response with the list of blocklist addresses.
+            $ref: '#/components/schemas/list_tokenization_blocklist_addresses_200_response'
+      description: Successfully retrieved addresses on the blocklist.
     listTokenizationHoldingsResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationListHoldingsResponse'
-      description: Successfully retrieved token holdings information
+      description: Successfully retrieved token holdings information.
     listTokenizationInfoResponse:
       content:
         application/json:
@@ -12734,7 +14525,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenizationListEnabledChainsResponse'
-      description: List of tokenization supported chains retrieved successfully
+      description: Successfully retrieved the list of tokenization supported chains.
+    getSweepToAddressesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_wallet_sweep_to_addresses_200_response'
+      description: Successfully listed sweep to addresses
+    createSweepToAddressResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SweepToAddress'
+      description: Successfully create sweep to addresses
+    createAutoSweepTaskResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AutoSweepTask'
+      description: Successfully create auto sweep task
+    listAutoSweepTasksResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_auto_sweep_task_200_response'
+      description: Successfully listed auto sweep tasks
+    getAutoSweepTaskResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AutoSweepTask'
+      description: The information about a auto sweep task.
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -13319,6 +15140,7 @@ components:
         org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         name: Example Wallet
         wallet_type: Custodial
+        enable_auto_sweep: true
       properties:
         wallet_id:
           description: The wallet ID.
@@ -13337,6 +15159,9 @@ components:
           description: The ID of the owning organization.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet
+          type: boolean
       required:
       - name
       - org_id
@@ -13586,6 +15411,7 @@ components:
         wallet_subtype: Asset
         name: My WaaS 2.0 Wallet
         wallet_type: Custodial
+        enable_auto_sweep: true
       properties:
         name:
           description: The wallet name.
@@ -13595,6 +15421,10 @@ components:
           $ref: '#/components/schemas/WalletType'
         wallet_subtype:
           $ref: '#/components/schemas/WalletSubtype'
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet. This parameter
+            only applies to MPC and Web3 wallets.
+          type: boolean
       required:
       - name
       - wallet_subtype
@@ -13743,6 +15573,7 @@ components:
       example:
         name: My WaaS 2.0 Wallet
         wallet_type: Custodial
+        enable_auto_sweep: true
       properties:
         wallet_type:
           $ref: '#/components/schemas/WalletType'
@@ -13750,8 +15581,10 @@ components:
           description: The wallet name.
           example: My WaaS 2.0 Wallet
           type: string
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet
+          type: boolean
       required:
-      - name
       - wallet_type
       title: Custodial Wallets
       type: object
@@ -13764,8 +15597,10 @@ components:
           description: The wallet name.
           example: My WaaS 2.0 Wallet
           type: string
+        enable_auto_sweep:
+          description: Enable the auto sweep feature for the wallet
+          type: boolean
       required:
-      - name
       - wallet_type
       title: MPC Wallets
       type: object
@@ -17083,7 +18918,11 @@ components:
         \ for unstaking ETH assets.\n  - `StakingSkyfarmClaim`: A transaction for\
         \ claiming rewards from Skyfarm staking.\n  - `StakingSkyfarmStake`: A transaction\
         \ for staking assets in the Skyfarm platform.\n  - `StakingSkyfarmUnstake`:\
-        \ A transaction for unstaking assets from the Skyfarm platform.\n"
+        \ A transaction for unstaking assets from the Skyfarm platform.\n  - `ScreenAppRefund`:\
+        \ A refund transaction initiated through the Screening App.\n  - `ScreenAppIsolate`:\
+        \ An isolation transaction initiated through the Screening App.\n  - `ComplianceRefund`:\
+        \ A refund transaction initiated by Cobo KYT.\n  - `ComplianceIsolate`: An\
+        \ isolation transaction initiated by Cobo KYT.\n"
       enum:
       - AutoFueling
       - AutoFuelingRefund
@@ -17367,6 +19206,112 @@ components:
       type: object
     ApprovalDetail:
       description: The approval detail data for transaction.
+      example:
+        transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        address_owner:
+          result: 1
+          user_details:
+          - result: 1
+            created_time: 1610444045
+            user_email: example@gmail.com
+            template_version: 1.0.0
+            header_title: Transaction Approval
+            signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            show_info:
+              environment: Prod
+              from_address_label: Main Address
+              wallet_name: Cobo Wallet
+              to_address_label: Exchange Address
+              org_name: Cobo
+            is_for_sign: true
+            statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          - result: 1
+            created_time: 1610444045
+            user_email: example@gmail.com
+            template_version: 1.0.0
+            header_title: Transaction Approval
+            signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            show_info:
+              environment: Prod
+              from_address_label: Main Address
+              wallet_name: Cobo Wallet
+              to_address_label: Exchange Address
+              org_name: Cobo
+            is_for_sign: true
+            statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          threshold: 2
+        approver:
+          result: 1
+          user_details:
+          - result: 1
+            created_time: 1610444045
+            user_email: example@gmail.com
+            template_version: 1.0.0
+            header_title: Transaction Approval
+            signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            show_info:
+              environment: Prod
+              from_address_label: Main Address
+              wallet_name: Cobo Wallet
+              to_address_label: Exchange Address
+              org_name: Cobo
+            is_for_sign: true
+            statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          - result: 1
+            created_time: 1610444045
+            user_email: example@gmail.com
+            template_version: 1.0.0
+            header_title: Transaction Approval
+            signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            show_info:
+              environment: Prod
+              from_address_label: Main Address
+              wallet_name: Cobo Wallet
+              to_address_label: Exchange Address
+              org_name: Cobo
+            is_for_sign: true
+            statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          threshold: 2
+        spender:
+          result: 1
+          user_details:
+          - result: 1
+            created_time: 1610444045
+            user_email: example@gmail.com
+            template_version: 1.0.0
+            header_title: Transaction Approval
+            signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            show_info:
+              environment: Prod
+              from_address_label: Main Address
+              wallet_name: Cobo Wallet
+              to_address_label: Exchange Address
+              org_name: Cobo
+            is_for_sign: true
+            statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          - result: 1
+            created_time: 1610444045
+            user_email: example@gmail.com
+            template_version: 1.0.0
+            header_title: Transaction Approval
+            signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            show_info:
+              environment: Prod
+              from_address_label: Main Address
+              wallet_name: Cobo Wallet
+              to_address_label: Exchange Address
+              org_name: Cobo
+            is_for_sign: true
+            statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          threshold: 2
+        cobo_id: "20231213122855000000000000000000"
+        request_id: web_send_by_user_327_1610444045047
       properties:
         transaction_id:
           description: The transaction ID.
@@ -17382,7 +19327,7 @@ components:
             The request ID is provided by you and must be unique within your organization.
           example: web_send_by_user_327_1610444045047
           type: string
-        broker_user:
+        address_owner:
           $ref: '#/components/schemas/RoleDetail'
         spender:
           $ref: '#/components/schemas/RoleDetail'
@@ -17391,6 +19336,40 @@ components:
       type: object
     RoleDetail:
       description: Transaction approval details response schema.
+      example:
+        result: 1
+        user_details:
+        - result: 1
+          created_time: 1610444045
+          user_email: example@gmail.com
+          template_version: 1.0.0
+          header_title: Transaction Approval
+          signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          show_info:
+            environment: Prod
+            from_address_label: Main Address
+            wallet_name: Cobo Wallet
+            to_address_label: Exchange Address
+            org_name: Cobo
+          is_for_sign: true
+          statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+        - result: 1
+          created_time: 1610444045
+          user_email: example@gmail.com
+          template_version: 1.0.0
+          header_title: Transaction Approval
+          signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          show_info:
+            environment: Prod
+            from_address_label: Main Address
+            wallet_name: Cobo Wallet
+            to_address_label: Exchange Address
+            org_name: Cobo
+          is_for_sign: true
+          statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+        threshold: 2
       properties:
         result:
           $ref: '#/components/schemas/ApprovalTransactionResult'
@@ -17420,6 +19399,12 @@ components:
     ApprovalShowInfo:
       description: |
         Extra information for transaction approval details.
+      example:
+        environment: Prod
+        from_address_label: Main Address
+        wallet_name: Cobo Wallet
+        to_address_label: Exchange Address
+        org_name: Cobo
       properties:
         org_name:
           description: The name of the organization that the transaction belongs to.
@@ -17444,6 +19429,11 @@ components:
       type: object
     ApprovalTemplate:
       description: The template for transaction approval details.
+      example:
+        template_version: 1.0.0
+        template_text: "{{user_name}} requests to withdraw {{amount}} {{currency}}\
+          \ from the account."
+        business_key: transaction_withdrawal
       properties:
         business_key:
           description: The business key that is used to identify the transaction.
@@ -17476,6 +19466,22 @@ components:
     ApprovalUserDetail:
       description: |
         The user detail for a transaction approval. This includes the user's email, public key, signature, statement UUID, result of the approval, creation time, template version, header title, whether it is for signing, and additional information to show.
+      example:
+        result: 1
+        created_time: 1610444045
+        user_email: example@gmail.com
+        template_version: 1.0.0
+        header_title: Transaction Approval
+        signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+        show_info:
+          environment: Prod
+          from_address_label: Main Address
+          wallet_name: Cobo Wallet
+          to_address_label: Exchange Address
+          org_name: Cobo
+        is_for_sign: true
+        statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
       properties:
         user_email:
           description: The email address of the user who approved the transaction.
@@ -22587,6 +24593,8 @@ components:
           items:
             $ref: '#/components/schemas/OrderId'
           type: array
+      required:
+      - token_id
       type: object
     Merchant:
       example:
@@ -22963,7 +24971,7 @@ components:
       type: string
     SettleRequestStatus:
       description: |
-        The current status of the settlement request:
+        The current status of a settlement request:
         - `Pending`: The settlement request has been created and is awaiting processing.
         - `Processing`: The settlement request is currently being processed, with at least one settlement in progress.
         - `Completed`: All requested settlements have been completed.
@@ -22979,10 +24987,10 @@ components:
       type: string
     SettleStatus:
       description: |
-        The current status of settlement.
+        The current status of a settlement.
         - `Pending`: The settlement has been created and is awaiting processing.
         - `Processing`: The settlement is being processed.
-        - `Completed`: The funds have been successfully deposited into the bank account.
+        - `Completed`: The funds have been successfully deposited into the bank account or the withdrawal crypto address.
         - `PartiallyCompleted`: Some settlement transactions have been completed successfully, while others have failed.
         - `Failed`: The settlement could not be completed due to an error.
       enum:
@@ -23266,8 +25274,6 @@ components:
 
             - This field is only applicable when `settlement_type` is set to `Merchant`.
             - If provided, the settlement will only apply to the specified orders.
-            - The settlement `amount` must exactly match the total eligible amount from these orders.
-            - This ensures consistency between the declared amount and the actual order-level data being settled.
           items:
             $ref: '#/components/schemas/OrderId'
           type: array
@@ -23807,6 +25813,150 @@ components:
       - Completed
       example: Pending
       type: string
+    PaymentWalletBalance:
+      example:
+        total_balance: "1.23"
+        wallet_id: 123e4567-e89b-12d3-a456-426614174000
+        above_sweep_threshold_balance: "1.23"
+        token_id: ETH_USDT
+        swept_balance: "1.23"
+        available_balance: "1.23"
+      properties:
+        wallet_id:
+          description: The unique identifier of the wallet.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          format: uuid
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency.
+          example: ETH_USDT
+          type: string
+        swept_balance:
+          description: The payment wallet swept balance.
+          example: "1.23"
+          type: string
+        available_balance:
+          description: The payment wallet available balance.
+          example: "1.23"
+          type: string
+        total_balance:
+          description: The payment wallet total balance.
+          example: "1.23"
+          type: string
+        above_sweep_threshold_balance:
+          description: The payment wallet above sweep threshold balance.
+          example: "1.23"
+          type: string
+      required:
+      - token_id
+      - wallet_id
+      type: object
+    MerchantBalance:
+      example:
+        settled_amount: "1.23"
+        total_balance: "1.23"
+        token_id: ETH_USDT
+        total_received_amount: "1.23"
+        merchant_id: "1"
+        acquiring_type: Order
+        available_balance: "1.23"
+        refunded_amount: "1.23"
+      properties:
+        merchant_id:
+          description: The merchant ID.
+          example: "1"
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency.
+          example: ETH_USDT
+          type: string
+        acquiring_type:
+          $ref: '#/components/schemas/AcquiringType'
+        total_received_amount:
+          description: The merchant total received amount.
+          example: "1.23"
+          type: string
+        settled_amount:
+          description: The merchant settled amount.
+          example: "1.23"
+          type: string
+        refunded_amount:
+          description: The merchant total refunded amount.
+          example: "1.23"
+          type: string
+        total_balance:
+          description: The merchant total balance.
+          example: "1.23"
+          type: string
+        available_balance:
+          description: The merchant available balance.
+          example: "1.23"
+          type: string
+      required:
+      - acquiring_type
+      - merchant_id
+      - token_id
+      type: object
+    PspBalance:
+      example:
+        settled_amount: "1.23"
+        total_balance: "1.23"
+        developer_fee_amount: "1.23"
+        token_id: ETH_USDT
+        available_balance: "1.23"
+        refunded_amount: "1.23"
+      properties:
+        token_id:
+          description: The ID of the cryptocurrency.
+          example: ETH_USDT
+          type: string
+        developer_fee_amount:
+          description: The psp developer fee amount.
+          example: "1.23"
+          type: string
+        settled_amount:
+          description: The psp settled amount.
+          example: "1.23"
+          type: string
+        refunded_amount:
+          description: The psp total refunded amount.
+          example: "1.23"
+          type: string
+        total_balance:
+          description: The psp total balance.
+          example: "1.23"
+          type: string
+        available_balance:
+          description: The psp available balance.
+          example: "1.23"
+          type: string
+      required:
+      - token_id
+      type: object
+    PayerBalanceByAddress:
+      description: Aggregated balance information of a specific token for a given
+        payer.
+      items:
+        $ref: '#/components/schemas/ReceivedAmountPerAddress'
+      type: array
+    ReceivedAmountPerAddress:
+      description: Total amount of a specific token received at a given address.
+      example:
+        address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+        total_received_amount: "0.15"
+      properties:
+        address:
+          description: Receiving address.
+          example: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          type: string
+        total_received_amount:
+          description: "Total tokens received at this address, as a decimal string."
+          example: "0.15"
+          type: string
+      required:
+      - address
+      - total_received_amount
+      type: object
     TSSKeyGenRequest:
       properties:
         threshold:
@@ -24454,6 +26604,22 @@ components:
       example: APPROVE
       type: string
     TokenizationActivityInfo:
+      example:
+        token_id: BTC
+        updated_timestamp: 1678886400000
+        initiator: steve@example.com
+        activity_id: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
+        created_timestamp: 1678886400000
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        transaction_ids:
+        - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        type: Issue
+        status: Processing
+        initiator_type: API
       properties:
         activity_id:
           description: The ID of the activity.
@@ -24496,12 +26662,13 @@ components:
           type: integer
       required:
       - activity_id
+      - created_timestamp
       - initiator
       - initiator_type
       - source
       - status
       - token_id
-      - transaction_ids  - created_timestamp
+      - transaction_ids
       - type
       - updated_timestamp
       type: object
@@ -24513,18 +26680,22 @@ components:
       - Failed
       type: string
     TokenizationAllowlistAddressNote:
+      example:
+        note: Trusted address
+        address: 0xabcdef...
+        created_timestamp: 1610445878970
       properties:
         address:
-          description: The allowed address.
+          description: The address on the allowlist.
           example: 0xabcdef...
           type: string
         note:
-          description: The note for the allowed address.
+          description: The note for the address on the allowlist.
           example: Trusted address
           type: string
         created_timestamp:
-          description: "The time when the allowlist address was created, in Unix timestamp\
-            \ format, measured in milliseconds."
+          description: "The time when the address was added to the allowlist, in Unix\
+            \ timestamp format, measured in milliseconds."
           example: 1610445878970
           format: int64
           type: integer
@@ -24533,18 +26704,22 @@ components:
       title: AllowlistAddressNote
       type: object
     TokenizationBlocklistAddressNote:
+      example:
+        note: Blocked address
+        address: 0xabcdef...
+        created_timestamp: 1610445878970
       properties:
         address:
-          description: The allowed address.
+          description: The address on the blocklist.
           example: 0xabcdef...
           type: string
         note:
-          description: The note for the allowed address.
-          example: Trusted address
+          description: The note for the address on the blocklist.
+          example: Blocked address
           type: string
         created_timestamp:
-          description: "The time when the blocklist address was created, in Unix timestamp\
-            \ format, measured in milliseconds."
+          description: "The time when the address was added to the blocklist, in Unix\
+            \ timestamp format, measured in milliseconds."
           example: 1610445878970
           format: int64
           type: integer
@@ -24553,6 +26728,12 @@ components:
       title: BlocklistAddressNote
       type: object
     TokenizationAddressPermission:
+      example:
+        execution_address: 0x0406db8351aa6839169bb363f63c2c808fee8f99
+        permissions:
+        - UpgradeContract
+        - PauseContract
+        created_timestamp: 1610445878970
       properties:
         execution_address:
           description: The execution address.
@@ -24604,9 +26785,30 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        addresses:
+        - address: 0x789abc...
+          note: reason for allowing
+        - address: 0xdef012...
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        action: Grant
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationUpdateBlocklistAddressesParams:
       properties:
         action:
@@ -24635,9 +26837,30 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        addresses:
+        - address: 0x789abc...
+          note: reason for blocklisting
+        - address: 0xdef012...
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        action: Grant
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationBurnTokenParams:
       properties:
         source:
@@ -24659,9 +26882,30 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        burns:
+        - amount: "0.99"
+          from_address: 0x051A924H4dCb264226d7B036C2893a0D344
+        - amount: "0.99"
+          from_address: 0x051A924H4dCb264226d7B036C2893a0D344
     TokenizationAllowlistActivationParams:
       properties:
         source:
@@ -24681,9 +26925,26 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        activation: true
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationIssueTokenParams:
       properties:
         chain_id:
@@ -24704,16 +26965,56 @@ components:
       - $ref: '#/components/schemas/TokenizationIssueTokenParams'
       - $ref: '#/components/schemas/TokenizationAppInitiator'
       - properties:
-          app_initiator:
-            description: |
-              The address of the app initiator.
-            example: 0x1234567890
-            type: string
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        chain_id: ETH
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        token_params:
+          standard: ERC20
+          symbol: MAT
+          token_access_activated: false
+          permissions:
+            pauser:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            salvager:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            minter:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            manager:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            admin:
+            - 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            upgrader:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            burner:
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            - 0x9cb2f210662eE543904023756Ibd247d45C9g8g8
+          decimals: 18
+          name: My Awesome Token
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationStatus:
       description: The status of the token.
       enum:
@@ -24724,6 +27025,34 @@ components:
       example: Active
       type: string
     TokenizationERC20TokenParams:
+      example:
+        standard: ERC20
+        symbol: MAT
+        token_access_activated: false
+        permissions:
+          pauser:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          salvager:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          minter:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          manager:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          admin:
+          - 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          upgrader:
+          - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          burner:
+          - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+          - 0x9cb2f210662eE543904023756Ibd247d45C9g8g8
+        decimals: 18
+        name: My Awesome Token
       properties:
         standard:
           $ref: '#/components/schemas/TokenizationTokenStandard'
@@ -24742,7 +27071,7 @@ components:
           maximum: 18
           minimum: 0
           type: integer
-        allowlist_activated:
+        token_access_activated:
           default: false
           description: "Whether the allowlist feature is activated for the token.\
             \ When activated, only addresses in the allowlist can perform token operations."
@@ -24756,7 +27085,77 @@ components:
       - standard
       - symbol
       type: object
+    TokenizationSOLTokenParams:
+      properties:
+        standard:
+          $ref: '#/components/schemas/TokenizationTokenStandard'
+        name:
+          description: The name of the token.
+          example: My Awesome Token
+          type: string
+        symbol:
+          description: The symbol of the token.
+          example: MAT
+          type: string
+        decimals:
+          description: The number of decimals for the token (0-18).
+          example: 18
+          format: int32
+          maximum: 18
+          minimum: 0
+          type: integer
+        token_access_activated:
+          default: false
+          description: "Whether the allowlist feature is activated for the token.\
+            \ When activated, only addresses in the allowlist can perform token operations."
+          example: false
+          type: boolean
+        permissions:
+          $ref: '#/components/schemas/TokenizationSolTokenPermissionParams'
+      required:
+      - decimals
+      - name
+      - standard
+      - symbol
+      type: object
     TokenizationEstimateFeeRequest:
+      example:
+        operation_params:
+          chain_id: ETH
+          operation_type: Issue
+          token_params:
+            standard: ERC20
+            symbol: MAT
+            token_access_activated: false
+            permissions:
+              pauser:
+              - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+              - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+              salvager:
+              - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+              - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+              minter:
+              - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+              - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+              manager:
+              - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+              - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+              admin:
+              - 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+              - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+              upgrader:
+              - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+              - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+              burner:
+              - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+              - 0x9cb2f210662eE543904023756Ibd247d45C9g8g8
+            decimals: 18
+            name: My Awesome Token
+          source:
+            wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            source_type: Org-Controlled
+          request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
       properties:
         operation_params:
           $ref: '#/components/schemas/TokenizationEstimateFeeRequest_operation_params'
@@ -24764,6 +27163,12 @@ components:
       - operation_params
       type: object
     TokenizationHoldingInfo:
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        address: 0x051A924H4dCb264226d7B036C2893a0D344
+        balance: "1000.50"
+        wallet_name: Main Wallet
+        address_label: Treasury Address
       properties:
         wallet_id:
           description: The unique identifier of the wallet holding the token.
@@ -24791,6 +27196,42 @@ components:
       - wallet_id
       type: object
     TokenizationListActivitiesResponse:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - token_id: BTC
+          updated_timestamp: 1678886400000
+          initiator: steve@example.com
+          activity_id: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
+          created_timestamp: 1678886400000
+          source:
+            wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            source_type: Org-Controlled
+          transaction_ids:
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          type: Issue
+          status: Processing
+          initiator_type: API
+        - token_id: BTC
+          updated_timestamp: 1678886400000
+          initiator: steve@example.com
+          activity_id: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
+          created_timestamp: 1678886400000
+          source:
+            wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            source_type: Org-Controlled
+          transaction_ids:
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          type: Issue
+          status: Processing
+          initiator_type: API
       properties:
         data:
           description: The list of tokenization activities.
@@ -24804,6 +27245,22 @@ components:
       - pagination
       type: object
     TokenizationListHoldingsResponse:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0x051A924H4dCb264226d7B036C2893a0D344
+          balance: "1000.50"
+          wallet_name: Main Wallet
+          address_label: Treasury Address
+        - wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0x051A924H4dCb264226d7B036C2893a0D344
+          balance: "1000.50"
+          wallet_name: Main Wallet
+          address_label: Treasury Address
       properties:
         data:
           description: List of token holdings.
@@ -24817,6 +27274,32 @@ components:
       - pagination
       type: object
     TokenizationListTokenInfoResponse:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - token_access_activated: false
+          token_id: ETH_CUSD2
+          chain_id: ETH
+          total_supply: "133399"
+          decimals: 18
+          token_name: CUSD
+          token_address: 0x1234567890123456789012345678901234567890
+          token_symbol: CUSD
+          holdings: "12399"
+          status: Active
+        - token_access_activated: false
+          token_id: ETH_CUSD2
+          chain_id: ETH
+          total_supply: "133399"
+          decimals: 18
+          token_name: CUSD
+          token_address: 0x1234567890123456789012345678901234567890
+          token_symbol: CUSD
+          holdings: "12399"
+          status: Active
       properties:
         data:
           description: List tokens.
@@ -24850,9 +27333,30 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        mints:
+        - amount: "0.99"
+          to_address: 0x051A924H4dCb264226d7B036C2893a0D344
+        - amount: "0.99"
+          to_address: 0x051A924H4dCb264226d7B036C2893a0D344
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationPauseTokenParams:
       properties:
         source:
@@ -24867,9 +27371,25 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationUnpauseTokenParams:
       properties:
         source:
@@ -24884,10 +27404,30 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationMpcOperationSource:
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+        source_type: Org-Controlled
       properties:
         source_type:
           $ref: '#/components/schemas/TokenizationOperationSourceType'
@@ -24897,7 +27437,7 @@ components:
           format: uuid
           type: string
         address:
-          description: The wallet address to interact with the token contract from.
+          description: The wallet address used to interact with the token contract.
           example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
           type: string
       required:
@@ -24906,6 +27446,8 @@ components:
       - wallet_id
       type: object
     TokenizationOperationResponse:
+      example:
+        activity_id: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
       properties:
         activity_id:
           description: The ID of the activity related to the tokenization operation.
@@ -24934,7 +27476,40 @@ components:
               $ref: '#/components/schemas/TokenizationAddressPermission'
             type: array
         type: object
+      example:
+        token_access_activated: false
+        token_id: ETH_CUSD2
+        chain_id: ETH
+        total_supply: "133399"
+        permissions:
+        - execution_address: 0x0406db8351aa6839169bb363f63c2c808fee8f99
+          permissions:
+          - UpgradeContract
+          - PauseContract
+          created_timestamp: 1610445878970
+        - execution_address: 0x0406db8351aa6839169bb363f63c2c808fee8f99
+          permissions:
+          - UpgradeContract
+          - PauseContract
+          created_timestamp: 1610445878970
+        decimals: 18
+        token_name: CUSD
+        token_address: 0x1234567890123456789012345678901234567890
+        token_symbol: CUSD
+        holdings: "12399"
+        status: Active
     TokenizationTokenInfo:
+      example:
+        token_access_activated: false
+        token_id: ETH_CUSD2
+        chain_id: ETH
+        total_supply: "133399"
+        decimals: 18
+        token_name: CUSD
+        token_address: 0x1234567890123456789012345678901234567890
+        token_symbol: CUSD
+        holdings: "12399"
+        status: Active
       properties:
         token_id:
           description: The unique token identifier.
@@ -24960,7 +27535,7 @@ components:
           description: The number of decimals of the token.
           example: 18
           type: integer
-        allowlist_activated:
+        token_access_activated:
           description: Whether the allowlist feature is activated for the token.
           example: false
           type: boolean
@@ -25014,7 +27589,29 @@ components:
       type: object
     TokenizationTokenPermissionParams:
       description: "Role-based permission settings for token contract. If not provided,\
-        \ all permissions will be granted to the issuance wallet by default."
+        \ all permissions will be granted to the issuing wallet by default."
+      example:
+        pauser:
+        - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+        - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+        salvager:
+        - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+        - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+        minter:
+        - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+        - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+        manager:
+        - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+        - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+        admin:
+        - 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+        - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+        upgrader:
+        - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+        - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+        burner:
+        - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+        - 0x9cb2f210662eE543904023756Ibd247d45C9g8g8
       properties:
         admin:
           description: List of addresses for the admin role.
@@ -25087,6 +27684,38 @@ components:
             type: string
           type: array
       type: object
+    TokenizationSolTokenPermissionParams:
+      description: "Role-based permission settings for the Solana Token-2022 Program.\
+        \ If not provided, all permissions will be granted to the issuing wallet by\
+        \ default."
+      properties:
+        permanent_delegate:
+          description: Solana wallet address assigned as the permanent delegate authority.
+            It can perform delegated operations on behalf of token holders.
+          example: 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          type: string
+        minter:
+          description: Solana wallet address assigned as the mint authority. It can
+            mint new tokens.
+          example: 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          type: string
+        freezer:
+          description: Solana wallet address assigned as the freeze authority. It
+            can freeze token accounts.
+          example: 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          type: string
+        updater:
+          description: Solana wallet address assigned as the update authority. It
+            can update token metadata.
+          example: 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          type: string
+        pauser:
+          description: "Solana wallet address assigned as the pause authority. It\
+            \ can pause or unpause all token activities including transfers, burns,\
+            \ and mints."
+          example: 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          type: string
+      type: object
     TokenizationTokenPermissionType:
       description: The type of permission for token operations.
       enum:
@@ -25097,6 +27726,9 @@ components:
       - RecoverTokens
       - UpgradeContract
       - PauseContract
+      - FreezeAccounts
+      - UpdateMetadata
+      - PermanentDelegate
       example: MintTokens
       type: string
     TokenizationTokenPermissionsResponse:
@@ -25118,6 +27750,7 @@ components:
       description: The standard of token to create.
       enum:
       - ERC20
+      - SPLToken2022
       example: ERC20
       type: string
     TokenizationOperationType:
@@ -25144,7 +27777,7 @@ components:
           format: uuid
           type: string
         address:
-          description: The wallet address to interact with the token contract from.
+          description: The wallet address used to interact with the token contract.
           example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
           type: string
       required:
@@ -25154,12 +27787,16 @@ components:
       type: object
     TokenizationEvmContractCallParams:
       description: The information about the EVM contract call.
+      example:
+        calldata: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+        type: EVM_Contract
+        value: "1.5"
       properties:
         type:
           $ref: '#/components/schemas/TokenizationContractCallType'
         calldata:
           description: |
-            The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.
+            The data that is used to invoke a specific function or method within the specified contract at the destination address.
           example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
           type: string
         value:
@@ -25170,6 +27807,18 @@ components:
       required:
       - calldata
       type: object
+    TokenizationSolContractCallParams:
+      description: The information about the Solana program call.
+      properties:
+        type:
+          $ref: '#/components/schemas/TokenizationContractCallType'
+        instructions:
+          items:
+            $ref: '#/components/schemas/SolContractCallInstruction'
+          type: array
+      required:
+      - instructions
+      type: object
     TokenizationContractCallRequest:
       allOf:
       - $ref: '#/components/schemas/TokenizationContractCallParams'
@@ -25177,9 +27826,29 @@ components:
       - properties:
           fee:
             $ref: '#/components/schemas/TransactionRequestFee'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - fee
         type: object
+      example:
+        data:
+          calldata: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
+          type: EVM_Contract
+          value: "1.5"
+        app_initiator: steve@example.com
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
     TokenizationContractCallParams:
       description: The information about the contract call.
       properties:
@@ -25205,9 +27874,50 @@ components:
       - properties:
           operation_type:
             $ref: '#/components/schemas/TokenizationOperationType'
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - operation_type
         type: object
+      example:
+        chain_id: ETH
+        operation_type: Issue
+        token_params:
+          standard: ERC20
+          symbol: MAT
+          token_access_activated: false
+          permissions:
+            pauser:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            salvager:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            minter:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            manager:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            admin:
+            - 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            upgrader:
+            - 0x742d35Cc6634C0532925a3b8D4C2C4e4C7C6B5f6
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            burner:
+            - 0x8ba1f109551bD432803012645Hac136c34B8f7f7
+            - 0x9cb2f210662eE543904023756Ibd247d45C9g8g8
+          decimals: 18
+          name: My Awesome Token
+        source:
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          source_type: Org-Controlled
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
       title: TokenizationIssueEstimateFeeParams
     TokenizationMintEstimateFeeParams:
       allOf:
@@ -25218,6 +27928,11 @@ components:
           token_id:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             type: string
         required:
         - operation_type
@@ -25233,6 +27948,11 @@ components:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
             type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - operation_type
         - token_id
@@ -25246,6 +27966,11 @@ components:
           token_id:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             type: string
         required:
         - operation_type
@@ -25261,6 +27986,11 @@ components:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
             type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - operation_type
         - token_id
@@ -25274,6 +28004,11 @@ components:
           token_id:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             type: string
         required:
         - operation_type
@@ -25289,6 +28024,11 @@ components:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
             type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - operation_type
         - token_id
@@ -25302,6 +28042,11 @@ components:
           token_id:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
+            type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             type: string
         required:
         - operation_type
@@ -25317,18 +28062,30 @@ components:
             description: The ID of the token.
             example: 8a4f9324-ef2a-43cf-9f0e-d7f99999d3e8
             type: string
+          request_id:
+            description: The request ID that is used to track a transaction request.
+              The request ID is provided by you and must be unique within your organization.
+            example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            type: string
         required:
         - operation_type
         - token_id
         type: object
     TokenizationUpdateAddressAction:
-      description: The operation to perform on the blocklist or allowlist addresses
-        list.
+      description: The operation to perform on the blocklist or allowlist.
       enum:
       - Grant
       - Revoke
       type: string
     TokenizationListEnabledChainsResponse:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - ETH
+        - ETH
       properties:
         data:
           description: The list of tokenization supported chains.
@@ -25347,8 +28104,149 @@ components:
       description: The type of contract call.
       enum:
       - EVM_Contract
+      - SOL_Contract
       example: EVM_Contract
       type: string
+    SweepToAddress:
+      description: The sweep to address information.
+      example:
+        address: 0x0000000000000000000000000000000000000000
+        chain_id: ETH
+        status: Valid
+      properties:
+        address:
+          description: The wallet address.
+          example: 0x0000000000000000000000000000000000000000
+          type: string
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain.\
+            \ You can retrieve the IDs of all the chains you can use by calling [List\
+            \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+          example: ETH
+          type: string
+        status:
+          $ref: '#/components/schemas/SweepToAddressStatus'
+      required:
+      - address
+      - chain_id
+      type: object
+    SweepToAddressStatus:
+      enum:
+      - Valid
+      - Invalid
+      example: Valid
+      type: string
+    CreateSweepToAddress:
+      description: The information of create sweep to address.
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        chain_id: ETH
+      properties:
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain.\
+            \ You can retrieve the IDs of all the chains you can use by calling [List\
+            \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+          example: ETH
+          type: string
+      required:
+      - chain_id
+      - wallet_id
+      title: The request body to generates a new sweep to addresses within a specified
+        wallet.
+      type: object
+    AutoSweepTask:
+      description: The auto sweep task information.
+      example:
+        failed_reasons:
+        - exist pending transaction
+        - exist pending transaction
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        token_id: ETH_USDT
+        updated_timestamp: 1610445878970
+        task_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        created_timestamp: 1610445878970
+        transaction_ids:
+        - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+        status: Submitted
+      properties:
+        task_id:
+          description: The auto sweep task ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          format: uuid
+          type: string
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        token_id:
+          description: "The token ID of the swept token. You can retrieve the IDs\
+            \ of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH_USDT
+          type: string
+        status:
+          $ref: '#/components/schemas/AutoSweepTaskStatus'
+        transaction_ids:
+          description: The IDs of the corresponding transactions of the auto sweep
+            task.
+          items:
+            example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+            type: string
+          type: array
+        failed_reasons:
+          description: Failed reason of create auto sweep transaction.
+          items:
+            example: exist pending transaction
+            type: string
+          type: array
+        created_timestamp:
+          description: "The time when the task was created, in Unix timestamp format,\
+            \ measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+        updated_timestamp:
+          description: "The time when the task was updated, in Unix timestamp format,\
+            \ measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+      required:
+      - created_timestamp
+      - status
+      - task_id
+      - token_id
+      - wallet_id
+      type: object
+    AutoSweepTaskStatus:
+      enum:
+      - Submitted
+      - TransactionCreated
+      example: Submitted
+      type: string
+    CreateAutoSweepTask:
+      description: The sweep to address information.
+      example:
+        wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        token_id: ETH_USDT
+      properties:
+        wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        token_id:
+          description: "The token ID of the swept token. You can retrieve the IDs\
+            \ of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH_USDT
+          type: string
+      required:
+      - token_id
+      - wallet_id
+      type: object
     list_supported_chains_200_response:
       example:
         pagination:
@@ -25533,11 +28431,13 @@ components:
           org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           name: Example Wallet
           wallet_type: Custodial
+          enable_auto_sweep: true
         - wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           wallet_subtype: Asset
           org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           name: Example Wallet
           wallet_type: Custodial
+          enable_auto_sweep: true
       properties:
         data:
           items:
@@ -29413,23 +32313,20 @@ components:
       properties:
         token_id:
           description: |
-            The token ID that identifies the cryptocurrency and its corresponding blockchain.
-
-            **Supported values**:
-              - **USDC**: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-              - **USDT**: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+            The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+              - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
           example: ETH_USDT
           type: string
         address:
           description: |
-            The blockchain address where crypto withdrawals will be sent. Must be a valid address format for the blockchain specified by `token_id`. For example:
-            - For `SOL_USDC`: Provide a Solana address.
-            - For `ETH_USDT`: Provide an Ethereum address.
+            The blockchain address in its native format. This is the actual destination address where funds will be sent. The address must match the format required by the specified blockchain. For example:
+              - For `SOL_USDC`: Provide a Solana address
+              - For `ETH_USDT`: Provide an Ethereum address
           example: 0xabc123456789def0000000000000000000000000
           type: string
         label:
-          description: |
-            A label to help identify the address's purpose.
+          description: A label to help identify the address's purpose.
           example: Main Withdrawal Address
           type: string
       required:
@@ -29441,7 +32338,7 @@ components:
         crypto_address_id: addr_ethusdt_20250506T123456_ab12cd
       properties:
         crypto_address_id:
-          description: The crypto address ID.
+          description: The ID of the deleted crypto address.
           example: addr_ethusdt_20250506T123456_ab12cd
           type: string
       required:
@@ -29710,6 +32607,168 @@ components:
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
+      type: object
+    list_payment_wallet_balances_200_response:
+      example:
+        data:
+        - total_balance: "1.23"
+          wallet_id: 123e4567-e89b-12d3-a456-426614174000
+          above_sweep_threshold_balance: "1.23"
+          token_id: ETH_USDT
+          swept_balance: "1.23"
+          available_balance: "1.23"
+        - total_balance: "1.23"
+          wallet_id: 123e4567-e89b-12d3-a456-426614174000
+          above_sweep_threshold_balance: "1.23"
+          token_id: ETH_USDT
+          swept_balance: "1.23"
+          available_balance: "1.23"
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PaymentWalletBalance'
+          type: array
+      type: object
+    list_merchant_balances_200_response:
+      example:
+        data:
+        - settled_amount: "1.23"
+          total_balance: "1.23"
+          token_id: ETH_USDT
+          total_received_amount: "1.23"
+          merchant_id: "1"
+          acquiring_type: Order
+          available_balance: "1.23"
+          refunded_amount: "1.23"
+        - settled_amount: "1.23"
+          total_balance: "1.23"
+          token_id: ETH_USDT
+          total_received_amount: "1.23"
+          merchant_id: "1"
+          acquiring_type: Order
+          available_balance: "1.23"
+          refunded_amount: "1.23"
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/MerchantBalance'
+          type: array
+      type: object
+    list_wallet_sweep_to_addresses_200_response:
+      example:
+        data:
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+          status: Valid
+        - address: 0x0000000000000000000000000000000000000000
+          chain_id: ETH
+          status: Valid
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SweepToAddress'
+          type: array
+      type: object
+    list_auto_sweep_task_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - failed_reasons:
+          - exist pending transaction
+          - exist pending transaction
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          task_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          created_timestamp: 1610445878970
+          transaction_ids:
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          status: Submitted
+        - failed_reasons:
+          - exist pending transaction
+          - exist pending transaction
+          wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          task_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          created_timestamp: 1610445878970
+          transaction_ids:
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          - 0011039d-27fb-49ba-b172-6e0aa80e37ec
+          status: Submitted
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AutoSweepTask'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    list_tokenization_blocklist_addresses_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - note: Blocked address
+          address: 0xabcdef...
+          created_timestamp: 1610445878970
+        - note: Blocked address
+          address: 0xabcdef...
+          created_timestamp: 1610445878970
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TokenizationBlocklistAddressNote'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      type: object
+    TokenizationAllowlistAddressesResponse:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - note: Trusted address
+          address: 0xabcdef...
+          created_timestamp: 1610445878970
+        - note: Trusted address
+          address: 0xabcdef...
+          created_timestamp: 1610445878970
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TokenizationAllowlistAddressNote'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      title: TokenizationAllowlistAddressesResponse
+      type: object
+    get_tokenization_allowlist_activation_200_response:
+      description: The response schema for retrieving the allowlist activation status.
+      example:
+        activated: true
+      properties:
+        activated:
+          description: Indicates whether the allowlist feature is activated for the
+            token.
+          example: true
+          type: boolean
+      required:
+      - activated
       type: object
     EstimatedEvmEip1559Fee_slow:
       allOf:
@@ -30137,7 +33196,8 @@ components:
           example: 0x789abc...
           type: string
         note:
-          description: "An optional note for the address, primarily used when adding."
+          description: "An optional note for the address, primarily used when adding\
+            \ addresses."
           example: Allowed address for trusted partner
           type: string
       required:
@@ -30150,20 +33210,24 @@ components:
           example: 0x789abc...
           type: string
         note:
-          description: "An optional note for the address, primarily used when adding."
+          description: "An optional note for the address, primarily used when adding\
+            \ addresses."
           example: Blocklist address for malicious activity
           type: string
       required:
       - address
       type: object
     TokenizationBurnTokenParams_burns_inner:
+      example:
+        amount: "0.99"
+        from_address: 0x051A924H4dCb264226d7B036C2893a0D344
       properties:
         amount:
-          description: The amount of tokens to burn from this source.
+          description: The amount of tokens to burn.
           example: "0.99"
           type: string
         from_address:
-          description: The address to burn tokens from for this source.
+          description: The address to burn tokens from.
           example: 0x051A924H4dCb264226d7B036C2893a0D344
           type: string
       required:
@@ -30174,9 +33238,11 @@ components:
       discriminator:
         mapping:
           ERC20: '#/components/schemas/TokenizationERC20TokenParams'
+          SPLToken2022: '#/components/schemas/TokenizationSOLTokenParams'
         propertyName: standard
       oneOf:
       - $ref: '#/components/schemas/TokenizationERC20TokenParams'
+      - $ref: '#/components/schemas/TokenizationSOLTokenParams'
     TokenizationEstimateFeeRequest_operation_params:
       discriminator:
         mapping:
@@ -30201,6 +33267,9 @@ components:
       - $ref: '#/components/schemas/TokenizationToggleAllowlistEstimateFeeParams'
       - $ref: '#/components/schemas/TokenizationContractCallEstimateFeeParams'
     TokenizationMintTokenParams_mints_inner:
+      example:
+        amount: "0.99"
+        to_address: 0x051A924H4dCb264226d7B036C2893a0D344
       properties:
         amount:
           description: The amount of tokens to mint for this recipient.
@@ -30218,9 +33287,11 @@ components:
       discriminator:
         mapping:
           EVM_Contract: '#/components/schemas/TokenizationEvmContractCallParams'
+          SOL_Contract: '#/components/schemas/TokenizationSolContractCallParams'
         propertyName: type
       oneOf:
       - $ref: '#/components/schemas/TokenizationEvmContractCallParams'
+      - $ref: '#/components/schemas/TokenizationSolContractCallParams'
   securitySchemes:
     CoboAuth:
       description: |

@@ -19,11 +19,11 @@ var _ MappedNullable = &TokenizationAllowlistAddressNote{}
 
 // TokenizationAllowlistAddressNote struct for TokenizationAllowlistAddressNote
 type TokenizationAllowlistAddressNote struct {
-	// The allowed address.
+	// The address on the allowlist.
 	Address string `json:"address"`
-	// The note for the allowed address.
+	// The note for the address on the allowlist.
 	Note *string `json:"note,omitempty"`
-	// The time when the allowlist address was created, in Unix timestamp format, measured in milliseconds.
+	// The time when the address was added to the allowlist, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 }
 

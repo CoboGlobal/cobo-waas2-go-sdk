@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Name** | **string** | The wallet name. | 
 **OrgId** | **string** | The ID of the owning organization. | 
+**EnableAutoSweep** | Pointer to **bool** | Enable the auto sweep feature for the wallet | [optional] 
 **ProjectId** | Pointer to **string** | The project ID. | [optional] 
 **ProjectName** | Pointer to **string** | The project name. | [optional] 
 **VaultId** | **string** | The ID of the owning vault. | 
@@ -132,6 +133,31 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+
+### GetEnableAutoSweep
+
+`func (o *MPCWalletInfo) GetEnableAutoSweep() bool`
+
+GetEnableAutoSweep returns the EnableAutoSweep field if non-nil, zero value otherwise.
+
+### GetEnableAutoSweepOk
+
+`func (o *MPCWalletInfo) GetEnableAutoSweepOk() (*bool, bool)`
+
+GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnableAutoSweep
+
+`func (o *MPCWalletInfo) SetEnableAutoSweep(v bool)`
+
+SetEnableAutoSweep sets EnableAutoSweep field to given value.
+
+### HasEnableAutoSweep
+
+`func (o *MPCWalletInfo) HasEnableAutoSweep() bool`
+
+HasEnableAutoSweep returns a boolean if a field has been set.
 
 ### GetProjectId
 

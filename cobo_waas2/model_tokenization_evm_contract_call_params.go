@@ -20,7 +20,7 @@ var _ MappedNullable = &TokenizationEvmContractCallParams{}
 // TokenizationEvmContractCallParams The information about the EVM contract call.
 type TokenizationEvmContractCallParams struct {
 	Type *TokenizationContractCallType `json:"type,omitempty"`
-	// The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters. 
+	// The data that is used to invoke a specific function or method within the specified contract at the destination address. 
 	Calldata string `json:"calldata"`
 	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Value *string `json:"value,omitempty"`

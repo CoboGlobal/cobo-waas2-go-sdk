@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **TransactionId** | Pointer to **string** | The transaction ID. | [optional] 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
-**BrokerUser** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
+**AddressOwner** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
 **Spender** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
 **Approver** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
 
@@ -105,30 +105,30 @@ SetRequestId sets RequestId field to given value.
 
 HasRequestId returns a boolean if a field has been set.
 
-### GetBrokerUser
+### GetAddressOwner
 
-`func (o *ApprovalDetail) GetBrokerUser() RoleDetail`
+`func (o *ApprovalDetail) GetAddressOwner() RoleDetail`
 
-GetBrokerUser returns the BrokerUser field if non-nil, zero value otherwise.
+GetAddressOwner returns the AddressOwner field if non-nil, zero value otherwise.
 
-### GetBrokerUserOk
+### GetAddressOwnerOk
 
-`func (o *ApprovalDetail) GetBrokerUserOk() (*RoleDetail, bool)`
+`func (o *ApprovalDetail) GetAddressOwnerOk() (*RoleDetail, bool)`
 
-GetBrokerUserOk returns a tuple with the BrokerUser field if it's non-nil, zero value otherwise
+GetAddressOwnerOk returns a tuple with the AddressOwner field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetBrokerUser
+### SetAddressOwner
 
-`func (o *ApprovalDetail) SetBrokerUser(v RoleDetail)`
+`func (o *ApprovalDetail) SetAddressOwner(v RoleDetail)`
 
-SetBrokerUser sets BrokerUser field to given value.
+SetAddressOwner sets AddressOwner field to given value.
 
-### HasBrokerUser
+### HasAddressOwner
 
-`func (o *ApprovalDetail) HasBrokerUser() bool`
+`func (o *ApprovalDetail) HasAddressOwner() bool`
 
-HasBrokerUser returns a boolean if a field has been set.
+HasAddressOwner returns a boolean if a field has been set.
 
 ### GetSpender
 

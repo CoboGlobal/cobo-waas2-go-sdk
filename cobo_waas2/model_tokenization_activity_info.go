@@ -30,9 +30,9 @@ type TokenizationActivityInfo struct {
 	Initiator string `json:"initiator"`
 	InitiatorType TransactionInitiatorType `json:"initiator_type"`
 	// The IDs of the corresponding transactions of the activity.
-	TransactionIds []string `json:"transaction_ids,omitempty"`
+	TransactionIds []string `json:"transaction_ids"`
 	// The creation timestamp of the activity in milliseconds since the Unix epoch.
-	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
+	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The last update timestamp of the activity in milliseconds since the Unix epoch.
 	UpdatedTimestamp int64 `json:"updated_timestamp"`
 }
@@ -43,7 +43,7 @@ type _TokenizationActivityInfo TokenizationActivityInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenizationActivityInfo(activityId string, tokenId string, type_ TokenizationOperationType, status TokenizationActivityStatus, source TokenizationTokenOperationSource, initiator string, initiatorType TransactionInitiatorType, updatedTimestamp int64) *TokenizationActivityInfo {
+func NewTokenizationActivityInfo(activityId string, tokenId string, type_ TokenizationOperationType, status TokenizationActivityStatus, source TokenizationTokenOperationSource, initiator string, initiatorType TransactionInitiatorType, transactionIds []string, createdTimestamp int64, updatedTimestamp int64) *TokenizationActivityInfo {
 	this := TokenizationActivityInfo{}
 	this.ActivityId = activityId
 	this.TokenId = tokenId
@@ -52,6 +52,8 @@ func NewTokenizationActivityInfo(activityId string, tokenId string, type_ Tokeni
 	this.Source = source
 	this.Initiator = initiator
 	this.InitiatorType = initiatorType
+	this.TransactionIds = transactionIds
+	this.CreatedTimestamp = createdTimestamp
 	this.UpdatedTimestamp = updatedTimestamp
 	return &this
 }
@@ -232,68 +234,52 @@ func (o *TokenizationActivityInfo) SetInitiatorType(v TransactionInitiatorType) 
 	o.InitiatorType = v
 }
 
-// GetTransactionIds returns the TransactionIds field value if set, zero value otherwise.
+// GetTransactionIds returns the TransactionIds field value
 func (o *TokenizationActivityInfo) GetTransactionIds() []string {
-	if o == nil || IsNil(o.TransactionIds) {
+	if o == nil {
 		var ret []string
 		return ret
 	}
+
 	return o.TransactionIds
 }
 
-// GetTransactionIdsOk returns a tuple with the TransactionIds field value if set, nil otherwise
+// GetTransactionIdsOk returns a tuple with the TransactionIds field value
 // and a boolean to check if the value has been set.
 func (o *TokenizationActivityInfo) GetTransactionIdsOk() ([]string, bool) {
-	if o == nil || IsNil(o.TransactionIds) {
+	if o == nil {
 		return nil, false
 	}
 	return o.TransactionIds, true
 }
 
-// HasTransactionIds returns a boolean if a field has been set.
-func (o *TokenizationActivityInfo) HasTransactionIds() bool {
-	if o != nil && !IsNil(o.TransactionIds) {
-		return true
-	}
-
-	return false
-}
-
-// SetTransactionIds gets a reference to the given []string and assigns it to the TransactionIds field.
+// SetTransactionIds sets field value
 func (o *TokenizationActivityInfo) SetTransactionIds(v []string) {
 	o.TransactionIds = v
 }
 
-// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
+// GetCreatedTimestamp returns the CreatedTimestamp field value
 func (o *TokenizationActivityInfo) GetCreatedTimestamp() int64 {
-	if o == nil || IsNil(o.CreatedTimestamp) {
+	if o == nil {
 		var ret int64
 		return ret
 	}
-	return *o.CreatedTimestamp
+
+	return o.CreatedTimestamp
 }
 
-// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value
 // and a boolean to check if the value has been set.
 func (o *TokenizationActivityInfo) GetCreatedTimestampOk() (*int64, bool) {
-	if o == nil || IsNil(o.CreatedTimestamp) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedTimestamp, true
+	return &o.CreatedTimestamp, true
 }
 
-// HasCreatedTimestamp returns a boolean if a field has been set.
-func (o *TokenizationActivityInfo) HasCreatedTimestamp() bool {
-	if o != nil && !IsNil(o.CreatedTimestamp) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+// SetCreatedTimestamp sets field value
 func (o *TokenizationActivityInfo) SetCreatedTimestamp(v int64) {
-	o.CreatedTimestamp = &v
+	o.CreatedTimestamp = v
 }
 
 // GetUpdatedTimestamp returns the UpdatedTimestamp field value
@@ -337,12 +323,8 @@ func (o TokenizationActivityInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize["source"] = o.Source
 	toSerialize["initiator"] = o.Initiator
 	toSerialize["initiator_type"] = o.InitiatorType
-	if !IsNil(o.TransactionIds) {
-		toSerialize["transaction_ids"] = o.TransactionIds
-	}
-	if !IsNil(o.CreatedTimestamp) {
-		toSerialize["created_timestamp"] = o.CreatedTimestamp
-	}
+	toSerialize["transaction_ids"] = o.TransactionIds
+	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	return toSerialize, nil
 }
@@ -359,6 +341,8 @@ func (o *TokenizationActivityInfo) UnmarshalJSON(data []byte) (err error) {
 		"source",
 		"initiator",
 		"initiator_type",
+		"transaction_ids",
+		"created_timestamp",
 		"updated_timestamp",
 	}
 

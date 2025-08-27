@@ -5,13 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **WalletType** | [**WalletType**](WalletType.md) |  | 
-**Name** | **string** | The wallet name. | 
+**Name** | Pointer to **string** | The wallet name. | [optional] 
+**EnableAutoSweep** | Pointer to **bool** | Enable the auto sweep feature for the wallet | [optional] 
 
 ## Methods
 
 ### NewUpdateMpcWalletParams
 
-`func NewUpdateMpcWalletParams(walletType WalletType, name string, ) *UpdateMpcWalletParams`
+`func NewUpdateMpcWalletParams(walletType WalletType, ) *UpdateMpcWalletParams`
 
 NewUpdateMpcWalletParams instantiates a new UpdateMpcWalletParams object
 This constructor will assign default values to properties that have it defined,
@@ -65,6 +66,36 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+### HasName
+
+`func (o *UpdateMpcWalletParams) HasName() bool`
+
+HasName returns a boolean if a field has been set.
+
+### GetEnableAutoSweep
+
+`func (o *UpdateMpcWalletParams) GetEnableAutoSweep() bool`
+
+GetEnableAutoSweep returns the EnableAutoSweep field if non-nil, zero value otherwise.
+
+### GetEnableAutoSweepOk
+
+`func (o *UpdateMpcWalletParams) GetEnableAutoSweepOk() (*bool, bool)`
+
+GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnableAutoSweep
+
+`func (o *UpdateMpcWalletParams) SetEnableAutoSweep(v bool)`
+
+SetEnableAutoSweep sets EnableAutoSweep field to given value.
+
+### HasEnableAutoSweep
+
+`func (o *UpdateMpcWalletParams) HasEnableAutoSweep() bool`
+
+HasEnableAutoSweep returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

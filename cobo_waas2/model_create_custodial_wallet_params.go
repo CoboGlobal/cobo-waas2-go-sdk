@@ -23,6 +23,8 @@ type CreateCustodialWalletParams struct {
 	Name string `json:"name"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
+	// Enable the auto sweep feature for the wallet. This parameter only applies to MPC and Web3 wallets.
+	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 }
 
 type _CreateCustodialWalletParams CreateCustodialWalletParams
@@ -119,6 +121,38 @@ func (o *CreateCustodialWalletParams) SetWalletSubtype(v WalletSubtype) {
 	o.WalletSubtype = v
 }
 
+// GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
+func (o *CreateCustodialWalletParams) GetEnableAutoSweep() bool {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableAutoSweep
+}
+
+// GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateCustodialWalletParams) GetEnableAutoSweepOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		return nil, false
+	}
+	return o.EnableAutoSweep, true
+}
+
+// HasEnableAutoSweep returns a boolean if a field has been set.
+func (o *CreateCustodialWalletParams) HasEnableAutoSweep() bool {
+	if o != nil && !IsNil(o.EnableAutoSweep) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAutoSweep gets a reference to the given bool and assigns it to the EnableAutoSweep field.
+func (o *CreateCustodialWalletParams) SetEnableAutoSweep(v bool) {
+	o.EnableAutoSweep = &v
+}
+
 func (o CreateCustodialWalletParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -132,6 +166,9 @@ func (o CreateCustodialWalletParams) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	toSerialize["wallet_type"] = o.WalletType
 	toSerialize["wallet_subtype"] = o.WalletSubtype
+	if !IsNil(o.EnableAutoSweep) {
+		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
+	}
 	return toSerialize, nil
 }
 

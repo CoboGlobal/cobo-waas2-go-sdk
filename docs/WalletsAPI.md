@@ -2396,7 +2396,7 @@ import (
 
 func main() {
 	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-	updateWalletParams := coboWaas2.UpdateWalletParams{UpdateCustodialWalletParams: coboWaas2.NewUpdateCustodialWalletParams(coboWaas2.WalletType("Custodial"), "My WaaS 2.0 Wallet")}
+	updateWalletParams := coboWaas2.UpdateWalletParams{UpdateCustodialWalletParams: coboWaas2.NewUpdateCustodialWalletParams(coboWaas2.WalletType("Custodial"))}
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

@@ -27,6 +27,8 @@ type ExchangeWalletInfo struct {
 	Name string `json:"name"`
 	// The ID of the owning organization.
 	OrgId string `json:"org_id"`
+	// Enable the auto sweep feature for the wallet
+	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	// The API key of your exchange account.
 	Apikey string `json:"apikey"`
 	ExchangeId ExchangeId `json:"exchange_id"`
@@ -180,6 +182,38 @@ func (o *ExchangeWalletInfo) SetOrgId(v string) {
 	o.OrgId = v
 }
 
+// GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
+func (o *ExchangeWalletInfo) GetEnableAutoSweep() bool {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		var ret bool
+		return ret
+	}
+	return *o.EnableAutoSweep
+}
+
+// GetEnableAutoSweepOk returns a tuple with the EnableAutoSweep field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ExchangeWalletInfo) GetEnableAutoSweepOk() (*bool, bool) {
+	if o == nil || IsNil(o.EnableAutoSweep) {
+		return nil, false
+	}
+	return o.EnableAutoSweep, true
+}
+
+// HasEnableAutoSweep returns a boolean if a field has been set.
+func (o *ExchangeWalletInfo) HasEnableAutoSweep() bool {
+	if o != nil && !IsNil(o.EnableAutoSweep) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAutoSweep gets a reference to the given bool and assigns it to the EnableAutoSweep field.
+func (o *ExchangeWalletInfo) SetEnableAutoSweep(v bool) {
+	o.EnableAutoSweep = &v
+}
+
 // GetApikey returns the Apikey field value
 func (o *ExchangeWalletInfo) GetApikey() string {
 	if o == nil {
@@ -275,6 +309,9 @@ func (o ExchangeWalletInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize["wallet_subtype"] = o.WalletSubtype
 	toSerialize["name"] = o.Name
 	toSerialize["org_id"] = o.OrgId
+	if !IsNil(o.EnableAutoSweep) {
+		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
+	}
 	toSerialize["apikey"] = o.Apikey
 	toSerialize["exchange_id"] = o.ExchangeId
 	if !IsNil(o.MainWalletId) {
