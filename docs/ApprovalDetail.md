@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TransactionId** | Pointer to **string** | The transaction ID. | [optional] 
-**CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
-**RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
+**TransactionId** | Pointer to **string** | Transaction ID. | [optional] 
+**CoboId** | Pointer to **string** | Cobo ID used to track a transaction. | [optional] 
+**RequestId** | Pointer to **string** | Request ID used to track a transaction request. | [optional] 
 **AddressOwner** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
 **Spender** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 
 **Approver** | Pointer to [**RoleDetail**](RoleDetail.md) |  | [optional] 

@@ -15,13 +15,13 @@ import (
 // checks if the ApprovalTemplate type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApprovalTemplate{}
 
-// ApprovalTemplate The template for transaction approval details.
+// ApprovalTemplate Approval template details.
 type ApprovalTemplate struct {
-	// The business key that is used to identify the transaction.
+	// Business key used to identify the type of approval template.
 	BusinessKey *string `json:"business_key,omitempty"`
-	// The template text that is used for the transaction approval.
+	// Text content defined in the approval template used to generate approval messages shown to users
 	TemplateText *string `json:"template_text,omitempty"`
-	// The version of the template used for the transaction approval.
+	// Version of the approval template.
 	TemplateVersion *string `json:"template_version,omitempty"`
 }
 

@@ -13,25 +13,25 @@ import (
 	"fmt"
 )
 
-// ApprovalTransactionResult The transaction approval result. Possible values include:    - `-1`: The transaction is rejected.   - `0`: The transaction is pending approval.   - `1`: The transaction is approved. 
-type ApprovalTransactionResult int32
+// ApprovalTransactionResult Result of transaction approval. Possible values include:    - `Rejected`: The transaction is rejected.   - `Pending`: The transaction is pending approval.   - `Approved`: The transaction is approved. 
+type ApprovalTransactionResult string
 
 // List of ApprovalTransactionResult
 const (
-	APPROVALTRANSACTIONRESULT_REJECTED ApprovalTransactionResult = -1
-	APPROVALTRANSACTIONRESULT_PENDING ApprovalTransactionResult = 0
-	APPROVALTRANSACTIONRESULT_APPROVED ApprovalTransactionResult = 1
+	APPROVALTRANSACTIONRESULT_REJECTED ApprovalTransactionResult = "Rejected"
+	APPROVALTRANSACTIONRESULT_PENDING ApprovalTransactionResult = "Pending"
+	APPROVALTRANSACTIONRESULT_APPROVED ApprovalTransactionResult = "Approved"
 )
 
 // All allowed values of ApprovalTransactionResult enum
 var AllowedApprovalTransactionResultEnumValues = []ApprovalTransactionResult{
-	-1,
-	0,
-	1,
+	"Rejected",
+	"Pending",
+	"Approved",
 }
 
 func (v *ApprovalTransactionResult) UnmarshalJSON(src []byte) error {
-	var value int32
+	var value string
 	err := json.Unmarshal(src, &value)
 	if err != nil {
 		return err
@@ -43,13 +43,13 @@ func (v *ApprovalTransactionResult) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-	*v = ApprovalTransactionResult(-1)
+	*v = ApprovalTransactionResult("unknown")
 	return nil
 }
 
 // NewApprovalTransactionResultFromValue returns a pointer to a valid ApprovalTransactionResult
 // for the value passed as argument, or an error if the value passed is not allowed by the enum
-func NewApprovalTransactionResultFromValue(v int32) (*ApprovalTransactionResult, error) {
+func NewApprovalTransactionResultFromValue(v string) (*ApprovalTransactionResult, error) {
 	ev := ApprovalTransactionResult(v)
 	if ev.IsValid() {
 		return &ev, nil

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | **string** | The organization ID. | 
+**BizOrgId** | Pointer to **int32** | An internal business ID assigned by Cobo. Used mainly by Cobo&#39;s customer support to locate the organization. | [optional] 
 **Name** | Pointer to **string** | The organization name. | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The organization&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 
@@ -46,6 +47,31 @@ and a boolean to check if the value has been set.
 
 SetOrgId sets OrgId field to given value.
 
+
+### GetBizOrgId
+
+`func (o *OrgInfo) GetBizOrgId() int32`
+
+GetBizOrgId returns the BizOrgId field if non-nil, zero value otherwise.
+
+### GetBizOrgIdOk
+
+`func (o *OrgInfo) GetBizOrgIdOk() (*int32, bool)`
+
+GetBizOrgIdOk returns a tuple with the BizOrgId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBizOrgId
+
+`func (o *OrgInfo) SetBizOrgId(v int32)`
+
+SetBizOrgId sets BizOrgId field to given value.
+
+### HasBizOrgId
+
+`func (o *OrgInfo) HasBizOrgId() bool`
+
+HasBizOrgId returns a boolean if a field has been set.
 
 ### GetName
 

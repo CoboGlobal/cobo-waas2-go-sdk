@@ -17,25 +17,25 @@ import (
 // checks if the AddressBook type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AddressBook{}
 
-// AddressBook The information of an address book entry.
+// AddressBook The information of an Address Book entry.
 type AddressBook struct {
-	// The organization ID.
+	// Organization ID.
 	OrgId string `json:"org_id"`
-	// The entry ID.
+	// Address Book entry ID.
 	EntryId string `json:"entry_id"`
-	// The wallet address.
+	// Wallet address.
 	Address string `json:"address"`
-	// The memo.
+	// Optional memo or tag required by some chains.
 	Memo *string `json:"memo,omitempty"`
-	// The wallet name.
+	// Wallet name.
 	WalletName *string `json:"wallet_name,omitempty"`
 	WalletType *WalletType `json:"wallet_type,omitempty"`
 	WalletSubtype *WalletSubtype `json:"wallet_subtype,omitempty"`
-	// The address label.
+	// A user-defined label for the address.
 	Label string `json:"label"`
 	// A list of chain IDs.
 	ChainIds []string `json:"chain_ids,omitempty"`
-	// The email of the address owner.
+	// Email of the address owner.
 	Email *string `json:"email,omitempty"`
 	Encoding *AddressEncoding `json:"encoding,omitempty"`
 }

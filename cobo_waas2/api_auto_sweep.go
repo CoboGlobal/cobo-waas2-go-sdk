@@ -27,7 +27,7 @@ type ApiCreateAutoSweepTaskRequest struct {
 	createAutoSweepTask *CreateAutoSweepTask
 }
 
-// The request body to generates a new sweep to addresses within a specified wallet.
+// The request body to create an auto-sweep task.
 func (r ApiCreateAutoSweepTaskRequest) CreateAutoSweepTask(createAutoSweepTask CreateAutoSweepTask) ApiCreateAutoSweepTaskRequest {
 	r.createAutoSweepTask = &createAutoSweepTask
 	return r
@@ -38,9 +38,9 @@ func (r ApiCreateAutoSweepTaskRequest) Execute() (*AutoSweepTask, *http.Response
 }
 
 /*
-CreateAutoSweepTask create auto sweep task
+CreateAutoSweepTask Create auto-sweep task
 
-This operation create a new auto sweep task.
+This operation creates an auto-sweep task for the specified wallet and token. The task triggers transactions to sweep the full balance of the specified token to the configured sweep-to address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -157,7 +157,7 @@ type ApiCreateWalletSweepToAddressesRequest struct {
 	createSweepToAddress *CreateSweepToAddress
 }
 
-// The request body to generates a new sweep to addresses within a specified wallet.
+// The request body to generates a new sweep-to address within a specified wallet.
 func (r ApiCreateWalletSweepToAddressesRequest) CreateSweepToAddress(createSweepToAddress CreateSweepToAddress) ApiCreateWalletSweepToAddressesRequest {
 	r.createSweepToAddress = &createSweepToAddress
 	return r
@@ -168,9 +168,13 @@ func (r ApiCreateWalletSweepToAddressesRequest) Execute() (*SweepToAddress, *htt
 }
 
 /*
-CreateWalletSweepToAddresses create wallet sweep to addresses
+CreateWalletSweepToAddresses create sweep-to address
 
-This operation create a new sweep to address for the wallet. The old sweep to address will become invalid.
+This operation creates a new sweep-to address for the specified wallet. The previously sweep-to address for the same token becomes invalid once the new one is created.
+
+Use this operation to change the sweep-to address when your setup changes, you switch networks, or the current address is compromised or tainted by suspicious funds. You can withdraw any remaining balances from the old sweep-to addresses to the new address or another designated destination.
+
+<Note>Sweep-to addresses are only applicable to MPC Wallets and Web3 Wallets with the auto-sweep feature enabled.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -292,9 +296,9 @@ func (r ApiGetAutoSweepTaskByIdRequest) Execute() (*AutoSweepTask, *http.Respons
 }
 
 /*
-GetAutoSweepTaskById Get auto sweep task information
+GetAutoSweepTaskById Get auto-sweep task details
 
-This operation retrieves detailed information about a specified auto sweep task.
+This operation retrieves detailed information about a specified auto-sweep task.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -432,7 +436,7 @@ func (r ApiListAutoSweepTaskRequest) TokenId(tokenId string) ApiListAutoSweepTas
 	return r
 }
 
-// A list of auto sweep task IDs, separated by comma.
+// A list of auto-sweep task IDs, separated by comma.
 func (r ApiListAutoSweepTaskRequest) TaskIds(taskIds string) ApiListAutoSweepTaskRequest {
 	r.taskIds = &taskIds
 	return r
@@ -479,9 +483,9 @@ func (r ApiListAutoSweepTaskRequest) Execute() (*ListAutoSweepTask200Response, *
 }
 
 /*
-ListAutoSweepTask List wallet auto sweep task
+ListAutoSweepTask List auto-sweep tasks
 
-This operation retrieves a list of auto sweep task.
+This operation retrieves a list of auto-sweep tasks for the specified wallet. You can filter the results by token ID, task IDs, or a created-time range.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -641,9 +645,10 @@ func (r ApiListWalletSweepToAddressesRequest) Execute() (*ListWalletSweepToAddre
 }
 
 /*
-ListWalletSweepToAddresses List wallet sweep to addresses
+ListWalletSweepToAddresses List sweep-to addresses
 
-This operation retrieves a list of sweep to addresses within your wallet.
+This operation retrieves a list of sweep-to addresses within your wallet.
+<Note>Sweep-to addresses are only applicable to MPC Wallets and Web3 Wallets with the auto-sweep feature enabled.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

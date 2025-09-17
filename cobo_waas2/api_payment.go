@@ -431,6 +431,8 @@ This operation creates a merchant and links it to a specified wallet. Payments t
 
 Upon successful creation, a merchant ID is generated and returned along with the merchant's information.
 
+If you are a merchant (directly serving the payer), you only need to create one merchant and do not need to configure the developer fee rate. The developer fee rate only applies to platforms such as payment service providers (PSPs) that charge fees to their downstream merchants.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateMerchantRequest
@@ -1228,9 +1230,9 @@ func (r ApiGetPayerBalanceByAddressRequest) Execute() ([]ReceivedAmountPerAddres
 }
 
 /*
-GetPayerBalanceByAddress Get payer balance by address
+GetPayerBalanceByAddress Get payer balance
 
-This operation retrieves aggregated balance details for a specific token and payer, with amounts grouped by address.
+This operation retrieves the total amount received for a specific payer. The information is grouped by token and receiving address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1493,9 +1495,9 @@ func (r ApiGetPspBalanceRequest) Execute() (*PspBalance, *http.Response, error) 
 }
 
 /*
-GetPspBalance Get psp balance
+GetPspBalance Get developer balance
 
-This operation retrieves the information of psp balance.
+This operation retrieves the balance information for you as the developer. The balance information is grouped by token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2781,7 +2783,7 @@ func (r ApiListMerchantBalancesRequest) TokenId(tokenId string) ApiListMerchantB
 	return r
 }
 
-// AcquiringType defines the acquisition logic used in the payment flow: - &#x60;Order&#x60;: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis. - &#x60;TopUp&#x60;: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models. 
+// The payment acquisition type. - &#x60;Order&#x60;: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions. - &#x60;TopUp&#x60;: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models. 
 func (r ApiListMerchantBalancesRequest) AcquiringType(acquiringType AcquiringType) ApiListMerchantBalancesRequest {
 	r.acquiringType = &acquiringType
 	return r
@@ -2800,7 +2802,7 @@ func (r ApiListMerchantBalancesRequest) Execute() (*ListMerchantBalances200Respo
 /*
 ListMerchantBalances List merchant balances
 
-This operation retrieves the information of merchant balances.
+This operation retrieves the balance information for specified merchants. The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3427,7 +3429,7 @@ func (r ApiListPaymentWalletBalancesRequest) Execute() (*ListPaymentWalletBalanc
 /*
 ListPaymentWalletBalances List payment wallet balances
 
-This operation retrieves the information of payment wallet balances.
+This operation retrieves the balance information for specified payment wallets. The balance information is grouped by token. If you do not specify the `wallet_ids` parameter, the balance information for all payment wallets will be returned.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

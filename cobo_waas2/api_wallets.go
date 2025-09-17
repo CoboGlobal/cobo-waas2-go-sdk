@@ -2151,6 +2151,14 @@ func (r ApiListAddressesRequest) Execute() (*ListAddresses200Response, *http.Res
 ListAddresses List wallet addresses
 
 This operation retrieves a list of addresses within a specified wallet.
+<Note>
+For Web3 Wallets, Asset Wallets, and MPC Wallets, addresses created on one EVM chain automatically work on all other supported EVM chains. 
+
+Currently, query results for EVM chain addresses differ between interfaces:
+
+- API: Query results are limited by chain_id, so only addresses from that specific chain are returned.
+- Cobo Portal: Displays addresses from all supported EVM chains, so the number of addresses may be larger than the API results.
+</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3760,7 +3768,7 @@ func (r ApiListWalletsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiLis
 	return r
 }
 
-// The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
+// (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
 func (r ApiListWalletsRequest) ProjectId(projectId string) ApiListWalletsRequest {
 	r.projectId = &projectId
 	return r

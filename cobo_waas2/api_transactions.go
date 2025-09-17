@@ -606,7 +606,11 @@ In some scenarios, you want to sign a message for identity authentication or tra
 
 You can get the signature result by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information). 
 
-<Note>This operation only applies to transactions from MPC Wallets.</Note>
+<Note>
+This operation only supports message signing transactions from the following wallets and chains:
+- MPC Wallets: BTC, EVM-compatible chains, Cosmos, and Solana.  
+- Web3 Wallets: EVM-compatible chains.
+</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1410,9 +1414,11 @@ func (r ApiListApprovalDetailsRequest) Execute() ([]ApprovalDetail, *http.Respon
 }
 
 /*
-ListApprovalDetails List transaction approval details
+ListApprovalDetails List approval details
 
-This operation retrieves detailed approval information for a specified transaction.
+This operation retrieves comprehensive approval information for transactions, including approval status, reviewer details, signatures, and approval history. You can filter the results by transaction IDs, Cobo IDs, or request IDs. 
+
+This operation is commonly used to monitor approval progress and identify delays in multi-signature workflows.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1678,13 +1684,13 @@ type ApiListTransactionTemplatesRequest struct {
 	templateVersion *string
 }
 
-// The key of the transaction template to be used for creating a transaction approval message. 
+// Key of the transaction template used to create an approval message. 
 func (r ApiListTransactionTemplatesRequest) TemplateKey(templateKey string) ApiListTransactionTemplatesRequest {
 	r.templateKey = &templateKey
 	return r
 }
 
-// The version of the template used for the transaction approval.
+// Version of the template.
 func (r ApiListTransactionTemplatesRequest) TemplateVersion(templateVersion string) ApiListTransactionTemplatesRequest {
 	r.templateVersion = &templateVersion
 	return r
@@ -1695,10 +1701,11 @@ func (r ApiListTransactionTemplatesRequest) Execute() ([]ApprovalTemplate, *http
 }
 
 /*
-ListTransactionTemplates list transaction templates
+ListTransactionTemplates List transaction templates
 
-This operation retrieves transaction templates based on the specified transaction type and template version.
-The response includes a list of templates that can be used for creating transactions approval message.
+This operation retrieves approval templates based on the specified template key and template version.
+
+These templates define the content used to generate approval messages displayed to users, including messages for transaction approvals and other approval workflows.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1917,7 +1924,7 @@ func (r ApiListTransactionsRequest) WalletSubtype(walletSubtype WalletSubtype) A
 	return r
 }
 
-// The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
+// (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
 func (r ApiListTransactionsRequest) ProjectId(projectId string) ApiListTransactionsRequest {
 	r.projectId = &projectId
 	return r

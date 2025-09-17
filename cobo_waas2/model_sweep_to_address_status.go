@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SweepToAddressStatus the model 'SweepToAddressStatus'
+// SweepToAddressStatus The status of the sweep-to address:  - `Valid`: The sweep-to address is active and used for auto token sweeping. - `Invalid`: The sweep-to address is no longer used for auto token sweeping. 
 type SweepToAddressStatus string
 
 // List of SweepToAddressStatus

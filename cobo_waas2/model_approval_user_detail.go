@@ -15,26 +15,39 @@ import (
 // checks if the ApprovalUserDetail type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApprovalUserDetail{}
 
-// ApprovalUserDetail The user detail for a transaction approval. This includes the user's email, public key, signature, statement UUID, result of the approval, creation time, template version, header title, whether it is for signing, and additional information to show. 
+// ApprovalUserDetail Details about a user involved in a transaction approval workflow. 
 type ApprovalUserDetail struct {
-	// The email address of the user who approved the transaction.
-	UserEmail *string `json:"user_email,omitempty"`
-	// The public key of the user who approved the transaction.
+	// Name of the user who approved the transaction.
+	Name *string `json:"name,omitempty"`
+	// Email of the user.
+	Email *string `json:"email,omitempty"`
+	// Public key of the user.
 	Pubkey *string `json:"pubkey,omitempty"`
-	// The signature of the transaction approval.
+	// Signature produced by the user for this approval.
 	Signature *string `json:"signature,omitempty"`
-	// The UUID of the statement associated with the transaction approval.
+	// UUID of the statement associated with this approval.
 	StatementUuid *string `json:"statement_uuid,omitempty"`
 	Result *ApprovalResult `json:"result,omitempty"`
-	// The timestamp when the approval was created.
+	// Integer value representing the result of the approval.
+	ApprovalResultCode *int32 `json:"approval_result_code,omitempty"`
+	// Timestamp when the approval was created.
 	CreatedTime *int32 `json:"created_time,omitempty"`
-	// The version of the template used for the transaction approval.
+	// Version of the template used for the transaction approval.
 	TemplateVersion *string `json:"template_version,omitempty"`
-	// The title of the header for the transaction approval.
+	// Display title used in the transaction approval.
 	HeaderTitle *string `json:"header_title,omitempty"`
-	// Indicates whether the approval is for signing.
+	// Indicates whether this approval requires signing: - `true`: The user must sign the transaction. - `false`: The user only needs to approve or reject without signing. 
 	IsForSign *bool `json:"is_for_sign,omitempty"`
-	ShowInfo *ApprovalShowInfo `json:"show_info,omitempty"`
+	// Additional information to show for the transaction approval.
+	ShowInfo *string `json:"show_info,omitempty"`
+	// Language used for the transaction approval.
+	Language *string `json:"language,omitempty"`
+	// Version of the message format used for the transaction approval.
+	MessageVersion *string `json:"message_version,omitempty"`
+	// Message associated with the transaction approval.
+	Message *string `json:"message,omitempty"`
+	// Any additional message or information related to the transaction approval.
+	ExtraMessage *string `json:"extra_message,omitempty"`
 }
 
 // NewApprovalUserDetail instantiates a new ApprovalUserDetail object
@@ -54,36 +67,68 @@ func NewApprovalUserDetailWithDefaults() *ApprovalUserDetail {
 	return &this
 }
 
-// GetUserEmail returns the UserEmail field value if set, zero value otherwise.
-func (o *ApprovalUserDetail) GetUserEmail() string {
-	if o == nil || IsNil(o.UserEmail) {
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *ApprovalUserDetail) GetName() string {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-	return *o.UserEmail
+	return *o.Name
 }
 
-// GetUserEmailOk returns a tuple with the UserEmail field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApprovalUserDetail) GetUserEmailOk() (*string, bool) {
-	if o == nil || IsNil(o.UserEmail) {
+func (o *ApprovalUserDetail) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return o.UserEmail, true
+	return o.Name, true
 }
 
-// HasUserEmail returns a boolean if a field has been set.
-func (o *ApprovalUserDetail) HasUserEmail() bool {
-	if o != nil && !IsNil(o.UserEmail) {
+// HasName returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
 	return false
 }
 
-// SetUserEmail gets a reference to the given string and assigns it to the UserEmail field.
-func (o *ApprovalUserDetail) SetUserEmail(v string) {
-	o.UserEmail = &v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *ApprovalUserDetail) SetName(v string) {
+	o.Name = &v
+}
+
+// GetEmail returns the Email field value if set, zero value otherwise.
+func (o *ApprovalUserDetail) GetEmail() string {
+	if o == nil || IsNil(o.Email) {
+		var ret string
+		return ret
+	}
+	return *o.Email
+}
+
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApprovalUserDetail) GetEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.Email) {
+		return nil, false
+	}
+	return o.Email, true
+}
+
+// HasEmail returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given string and assigns it to the Email field.
+func (o *ApprovalUserDetail) SetEmail(v string) {
+	o.Email = &v
 }
 
 // GetPubkey returns the Pubkey field value if set, zero value otherwise.
@@ -212,6 +257,38 @@ func (o *ApprovalUserDetail) HasResult() bool {
 // SetResult gets a reference to the given ApprovalResult and assigns it to the Result field.
 func (o *ApprovalUserDetail) SetResult(v ApprovalResult) {
 	o.Result = &v
+}
+
+// GetApprovalResultCode returns the ApprovalResultCode field value if set, zero value otherwise.
+func (o *ApprovalUserDetail) GetApprovalResultCode() int32 {
+	if o == nil || IsNil(o.ApprovalResultCode) {
+		var ret int32
+		return ret
+	}
+	return *o.ApprovalResultCode
+}
+
+// GetApprovalResultCodeOk returns a tuple with the ApprovalResultCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApprovalUserDetail) GetApprovalResultCodeOk() (*int32, bool) {
+	if o == nil || IsNil(o.ApprovalResultCode) {
+		return nil, false
+	}
+	return o.ApprovalResultCode, true
+}
+
+// HasApprovalResultCode returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasApprovalResultCode() bool {
+	if o != nil && !IsNil(o.ApprovalResultCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetApprovalResultCode gets a reference to the given int32 and assigns it to the ApprovalResultCode field.
+func (o *ApprovalUserDetail) SetApprovalResultCode(v int32) {
+	o.ApprovalResultCode = &v
 }
 
 // GetCreatedTime returns the CreatedTime field value if set, zero value otherwise.
@@ -343,9 +420,9 @@ func (o *ApprovalUserDetail) SetIsForSign(v bool) {
 }
 
 // GetShowInfo returns the ShowInfo field value if set, zero value otherwise.
-func (o *ApprovalUserDetail) GetShowInfo() ApprovalShowInfo {
+func (o *ApprovalUserDetail) GetShowInfo() string {
 	if o == nil || IsNil(o.ShowInfo) {
-		var ret ApprovalShowInfo
+		var ret string
 		return ret
 	}
 	return *o.ShowInfo
@@ -353,7 +430,7 @@ func (o *ApprovalUserDetail) GetShowInfo() ApprovalShowInfo {
 
 // GetShowInfoOk returns a tuple with the ShowInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApprovalUserDetail) GetShowInfoOk() (*ApprovalShowInfo, bool) {
+func (o *ApprovalUserDetail) GetShowInfoOk() (*string, bool) {
 	if o == nil || IsNil(o.ShowInfo) {
 		return nil, false
 	}
@@ -369,9 +446,137 @@ func (o *ApprovalUserDetail) HasShowInfo() bool {
 	return false
 }
 
-// SetShowInfo gets a reference to the given ApprovalShowInfo and assigns it to the ShowInfo field.
-func (o *ApprovalUserDetail) SetShowInfo(v ApprovalShowInfo) {
+// SetShowInfo gets a reference to the given string and assigns it to the ShowInfo field.
+func (o *ApprovalUserDetail) SetShowInfo(v string) {
 	o.ShowInfo = &v
+}
+
+// GetLanguage returns the Language field value if set, zero value otherwise.
+func (o *ApprovalUserDetail) GetLanguage() string {
+	if o == nil || IsNil(o.Language) {
+		var ret string
+		return ret
+	}
+	return *o.Language
+}
+
+// GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApprovalUserDetail) GetLanguageOk() (*string, bool) {
+	if o == nil || IsNil(o.Language) {
+		return nil, false
+	}
+	return o.Language, true
+}
+
+// HasLanguage returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasLanguage() bool {
+	if o != nil && !IsNil(o.Language) {
+		return true
+	}
+
+	return false
+}
+
+// SetLanguage gets a reference to the given string and assigns it to the Language field.
+func (o *ApprovalUserDetail) SetLanguage(v string) {
+	o.Language = &v
+}
+
+// GetMessageVersion returns the MessageVersion field value if set, zero value otherwise.
+func (o *ApprovalUserDetail) GetMessageVersion() string {
+	if o == nil || IsNil(o.MessageVersion) {
+		var ret string
+		return ret
+	}
+	return *o.MessageVersion
+}
+
+// GetMessageVersionOk returns a tuple with the MessageVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApprovalUserDetail) GetMessageVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.MessageVersion) {
+		return nil, false
+	}
+	return o.MessageVersion, true
+}
+
+// HasMessageVersion returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasMessageVersion() bool {
+	if o != nil && !IsNil(o.MessageVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessageVersion gets a reference to the given string and assigns it to the MessageVersion field.
+func (o *ApprovalUserDetail) SetMessageVersion(v string) {
+	o.MessageVersion = &v
+}
+
+// GetMessage returns the Message field value if set, zero value otherwise.
+func (o *ApprovalUserDetail) GetMessage() string {
+	if o == nil || IsNil(o.Message) {
+		var ret string
+		return ret
+	}
+	return *o.Message
+}
+
+// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApprovalUserDetail) GetMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.Message) {
+		return nil, false
+	}
+	return o.Message, true
+}
+
+// HasMessage returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasMessage() bool {
+	if o != nil && !IsNil(o.Message) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessage gets a reference to the given string and assigns it to the Message field.
+func (o *ApprovalUserDetail) SetMessage(v string) {
+	o.Message = &v
+}
+
+// GetExtraMessage returns the ExtraMessage field value if set, zero value otherwise.
+func (o *ApprovalUserDetail) GetExtraMessage() string {
+	if o == nil || IsNil(o.ExtraMessage) {
+		var ret string
+		return ret
+	}
+	return *o.ExtraMessage
+}
+
+// GetExtraMessageOk returns a tuple with the ExtraMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApprovalUserDetail) GetExtraMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.ExtraMessage) {
+		return nil, false
+	}
+	return o.ExtraMessage, true
+}
+
+// HasExtraMessage returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasExtraMessage() bool {
+	if o != nil && !IsNil(o.ExtraMessage) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtraMessage gets a reference to the given string and assigns it to the ExtraMessage field.
+func (o *ApprovalUserDetail) SetExtraMessage(v string) {
+	o.ExtraMessage = &v
 }
 
 func (o ApprovalUserDetail) MarshalJSON() ([]byte, error) {
@@ -384,8 +589,11 @@ func (o ApprovalUserDetail) MarshalJSON() ([]byte, error) {
 
 func (o ApprovalUserDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.UserEmail) {
-		toSerialize["user_email"] = o.UserEmail
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
 	}
 	if !IsNil(o.Pubkey) {
 		toSerialize["pubkey"] = o.Pubkey
@@ -398,6 +606,9 @@ func (o ApprovalUserDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Result) {
 		toSerialize["result"] = o.Result
+	}
+	if !IsNil(o.ApprovalResultCode) {
+		toSerialize["approval_result_code"] = o.ApprovalResultCode
 	}
 	if !IsNil(o.CreatedTime) {
 		toSerialize["created_time"] = o.CreatedTime
@@ -413,6 +624,18 @@ func (o ApprovalUserDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ShowInfo) {
 		toSerialize["show_info"] = o.ShowInfo
+	}
+	if !IsNil(o.Language) {
+		toSerialize["language"] = o.Language
+	}
+	if !IsNil(o.MessageVersion) {
+		toSerialize["message_version"] = o.MessageVersion
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.ExtraMessage) {
+		toSerialize["extra_message"] = o.ExtraMessage
 	}
 	return toSerialize, nil
 }

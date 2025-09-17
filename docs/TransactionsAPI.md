@@ -14,9 +14,9 @@ Method | HTTP request | Description
 [**EstimateFee**](TransactionsAPI.md#EstimateFee) | **Post** /transactions/estimate_fee | Estimate transaction fee
 [**GetTransactionApprovalDetail**](TransactionsAPI.md#GetTransactionApprovalDetail) | **Get** /transactions/{transaction_id}/approval_detail | Get transaction approval details
 [**GetTransactionById**](TransactionsAPI.md#GetTransactionById) | **Get** /transactions/{transaction_id} | Get transaction information
-[**ListApprovalDetails**](TransactionsAPI.md#ListApprovalDetails) | **Get** /transactions/approval/details | List transaction approval details
+[**ListApprovalDetails**](TransactionsAPI.md#ListApprovalDetails) | **Get** /transactions/approval/details | List approval details
 [**ListTransactionApprovalDetails**](TransactionsAPI.md#ListTransactionApprovalDetails) | **Get** /transactions/approval_details | List transaction approval details
-[**ListTransactionTemplates**](TransactionsAPI.md#ListTransactionTemplates) | **Get** /transactions/templates | list transaction templates
+[**ListTransactionTemplates**](TransactionsAPI.md#ListTransactionTemplates) | **Get** /transactions/templates | List transaction templates
 [**ListTransactions**](TransactionsAPI.md#ListTransactions) | **Get** /transactions | List all transactions
 [**ResendTransactionById**](TransactionsAPI.md#ResendTransactionById) | **Post** /transactions/{transaction_id}/resend | Resend transaction
 [**SignAndBroadcastTransactionById**](TransactionsAPI.md#SignAndBroadcastTransactionById) | **Post** /transactions/{transaction_id}/sign_and_broadcast | Sign and broadcast transaction
@@ -810,7 +810,7 @@ Name | Type | Description  | Notes
 
 > []ApprovalDetail ListApprovalDetails(ctx).TransactionIds(transactionIds).CoboIds(coboIds).RequestIds(requestIds).Execute()
 
-List transaction approval details
+List approval details
 
 
 
@@ -968,7 +968,7 @@ Name | Type | Description  | Notes
 
 > []ApprovalTemplate ListTransactionTemplates(ctx).TemplateKey(templateKey).TemplateVersion(templateVersion).Execute()
 
-list transaction templates
+List transaction templates
 
 
 
@@ -1021,8 +1021,8 @@ Other parameters are passed through a pointer to a apiListTransactionTemplatesRe
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **templateKey** | **string** | The key of the transaction template to be used for creating a transaction approval message.  | 
- **templateVersion** | **string** | The version of the template used for the transaction approval. | 
+ **templateKey** | **string** | Key of the transaction template used to create an approval message.  | 
+ **templateVersion** | **string** | Version of the template. | 
 
 ### Return type
 
@@ -1130,7 +1130,7 @@ Name | Type | Description  | Notes
  **vaultId** | **string** | The vault ID, which you can retrieve by calling [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults). | 
  **walletType** | [**WalletType**](WalletType.md) | The wallet type.  - &#x60;Custodial&#x60;: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - &#x60;MPC&#x60;: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - &#x60;SmartContract&#x60;: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - &#x60;Exchange&#x60;: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)  | 
  **walletSubtype** | [**WalletSubtype**](WalletSubtype.md) | The wallet subtype.  - &#x60;Asset&#x60;: Custodial Wallets (Asset Wallets)  - &#x60;Web3&#x60;: Custodial Wallets (Web3 Wallets)  - &#x60;Main&#x60;: Exchange Wallets (Main Account)  - &#x60;Sub&#x60;: Exchange Wallets (Sub Account)  - &#x60;Org-Controlled&#x60;: MPC Wallets (Organization-Controlled Wallets)  - &#x60;User-Controlled&#x60;: MPC Wallets (User-Controlled Wallets)  - &#x60;Safe{Wallet}&#x60;: Smart Contract Wallets (Safe{Wallet})  | 
- **projectId** | **string** | The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).  | 
+ **projectId** | **string** | (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).  | 
  **minCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If not provided, the default value is 90 days before the current time. This default value is subject to change.  | 
  **maxCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If not provided, the default value is the current time. This default value is subject to change.  | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]

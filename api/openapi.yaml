@@ -49,7 +49,7 @@ tags:
   name: OAuth
 - description: Operations related to developers.
   name: Developers
-- description: Operations related to address books.
+- description: Operations related to Address Books.
   name: AddressBooks
 - description: Operations related to travel rule.
   name: TravelRule
@@ -65,6 +65,8 @@ tags:
   name: Tokenization
 - description: Operations related to auto sweep.
   name: AutoSweep
+- description: Operations related to compliance.
+  name: Compliance
 paths:
   /organizations/info:
     get:
@@ -852,7 +854,7 @@ paths:
           $ref: '#/components/schemas/WalletSubtype'
         style: form
       - description: |
-          The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
+          (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: true
         in: query
@@ -1482,8 +1484,14 @@ paths:
       - Wallets
   /wallets/{wallet_id}/addresses:
     get:
-      description: |
-        This operation retrieves a list of addresses within a specified wallet.
+      description: "This operation retrieves a list of addresses within a specified\
+        \ wallet.\n<Note>\nFor Web3 Wallets, Asset Wallets, and MPC Wallets, addresses\
+        \ created on one EVM chain automatically work on all other supported EVM chains.\
+        \ \n\nCurrently, query results for EVM chain addresses differ between interfaces:\n\
+        \n- API: Query results are limited by chain_id, so only addresses from that\
+        \ specific chain are returned.\n- Cobo Portal: Displays addresses from all\
+        \ supported EVM chains, so the number of addresses may be larger than the\
+        \ API results.\n</Note>\n"
       operationId: list_addresses
       parameters:
       - description: The wallet ID.
@@ -2375,7 +2383,7 @@ paths:
           $ref: '#/components/schemas/MPCVaultType'
         style: form
       - description: |
-          The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
+          (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: true
         in: query
@@ -3744,7 +3752,9 @@ paths:
         \ message to be signed. A transaction request for tracking is returned upon\
         \ successful operation.\n\nYou can get the signature result by calling [Get\
         \ transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information).\
-        \ \n\n<Note>This operation only applies to transactions from MPC Wallets.</Note>\n"
+        \ \n\n<Note>\nThis operation only supports message signing transactions from\
+        \ the following wallets and chains:\n- MPC Wallets: BTC, EVM-compatible chains,\
+        \ Cosmos, and Solana.  \n- Web3 Wallets: EVM-compatible chains.\n</Note>\n"
       operationId: create_message_sign_transaction
       requestBody:
         $ref: '#/components/requestBodies/createMessageSignBody'
@@ -3952,7 +3962,7 @@ paths:
           $ref: '#/components/schemas/WalletSubtype'
         style: form
       - description: |
-          The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
+          (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
         example: f47ac10b-58cc-4372-a567-0e02b2c3d479
         explode: true
         in: query
@@ -4495,8 +4505,11 @@ paths:
       - Transactions
   /transactions/approval/details:
     get:
-      description: |
-        This operation retrieves detailed approval information for a specified transaction.
+      description: "This operation retrieves comprehensive approval information for\
+        \ transactions, including approval status, reviewer details, signatures, and\
+        \ approval history. You can filter the results by transaction IDs, Cobo IDs,\
+        \ or request IDs. \n\nThis operation is commonly used to monitor approval\
+        \ progress and identify delays in multi-signature workflows.\n"
       operationId: list_approval_details
       parameters:
       - description: "A list of transaction IDs, separated by comma."
@@ -4535,7 +4548,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ApprovalDetail'
                 type: array
-          description: The information about transaction approval detail.
+          description: Details of the transaction approvals.
         "4XX":
           content:
             application/json:
@@ -4553,18 +4566,19 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.read
-      summary: List transaction approval details
+      summary: List approval details
       tags:
       - Transactions
   /transactions/templates:
     get:
       description: |
-        This operation retrieves transaction templates based on the specified transaction type and template version.
-        The response includes a list of templates that can be used for creating transactions approval message.
+        This operation retrieves approval templates based on the specified template key and template version.
+
+        These templates define the content used to generate approval messages displayed to users, including messages for transaction approvals and other approval workflows.
       operationId: list_transaction_templates
       parameters:
       - description: |
-          The key of the transaction template to be used for creating a transaction approval message.
+          Key of the transaction template used to create an approval message.
         example: withdrawal
         explode: true
         in: query
@@ -4573,7 +4587,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: The version of the template used for the transaction approval.
+      - description: Version of the template.
         example: 1.0.0
         explode: true
         in: query
@@ -4590,7 +4604,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ApprovalTemplate'
                 type: array
-          description: Response containing a list of transaction approval templates.
+          description: Successfully retrieved approval templates.
         "4XX":
           content:
             application/json:
@@ -4608,7 +4622,7 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.read
-      summary: list transaction templates
+      summary: List transaction templates
       tags:
       - Transactions
   /oauth/token:
@@ -6765,7 +6779,7 @@ paths:
   /address_books:
     get:
       description: |
-        This operation retrieves a list of addresses from your address book.
+        This operation retrieves all entries (records) from your Address Book. You can filter the entries by chain ID, address, and label.
       operationId: list_address_books
       parameters:
       - description: "The chain ID, which is the unique identifier of a blockchain.\
@@ -6775,7 +6789,7 @@ paths:
         explode: true
         in: query
         name: chain_id
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -6789,14 +6803,14 @@ paths:
           description: The wallet address.
           type: string
         style: form
-      - description: The address label.
+      - description: A user-defined label for the address.
         example: test
         explode: true
         in: query
         name: label
         required: false
         schema:
-          description: The address label.
+          description: A user-defined label for the address.
           type: string
         style: form
       - description: "The maximum number of objects to return. For most operations,\
@@ -6837,7 +6851,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/list_address_books_200_response'
-          description: The information about an address book entry.
+          description: The information about an Address Book.
         "4XX":
           content:
             application/json:
@@ -6855,7 +6869,170 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - address_book.read
-      summary: List address book entries
+      summary: List Address Book entries
+      tags:
+      - AddressBooks
+    post:
+      description: |
+        This operation adds new entries (records) to your Address Book.
+      operationId: create_address_books
+      requestBody:
+        $ref: '#/components/requestBodies/createAddressBooksRequestBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_address_books_201_response'
+          description: The information about created Address Books.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - address_book.create
+      summary: Create Address Book entries
+      tags:
+      - AddressBooks
+  /address_books/{entry_id}:
+    get:
+      description: |
+        This operation retrieves the detailed information about a specified Address Book entry (record).
+      operationId: get_address_book_by_id
+      parameters:
+      - description: The Address Book entry ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: entry_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressBook'
+          description: The information about an Address Book.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - address_book.read
+      summary: Get Address Book entry
+      tags:
+      - AddressBooks
+    put:
+      description: |
+        This operation updates the information of a specified Address Book entry (record).
+      operationId: update_address_book_by_id
+      parameters:
+      - description: The Address Book entry ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: entry_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/updateAddressBookRequestBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressBook'
+          description: Successfully updated Address Book.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - address_book.update
+      summary: Update Address Book entry
+      tags:
+      - AddressBooks
+  /address_books/{entry_id}/delete:
+    post:
+      description: |
+        This operation deletes a specified Address Book entry (record).
+      operationId: delete_address_book_by_id
+      parameters:
+      - description: The Address Book entry ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: entry_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/delete_address_book_by_id_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - address_book.delete
+      summary: Delete Address Book entry
       tags:
       - AddressBooks
   /prime_broker/user/{user_id}/guard_pubkey:
@@ -8092,6 +8269,8 @@ paths:
         This operation creates a merchant and links it to a specified wallet. Payments to the merchant will be deposited into the linked wallet.
 
         Upon successful creation, a merchant ID is generated and returned along with the merchant's information.
+
+        If you are a merchant (directly serving the payer), you only need to create one merchant and do not need to configure the developer fee rate. The developer fee rate only applies to platforms such as payment service providers (PSPs) that charge fees to their downstream merchants.
       operationId: create_merchant
       requestBody:
         $ref: '#/components/requestBodies/createMerchantBody'
@@ -9479,7 +9658,7 @@ paths:
   /payments/balance/payment_wallets:
     get:
       description: |
-        This operation retrieves the information of payment wallet balances.
+        This operation retrieves the balance information for specified payment wallets. The balance information is grouped by token. If you do not specify the `wallet_ids` parameter, the balance information for all payment wallets will be returned.
       operationId: list_payment_wallet_balances
       parameters:
       - description: A list of wallet IDs to query.
@@ -9533,7 +9712,7 @@ paths:
   /payments/balance/merchants:
     get:
       description: |
-        This operation retrieves the information of merchant balances.
+        This operation retrieves the balance information for specified merchants. The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
       operationId: list_merchant_balances
       parameters:
       - description: A list of merchant IDs to query.
@@ -9558,9 +9737,9 @@ paths:
           type: string
         style: form
       - description: |
-          AcquiringType defines the acquisition logic used in the payment flow:
-          - `Order`: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis.
-          - `TopUp`: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models.
+          The payment acquisition type.
+          - `Order`: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions.
+          - `TopUp`: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models.
         explode: true
         in: query
         name: acquiring_type
@@ -9598,7 +9777,7 @@ paths:
   /payments/balance/psp:
     get:
       description: |
-        This operation retrieves the information of psp balance.
+        This operation retrieves the balance information for you as the developer. The balance information is grouped by token.
       operationId: get_psp_balance
       parameters:
       - description: |
@@ -9637,13 +9816,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - payment_balance.read
-      summary: Get psp balance
+      summary: Get developer balance
       tags:
       - Payment
   /payments/balance/payer/address:
     get:
       description: |
-        This operation retrieves aggregated balance details for a specific token and payer, with amounts grouped by address.
+        This operation retrieves the total amount received for a specific payer. The information is grouped by token and receiving address.
       operationId: get_payer_balance_by_address
       parameters:
       - description: The merchant ID.
@@ -9701,13 +9880,14 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - payment_balance.read
-      summary: Get payer balance by address
+      summary: Get payer balance
       tags:
       - Payment
   /auto_sweep/sweep_to_addresses:
     get:
       description: |
-        This operation retrieves a list of sweep to addresses within your wallet.
+        This operation retrieves a list of sweep-to addresses within your wallet.
+        <Note>Sweep-to addresses are only applicable to MPC Wallets and Web3 Wallets with the auto-sweep feature enabled.</Note>
       operationId: list_wallet_sweep_to_addresses
       parameters:
       - description: The wallet ID.
@@ -9726,7 +9906,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/list_wallet_sweep_to_addresses_200_response'
-          description: Successfully listed sweep to addresses
+          description: Successfully retrieved sweep-to addresses
         "4XX":
           content:
             application/json:
@@ -9744,12 +9924,16 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: List wallet sweep to addresses
+      summary: List sweep-to addresses
       tags:
       - AutoSweep
     post:
       description: |
-        This operation create a new sweep to address for the wallet. The old sweep to address will become invalid.
+        This operation creates a new sweep-to address for the specified wallet. The previously sweep-to address for the same token becomes invalid once the new one is created.
+
+        Use this operation to change the sweep-to address when your setup changes, you switch networks, or the current address is compromised or tainted by suspicious funds. You can withdraw any remaining balances from the old sweep-to addresses to the new address or another designated destination.
+
+        <Note>Sweep-to addresses are only applicable to MPC Wallets and Web3 Wallets with the auto-sweep feature enabled.</Note>
       operationId: create_wallet_sweep_to_addresses
       requestBody:
         $ref: '#/components/requestBodies/createSweepAddressBody'
@@ -9777,13 +9961,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.create
-      summary: create wallet sweep to addresses
+      summary: create sweep-to address
       tags:
       - AutoSweep
   /auto_sweep/tasks:
     get:
       description: |
-        This operation retrieves a list of auto sweep task.
+        This operation retrieves a list of auto-sweep tasks for the specified wallet. You can filter the results by token ID, task IDs, or a created-time range.
       operationId: list_auto_sweep_task
       parameters:
       - description: The wallet ID.
@@ -9807,7 +9991,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: "A list of auto sweep task IDs, separated by comma."
+      - description: "A list of auto-sweep task IDs, separated by comma."
         example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,1ddca562-8434-41c9-8809-d437bad9c868"
         explode: true
         in: query
@@ -9896,7 +10080,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/list_auto_sweep_task_200_response'
-          description: Successfully listed auto sweep tasks
+          description: Successfully retrieved auto-sweep tasks
         "4XX":
           content:
             application/json:
@@ -9914,12 +10098,12 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: List wallet auto sweep task
+      summary: List auto-sweep tasks
       tags:
       - AutoSweep
     post:
       description: |
-        This operation create a new auto sweep task.
+        This operation creates an auto-sweep task for the specified wallet and token. The task triggers transactions to sweep the full balance of the specified token to the configured sweep-to address.
       operationId: create_auto_sweep_task
       requestBody:
         $ref: '#/components/requestBodies/createAutoSweepTaskBody'
@@ -9929,7 +10113,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AutoSweepTask'
-          description: Successfully create auto sweep task
+          description: Successfully created auto-sweep task.
         "4XX":
           content:
             application/json:
@@ -9947,13 +10131,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.create
-      summary: create auto sweep task
+      summary: Create auto-sweep task
       tags:
       - AutoSweep
   /auto_sweep/tasks/{task_id}:
     get:
       description: |
-        This operation retrieves detailed information about a specified auto sweep task.
+        This operation retrieves detailed information about a specified auto-sweep task.
       operationId: get_auto_sweep_task_by_id
       parameters:
       - description: The auto sweep task ID.
@@ -9972,7 +10156,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AutoSweepTask'
-          description: The information about a auto sweep task.
+          description: Information about a auto-sweep task.
         "4XX":
           content:
             application/json:
@@ -9990,7 +10174,7 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: Get auto sweep task information
+      summary: Get auto-sweep task details
       tags:
       - AutoSweep
   /tokenization/activities:
@@ -10690,7 +10874,7 @@ paths:
       security:
       - CoboAuth: []
       - OAuth2: []
-      summary: Lists addresses on blocklist
+      summary: List addresses on blocklist
       tags:
       - Tokenization
     post:
@@ -11056,6 +11240,195 @@ paths:
       summary: List supported chains for tokenization
       tags:
       - Tokenization
+  /compliance/funds/disposition/refund:
+    post:
+      description: "This operation creates a request to refund funds for a specific\
+        \ transaction. The funds will be sent to the specified destination address.\n\
+        \nYou need to specify the transaction ID to be refunded and the destination\
+        \ address. \nOptional parameters include custom categories for tracking purposes.\n\
+        \n<Note>The refund will initiate a withdrawal transaction from the compliance-managed\
+        \ address to the specified destination.</Note>\n"
+      operationId: refund_funds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundDisposition'
+        description: The request body to refund funds.
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                status: Submitted
+              schema:
+                $ref: '#/components/schemas/DispositionResponse'
+          description: Successfully created a disposition request.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - compliance_funds.refund
+      summary: Refund funds
+      tags:
+      - Compliance
+  /compliance/funds/disposition/isolate:
+    post:
+      description: "This operation creates a request to isolate funds for a specific\
+        \ transaction. The funds will be sent to a designated isolation address for\
+        \ compliance purposes.\n\nYou need to specify the transaction ID to be isolated\
+        \ and the destination address. \nOptional parameters include custom categories\
+        \ for tracking purposes.\n\n<Note>The isolation will initiate a withdrawal\
+        \ transaction from the compliance-managed address to the specified isolation\
+        \ address.</Note>\n"
+      operationId: isolate_funds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IsolateDisposition'
+        description: The request body to isolate funds.
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                status: Submitted
+              schema:
+                $ref: '#/components/schemas/DispositionResponse'
+          description: Successfully created a disposition request.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - compliance_funds.isolate
+      summary: Isolate funds
+      tags:
+      - Compliance
+  /compliance/funds/disposition/unfreeze:
+    post:
+      description: |
+        This operation creates a request to unfreeze funds for a previously frozen transaction. It releases the frozen funds back to their original state.
+
+        You only need to specify the transaction ID to be unfrozen. Once unfrozen, the funds will be available for normal operations.
+
+        <Note>The unfreeze process will release the compliance hold on the transaction, allowing it to proceed normally.</Note>
+      operationId: unfreeze_funds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnfreezeDisposition'
+        description: The request body to unfreeze funds.
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                status: Submitted
+              schema:
+                $ref: '#/components/schemas/DispositionResponse'
+          description: Successfully created a disposition request.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - compliance_funds.unfreeze
+      summary: Unfreeze frozen funds
+      tags:
+      - Compliance
+  /compliance/funds/disposition:
+    get:
+      description: "This operation retrieves the current status of a disposition request\
+        \ for a specific transaction.\n\nYou can use this endpoint to check the status\
+        \ of any disposition operation (Refund, Isolate, or Unfreeze) \nthat has been\
+        \ initiated for a transaction. The response includes the disposition type,\
+        \ current status, \nand the disposition transaction ID if applicable.\n\n\
+        <Note>Use this endpoint to monitor the progress of disposition operations\
+        \ and verify their completion.</Note>\n"
+      operationId: get_disposition_status
+      parameters:
+      - description: The UUID of the transaction to query for disposition status.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: transaction_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                disposition_type: Refund
+                disposition_status: Refunded
+                disposition_transaction_id: 550e8400-e29b-41d4-a716-446655440000
+              schema:
+                $ref: '#/components/schemas/DispositionQueryResponse'
+          description: Successfully retrieved disposition information.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - compliance_funds.read
+      summary: Get disposition status
+      tags:
+      - Compliance
 components:
   parameters:
     sortByParam:
@@ -11565,7 +11938,7 @@ components:
       style: simple
     optionalProjectIdQueryParam:
       description: |
-        The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
+        (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects).
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: true
       in: query
@@ -11958,7 +12331,7 @@ components:
         type: string
       style: form
     optionalTemplateVersionParam:
-      description: The version of the template used for the transaction approval.
+      description: Version of the template.
       example: 1.0.0
       explode: true
       in: query
@@ -11969,7 +12342,7 @@ components:
       style: form
     requiredTemplateKeyParam:
       description: |
-        The key of the transaction template to be used for creating a transaction approval message.
+        Key of the transaction template used to create an approval message.
       example: withdrawal
       explode: true
       in: query
@@ -12206,16 +12579,27 @@ components:
         type: string
       style: form
     optionalAddressBookLabelParam:
-      description: The address label.
+      description: A user-defined label for the address.
       example: test
       explode: true
       in: query
       name: label
       required: false
       schema:
-        description: The address label.
+        description: A user-defined label for the address.
         type: string
       style: form
+    addressBookIdParam:
+      description: The Address Book entry ID.
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      explode: false
+      in: path
+      name: entry_id
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
     requiredTransactionTypeParam:
       description: "The transaction type. Possible values include: \n  - `DEPOSIT`:\
         \ A deposit transaction.\n  - `WITHDRAW`: A withdrawal transaction.\n"
@@ -12874,9 +13258,9 @@ components:
       style: simple
     AcquiringTypeRequiredParam:
       description: |
-        AcquiringType defines the acquisition logic used in the payment flow:
-        - `Order`: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis.
-        - `TopUp`: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models.
+        The payment acquisition type.
+        - `Order`: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions.
+        - `TopUp`: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models.
       explode: true
       in: query
       name: acquiring_type
@@ -12944,7 +13328,7 @@ components:
         $ref: '#/components/schemas/TokenizationActivityStatus'
       style: form
     optionalTaskIdListParam:
-      description: "A list of auto sweep task IDs, separated by comma."
+      description: "A list of auto-sweep task IDs, separated by comma."
       example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,1ddca562-8434-41c9-8809-d437bad9c868"
       explode: true
       in: query
@@ -13022,6 +13406,18 @@ components:
             $ref: '#/components/schemas/get_max_transferable_value_with_fee_model_request'
       description: The request body for retrieving the maximum transferable value
         from a specified wallet.
+    createAddressBooksRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateAddressBooksParam'
+      description: The request body of the create Address Books operation.
+    updateAddressBookRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAddressBookParam'
+      description: The request body of the update Address Book operation.
     createKeyShareHolderGroupBody:
       content:
         application/json:
@@ -13466,15 +13862,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CreateSweepToAddress'
-      description: The request body to generates a new sweep to addresses within a
-        specified wallet.
+      description: The request body to generates a new sweep-to address within a specified
+        wallet.
     createAutoSweepTaskBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/CreateAutoSweepTask'
-      description: The request body to generates a new sweep to addresses within a
-        specified wallet.
+      description: The request body to create an auto-sweep task.
   responses:
     badRequestError:
       content:
@@ -13890,7 +14285,7 @@ components:
             items:
               $ref: '#/components/schemas/ApprovalDetail'
             type: array
-      description: The information about transaction approval detail.
+      description: Details of the transaction approvals.
     getTemplatesResponse:
       content:
         application/json:
@@ -13898,7 +14293,7 @@ components:
             items:
               $ref: '#/components/schemas/ApprovalTemplate'
             type: array
-      description: Response containing a list of transaction approval templates.
+      description: Successfully retrieved approval templates.
     createWebhookEndpointResponse:
       content:
         application/json:
@@ -14116,7 +14511,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/list_address_books_200_response'
-      description: The information about an address book entry.
+      description: The information about an Address Book.
+    createAddressBooksResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_address_books_201_response'
+      description: The information about created Address Books.
+    updateAddressBookResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressBook'
+      description: Successfully updated Address Book.
+    getAddressBookResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressBook'
+      description: The information about an Address Book.
+    deleteAddressBookResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/delete_address_book_by_id_201_response'
+      description: The request was successful.
     getCountriesResponse:
       content:
         application/json:
@@ -14416,6 +14835,26 @@ components:
           schema:
             $ref: '#/components/schemas/list_merchant_balances_200_response'
       description: The request was successful.
+    createDispositionResponse:
+      content:
+        application/json:
+          example:
+            transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            status: Submitted
+          schema:
+            $ref: '#/components/schemas/DispositionResponse'
+      description: Successfully created a disposition request.
+    getDispositionResponse:
+      content:
+        application/json:
+          example:
+            transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+            disposition_type: Refund
+            disposition_status: Refunded
+            disposition_transaction_id: 550e8400-e29b-41d4-a716-446655440000
+          schema:
+            $ref: '#/components/schemas/DispositionQueryResponse'
+      description: Successfully retrieved disposition information.
     getFeeStationTokenBalancesResponse:
       content:
         application/json:
@@ -14531,7 +14970,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/list_wallet_sweep_to_addresses_200_response'
-      description: Successfully listed sweep to addresses
+      description: Successfully retrieved sweep-to addresses
     createSweepToAddressResponse:
       content:
         application/json:
@@ -14543,19 +14982,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AutoSweepTask'
-      description: Successfully create auto sweep task
+      description: Successfully created auto-sweep task.
     listAutoSweepTasksResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/list_auto_sweep_task_200_response'
-      description: Successfully listed auto sweep tasks
+      description: Successfully retrieved auto-sweep tasks
     getAutoSweepTaskResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AutoSweepTask'
-      description: The information about a auto sweep task.
+      description: Information about a auto-sweep task.
   schemas:
     Pagination:
       description: The pagination information of the returned data.
@@ -14789,6 +15228,7 @@ components:
         symbol: ETH
         chain_id: ETH
         require_memo: false
+        chain_identifier: ETH
         confirming_threshold: 15
         explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
         coinbase_maturity: 15
@@ -14799,12 +15239,19 @@ components:
           example: ETH
           type: string
         symbol:
-          description: "The chain symbol, which is the abbreviated name of a chain."
+          description: "The chain symbol for display purposes, which is the abbreviated\
+            \ name of a chain."
           example: ETH
           type: string
         icon_url:
           description: The URL of the chain icon.
           example: https://d.cobo.com/public/logos/ETH.png
+          type: string
+        chain_identifier:
+          description: "A functional identifier used to group blockchains with similar\
+            \ execution logic. For example, `ETH` for all EVM-compatible chains (Ethereum,\
+            \ BNB Smart Chain, Polygon)."
+          example: ETH
           type: string
         explorer_tx_url:
           description: The transaction URL pattern on the blockchain explorer. You
@@ -15422,8 +15869,8 @@ components:
         wallet_subtype:
           $ref: '#/components/schemas/WalletSubtype'
         enable_auto_sweep:
-          description: Enable the auto sweep feature for the wallet. This parameter
-            only applies to MPC and Web3 wallets.
+          description: Enable the auto-sweep feature for the wallet. This parameter
+            only applies to MPC Wallets and Web3 Wallets.
           type: boolean
       required:
       - name
@@ -15710,11 +16157,17 @@ components:
         org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         name: Org name
         created_timestamp: 1718619403933
+        biz_org_id: 1
       properties:
         org_id:
           description: The organization ID.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
+        biz_org_id:
+          description: An internal business ID assigned by Cobo. Used mainly by Cobo's
+            customer support to locate the organization.
+          example: 1
+          type: integer
         name:
           description: The organization name.
           example: Org name
@@ -19205,126 +19658,146 @@ components:
       title: CoreStakeInfo
       type: object
     ApprovalDetail:
-      description: The approval detail data for transaction.
+      description: Details of the transaction approval.
       example:
         transaction_id: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
         address_owner:
-          result: 1
+          result: Rejected
+          review_threshold: 2
+          complete_time: 2023-12-13T04:28:55.000Z
           user_details:
-          - result: 1
-            created_time: 1610444045
-            user_email: example@gmail.com
+          - created_time: 1610444045
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-            show_info:
-              environment: Prod
-              from_address_label: Main Address
-              wallet_name: Cobo Wallet
-              to_address_label: Exchange Address
-              org_name: Cobo
+            language: en
+            message: Please approve the transaction.
+            extra_message: Please review the transaction details carefully.
+            message_version: 1.0.0
+            result: Approved
+            name: John Doe
+            show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+              \ 'Prod'}"
+            approval_result_code: 1
             is_for_sign: true
             statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            email: example@gmail.com
             pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          - result: 1
-            created_time: 1610444045
-            user_email: example@gmail.com
+          - created_time: 1610444045
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-            show_info:
-              environment: Prod
-              from_address_label: Main Address
-              wallet_name: Cobo Wallet
-              to_address_label: Exchange Address
-              org_name: Cobo
+            language: en
+            message: Please approve the transaction.
+            extra_message: Please review the transaction details carefully.
+            message_version: 1.0.0
+            result: Approved
+            name: John Doe
+            show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+              \ 'Prod'}"
+            approval_result_code: 1
             is_for_sign: true
             statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            email: example@gmail.com
             pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          threshold: 2
+          initiator: test@gmail.com
+          is_upgraded: false
         approver:
-          result: 1
+          result: Rejected
+          review_threshold: 2
+          complete_time: 2023-12-13T04:28:55.000Z
           user_details:
-          - result: 1
-            created_time: 1610444045
-            user_email: example@gmail.com
+          - created_time: 1610444045
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-            show_info:
-              environment: Prod
-              from_address_label: Main Address
-              wallet_name: Cobo Wallet
-              to_address_label: Exchange Address
-              org_name: Cobo
+            language: en
+            message: Please approve the transaction.
+            extra_message: Please review the transaction details carefully.
+            message_version: 1.0.0
+            result: Approved
+            name: John Doe
+            show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+              \ 'Prod'}"
+            approval_result_code: 1
             is_for_sign: true
             statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            email: example@gmail.com
             pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          - result: 1
-            created_time: 1610444045
-            user_email: example@gmail.com
+          - created_time: 1610444045
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-            show_info:
-              environment: Prod
-              from_address_label: Main Address
-              wallet_name: Cobo Wallet
-              to_address_label: Exchange Address
-              org_name: Cobo
+            language: en
+            message: Please approve the transaction.
+            extra_message: Please review the transaction details carefully.
+            message_version: 1.0.0
+            result: Approved
+            name: John Doe
+            show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+              \ 'Prod'}"
+            approval_result_code: 1
             is_for_sign: true
             statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            email: example@gmail.com
             pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          threshold: 2
+          initiator: test@gmail.com
+          is_upgraded: false
         spender:
-          result: 1
+          result: Rejected
+          review_threshold: 2
+          complete_time: 2023-12-13T04:28:55.000Z
           user_details:
-          - result: 1
-            created_time: 1610444045
-            user_email: example@gmail.com
+          - created_time: 1610444045
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-            show_info:
-              environment: Prod
-              from_address_label: Main Address
-              wallet_name: Cobo Wallet
-              to_address_label: Exchange Address
-              org_name: Cobo
+            language: en
+            message: Please approve the transaction.
+            extra_message: Please review the transaction details carefully.
+            message_version: 1.0.0
+            result: Approved
+            name: John Doe
+            show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+              \ 'Prod'}"
+            approval_result_code: 1
             is_for_sign: true
             statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            email: example@gmail.com
             pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          - result: 1
-            created_time: 1610444045
-            user_email: example@gmail.com
+          - created_time: 1610444045
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-            show_info:
-              environment: Prod
-              from_address_label: Main Address
-              wallet_name: Cobo Wallet
-              to_address_label: Exchange Address
-              org_name: Cobo
+            language: en
+            message: Please approve the transaction.
+            extra_message: Please review the transaction details carefully.
+            message_version: 1.0.0
+            result: Approved
+            name: John Doe
+            show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+              \ 'Prod'}"
+            approval_result_code: 1
             is_for_sign: true
             statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            email: example@gmail.com
             pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          threshold: 2
+          initiator: test@gmail.com
+          is_upgraded: false
         cobo_id: "20231213122855000000000000000000"
         request_id: web_send_by_user_327_1610444045047
       properties:
         transaction_id:
-          description: The transaction ID.
+          description: Transaction ID.
           example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           format: uuid
           type: string
         cobo_id:
-          description: "The Cobo ID, which can be used to track a transaction."
+          description: Cobo ID used to track a transaction.
           example: "20231213122855000000000000000000"
           type: string
         request_id:
-          description: The request ID that is used to track a transaction request.
-            The request ID is provided by you and must be unique within your organization.
+          description: Request ID used to track a transaction request.
           example: web_send_by_user_327_1610444045047
           type: string
         address_owner:
@@ -19335,100 +19808,86 @@ components:
           $ref: '#/components/schemas/RoleDetail'
       type: object
     RoleDetail:
-      description: Transaction approval details response schema.
+      description: Details of the role in a transaction approval.
       example:
-        result: 1
+        result: Rejected
+        review_threshold: 2
+        complete_time: 2023-12-13T04:28:55.000Z
         user_details:
-        - result: 1
-          created_time: 1610444045
-          user_email: example@gmail.com
+        - created_time: 1610444045
           template_version: 1.0.0
           header_title: Transaction Approval
           signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          show_info:
-            environment: Prod
-            from_address_label: Main Address
-            wallet_name: Cobo Wallet
-            to_address_label: Exchange Address
-            org_name: Cobo
+          language: en
+          message: Please approve the transaction.
+          extra_message: Please review the transaction details carefully.
+          message_version: 1.0.0
+          result: Approved
+          name: John Doe
+          show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+            \ 'Prod'}"
+          approval_result_code: 1
           is_for_sign: true
           statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          email: example@gmail.com
           pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-        - result: 1
-          created_time: 1610444045
-          user_email: example@gmail.com
+        - created_time: 1610444045
           template_version: 1.0.0
           header_title: Transaction Approval
           signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-          show_info:
-            environment: Prod
-            from_address_label: Main Address
-            wallet_name: Cobo Wallet
-            to_address_label: Exchange Address
-            org_name: Cobo
+          language: en
+          message: Please approve the transaction.
+          extra_message: Please review the transaction details carefully.
+          message_version: 1.0.0
+          result: Approved
+          name: John Doe
+          show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+            \ 'Prod'}"
+          approval_result_code: 1
           is_for_sign: true
           statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          email: example@gmail.com
           pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-        threshold: 2
+        initiator: test@gmail.com
+        is_upgraded: false
       properties:
         result:
           $ref: '#/components/schemas/ApprovalTransactionResult'
-        threshold:
-          description: The threshold for the transaction approval.
+        review_threshold:
+          description: Minimum number of approvals required for this role.
           example: 2
           type: integer
+        initiator:
+          description: The initiator of the transaction.
+          example: test@gmail.com
+          type: string
+        is_upgraded:
+          description: Indicates whether the transaction approval has been upgraded.
+          example: false
+          type: boolean
+        complete_time:
+          description: Time when the role completed the approval.
+          example: 2023-12-13T04:28:55.000Z
+          type: string
         user_details:
           items:
             $ref: '#/components/schemas/ApprovalUserDetail'
           type: array
       type: object
     ApprovalResult:
-      description: "The single approval result. Possible values include: \n  - `1`:\
-        \ The transaction is pending approval.\n  - `2`: The transaction is approved.\n\
-        \  - `3`: The transaction is rejected.\n"
+      description: "Approval result for this user in the transaction approval. Possible\
+        \ values include: \n  - `Approved`: The transaction is approved.\n  - `Rejected`:\
+        \ The transaction is rejected.\n"
       enum:
-      - 1
-      - 2
-      - 3
-      example: 1
-      type: integer
+      - Approved
+      - Rejected
+      example: Approved
+      type: string
       x-enum-varnames:
-      - PENDING
       - APPROVED
       - REJECTED
-    ApprovalShowInfo:
-      description: |
-        Extra information for transaction approval details.
-      example:
-        environment: Prod
-        from_address_label: Main Address
-        wallet_name: Cobo Wallet
-        to_address_label: Exchange Address
-        org_name: Cobo
-      properties:
-        org_name:
-          description: The name of the organization that the transaction belongs to.
-          example: Cobo
-          type: string
-        wallet_name:
-          description: The name of the wallet that the transaction belongs to.
-          example: Cobo Wallet
-          type: string
-        environment:
-          description: The environment in which the transaction is processed.
-          example: Prod
-          type: string
-        from_address_label:
-          description: The label of the address from which the transaction is initiated.
-          example: Main Address
-          type: string
-        to_address_label:
-          description: The label of the address to which the transaction is sent.
-          example: Exchange Address
-          type: string
-      type: object
     ApprovalTemplate:
-      description: The template for transaction approval details.
+      description: Approval template details.
       example:
         template_version: 1.0.0
         template_text: "{{user_name}} requests to withdraw {{amount}} {{currency}}\
@@ -19436,90 +19895,124 @@ components:
         business_key: transaction_withdrawal
       properties:
         business_key:
-          description: The business key that is used to identify the transaction.
+          description: Business key used to identify the type of approval template.
           example: transaction_withdrawal
           type: string
         template_text:
-          description: The template text that is used for the transaction approval.
+          description: Text content defined in the approval template used to generate
+            approval messages shown to users
           example: "{{user_name}} requests to withdraw {{amount}} {{currency}} from\
             \ the account."
           type: string
         template_version:
-          description: The version of the template used for the transaction approval.
+          description: Version of the approval template.
           example: 1.0.0
           type: string
       type: object
     ApprovalTransactionResult:
-      description: "The transaction approval result. Possible values include: \n \
-        \ - `-1`: The transaction is rejected.\n  - `0`: The transaction is pending\
-        \ approval.\n  - `1`: The transaction is approved.\n"
+      description: "Result of transaction approval. Possible values include: \n  -\
+        \ `Rejected`: The transaction is rejected.\n  - `Pending`: The transaction\
+        \ is pending approval.\n  - `Approved`: The transaction is approved.\n"
       enum:
-      - -1
-      - 0
-      - 1
-      example: 1
-      type: integer
+      - Rejected
+      - Pending
+      - Approved
+      example: Rejected
+      type: string
       x-enum-varnames:
       - REJECTED
       - PENDING
       - APPROVED
     ApprovalUserDetail:
       description: |
-        The user detail for a transaction approval. This includes the user's email, public key, signature, statement UUID, result of the approval, creation time, template version, header title, whether it is for signing, and additional information to show.
+        Details about a user involved in a transaction approval workflow.
       example:
-        result: 1
         created_time: 1610444045
-        user_email: example@gmail.com
         template_version: 1.0.0
         header_title: Transaction Approval
         signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-        show_info:
-          environment: Prod
-          from_address_label: Main Address
-          wallet_name: Cobo Wallet
-          to_address_label: Exchange Address
-          org_name: Cobo
+        language: en
+        message: Please approve the transaction.
+        extra_message: Please review the transaction details carefully.
+        message_version: 1.0.0
+        result: Approved
+        name: John Doe
+        show_info: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+          \ 'Prod'}"
+        approval_result_code: 1
         is_for_sign: true
         statement_uuid: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        email: example@gmail.com
         pubkey: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
       properties:
-        user_email:
-          description: The email address of the user who approved the transaction.
+        name:
+          description: Name of the user who approved the transaction.
+          example: John Doe
+          type: string
+        email:
+          description: Email of the user.
           example: example@gmail.com
           type: string
         pubkey:
-          description: The public key of the user who approved the transaction.
+          description: Public key of the user.
           example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
           type: string
         signature:
-          description: The signature of the transaction approval.
+          description: Signature produced by the user for this approval.
           example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
           type: string
         statement_uuid:
-          description: The UUID of the statement associated with the transaction approval.
+          description: UUID of the statement associated with this approval.
           example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           format: uuid
           type: string
         result:
           $ref: '#/components/schemas/ApprovalResult'
+        approval_result_code:
+          description: Integer value representing the result of the approval.
+          example: 1
+          type: integer
         created_time:
-          description: The timestamp when the approval was created.
+          description: Timestamp when the approval was created.
           example: 1610444045
           type: integer
         template_version:
-          description: The version of the template used for the transaction approval.
+          description: Version of the template used for the transaction approval.
           example: 1.0.0
           type: string
         header_title:
-          description: The title of the header for the transaction approval.
+          description: Display title used in the transaction approval.
           example: Transaction Approval
           type: string
         is_for_sign:
-          description: Indicates whether the approval is for signing.
+          description: |
+            Indicates whether this approval requires signing:
+            - `true`: The user must sign the transaction.
+            - `false`: The user only needs to approve or reject without signing.
           example: true
           type: boolean
         show_info:
-          $ref: '#/components/schemas/ApprovalShowInfo'
+          description: Additional information to show for the transaction approval.
+          example: "{'org_name': 'Cobo', 'wallet_name': 'Cobo Wallet', 'environment':\
+            \ 'Prod'}"
+          type: string
+        language:
+          description: Language used for the transaction approval.
+          example: en
+          type: string
+        message_version:
+          description: Version of the message format used for the transaction approval.
+          example: 1.0.0
+          type: string
+        message:
+          description: Message associated with the transaction approval.
+          example: Please approve the transaction.
+          type: string
+        extra_message:
+          description: Any additional message or information related to the transaction
+            approval.
+          example: Please review the transaction details carefully.
+          type: string
       type: object
     CustodialTransferSource:
       description: |
@@ -20860,7 +21353,8 @@ components:
             - `PaymentSettlement`: The payment settlement event data.\n- `PaymentTransaction`:\
             \ The payment transaction event data.\n- `PaymentAddressUpdate`: The top-up\
             \ address update event data.\n- `BalanceUpdateInfo`: The balance update\
-            \ event data.\n- `SuspendedToken`: The token suspension event data."
+            \ event data.\n- `SuspendedToken`: The token suspension event data.\n\
+            - `ComplianceDisposition`: The compliance disposition event data."
           enum:
           - Transaction
           - TSSRequest
@@ -20877,6 +21371,7 @@ components:
           - PaymentAddressUpdate
           - BalanceUpdateInfo
           - SuspendedToken
+          - ComplianceDisposition
           example: Transaction
           type: string
       required:
@@ -20900,6 +21395,7 @@ components:
           PaymentSettlement: '#/components/schemas/PaymentSettlementEvent'
           PaymentTransaction: '#/components/schemas/PaymentTransactionEventData'
           PaymentAddressUpdate: '#/components/schemas/PaymentAddressUpdateEventData'
+          ComplianceDisposition: '#/components/schemas/ComplianceDispositionUpdateEventData'
         propertyName: data_type
       oneOf:
       - $ref: '#/components/schemas/TransactionWebhookEventData'
@@ -20917,6 +21413,7 @@ components:
       - $ref: '#/components/schemas/PaymentSettlementEvent'
       - $ref: '#/components/schemas/PaymentTransactionEventData'
       - $ref: '#/components/schemas/PaymentAddressUpdateEventData'
+      - $ref: '#/components/schemas/ComplianceDispositionUpdateEventData'
     TransactionWebhookEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -21277,6 +21774,11 @@ components:
         - updated_address
         type: object
       title: Top-Up Address Update
+    ComplianceDispositionUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - $ref: '#/components/schemas/DispositionEventData'
+      title: Compliance Disposition Event Data
     WebhookEventType:
       description: "The event type. To learn the trigger condition of each event type,\
         \ refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type)."
@@ -21314,6 +21816,7 @@ components:
       - payment.refund.status.updated
       - payment.settlement.status.updated
       - payment.address.updated
+      - compliance.disposition.status.updated
       example: wallets.transaction.created
       type: string
     WebhookEventStatus:
@@ -22894,7 +23397,7 @@ components:
       - btc_sign_baby
       type: object
     AddressBook:
-      description: The information of an address book entry.
+      description: The information of an Address Book entry.
       example:
         wallet_subtype: Asset
         address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
@@ -22911,25 +23414,25 @@ components:
         - ETH
       properties:
         org_id:
-          description: The organization ID.
+          description: Organization ID.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           format: uuid
           type: string
         entry_id:
-          description: The entry ID.
+          description: Address Book entry ID.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           format: uuid
           type: string
         address:
-          description: The wallet address.
+          description: Wallet address.
           example: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
           type: string
         memo:
-          description: The memo.
+          description: Optional memo or tag required by some chains.
           example: 9d4773eb
           type: string
         wallet_name:
-          description: The wallet name.
+          description: Wallet name.
           example: Example Wallet
           type: string
         wallet_type:
@@ -22937,7 +23440,7 @@ components:
         wallet_subtype:
           $ref: '#/components/schemas/WalletSubtype'
         label:
-          description: The address label.
+          description: A user-defined label for the address.
           example: test
           type: string
         chain_ids:
@@ -22947,7 +23450,7 @@ components:
             type: string
           type: array
         email:
-          description: The email of the address owner.
+          description: Email of the address owner.
           example: help@cobo.com
           type: string
         encoding:
@@ -22957,6 +23460,101 @@ components:
       - entry_id
       - label
       - org_id
+      type: object
+    CreateAddressBooksParam:
+      description: The request body to add addresses in batches to your Address Book.
+      example:
+        address_books:
+        - address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+          memo: 9d4773eb
+          label: test
+          email: help@cobo.com
+          chain_ids:
+          - ETH
+          - ETH
+        - address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+          memo: 9d4773eb
+          label: test
+          email: help@cobo.com
+          chain_ids:
+          - ETH
+          - ETH
+      properties:
+        address_books:
+          items:
+            $ref: '#/components/schemas/CreateAddressBookParam'
+          type: array
+      required:
+      - address_books
+      title: Batch Create Address Book
+      type: object
+    CreateAddressBookParam:
+      description: The request body to add an address to your Address Book.
+      example:
+        address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+        memo: 9d4773eb
+        label: test
+        email: help@cobo.com
+        chain_ids:
+        - ETH
+        - ETH
+      properties:
+        chain_ids:
+          description: A list of chain IDs.
+          items:
+            example: ETH
+            type: string
+          type: array
+        address:
+          description: The wallet address.
+          example: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+          type: string
+        memo:
+          description: Optional memo or tag required by some chains.
+          example: 9d4773eb
+          type: string
+        label:
+          description: A user-defined label for the address.
+          example: test
+          type: string
+        email:
+          description: The email of the address owner.
+          example: help@cobo.com
+          type: string
+      required:
+      - address
+      - chain_ids
+      title: Create Address Book
+      type: object
+    UpdateAddressBookParam:
+      description: The request body to update Address Book.
+      example:
+        memo: 9d4773eb
+        label: test
+        email: help@cobo.com
+        chain_ids: ETH
+      properties:
+        chain_ids:
+          description: A list of chain IDs.
+          example: ETH
+          items:
+            type: string
+          type: array
+        memo:
+          description: Optional memo or tag required by some chains.
+          example: 9d4773eb
+          type: string
+        label:
+          description: A user-defined label for the address.
+          example: test
+          type: string
+        email:
+          description: Email of the address owner.
+          example: help@cobo.com
+          type: string
+      required:
+      - chain_ids
+      title: Update Address Book
       type: object
     TravelRuleDepositExchangesOrVASP:
       description: Required information when depositing from an exchange or other
@@ -24570,9 +25168,7 @@ components:
           type: string
         amount:
           description: |
-            The settlement amount. When settling merchant balance from orders (`acquiring_type` is `Order` and `settlement_type` is `Merchant`), do not specify this field as the settlement amount will be automatically calculated based on the order amounts.
-            - If `payout_channel` is set to `Crypto`, this represents the settlement amount in the specified cryptocurrency.
-            - If `payout_channel` is set to `OffRamp`, this represents the settlement amount in the specified fiat currency.
+            The amount of cryptocurrency to be settled. When settling merchant balance from orders (`acquiring_type` is `Order` and `settlement_type` is `Merchant`), do not specify this field as the amount will be automatically calculated based on the order amounts.
           example: "500.00"
           type: string
         bank_account_id:
@@ -24619,9 +25215,11 @@ components:
           format: uuid
           type: string
         developer_fee_rate:
-          description: The developer fee rate applied to this merchant. Expressed
-            as a string in decimal format where "0.1" represents 10%. This fee is
-            deducted from the payment amount and only applies to top-up transactions.
+          description: "The developer fee rate applied to this merchant. Expressed\
+            \ as a string in decimal format where \"0.1\" represents 10%. This fee\
+            \ is deducted from the payment amount and only applies to top-up transactions.\
+            \ If you are a merchant (directly serving the payer), you do not need\
+            \ to configure the developer fee rate."
           example: "0.01"
           type: string
         created_timestamp:
@@ -25828,23 +26426,29 @@ components:
           format: uuid
           type: string
         token_id:
-          description: The ID of the cryptocurrency.
+          description: "The token ID, which is a unique identifier that specifies\
+            \ both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`."
           example: ETH_USDT
           type: string
         swept_balance:
-          description: The payment wallet swept balance.
+          description: The total amount of the token on the sweep-to address of the
+            payment wallet.
           example: "1.23"
           type: string
         available_balance:
-          description: The payment wallet available balance.
+          description: "The balance available for settlement or refund, in the specified\
+            \ cryptocurrency."
           example: "1.23"
           type: string
         total_balance:
-          description: The payment wallet total balance.
+          description: The total balance of the token for the payment wallet.
           example: "1.23"
           type: string
         above_sweep_threshold_balance:
-          description: The payment wallet above sweep threshold balance.
+          description: "The total amount of funds that exceed the sweep threshold\
+            \ across all receiving addresses in the payment wallet. When the balance\
+            \ on a receiving address exceeds the sweep threshold, those funds become\
+            \ eligible for automatic sweeping and are included in this balance."
           example: "1.23"
           type: string
       required:
@@ -25867,29 +26471,34 @@ components:
           example: "1"
           type: string
         token_id:
-          description: The ID of the cryptocurrency.
+          description: "The token ID, which is a unique identifier that specifies\
+            \ both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`."
           example: ETH_USDT
           type: string
         acquiring_type:
           $ref: '#/components/schemas/AcquiringType'
         total_received_amount:
-          description: The merchant total received amount.
+          description: The total amount of the token that has been received by the
+            merchant.
           example: "1.23"
           type: string
         settled_amount:
-          description: The merchant settled amount.
+          description: The total amount of the token that has been settled from the
+            merchant's balance.
           example: "1.23"
           type: string
         refunded_amount:
-          description: The merchant total refunded amount.
+          description: The total amount of the token that has been refunded from the
+            merchant's balance.
           example: "1.23"
           type: string
         total_balance:
-          description: The merchant total balance.
+          description: The total balance of the token for the merchant.
           example: "1.23"
           type: string
         available_balance:
-          description: The merchant available balance.
+          description: "The balance available for settlement or refund, in the specified\
+            \ cryptocurrency."
           example: "1.23"
           type: string
       required:
@@ -25904,58 +26513,274 @@ components:
         developer_fee_amount: "1.23"
         token_id: ETH_USDT
         available_balance: "1.23"
-        refunded_amount: "1.23"
+        refunded_amount: refunded_amount
       properties:
         token_id:
-          description: The ID of the cryptocurrency.
+          description: "The token ID, which is a unique identifier that specifies\
+            \ both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`."
           example: ETH_USDT
           type: string
         developer_fee_amount:
-          description: The psp developer fee amount.
+          description: The total amount of the token that has been received as developer
+            fee.
           example: "1.23"
           type: string
         settled_amount:
-          description: The psp settled amount.
+          description: The total amount of the token that has been settled from the
+            developer's balance.
           example: "1.23"
           type: string
         refunded_amount:
-          description: The psp total refunded amount.
-          example: "1.23"
+          description: The total amount of the token that has been refunded from the
+            developer's balance.
           type: string
         total_balance:
-          description: The psp total balance.
+          description: The total balance of the token for the developer.
           example: "1.23"
           type: string
         available_balance:
-          description: The psp available balance.
+          description: "The balance available for settlement or refund, in the specified\
+            \ cryptocurrency."
           example: "1.23"
           type: string
       required:
       - token_id
       type: object
     PayerBalanceByAddress:
-      description: Aggregated balance information of a specific token for a given
-        payer.
+      description: The total amount received for a specific payer on a list of receiving
+        addresses.
       items:
         $ref: '#/components/schemas/ReceivedAmountPerAddress'
       type: array
     ReceivedAmountPerAddress:
-      description: Total amount of a specific token received at a given address.
+      description: The total amount of the token that has been received at a given
+        address.
       example:
         address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
         total_received_amount: "0.15"
       properties:
         address:
-          description: Receiving address.
+          description: The receiving address.
           example: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
           type: string
         total_received_amount:
-          description: "Total tokens received at this address, as a decimal string."
+          description: The total amount of the token that has been received at this
+            address.
           example: "0.15"
           type: string
       required:
       - address
       - total_received_amount
+      type: object
+    DispositionStatus:
+      description: The status of a disposition operation.
+      enum:
+      - Submitted
+      - Refunding
+      - Refunded
+      - RefundFailed
+      - Frozen
+      - Unfreezing
+      - Unfrozen
+      - UnfreezeFailed
+      - Isolating
+      - Isolated
+      - IsolateFailed
+      - CoboDisposition
+      - Normal
+      example: Submitted
+      type: string
+    DispositionType:
+      description: The type of a disposition operation.
+      enum:
+      - Unfreeze
+      - Refund
+      - Isolate
+      example: Refund
+      type: string
+    RefundDisposition:
+      description: The information about a request to refund funds.
+      example:
+        transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        destination_address: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb7
+        disposition_amount: "1.5"
+        description: "Refund due to compliance requirements - Case #12345"
+        category_names:
+        - Compliance
+        - Refund
+        - AML
+      properties:
+        transaction_id:
+          description: The UUID of the transaction whose funds are to be refunded.
+            This identifies the original transaction that requires refund processing.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        destination_address:
+          description: The blockchain address to receive the refunded funds.
+          example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb7
+          type: string
+        disposition_amount:
+          description: |
+            The amount to be refunded from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.
+          example: "1.5"
+          type: string
+        category_names:
+          description: Custom categories to identify and track this refund transaction.
+            Used for transaction classification and reporting.
+          example:
+          - Compliance
+          - Refund
+          - AML
+          items:
+            type: string
+          type: array
+        description:
+          description: Additional notes or description for the refund.
+          example: "Refund due to compliance requirements - Case #12345"
+          maxLength: 200
+          type: string
+      required:
+      - destination_address
+      - disposition_amount
+      - transaction_id
+      type: object
+    IsolateDisposition:
+      description: The information about a request to isolate funds.
+      example:
+        transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        destination_address: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb7
+        disposition_amount: "1.5"
+        description: "Isolate funds due to compliance requirements - Case #12345"
+        category_names:
+        - Compliance
+        - Isolate
+        - AML
+      properties:
+        transaction_id:
+          description: The UUID of the transaction whose funds are to be isolated.
+            This identifies the original transaction that requires fund isolation.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        destination_address:
+          description: The blockchain address to receive the isolated funds.
+          example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb7
+          type: string
+        disposition_amount:
+          description: |
+            The amount to be isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.
+          example: "1.5"
+          type: string
+        category_names:
+          description: Custom categories to identify and track this isolation transaction.
+            Used for transaction classification and reporting.
+          example:
+          - Compliance
+          - Isolate
+          - AML
+          items:
+            type: string
+          type: array
+        description:
+          description: Additional notes or description for the isolation.
+          example: "Isolate funds due to compliance requirements - Case #12345"
+          maxLength: 200
+          type: string
+      required:
+      - destination_address
+      - disposition_amount
+      - transaction_id
+      type: object
+    UnfreezeDisposition:
+      description: The information about a request to unfreeze funds.
+      example:
+        transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      properties:
+        transaction_id:
+          description: The UUID of the transaction whose funds are to be unfrozen.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+      required:
+      - transaction_id
+      type: object
+    DispositionResponse:
+      description: The response for a disposition request.
+      example:
+        transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        status: Submitted
+      properties:
+        transaction_id:
+          description: The UUID of the transaction being processed for disposition.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        status:
+          $ref: '#/components/schemas/DispositionStatus'
+      required:
+      - status
+      - transaction_id
+      type: object
+    DispositionQueryResponse:
+      description: The response for a disposition query request.
+      example:
+        transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        disposition_transaction_id: 550e8400-e29b-41d4-a716-446655440000
+        disposition_type: Refund
+        disposition_status: Submitted
+      properties:
+        transaction_id:
+          description: The UUID of the transaction that the disposition applies to.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        disposition_type:
+          $ref: '#/components/schemas/DispositionType'
+        disposition_status:
+          $ref: '#/components/schemas/DispositionStatus'
+        disposition_transaction_id:
+          description: The UUID of the generated disposition transaction (if available).
+          example: 550e8400-e29b-41d4-a716-446655440000
+          format: uuid
+          type: string
+      required:
+      - disposition_status
+      - disposition_type
+      - transaction_id
+      type: object
+    DispositionEventData:
+      description: The disposition information about a transaction.
+      properties:
+        transaction_id:
+          description: The transaction ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          format: uuid
+          type: string
+        disposition_type:
+          $ref: '#/components/schemas/DispositionType'
+        disposition_status:
+          $ref: '#/components/schemas/DispositionStatus'
+        destination_address:
+          description: The blockchain address to receive the refunded/isolated funds.
+          example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb7
+          type: string
+        disposition_amount:
+          description: |
+            The amount to be refunded/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.
+          example: "1.5"
+          type: string
+        updated_timestamp:
+          description: "The time when the disposition was updated, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1610445878970
+          format: int64
+          type: integer
+      required:
+      - disposition_status
+      - disposition_type
+      - transaction_id
+      - updated_timestamp
       type: object
     TSSKeyGenRequest:
       properties:
@@ -27084,6 +27909,7 @@ components:
       - name
       - standard
       - symbol
+      title: ERC20
       type: object
     TokenizationSOLTokenParams:
       properties:
@@ -27117,6 +27943,7 @@ components:
       - name
       - standard
       - symbol
+      title: Solana
       type: object
     TokenizationEstimateFeeRequest:
       example:
@@ -27444,6 +28271,7 @@ components:
       - address
       - source_type
       - wallet_id
+      title: MPC Wallets
       type: object
     TokenizationOperationResponse:
       example:
@@ -27784,6 +28612,7 @@ components:
       - address
       - source_type
       - wallet_id
+      title: Web3
       type: object
     TokenizationEvmContractCallParams:
       description: The information about the EVM contract call.
@@ -27918,7 +28747,7 @@ components:
           address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
           source_type: Org-Controlled
         request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-      title: TokenizationIssueEstimateFeeParams
+      title: Issue
     TokenizationMintEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationMintTokenParams'
@@ -27938,6 +28767,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Mint
     TokenizationBurnEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationBurnTokenParams'
@@ -27957,6 +28787,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Burn
     TokenizationPauseEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationPauseTokenParams'
@@ -27976,6 +28807,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Pause
     TokenizationUnpauseEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationUnpauseTokenParams'
@@ -27995,6 +28827,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Unpause
     TokenizationUpdateAllowlistAddressesEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationUpdateAllowlistAddressesParams'
@@ -28014,6 +28847,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Update allowlist addresses
     TokenizationUpdateBlocklistAddressesEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationUpdateBlocklistAddressesParams'
@@ -28033,6 +28867,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Update blocklist addresses
     TokenizationToggleAllowlistEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationAllowlistActivationParams'
@@ -28052,6 +28887,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Toggle allowlist
     TokenizationContractCallEstimateFeeParams:
       allOf:
       - $ref: '#/components/schemas/TokenizationContractCallParams'
@@ -28071,6 +28907,7 @@ components:
         - operation_type
         - token_id
         type: object
+      title: Contract call
     TokenizationUpdateAddressAction:
       description: The operation to perform on the blocklist or allowlist.
       enum:
@@ -28108,7 +28945,7 @@ components:
       example: EVM_Contract
       type: string
     SweepToAddress:
-      description: The sweep to address information.
+      description: Information about the sweep-to address.
       example:
         address: 0x0000000000000000000000000000000000000000
         chain_id: ETH
@@ -28131,13 +28968,18 @@ components:
       - chain_id
       type: object
     SweepToAddressStatus:
+      description: |
+        The status of the sweep-to address:
+
+        - `Valid`: The sweep-to address is active and used for auto token sweeping.
+        - `Invalid`: The sweep-to address is no longer used for auto token sweeping.
       enum:
       - Valid
       - Invalid
       example: Valid
       type: string
     CreateSweepToAddress:
-      description: The information of create sweep to address.
+      description: Information of the new sweep-to address to be created.
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         chain_id: ETH
@@ -28155,11 +28997,10 @@ components:
       required:
       - chain_id
       - wallet_id
-      title: The request body to generates a new sweep to addresses within a specified
-        wallet.
+      title: CreateSweepToAddressRequest
       type: object
     AutoSweepTask:
-      description: The auto sweep task information.
+      description: Auto-sweep task information.
       example:
         failed_reasons:
         - exist pending transaction
@@ -28175,30 +29016,29 @@ components:
         status: Submitted
       properties:
         task_id:
-          description: The auto sweep task ID.
+          description: Auto-sweep task ID.
           example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
           format: uuid
           type: string
         wallet_id:
-          description: The wallet ID.
+          description: Wallet ID.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         token_id:
-          description: "The token ID of the swept token. You can retrieve the IDs\
-            \ of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          description: "Token ID of the swept token. You can retrieve the IDs of all\
+            \ the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
           example: ETH_USDT
           type: string
         status:
           $ref: '#/components/schemas/AutoSweepTaskStatus'
         transaction_ids:
-          description: The IDs of the corresponding transactions of the auto sweep
-            task.
+          description: IDs of the transactions triggered by the task.
           items:
             example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
             type: string
           type: array
         failed_reasons:
-          description: Failed reason of create auto sweep transaction.
+          description: Reasons why the task creation failed.
           items:
             example: exist pending transaction
             type: string
@@ -28223,24 +29063,28 @@ components:
       - wallet_id
       type: object
     AutoSweepTaskStatus:
+      description: |
+        Auto-sweep task status:
+        - `Submitted`: The auto-sweep task has been submitted.
+        - `TransactionCreated`: The auto-sweep task triggered one or more token sweeping transactions.
       enum:
       - Submitted
       - TransactionCreated
       example: Submitted
       type: string
     CreateAutoSweepTask:
-      description: The sweep to address information.
+      description: Wallet and token information required to create an auto-sweep task.
       example:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         token_id: ETH_USDT
       properties:
         wallet_id:
-          description: The wallet ID.
+          description: ID of the wallet where the token will be swept.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         token_id:
-          description: "The token ID of the swept token. You can retrieve the IDs\
-            \ of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          description: "ID of the token to be swept. You can retrieve the IDs of all\
+            \ the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
           example: ETH_USDT
           type: string
       required:
@@ -28258,6 +29102,7 @@ components:
           symbol: ETH
           chain_id: ETH
           require_memo: false
+          chain_identifier: ETH
           confirming_threshold: 15
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
           coinbase_maturity: 15
@@ -28266,6 +29111,7 @@ components:
           symbol: ETH
           chain_id: ETH
           require_memo: false
+          chain_identifier: ETH
           confirming_threshold: 15
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
           coinbase_maturity: 15
@@ -31254,6 +32100,55 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
+    create_address_books_201_response:
+      example:
+        data:
+        - wallet_subtype: Asset
+          address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+          org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          wallet_name: Example Wallet
+          memo: 9d4773eb
+          wallet_type: Custodial
+          label: test
+          encoding: ENCODING_P2PKH
+          entry_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          email: help@cobo.com
+          chain_ids:
+          - ETH
+          - ETH
+        - wallet_subtype: Asset
+          address: 0x570f02f2b5fcf3ac56fb6703bd7039c0c9e33460
+          org_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          wallet_name: Example Wallet
+          memo: 9d4773eb
+          wallet_type: Custodial
+          label: test
+          encoding: ENCODING_P2PKH
+          entry_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          email: help@cobo.com
+          chain_ids:
+          - ETH
+          - ETH
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AddressBook'
+          type: array
+      type: object
+    delete_address_book_by_id_201_response:
+      example:
+        submitted: true
+      properties:
+        submitted:
+          description: |
+            Whether the request to delete the Address Book entry (record) has been successfully submitted.
+            - `true`: The request has been successfully submitted.
+            - `false`: The request has not been submitted.
+          example: true
+          type: boolean
+      required:
+      - submitted
+      type: object
     query_guard_pubkey_200_response_addresses_inner:
       example:
         address: 0x0000000000000000000000000000000000000000
@@ -31625,9 +32520,11 @@ components:
           format: uuid
           type: string
         developer_fee_rate:
-          description: The developer fee rate applied to this merchant. Expressed
-            as a string in decimal format where "0.1" represents 10%. This fee is
-            deducted from the payment amount and only applies to top-up transactions.
+          description: "The developer fee rate applied to this merchant. Expressed\
+            \ as a string in decimal format where \"0.1\" represents 10%. This fee\
+            \ is deducted from the payment amount and only applies to top-up transactions.\
+            \ If you are a merchant (directly serving the payer), you do not need\
+            \ to configure the developer fee rate."
           example: "0.1"
           type: string
       required:
@@ -31641,9 +32538,11 @@ components:
           example: Merchant B
           type: string
         developer_fee_rate:
-          description: The developer fee rate applied to this merchant. Expressed
-            as a string in decimal format where "0.1" represents 10%. This fee is
-            deducted from the payment amount and only applies to top-up transactions.
+          description: "The developer fee rate applied to this merchant. Expressed\
+            \ as a string in decimal format where \"0.1\" represents 10%. This fee\
+            \ is deducted from the payment amount and only applies to top-up transactions.\
+            \ If you are a merchant (directly serving the payer), you do not need\
+            \ to configure the developer fee rate."
           example: "0.1"
           type: string
       type: object
@@ -31745,7 +32644,7 @@ components:
           type: string
         payable_amount:
           description: The amount to refund in cryptocurrency. The amount must be
-            a positive integer with up to two decimal places.
+            a positive number and can have up to two decimal places
           example: "0.25"
           type: string
         to_address:
@@ -31925,11 +32824,13 @@ components:
         fee_amount:
           description: "\nThe developer fee for the order, in the currency specified\
             \ by `currency`. If `currency` is not specified, the fee is in the cryptocurrency\
-            \ specified by `token_id`.\n\nThe developer fee is added to the base amount\
-            \ (`order_amount`) to determine the final charge. For example:\n- Base\
-            \ amount (`order_amount`): \"100.00\"\n- Developer fee (`fee_amount`):\
-            \ \"2.00\" \n- Total charged to customer: \"102.00\"\n\nValues must be\
-            \ greater than 0 and contain two decimal places.\n"
+            \ specified by `token_id`.\n\nIf you are a merchant directly serving payers,\
+            \ set this field to `0`. Developer fees are only relevant for platforms\
+            \ like payment service providers (PSPs) that charge fees to their downstream\
+            \ merchants.\n\nThe developer fee is added to the base amount (`order_amount`)\
+            \ to determine the final charge. For example:\n- Base amount (`order_amount`):\
+            \ \"100.00\"\n- Developer fee (`fee_amount`): \"2.00\" \n- Total charged\
+            \ to customer: \"102.00\"\n\nValues can contain up to two decimal places.\n"
           example: "2.00"
           type: string
         merchant_order_code:
@@ -31946,7 +32847,8 @@ components:
         expired_in:
           default: 1800
           description: |
-            The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. After expiration:
+            The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:
+
             - The order status becomes final and cannot be changed
             - The `received_token_amount` field will no longer be updated
             - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance.
@@ -33320,7 +34222,7 @@ components:
         authorizationCode:
           authorizationUrl: https://auth.cobo.com/authorize
           scopes:
-            address_book.read: Read address book
+            address_book.read: Read Address Book
             api_key.read: Read API key information
             callback.read: Read callback message
             callback.resend: Resend callback message
@@ -33367,6 +34269,10 @@ components:
             payment_merchant.update: Update payment merchant
             payment_force_sweep.create: Create payment force sweep request
             payment_force_sweep.read: Read payment force sweep request information
+            compliance_funds.refund: Refund compliance funds request
+            compliance_funds.isolate: Isolate compliance funds request
+            compliance_funds.unfreeze: Unfreeze compliance funds request
+            compliance_funds.read: Read compliance funds request information
           tokenUrl: https://auth.cobo.com/oauth/token
       type: oauth2
 x-mcp:

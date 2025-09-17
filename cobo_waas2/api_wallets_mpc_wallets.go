@@ -2081,7 +2081,7 @@ func (r ApiListMpcVaultsRequest) VaultType(vaultType MPCVaultType) ApiListMpcVau
 	return r
 }
 
-// The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
+// (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
 func (r ApiListMpcVaultsRequest) ProjectId(projectId string) ApiListMpcVaultsRequest {
 	r.projectId = &projectId
 	return r

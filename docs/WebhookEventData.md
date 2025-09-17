@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
@@ -35,7 +35,7 @@ Name | Type | Description | Notes
 **Extra** | Pointer to **[]string** | A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the &#x60;extra_type&#x60; field in the JSON object (for example, \&quot;BabylonBusinessInfo\&quot;, \&quot;BtcAddressInfo\&quot;).  | [optional] 
 **FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
 **CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
-**UpdatedTimestamp** | **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | 
+**UpdatedTimestamp** | **int64** | The time when the disposition was updated, in Unix timestamp format, measured in milliseconds. | 
 **TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
 **SourceKeyShareHolderGroup** | Pointer to [**SourceGroup**](SourceGroup.md) |  | [optional] 
 **TargetKeyShareHolderGroupId** | Pointer to **string** | The target key share holder group ID. | [optional] 
@@ -89,12 +89,16 @@ Name | Type | Description | Notes
 **Chain** | **string** | The chain ID. | 
 **PreviousAddress** | **string** | The previous top-up address that was assigned to the payer. | 
 **UpdatedAddress** | **string** | The new top-up address that has been assigned to the payer. | 
+**DispositionType** | [**DispositionType**](DispositionType.md) |  | 
+**DispositionStatus** | [**DispositionStatus**](DispositionStatus.md) |  | 
+**DestinationAddress** | Pointer to **string** | The blockchain address to receive the refunded/isolated funds. | [optional] 
+**DispositionAmount** | Pointer to **string** | The amount to be refunded/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.  | [optional] 
 
 ## Methods
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status TransactionStatus, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status TransactionStatus, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, dispositionType DispositionType, dispositionStatus DispositionStatus, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -2023,6 +2027,96 @@ and a boolean to check if the value has been set.
 
 SetUpdatedAddress sets UpdatedAddress field to given value.
 
+
+### GetDispositionType
+
+`func (o *WebhookEventData) GetDispositionType() DispositionType`
+
+GetDispositionType returns the DispositionType field if non-nil, zero value otherwise.
+
+### GetDispositionTypeOk
+
+`func (o *WebhookEventData) GetDispositionTypeOk() (*DispositionType, bool)`
+
+GetDispositionTypeOk returns a tuple with the DispositionType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDispositionType
+
+`func (o *WebhookEventData) SetDispositionType(v DispositionType)`
+
+SetDispositionType sets DispositionType field to given value.
+
+
+### GetDispositionStatus
+
+`func (o *WebhookEventData) GetDispositionStatus() DispositionStatus`
+
+GetDispositionStatus returns the DispositionStatus field if non-nil, zero value otherwise.
+
+### GetDispositionStatusOk
+
+`func (o *WebhookEventData) GetDispositionStatusOk() (*DispositionStatus, bool)`
+
+GetDispositionStatusOk returns a tuple with the DispositionStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDispositionStatus
+
+`func (o *WebhookEventData) SetDispositionStatus(v DispositionStatus)`
+
+SetDispositionStatus sets DispositionStatus field to given value.
+
+
+### GetDestinationAddress
+
+`func (o *WebhookEventData) GetDestinationAddress() string`
+
+GetDestinationAddress returns the DestinationAddress field if non-nil, zero value otherwise.
+
+### GetDestinationAddressOk
+
+`func (o *WebhookEventData) GetDestinationAddressOk() (*string, bool)`
+
+GetDestinationAddressOk returns a tuple with the DestinationAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDestinationAddress
+
+`func (o *WebhookEventData) SetDestinationAddress(v string)`
+
+SetDestinationAddress sets DestinationAddress field to given value.
+
+### HasDestinationAddress
+
+`func (o *WebhookEventData) HasDestinationAddress() bool`
+
+HasDestinationAddress returns a boolean if a field has been set.
+
+### GetDispositionAmount
+
+`func (o *WebhookEventData) GetDispositionAmount() string`
+
+GetDispositionAmount returns the DispositionAmount field if non-nil, zero value otherwise.
+
+### GetDispositionAmountOk
+
+`func (o *WebhookEventData) GetDispositionAmountOk() (*string, bool)`
+
+GetDispositionAmountOk returns a tuple with the DispositionAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDispositionAmount
+
+`func (o *WebhookEventData) SetDispositionAmount(v string)`
+
+SetDispositionAmount sets DispositionAmount field to given value.
+
+### HasDispositionAmount
+
+`func (o *WebhookEventData) HasDispositionAmount() bool`
+
+HasDispositionAmount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

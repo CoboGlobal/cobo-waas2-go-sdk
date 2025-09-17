@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | The ID of the cryptocurrency. | 
-**DeveloperFeeAmount** | Pointer to **string** | The psp developer fee amount. | [optional] 
-**SettledAmount** | Pointer to **string** | The psp settled amount. | [optional] 
-**RefundedAmount** | Pointer to **string** | The psp total refunded amount. | [optional] 
-**TotalBalance** | Pointer to **string** | The psp total balance. | [optional] 
-**AvailableBalance** | Pointer to **string** | The psp available balance. | [optional] 
+**TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. | 
+**DeveloperFeeAmount** | Pointer to **string** | The total amount of the token that has been received as developer fee. | [optional] 
+**SettledAmount** | Pointer to **string** | The total amount of the token that has been settled from the developer&#39;s balance. | [optional] 
+**RefundedAmount** | Pointer to **string** | The total amount of the token that has been refunded from the developer&#39;s balance. | [optional] 
+**TotalBalance** | Pointer to **string** | The total balance of the token for the developer. | [optional] 
+**AvailableBalance** | Pointer to **string** | The balance available for settlement or refund, in the specified cryptocurrency. | [optional] 
 
 ## Methods
 

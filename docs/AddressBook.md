@@ -4,16 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **string** | The organization ID. | 
-**EntryId** | **string** | The entry ID. | 
-**Address** | **string** | The wallet address. | 
-**Memo** | Pointer to **string** | The memo. | [optional] 
-**WalletName** | Pointer to **string** | The wallet name. | [optional] 
+**OrgId** | **string** | Organization ID. | 
+**EntryId** | **string** | Address Book entry ID. | 
+**Address** | **string** | Wallet address. | 
+**Memo** | Pointer to **string** | Optional memo or tag required by some chains. | [optional] 
+**WalletName** | Pointer to **string** | Wallet name. | [optional] 
 **WalletType** | Pointer to [**WalletType**](WalletType.md) |  | [optional] 
 **WalletSubtype** | Pointer to [**WalletSubtype**](WalletSubtype.md) |  | [optional] 
-**Label** | **string** | The address label. | 
+**Label** | **string** | A user-defined label for the address. | 
 **ChainIds** | Pointer to **[]string** | A list of chain IDs. | [optional] 
-**Email** | Pointer to **string** | The email of the address owner. | [optional] 
+**Email** | Pointer to **string** | Email of the address owner. | [optional] 
 **Encoding** | Pointer to [**AddressEncoding**](AddressEncoding.md) |  | [optional] 
 
 ## Methods

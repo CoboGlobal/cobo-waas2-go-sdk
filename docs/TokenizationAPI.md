@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**ListIssuedTokens**](TokenizationAPI.md#ListIssuedTokens) | **Get** /tokenization/tokens | List issued tokens
 [**ListTokenizationActivities**](TokenizationAPI.md#ListTokenizationActivities) | **Get** /tokenization/activities | List tokenization activities
 [**ListTokenizationAllowlistAddresses**](TokenizationAPI.md#ListTokenizationAllowlistAddresses) | **Get** /tokenization/tokens/{token_id}/allowlist/addresses | List addresses on allowlist
-[**ListTokenizationBlocklistAddresses**](TokenizationAPI.md#ListTokenizationBlocklistAddresses) | **Get** /tokenization/tokens/{token_id}/blocklist/addresses | Lists addresses on blocklist
+[**ListTokenizationBlocklistAddresses**](TokenizationAPI.md#ListTokenizationBlocklistAddresses) | **Get** /tokenization/tokens/{token_id}/blocklist/addresses | List addresses on blocklist
 [**ListTokenizationHoldings**](TokenizationAPI.md#ListTokenizationHoldings) | **Get** /tokenization/tokens/{token_id}/holdings | Get token holdings information
 [**ListTokenizationSupportedChains**](TokenizationAPI.md#ListTokenizationSupportedChains) | **Get** /tokenization/enabled_chains | List supported chains for tokenization
 [**MintTokenization**](TokenizationAPI.md#MintTokenization) | **Post** /tokenization/tokens/{token_id}/mint | Mint tokens
@@ -768,7 +768,7 @@ Name | Type | Description  | Notes
 
 > ListTokenizationBlocklistAddresses200Response ListTokenizationBlocklistAddresses(ctx, tokenId).Limit(limit).After(after).Before(before).Direction(direction).Execute()
 
-Lists addresses on blocklist
+List addresses on blocklist
 
 
 
