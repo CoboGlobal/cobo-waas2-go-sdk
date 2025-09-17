@@ -1402,7 +1402,7 @@ func (r ApiListTokenizationBlocklistAddressesRequest) Execute() (*ListTokenizati
 }
 
 /*
-ListTokenizationBlocklistAddresses Lists addresses on blocklist
+ListTokenizationBlocklistAddresses List addresses on blocklist
 
 This operation lists addresses on the blocklist.
 

@@ -17,7 +17,7 @@ import (
 // checks if the SweepToAddress type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SweepToAddress{}
 
-// SweepToAddress The sweep to address information.
+// SweepToAddress Information about the sweep-to address.
 type SweepToAddress struct {
 	// The wallet address.
 	Address string `json:"address"`

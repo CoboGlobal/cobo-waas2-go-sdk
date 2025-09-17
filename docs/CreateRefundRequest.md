@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | **string** | The request ID that is used to track a refund request. The request ID is provided by you and must be unique. | 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
-**PayableAmount** | **string** | The amount to refund in cryptocurrency. The amount must be a positive integer with up to two decimal places. | 
+**PayableAmount** | **string** | The amount to refund in cryptocurrency. The amount must be a positive number and can have up to two decimal places | 
 **ToAddress** | Pointer to **string** | The address where the refunded cryptocurrency will be sent. | [optional] 
 **TokenId** | **string** | The ID of the cryptocurrency used for refund. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
 **RefundType** | [**RefundType**](RefundType.md) |  | 

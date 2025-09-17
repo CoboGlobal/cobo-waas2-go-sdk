@@ -3,11 +3,11 @@
 ## Enum
 
 
-* `REJECTED` (value: `-1`)
+* `REJECTED` (value: `"Rejected"`)
 
-* `PENDING` (value: `0`)
+* `PENDING` (value: `"Pending"`)
 
-* `APPROVED` (value: `1`)
+* `APPROVED` (value: `"Approved"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

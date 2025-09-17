@@ -21,18 +21,18 @@ var _ MappedNullable = &MerchantBalance{}
 type MerchantBalance struct {
 	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
-	// The ID of the cryptocurrency.
+	// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`.
 	TokenId string `json:"token_id"`
 	AcquiringType AcquiringType `json:"acquiring_type"`
-	// The merchant total received amount.
+	// The total amount of the token that has been received by the merchant.
 	TotalReceivedAmount *string `json:"total_received_amount,omitempty"`
-	// The merchant settled amount.
+	// The total amount of the token that has been settled from the merchant's balance.
 	SettledAmount *string `json:"settled_amount,omitempty"`
-	// The merchant total refunded amount.
+	// The total amount of the token that has been refunded from the merchant's balance.
 	RefundedAmount *string `json:"refunded_amount,omitempty"`
-	// The merchant total balance.
+	// The total balance of the token for the merchant.
 	TotalBalance *string `json:"total_balance,omitempty"`
-	// The merchant available balance.
+	// The balance available for settlement or refund, in the specified cryptocurrency.
 	AvailableBalance *string `json:"available_balance,omitempty"`
 }
 

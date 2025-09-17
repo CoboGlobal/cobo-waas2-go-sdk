@@ -7,6 +7,7 @@ api/openapi.yaml
 api_address_books.go
 api_app_workflows.go
 api_auto_sweep.go
+api_compliance.go
 api_developers.go
 api_developers_webhooks.go
 api_fee_station.go
@@ -61,7 +62,6 @@ docs/ApprovalEntry.md
 docs/ApprovalRequest.md
 docs/ApprovalRequestDetail.md
 docs/ApprovalResult.md
-docs/ApprovalShowInfo.md
 docs/ApprovalStatementStatus.md
 docs/ApprovalStatus.md
 docs/ApprovalTemplate.md
@@ -111,6 +111,8 @@ docs/CheckAddressesValidity200ResponseInner.md
 docs/CheckLoopTransfers200ResponseInner.md
 docs/CoboSafeDelegate.md
 docs/CoboSafeDelegateType.md
+docs/ComplianceAPI.md
+docs/ComplianceDispositionUpdateEventData.md
 docs/ContractCallDestination.md
 docs/ContractCallDestinationType.md
 docs/ContractCallParams.md
@@ -122,6 +124,9 @@ docs/CoreStakingExtra.md
 docs/CosmosAdr36MessageSignDestination.md
 docs/CosmosContractCallDestination.md
 docs/CosmosContractCallMessage.md
+docs/CreateAddressBookParam.md
+docs/CreateAddressBooks201Response.md
+docs/CreateAddressBooksParam.md
 docs/CreateAddressRequest.md
 docs/CreateApprovalRequest201Response.md
 docs/CreateAutoSweepTask.md
@@ -173,6 +178,7 @@ docs/CustodialWalletInfo.md
 docs/CustodialWeb3ContractCallSource.md
 docs/CustodialWeb3MessageSignSource.md
 docs/CustodialWeb3TransferSource.md
+docs/DeleteAddressBookById201Response.md
 docs/DeleteCryptoAddress201Response.md
 docs/DeleteGuardPubkey201Response.md
 docs/DeleteKeyShareHolderGroupById201Response.md
@@ -180,6 +186,11 @@ docs/DeleteWalletById201Response.md
 docs/DestinationWalletType.md
 docs/DevelopersAPI.md
 docs/DevelopersWebhooksAPI.md
+docs/DispositionEventData.md
+docs/DispositionQueryResponse.md
+docs/DispositionResponse.md
+docs/DispositionStatus.md
+docs/DispositionType.md
 docs/EigenLayerLstStakeExtra.md
 docs/EigenLayerNativeStakeExtra.md
 docs/EigenlayerValidator.md
@@ -255,6 +266,7 @@ docs/GraphQLErrorLocationsInner.md
 docs/GraphQLRequest.md
 docs/GraphQLResponse.md
 docs/GuardPubkeyStatus.md
+docs/IsolateDisposition.md
 docs/KeyShareHolder.md
 docs/KeyShareHolderGroup.md
 docs/KeyShareHolderGroupStatus.md
@@ -370,6 +382,7 @@ docs/RefreshPermissionTokenRequest.md
 docs/RefreshToken2XXResponse.md
 docs/RefreshTokenRequest.md
 docs/Refund.md
+docs/RefundDisposition.md
 docs/RefundStatus.md
 docs/RefundType.md
 docs/ReplaceType.md
@@ -659,6 +672,8 @@ docs/TravelRuleWithdrawRequestTravelRuleInfo.md
 docs/TriggerTestWebhookEvent201Response.md
 docs/TriggerTestWebhookEventRequest.md
 docs/UTXO.md
+docs/UnfreezeDisposition.md
+docs/UpdateAddressBookParam.md
 docs/UpdateCustodialWalletParams.md
 docs/UpdateExchangeWalletParams.md
 docs/UpdateGroupAction.md
@@ -725,7 +740,6 @@ model_approval_entry.go
 model_approval_request.go
 model_approval_request_detail.go
 model_approval_result.go
-model_approval_show_info.go
 model_approval_statement_status.go
 model_approval_status.go
 model_approval_template.go
@@ -774,6 +788,7 @@ model_check_addresses_validity_200_response_inner.go
 model_check_loop_transfers_200_response_inner.go
 model_cobo_safe_delegate.go
 model_cobo_safe_delegate_type.go
+model_compliance_disposition_update_event_data.go
 model_contract_call_destination.go
 model_contract_call_destination_type.go
 model_contract_call_params.go
@@ -785,6 +800,9 @@ model_core_staking_extra.go
 model_cosmos_adr36_message_sign_destination.go
 model_cosmos_contract_call_destination.go
 model_cosmos_contract_call_message.go
+model_create_address_book_param.go
+model_create_address_books_201_response.go
+model_create_address_books_param.go
 model_create_address_request.go
 model_create_approval_request_201_response.go
 model_create_auto_sweep_task.go
@@ -836,11 +854,17 @@ model_custodial_wallet_info.go
 model_custodial_web3_contract_call_source.go
 model_custodial_web3_message_sign_source.go
 model_custodial_web3_transfer_source.go
+model_delete_address_book_by_id_201_response.go
 model_delete_crypto_address_201_response.go
 model_delete_guard_pubkey_201_response.go
 model_delete_key_share_holder_group_by_id_201_response.go
 model_delete_wallet_by_id_201_response.go
 model_destination_wallet_type.go
+model_disposition_event_data.go
+model_disposition_query_response.go
+model_disposition_response.go
+model_disposition_status.go
+model_disposition_type.go
 model_eigen_layer_lst_stake_extra.go
 model_eigen_layer_native_stake_extra.go
 model_eigenlayer_validator.go
@@ -915,6 +939,7 @@ model_graph_ql_error_locations_inner.go
 model_graph_ql_request.go
 model_graph_ql_response.go
 model_guard_pubkey_status.go
+model_isolate_disposition.go
 model_key_share_holder.go
 model_key_share_holder_group.go
 model_key_share_holder_group_status.go
@@ -1026,6 +1051,7 @@ model_refresh_permission_token_request.go
 model_refresh_token_2_xx_response.go
 model_refresh_token_request.go
 model_refund.go
+model_refund_disposition.go
 model_refund_status.go
 model_refund_type.go
 model_replace_type.go
@@ -1310,6 +1336,8 @@ model_tss_signature.go
 model_tss_signature_type.go
 model_tss_signatures.go
 model_tss_status.go
+model_unfreeze_disposition.go
+model_update_address_book_param.go
 model_update_custodial_wallet_params.go
 model_update_exchange_wallet_params.go
 model_update_group_action.go
@@ -1344,6 +1372,7 @@ response.go
 test/api_address_books_test.go
 test/api_app_workflows_test.go
 test/api_auto_sweep_test.go
+test/api_compliance_test.go
 test/api_developers_test.go
 test/api_developers_webhooks_test.go
 test/api_fee_station_test.go

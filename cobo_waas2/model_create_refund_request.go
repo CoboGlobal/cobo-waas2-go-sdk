@@ -23,7 +23,7 @@ type CreateRefundRequest struct {
 	RequestId string `json:"request_id"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The amount to refund in cryptocurrency. The amount must be a positive integer with up to two decimal places.
+	// The amount to refund in cryptocurrency. The amount must be a positive number and can have up to two decimal places
 	PayableAmount string `json:"payable_amount"`
 	// The address where the refunded cryptocurrency will be sent.
 	ToAddress *string `json:"to_address,omitempty"`

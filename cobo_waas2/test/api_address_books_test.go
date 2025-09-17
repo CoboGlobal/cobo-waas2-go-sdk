@@ -28,11 +28,65 @@ func Test_cobo_waas2_AddressBooksAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test AddressBooksAPIService CreateAddressBooks", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AddressBooksAPI.CreateAddressBooks(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AddressBooksAPIService DeleteAddressBookById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var entryId string
+
+		resp, httpRes, err := apiClient.AddressBooksAPI.DeleteAddressBookById(ctx, entryId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AddressBooksAPIService GetAddressBookById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var entryId string
+
+		resp, httpRes, err := apiClient.AddressBooksAPI.GetAddressBookById(ctx, entryId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AddressBooksAPIService ListAddressBooks", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.AddressBooksAPI.ListAddressBooks(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AddressBooksAPIService UpdateAddressBookById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var entryId string
+
+		resp, httpRes, err := apiClient.AddressBooksAPI.UpdateAddressBookById(ctx, entryId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

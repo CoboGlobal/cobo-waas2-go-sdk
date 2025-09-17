@@ -5,11 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **WalletId** | **string** | The unique identifier of the wallet. | 
-**TokenId** | **string** | The ID of the cryptocurrency. | 
-**SweptBalance** | Pointer to **string** | The payment wallet swept balance. | [optional] 
-**AvailableBalance** | Pointer to **string** | The payment wallet available balance. | [optional] 
-**TotalBalance** | Pointer to **string** | The payment wallet total balance. | [optional] 
-**AboveSweepThresholdBalance** | Pointer to **string** | The payment wallet above sweep threshold balance. | [optional] 
+**TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. | 
+**SweptBalance** | Pointer to **string** | The total amount of the token on the sweep-to address of the payment wallet. | [optional] 
+**AvailableBalance** | Pointer to **string** | The balance available for settlement or refund, in the specified cryptocurrency. | [optional] 
+**TotalBalance** | Pointer to **string** | The total balance of the token for the payment wallet. | [optional] 
+**AboveSweepThresholdBalance** | Pointer to **string** | The total amount of funds that exceed the sweep threshold across all receiving addresses in the payment wallet. When the balance on a receiving address exceeds the sweep threshold, those funds become eligible for automatic sweeping and are included in this balance. | [optional] 
 
 ## Methods
 

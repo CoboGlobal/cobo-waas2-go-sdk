@@ -4,11 +4,11 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateAutoSweepTask**](AutoSweepAPI.md#CreateAutoSweepTask) | **Post** /auto_sweep/tasks | create auto sweep task
-[**CreateWalletSweepToAddresses**](AutoSweepAPI.md#CreateWalletSweepToAddresses) | **Post** /auto_sweep/sweep_to_addresses | create wallet sweep to addresses
-[**GetAutoSweepTaskById**](AutoSweepAPI.md#GetAutoSweepTaskById) | **Get** /auto_sweep/tasks/{task_id} | Get auto sweep task information
-[**ListAutoSweepTask**](AutoSweepAPI.md#ListAutoSweepTask) | **Get** /auto_sweep/tasks | List wallet auto sweep task
-[**ListWalletSweepToAddresses**](AutoSweepAPI.md#ListWalletSweepToAddresses) | **Get** /auto_sweep/sweep_to_addresses | List wallet sweep to addresses
+[**CreateAutoSweepTask**](AutoSweepAPI.md#CreateAutoSweepTask) | **Post** /auto_sweep/tasks | Create auto-sweep task
+[**CreateWalletSweepToAddresses**](AutoSweepAPI.md#CreateWalletSweepToAddresses) | **Post** /auto_sweep/sweep_to_addresses | create sweep-to address
+[**GetAutoSweepTaskById**](AutoSweepAPI.md#GetAutoSweepTaskById) | **Get** /auto_sweep/tasks/{task_id} | Get auto-sweep task details
+[**ListAutoSweepTask**](AutoSweepAPI.md#ListAutoSweepTask) | **Get** /auto_sweep/tasks | List auto-sweep tasks
+[**ListWalletSweepToAddresses**](AutoSweepAPI.md#ListWalletSweepToAddresses) | **Get** /auto_sweep/sweep_to_addresses | List sweep-to addresses
 
 
 
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 > AutoSweepTask CreateAutoSweepTask(ctx).CreateAutoSweepTask(createAutoSweepTask).Execute()
 
-create auto sweep task
+Create auto-sweep task
 
 
 
@@ -68,7 +68,7 @@ Other parameters are passed through a pointer to a apiCreateAutoSweepTaskRequest
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createAutoSweepTask** | [**CreateAutoSweepTask**](CreateAutoSweepTask.md) | The request body to generates a new sweep to addresses within a specified wallet. | 
+ **createAutoSweepTask** | [**CreateAutoSweepTask**](CreateAutoSweepTask.md) | The request body to create an auto-sweep task. | 
 
 ### Return type
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 > SweepToAddress CreateWalletSweepToAddresses(ctx).CreateSweepToAddress(createSweepToAddress).Execute()
 
-create wallet sweep to addresses
+create sweep-to address
 
 
 
@@ -144,7 +144,7 @@ Other parameters are passed through a pointer to a apiCreateWalletSweepToAddress
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createSweepToAddress** | [**CreateSweepToAddress**](CreateSweepToAddress.md) | The request body to generates a new sweep to addresses within a specified wallet. | 
+ **createSweepToAddress** | [**CreateSweepToAddress**](CreateSweepToAddress.md) | The request body to generates a new sweep-to address within a specified wallet. | 
 
 ### Return type
 
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 
 > AutoSweepTask GetAutoSweepTaskById(ctx, taskId).Execute()
 
-Get auto sweep task information
+Get auto-sweep task details
 
 
 
@@ -248,7 +248,7 @@ Name | Type | Description  | Notes
 
 > ListAutoSweepTask200Response ListAutoSweepTask(ctx).WalletId(walletId).TokenId(tokenId).TaskIds(taskIds).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).Limit(limit).Before(before).After(after).Direction(direction).Execute()
 
-List wallet auto sweep task
+List auto-sweep tasks
 
 
 
@@ -310,7 +310,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **walletId** | **string** | The wallet ID. | 
  **tokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
- **taskIds** | **string** | A list of auto sweep task IDs, separated by comma. | 
+ **taskIds** | **string** | A list of auto-sweep task IDs, separated by comma. | 
  **minCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If not provided, the default value is 90 days before the current time. This default value is subject to change.  | 
  **maxCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If not provided, the default value is the current time. This default value is subject to change.  | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
 
 > ListWalletSweepToAddresses200Response ListWalletSweepToAddresses(ctx).WalletId(walletId).Execute()
 
-List wallet sweep to addresses
+List sweep-to addresses
 
 
 
