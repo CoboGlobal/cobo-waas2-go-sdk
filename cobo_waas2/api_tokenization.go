@@ -28,7 +28,7 @@ type ApiBurnTokenizationRequest struct {
 	tokenizationBurnTokenRequest *TokenizationBurnTokenRequest
 }
 
-// Request body for burning tokens
+// The request body for burning tokens.
 func (r ApiBurnTokenizationRequest) TokenizationBurnTokenRequest(tokenizationBurnTokenRequest TokenizationBurnTokenRequest) ApiBurnTokenizationRequest {
 	r.tokenizationBurnTokenRequest = &tokenizationBurnTokenRequest
 	return r
@@ -824,13 +824,13 @@ func (r ApiListIssuedTokensRequest) TokenId(tokenId string) ApiListIssuedTokensR
 	return r
 }
 
-// Filter by token standard
+// Filter by token standard.
 func (r ApiListIssuedTokensRequest) TokenStandard(tokenStandard TokenizationTokenStandard) ApiListIssuedTokensRequest {
 	r.tokenStandard = &tokenStandard
 	return r
 }
 
-// Filter by token status
+// Filter by token status.
 func (r ApiListIssuedTokensRequest) Status(status TokenizationStatus) ApiListIssuedTokensRequest {
 	r.status = &status
 	return r
@@ -1693,6 +1693,187 @@ func (a *TokenizationAPIService) ListTokenizationHoldingsExecute(r ApiListTokeni
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiListTokenizationPermissionsRequest struct {
+	ctx context.Context
+	ApiService *TokenizationAPIService
+	tokenId string
+	address *string
+	limit *int32
+	after *string
+	before *string
+	direction *string
+}
+
+// The address to query permissions for. If not provided, returns all addresses with permissions.
+func (r ApiListTokenizationPermissionsRequest) Address(address string) ApiListTokenizationPermissionsRequest {
+	r.address = &address
+	return r
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListTokenizationPermissionsRequest) Limit(limit int32) ApiListTokenizationPermissionsRequest {
+	r.limit = &limit
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+func (r ApiListTokenizationPermissionsRequest) After(after string) ApiListTokenizationPermissionsRequest {
+	r.after = &after
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
+func (r ApiListTokenizationPermissionsRequest) Before(before string) ApiListTokenizationPermissionsRequest {
+	r.before = &before
+	return r
+}
+
+// The sort direction. Possible values include:   - &#x60;ASC&#x60;: Sort the results in ascending order.   - &#x60;DESC&#x60;: Sort the results in descending order. 
+func (r ApiListTokenizationPermissionsRequest) Direction(direction string) ApiListTokenizationPermissionsRequest {
+	r.direction = &direction
+	return r
+}
+
+func (r ApiListTokenizationPermissionsRequest) Execute() (*TokenizationListPermissionsResponse, *http.Response, error) {
+	return r.ApiService.ListTokenizationPermissionsExecute(r)
+}
+
+/*
+ListTokenizationPermissions List permissions of the token
+
+This operation retrieves the permissions for a tokenization contract.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param tokenId The token ID, which is the unique identifier of a token.
+ @return ApiListTokenizationPermissionsRequest
+*/
+func (a *TokenizationAPIService) ListTokenizationPermissions(ctx context.Context, tokenId string) ApiListTokenizationPermissionsRequest {
+	return ApiListTokenizationPermissionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return TokenizationListPermissionsResponse
+func (a *TokenizationAPIService) ListTokenizationPermissionsExecute(r ApiListTokenizationPermissionsRequest) (*TokenizationListPermissionsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TokenizationListPermissionsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenizationAPIService.ListTokenizationPermissions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tokenization/tokens/{token_id}/permissions"
+	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.address != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "address", r.address, "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.direction != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "direction", r.direction, "")
+	} else {
+		var defaultValue string = "ASC"
+		r.direction = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListTokenizationSupportedChainsRequest struct {
 	ctx context.Context
 	ApiService *TokenizationAPIService
@@ -1724,7 +1905,7 @@ func (r ApiListTokenizationSupportedChainsRequest) Execute() (*TokenizationListE
 }
 
 /*
-ListTokenizationSupportedChains List tokenization supported chains
+ListTokenizationSupportedChains List supported chains for tokenization
 
 This operation retrieves a list of tokenization supported chains.
 
@@ -1854,7 +2035,7 @@ type ApiMintTokenizationRequest struct {
 	tokenizationMintTokenRequest *TokenizationMintTokenRequest
 }
 
-// The request body for minting tokens
+// The request body for minting tokens.
 func (r ApiMintTokenizationRequest) TokenizationMintTokenRequest(tokenizationMintTokenRequest TokenizationMintTokenRequest) ApiMintTokenizationRequest {
 	r.tokenizationMintTokenRequest = &tokenizationMintTokenRequest
 	return r
@@ -1992,7 +2173,7 @@ type ApiPauseTokenizationRequest struct {
 	tokenizationPauseTokenRequest *TokenizationPauseTokenRequest
 }
 
-// Request body for pausing tokens
+// The request body for pausing tokens.
 func (r ApiPauseTokenizationRequest) TokenizationPauseTokenRequest(tokenizationPauseTokenRequest TokenizationPauseTokenRequest) ApiPauseTokenizationRequest {
 	r.tokenizationPauseTokenRequest = &tokenizationPauseTokenRequest
 	return r
@@ -2003,10 +2184,9 @@ func (r ApiPauseTokenizationRequest) Execute() (*TokenizationOperationResponse, 
 }
 
 /*
-PauseTokenization Pause tokenization
+PauseTokenization Pause token contract
 
-This operation pauses the token contract.
-Creates a pause transaction that will stop the token contract.
+This operation pauses the token contract, temporarily halting token operations and transfers.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2127,7 +2307,7 @@ type ApiTokenizationContractCallRequest struct {
 	tokenizationContractCallRequest *TokenizationContractCallRequest
 }
 
-// Request body for contract call
+// The request body for contract call.
 func (r ApiTokenizationContractCallRequest) TokenizationContractCallRequest(tokenizationContractCallRequest TokenizationContractCallRequest) ApiTokenizationContractCallRequest {
 	r.tokenizationContractCallRequest = &tokenizationContractCallRequest
 	return r
@@ -2138,9 +2318,9 @@ func (r ApiTokenizationContractCallRequest) Execute() (*TokenizationOperationRes
 }
 
 /*
-TokenizationContractCall Contract call
+TokenizationContractCall Call token contract
 
-This operation calls a smart contract.
+This operation performs a contract call on the token contract.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2261,7 +2441,7 @@ type ApiUnpauseTokenizationRequest struct {
 	tokenizationUnpauseTokenRequest *TokenizationUnpauseTokenRequest
 }
 
-// Request body for unpausing tokens
+// The request body for unpausing tokens.
 func (r ApiUnpauseTokenizationRequest) TokenizationUnpauseTokenRequest(tokenizationUnpauseTokenRequest TokenizationUnpauseTokenRequest) ApiUnpauseTokenizationRequest {
 	r.tokenizationUnpauseTokenRequest = &tokenizationUnpauseTokenRequest
 	return r
@@ -2272,10 +2452,9 @@ func (r ApiUnpauseTokenizationRequest) Execute() (*TokenizationOperationResponse
 }
 
 /*
-UnpauseTokenization Unpause tokenization
+UnpauseTokenization Unpause token contract
 
-This operation unpauses the token contract.
-Creates an unpause transaction that will resume the token contract.
+This operation unpauses the token contract, resuming token operations and transfers.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2389,140 +2568,6 @@ func (a *TokenizationAPIService) UnpauseTokenizationExecute(r ApiUnpauseTokeniza
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateAllowlistAddressesRequest struct {
-	ctx context.Context
-	ApiService *TokenizationAPIService
-	tokenId string
-	tokenizationUpdateAllowlistAddressesRequest *TokenizationUpdateAllowlistAddressesRequest
-}
-
-// Request body for managing multiple allowlist addresses (adding or removing).
-func (r ApiUpdateAllowlistAddressesRequest) TokenizationUpdateAllowlistAddressesRequest(tokenizationUpdateAllowlistAddressesRequest TokenizationUpdateAllowlistAddressesRequest) ApiUpdateAllowlistAddressesRequest {
-	r.tokenizationUpdateAllowlistAddressesRequest = &tokenizationUpdateAllowlistAddressesRequest
-	return r
-}
-
-func (r ApiUpdateAllowlistAddressesRequest) Execute() (*TokenizationOperationResponse, *http.Response, error) {
-	return r.ApiService.UpdateAllowlistAddressesExecute(r)
-}
-
-/*
-UpdateAllowlistAddresses Update allowlist addresses
-
-This operation updates the allowlist addresses of the token contract.
-
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param tokenId The token ID, which is the unique identifier of a token.
- @return ApiUpdateAllowlistAddressesRequest
-*/
-func (a *TokenizationAPIService) UpdateAllowlistAddresses(ctx context.Context, tokenId string) ApiUpdateAllowlistAddressesRequest {
-	return ApiUpdateAllowlistAddressesRequest{
-		ApiService: a,
-		ctx: ctx,
-		tokenId: tokenId,
-	}
-}
-
-// Execute executes the request
-//  @return TokenizationOperationResponse
-func (a *TokenizationAPIService) UpdateAllowlistAddressesExecute(r ApiUpdateAllowlistAddressesRequest) (*TokenizationOperationResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *TokenizationOperationResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenizationAPIService.UpdateAllowlistAddresses")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/tokenization/tokens/{token_id}/allowlist/addresses"
-	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.tokenizationUpdateAllowlistAddressesRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 500 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUpdateTokenizationAllowlistActivationRequest struct {
 	ctx context.Context
 	ApiService *TokenizationAPIService
@@ -2530,7 +2575,7 @@ type ApiUpdateTokenizationAllowlistActivationRequest struct {
 	tokenizationAllowlistActivationRequest *TokenizationAllowlistActivationRequest
 }
 
-// Request body for updating the allowlist activation setting.
+// The request body for activating or deactivating the allowlist.
 func (r ApiUpdateTokenizationAllowlistActivationRequest) TokenizationAllowlistActivationRequest(tokenizationAllowlistActivationRequest TokenizationAllowlistActivationRequest) ApiUpdateTokenizationAllowlistActivationRequest {
 	r.tokenizationAllowlistActivationRequest = &tokenizationAllowlistActivationRequest
 	return r
@@ -2541,9 +2586,9 @@ func (r ApiUpdateTokenizationAllowlistActivationRequest) Execute() (*Tokenizatio
 }
 
 /*
-UpdateTokenizationAllowlistActivation Update allowlist activation
+UpdateTokenizationAllowlistActivation Activate or deactivate the allowlist
 
-This operation updates the allowlist activation setting of the token contract.
+This operation activates or deactivates the allowlist.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2657,6 +2702,140 @@ func (a *TokenizationAPIService) UpdateTokenizationAllowlistActivationExecute(r 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateTokenizationAllowlistAddressesRequest struct {
+	ctx context.Context
+	ApiService *TokenizationAPIService
+	tokenId string
+	tokenizationUpdateAllowlistAddressesRequest *TokenizationUpdateAllowlistAddressesRequest
+}
+
+// The request body for managing multiple allowlist addresses (adding or removing).
+func (r ApiUpdateTokenizationAllowlistAddressesRequest) TokenizationUpdateAllowlistAddressesRequest(tokenizationUpdateAllowlistAddressesRequest TokenizationUpdateAllowlistAddressesRequest) ApiUpdateTokenizationAllowlistAddressesRequest {
+	r.tokenizationUpdateAllowlistAddressesRequest = &tokenizationUpdateAllowlistAddressesRequest
+	return r
+}
+
+func (r ApiUpdateTokenizationAllowlistAddressesRequest) Execute() (*TokenizationOperationResponse, *http.Response, error) {
+	return r.ApiService.UpdateTokenizationAllowlistAddressesExecute(r)
+}
+
+/*
+UpdateTokenizationAllowlistAddresses Update allowlist addresses
+
+This operation updates the allowlist addresses of the token contract.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param tokenId The token ID, which is the unique identifier of a token.
+ @return ApiUpdateTokenizationAllowlistAddressesRequest
+*/
+func (a *TokenizationAPIService) UpdateTokenizationAllowlistAddresses(ctx context.Context, tokenId string) ApiUpdateTokenizationAllowlistAddressesRequest {
+	return ApiUpdateTokenizationAllowlistAddressesRequest{
+		ApiService: a,
+		ctx: ctx,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return TokenizationOperationResponse
+func (a *TokenizationAPIService) UpdateTokenizationAllowlistAddressesExecute(r ApiUpdateTokenizationAllowlistAddressesRequest) (*TokenizationOperationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TokenizationOperationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenizationAPIService.UpdateTokenizationAllowlistAddresses")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tokenization/tokens/{token_id}/allowlist/addresses"
+	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tokenizationUpdateAllowlistAddressesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUpdateTokenizationBlocklistAddressesRequest struct {
 	ctx context.Context
 	ApiService *TokenizationAPIService
@@ -2664,7 +2843,7 @@ type ApiUpdateTokenizationBlocklistAddressesRequest struct {
 	tokenizationUpdateBlocklistAddressesRequest *TokenizationUpdateBlocklistAddressesRequest
 }
 
-// Request body for managing multiple blocklist addresses (adding or removing).
+// The request body for managing multiple blocklist addresses (adding or removing).
 func (r ApiUpdateTokenizationBlocklistAddressesRequest) TokenizationUpdateBlocklistAddressesRequest(tokenizationUpdateBlocklistAddressesRequest TokenizationUpdateBlocklistAddressesRequest) ApiUpdateTokenizationBlocklistAddressesRequest {
 	r.tokenizationUpdateBlocklistAddressesRequest = &tokenizationUpdateBlocklistAddressesRequest
 	return r
@@ -2733,6 +2912,147 @@ func (a *TokenizationAPIService) UpdateTokenizationBlocklistAddressesExecute(r A
 	}
 	// body params
 	localVarPostBody = r.tokenizationUpdateBlocklistAddressesRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateTokenizationPermissionsRequest struct {
+	ctx context.Context
+	ApiService *TokenizationAPIService
+	tokenId string
+	tokenizationUpdatePermissionsRequest *TokenizationUpdatePermissionsRequest
+}
+
+// The request body for managing permissions.
+func (r ApiUpdateTokenizationPermissionsRequest) TokenizationUpdatePermissionsRequest(tokenizationUpdatePermissionsRequest TokenizationUpdatePermissionsRequest) ApiUpdateTokenizationPermissionsRequest {
+	r.tokenizationUpdatePermissionsRequest = &tokenizationUpdatePermissionsRequest
+	return r
+}
+
+func (r ApiUpdateTokenizationPermissionsRequest) Execute() (*TokenizationOperationResponse, *http.Response, error) {
+	return r.ApiService.UpdateTokenizationPermissionsExecute(r)
+}
+
+/*
+UpdateTokenizationPermissions Update permissions of the token
+
+This operation updates permissions for tokenization contracts.
+
+**For Ethereum-based tokens:** Use `add` to grant permissions or `remove` to revoke permissions. Multiple permissions can be assigned to the same address.
+
+**For Solana tokens:** Use `set` to define the complete list of permissions for an address. This replaces any existing permissions.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param tokenId The token ID, which is the unique identifier of a token.
+ @return ApiUpdateTokenizationPermissionsRequest
+*/
+func (a *TokenizationAPIService) UpdateTokenizationPermissions(ctx context.Context, tokenId string) ApiUpdateTokenizationPermissionsRequest {
+	return ApiUpdateTokenizationPermissionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return TokenizationOperationResponse
+func (a *TokenizationAPIService) UpdateTokenizationPermissionsExecute(r ApiUpdateTokenizationPermissionsRequest) (*TokenizationOperationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TokenizationOperationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenizationAPIService.UpdateTokenizationPermissions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tokenization/tokens/{token_id}/permissions"
+	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.tokenizationUpdatePermissionsRequest == nil {
+		return localVarReturnValue, nil, reportError("tokenizationUpdatePermissionsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tokenizationUpdatePermissionsRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

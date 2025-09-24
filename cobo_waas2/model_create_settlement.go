@@ -10,6 +10,8 @@ package cobo_waas2
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CreateSettlement type satisfies the MappedNullable interface at compile time
@@ -20,7 +22,7 @@ type CreateSettlement struct {
 	// Only used in Merchant settlement type. The merchant ID. 
 	MerchantId *string `json:"merchant_id,omitempty"`
 	// Only used in Crypto payout channel. The ID of the cryptocurrency you want to settle. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
-	TokenId *string `json:"token_id,omitempty"`
+	TokenId string `json:"token_id"`
 	// Only used in OffRamp payout channel. The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported. 
 	Currency *string `json:"currency,omitempty"`
 	// The settlement amount. - In Crypto payout channel, this represents the settlement amount in the specified cryptocurrency. - In OffRamp payout channel, this represents the settlement amount in the specified fiat currency. 
@@ -33,12 +35,15 @@ type CreateSettlement struct {
 	OrderIds []string `json:"order_ids,omitempty"`
 }
 
+type _CreateSettlement CreateSettlement
+
 // NewCreateSettlement instantiates a new CreateSettlement object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateSettlement() *CreateSettlement {
+func NewCreateSettlement(tokenId string) *CreateSettlement {
 	this := CreateSettlement{}
+	this.TokenId = tokenId
 	return &this
 }
 
@@ -82,36 +87,28 @@ func (o *CreateSettlement) SetMerchantId(v string) {
 	o.MerchantId = &v
 }
 
-// GetTokenId returns the TokenId field value if set, zero value otherwise.
+// GetTokenId returns the TokenId field value
 func (o *CreateSettlement) GetTokenId() string {
-	if o == nil || IsNil(o.TokenId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.TokenId
+
+	return o.TokenId
 }
 
-// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// GetTokenIdOk returns a tuple with the TokenId field value
 // and a boolean to check if the value has been set.
 func (o *CreateSettlement) GetTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.TokenId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.TokenId, true
+	return &o.TokenId, true
 }
 
-// HasTokenId returns a boolean if a field has been set.
-func (o *CreateSettlement) HasTokenId() bool {
-	if o != nil && !IsNil(o.TokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+// SetTokenId sets field value
 func (o *CreateSettlement) SetTokenId(v string) {
-	o.TokenId = &v
+	o.TokenId = v
 }
 
 // GetCurrency returns the Currency field value if set, zero value otherwise.
@@ -287,9 +284,7 @@ func (o CreateSettlement) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.MerchantId) {
 		toSerialize["merchant_id"] = o.MerchantId
 	}
-	if !IsNil(o.TokenId) {
-		toSerialize["token_id"] = o.TokenId
-	}
+	toSerialize["token_id"] = o.TokenId
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
 	}
@@ -306,6 +301,43 @@ func (o CreateSettlement) ToMap() (map[string]interface{}, error) {
 		toSerialize["order_ids"] = o.OrderIds
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateSettlement) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"token_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateSettlement := _CreateSettlement{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	//decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateSettlement)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateSettlement(varCreateSettlement)
+
+	return err
 }
 
 type NullableCreateSettlement struct {

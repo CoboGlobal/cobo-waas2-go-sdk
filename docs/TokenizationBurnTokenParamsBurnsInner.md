@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Amount** | **string** | The amount of tokens to burn from this source. | 
-**FromAddress** | **string** | The address to burn tokens from for this source. | 
+**Amount** | **string** | The amount of tokens to burn. | 
+**FromAddress** | **string** | The address to burn tokens from. | 
 
 ## Methods
 

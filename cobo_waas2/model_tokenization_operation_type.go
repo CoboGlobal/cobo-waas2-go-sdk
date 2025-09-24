@@ -27,6 +27,7 @@ const (
 	TOKENIZATIONOPERATIONTYPE_UPDATE_BLOCKLIST_ADDRESSES TokenizationOperationType = "UpdateBlocklistAddresses"
 	TOKENIZATIONOPERATIONTYPE_TOGGLE_ALLOWLIST TokenizationOperationType = "ToggleAllowlist"
 	TOKENIZATIONOPERATIONTYPE_CONTRACT_CALL TokenizationOperationType = "ContractCall"
+	TOKENIZATIONOPERATIONTYPE_UPDATE_PERMISSIONS TokenizationOperationType = "UpdatePermissions"
 )
 
 // All allowed values of TokenizationOperationType enum
@@ -40,6 +41,7 @@ var AllowedTokenizationOperationTypeEnumValues = []TokenizationOperationType{
 	"UpdateBlocklistAddresses",
 	"ToggleAllowlist",
 	"ContractCall",
+	"UpdatePermissions",
 }
 
 func (v *TokenizationOperationType) UnmarshalJSON(src []byte) error {

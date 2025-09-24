@@ -25,6 +25,8 @@ type ChainInfo struct {
 	Symbol *string `json:"symbol,omitempty"`
 	// The URL of the chain icon.
 	IconUrl *string `json:"icon_url,omitempty"`
+	// The chain identifier, which is the identifier of a blockchain for similar function, such as ETH for ETH, BSC_BNB eth.
+	ChainIdentifier *string `json:"chain_identifier,omitempty"`
 	// The transaction URL pattern on the blockchain explorer. You can use it to concatenate the transaction URLs.
 	ExplorerTxUrl *string `json:"explorer_tx_url,omitempty"`
 	// The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs.
@@ -143,6 +145,38 @@ func (o *ChainInfo) HasIconUrl() bool {
 // SetIconUrl gets a reference to the given string and assigns it to the IconUrl field.
 func (o *ChainInfo) SetIconUrl(v string) {
 	o.IconUrl = &v
+}
+
+// GetChainIdentifier returns the ChainIdentifier field value if set, zero value otherwise.
+func (o *ChainInfo) GetChainIdentifier() string {
+	if o == nil || IsNil(o.ChainIdentifier) {
+		var ret string
+		return ret
+	}
+	return *o.ChainIdentifier
+}
+
+// GetChainIdentifierOk returns a tuple with the ChainIdentifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ChainInfo) GetChainIdentifierOk() (*string, bool) {
+	if o == nil || IsNil(o.ChainIdentifier) {
+		return nil, false
+	}
+	return o.ChainIdentifier, true
+}
+
+// HasChainIdentifier returns a boolean if a field has been set.
+func (o *ChainInfo) HasChainIdentifier() bool {
+	if o != nil && !IsNil(o.ChainIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetChainIdentifier gets a reference to the given string and assigns it to the ChainIdentifier field.
+func (o *ChainInfo) SetChainIdentifier(v string) {
+	o.ChainIdentifier = &v
 }
 
 // GetExplorerTxUrl returns the ExplorerTxUrl field value if set, zero value otherwise.
@@ -321,6 +355,9 @@ func (o ChainInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IconUrl) {
 		toSerialize["icon_url"] = o.IconUrl
+	}
+	if !IsNil(o.ChainIdentifier) {
+		toSerialize["chain_identifier"] = o.ChainIdentifier
 	}
 	if !IsNil(o.ExplorerTxUrl) {
 		toSerialize["explorer_tx_url"] = o.ExplorerTxUrl

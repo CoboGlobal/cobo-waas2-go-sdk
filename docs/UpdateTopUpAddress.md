@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MerchantId** | **string** | The merchant ID. | 
+**MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **TokenId** | **string** | The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
 **CustomPayerId** | **string** | Unique customer identifier on the merchant side, used to allocate a dedicated top-up address  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewUpdateTopUpAddress
 
-`func NewUpdateTopUpAddress(merchantId string, tokenId string, customPayerId string, ) *UpdateTopUpAddress`
+`func NewUpdateTopUpAddress(tokenId string, customPayerId string, ) *UpdateTopUpAddress`
 
 NewUpdateTopUpAddress instantiates a new UpdateTopUpAddress object
 This constructor will assign default values to properties that have it defined,
@@ -46,6 +46,11 @@ and a boolean to check if the value has been set.
 
 SetMerchantId sets MerchantId field to given value.
 
+### HasMerchantId
+
+`func (o *UpdateTopUpAddress) HasMerchantId() bool`
+
+HasMerchantId returns a boolean if a field has been set.
 
 ### GetTokenId
 

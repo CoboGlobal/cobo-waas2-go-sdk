@@ -23,6 +23,7 @@ const (
 	SETTLEREQUESTSTATUS_COMPLETED SettleRequestStatus = "Completed"
 	SETTLEREQUESTSTATUS_PARTIALLY_COMPLETED SettleRequestStatus = "PartiallyCompleted"
 	SETTLEREQUESTSTATUS_FAILED SettleRequestStatus = "Failed"
+	SETTLEREQUESTSTATUS_CANCELED SettleRequestStatus = "Canceled"
 )
 
 // All allowed values of SettleRequestStatus enum
@@ -32,6 +33,7 @@ var AllowedSettleRequestStatusEnumValues = []SettleRequestStatus{
 	"Completed",
 	"PartiallyCompleted",
 	"Failed",
+	"Canceled",
 }
 
 func (v *SettleRequestStatus) UnmarshalJSON(src []byte) error {

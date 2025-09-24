@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentTransactionEventData{}
 
 // PaymentTransactionEventData struct for PaymentTransactionEventData
 type PaymentTransactionEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The payment address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The suspended token event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The payment address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The suspended token event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
 	DataType string `json:"data_type"`
 	// The transaction ID.
 	TransactionId string `json:"transaction_id"`
@@ -80,6 +80,8 @@ type PaymentTransactionEventData struct {
 	PayerId *string `json:"payer_id,omitempty"`
 	// Unique user identifier on the merchant side, used to assign a dedicated deposit address. 
 	CustomPayerId *string `json:"custom_payer_id,omitempty"`
+	// A unique identifier assigned by Cobo to track and identify subscription.
+	SubscriptionId *string `json:"subscription_id,omitempty"`
 }
 
 type _PaymentTransactionEventData PaymentTransactionEventData
@@ -1215,6 +1217,38 @@ func (o *PaymentTransactionEventData) SetCustomPayerId(v string) {
 	o.CustomPayerId = &v
 }
 
+// GetSubscriptionId returns the SubscriptionId field value if set, zero value otherwise.
+func (o *PaymentTransactionEventData) GetSubscriptionId() string {
+	if o == nil || IsNil(o.SubscriptionId) {
+		var ret string
+		return ret
+	}
+	return *o.SubscriptionId
+}
+
+// GetSubscriptionIdOk returns a tuple with the SubscriptionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentTransactionEventData) GetSubscriptionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SubscriptionId) {
+		return nil, false
+	}
+	return o.SubscriptionId, true
+}
+
+// HasSubscriptionId returns a boolean if a field has been set.
+func (o *PaymentTransactionEventData) HasSubscriptionId() bool {
+	if o != nil && !IsNil(o.SubscriptionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubscriptionId gets a reference to the given string and assigns it to the SubscriptionId field.
+func (o *PaymentTransactionEventData) SetSubscriptionId(v string) {
+	o.SubscriptionId = &v
+}
+
 func (o PaymentTransactionEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1315,6 +1349,9 @@ func (o PaymentTransactionEventData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CustomPayerId) {
 		toSerialize["custom_payer_id"] = o.CustomPayerId
+	}
+	if !IsNil(o.SubscriptionId) {
+		toSerialize["subscription_id"] = o.SubscriptionId
 	}
 	return toSerialize, nil
 }

@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **RootPubkey** | Pointer to **string** | The root public key of the address. This property applies to MPC Wallets only. | [optional] 
 **TaprootScriptTreeHash** | Pointer to **string** | The information about the new address. | [optional] 
 **TaprootInternalAddress** | Pointer to **string** | The Taproot address before tweaking. | [optional] 
+**StellarTrustedTokenIds** | Pointer to **[]string** | The list of token IDs for which this address has already established stellar trustline. | [optional] 
 
 ## Methods
 
@@ -273,6 +274,31 @@ SetTaprootInternalAddress sets TaprootInternalAddress field to given value.
 `func (o *AddressInfo) HasTaprootInternalAddress() bool`
 
 HasTaprootInternalAddress returns a boolean if a field has been set.
+
+### GetStellarTrustedTokenIds
+
+`func (o *AddressInfo) GetStellarTrustedTokenIds() []string`
+
+GetStellarTrustedTokenIds returns the StellarTrustedTokenIds field if non-nil, zero value otherwise.
+
+### GetStellarTrustedTokenIdsOk
+
+`func (o *AddressInfo) GetStellarTrustedTokenIdsOk() (*[]string, bool)`
+
+GetStellarTrustedTokenIdsOk returns a tuple with the StellarTrustedTokenIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStellarTrustedTokenIds
+
+`func (o *AddressInfo) SetStellarTrustedTokenIds(v []string)`
+
+SetStellarTrustedTokenIds sets StellarTrustedTokenIds field to given value.
+
+### HasStellarTrustedTokenIds
+
+`func (o *AddressInfo) HasStellarTrustedTokenIds() bool`
+
+HasStellarTrustedTokenIds returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

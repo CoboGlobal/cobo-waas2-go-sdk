@@ -52,6 +52,7 @@ type SwapActivityDetail struct {
 	Timeline []SwapActivityTimeline `json:"timeline,omitempty"`
 	Approvers []SwapActivityApprovers `json:"approvers,omitempty"`
 	Signers []SwapActivitySigners `json:"signers,omitempty"`
+	ReceivingTransaction *SwapReceivingTransaction `json:"receiving_transaction,omitempty"`
 }
 
 // NewSwapActivityDetail instantiates a new SwapActivityDetail object
@@ -753,6 +754,38 @@ func (o *SwapActivityDetail) SetSigners(v []SwapActivitySigners) {
 	o.Signers = v
 }
 
+// GetReceivingTransaction returns the ReceivingTransaction field value if set, zero value otherwise.
+func (o *SwapActivityDetail) GetReceivingTransaction() SwapReceivingTransaction {
+	if o == nil || IsNil(o.ReceivingTransaction) {
+		var ret SwapReceivingTransaction
+		return ret
+	}
+	return *o.ReceivingTransaction
+}
+
+// GetReceivingTransactionOk returns a tuple with the ReceivingTransaction field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivityDetail) GetReceivingTransactionOk() (*SwapReceivingTransaction, bool) {
+	if o == nil || IsNil(o.ReceivingTransaction) {
+		return nil, false
+	}
+	return o.ReceivingTransaction, true
+}
+
+// HasReceivingTransaction returns a boolean if a field has been set.
+func (o *SwapActivityDetail) HasReceivingTransaction() bool {
+	if o != nil && !IsNil(o.ReceivingTransaction) {
+		return true
+	}
+
+	return false
+}
+
+// SetReceivingTransaction gets a reference to the given SwapReceivingTransaction and assigns it to the ReceivingTransaction field.
+func (o *SwapActivityDetail) SetReceivingTransaction(v SwapReceivingTransaction) {
+	o.ReceivingTransaction = &v
+}
+
 func (o SwapActivityDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -825,6 +858,9 @@ func (o SwapActivityDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Signers) {
 		toSerialize["signers"] = o.Signers
+	}
+	if !IsNil(o.ReceivingTransaction) {
+		toSerialize["receiving_transaction"] = o.ReceivingTransaction
 	}
 	return toSerialize, nil
 }

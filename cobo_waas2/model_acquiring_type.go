@@ -13,19 +13,21 @@ import (
 	"fmt"
 )
 
-// AcquiringType AcquiringType defines the acquisition logic used in the payment flow: - `Order`: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis. - `TopUp`: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models. 
+// AcquiringType AcquiringType defines the acquisition logic used in the payment flow: - `Order`: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis. - `TopUp`: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models. - `Subscription`: Subscription. 
 type AcquiringType string
 
 // List of AcquiringType
 const (
 	ACQUIRINGTYPE_ORDER AcquiringType = "Order"
 	ACQUIRINGTYPE_TOP_UP AcquiringType = "TopUp"
+	ACQUIRINGTYPE_SUBSCRIPTION AcquiringType = "Subscription"
 )
 
 // All allowed values of AcquiringType enum
 var AllowedAcquiringTypeEnumValues = []AcquiringType{
 	"Order",
 	"TopUp",
+	"Subscription",
 }
 
 func (v *AcquiringType) UnmarshalJSON(src []byte) error {

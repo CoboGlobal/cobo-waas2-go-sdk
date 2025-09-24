@@ -19,6 +19,7 @@ var _ MappedNullable = &CreateBankAccountRequest{}
 
 // CreateBankAccountRequest struct for CreateBankAccountRequest
 type CreateBankAccountRequest struct {
+	OtcBankAccountId string `json:"otc_bank_account_id"`
 	// JSON-formatted bank account details. The object should include the following fields: - beneficiary_name: Name of the account holder - beneficiary_address: Address of the account holder - account_number: Bank account number - bank_name: Name of the bank - bank_address: Address of the bank - iban: (Optional) International Bank Account Number - swift_or_bic: SWIFT or BIC code of the bank 
 	Info map[string]interface{} `json:"info"`
 }
@@ -29,8 +30,9 @@ type _CreateBankAccountRequest CreateBankAccountRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateBankAccountRequest(info map[string]interface{}) *CreateBankAccountRequest {
+func NewCreateBankAccountRequest(otcBankAccountId string, info map[string]interface{}) *CreateBankAccountRequest {
 	this := CreateBankAccountRequest{}
+	this.OtcBankAccountId = otcBankAccountId
 	this.Info = info
 	return &this
 }
@@ -41,6 +43,30 @@ func NewCreateBankAccountRequest(info map[string]interface{}) *CreateBankAccount
 func NewCreateBankAccountRequestWithDefaults() *CreateBankAccountRequest {
 	this := CreateBankAccountRequest{}
 	return &this
+}
+
+// GetOtcBankAccountId returns the OtcBankAccountId field value
+func (o *CreateBankAccountRequest) GetOtcBankAccountId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.OtcBankAccountId
+}
+
+// GetOtcBankAccountIdOk returns a tuple with the OtcBankAccountId field value
+// and a boolean to check if the value has been set.
+func (o *CreateBankAccountRequest) GetOtcBankAccountIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.OtcBankAccountId, true
+}
+
+// SetOtcBankAccountId sets field value
+func (o *CreateBankAccountRequest) SetOtcBankAccountId(v string) {
+	o.OtcBankAccountId = v
 }
 
 // GetInfo returns the Info field value
@@ -77,6 +103,7 @@ func (o CreateBankAccountRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateBankAccountRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["otc_bank_account_id"] = o.OtcBankAccountId
 	toSerialize["info"] = o.Info
 	return toSerialize, nil
 }
@@ -86,6 +113,7 @@ func (o *CreateBankAccountRequest) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"otc_bank_account_id",
 		"info",
 	}
 

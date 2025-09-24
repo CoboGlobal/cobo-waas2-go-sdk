@@ -21,10 +21,9 @@ var _ MappedNullable = &CreateMerchantRequest{}
 type CreateMerchantRequest struct {
 	// The merchant name.
 	Name string `json:"name"`
-	// The ID of the wallet linked to the merchant.
-	WalletId string `json:"wallet_id"`
 	// The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \"0.1\" means 10%).
 	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
+	WalletSetup *WalletSetup `json:"wallet_setup,omitempty"`
 }
 
 type _CreateMerchantRequest CreateMerchantRequest
@@ -33,10 +32,9 @@ type _CreateMerchantRequest CreateMerchantRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateMerchantRequest(name string, walletId string) *CreateMerchantRequest {
+func NewCreateMerchantRequest(name string) *CreateMerchantRequest {
 	this := CreateMerchantRequest{}
 	this.Name = name
-	this.WalletId = walletId
 	return &this
 }
 
@@ -72,30 +70,6 @@ func (o *CreateMerchantRequest) SetName(v string) {
 	o.Name = v
 }
 
-// GetWalletId returns the WalletId field value
-func (o *CreateMerchantRequest) GetWalletId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.WalletId
-}
-
-// GetWalletIdOk returns a tuple with the WalletId field value
-// and a boolean to check if the value has been set.
-func (o *CreateMerchantRequest) GetWalletIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.WalletId, true
-}
-
-// SetWalletId sets field value
-func (o *CreateMerchantRequest) SetWalletId(v string) {
-	o.WalletId = v
-}
-
 // GetDeveloperFeeRate returns the DeveloperFeeRate field value if set, zero value otherwise.
 func (o *CreateMerchantRequest) GetDeveloperFeeRate() string {
 	if o == nil || IsNil(o.DeveloperFeeRate) {
@@ -128,6 +102,38 @@ func (o *CreateMerchantRequest) SetDeveloperFeeRate(v string) {
 	o.DeveloperFeeRate = &v
 }
 
+// GetWalletSetup returns the WalletSetup field value if set, zero value otherwise.
+func (o *CreateMerchantRequest) GetWalletSetup() WalletSetup {
+	if o == nil || IsNil(o.WalletSetup) {
+		var ret WalletSetup
+		return ret
+	}
+	return *o.WalletSetup
+}
+
+// GetWalletSetupOk returns a tuple with the WalletSetup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateMerchantRequest) GetWalletSetupOk() (*WalletSetup, bool) {
+	if o == nil || IsNil(o.WalletSetup) {
+		return nil, false
+	}
+	return o.WalletSetup, true
+}
+
+// HasWalletSetup returns a boolean if a field has been set.
+func (o *CreateMerchantRequest) HasWalletSetup() bool {
+	if o != nil && !IsNil(o.WalletSetup) {
+		return true
+	}
+
+	return false
+}
+
+// SetWalletSetup gets a reference to the given WalletSetup and assigns it to the WalletSetup field.
+func (o *CreateMerchantRequest) SetWalletSetup(v WalletSetup) {
+	o.WalletSetup = &v
+}
+
 func (o CreateMerchantRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -139,9 +145,11 @@ func (o CreateMerchantRequest) MarshalJSON() ([]byte, error) {
 func (o CreateMerchantRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
-	toSerialize["wallet_id"] = o.WalletId
 	if !IsNil(o.DeveloperFeeRate) {
 		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
+	}
+	if !IsNil(o.WalletSetup) {
+		toSerialize["wallet_setup"] = o.WalletSetup
 	}
 	return toSerialize, nil
 }
@@ -152,7 +160,6 @@ func (o *CreateMerchantRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"name",
-		"wallet_id",
 	}
 
 	allProperties := make(map[string]interface{})

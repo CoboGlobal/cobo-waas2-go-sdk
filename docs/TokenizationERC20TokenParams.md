@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Symbol** | **string** | The symbol of the token. | 
 **Decimals** | **int32** | The number of decimals for the token (0-18). | 
 **TokenAccessActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations. | [optional] [default to false]
-**Permissions** | Pointer to [**TokenizationTokenPermissionParams**](TokenizationTokenPermissionParams.md) |  | [optional] 
+**Permissions** | Pointer to [**TokenizationERC20TokenPermissionParams**](TokenizationERC20TokenPermissionParams.md) |  | [optional] 
 
 ## Methods
 
@@ -137,20 +137,20 @@ HasTokenAccessActivated returns a boolean if a field has been set.
 
 ### GetPermissions
 
-`func (o *TokenizationERC20TokenParams) GetPermissions() TokenizationTokenPermissionParams`
+`func (o *TokenizationERC20TokenParams) GetPermissions() TokenizationERC20TokenPermissionParams`
 
 GetPermissions returns the Permissions field if non-nil, zero value otherwise.
 
 ### GetPermissionsOk
 
-`func (o *TokenizationERC20TokenParams) GetPermissionsOk() (*TokenizationTokenPermissionParams, bool)`
+`func (o *TokenizationERC20TokenParams) GetPermissionsOk() (*TokenizationERC20TokenPermissionParams, bool)`
 
 GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPermissions
 
-`func (o *TokenizationERC20TokenParams) SetPermissions(v TokenizationTokenPermissionParams)`
+`func (o *TokenizationERC20TokenParams) SetPermissions(v TokenizationERC20TokenPermissionParams)`
 
 SetPermissions sets Permissions field to given value.
 

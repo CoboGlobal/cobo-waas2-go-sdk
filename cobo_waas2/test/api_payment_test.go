@@ -126,6 +126,30 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService CreateSubscriptionAction", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.CreateSubscriptionAction(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService CreateSubscriptionPlan", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.CreateSubscriptionPlan(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService DeleteCryptoAddress", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -148,6 +172,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var currency string
 
 		resp, httpRes, err := apiClient.PaymentAPI.GetExchangeRate(ctx, tokenId, currency).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService GetPayerBalanceByAddress", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetPayerBalanceByAddress(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -226,6 +262,34 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.GetSettlementInfoByIds(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService GetSubscriptionById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var subscriptionId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetSubscriptionById(ctx, subscriptionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService GetSubscriptionPlanById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var subscriptionId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetSubscriptionPlanById(ctx, subscriptionId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -365,6 +429,42 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService ListSubscriptionActions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListSubscriptionActions(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService ListSubscriptionPlans", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListSubscriptionPlans(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService ListSubscriptions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListSubscriptions(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService ListTopUpPayerAccounts", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -382,6 +482,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.ListTopUpPayers(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService PaymentEstimateFee", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.PaymentEstimateFee(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

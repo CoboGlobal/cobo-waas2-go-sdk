@@ -28,7 +28,7 @@ type TokenizationERC20TokenParams struct {
 	Decimals int32 `json:"decimals"`
 	// Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations.
 	TokenAccessActivated *bool `json:"token_access_activated,omitempty"`
-	Permissions *TokenizationTokenPermissionParams `json:"permissions,omitempty"`
+	Permissions *TokenizationERC20TokenPermissionParams `json:"permissions,omitempty"`
 }
 
 type _TokenizationERC20TokenParams TokenizationERC20TokenParams
@@ -187,9 +187,9 @@ func (o *TokenizationERC20TokenParams) SetTokenAccessActivated(v bool) {
 }
 
 // GetPermissions returns the Permissions field value if set, zero value otherwise.
-func (o *TokenizationERC20TokenParams) GetPermissions() TokenizationTokenPermissionParams {
+func (o *TokenizationERC20TokenParams) GetPermissions() TokenizationERC20TokenPermissionParams {
 	if o == nil || IsNil(o.Permissions) {
-		var ret TokenizationTokenPermissionParams
+		var ret TokenizationERC20TokenPermissionParams
 		return ret
 	}
 	return *o.Permissions
@@ -197,7 +197,7 @@ func (o *TokenizationERC20TokenParams) GetPermissions() TokenizationTokenPermiss
 
 // GetPermissionsOk returns a tuple with the Permissions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationERC20TokenParams) GetPermissionsOk() (*TokenizationTokenPermissionParams, bool) {
+func (o *TokenizationERC20TokenParams) GetPermissionsOk() (*TokenizationERC20TokenPermissionParams, bool) {
 	if o == nil || IsNil(o.Permissions) {
 		return nil, false
 	}
@@ -213,8 +213,8 @@ func (o *TokenizationERC20TokenParams) HasPermissions() bool {
 	return false
 }
 
-// SetPermissions gets a reference to the given TokenizationTokenPermissionParams and assigns it to the Permissions field.
-func (o *TokenizationERC20TokenParams) SetPermissions(v TokenizationTokenPermissionParams) {
+// SetPermissions gets a reference to the given TokenizationERC20TokenPermissionParams and assigns it to the Permissions field.
+func (o *TokenizationERC20TokenParams) SetPermissions(v TokenizationERC20TokenPermissionParams) {
 	o.Permissions = &v
 }
 

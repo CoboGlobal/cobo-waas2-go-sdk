@@ -24,6 +24,7 @@ type TokenizationEstimateFeeRequestOperationParams struct {
 	TokenizationUnpauseEstimateFeeParams *TokenizationUnpauseEstimateFeeParams
 	TokenizationUpdateAllowlistAddressesEstimateFeeParams *TokenizationUpdateAllowlistAddressesEstimateFeeParams
 	TokenizationUpdateBlocklistAddressesEstimateFeeParams *TokenizationUpdateBlocklistAddressesEstimateFeeParams
+	TokenizationUpdatePermissionsEstimateFeeParams *TokenizationUpdatePermissionsEstimateFeeParams
 }
 
 // TokenizationBurnEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationParams is a convenience function that returns TokenizationBurnEstimateFeeParams wrapped in TokenizationEstimateFeeRequestOperationParams
@@ -86,6 +87,13 @@ func TokenizationUpdateAllowlistAddressesEstimateFeeParamsAsTokenizationEstimate
 func TokenizationUpdateBlocklistAddressesEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationParams(v *TokenizationUpdateBlocklistAddressesEstimateFeeParams) TokenizationEstimateFeeRequestOperationParams {
 	return TokenizationEstimateFeeRequestOperationParams{
 		TokenizationUpdateBlocklistAddressesEstimateFeeParams: v,
+	}
+}
+
+// TokenizationUpdatePermissionsEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationParams is a convenience function that returns TokenizationUpdatePermissionsEstimateFeeParams wrapped in TokenizationEstimateFeeRequestOperationParams
+func TokenizationUpdatePermissionsEstimateFeeParamsAsTokenizationEstimateFeeRequestOperationParams(v *TokenizationUpdatePermissionsEstimateFeeParams) TokenizationEstimateFeeRequestOperationParams {
+	return TokenizationEstimateFeeRequestOperationParams{
+		TokenizationUpdatePermissionsEstimateFeeParams: v,
 	}
 }
 
@@ -208,6 +216,18 @@ func (dst *TokenizationEstimateFeeRequestOperationParams) UnmarshalJSON(data []b
 		}
 	}
 
+	// check if the discriminator value is 'UpdatePermissions'
+	if jsonDict["operation_type"] == "UpdatePermissions" {
+		// try to unmarshal JSON data into TokenizationUpdatePermissionsEstimateFeeParams
+		err = json.Unmarshal(data, &dst.TokenizationUpdatePermissionsEstimateFeeParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationUpdatePermissionsEstimateFeeParams, return on the first match
+		} else {
+			dst.TokenizationUpdatePermissionsEstimateFeeParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationEstimateFeeRequestOperationParams as TokenizationUpdatePermissionsEstimateFeeParams: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TokenizationBurnEstimateFeeParams'
 	if jsonDict["operation_type"] == "TokenizationBurnEstimateFeeParams" {
 		// try to unmarshal JSON data into TokenizationBurnEstimateFeeParams
@@ -316,6 +336,18 @@ func (dst *TokenizationEstimateFeeRequestOperationParams) UnmarshalJSON(data []b
 		}
 	}
 
+	// check if the discriminator value is 'TokenizationUpdatePermissionsEstimateFeeParams'
+	if jsonDict["operation_type"] == "TokenizationUpdatePermissionsEstimateFeeParams" {
+		// try to unmarshal JSON data into TokenizationUpdatePermissionsEstimateFeeParams
+		err = json.Unmarshal(data, &dst.TokenizationUpdatePermissionsEstimateFeeParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationUpdatePermissionsEstimateFeeParams, return on the first match
+		} else {
+			dst.TokenizationUpdatePermissionsEstimateFeeParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationEstimateFeeRequestOperationParams as TokenizationUpdatePermissionsEstimateFeeParams: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
@@ -355,6 +387,10 @@ func (src TokenizationEstimateFeeRequestOperationParams) MarshalJSON() ([]byte, 
 
 	if src.TokenizationUpdateBlocklistAddressesEstimateFeeParams != nil {
 		return json.Marshal(&src.TokenizationUpdateBlocklistAddressesEstimateFeeParams)
+	}
+
+	if src.TokenizationUpdatePermissionsEstimateFeeParams != nil {
+		return json.Marshal(&src.TokenizationUpdatePermissionsEstimateFeeParams)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -399,6 +435,10 @@ func (obj *TokenizationEstimateFeeRequestOperationParams) GetActualInstance() (i
 
 	if obj.TokenizationUpdateBlocklistAddressesEstimateFeeParams != nil {
 		return obj.TokenizationUpdateBlocklistAddressesEstimateFeeParams
+	}
+
+	if obj.TokenizationUpdatePermissionsEstimateFeeParams != nil {
+		return obj.TokenizationUpdatePermissionsEstimateFeeParams
 	}
 
 	// all schemas are nil

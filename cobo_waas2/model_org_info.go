@@ -21,6 +21,8 @@ var _ MappedNullable = &OrgInfo{}
 type OrgInfo struct {
 	// The organization ID.
 	OrgId string `json:"org_id"`
+	// The organization biz ID.
+	BizOrgId *int32 `json:"biz_org_id,omitempty"`
 	// The organization name.
 	Name *string `json:"name,omitempty"`
 	// The organization's creation time in Unix timestamp format, measured in milliseconds.
@@ -69,6 +71,38 @@ func (o *OrgInfo) GetOrgIdOk() (*string, bool) {
 // SetOrgId sets field value
 func (o *OrgInfo) SetOrgId(v string) {
 	o.OrgId = v
+}
+
+// GetBizOrgId returns the BizOrgId field value if set, zero value otherwise.
+func (o *OrgInfo) GetBizOrgId() int32 {
+	if o == nil || IsNil(o.BizOrgId) {
+		var ret int32
+		return ret
+	}
+	return *o.BizOrgId
+}
+
+// GetBizOrgIdOk returns a tuple with the BizOrgId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrgInfo) GetBizOrgIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.BizOrgId) {
+		return nil, false
+	}
+	return o.BizOrgId, true
+}
+
+// HasBizOrgId returns a boolean if a field has been set.
+func (o *OrgInfo) HasBizOrgId() bool {
+	if o != nil && !IsNil(o.BizOrgId) {
+		return true
+	}
+
+	return false
+}
+
+// SetBizOrgId gets a reference to the given int32 and assigns it to the BizOrgId field.
+func (o *OrgInfo) SetBizOrgId(v int32) {
+	o.BizOrgId = &v
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
@@ -146,6 +180,9 @@ func (o OrgInfo) MarshalJSON() ([]byte, error) {
 func (o OrgInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["org_id"] = o.OrgId
+	if !IsNil(o.BizOrgId) {
+		toSerialize["biz_org_id"] = o.BizOrgId
+	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}

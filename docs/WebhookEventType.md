@@ -69,6 +69,10 @@
 
 * `PAYMENT_ADDRESS_UPDATED` (value: `"payment.address.updated"`)
 
+* `COMPLIANCE_DISPOSITION_STATUS_UPDATED` (value: `"compliance.disposition.status.updated"`)
+
+* `COMPLIANCE_KYT_SCREENINGS_STATUS_UPDATED` (value: `"compliance.kyt.screenings.status.updated"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -14,6 +14,9 @@ Name | Type | Description | Notes
 **AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
 **SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
+**Currency** | Pointer to **string** | The fiat currency for the settlement request. | [optional] 
+**ReceivedAmountFiat** | Pointer to **string** | The received fiat amount of this settlement request.  | [optional] 
+**BankAccount** | Pointer to [**BankAccount**](BankAccount.md) |  | [optional] 
 
 ## Methods
 
@@ -263,6 +266,81 @@ SetSettlementType sets SettlementType field to given value.
 `func (o *Settlement) HasSettlementType() bool`
 
 HasSettlementType returns a boolean if a field has been set.
+
+### GetCurrency
+
+`func (o *Settlement) GetCurrency() string`
+
+GetCurrency returns the Currency field if non-nil, zero value otherwise.
+
+### GetCurrencyOk
+
+`func (o *Settlement) GetCurrencyOk() (*string, bool)`
+
+GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrency
+
+`func (o *Settlement) SetCurrency(v string)`
+
+SetCurrency sets Currency field to given value.
+
+### HasCurrency
+
+`func (o *Settlement) HasCurrency() bool`
+
+HasCurrency returns a boolean if a field has been set.
+
+### GetReceivedAmountFiat
+
+`func (o *Settlement) GetReceivedAmountFiat() string`
+
+GetReceivedAmountFiat returns the ReceivedAmountFiat field if non-nil, zero value otherwise.
+
+### GetReceivedAmountFiatOk
+
+`func (o *Settlement) GetReceivedAmountFiatOk() (*string, bool)`
+
+GetReceivedAmountFiatOk returns a tuple with the ReceivedAmountFiat field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReceivedAmountFiat
+
+`func (o *Settlement) SetReceivedAmountFiat(v string)`
+
+SetReceivedAmountFiat sets ReceivedAmountFiat field to given value.
+
+### HasReceivedAmountFiat
+
+`func (o *Settlement) HasReceivedAmountFiat() bool`
+
+HasReceivedAmountFiat returns a boolean if a field has been set.
+
+### GetBankAccount
+
+`func (o *Settlement) GetBankAccount() BankAccount`
+
+GetBankAccount returns the BankAccount field if non-nil, zero value otherwise.
+
+### GetBankAccountOk
+
+`func (o *Settlement) GetBankAccountOk() (*BankAccount, bool)`
+
+GetBankAccountOk returns a tuple with the BankAccount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankAccount
+
+`func (o *Settlement) SetBankAccount(v BankAccount)`
+
+SetBankAccount sets BankAccount field to given value.
+
+### HasBankAccount
+
+`func (o *Settlement) HasBankAccount() bool`
+
+HasBankAccount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
