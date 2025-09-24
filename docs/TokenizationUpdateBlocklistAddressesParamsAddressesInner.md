@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Address** | **string** | The address to add or remove. | 
-**Note** | Pointer to **string** | An optional note for the address, primarily used when adding. | [optional] 
+**Note** | Pointer to **string** | An optional note for the address, primarily used when adding addresses. | [optional] 
 
 ## Methods
 

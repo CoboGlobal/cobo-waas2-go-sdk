@@ -11,15 +11,15 @@ Name | Type | Description | Notes
 **Source** | [**TokenizationTokenOperationSource**](TokenizationTokenOperationSource.md) |  | 
 **Initiator** | **string** | The initiator of the activity. | 
 **InitiatorType** | [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | 
-**TransactionIds** | Pointer to **[]string** | The IDs of the corresponding transactions of the activity. | [optional] 
-**CreatedTimestamp** | Pointer to **int64** | The creation timestamp of the activity in milliseconds since the Unix epoch. | [optional] 
+**TransactionIds** | **[]string** | The IDs of the corresponding transactions of the activity. | 
+**CreatedTimestamp** | **int64** | The creation timestamp of the activity in milliseconds since the Unix epoch. | 
 **UpdatedTimestamp** | **int64** | The last update timestamp of the activity in milliseconds since the Unix epoch. | 
 
 ## Methods
 
 ### NewTokenizationActivityInfo
 
-`func NewTokenizationActivityInfo(activityId string, tokenId string, type_ TokenizationOperationType, status TokenizationActivityStatus, source TokenizationTokenOperationSource, initiator string, initiatorType TransactionInitiatorType, updatedTimestamp int64, ) *TokenizationActivityInfo`
+`func NewTokenizationActivityInfo(activityId string, tokenId string, type_ TokenizationOperationType, status TokenizationActivityStatus, source TokenizationTokenOperationSource, initiator string, initiatorType TransactionInitiatorType, transactionIds []string, createdTimestamp int64, updatedTimestamp int64, ) *TokenizationActivityInfo`
 
 NewTokenizationActivityInfo instantiates a new TokenizationActivityInfo object
 This constructor will assign default values to properties that have it defined,
@@ -193,11 +193,6 @@ and a boolean to check if the value has been set.
 
 SetTransactionIds sets TransactionIds field to given value.
 
-### HasTransactionIds
-
-`func (o *TokenizationActivityInfo) HasTransactionIds() bool`
-
-HasTransactionIds returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 
@@ -218,11 +213,6 @@ and a boolean to check if the value has been set.
 
 SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
-### HasCreatedTimestamp
-
-`func (o *TokenizationActivityInfo) HasCreatedTimestamp() bool`
-
-HasCreatedTimestamp returns a boolean if a field has been set.
 
 ### GetUpdatedTimestamp
 

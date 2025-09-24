@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. | 
 **Symbol** | Pointer to **string** | The chain symbol, which is the abbreviated name of a chain. | [optional] 
 **IconUrl** | Pointer to **string** | The URL of the chain icon. | [optional] 
+**ChainIdentifier** | Pointer to **string** | The chain identifier, which is the identifier of a blockchain for similar function, such as ETH for ETH, BSC_BNB eth. | [optional] 
 **ExplorerTxUrl** | Pointer to **string** | The transaction URL pattern on the blockchain explorer. You can use it to concatenate the transaction URLs. | [optional] 
 **ExplorerAddressUrl** | Pointer to **string** | The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs. | [optional] 
 **RequireMemo** | Pointer to **bool** | Whether the chain requires a memo. | [optional] 
@@ -101,6 +102,31 @@ SetIconUrl sets IconUrl field to given value.
 `func (o *ChainInfo) HasIconUrl() bool`
 
 HasIconUrl returns a boolean if a field has been set.
+
+### GetChainIdentifier
+
+`func (o *ChainInfo) GetChainIdentifier() string`
+
+GetChainIdentifier returns the ChainIdentifier field if non-nil, zero value otherwise.
+
+### GetChainIdentifierOk
+
+`func (o *ChainInfo) GetChainIdentifierOk() (*string, bool)`
+
+GetChainIdentifierOk returns a tuple with the ChainIdentifier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChainIdentifier
+
+`func (o *ChainInfo) SetChainIdentifier(v string)`
+
+SetChainIdentifier sets ChainIdentifier field to given value.
+
+### HasChainIdentifier
+
+`func (o *ChainInfo) HasChainIdentifier() bool`
+
+HasChainIdentifier returns a boolean if a field has been set.
 
 ### GetExplorerTxUrl
 

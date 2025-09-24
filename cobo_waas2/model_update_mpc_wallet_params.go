@@ -21,7 +21,7 @@ var _ MappedNullable = &UpdateMpcWalletParams{}
 type UpdateMpcWalletParams struct {
 	WalletType WalletType `json:"wallet_type"`
 	// The wallet name.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Enable the auto sweep feature for the wallet
 	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 }
@@ -32,10 +32,9 @@ type _UpdateMpcWalletParams UpdateMpcWalletParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateMpcWalletParams(walletType WalletType, name string) *UpdateMpcWalletParams {
+func NewUpdateMpcWalletParams(walletType WalletType) *UpdateMpcWalletParams {
 	this := UpdateMpcWalletParams{}
 	this.WalletType = walletType
-	this.Name = name
 	return &this
 }
 
@@ -71,28 +70,36 @@ func (o *UpdateMpcWalletParams) SetWalletType(v WalletType) {
 	o.WalletType = v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *UpdateMpcWalletParams) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateMpcWalletParams) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *UpdateMpcWalletParams) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *UpdateMpcWalletParams) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
 // GetEnableAutoSweep returns the EnableAutoSweep field value if set, zero value otherwise.
@@ -138,7 +145,9 @@ func (o UpdateMpcWalletParams) MarshalJSON() ([]byte, error) {
 func (o UpdateMpcWalletParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["wallet_type"] = o.WalletType
-	toSerialize["name"] = o.Name
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
 	if !IsNil(o.EnableAutoSweep) {
 		toSerialize["enable_auto_sweep"] = o.EnableAutoSweep
 	}
@@ -151,7 +160,6 @@ func (o *UpdateMpcWalletParams) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"wallet_type",
-		"name",
 	}
 
 	allProperties := make(map[string]interface{})

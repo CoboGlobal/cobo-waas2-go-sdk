@@ -9,12 +9,13 @@ Name | Type | Description | Notes
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
+**ContractParam** | [**StellarContractCallContractParam**](StellarContractCallContractParam.md) |  | 
 
 ## Methods
 
 ### NewContractCallDestination
 
-`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, ) *ContractCallDestination`
+`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, contractParam StellarContractCallContractParam, ) *ContractCallDestination`
 
 NewContractCallDestination instantiates a new ContractCallDestination object
 This constructor will assign default values to properties that have it defined,
@@ -132,6 +133,26 @@ and a boolean to check if the value has been set.
 `func (o *ContractCallDestination) SetInstructions(v []SolContractCallInstruction)`
 
 SetInstructions sets Instructions field to given value.
+
+
+### GetContractParam
+
+`func (o *ContractCallDestination) GetContractParam() StellarContractCallContractParam`
+
+GetContractParam returns the ContractParam field if non-nil, zero value otherwise.
+
+### GetContractParamOk
+
+`func (o *ContractCallDestination) GetContractParamOk() (*StellarContractCallContractParam, bool)`
+
+GetContractParamOk returns a tuple with the ContractParam field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContractParam
+
+`func (o *ContractCallDestination) SetContractParam(v StellarContractCallContractParam)`
+
+SetContractParam sets ContractParam field to given value.
 
 
 

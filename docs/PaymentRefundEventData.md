@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The payment address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The suspended token event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The payment address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The suspended token event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. | 
 **RequestId** | Pointer to **string** | The request ID provided by you when creating the refund request. | [optional] 
 **RefundId** | **string** | The refund order ID. | 
 **OrderId** | Pointer to **string** | The order ID corresponding to this refund. | [optional] 
@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **ChargeMerchantFee** | Pointer to **bool** | Whether to charge developer fee to the merchant.  - &#x60;true&#x60;: The fee amount (specified in &#x60;merchant_fee_amount&#x60;) will be deducted from the merchant&#39;s balance and added to the developer&#39;s balance - &#x60;false&#x60;: The merchant is not charged any developer fee.  | [optional] 
 **MerchantFeeAmount** | Pointer to **string** | The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by &#x60;merchant_fee_token_id&#x60;. | [optional] 
 **MerchantFeeTokenId** | Pointer to **string** | The ID of the cryptocurrency used for the developer fee. | [optional] 
+**CommissionFee** | Pointer to [**CommissionFee**](CommissionFee.md) |  | [optional] 
 
 ## Methods
 
@@ -456,6 +457,31 @@ SetMerchantFeeTokenId sets MerchantFeeTokenId field to given value.
 `func (o *PaymentRefundEventData) HasMerchantFeeTokenId() bool`
 
 HasMerchantFeeTokenId returns a boolean if a field has been set.
+
+### GetCommissionFee
+
+`func (o *PaymentRefundEventData) GetCommissionFee() CommissionFee`
+
+GetCommissionFee returns the CommissionFee field if non-nil, zero value otherwise.
+
+### GetCommissionFeeOk
+
+`func (o *PaymentRefundEventData) GetCommissionFeeOk() (*CommissionFee, bool)`
+
+GetCommissionFeeOk returns a tuple with the CommissionFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCommissionFee
+
+`func (o *PaymentRefundEventData) SetCommissionFee(v CommissionFee)`
+
+SetCommissionFee sets CommissionFee field to given value.
+
+### HasCommissionFee
+
+`func (o *PaymentRefundEventData) HasCommissionFee() bool`
+
+HasCommissionFee returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

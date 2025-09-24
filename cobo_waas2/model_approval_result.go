@@ -13,25 +13,23 @@ import (
 	"fmt"
 )
 
-// ApprovalResult The single approval result. Possible values include:    - `1`: The transaction is pending approval.   - `2`: The transaction is approved.   - `3`: The transaction is rejected. 
-type ApprovalResult int32
+// ApprovalResult The single approval result. Possible values include:    - `Approved`: The transaction is approved.   - `Rejected`: The transaction is rejected. 
+type ApprovalResult string
 
 // List of ApprovalResult
 const (
-	APPROVALRESULT_PENDING ApprovalResult = 1
-	APPROVALRESULT_APPROVED ApprovalResult = 2
-	APPROVALRESULT_REJECTED ApprovalResult = 3
+	APPROVALRESULT_APPROVED ApprovalResult = "Approved"
+	APPROVALRESULT_REJECTED ApprovalResult = "Rejected"
 )
 
 // All allowed values of ApprovalResult enum
 var AllowedApprovalResultEnumValues = []ApprovalResult{
-	1,
-	2,
-	3,
+	"Approved",
+	"Rejected",
 }
 
 func (v *ApprovalResult) UnmarshalJSON(src []byte) error {
-	var value int32
+	var value string
 	err := json.Unmarshal(src, &value)
 	if err != nil {
 		return err
@@ -43,13 +41,13 @@ func (v *ApprovalResult) UnmarshalJSON(src []byte) error {
 			return nil
 		}
 	}
-	*v = ApprovalResult(-1)
+	*v = ApprovalResult("unknown")
 	return nil
 }
 
 // NewApprovalResultFromValue returns a pointer to a valid ApprovalResult
 // for the value passed as argument, or an error if the value passed is not allowed by the enum
-func NewApprovalResultFromValue(v int32) (*ApprovalResult, error) {
+func NewApprovalResultFromValue(v string) (*ApprovalResult, error) {
 	ev := ApprovalResult(v)
 	if ev.IsValid() {
 		return &ev, nil

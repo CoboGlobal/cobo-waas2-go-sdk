@@ -51,6 +51,7 @@ type Refund struct {
 	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
 	// The ID of the cryptocurrency used for the developer fee.
 	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
+	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
 }
 
 type _Refund Refund
@@ -574,6 +575,38 @@ func (o *Refund) SetMerchantFeeTokenId(v string) {
 	o.MerchantFeeTokenId = &v
 }
 
+// GetCommissionFee returns the CommissionFee field value if set, zero value otherwise.
+func (o *Refund) GetCommissionFee() CommissionFee {
+	if o == nil || IsNil(o.CommissionFee) {
+		var ret CommissionFee
+		return ret
+	}
+	return *o.CommissionFee
+}
+
+// GetCommissionFeeOk returns a tuple with the CommissionFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Refund) GetCommissionFeeOk() (*CommissionFee, bool) {
+	if o == nil || IsNil(o.CommissionFee) {
+		return nil, false
+	}
+	return o.CommissionFee, true
+}
+
+// HasCommissionFee returns a boolean if a field has been set.
+func (o *Refund) HasCommissionFee() bool {
+	if o != nil && !IsNil(o.CommissionFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommissionFee gets a reference to the given CommissionFee and assigns it to the CommissionFee field.
+func (o *Refund) SetCommissionFee(v CommissionFee) {
+	o.CommissionFee = &v
+}
+
 func (o Refund) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -622,6 +655,9 @@ func (o Refund) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MerchantFeeTokenId) {
 		toSerialize["merchant_fee_token_id"] = o.MerchantFeeTokenId
+	}
+	if !IsNil(o.CommissionFee) {
+		toSerialize["commission_fee"] = o.CommissionFee
 	}
 	return toSerialize, nil
 }

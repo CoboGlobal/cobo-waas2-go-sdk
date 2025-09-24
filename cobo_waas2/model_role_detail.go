@@ -19,7 +19,13 @@ var _ MappedNullable = &RoleDetail{}
 type RoleDetail struct {
 	Result *ApprovalTransactionResult `json:"result,omitempty"`
 	// The threshold for the transaction approval.
-	Threshold *int32 `json:"threshold,omitempty"`
+	ReviewThreshold *int32 `json:"review_threshold,omitempty"`
+	// The initiator of the transaction.
+	Initiator *string `json:"initiator,omitempty"`
+	// Indicates whether the transaction approval has been upgraded.
+	IsUpgraded *bool `json:"is_upgraded,omitempty"`
+	// Time to complete the review.
+	CompleteTime *string `json:"complete_time,omitempty"`
 	UserDetails []ApprovalUserDetail `json:"user_details,omitempty"`
 }
 
@@ -72,36 +78,132 @@ func (o *RoleDetail) SetResult(v ApprovalTransactionResult) {
 	o.Result = &v
 }
 
-// GetThreshold returns the Threshold field value if set, zero value otherwise.
-func (o *RoleDetail) GetThreshold() int32 {
-	if o == nil || IsNil(o.Threshold) {
+// GetReviewThreshold returns the ReviewThreshold field value if set, zero value otherwise.
+func (o *RoleDetail) GetReviewThreshold() int32 {
+	if o == nil || IsNil(o.ReviewThreshold) {
 		var ret int32
 		return ret
 	}
-	return *o.Threshold
+	return *o.ReviewThreshold
 }
 
-// GetThresholdOk returns a tuple with the Threshold field value if set, nil otherwise
+// GetReviewThresholdOk returns a tuple with the ReviewThreshold field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RoleDetail) GetThresholdOk() (*int32, bool) {
-	if o == nil || IsNil(o.Threshold) {
+func (o *RoleDetail) GetReviewThresholdOk() (*int32, bool) {
+	if o == nil || IsNil(o.ReviewThreshold) {
 		return nil, false
 	}
-	return o.Threshold, true
+	return o.ReviewThreshold, true
 }
 
-// HasThreshold returns a boolean if a field has been set.
-func (o *RoleDetail) HasThreshold() bool {
-	if o != nil && !IsNil(o.Threshold) {
+// HasReviewThreshold returns a boolean if a field has been set.
+func (o *RoleDetail) HasReviewThreshold() bool {
+	if o != nil && !IsNil(o.ReviewThreshold) {
 		return true
 	}
 
 	return false
 }
 
-// SetThreshold gets a reference to the given int32 and assigns it to the Threshold field.
-func (o *RoleDetail) SetThreshold(v int32) {
-	o.Threshold = &v
+// SetReviewThreshold gets a reference to the given int32 and assigns it to the ReviewThreshold field.
+func (o *RoleDetail) SetReviewThreshold(v int32) {
+	o.ReviewThreshold = &v
+}
+
+// GetInitiator returns the Initiator field value if set, zero value otherwise.
+func (o *RoleDetail) GetInitiator() string {
+	if o == nil || IsNil(o.Initiator) {
+		var ret string
+		return ret
+	}
+	return *o.Initiator
+}
+
+// GetInitiatorOk returns a tuple with the Initiator field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RoleDetail) GetInitiatorOk() (*string, bool) {
+	if o == nil || IsNil(o.Initiator) {
+		return nil, false
+	}
+	return o.Initiator, true
+}
+
+// HasInitiator returns a boolean if a field has been set.
+func (o *RoleDetail) HasInitiator() bool {
+	if o != nil && !IsNil(o.Initiator) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitiator gets a reference to the given string and assigns it to the Initiator field.
+func (o *RoleDetail) SetInitiator(v string) {
+	o.Initiator = &v
+}
+
+// GetIsUpgraded returns the IsUpgraded field value if set, zero value otherwise.
+func (o *RoleDetail) GetIsUpgraded() bool {
+	if o == nil || IsNil(o.IsUpgraded) {
+		var ret bool
+		return ret
+	}
+	return *o.IsUpgraded
+}
+
+// GetIsUpgradedOk returns a tuple with the IsUpgraded field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RoleDetail) GetIsUpgradedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsUpgraded) {
+		return nil, false
+	}
+	return o.IsUpgraded, true
+}
+
+// HasIsUpgraded returns a boolean if a field has been set.
+func (o *RoleDetail) HasIsUpgraded() bool {
+	if o != nil && !IsNil(o.IsUpgraded) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsUpgraded gets a reference to the given bool and assigns it to the IsUpgraded field.
+func (o *RoleDetail) SetIsUpgraded(v bool) {
+	o.IsUpgraded = &v
+}
+
+// GetCompleteTime returns the CompleteTime field value if set, zero value otherwise.
+func (o *RoleDetail) GetCompleteTime() string {
+	if o == nil || IsNil(o.CompleteTime) {
+		var ret string
+		return ret
+	}
+	return *o.CompleteTime
+}
+
+// GetCompleteTimeOk returns a tuple with the CompleteTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RoleDetail) GetCompleteTimeOk() (*string, bool) {
+	if o == nil || IsNil(o.CompleteTime) {
+		return nil, false
+	}
+	return o.CompleteTime, true
+}
+
+// HasCompleteTime returns a boolean if a field has been set.
+func (o *RoleDetail) HasCompleteTime() bool {
+	if o != nil && !IsNil(o.CompleteTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompleteTime gets a reference to the given string and assigns it to the CompleteTime field.
+func (o *RoleDetail) SetCompleteTime(v string) {
+	o.CompleteTime = &v
 }
 
 // GetUserDetails returns the UserDetails field value if set, zero value otherwise.
@@ -149,8 +251,17 @@ func (o RoleDetail) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Result) {
 		toSerialize["result"] = o.Result
 	}
-	if !IsNil(o.Threshold) {
-		toSerialize["threshold"] = o.Threshold
+	if !IsNil(o.ReviewThreshold) {
+		toSerialize["review_threshold"] = o.ReviewThreshold
+	}
+	if !IsNil(o.Initiator) {
+		toSerialize["initiator"] = o.Initiator
+	}
+	if !IsNil(o.IsUpgraded) {
+		toSerialize["is_upgraded"] = o.IsUpgraded
+	}
+	if !IsNil(o.CompleteTime) {
+		toSerialize["complete_time"] = o.CompleteTime
 	}
 	if !IsNil(o.UserDetails) {
 		toSerialize["user_details"] = o.UserDetails

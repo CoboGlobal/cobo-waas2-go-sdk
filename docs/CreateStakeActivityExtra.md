@@ -5,10 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PoolType** | [**StakingPoolType**](StakingPoolType.md) |  | 
-**FinalityProviderPublicKey** | **string** | The public key of the finality provider. | 
-**StakeBlockTime** | **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | 
+**FinalityProviderPublicKey** | Pointer to **string** | The public key of the finality provider. | [optional] 
+**FinalityProviderPublicKeys** | Pointer to **[]string** | The public keys of the finality providers(each key for a BSN chain). | [optional] 
+**StakeBlockTime** | Pointer to **int64** | The number of blocks that need to be processed before the locked tokens are unlocked and become accessible. | [optional] 
 **AutoBroadcast** | Pointer to **bool** | Whether to automatically broadcast the transaction. The default value is &#x60;true&#x60;.  - &#x60;true&#x60;: Automatically broadcast the transaction. - &#x60;false&#x60;: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data &#x60;raw_tx&#x60; by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself.  | [optional] 
 **BabylonAddress** | Pointer to [**StakingSource**](StakingSource.md) |  | [optional] 
+**OriginalStakingId** | Pointer to **string** | The original staking ID to expand. Only set this when you want to expand existing staking. | [optional] 
 **ProviderName** | **string** | The name of the provider. | 
 **Timelock** | **int32** | The Unix timestamp (in seconds) when the staking position will be unlocked and available for withdrawal. | 
 **ChangeAddress** | Pointer to **string** | The change address on the Bitcoin chain. If not provided, the source wallet&#39;s address will be used as the change address. | [optional] 
@@ -19,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewCreateStakeActivityExtra
 
-`func NewCreateStakeActivityExtra(poolType StakingPoolType, finalityProviderPublicKey string, stakeBlockTime int64, providerName string, timelock int32, validatorAddress string, rewardAddress string, ) *CreateStakeActivityExtra`
+`func NewCreateStakeActivityExtra(poolType StakingPoolType, providerName string, timelock int32, validatorAddress string, rewardAddress string, ) *CreateStakeActivityExtra`
 
 NewCreateStakeActivityExtra instantiates a new CreateStakeActivityExtra object
 This constructor will assign default values to properties that have it defined,
@@ -73,6 +75,36 @@ and a boolean to check if the value has been set.
 
 SetFinalityProviderPublicKey sets FinalityProviderPublicKey field to given value.
 
+### HasFinalityProviderPublicKey
+
+`func (o *CreateStakeActivityExtra) HasFinalityProviderPublicKey() bool`
+
+HasFinalityProviderPublicKey returns a boolean if a field has been set.
+
+### GetFinalityProviderPublicKeys
+
+`func (o *CreateStakeActivityExtra) GetFinalityProviderPublicKeys() []string`
+
+GetFinalityProviderPublicKeys returns the FinalityProviderPublicKeys field if non-nil, zero value otherwise.
+
+### GetFinalityProviderPublicKeysOk
+
+`func (o *CreateStakeActivityExtra) GetFinalityProviderPublicKeysOk() (*[]string, bool)`
+
+GetFinalityProviderPublicKeysOk returns a tuple with the FinalityProviderPublicKeys field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFinalityProviderPublicKeys
+
+`func (o *CreateStakeActivityExtra) SetFinalityProviderPublicKeys(v []string)`
+
+SetFinalityProviderPublicKeys sets FinalityProviderPublicKeys field to given value.
+
+### HasFinalityProviderPublicKeys
+
+`func (o *CreateStakeActivityExtra) HasFinalityProviderPublicKeys() bool`
+
+HasFinalityProviderPublicKeys returns a boolean if a field has been set.
 
 ### GetStakeBlockTime
 
@@ -93,6 +125,11 @@ and a boolean to check if the value has been set.
 
 SetStakeBlockTime sets StakeBlockTime field to given value.
 
+### HasStakeBlockTime
+
+`func (o *CreateStakeActivityExtra) HasStakeBlockTime() bool`
+
+HasStakeBlockTime returns a boolean if a field has been set.
 
 ### GetAutoBroadcast
 
@@ -143,6 +180,31 @@ SetBabylonAddress sets BabylonAddress field to given value.
 `func (o *CreateStakeActivityExtra) HasBabylonAddress() bool`
 
 HasBabylonAddress returns a boolean if a field has been set.
+
+### GetOriginalStakingId
+
+`func (o *CreateStakeActivityExtra) GetOriginalStakingId() string`
+
+GetOriginalStakingId returns the OriginalStakingId field if non-nil, zero value otherwise.
+
+### GetOriginalStakingIdOk
+
+`func (o *CreateStakeActivityExtra) GetOriginalStakingIdOk() (*string, bool)`
+
+GetOriginalStakingIdOk returns a tuple with the OriginalStakingId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginalStakingId
+
+`func (o *CreateStakeActivityExtra) SetOriginalStakingId(v string)`
+
+SetOriginalStakingId sets OriginalStakingId field to given value.
+
+### HasOriginalStakingId
+
+`func (o *CreateStakeActivityExtra) HasOriginalStakingId() bool`
+
+HasOriginalStakingId returns a boolean if a field has been set.
 
 ### GetProviderName
 

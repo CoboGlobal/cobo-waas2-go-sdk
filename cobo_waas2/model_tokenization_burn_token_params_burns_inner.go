@@ -19,9 +19,9 @@ var _ MappedNullable = &TokenizationBurnTokenParamsBurnsInner{}
 
 // TokenizationBurnTokenParamsBurnsInner struct for TokenizationBurnTokenParamsBurnsInner
 type TokenizationBurnTokenParamsBurnsInner struct {
-	// The amount of tokens to burn from this source.
+	// The amount of tokens to burn.
 	Amount string `json:"amount"`
-	// The address to burn tokens from for this source.
+	// The address to burn tokens from.
 	FromAddress string `json:"from_address"`
 }
 

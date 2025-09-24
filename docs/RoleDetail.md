@@ -5,7 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Result** | Pointer to [**ApprovalTransactionResult**](ApprovalTransactionResult.md) |  | [optional] 
-**Threshold** | Pointer to **int32** | The threshold for the transaction approval. | [optional] 
+**ReviewThreshold** | Pointer to **int32** | The threshold for the transaction approval. | [optional] 
+**Initiator** | Pointer to **string** | The initiator of the transaction. | [optional] 
+**IsUpgraded** | Pointer to **bool** | Indicates whether the transaction approval has been upgraded. | [optional] 
+**CompleteTime** | Pointer to **string** | Time to complete the review. | [optional] 
 **UserDetails** | Pointer to [**[]ApprovalUserDetail**](ApprovalUserDetail.md) |  | [optional] 
 
 ## Methods
@@ -52,30 +55,105 @@ SetResult sets Result field to given value.
 
 HasResult returns a boolean if a field has been set.
 
-### GetThreshold
+### GetReviewThreshold
 
-`func (o *RoleDetail) GetThreshold() int32`
+`func (o *RoleDetail) GetReviewThreshold() int32`
 
-GetThreshold returns the Threshold field if non-nil, zero value otherwise.
+GetReviewThreshold returns the ReviewThreshold field if non-nil, zero value otherwise.
 
-### GetThresholdOk
+### GetReviewThresholdOk
 
-`func (o *RoleDetail) GetThresholdOk() (*int32, bool)`
+`func (o *RoleDetail) GetReviewThresholdOk() (*int32, bool)`
 
-GetThresholdOk returns a tuple with the Threshold field if it's non-nil, zero value otherwise
+GetReviewThresholdOk returns a tuple with the ReviewThreshold field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetThreshold
+### SetReviewThreshold
 
-`func (o *RoleDetail) SetThreshold(v int32)`
+`func (o *RoleDetail) SetReviewThreshold(v int32)`
 
-SetThreshold sets Threshold field to given value.
+SetReviewThreshold sets ReviewThreshold field to given value.
 
-### HasThreshold
+### HasReviewThreshold
 
-`func (o *RoleDetail) HasThreshold() bool`
+`func (o *RoleDetail) HasReviewThreshold() bool`
 
-HasThreshold returns a boolean if a field has been set.
+HasReviewThreshold returns a boolean if a field has been set.
+
+### GetInitiator
+
+`func (o *RoleDetail) GetInitiator() string`
+
+GetInitiator returns the Initiator field if non-nil, zero value otherwise.
+
+### GetInitiatorOk
+
+`func (o *RoleDetail) GetInitiatorOk() (*string, bool)`
+
+GetInitiatorOk returns a tuple with the Initiator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitiator
+
+`func (o *RoleDetail) SetInitiator(v string)`
+
+SetInitiator sets Initiator field to given value.
+
+### HasInitiator
+
+`func (o *RoleDetail) HasInitiator() bool`
+
+HasInitiator returns a boolean if a field has been set.
+
+### GetIsUpgraded
+
+`func (o *RoleDetail) GetIsUpgraded() bool`
+
+GetIsUpgraded returns the IsUpgraded field if non-nil, zero value otherwise.
+
+### GetIsUpgradedOk
+
+`func (o *RoleDetail) GetIsUpgradedOk() (*bool, bool)`
+
+GetIsUpgradedOk returns a tuple with the IsUpgraded field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsUpgraded
+
+`func (o *RoleDetail) SetIsUpgraded(v bool)`
+
+SetIsUpgraded sets IsUpgraded field to given value.
+
+### HasIsUpgraded
+
+`func (o *RoleDetail) HasIsUpgraded() bool`
+
+HasIsUpgraded returns a boolean if a field has been set.
+
+### GetCompleteTime
+
+`func (o *RoleDetail) GetCompleteTime() string`
+
+GetCompleteTime returns the CompleteTime field if non-nil, zero value otherwise.
+
+### GetCompleteTimeOk
+
+`func (o *RoleDetail) GetCompleteTimeOk() (*string, bool)`
+
+GetCompleteTimeOk returns a tuple with the CompleteTime field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompleteTime
+
+`func (o *RoleDetail) SetCompleteTime(v string)`
+
+SetCompleteTime sets CompleteTime field to given value.
+
+### HasCompleteTime
+
+`func (o *RoleDetail) HasCompleteTime() bool`
+
+HasCompleteTime returns a boolean if a field has been set.
 
 ### GetUserDetails
 

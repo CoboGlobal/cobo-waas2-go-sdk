@@ -4,16 +4,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**UserEmail** | Pointer to **string** | The email address of the user who approved the transaction. | [optional] 
+**Name** | Pointer to **string** | The name of the user who approved the transaction. | [optional] 
+**Email** | Pointer to **string** | The email address of the user who approved the transaction. | [optional] 
 **Pubkey** | Pointer to **string** | The public key of the user who approved the transaction. | [optional] 
 **Signature** | Pointer to **string** | The signature of the transaction approval. | [optional] 
 **StatementUuid** | Pointer to **string** | The UUID of the statement associated with the transaction approval. | [optional] 
 **Result** | Pointer to [**ApprovalResult**](ApprovalResult.md) |  | [optional] 
+**ApprovalResultCode** | Pointer to **int32** | The integer value representing the result of the approval. | [optional] 
 **CreatedTime** | Pointer to **int32** | The timestamp when the approval was created. | [optional] 
 **TemplateVersion** | Pointer to **string** | The version of the template used for the transaction approval. | [optional] 
 **HeaderTitle** | Pointer to **string** | The title of the header for the transaction approval. | [optional] 
 **IsForSign** | Pointer to **bool** | Indicates whether the approval is for signing. | [optional] 
-**ShowInfo** | Pointer to [**ApprovalShowInfo**](ApprovalShowInfo.md) |  | [optional] 
+**ShowInfo** | Pointer to **string** | Additional information to show for the transaction approval. | [optional] 
+**Language** | Pointer to **string** | The language used for the transaction approval. | [optional] 
+**MessageVersion** | Pointer to **string** | The version of the message format used for the transaction approval. | [optional] 
+**Message** | Pointer to **string** | The message associated with the transaction approval. | [optional] 
+**ExtraMessage** | Pointer to **string** | Any additional message or information related to the transaction approval. | [optional] 
 
 ## Methods
 
@@ -34,30 +40,55 @@ NewApprovalUserDetailWithDefaults instantiates a new ApprovalUserDetail object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetUserEmail
+### GetName
 
-`func (o *ApprovalUserDetail) GetUserEmail() string`
+`func (o *ApprovalUserDetail) GetName() string`
 
-GetUserEmail returns the UserEmail field if non-nil, zero value otherwise.
+GetName returns the Name field if non-nil, zero value otherwise.
 
-### GetUserEmailOk
+### GetNameOk
 
-`func (o *ApprovalUserDetail) GetUserEmailOk() (*string, bool)`
+`func (o *ApprovalUserDetail) GetNameOk() (*string, bool)`
 
-GetUserEmailOk returns a tuple with the UserEmail field if it's non-nil, zero value otherwise
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUserEmail
+### SetName
 
-`func (o *ApprovalUserDetail) SetUserEmail(v string)`
+`func (o *ApprovalUserDetail) SetName(v string)`
 
-SetUserEmail sets UserEmail field to given value.
+SetName sets Name field to given value.
 
-### HasUserEmail
+### HasName
 
-`func (o *ApprovalUserDetail) HasUserEmail() bool`
+`func (o *ApprovalUserDetail) HasName() bool`
 
-HasUserEmail returns a boolean if a field has been set.
+HasName returns a boolean if a field has been set.
+
+### GetEmail
+
+`func (o *ApprovalUserDetail) GetEmail() string`
+
+GetEmail returns the Email field if non-nil, zero value otherwise.
+
+### GetEmailOk
+
+`func (o *ApprovalUserDetail) GetEmailOk() (*string, bool)`
+
+GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmail
+
+`func (o *ApprovalUserDetail) SetEmail(v string)`
+
+SetEmail sets Email field to given value.
+
+### HasEmail
+
+`func (o *ApprovalUserDetail) HasEmail() bool`
+
+HasEmail returns a boolean if a field has been set.
 
 ### GetPubkey
 
@@ -158,6 +189,31 @@ SetResult sets Result field to given value.
 `func (o *ApprovalUserDetail) HasResult() bool`
 
 HasResult returns a boolean if a field has been set.
+
+### GetApprovalResultCode
+
+`func (o *ApprovalUserDetail) GetApprovalResultCode() int32`
+
+GetApprovalResultCode returns the ApprovalResultCode field if non-nil, zero value otherwise.
+
+### GetApprovalResultCodeOk
+
+`func (o *ApprovalUserDetail) GetApprovalResultCodeOk() (*int32, bool)`
+
+GetApprovalResultCodeOk returns a tuple with the ApprovalResultCode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetApprovalResultCode
+
+`func (o *ApprovalUserDetail) SetApprovalResultCode(v int32)`
+
+SetApprovalResultCode sets ApprovalResultCode field to given value.
+
+### HasApprovalResultCode
+
+`func (o *ApprovalUserDetail) HasApprovalResultCode() bool`
+
+HasApprovalResultCode returns a boolean if a field has been set.
 
 ### GetCreatedTime
 
@@ -261,20 +317,20 @@ HasIsForSign returns a boolean if a field has been set.
 
 ### GetShowInfo
 
-`func (o *ApprovalUserDetail) GetShowInfo() ApprovalShowInfo`
+`func (o *ApprovalUserDetail) GetShowInfo() string`
 
 GetShowInfo returns the ShowInfo field if non-nil, zero value otherwise.
 
 ### GetShowInfoOk
 
-`func (o *ApprovalUserDetail) GetShowInfoOk() (*ApprovalShowInfo, bool)`
+`func (o *ApprovalUserDetail) GetShowInfoOk() (*string, bool)`
 
 GetShowInfoOk returns a tuple with the ShowInfo field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetShowInfo
 
-`func (o *ApprovalUserDetail) SetShowInfo(v ApprovalShowInfo)`
+`func (o *ApprovalUserDetail) SetShowInfo(v string)`
 
 SetShowInfo sets ShowInfo field to given value.
 
@@ -283,6 +339,106 @@ SetShowInfo sets ShowInfo field to given value.
 `func (o *ApprovalUserDetail) HasShowInfo() bool`
 
 HasShowInfo returns a boolean if a field has been set.
+
+### GetLanguage
+
+`func (o *ApprovalUserDetail) GetLanguage() string`
+
+GetLanguage returns the Language field if non-nil, zero value otherwise.
+
+### GetLanguageOk
+
+`func (o *ApprovalUserDetail) GetLanguageOk() (*string, bool)`
+
+GetLanguageOk returns a tuple with the Language field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLanguage
+
+`func (o *ApprovalUserDetail) SetLanguage(v string)`
+
+SetLanguage sets Language field to given value.
+
+### HasLanguage
+
+`func (o *ApprovalUserDetail) HasLanguage() bool`
+
+HasLanguage returns a boolean if a field has been set.
+
+### GetMessageVersion
+
+`func (o *ApprovalUserDetail) GetMessageVersion() string`
+
+GetMessageVersion returns the MessageVersion field if non-nil, zero value otherwise.
+
+### GetMessageVersionOk
+
+`func (o *ApprovalUserDetail) GetMessageVersionOk() (*string, bool)`
+
+GetMessageVersionOk returns a tuple with the MessageVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMessageVersion
+
+`func (o *ApprovalUserDetail) SetMessageVersion(v string)`
+
+SetMessageVersion sets MessageVersion field to given value.
+
+### HasMessageVersion
+
+`func (o *ApprovalUserDetail) HasMessageVersion() bool`
+
+HasMessageVersion returns a boolean if a field has been set.
+
+### GetMessage
+
+`func (o *ApprovalUserDetail) GetMessage() string`
+
+GetMessage returns the Message field if non-nil, zero value otherwise.
+
+### GetMessageOk
+
+`func (o *ApprovalUserDetail) GetMessageOk() (*string, bool)`
+
+GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMessage
+
+`func (o *ApprovalUserDetail) SetMessage(v string)`
+
+SetMessage sets Message field to given value.
+
+### HasMessage
+
+`func (o *ApprovalUserDetail) HasMessage() bool`
+
+HasMessage returns a boolean if a field has been set.
+
+### GetExtraMessage
+
+`func (o *ApprovalUserDetail) GetExtraMessage() string`
+
+GetExtraMessage returns the ExtraMessage field if non-nil, zero value otherwise.
+
+### GetExtraMessageOk
+
+`func (o *ApprovalUserDetail) GetExtraMessageOk() (*string, bool)`
+
+GetExtraMessageOk returns a tuple with the ExtraMessage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExtraMessage
+
+`func (o *ApprovalUserDetail) SetExtraMessage(v string)`
+
+SetExtraMessage sets ExtraMessage field to given value.
+
+### HasExtraMessage
+
+`func (o *ApprovalUserDetail) HasExtraMessage() bool`
+
+HasExtraMessage returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
