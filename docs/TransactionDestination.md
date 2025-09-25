@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **CalldataInfo** | Pointer to [**TransactionEvmCalldataInfo**](TransactionEvmCalldataInfo.md) |  | [optional] 
 **Instructions** | Pointer to [**[]TransactionSolContractInstruction**](TransactionSolContractInstruction.md) |  | [optional] 
+**AddressLookupTableAccounts** | Pointer to [**[]TransactionSolContractAddressLookupTableAccount**](TransactionSolContractAddressLookupTableAccount.md) |  | [optional] 
 **CosmosMessages** | [**[]TransactionCosmosMessage**](TransactionCosmosMessage.md) |  | 
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **RawStructuredData** | Pointer to **string** | The raw structured data to be signed, formatted as a JSON string. | [optional] 
@@ -402,6 +403,31 @@ SetInstructions sets Instructions field to given value.
 `func (o *TransactionDestination) HasInstructions() bool`
 
 HasInstructions returns a boolean if a field has been set.
+
+### GetAddressLookupTableAccounts
+
+`func (o *TransactionDestination) GetAddressLookupTableAccounts() []TransactionSolContractAddressLookupTableAccount`
+
+GetAddressLookupTableAccounts returns the AddressLookupTableAccounts field if non-nil, zero value otherwise.
+
+### GetAddressLookupTableAccountsOk
+
+`func (o *TransactionDestination) GetAddressLookupTableAccountsOk() (*[]TransactionSolContractAddressLookupTableAccount, bool)`
+
+GetAddressLookupTableAccountsOk returns a tuple with the AddressLookupTableAccounts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddressLookupTableAccounts
+
+`func (o *TransactionDestination) SetAddressLookupTableAccounts(v []TransactionSolContractAddressLookupTableAccount)`
+
+SetAddressLookupTableAccounts sets AddressLookupTableAccounts field to given value.
+
+### HasAddressLookupTableAccounts
+
+`func (o *TransactionDestination) HasAddressLookupTableAccounts() bool`
+
+HasAddressLookupTableAccounts returns a boolean if a field has been set.
 
 ### GetCosmosMessages
 

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**NewPlanId** | Pointer to **string** | The new plan id in cobo. | [optional] 
-**ActionType** | [**PaymentSubscriptionAction**](PaymentSubscriptionAction.md) |  | 
+**NewPlanId** | **string** | The new plan id in cobo. | 
+**ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
 **Signature** | **string** | The signature for transaction. | 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewPaymentUpdateAmountSubscriptionActionData
 
-`func NewPaymentUpdateAmountSubscriptionActionData(actionType PaymentSubscriptionAction, subscriptionId string, signature string, ) *PaymentUpdateAmountSubscriptionActionData`
+`func NewPaymentUpdateAmountSubscriptionActionData(newPlanId string, actionType PaymentSubscriptionActionType, subscriptionId string, signature string, ) *PaymentUpdateAmountSubscriptionActionData`
 
 NewPaymentUpdateAmountSubscriptionActionData instantiates a new PaymentUpdateAmountSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -47,28 +47,23 @@ and a boolean to check if the value has been set.
 
 SetNewPlanId sets NewPlanId field to given value.
 
-### HasNewPlanId
-
-`func (o *PaymentUpdateAmountSubscriptionActionData) HasNewPlanId() bool`
-
-HasNewPlanId returns a boolean if a field has been set.
 
 ### GetActionType
 
-`func (o *PaymentUpdateAmountSubscriptionActionData) GetActionType() PaymentSubscriptionAction`
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetActionType() PaymentSubscriptionActionType`
 
 GetActionType returns the ActionType field if non-nil, zero value otherwise.
 
 ### GetActionTypeOk
 
-`func (o *PaymentUpdateAmountSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool)`
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool)`
 
 GetActionTypeOk returns a tuple with the ActionType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetActionType
 
-`func (o *PaymentUpdateAmountSubscriptionActionData) SetActionType(v PaymentSubscriptionAction)`
+`func (o *PaymentUpdateAmountSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType)`
 
 SetActionType sets ActionType field to given value.
 

@@ -2717,7 +2717,7 @@ func (a *PaymentAPIService) GetSubscriptionByIdExecute(r ApiGetSubscriptionByIdR
 type ApiGetSubscriptionPlanByIdRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
-	subscriptionId string
+	planId string
 	tokenId *string
 }
 
@@ -2738,14 +2738,14 @@ This operation retrieves the information of subscription plan detail. You can fi
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param subscriptionId A unique identifier subscription.
+ @param planId A unique identifier subscription.
  @return ApiGetSubscriptionPlanByIdRequest
 */
-func (a *PaymentAPIService) GetSubscriptionPlanById(ctx context.Context, subscriptionId string) ApiGetSubscriptionPlanByIdRequest {
+func (a *PaymentAPIService) GetSubscriptionPlanById(ctx context.Context, planId string) ApiGetSubscriptionPlanByIdRequest {
 	return ApiGetSubscriptionPlanByIdRequest{
 		ApiService: a,
 		ctx: ctx,
-		subscriptionId: subscriptionId,
+		planId: planId,
 	}
 }
 
@@ -2764,8 +2764,8 @@ func (a *PaymentAPIService) GetSubscriptionPlanByIdExecute(r ApiGetSubscriptionP
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/payments/subscription_plans/{subscription_plan_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterValueToString(r.subscriptionId, "subscriptionId")), -1)
+	localVarPath := localBasePath + "/payments/subscription_plans/{plan_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"plan_id"+"}", url.PathEscape(parameterValueToString(r.planId, "planId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4908,7 +4908,7 @@ type ApiListSubscriptionsRequest struct {
 	after *string
 	planId *string
 	merchantId *string
-	subscriptionActionId *string
+	actionId *string
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -4942,8 +4942,8 @@ func (r ApiListSubscriptionsRequest) MerchantId(merchantId string) ApiListSubscr
 }
 
 // A unique identifier subscription action.
-func (r ApiListSubscriptionsRequest) SubscriptionActionId(subscriptionActionId string) ApiListSubscriptionsRequest {
-	r.subscriptionActionId = &subscriptionActionId
+func (r ApiListSubscriptionsRequest) ActionId(actionId string) ApiListSubscriptionsRequest {
+	r.actionId = &actionId
 	return r
 }
 
@@ -5006,8 +5006,8 @@ func (a *PaymentAPIService) ListSubscriptionsExecute(r ApiListSubscriptionsReque
 	if r.merchantId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
 	}
-	if r.subscriptionActionId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "subscription_action_id", r.subscriptionActionId, "")
+	if r.actionId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "action_id", r.actionId, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

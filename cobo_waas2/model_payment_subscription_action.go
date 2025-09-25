@@ -22,7 +22,7 @@ type PaymentSubscriptionAction struct {
 	// The action request id.
 	RequestId string `json:"request_id"`
 	// The action id.
-	SubscriptionActionId string `json:"subscription_action_id"`
+	ActionId string `json:"action_id"`
 	// The plan id in cobo.
 	PlanId string `json:"plan_id"`
 	// The subscription id in cobo.
@@ -45,10 +45,10 @@ type _PaymentSubscriptionAction PaymentSubscriptionAction
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentSubscriptionAction(requestId string, subscriptionActionId string, planId string, subscriptionId string, merchantId string, merchantAddress string, data PaymentSubscriptionActionData, status PaymentSubscriptionActionStatus) *PaymentSubscriptionAction {
+func NewPaymentSubscriptionAction(requestId string, actionId string, planId string, subscriptionId string, merchantId string, merchantAddress string, data PaymentSubscriptionActionData, status PaymentSubscriptionActionStatus) *PaymentSubscriptionAction {
 	this := PaymentSubscriptionAction{}
 	this.RequestId = requestId
-	this.SubscriptionActionId = subscriptionActionId
+	this.ActionId = actionId
 	this.PlanId = planId
 	this.SubscriptionId = subscriptionId
 	this.MerchantId = merchantId
@@ -90,28 +90,28 @@ func (o *PaymentSubscriptionAction) SetRequestId(v string) {
 	o.RequestId = v
 }
 
-// GetSubscriptionActionId returns the SubscriptionActionId field value
-func (o *PaymentSubscriptionAction) GetSubscriptionActionId() string {
+// GetActionId returns the ActionId field value
+func (o *PaymentSubscriptionAction) GetActionId() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.SubscriptionActionId
+	return o.ActionId
 }
 
-// GetSubscriptionActionIdOk returns a tuple with the SubscriptionActionId field value
+// GetActionIdOk returns a tuple with the ActionId field value
 // and a boolean to check if the value has been set.
-func (o *PaymentSubscriptionAction) GetSubscriptionActionIdOk() (*string, bool) {
+func (o *PaymentSubscriptionAction) GetActionIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.SubscriptionActionId, true
+	return &o.ActionId, true
 }
 
-// SetSubscriptionActionId sets field value
-func (o *PaymentSubscriptionAction) SetSubscriptionActionId(v string) {
-	o.SubscriptionActionId = v
+// SetActionId sets field value
+func (o *PaymentSubscriptionAction) SetActionId(v string) {
+	o.ActionId = v
 }
 
 // GetPlanId returns the PlanId field value
@@ -333,7 +333,7 @@ func (o PaymentSubscriptionAction) MarshalJSON() ([]byte, error) {
 func (o PaymentSubscriptionAction) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
-	toSerialize["subscription_action_id"] = o.SubscriptionActionId
+	toSerialize["action_id"] = o.ActionId
 	toSerialize["plan_id"] = o.PlanId
 	toSerialize["subscription_id"] = o.SubscriptionId
 	toSerialize["merchant_id"] = o.MerchantId
@@ -355,7 +355,7 @@ func (o *PaymentSubscriptionAction) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"request_id",
-		"subscription_action_id",
+		"action_id",
 		"plan_id",
 		"subscription_id",
 		"merchant_id",

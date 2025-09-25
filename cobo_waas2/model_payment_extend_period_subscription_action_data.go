@@ -21,7 +21,7 @@ var _ MappedNullable = &PaymentExtendPeriodSubscriptionActionData{}
 type PaymentExtendPeriodSubscriptionActionData struct {
 	// The periods needed updated.
 	Periods *int32 `json:"periods,omitempty"`
-	ActionType PaymentSubscriptionAction `json:"action_type"`
+	ActionType PaymentSubscriptionActionType `json:"action_type"`
 	// The subscription id in cobo.
 	SubscriptionId string `json:"subscription_id"`
 	// The signature for transaction.
@@ -34,7 +34,7 @@ type _PaymentExtendPeriodSubscriptionActionData PaymentExtendPeriodSubscriptionA
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionAction, subscriptionId string, signature string) *PaymentExtendPeriodSubscriptionActionData {
+func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string) *PaymentExtendPeriodSubscriptionActionData {
 	this := PaymentExtendPeriodSubscriptionActionData{}
 	this.ActionType = actionType
 	this.SubscriptionId = subscriptionId
@@ -83,9 +83,9 @@ func (o *PaymentExtendPeriodSubscriptionActionData) SetPeriods(v int32) {
 }
 
 // GetActionType returns the ActionType field value
-func (o *PaymentExtendPeriodSubscriptionActionData) GetActionType() PaymentSubscriptionAction {
+func (o *PaymentExtendPeriodSubscriptionActionData) GetActionType() PaymentSubscriptionActionType {
 	if o == nil {
-		var ret PaymentSubscriptionAction
+		var ret PaymentSubscriptionActionType
 		return ret
 	}
 
@@ -94,7 +94,7 @@ func (o *PaymentExtendPeriodSubscriptionActionData) GetActionType() PaymentSubsc
 
 // GetActionTypeOk returns a tuple with the ActionType field value
 // and a boolean to check if the value has been set.
-func (o *PaymentExtendPeriodSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool) {
+func (o *PaymentExtendPeriodSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -102,7 +102,7 @@ func (o *PaymentExtendPeriodSubscriptionActionData) GetActionTypeOk() (*PaymentS
 }
 
 // SetActionType sets field value
-func (o *PaymentExtendPeriodSubscriptionActionData) SetActionType(v PaymentSubscriptionAction) {
+func (o *PaymentExtendPeriodSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType) {
 	o.ActionType = v
 }
 

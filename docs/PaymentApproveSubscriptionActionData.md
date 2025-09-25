@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ActionType** | [**PaymentSubscriptionAction**](PaymentSubscriptionAction.md) |  | 
+**ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
 **PermitData** | Pointer to **string** | The signature of permit. | [optional] 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewPaymentApproveSubscriptionActionData
 
-`func NewPaymentApproveSubscriptionActionData(actionType PaymentSubscriptionAction, subscriptionId string, ) *PaymentApproveSubscriptionActionData`
+`func NewPaymentApproveSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, ) *PaymentApproveSubscriptionActionData`
 
 NewPaymentApproveSubscriptionActionData instantiates a new PaymentApproveSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetActionType
 
-`func (o *PaymentApproveSubscriptionActionData) GetActionType() PaymentSubscriptionAction`
+`func (o *PaymentApproveSubscriptionActionData) GetActionType() PaymentSubscriptionActionType`
 
 GetActionType returns the ActionType field if non-nil, zero value otherwise.
 
 ### GetActionTypeOk
 
-`func (o *PaymentApproveSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool)`
+`func (o *PaymentApproveSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool)`
 
 GetActionTypeOk returns a tuple with the ActionType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetActionType
 
-`func (o *PaymentApproveSubscriptionActionData) SetActionType(v PaymentSubscriptionAction)`
+`func (o *PaymentApproveSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType)`
 
 SetActionType sets ActionType field to given value.
 

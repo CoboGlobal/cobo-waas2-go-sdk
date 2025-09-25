@@ -21,6 +21,8 @@ var _ MappedNullable = &CreateMerchantRequest{}
 type CreateMerchantRequest struct {
 	// The merchant name.
 	Name string `json:"name"`
+	// The ID of the wallet linked to the merchant.
+	WalletId *string `json:"wallet_id,omitempty"`
 	// The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \"0.1\" means 10%).
 	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
 	WalletSetup *WalletSetup `json:"wallet_setup,omitempty"`
@@ -68,6 +70,38 @@ func (o *CreateMerchantRequest) GetNameOk() (*string, bool) {
 // SetName sets field value
 func (o *CreateMerchantRequest) SetName(v string) {
 	o.Name = v
+}
+
+// GetWalletId returns the WalletId field value if set, zero value otherwise.
+func (o *CreateMerchantRequest) GetWalletId() string {
+	if o == nil || IsNil(o.WalletId) {
+		var ret string
+		return ret
+	}
+	return *o.WalletId
+}
+
+// GetWalletIdOk returns a tuple with the WalletId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateMerchantRequest) GetWalletIdOk() (*string, bool) {
+	if o == nil || IsNil(o.WalletId) {
+		return nil, false
+	}
+	return o.WalletId, true
+}
+
+// HasWalletId returns a boolean if a field has been set.
+func (o *CreateMerchantRequest) HasWalletId() bool {
+	if o != nil && !IsNil(o.WalletId) {
+		return true
+	}
+
+	return false
+}
+
+// SetWalletId gets a reference to the given string and assigns it to the WalletId field.
+func (o *CreateMerchantRequest) SetWalletId(v string) {
+	o.WalletId = &v
 }
 
 // GetDeveloperFeeRate returns the DeveloperFeeRate field value if set, zero value otherwise.
@@ -145,6 +179,9 @@ func (o CreateMerchantRequest) MarshalJSON() ([]byte, error) {
 func (o CreateMerchantRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
+	if !IsNil(o.WalletId) {
+		toSerialize["wallet_id"] = o.WalletId
+	}
 	if !IsNil(o.DeveloperFeeRate) {
 		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
 	}

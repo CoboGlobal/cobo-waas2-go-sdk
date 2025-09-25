@@ -464,6 +464,7 @@ docs/SmartContractWalletInfo.md
 docs/SmartContractWalletOperationType.md
 docs/SmartContractWalletType.md
 docs/SolContractCallAccount.md
+docs/SolContractCallAddressLookupTableAccount.md
 docs/SolContractCallDestination.md
 docs/SolContractCallInstruction.md
 docs/SourceGroup.md
@@ -694,6 +695,7 @@ docs/TransactionSignatureResult.md
 docs/TransactionSigner.md
 docs/TransactionSmartContractSafeWalletSource.md
 docs/TransactionSolContractAccount.md
+docs/TransactionSolContractAddressLookupTableAccount.md
 docs/TransactionSolContractDestination.md
 docs/TransactionSolContractInstruction.md
 docs/TransactionSource.md
@@ -1199,6 +1201,7 @@ model_smart_contract_wallet_type.go
 model_sol_base.go
 model_sol_compute_unit.go
 model_sol_contract_call_account.go
+model_sol_contract_call_address_lookup_table_account.go
 model_sol_contract_call_destination.go
 model_sol_contract_call_instruction.go
 model_source_group.go
@@ -1385,6 +1388,7 @@ model_transaction_signature_result.go
 model_transaction_signer.go
 model_transaction_smart_contract_safe_wallet_source.go
 model_transaction_sol_contract_account.go
+model_transaction_sol_contract_address_lookup_table_account.go
 model_transaction_sol_contract_destination.go
 model_transaction_sol_contract_instruction.go
 model_transaction_sol_fee.go

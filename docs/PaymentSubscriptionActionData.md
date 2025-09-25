@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ActionType** | [**PaymentSubscriptionAction**](PaymentSubscriptionAction.md) |  | 
+**ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **UserAddress** | **string** | The subscription user address. | 
 **Amount** | **string** | The subscription crypto amount.  | 
 **TokenId** | **string** | The ID of the cryptocurrency you want to subscription. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
@@ -13,13 +13,13 @@ Name | Type | Description | Notes
 **PermitData** | Pointer to **string** | The signature of permit. | [optional] 
 **Signature** | **string** | The signature for transaction. | 
 **Periods** | Pointer to **int32** | The periods needed updated. | [optional] 
-**NewPlanId** | Pointer to **string** | The new plan id in cobo. | [optional] 
+**NewPlanId** | **string** | The new plan id in cobo. | 
 
 ## Methods
 
 ### NewPaymentSubscriptionActionData
 
-`func NewPaymentSubscriptionActionData(actionType PaymentSubscriptionAction, userAddress string, amount string, tokenId string, subscriptionId string, signature string, ) *PaymentSubscriptionActionData`
+`func NewPaymentSubscriptionActionData(actionType PaymentSubscriptionActionType, userAddress string, amount string, tokenId string, subscriptionId string, signature string, newPlanId string, ) *PaymentSubscriptionActionData`
 
 NewPaymentSubscriptionActionData instantiates a new PaymentSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -36,20 +36,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetActionType
 
-`func (o *PaymentSubscriptionActionData) GetActionType() PaymentSubscriptionAction`
+`func (o *PaymentSubscriptionActionData) GetActionType() PaymentSubscriptionActionType`
 
 GetActionType returns the ActionType field if non-nil, zero value otherwise.
 
 ### GetActionTypeOk
 
-`func (o *PaymentSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool)`
+`func (o *PaymentSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool)`
 
 GetActionTypeOk returns a tuple with the ActionType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetActionType
 
-`func (o *PaymentSubscriptionActionData) SetActionType(v PaymentSubscriptionAction)`
+`func (o *PaymentSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType)`
 
 SetActionType sets ActionType field to given value.
 
@@ -248,11 +248,6 @@ and a boolean to check if the value has been set.
 
 SetNewPlanId sets NewPlanId field to given value.
 
-### HasNewPlanId
-
-`func (o *PaymentSubscriptionActionData) HasNewPlanId() bool`
-
-HasNewPlanId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

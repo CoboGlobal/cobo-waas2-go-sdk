@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Periods** | Pointer to **int32** | The periods needed updated. | [optional] 
-**ActionType** | [**PaymentSubscriptionAction**](PaymentSubscriptionAction.md) |  | 
+**ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
 **Signature** | **string** | The signature for transaction. | 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewPaymentExtendPeriodSubscriptionActionData
 
-`func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionAction, subscriptionId string, signature string, ) *PaymentExtendPeriodSubscriptionActionData`
+`func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, ) *PaymentExtendPeriodSubscriptionActionData`
 
 NewPaymentExtendPeriodSubscriptionActionData instantiates a new PaymentExtendPeriodSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -55,20 +55,20 @@ HasPeriods returns a boolean if a field has been set.
 
 ### GetActionType
 
-`func (o *PaymentExtendPeriodSubscriptionActionData) GetActionType() PaymentSubscriptionAction`
+`func (o *PaymentExtendPeriodSubscriptionActionData) GetActionType() PaymentSubscriptionActionType`
 
 GetActionType returns the ActionType field if non-nil, zero value otherwise.
 
 ### GetActionTypeOk
 
-`func (o *PaymentExtendPeriodSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool)`
+`func (o *PaymentExtendPeriodSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool)`
 
 GetActionTypeOk returns a tuple with the ActionType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetActionType
 
-`func (o *PaymentExtendPeriodSubscriptionActionData) SetActionType(v PaymentSubscriptionAction)`
+`func (o *PaymentExtendPeriodSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType)`
 
 SetActionType sets ActionType field to given value.
 

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | **string** | The action request id. | 
-**SubscriptionActionId** | **string** | The action id. | 
+**ActionId** | **string** | The action id. | 
 **PlanId** | **string** | The plan id in cobo. | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
 **MerchantId** | **string** | The merchant id in cobo. | 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewPaymentSubscriptionAction
 
-`func NewPaymentSubscriptionAction(requestId string, subscriptionActionId string, planId string, subscriptionId string, merchantId string, merchantAddress string, data PaymentSubscriptionActionData, status PaymentSubscriptionActionStatus, ) *PaymentSubscriptionAction`
+`func NewPaymentSubscriptionAction(requestId string, actionId string, planId string, subscriptionId string, merchantId string, merchantAddress string, data PaymentSubscriptionActionData, status PaymentSubscriptionActionStatus, ) *PaymentSubscriptionAction`
 
 NewPaymentSubscriptionAction instantiates a new PaymentSubscriptionAction object
 This constructor will assign default values to properties that have it defined,
@@ -54,24 +54,24 @@ and a boolean to check if the value has been set.
 SetRequestId sets RequestId field to given value.
 
 
-### GetSubscriptionActionId
+### GetActionId
 
-`func (o *PaymentSubscriptionAction) GetSubscriptionActionId() string`
+`func (o *PaymentSubscriptionAction) GetActionId() string`
 
-GetSubscriptionActionId returns the SubscriptionActionId field if non-nil, zero value otherwise.
+GetActionId returns the ActionId field if non-nil, zero value otherwise.
 
-### GetSubscriptionActionIdOk
+### GetActionIdOk
 
-`func (o *PaymentSubscriptionAction) GetSubscriptionActionIdOk() (*string, bool)`
+`func (o *PaymentSubscriptionAction) GetActionIdOk() (*string, bool)`
 
-GetSubscriptionActionIdOk returns a tuple with the SubscriptionActionId field if it's non-nil, zero value otherwise
+GetActionIdOk returns a tuple with the ActionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSubscriptionActionId
+### SetActionId
 
-`func (o *PaymentSubscriptionAction) SetSubscriptionActionId(v string)`
+`func (o *PaymentSubscriptionAction) SetActionId(v string)`
 
-SetSubscriptionActionId sets SubscriptionActionId field to given value.
+SetActionId sets ActionId field to given value.
 
 
 ### GetPlanId

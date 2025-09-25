@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ActionType** | [**PaymentSubscriptionAction**](PaymentSubscriptionAction.md) |  | 
+**ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
 **Signature** | **string** | The signature for transaction. | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewPaymentBaseSubscriptionActionData
 
-`func NewPaymentBaseSubscriptionActionData(actionType PaymentSubscriptionAction, subscriptionId string, signature string, ) *PaymentBaseSubscriptionActionData`
+`func NewPaymentBaseSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, ) *PaymentBaseSubscriptionActionData`
 
 NewPaymentBaseSubscriptionActionData instantiates a new PaymentBaseSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetActionType
 
-`func (o *PaymentBaseSubscriptionActionData) GetActionType() PaymentSubscriptionAction`
+`func (o *PaymentBaseSubscriptionActionData) GetActionType() PaymentSubscriptionActionType`
 
 GetActionType returns the ActionType field if non-nil, zero value otherwise.
 
 ### GetActionTypeOk
 
-`func (o *PaymentBaseSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool)`
+`func (o *PaymentBaseSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool)`
 
 GetActionTypeOk returns a tuple with the ActionType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetActionType
 
-`func (o *PaymentBaseSubscriptionActionData) SetActionType(v PaymentSubscriptionAction)`
+`func (o *PaymentBaseSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType)`
 
 SetActionType sets ActionType field to given value.
 
