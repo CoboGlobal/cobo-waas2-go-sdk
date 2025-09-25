@@ -20,8 +20,8 @@ var _ MappedNullable = &PaymentUpdateAmountSubscriptionActionData{}
 // PaymentUpdateAmountSubscriptionActionData struct for PaymentUpdateAmountSubscriptionActionData
 type PaymentUpdateAmountSubscriptionActionData struct {
 	// The new plan id in cobo.
-	NewPlanId *string `json:"new_plan_id,omitempty"`
-	ActionType PaymentSubscriptionAction `json:"action_type"`
+	NewPlanId string `json:"new_plan_id"`
+	ActionType PaymentSubscriptionActionType `json:"action_type"`
 	// The subscription id in cobo.
 	SubscriptionId string `json:"subscription_id"`
 	// The signature for transaction.
@@ -34,7 +34,7 @@ type _PaymentUpdateAmountSubscriptionActionData PaymentUpdateAmountSubscriptionA
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentUpdateAmountSubscriptionActionData(actionType PaymentSubscriptionAction, subscriptionId string, signature string) *PaymentUpdateAmountSubscriptionActionData {
+func NewPaymentUpdateAmountSubscriptionActionData(newPlanId string, actionType PaymentSubscriptionActionType, subscriptionId string, signature string) *PaymentUpdateAmountSubscriptionActionData {
 	this := PaymentUpdateAmountSubscriptionActionData{}
 	this.ActionType = actionType
 	this.SubscriptionId = subscriptionId
@@ -50,42 +50,34 @@ func NewPaymentUpdateAmountSubscriptionActionDataWithDefaults() *PaymentUpdateAm
 	return &this
 }
 
-// GetNewPlanId returns the NewPlanId field value if set, zero value otherwise.
+// GetNewPlanId returns the NewPlanId field value
 func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanId() string {
-	if o == nil || IsNil(o.NewPlanId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.NewPlanId
+
+	return o.NewPlanId
 }
 
-// GetNewPlanIdOk returns a tuple with the NewPlanId field value if set, nil otherwise
+// GetNewPlanIdOk returns a tuple with the NewPlanId field value
 // and a boolean to check if the value has been set.
 func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanIdOk() (*string, bool) {
-	if o == nil || IsNil(o.NewPlanId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.NewPlanId, true
+	return &o.NewPlanId, true
 }
 
-// HasNewPlanId returns a boolean if a field has been set.
-func (o *PaymentUpdateAmountSubscriptionActionData) HasNewPlanId() bool {
-	if o != nil && !IsNil(o.NewPlanId) {
-		return true
-	}
-
-	return false
-}
-
-// SetNewPlanId gets a reference to the given string and assigns it to the NewPlanId field.
+// SetNewPlanId sets field value
 func (o *PaymentUpdateAmountSubscriptionActionData) SetNewPlanId(v string) {
-	o.NewPlanId = &v
+	o.NewPlanId = v
 }
 
 // GetActionType returns the ActionType field value
-func (o *PaymentUpdateAmountSubscriptionActionData) GetActionType() PaymentSubscriptionAction {
+func (o *PaymentUpdateAmountSubscriptionActionData) GetActionType() PaymentSubscriptionActionType {
 	if o == nil {
-		var ret PaymentSubscriptionAction
+		var ret PaymentSubscriptionActionType
 		return ret
 	}
 
@@ -94,7 +86,7 @@ func (o *PaymentUpdateAmountSubscriptionActionData) GetActionType() PaymentSubsc
 
 // GetActionTypeOk returns a tuple with the ActionType field value
 // and a boolean to check if the value has been set.
-func (o *PaymentUpdateAmountSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool) {
+func (o *PaymentUpdateAmountSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -102,7 +94,7 @@ func (o *PaymentUpdateAmountSubscriptionActionData) GetActionTypeOk() (*PaymentS
 }
 
 // SetActionType sets field value
-func (o *PaymentUpdateAmountSubscriptionActionData) SetActionType(v PaymentSubscriptionAction) {
+func (o *PaymentUpdateAmountSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType) {
 	o.ActionType = v
 }
 
@@ -164,9 +156,7 @@ func (o PaymentUpdateAmountSubscriptionActionData) MarshalJSON() ([]byte, error)
 
 func (o PaymentUpdateAmountSubscriptionActionData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.NewPlanId) {
-		toSerialize["new_plan_id"] = o.NewPlanId
-	}
+	toSerialize["new_plan_id"] = o.NewPlanId
 	toSerialize["action_type"] = o.ActionType
 	toSerialize["subscription_id"] = o.SubscriptionId
 	toSerialize["signature"] = o.Signature
@@ -178,6 +168,7 @@ func (o *PaymentUpdateAmountSubscriptionActionData) UnmarshalJSON(data []byte) (
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"new_plan_id",
 		"action_type",
 		"subscription_id",
 		"signature",

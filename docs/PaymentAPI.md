@@ -24,7 +24,7 @@ Method | HTTP request | Description
 [**GetSettlementById**](PaymentAPI.md#GetSettlementById) | **Get** /payments/settlement_requests/{settlement_request_id} | Get settlement request information
 [**GetSettlementInfoByIds**](PaymentAPI.md#GetSettlementInfoByIds) | **Get** /payments/settlement_info | Get withdrawable balances
 [**GetSubscriptionById**](PaymentAPI.md#GetSubscriptionById) | **Get** /payments/subscriptions/{subscription_id} | Get subscription by id
-[**GetSubscriptionPlanById**](PaymentAPI.md#GetSubscriptionPlanById) | **Get** /payments/subscription_plans/{subscription_plan_id} | Get subscription plan by id
+[**GetSubscriptionPlanById**](PaymentAPI.md#GetSubscriptionPlanById) | **Get** /payments/subscription_plans/{plan_id} | Get subscription plan by id
 [**GetTopUpAddress**](PaymentAPI.md#GetTopUpAddress) | **Get** /payments/topup/address | Get top-up address
 [**ListBankAccounts**](PaymentAPI.md#ListBankAccounts) | **Get** /payments/bank_accounts | List all bank accounts
 [**ListCryptoAddresses**](PaymentAPI.md#ListCryptoAddresses) | **Get** /payments/crypto_addresses | List crypto addresses
@@ -1621,7 +1621,7 @@ Name | Type | Description  | Notes
 
 ## GetSubscriptionPlanById
 
-> PaymentSubscriptionPlanDetail GetSubscriptionPlanById(ctx, subscriptionId).TokenId(tokenId).Execute()
+> PaymentSubscriptionPlanDetail GetSubscriptionPlanById(ctx, planId).TokenId(tokenId).Execute()
 
 Get subscription plan by id
 
@@ -1641,7 +1641,7 @@ import (
 )
 
 func main() {
-	subscriptionId := "123e457-e89b-12d3-a456-426614174004"
+	planId := "123e457-e89b-12d3-a456-426614174004"
 	tokenId := "ETH_USDT"
 
 	configuration := coboWaas2.NewConfiguration()
@@ -1655,7 +1655,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.PaymentAPI.GetSubscriptionPlanById(ctx, subscriptionId).TokenId(tokenId).Execute()
+	resp, r, err := apiClient.PaymentAPI.GetSubscriptionPlanById(ctx, planId).TokenId(tokenId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetSubscriptionPlanById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1671,7 +1671,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
-**subscriptionId** | **string** | A unique identifier subscription. | 
+**planId** | **string** | A unique identifier subscription. | 
 
 ### Other Parameters
 
@@ -2749,7 +2749,7 @@ Name | Type | Description  | Notes
 
 ## ListSubscriptions
 
-> ListSubscriptions200Response ListSubscriptions(ctx).Limit(limit).Before(before).After(after).PlanId(planId).MerchantId(merchantId).SubscriptionActionId(subscriptionActionId).Execute()
+> ListSubscriptions200Response ListSubscriptions(ctx).Limit(limit).Before(before).After(after).PlanId(planId).MerchantId(merchantId).ActionId(actionId).Execute()
 
 List subscriptions
 
@@ -2774,7 +2774,7 @@ func main() {
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
 	planId := "123e457-e89b-12d3-a456-426614174004"
 	merchantId := "M1001"
-	subscriptionActionId := "123e457-e89b-12d3-a456-426614174004"
+	actionId := "123e457-e89b-12d3-a456-426614174004"
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -2787,7 +2787,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.PaymentAPI.ListSubscriptions(ctx).Limit(limit).Before(before).After(after).PlanId(planId).MerchantId(merchantId).SubscriptionActionId(subscriptionActionId).Execute()
+	resp, r, err := apiClient.PaymentAPI.ListSubscriptions(ctx).Limit(limit).Before(before).After(after).PlanId(planId).MerchantId(merchantId).ActionId(actionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListSubscriptions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2813,7 +2813,7 @@ Name | Type | Description  | Notes
  **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
  **planId** | **string** | A unique identifier plan. | 
  **merchantId** | **string** | The merchant ID. | 
- **subscriptionActionId** | **string** | A unique identifier subscription action. | 
+ **actionId** | **string** | A unique identifier subscription action. | 
 
 ### Return type
 

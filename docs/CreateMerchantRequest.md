@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The merchant name. | 
+**WalletId** | Pointer to **string** | The ID of the wallet linked to the merchant. | [optional] 
 **DeveloperFeeRate** | Pointer to **string** | The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \&quot;0.1\&quot; means 10%). | [optional] 
 **WalletSetup** | Pointer to [**WalletSetup**](WalletSetup.md) |  | [optional] 
 
@@ -46,6 +47,31 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+
+### GetWalletId
+
+`func (o *CreateMerchantRequest) GetWalletId() string`
+
+GetWalletId returns the WalletId field if non-nil, zero value otherwise.
+
+### GetWalletIdOk
+
+`func (o *CreateMerchantRequest) GetWalletIdOk() (*string, bool)`
+
+GetWalletIdOk returns a tuple with the WalletId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWalletId
+
+`func (o *CreateMerchantRequest) SetWalletId(v string)`
+
+SetWalletId sets WalletId field to given value.
+
+### HasWalletId
+
+`func (o *CreateMerchantRequest) HasWalletId() bool`
+
+HasWalletId returns a boolean if a field has been set.
 
 ### GetDeveloperFeeRate
 

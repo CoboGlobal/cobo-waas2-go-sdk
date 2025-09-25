@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentApproveSubscriptionActionData{}
 
 // PaymentApproveSubscriptionActionData struct for PaymentApproveSubscriptionActionData
 type PaymentApproveSubscriptionActionData struct {
-	ActionType PaymentSubscriptionAction `json:"action_type"`
+	ActionType PaymentSubscriptionActionType `json:"action_type"`
 	// The subscription id in cobo.
 	SubscriptionId string `json:"subscription_id"`
 	// The signature of permit.
@@ -32,7 +32,7 @@ type _PaymentApproveSubscriptionActionData PaymentApproveSubscriptionActionData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentApproveSubscriptionActionData(actionType PaymentSubscriptionAction, subscriptionId string) *PaymentApproveSubscriptionActionData {
+func NewPaymentApproveSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string) *PaymentApproveSubscriptionActionData {
 	this := PaymentApproveSubscriptionActionData{}
 	this.ActionType = actionType
 	this.SubscriptionId = subscriptionId
@@ -48,9 +48,9 @@ func NewPaymentApproveSubscriptionActionDataWithDefaults() *PaymentApproveSubscr
 }
 
 // GetActionType returns the ActionType field value
-func (o *PaymentApproveSubscriptionActionData) GetActionType() PaymentSubscriptionAction {
+func (o *PaymentApproveSubscriptionActionData) GetActionType() PaymentSubscriptionActionType {
 	if o == nil {
-		var ret PaymentSubscriptionAction
+		var ret PaymentSubscriptionActionType
 		return ret
 	}
 
@@ -59,7 +59,7 @@ func (o *PaymentApproveSubscriptionActionData) GetActionType() PaymentSubscripti
 
 // GetActionTypeOk returns a tuple with the ActionType field value
 // and a boolean to check if the value has been set.
-func (o *PaymentApproveSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionAction, bool) {
+func (o *PaymentApproveSubscriptionActionData) GetActionTypeOk() (*PaymentSubscriptionActionType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -67,7 +67,7 @@ func (o *PaymentApproveSubscriptionActionData) GetActionTypeOk() (*PaymentSubscr
 }
 
 // SetActionType sets field value
-func (o *PaymentApproveSubscriptionActionData) SetActionType(v PaymentSubscriptionAction) {
+func (o *PaymentApproveSubscriptionActionData) SetActionType(v PaymentSubscriptionActionType) {
 	o.ActionType = v
 }
 

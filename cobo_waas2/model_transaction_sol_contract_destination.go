@@ -21,6 +21,7 @@ var _ MappedNullable = &TransactionSolContractDestination{}
 type TransactionSolContractDestination struct {
 	DestinationType TransactionDestinationType `json:"destination_type"`
 	Instructions []TransactionSolContractInstruction `json:"instructions,omitempty"`
+	AddressLookupTableAccounts []TransactionSolContractAddressLookupTableAccount `json:"address_lookup_table_accounts,omitempty"`
 }
 
 type _TransactionSolContractDestination TransactionSolContractDestination
@@ -99,6 +100,38 @@ func (o *TransactionSolContractDestination) SetInstructions(v []TransactionSolCo
 	o.Instructions = v
 }
 
+// GetAddressLookupTableAccounts returns the AddressLookupTableAccounts field value if set, zero value otherwise.
+func (o *TransactionSolContractDestination) GetAddressLookupTableAccounts() []TransactionSolContractAddressLookupTableAccount {
+	if o == nil || IsNil(o.AddressLookupTableAccounts) {
+		var ret []TransactionSolContractAddressLookupTableAccount
+		return ret
+	}
+	return o.AddressLookupTableAccounts
+}
+
+// GetAddressLookupTableAccountsOk returns a tuple with the AddressLookupTableAccounts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionSolContractDestination) GetAddressLookupTableAccountsOk() ([]TransactionSolContractAddressLookupTableAccount, bool) {
+	if o == nil || IsNil(o.AddressLookupTableAccounts) {
+		return nil, false
+	}
+	return o.AddressLookupTableAccounts, true
+}
+
+// HasAddressLookupTableAccounts returns a boolean if a field has been set.
+func (o *TransactionSolContractDestination) HasAddressLookupTableAccounts() bool {
+	if o != nil && !IsNil(o.AddressLookupTableAccounts) {
+		return true
+	}
+
+	return false
+}
+
+// SetAddressLookupTableAccounts gets a reference to the given []TransactionSolContractAddressLookupTableAccount and assigns it to the AddressLookupTableAccounts field.
+func (o *TransactionSolContractDestination) SetAddressLookupTableAccounts(v []TransactionSolContractAddressLookupTableAccount) {
+	o.AddressLookupTableAccounts = v
+}
+
 func (o TransactionSolContractDestination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -112,6 +145,9 @@ func (o TransactionSolContractDestination) ToMap() (map[string]interface{}, erro
 	toSerialize["destination_type"] = o.DestinationType
 	if !IsNil(o.Instructions) {
 		toSerialize["instructions"] = o.Instructions
+	}
+	if !IsNil(o.AddressLookupTableAccounts) {
+		toSerialize["address_lookup_table_accounts"] = o.AddressLookupTableAccounts
 	}
 	return toSerialize, nil
 }

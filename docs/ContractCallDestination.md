@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
+**AddressLookupTableAccounts** | Pointer to [**[]SolContractCallAddressLookupTableAccount**](SolContractCallAddressLookupTableAccount.md) |  | [optional] 
 **ContractParam** | [**StellarContractCallContractParam**](StellarContractCallContractParam.md) |  | 
 
 ## Methods
@@ -134,6 +135,31 @@ and a boolean to check if the value has been set.
 
 SetInstructions sets Instructions field to given value.
 
+
+### GetAddressLookupTableAccounts
+
+`func (o *ContractCallDestination) GetAddressLookupTableAccounts() []SolContractCallAddressLookupTableAccount`
+
+GetAddressLookupTableAccounts returns the AddressLookupTableAccounts field if non-nil, zero value otherwise.
+
+### GetAddressLookupTableAccountsOk
+
+`func (o *ContractCallDestination) GetAddressLookupTableAccountsOk() (*[]SolContractCallAddressLookupTableAccount, bool)`
+
+GetAddressLookupTableAccountsOk returns a tuple with the AddressLookupTableAccounts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddressLookupTableAccounts
+
+`func (o *ContractCallDestination) SetAddressLookupTableAccounts(v []SolContractCallAddressLookupTableAccount)`
+
+SetAddressLookupTableAccounts sets AddressLookupTableAccounts field to given value.
+
+### HasAddressLookupTableAccounts
+
+`func (o *ContractCallDestination) HasAddressLookupTableAccounts() bool`
+
+HasAddressLookupTableAccounts returns a boolean if a field has been set.
 
 ### GetContractParam
 
