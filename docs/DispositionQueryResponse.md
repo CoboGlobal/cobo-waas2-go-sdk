@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TransactionId** | **string** | The UUID of the transaction that the disposition applies to. | 
+**TransactionId** | **string** | The UUID of the transaction that was disposed. | 
 **DispositionType** | [**DispositionType**](DispositionType.md) |  | 
 **DispositionStatus** | [**DispositionStatus**](DispositionStatus.md) |  | 
 **DispositionTransactionId** | Pointer to **string** | The UUID of the generated disposition transaction (if available). | [optional] 

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**TokenId** | **string** | The token used to pay the transaction fee. | 
+**TokenId** | **string** | The token ID of the transaction fee. | 
 **Slow** | Pointer to [**EstimatedFILFeeSlow**](EstimatedFILFeeSlow.md) |  | [optional] 
 **Recommended** | [**EstimatedFILFeeSlow**](EstimatedFILFeeSlow.md) |  | 
 **Fast** | Pointer to [**EstimatedFILFeeSlow**](EstimatedFILFeeSlow.md) |  | [optional] 

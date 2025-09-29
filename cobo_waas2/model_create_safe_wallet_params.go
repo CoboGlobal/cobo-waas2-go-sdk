@@ -23,7 +23,7 @@ type CreateSafeWalletParams struct {
 	Name string `json:"name"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
-	// Enable the auto-sweep feature for the wallet. This parameter only applies to MPC Wallets and Web3 Wallets.
+	// Enable the auto sweep feature for the wallet. This parameter only applies to MPC and Web3 wallets.
 	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	// The ID of the chain that the wallet operates on.
 	ChainId string `json:"chain_id"`

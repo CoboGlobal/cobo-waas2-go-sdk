@@ -26,7 +26,7 @@ type ApiGetDispositionStatusRequest struct {
 	transactionId *string
 }
 
-// The UUID of the transaction to query for disposition status.
+// The unique identifier (UUID) of the transaction to retrieve KYT screening status information for.
 func (r ApiGetDispositionStatusRequest) TransactionId(transactionId string) ApiGetDispositionStatusRequest {
 	r.transactionId = &transactionId
 	return r
@@ -37,7 +37,7 @@ func (r ApiGetDispositionStatusRequest) Execute() (*DispositionQueryResponse, *h
 }
 
 /*
-GetDispositionStatus Get disposition status
+GetDispositionStatus Query disposition status
 
 This operation retrieves the current status of a disposition request for a specific transaction.
 
@@ -158,13 +158,150 @@ func (a *ComplianceAPIService) GetDispositionStatusExecute(r ApiGetDispositionSt
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetKytScreeningStatusRequest struct {
+	ctx context.Context
+	ApiService *ComplianceAPIService
+	transactionId *string
+}
+
+// The unique identifier (UUID) of the transaction to retrieve KYT screening status information for.
+func (r ApiGetKytScreeningStatusRequest) TransactionId(transactionId string) ApiGetKytScreeningStatusRequest {
+	r.transactionId = &transactionId
+	return r
+}
+
+func (r ApiGetKytScreeningStatusRequest) Execute() (*KytScreeningsTransaction, *http.Response, error) {
+	return r.ApiService.GetKytScreeningStatusExecute(r)
+}
+
+/*
+GetKytScreeningStatus Retrieve KYT screening status
+
+This operation retrieves the current KYT (Know Your Transaction) screening status and compliance information for a specific transaction.
+
+Use this endpoint to monitor the real-time screening status, review decisions, and funds disposition status for transactions that have been processed through the KYT compliance system.
+The response includes detailed screening results, risk assessment outcomes, and current funds status.
+
+<Note>This endpoint provides comprehensive compliance monitoring capabilities to help maintain AML (Anti-Money Laundering) regulatory compliance and audit trail requirements.</Note>
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetKytScreeningStatusRequest
+*/
+func (a *ComplianceAPIService) GetKytScreeningStatus(ctx context.Context) ApiGetKytScreeningStatusRequest {
+	return ApiGetKytScreeningStatusRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return KytScreeningsTransaction
+func (a *ComplianceAPIService) GetKytScreeningStatusExecute(r ApiGetKytScreeningStatusRequest) (*KytScreeningsTransaction, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *KytScreeningsTransaction
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComplianceAPIService.GetKytScreeningStatus")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/compliance/kyt/screenings/status"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.transactionId == nil {
+		return localVarReturnValue, nil, reportError("transactionId is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "transaction_id", r.transactionId, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiIsolateFundsRequest struct {
 	ctx context.Context
 	ApiService *ComplianceAPIService
 	isolateDisposition *IsolateDisposition
 }
 
-// The request body to isolate funds.
+// The request body to create an isolate disposition
 func (r ApiIsolateFundsRequest) IsolateDisposition(isolateDisposition IsolateDisposition) ApiIsolateFundsRequest {
 	r.isolateDisposition = &isolateDisposition
 	return r
@@ -175,14 +312,15 @@ func (r ApiIsolateFundsRequest) Execute() (*DispositionResponse, *http.Response,
 }
 
 /*
-IsolateFunds Isolate funds
+IsolateFunds Create fund isolate disposition
 
-This operation creates a request to isolate funds for a specific transaction. The funds will be sent to a designated isolation address for compliance purposes.
+This operation creates an isolate disposition request for a specific transaction. 
+The isolated funds will be sent to a designated isolation address for compliance purposes.
 
 You need to specify the transaction ID to be isolated and the destination address. 
 Optional parameters include custom categories for tracking purposes.
 
-<Note>The isolation will initiate a withdrawal transaction from the compliance-managed address to the specified isolation address.</Note>
+<Note>The isolate process will initiate a withdrawal transaction from the compliance-managed address to the specified isolation address.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -299,7 +437,7 @@ type ApiRefundFundsRequest struct {
 	refundDisposition *RefundDisposition
 }
 
-// The request body to refund funds.
+// The request body to create a refund disposition
 func (r ApiRefundFundsRequest) RefundDisposition(refundDisposition RefundDisposition) ApiRefundFundsRequest {
 	r.refundDisposition = &refundDisposition
 	return r
@@ -310,14 +448,15 @@ func (r ApiRefundFundsRequest) Execute() (*DispositionResponse, *http.Response, 
 }
 
 /*
-RefundFunds Refund funds
+RefundFunds Create fund refund disposition
 
-This operation creates a request to refund funds for a specific transaction. The funds will be sent to the specified destination address.
+This operation creates a refund disposition request for a specific transaction. 
+The refunded funds will be sent to the specified destination address.
 
 You need to specify the transaction ID to be refunded and the destination address. 
 Optional parameters include custom categories for tracking purposes.
 
-<Note>The refund will initiate a withdrawal transaction from the compliance-managed address to the specified destination.</Note>
+<Note>The refund process will initiate a withdrawal transaction from the compliance-managed address to the specified destination.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -428,13 +567,283 @@ func (a *ComplianceAPIService) RefundFundsExecute(r ApiRefundFundsRequest) (*Dis
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiSubmitKytManualReviewRequest struct {
+	ctx context.Context
+	ApiService *ComplianceAPIService
+	submitKytScreeningsReviewBody *SubmitKytScreeningsReviewBody
+}
+
+// The request body to submit manual review results for KYT screening cases requiring human analysis
+func (r ApiSubmitKytManualReviewRequest) SubmitKytScreeningsReviewBody(submitKytScreeningsReviewBody SubmitKytScreeningsReviewBody) ApiSubmitKytManualReviewRequest {
+	r.submitKytScreeningsReviewBody = &submitKytScreeningsReviewBody
+	return r
+}
+
+func (r ApiSubmitKytManualReviewRequest) Execute() (*SubmitKytResponse, *http.Response, error) {
+	return r.ApiService.SubmitKytManualReviewExecute(r)
+}
+
+/*
+SubmitKytManualReview Submit KYT manual review result
+
+This operation submits manual review results for KYT (Know Your Transaction) screening cases that require human intervention and analysis.
+
+Use this endpoint when transactions flagged for manual review have been analyzed by compliance officers and require submission of review outcomes with detailed comments and justifications.
+This endpoint is specifically designed for submitting comprehensive manual review findings rather than automated screening decisions.
+
+<Note>Submitting manual review results will update the KYT screening status and initiate appropriate compliance workflow actions based on the review outcome.</Note>
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSubmitKytManualReviewRequest
+*/
+func (a *ComplianceAPIService) SubmitKytManualReview(ctx context.Context) ApiSubmitKytManualReviewRequest {
+	return ApiSubmitKytManualReviewRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return SubmitKytResponse
+func (a *ComplianceAPIService) SubmitKytManualReviewExecute(r ApiSubmitKytManualReviewRequest) (*SubmitKytResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SubmitKytResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComplianceAPIService.SubmitKytManualReview")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/compliance/kyt/screenings/manual_review"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.submitKytScreeningsReviewBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSubmitKytScreeningDecisionsRequest struct {
+	ctx context.Context
+	ApiService *ComplianceAPIService
+	submitKytScreeningsDecisionsBody *SubmitKytScreeningsDecisionsBody
+}
+
+// The request body to submit a KYT screening decision result based on external compliance review
+func (r ApiSubmitKytScreeningDecisionsRequest) SubmitKytScreeningsDecisionsBody(submitKytScreeningsDecisionsBody SubmitKytScreeningsDecisionsBody) ApiSubmitKytScreeningDecisionsRequest {
+	r.submitKytScreeningsDecisionsBody = &submitKytScreeningsDecisionsBody
+	return r
+}
+
+func (r ApiSubmitKytScreeningDecisionsRequest) Execute() (*SubmitKytResponse, *http.Response, error) {
+	return r.ApiService.SubmitKytScreeningDecisionsExecute(r)
+}
+
+/*
+SubmitKytScreeningDecisions Submit KYT screening decision
+
+This operation submits the final KYT (Know Your Transaction) screening decision for a specific transaction based on external compliance review results.
+
+Use this endpoint to provide screening decisions (Approve, ApproveWithAlert, Reject, or ManualReview) after completing the external KYT screening process.
+The submitted decision will be recorded for compliance audit purposes and regulatory reporting requirements.
+
+<Note>Submitting a screening decision will update the transaction's KYT status and may automatically trigger downstream compliance workflows or notifications based on the decision type.</Note>
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSubmitKytScreeningDecisionsRequest
+*/
+func (a *ComplianceAPIService) SubmitKytScreeningDecisions(ctx context.Context) ApiSubmitKytScreeningDecisionsRequest {
+	return ApiSubmitKytScreeningDecisionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return SubmitKytResponse
+func (a *ComplianceAPIService) SubmitKytScreeningDecisionsExecute(r ApiSubmitKytScreeningDecisionsRequest) (*SubmitKytResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SubmitKytResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComplianceAPIService.SubmitKytScreeningDecisions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/compliance/kyt/screenings/decisions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.submitKytScreeningsDecisionsBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiUnfreezeFundsRequest struct {
 	ctx context.Context
 	ApiService *ComplianceAPIService
 	unfreezeDisposition *UnfreezeDisposition
 }
 
-// The request body to unfreeze funds.
+// The request body to create an unfreeze disposition
 func (r ApiUnfreezeFundsRequest) UnfreezeDisposition(unfreezeDisposition UnfreezeDisposition) ApiUnfreezeFundsRequest {
 	r.unfreezeDisposition = &unfreezeDisposition
 	return r
@@ -447,9 +856,11 @@ func (r ApiUnfreezeFundsRequest) Execute() (*DispositionResponse, *http.Response
 /*
 UnfreezeFunds Unfreeze frozen funds
 
-This operation creates a request to unfreeze funds for a previously frozen transaction. It releases the frozen funds back to their original state.
+This operation creates an unfreeze request for a previously frozen transaction. 
+The unfreeze operation will release the frozen funds back to their original state.
 
-You only need to specify the transaction ID to be unfrozen. Once unfrozen, the funds will be available for normal operations.
+You only need to specify the transaction ID to be unfrozen. Once unfrozen, the funds 
+will be available for normal operations.
 
 <Note>The unfreeze process will release the compliance hold on the transaction, allowing it to proceed normally.</Note>
 

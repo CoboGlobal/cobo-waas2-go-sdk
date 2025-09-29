@@ -17,9 +17,9 @@ import (
 // checks if the UnfreezeDisposition type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UnfreezeDisposition{}
 
-// UnfreezeDisposition The information about a request to unfreeze funds.
+// UnfreezeDisposition The information about a fund unfreeze disposition request.
 type UnfreezeDisposition struct {
-	// The UUID of the transaction whose funds are to be unfrozen.
+	// The UUID of the transaction to be unfrozen. This identifies the frozen transaction that needs to be released.
 	TransactionId string `json:"transaction_id"`
 }
 

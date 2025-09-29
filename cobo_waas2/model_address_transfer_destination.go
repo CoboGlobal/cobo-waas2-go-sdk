@@ -26,9 +26,9 @@ type AddressTransferDestination struct {
 	ChangeAddress *string `json:"change_address,omitempty"`
 	// The position of the change output in the transaction's outputs. Possible values are: - `Last`: The change output is placed at the end of the transaction's outputs.   - `First`: The change output is placed at the beginning of the transaction's outputs. 
 	ChangeOutputType *string `json:"change_output_type,omitempty"`
-	// Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must be executed as a Cobo Loop transfer.   - `false`: The transaction request may not be executed as a Cobo Loop transfer.    Please do not set both `force_internal` and `force_external` as `true`. If both are set to `false`, the system uses Cobo Loop by default if possible; otherwise, it proceeds with an on-chain transfer. 
+	// Whether the transaction request must be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must be executed as a Cobo Loop transfer.   - `false`: The transaction request may not be executed as a Cobo Loop transfer.    Please do not set both `force_internal` and `force_external` as `true`. 
 	ForceInternal *bool `json:"force_internal,omitempty"`
-	// Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must not be executed as a Cobo Loop transfer.   - `false`: The transaction request can be executed as a Cobo Loop transfer.  Please do not set both `force_internal` and `force_external` as `true`. If both are set to `false`, the system uses Cobo Loop by default if possible; otherwise, it proceeds with an on-chain transfer. 
+	// Whether the transaction request must not be executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.   - `true`: The transaction request must not be executed as a Cobo Loop transfer.   - `false`: The transaction request can be executed as a Cobo Loop transfer.  Please do not set both `force_internal` and `force_external` as `true`. 
 	ForceExternal *bool `json:"force_external,omitempty"`
 }
 

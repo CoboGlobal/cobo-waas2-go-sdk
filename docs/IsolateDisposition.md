@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TransactionId** | **string** | The UUID of the transaction whose funds are to be isolated. This identifies the original transaction that requires fund isolation. | 
-**DestinationAddress** | **string** | The blockchain address to receive the isolated funds. | 
+**TransactionId** | **string** | The UUID of the transaction to be isolated. This identifies the original transaction that requires isolation processing. | 
+**DestinationAddress** | **string** | The blockchain address where the isolated funds will be sent. | 
 **DispositionAmount** | **string** | The amount to be isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.  | 
-**CategoryNames** | Pointer to **[]string** | Custom categories to identify and track this isolation transaction. Used for transaction classification and reporting. | [optional] 
-**Description** | Pointer to **string** | Additional notes or description for the isolation. | [optional] 
+**CategoryNames** | Pointer to **[]string** | Custom categories to identify and track this isolate transaction. Used for transaction classification and reporting. | [optional] 
+**Description** | Pointer to **string** | Additional notes or description for this isolate disposition. | [optional] 
 
 ## Methods
 

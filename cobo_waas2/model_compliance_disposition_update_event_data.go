@@ -19,15 +19,15 @@ var _ MappedNullable = &ComplianceDispositionUpdateEventData{}
 
 // ComplianceDispositionUpdateEventData struct for ComplianceDispositionUpdateEventData
 type ComplianceDispositionUpdateEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The payment address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The suspended token event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
 	DataType string `json:"data_type"`
 	// The transaction ID.
 	TransactionId string `json:"transaction_id"`
 	DispositionType DispositionType `json:"disposition_type"`
 	DispositionStatus DispositionStatus `json:"disposition_status"`
-	// The blockchain address to receive the refunded/isolated funds.
+	// The blockchain address where the refund/isolated funds will be sent.
 	DestinationAddress *string `json:"destination_address,omitempty"`
-	// The amount to be refunded/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction. 
+	// The amount to be refund/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction. 
 	DispositionAmount *string `json:"disposition_amount,omitempty"`
 	// The time when the disposition was updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp int64 `json:"updated_timestamp"`

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Address** | **string** | The address on the blocklist. | 
-**Note** | Pointer to **string** | The note for the address on the blocklist. | [optional] 
-**CreatedTimestamp** | Pointer to **int64** | The time when the address was added to the blocklist, in Unix timestamp format, measured in milliseconds. | [optional] 
+**Address** | **string** | The allowed address. | 
+**Note** | Pointer to **string** | The note for the allowed address. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The time when the blocklist address was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 
 ## Methods
 

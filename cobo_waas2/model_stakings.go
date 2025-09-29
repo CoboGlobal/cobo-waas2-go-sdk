@@ -36,7 +36,8 @@ type Stakings struct {
 	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The time when the staking position was last updated.
 	UpdatedTimestamp int64 `json:"updated_timestamp"`
-	ValidatorInfo BabylonValidator `json:"validator_info"`
+	ValidatorInfo *BabylonValidator `json:"validator_info,omitempty"`
+	Validators []BabylonValidator `json:"validators,omitempty"`
 	Extra *StakingsExtra `json:"extra,omitempty"`
 }
 
@@ -46,7 +47,7 @@ type _Stakings Stakings
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId StakingPoolId, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo BabylonValidator) *Stakings {
+func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId StakingPoolId, tokenId string, createdTimestamp int64, updatedTimestamp int64) *Stakings {
 	this := Stakings{}
 	this.Id = id
 	this.WalletId = walletId
@@ -56,7 +57,6 @@ func NewStakings(id string, walletId string, address string, amounts []AmountDet
 	this.TokenId = tokenId
 	this.CreatedTimestamp = createdTimestamp
 	this.UpdatedTimestamp = updatedTimestamp
-	this.ValidatorInfo = validatorInfo
 	return &this
 }
 
@@ -292,28 +292,68 @@ func (o *Stakings) SetUpdatedTimestamp(v int64) {
 	o.UpdatedTimestamp = v
 }
 
-// GetValidatorInfo returns the ValidatorInfo field value
+// GetValidatorInfo returns the ValidatorInfo field value if set, zero value otherwise.
 func (o *Stakings) GetValidatorInfo() BabylonValidator {
-	if o == nil {
+	if o == nil || IsNil(o.ValidatorInfo) {
 		var ret BabylonValidator
 		return ret
 	}
-
-	return o.ValidatorInfo
+	return *o.ValidatorInfo
 }
 
-// GetValidatorInfoOk returns a tuple with the ValidatorInfo field value
+// GetValidatorInfoOk returns a tuple with the ValidatorInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Stakings) GetValidatorInfoOk() (*BabylonValidator, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ValidatorInfo) {
 		return nil, false
 	}
-	return &o.ValidatorInfo, true
+	return o.ValidatorInfo, true
 }
 
-// SetValidatorInfo sets field value
+// HasValidatorInfo returns a boolean if a field has been set.
+func (o *Stakings) HasValidatorInfo() bool {
+	if o != nil && !IsNil(o.ValidatorInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidatorInfo gets a reference to the given BabylonValidator and assigns it to the ValidatorInfo field.
 func (o *Stakings) SetValidatorInfo(v BabylonValidator) {
-	o.ValidatorInfo = v
+	o.ValidatorInfo = &v
+}
+
+// GetValidators returns the Validators field value if set, zero value otherwise.
+func (o *Stakings) GetValidators() []BabylonValidator {
+	if o == nil || IsNil(o.Validators) {
+		var ret []BabylonValidator
+		return ret
+	}
+	return o.Validators
+}
+
+// GetValidatorsOk returns a tuple with the Validators field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Stakings) GetValidatorsOk() ([]BabylonValidator, bool) {
+	if o == nil || IsNil(o.Validators) {
+		return nil, false
+	}
+	return o.Validators, true
+}
+
+// HasValidators returns a boolean if a field has been set.
+func (o *Stakings) HasValidators() bool {
+	if o != nil && !IsNil(o.Validators) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidators gets a reference to the given []BabylonValidator and assigns it to the Validators field.
+func (o *Stakings) SetValidators(v []BabylonValidator) {
+	o.Validators = v
 }
 
 // GetExtra returns the Extra field value if set, zero value otherwise.
@@ -369,7 +409,12 @@ func (o Stakings) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
-	toSerialize["validator_info"] = o.ValidatorInfo
+	if !IsNil(o.ValidatorInfo) {
+		toSerialize["validator_info"] = o.ValidatorInfo
+	}
+	if !IsNil(o.Validators) {
+		toSerialize["validators"] = o.Validators
+	}
 	if !IsNil(o.Extra) {
 		toSerialize["extra"] = o.Extra
 	}
@@ -389,7 +434,6 @@ func (o *Stakings) UnmarshalJSON(data []byte) (err error) {
 		"token_id",
 		"created_timestamp",
 		"updated_timestamp",
-		"validator_info",
 	}
 
 	allProperties := make(map[string]interface{})

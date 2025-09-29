@@ -28,7 +28,7 @@ type ApiBatchCheckUtxoRequest struct {
 	batchCheckUtxoRequest *BatchCheckUtxoRequest
 }
 
-// The request body of the Batch check UTXOs operation.
+// The request body of the batch check UTXOs operation.
 func (r ApiBatchCheckUtxoRequest) BatchCheckUtxoRequest(batchCheckUtxoRequest BatchCheckUtxoRequest) ApiBatchCheckUtxoRequest {
 	r.batchCheckUtxoRequest = &batchCheckUtxoRequest
 	return r
@@ -41,8 +41,9 @@ func (r ApiBatchCheckUtxoRequest) Execute() (*BatchCheckUtxo201Response, *http.R
 /*
 BatchCheckUtxo Batch check UTXOs
 
-This operation verifies the existence and details of specified unspent transaction outputs (UTXOs) for a given wallet and token. A maximum of 100 UTXOs can be verified per request.
-<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
+The operation check a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
+
+<Note>This operation is applicable to MPC and Custodial Web3 Wallets. This interface can only withdraw a maximum of 100 utxos</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -183,8 +184,6 @@ func (r ApiCheckAddressChainsValidityRequest) Execute() ([]CheckAddressChainsVal
 CheckAddressChainsValidity Check address validity across chains
 
 This operation verifies if a given address is valid for a list of chains.
-
-<Note>You can specify up to 20 chain IDs in a single request.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -729,7 +728,7 @@ type ApiCreateTokenListingRequestRequest struct {
 	createTokenListingRequestRequest *CreateTokenListingRequestRequest
 }
 
-// Request body for submitting a token listing request. 
+// Request body for submitting a token listing request. &lt;note&gt;   wallet_type only supports &#x60;Custodial&#x60; and &#x60;MPC&#x60;.   wallet_subtype only supports &#x60;Asset&#x60;, &#x60;Web3&#x60;, and &#x60;Org-Controlled&#x60;. &lt;/note&gt; 
 func (r ApiCreateTokenListingRequestRequest) CreateTokenListingRequestRequest(createTokenListingRequestRequest CreateTokenListingRequestRequest) ApiCreateTokenListingRequestRequest {
 	r.createTokenListingRequestRequest = &createTokenListingRequestRequest
 	return r
@@ -740,11 +739,10 @@ func (r ApiCreateTokenListingRequestRequest) Execute() (*CreateTokenListingReque
 }
 
 /*
-CreateTokenListingRequest Create token listing request
+CreateTokenListingRequest Submit token listing request
 
-This operation creates a token listing request. The token to be listed must already be deployed on the specified blockchain and have a valid contract address.
-
-<note>Currently, tokens listed through this operation are only supported in wallets of type `Custodial` or `MPC`, and subtype `Asset`, `Web3`, or `Org-Controlled`.</note>
+Submit a request to add a non-listed token.
+The token must exist on the specified blockchain with a valid contract address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1283,7 +1281,6 @@ func (r ApiGetMaxTransferableValueRequest) Execute() (*MaxTransferableValue, *ht
 /*
 GetMaxTransferableValue Get maximum transferable value
 
-<Warning>This operation is planned for deprecation. We recommend using  [Estimate maximum transferable value](https://www.cobo.com/developers/v2/api-references/wallets/estimate-maximum-transferable-value) instead.</Warning>
 This operation retrieves the maximum amount that you can transfer from a wallet or a specified wallet address, along with the corresponding transaction fee.
 
 You must specify `to_address` in your query because it affects the transaction fee.
@@ -1422,7 +1419,7 @@ type ApiGetMaxTransferableValueWithFeeModelRequest struct {
 	getMaxTransferableValueWithFeeModelRequest *GetMaxTransferableValueWithFeeModelRequest
 }
 
-// The request body for retrieving the maximum transferable value from a specified wallet.
+// The request body to get max transferable value within a specified wallet.
 func (r ApiGetMaxTransferableValueWithFeeModelRequest) GetMaxTransferableValueWithFeeModelRequest(getMaxTransferableValueWithFeeModelRequest GetMaxTransferableValueWithFeeModelRequest) ApiGetMaxTransferableValueWithFeeModelRequest {
 	r.getMaxTransferableValueWithFeeModelRequest = &getMaxTransferableValueWithFeeModelRequest
 	return r
@@ -1433,13 +1430,13 @@ func (r ApiGetMaxTransferableValueWithFeeModelRequest) Execute() (*MaxTransferab
 }
 
 /*
-GetMaxTransferableValueWithFeeModel Estimate maximum transferable value
+GetMaxTransferableValueWithFeeModel Get maximum transferable value with fee model
 
-This operation estimates the maximum transferable value from a wallet or a specific wallet address, based on the specified fee settings.
+This operation retrieves the maximum amount that you can transfer from a wallet or a specified wallet address, along with the corresponding transaction fee.
 
-The `to_address` property is required because it affects the fee calculation.
+You must specify `to_address` in your query because it affects the transaction fee.
 
-<Note>This operation is applicable to Custodial Wallets (Web3 Wallets) and MPC Wallets only.</Note>
+<Note>This operation is applicable to Custodial Wallets and MPC Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1689,13 +1686,14 @@ func (r ApiGetTokenListingRequestByRequestIdRequest) Execute() (*TokenListing, *
 }
 
 /*
-GetTokenListingRequestByRequestId Get token listing request
+GetTokenListingRequestByRequestId Get token listing request details
 
-This operation retrieves detailed information about a specific token listing request, including its current status.
+Retrieve detailed information about a specific token listing request
+including its current status and any admin feedback.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param requestId The unique identifier of the token listing request.
+ @param requestId The unique identifier of the token listing request
  @return ApiGetTokenListingRequestByRequestIdRequest
 */
 func (a *WalletsAPIService) GetTokenListingRequestByRequestId(ctx context.Context, requestId string) ApiGetTokenListingRequestByRequestIdRequest {
@@ -1951,13 +1949,13 @@ func (r ApiListAddressBalancesByTokenRequest) Limit(limit int32) ApiListAddressB
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListAddressBalancesByTokenRequest) Before(before string) ApiListAddressBalancesByTokenRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListAddressBalancesByTokenRequest) After(after string) ApiListAddressBalancesByTokenRequest {
 	r.after = &after
 	return r
@@ -2131,13 +2129,13 @@ func (r ApiListAddressesRequest) Limit(limit int32) ApiListAddressesRequest {
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListAddressesRequest) Before(before string) ApiListAddressesRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListAddressesRequest) After(after string) ApiListAddressesRequest {
 	r.after = &after
 	return r
@@ -2151,14 +2149,6 @@ func (r ApiListAddressesRequest) Execute() (*ListAddresses200Response, *http.Res
 ListAddresses List wallet addresses
 
 This operation retrieves a list of addresses within a specified wallet.
-<Note>
-For Web3 Wallets, Asset Wallets, and MPC Wallets, addresses created on one EVM chain automatically work on all other supported EVM chains. 
-
-Currently, query results for EVM chain addresses differ between interfaces:
-
-- API: Query results are limited by chain_id, so only addresses from that specific chain are returned.
-- Cobo Portal: Displays addresses from all supported EVM chains, so the number of addresses may be larger than the API results.
-</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2316,13 +2306,13 @@ func (r ApiListEnabledChainsRequest) Limit(limit int32) ApiListEnabledChainsRequ
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListEnabledChainsRequest) Before(before string) ApiListEnabledChainsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListEnabledChainsRequest) After(after string) ApiListEnabledChainsRequest {
 	r.after = &after
 	return r
@@ -2506,13 +2496,13 @@ func (r ApiListEnabledTokensRequest) Limit(limit int32) ApiListEnabledTokensRequ
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListEnabledTokensRequest) Before(before string) ApiListEnabledTokensRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListEnabledTokensRequest) After(after string) ApiListEnabledTokensRequest {
 	r.after = &after
 	return r
@@ -2527,7 +2517,7 @@ ListEnabledTokens List enabled tokens
 
 This operation retrieves all the tokens that can be used by your organization. 
 
-You can filter the result by wallet type, subtype, chain IDs, and token IDs. If you do not specify a wallet type, this operation returns a combination of tokens that can be used by your organization for each wallet type.
+You can filter the result by wallet type, subtype, and chain IDs. If you do not specify a wallet type, this operation returns a combination of tokens that can be used by your organization for each wallet type.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2695,13 +2685,13 @@ func (r ApiListSupportedChainsRequest) Limit(limit int32) ApiListSupportedChains
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListSupportedChainsRequest) Before(before string) ApiListSupportedChainsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListSupportedChainsRequest) After(after string) ApiListSupportedChainsRequest {
 	r.after = &after
 	return r
@@ -2890,13 +2880,13 @@ func (r ApiListSupportedTokensRequest) Limit(limit int32) ApiListSupportedTokens
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListSupportedTokensRequest) Before(before string) ApiListSupportedTokensRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListSupportedTokensRequest) After(after string) ApiListSupportedTokensRequest {
 	r.after = &after
 	return r
@@ -3069,13 +3059,13 @@ func (r ApiListTokenBalancesForAddressRequest) Limit(limit int32) ApiListTokenBa
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListTokenBalancesForAddressRequest) Before(before string) ApiListTokenBalancesForAddressRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListTokenBalancesForAddressRequest) After(after string) ApiListTokenBalancesForAddressRequest {
 	r.after = &after
 	return r
@@ -3242,13 +3232,13 @@ func (r ApiListTokenBalancesForWalletRequest) Limit(limit int32) ApiListTokenBal
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListTokenBalancesForWalletRequest) Before(before string) ApiListTokenBalancesForWalletRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListTokenBalancesForWalletRequest) After(after string) ApiListTokenBalancesForWalletRequest {
 	r.after = &after
 	return r
@@ -3405,19 +3395,19 @@ func (r ApiListTokenListingRequestsRequest) Limit(limit int32) ApiListTokenListi
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListTokenListingRequestsRequest) Before(before string) ApiListTokenListingRequestsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListTokenListingRequestsRequest) After(after string) ApiListTokenListingRequestsRequest {
 	r.after = &after
 	return r
 }
 
-// The current status of the token listing request.
+// Filter by request status
 func (r ApiListTokenListingRequestsRequest) Status(status TokenListingRequestStatus) ApiListTokenListingRequestsRequest {
 	r.status = &status
 	return r
@@ -3428,9 +3418,10 @@ func (r ApiListTokenListingRequestsRequest) Execute() (*ListTokenListingRequests
 }
 
 /*
-ListTokenListingRequests List token listing requests
+ListTokenListingRequests Get all token listing requests
 
-This operation lists all token listing requests in your organization. You can filter the results by request status.
+Retrieve a list of all token listing requests.
+Results can be filtered and paginated.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3589,13 +3580,13 @@ func (r ApiListUtxosRequest) Limit(limit int32) ApiListUtxosRequest {
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListUtxosRequest) Before(before string) ApiListUtxosRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListUtxosRequest) After(after string) ApiListUtxosRequest {
 	r.after = &after
 	return r
@@ -3610,7 +3601,7 @@ ListUtxos List UTXOs
 
 The operation retrieves a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
 
-<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
+<Note>This operation is applicable to MPC and Custodial Web3 Wallets.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3768,7 +3759,7 @@ func (r ApiListWalletsRequest) WalletSubtype(walletSubtype WalletSubtype) ApiLis
 	return r
 }
 
-// (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
+// The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
 func (r ApiListWalletsRequest) ProjectId(projectId string) ApiListWalletsRequest {
 	r.projectId = &projectId
 	return r
@@ -3786,13 +3777,13 @@ func (r ApiListWalletsRequest) Limit(limit int32) ApiListWalletsRequest {
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListWalletsRequest) Before(before string) ApiListWalletsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListWalletsRequest) After(after string) ApiListWalletsRequest {
 	r.after = &after
 	return r

@@ -23,24 +23,24 @@ type SettlementInfo struct {
 	MerchantId *string `json:"merchant_id,omitempty"`
 	// The ID of the cryptocurrency.
 	TokenId *string `json:"token_id,omitempty"`
-	// This field is no longer in use and can be ignored.
+	// The amount available for settlement or refund, in the specified cryptocurrency.
 	AvailableAmount string `json:"available_amount"`
-	// This field is no longer in use and can be ignored.
+	// The amount available for settlement or refund, in the specified fiat currency.
 	AvailableCurrencyBalance *string `json:"available_currency_balance,omitempty"`
-	// This field is no longer in use and can be ignored.
+	// The amount unavailable for settlement or refund, in the specified cryptocurrency.
 	PendingAmount *string `json:"pending_amount,omitempty"`
-	// This field is no longer in use and can be ignored.
+	// The amount unavailable for settlement or refund, in the specified fiat currency.
 	PendingCurrencyBalance *string `json:"pending_currency_balance,omitempty"`
 	// The amount already settled, in the specified cryptocurrency.
 	SettledAmount *string `json:"settled_amount,omitempty"`
-	// The balance available for settlement or refund, in the specified cryptocurrency.
+	// The balance available for settlement or refund, in the specified fiat currency.
 	AvailableBalance *string `json:"available_balance,omitempty"`
-	//  The total unsettled balance in the specified cryptocurrency, including: - Available balance that can be settled immediately - Amounts below the sweep threshold that require forced sweep before settlement 
+	// The balance total for settlement or refund, in the specified fiat currency.
 	TotalBalance *string `json:"total_balance,omitempty"`
 	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
-	// The creation time of the settlement, represented as a UNIX timestamp in seconds.
+	// The created time of the settlement, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The last update time of the settlement, represented as a UNIX timestamp in seconds.
+	// The updated time of the settlement, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 }
 

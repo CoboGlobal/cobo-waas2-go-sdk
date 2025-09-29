@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TokenListingRequestSource The source of the token listing request. - `API`: The request was created via the WaaS 2.0 API. - `Admin`: The request was created on Cobo Portal. 
+// TokenListingRequestSource Source of the token listing request
 type TokenListingRequestSource string
 
 // List of TokenListingRequestSource

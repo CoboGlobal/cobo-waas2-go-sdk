@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// DispositionType The type of a disposition operation.
+// DispositionType The type of disposition operation.
 type DispositionType string
 
 // List of DispositionType

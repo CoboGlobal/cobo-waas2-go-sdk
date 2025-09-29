@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **TransactionId** | **string** | The transaction ID. | 
 **DispositionType** | [**DispositionType**](DispositionType.md) |  | 
 **DispositionStatus** | [**DispositionStatus**](DispositionStatus.md) |  | 
-**DestinationAddress** | Pointer to **string** | The blockchain address to receive the refunded/isolated funds. | [optional] 
-**DispositionAmount** | Pointer to **string** | The amount to be refunded/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.  | [optional] 
+**DestinationAddress** | Pointer to **string** | The blockchain address where the refund/isolated funds will be sent. | [optional] 
+**DispositionAmount** | Pointer to **string** | The amount to be refund/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.  | [optional] 
 **UpdatedTimestamp** | **int64** | The time when the disposition was updated, in Unix timestamp format, measured in milliseconds. | 
 
 ## Methods

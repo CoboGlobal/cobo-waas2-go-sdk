@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RefreshToken** | **string** | The Refresh Token of the current Access Token. | 
+**RefreshToken** | **string** | The Refresh Token of the current Org Access Token. | 
 
 ## Methods
 

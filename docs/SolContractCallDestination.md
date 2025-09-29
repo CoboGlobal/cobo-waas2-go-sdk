@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**ContractCallDestinationType**](ContractCallDestinationType.md) |  | 
 **Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
+**AddressLookupTableAccounts** | Pointer to [**[]SolContractCallAddressLookupTableAccount**](SolContractCallAddressLookupTableAccount.md) |  | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetInstructions sets Instructions field to given value.
 
+
+### GetAddressLookupTableAccounts
+
+`func (o *SolContractCallDestination) GetAddressLookupTableAccounts() []SolContractCallAddressLookupTableAccount`
+
+GetAddressLookupTableAccounts returns the AddressLookupTableAccounts field if non-nil, zero value otherwise.
+
+### GetAddressLookupTableAccountsOk
+
+`func (o *SolContractCallDestination) GetAddressLookupTableAccountsOk() (*[]SolContractCallAddressLookupTableAccount, bool)`
+
+GetAddressLookupTableAccountsOk returns a tuple with the AddressLookupTableAccounts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddressLookupTableAccounts
+
+`func (o *SolContractCallDestination) SetAddressLookupTableAccounts(v []SolContractCallAddressLookupTableAccount)`
+
+SetAddressLookupTableAccounts sets AddressLookupTableAccounts field to given value.
+
+### HasAddressLookupTableAccounts
+
+`func (o *SolContractCallDestination) HasAddressLookupTableAccounts() bool`
+
+HasAddressLookupTableAccounts returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

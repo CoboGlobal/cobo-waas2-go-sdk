@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ChainIds** | **[]string** | A list of chain IDs. | 
 **Address** | **string** | The wallet address. | 
-**Memo** | Pointer to **string** | Optional memo or tag required by some chains. | [optional] 
-**Label** | Pointer to **string** | A user-defined label for the address. | [optional] 
+**Memo** | Pointer to **string** | The memo. | [optional] 
+**Label** | Pointer to **string** | The address label. | [optional] 
 **Email** | Pointer to **string** | The email of the address owner. | [optional] 
 
 ## Methods

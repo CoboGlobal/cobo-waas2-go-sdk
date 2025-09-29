@@ -17,12 +17,12 @@ import (
 // checks if the AppWorkflowField type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AppWorkflowField{}
 
-// AppWorkflowField The information of a workflow field.
+// AppWorkflowField The information of an app workflow field.
 type AppWorkflowField struct {
-	// The workflow field name.
+	// The app workflow field name.
 	Field string `json:"field"`
 	ValueType PolicyFieldValueType `json:"value_type"`
-	// The workflow field value.
+	// The app workflow field value.
 	Value string `json:"value"`
 }
 

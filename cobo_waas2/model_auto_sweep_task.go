@@ -17,18 +17,18 @@ import (
 // checks if the AutoSweepTask type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AutoSweepTask{}
 
-// AutoSweepTask Auto-sweep task information.
+// AutoSweepTask The auto sweep task information.
 type AutoSweepTask struct {
-	// Auto-sweep task ID.
+	// The auto sweep task ID.
 	TaskId string `json:"task_id"`
-	// Wallet ID.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// Token ID of the swept token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+	// The token ID of the swept token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
 	Status AutoSweepTaskStatus `json:"status"`
-	// IDs of the transactions triggered by the task.
+	// The IDs of the corresponding transactions of the auto sweep task.
 	TransactionIds []string `json:"transaction_ids,omitempty"`
-	// Reasons why the task creation failed.
+	// Failed reason of create auto sweep transaction.
 	FailedReasons []string `json:"failed_reasons,omitempty"`
 	// The time when the task was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp int64 `json:"created_timestamp"`

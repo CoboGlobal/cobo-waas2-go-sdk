@@ -34,7 +34,7 @@ func (r ApiCancelRefundByIdRequest) Execute() (*Refund, *http.Response, error) {
 /*
 CancelRefundById Cancel refund order
 
-This operation cancels a specified refund order. You can only cancel refund orders that have not been processed yet.
+This operation cancels a specified refund order.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -146,13 +146,145 @@ func (a *PaymentAPIService) CancelRefundByIdExecute(r ApiCancelRefundByIdRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateBankAccountRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	createBankAccountRequest *CreateBankAccountRequest
+}
+
+// The request body to register a bank account.
+func (r ApiCreateBankAccountRequest) CreateBankAccountRequest(createBankAccountRequest CreateBankAccountRequest) ApiCreateBankAccountRequest {
+	r.createBankAccountRequest = &createBankAccountRequest
+	return r
+}
+
+func (r ApiCreateBankAccountRequest) Execute() (*BankAccount, *http.Response, error) {
+	return r.ApiService.CreateBankAccountExecute(r)
+}
+
+/*
+CreateBankAccount Create bank account
+
+This operation registers a bank account for payment settlement.
+
+Upon successful registration, the bank account details can be retrieved using the assigned bank account ID.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateBankAccountRequest
+*/
+func (a *PaymentAPIService) CreateBankAccount(ctx context.Context) ApiCreateBankAccountRequest {
+	return ApiCreateBankAccountRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return BankAccount
+func (a *PaymentAPIService) CreateBankAccountExecute(r ApiCreateBankAccountRequest) (*BankAccount, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *BankAccount
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.CreateBankAccount")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/bank_accounts"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createBankAccountRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateCryptoAddressRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
 	createCryptoAddressRequest *CreateCryptoAddressRequest
 }
 
-// The request body to register a crypto address.
+// The request body to create a crypto address.
 func (r ApiCreateCryptoAddressRequest) CreateCryptoAddressRequest(createCryptoAddressRequest CreateCryptoAddressRequest) ApiCreateCryptoAddressRequest {
 	r.createCryptoAddressRequest = &createCryptoAddressRequest
 	return r
@@ -165,9 +297,9 @@ func (r ApiCreateCryptoAddressRequest) Execute() (*CryptoAddress, *http.Response
 /*
 CreateCryptoAddress Create crypto address
 
-This operation registers a crypto address for crypto withdrawal.
-
-The registered address can later be referenced by its ID when creating settlement requests.
+Create a new cryptocurrency address for receiving payouts or transfers. 
+The address must match the specified `token_id`'s blockchain. 
+Optionally, a label can be provided to help categorize the address internally.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -284,7 +416,7 @@ type ApiCreateForcedSweepRequestRequest struct {
 	forcedSweepRequest *ForcedSweepRequest
 }
 
-// The request body for forced sweep.
+// The request body to force sweep.
 func (r ApiCreateForcedSweepRequestRequest) ForcedSweepRequest(forcedSweepRequest ForcedSweepRequest) ApiCreateForcedSweepRequestRequest {
 	r.forcedSweepRequest = &forcedSweepRequest
 	return r
@@ -295,9 +427,9 @@ func (r ApiCreateForcedSweepRequestRequest) Execute() (*ForcedSweep, *http.Respo
 }
 
 /*
-CreateForcedSweepRequest Create forced sweep
+CreateForcedSweepRequest Create force sweep request
 
-This operation creates a forced sweep to transfer funds from addresses within a specified wallet to its designated sweep-to address.
+This operation creates a force sweep request to settle or refund available balances. 
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -430,8 +562,6 @@ CreateMerchant Create merchant
 This operation creates a merchant and links it to a specified wallet. Payments to the merchant will be deposited into the linked wallet.
 
 Upon successful creation, a merchant ID is generated and returned along with the merchant's information.
-
-If you are a merchant (directly serving the payer), you only need to create one merchant and do not need to configure the developer fee rate. The developer fee rate only applies to platforms such as payment service providers (PSPs) that charge fees to their downstream merchants.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -823,7 +953,9 @@ func (r ApiCreateSettlementRequestRequest) Execute() (*Settlement, *http.Respons
 /*
 CreateSettlementRequest Create settlement request
 
-This operation creates a settlement request to withdraw available balances.
+This operation creates a settlement request to withdraw available balances. 
+
+You can include multiple merchants and cryptocurrencies in a single settlement request.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -934,6 +1066,266 @@ func (a *PaymentAPIService) CreateSettlementRequestExecute(r ApiCreateSettlement
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateSubscriptionActionRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	paymentCreateSubscriptionAction *PaymentCreateSubscriptionAction
+}
+
+// The request body to create subscription action.
+func (r ApiCreateSubscriptionActionRequest) PaymentCreateSubscriptionAction(paymentCreateSubscriptionAction PaymentCreateSubscriptionAction) ApiCreateSubscriptionActionRequest {
+	r.paymentCreateSubscriptionAction = &paymentCreateSubscriptionAction
+	return r
+}
+
+func (r ApiCreateSubscriptionActionRequest) Execute() (*PaymentSubscriptionAction, *http.Response, error) {
+	return r.ApiService.CreateSubscriptionActionExecute(r)
+}
+
+/*
+CreateSubscriptionAction Create a subscription action
+
+This operation creates a subscription action.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateSubscriptionActionRequest
+*/
+func (a *PaymentAPIService) CreateSubscriptionAction(ctx context.Context) ApiCreateSubscriptionActionRequest {
+	return ApiCreateSubscriptionActionRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return PaymentSubscriptionAction
+func (a *PaymentAPIService) CreateSubscriptionActionExecute(r ApiCreateSubscriptionActionRequest) (*PaymentSubscriptionAction, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PaymentSubscriptionAction
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.CreateSubscriptionAction")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/subscription_actions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.paymentCreateSubscriptionAction
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateSubscriptionPlanRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	paymentCreateSubscriptionPlan *PaymentCreateSubscriptionPlan
+}
+
+// The request body to create subscription plan.
+func (r ApiCreateSubscriptionPlanRequest) PaymentCreateSubscriptionPlan(paymentCreateSubscriptionPlan PaymentCreateSubscriptionPlan) ApiCreateSubscriptionPlanRequest {
+	r.paymentCreateSubscriptionPlan = &paymentCreateSubscriptionPlan
+	return r
+}
+
+func (r ApiCreateSubscriptionPlanRequest) Execute() (*PaymentSubscriptionPlan, *http.Response, error) {
+	return r.ApiService.CreateSubscriptionPlanExecute(r)
+}
+
+/*
+CreateSubscriptionPlan Create subscription plan
+
+This operation creates a subscription plan.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateSubscriptionPlanRequest
+*/
+func (a *PaymentAPIService) CreateSubscriptionPlan(ctx context.Context) ApiCreateSubscriptionPlanRequest {
+	return ApiCreateSubscriptionPlanRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return PaymentSubscriptionPlan
+func (a *PaymentAPIService) CreateSubscriptionPlanExecute(r ApiCreateSubscriptionPlanRequest) (*PaymentSubscriptionPlan, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PaymentSubscriptionPlan
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.CreateSubscriptionPlan")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/subscription_plans"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.paymentCreateSubscriptionPlan
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiDeleteCryptoAddressRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
@@ -947,7 +1339,7 @@ func (r ApiDeleteCryptoAddressRequest) Execute() (*DeleteCryptoAddress201Respons
 /*
 DeleteCryptoAddress Delete crypto address
 
-This operation unregisters a crypto address from being used for crypto withdrawals.
+This operation deletes a crypto address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1088,7 +1480,7 @@ This operation retrieves the current exchange rate between a specified currency 
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param tokenId The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:   - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+ @param tokenId The token ID, which identifies the cryptocurrency. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
  @param currency The fiat currency. Currently, only `USD` is supported.
  @return ApiGetExchangeRateRequest
 */
@@ -1202,15 +1594,9 @@ func (a *PaymentAPIService) GetExchangeRateExecute(r ApiGetExchangeRateRequest) 
 type ApiGetPayerBalanceByAddressRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
-	merchantId *string
 	payerId *string
 	tokenId *string
-}
-
-// The merchant ID.
-func (r ApiGetPayerBalanceByAddressRequest) MerchantId(merchantId string) ApiGetPayerBalanceByAddressRequest {
-	r.merchantId = &merchantId
-	return r
+	merchantId *string
 }
 
 // Unique payer identifier on the Cobo side, auto-generated by the system.
@@ -1219,9 +1605,15 @@ func (r ApiGetPayerBalanceByAddressRequest) PayerId(payerId string) ApiGetPayerB
 	return r
 }
 
-// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
+// The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
 func (r ApiGetPayerBalanceByAddressRequest) TokenId(tokenId string) ApiGetPayerBalanceByAddressRequest {
 	r.tokenId = &tokenId
+	return r
+}
+
+// The merchant ID.
+func (r ApiGetPayerBalanceByAddressRequest) MerchantId(merchantId string) ApiGetPayerBalanceByAddressRequest {
+	r.merchantId = &merchantId
 	return r
 }
 
@@ -1230,9 +1622,9 @@ func (r ApiGetPayerBalanceByAddressRequest) Execute() ([]ReceivedAmountPerAddres
 }
 
 /*
-GetPayerBalanceByAddress Get payer balance
+GetPayerBalanceByAddress Get payer balance by address
 
-This operation retrieves the total amount received for a specific payer. The information is grouped by token and receiving address.
+This operation retrieves aggregated balance details for a specific token and payer, with amounts grouped by address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1265,9 +1657,6 @@ func (a *PaymentAPIService) GetPayerBalanceByAddressExecute(r ApiGetPayerBalance
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.merchantId == nil {
-		return localVarReturnValue, nil, reportError("merchantId is required and must be specified")
-	}
 	if r.payerId == nil {
 		return localVarReturnValue, nil, reportError("payerId is required and must be specified")
 	}
@@ -1275,7 +1664,9 @@ func (a *PaymentAPIService) GetPayerBalanceByAddressExecute(r ApiGetPayerBalance
 		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
 	parameterAddToHeaderOrQuery(localVarQueryParams, "payer_id", r.payerId, "")
 	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
 	// to determine the Content-Type header
@@ -1484,7 +1875,7 @@ type ApiGetPspBalanceRequest struct {
 	tokenId *string
 }
 
-// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
+// The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
 func (r ApiGetPspBalanceRequest) TokenId(tokenId string) ApiGetPspBalanceRequest {
 	r.tokenId = &tokenId
 	return r
@@ -1495,9 +1886,9 @@ func (r ApiGetPspBalanceRequest) Execute() (*PspBalance, *http.Response, error) 
 }
 
 /*
-GetPspBalance Get developer balance
+GetPspBalance Get psp balance
 
-This operation retrieves the balance information for you as the developer. The balance information is grouped by token.
+This operation retrieves the information of psp balance.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1752,13 +2143,13 @@ func (r ApiGetRefundsRequest) Limit(limit int32) ApiGetRefundsRequest {
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiGetRefundsRequest) Before(before string) ApiGetRefundsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiGetRefundsRequest) After(after string) ApiGetRefundsRequest {
 	r.after = &after
 	return r
@@ -1776,7 +2167,7 @@ func (r ApiGetRefundsRequest) RequestId(requestId string) ApiGetRefundsRequest {
 	return r
 }
 
-// A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:  - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)  - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)  - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details) 
+// A list of  statuses of order, refund or settle request.
 func (r ApiGetRefundsRequest) Statuses(statuses string) ApiGetRefundsRequest {
 	r.statuses = &statuses
 	return r
@@ -2064,6 +2455,7 @@ func (r ApiGetSettlementInfoByIdsRequest) Currency(currency string) ApiGetSettle
 	return r
 }
 
+// AcquiringType defines the acquisition logic used in the payment flow: - &#x60;Order&#x60;: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis. - &#x60;TopUp&#x60;: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models. 
 func (r ApiGetSettlementInfoByIdsRequest) AcquiringType(acquiringType AcquiringType) ApiGetSettlementInfoByIdsRequest {
 	r.acquiringType = &acquiringType
 	return r
@@ -2076,7 +2468,7 @@ func (r ApiGetSettlementInfoByIdsRequest) Execute() (*GetSettlementInfoByIds200R
 /*
 GetSettlementInfoByIds Get withdrawable balances
 
-This operation retrieves the balances of specified merchants or the developer.
+This operation retrieves the current withdrawable balances of specified merchants or the developer.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2197,29 +2589,290 @@ func (a *PaymentAPIService) GetSettlementInfoByIdsExecute(r ApiGetSettlementInfo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetTopUpAddressRequest struct {
+type ApiGetSubscriptionByIdRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
-	merchantId *string
-	tokenId *string
-	customPayerId *string
+	subscriptionId string
 }
 
-// The merchant ID.
-func (r ApiGetTopUpAddressRequest) MerchantId(merchantId string) ApiGetTopUpAddressRequest {
-	r.merchantId = &merchantId
+func (r ApiGetSubscriptionByIdRequest) Execute() (*PaymentSubscriptionDetail, *http.Response, error) {
+	return r.ApiService.GetSubscriptionByIdExecute(r)
+}
+
+/*
+GetSubscriptionById Get subscription by id
+
+This operation retrieves the information of subscription detail. You can filter the result by subscription_id.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param subscriptionId A unique identifier subscription.
+ @return ApiGetSubscriptionByIdRequest
+*/
+func (a *PaymentAPIService) GetSubscriptionById(ctx context.Context, subscriptionId string) ApiGetSubscriptionByIdRequest {
+	return ApiGetSubscriptionByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return PaymentSubscriptionDetail
+func (a *PaymentAPIService) GetSubscriptionByIdExecute(r ApiGetSubscriptionByIdRequest) (*PaymentSubscriptionDetail, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PaymentSubscriptionDetail
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.GetSubscriptionById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/subscriptions/{subscription_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterValueToString(r.subscriptionId, "subscriptionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetSubscriptionPlanByIdRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	subscriptionId string
+	tokenId *string
+}
+
+// The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
+func (r ApiGetSubscriptionPlanByIdRequest) TokenId(tokenId string) ApiGetSubscriptionPlanByIdRequest {
+	r.tokenId = &tokenId
 	return r
 }
 
-// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
+func (r ApiGetSubscriptionPlanByIdRequest) Execute() (*PaymentSubscriptionPlanDetail, *http.Response, error) {
+	return r.ApiService.GetSubscriptionPlanByIdExecute(r)
+}
+
+/*
+GetSubscriptionPlanById Get subscription plan by id
+
+This operation retrieves the information of subscription plan detail. You can filter the result by subscription_id.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param subscriptionId A unique identifier subscription.
+ @return ApiGetSubscriptionPlanByIdRequest
+*/
+func (a *PaymentAPIService) GetSubscriptionPlanById(ctx context.Context, subscriptionId string) ApiGetSubscriptionPlanByIdRequest {
+	return ApiGetSubscriptionPlanByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		subscriptionId: subscriptionId,
+	}
+}
+
+// Execute executes the request
+//  @return PaymentSubscriptionPlanDetail
+func (a *PaymentAPIService) GetSubscriptionPlanByIdExecute(r ApiGetSubscriptionPlanByIdRequest) (*PaymentSubscriptionPlanDetail, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PaymentSubscriptionPlanDetail
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.GetSubscriptionPlanById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/subscription_plans/{subscription_plan_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"subscription_id"+"}", url.PathEscape(parameterValueToString(r.subscriptionId, "subscriptionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.tokenId == nil {
+		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetTopUpAddressRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	tokenId *string
+	customPayerId *string
+	merchantId *string
+}
+
+// The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
 func (r ApiGetTopUpAddressRequest) TokenId(tokenId string) ApiGetTopUpAddressRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// A unique identifier assigned by the developer to track and identify individual payers in their system.
+// Unique customer identifier on the merchant side, used to allocate a dedicated top-up address 
 func (r ApiGetTopUpAddressRequest) CustomPayerId(customPayerId string) ApiGetTopUpAddressRequest {
 	r.customPayerId = &customPayerId
+	return r
+}
+
+// The merchant ID.
+func (r ApiGetTopUpAddressRequest) MerchantId(merchantId string) ApiGetTopUpAddressRequest {
+	r.merchantId = &merchantId
 	return r
 }
 
@@ -2230,7 +2883,7 @@ func (r ApiGetTopUpAddressRequest) Execute() (*TopUpAddress, *http.Response, err
 /*
 GetTopUpAddress Get top-up address
 
-This operation retrieves the information of the dedicated top-up address assigned to a specific payer under a merchant on a specified chain.
+Get a top-up address for certain payer under merchant.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2263,9 +2916,6 @@ func (a *PaymentAPIService) GetTopUpAddressExecute(r ApiGetTopUpAddressRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.merchantId == nil {
-		return localVarReturnValue, nil, reportError("merchantId is required and must be specified")
-	}
 	if r.tokenId == nil {
 		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
 	}
@@ -2273,7 +2923,9 @@ func (a *PaymentAPIService) GetTopUpAddressExecute(r ApiGetTopUpAddressRequest) 
 		return localVarReturnValue, nil, reportError("customPayerId is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
 	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
 	parameterAddToHeaderOrQuery(localVarQueryParams, "custom_payer_id", r.customPayerId, "")
 	// to determine the Content-Type header
@@ -2363,7 +3015,7 @@ func (r ApiListBankAccountsRequest) Execute() ([]BankAccount, *http.Response, er
 /*
 ListBankAccounts List all bank accounts
 
-This operation retrieves the information of all bank accounts you have registered for payment settlement. Contact our support team at [help@cobo.com](mailto:help@cobo.com) to register a new bank account.
+This operation retrieves the information of all bank accounts registered.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2478,7 +3130,7 @@ type ApiListCryptoAddressesRequest struct {
 	tokenId *string
 }
 
-// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
+// The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
 func (r ApiListCryptoAddressesRequest) TokenId(tokenId string) ApiListCryptoAddressesRequest {
 	r.tokenId = &tokenId
 	return r
@@ -2491,9 +3143,7 @@ func (r ApiListCryptoAddressesRequest) Execute() ([]CryptoAddress, *http.Respons
 /*
 ListCryptoAddresses List crypto addresses
 
-This operation retrieves a list of crypto addresses registered for crypto withdrawal. 
-
-Contact our support team at [help@cobo.com](mailto:help@cobo.com) to register a new crypto address.
+Retrieve a list of cryptocurrency addresses previously created for a given `token_id`.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2620,13 +3270,13 @@ func (r ApiListForcedSweepRequestsRequest) Limit(limit int32) ApiListForcedSweep
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListForcedSweepRequestsRequest) Before(before string) ApiListForcedSweepRequestsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListForcedSweepRequestsRequest) After(after string) ApiListForcedSweepRequestsRequest {
 	r.after = &after
 	return r
@@ -2643,9 +3293,9 @@ func (r ApiListForcedSweepRequestsRequest) Execute() (*ListForcedSweepRequests20
 }
 
 /*
-ListForcedSweepRequests List forced sweeps
+ListForcedSweepRequests List force sweep requests
 
-This operation retrieves the information of all forced sweeps.
+This operation retrieves the information of force_sweep requests.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2777,13 +3427,13 @@ type ApiListMerchantBalancesRequest struct {
 	merchantIds *string
 }
 
-// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
+// The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
 func (r ApiListMerchantBalancesRequest) TokenId(tokenId string) ApiListMerchantBalancesRequest {
 	r.tokenId = &tokenId
 	return r
 }
 
-// The payment acquisition type. - &#x60;Order&#x60;: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions. - &#x60;TopUp&#x60;: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models. 
+// AcquiringType defines the acquisition logic used in the payment flow: - &#x60;Order&#x60;: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis. - &#x60;TopUp&#x60;: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models. 
 func (r ApiListMerchantBalancesRequest) AcquiringType(acquiringType AcquiringType) ApiListMerchantBalancesRequest {
 	r.acquiringType = &acquiringType
 	return r
@@ -2802,7 +3452,7 @@ func (r ApiListMerchantBalancesRequest) Execute() (*ListMerchantBalances200Respo
 /*
 ListMerchantBalances List merchant balances
 
-This operation retrieves the balance information for specified merchants. The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
+This operation retrieves the information of merchant balances.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2929,7 +3579,7 @@ type ApiListMerchantsRequest struct {
 	before *string
 	after *string
 	keyword *string
-	walletId *string
+	walletSetup *WalletSetup
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -2938,13 +3588,13 @@ func (r ApiListMerchantsRequest) Limit(limit int32) ApiListMerchantsRequest {
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListMerchantsRequest) Before(before string) ApiListMerchantsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListMerchantsRequest) After(after string) ApiListMerchantsRequest {
 	r.after = &after
 	return r
@@ -2956,9 +3606,9 @@ func (r ApiListMerchantsRequest) Keyword(keyword string) ApiListMerchantsRequest
 	return r
 }
 
-// The wallet ID.
-func (r ApiListMerchantsRequest) WalletId(walletId string) ApiListMerchantsRequest {
-	r.walletId = &walletId
+// WalletSetup defines the type of funds used in the merchant account, either \&quot;Shared\&quot; or \&quot;Separate\&quot; is allowed when creating a merchant: - &#x60;Default&#x60;: Wallet of psp owned default merchant. - &#x60;Shared&#x60;: Shared wallet of non-psp owned merchants. - &#x60;Separate&#x60;: Separate wallet of non-psp owned merchants. 
+func (r ApiListMerchantsRequest) WalletSetup(walletSetup WalletSetup) ApiListMerchantsRequest {
+	r.walletSetup = &walletSetup
 	return r
 }
 
@@ -3020,8 +3670,8 @@ func (a *PaymentAPIService) ListMerchantsExecute(r ApiListMerchantsRequest) (*Li
 	if r.keyword != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "keyword", r.keyword, "")
 	}
-	if r.walletId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_id", r.walletId, "")
+	if r.walletSetup != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_setup", r.walletSetup, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3115,13 +3765,13 @@ func (r ApiListPaymentOrdersRequest) Limit(limit int32) ApiListPaymentOrdersRequ
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListPaymentOrdersRequest) Before(before string) ApiListPaymentOrdersRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListPaymentOrdersRequest) After(after string) ApiListPaymentOrdersRequest {
 	r.after = &after
 	return r
@@ -3133,13 +3783,13 @@ func (r ApiListPaymentOrdersRequest) MerchantId(merchantId string) ApiListPaymen
 	return r
 }
 
-// A unique reference code assigned by the developer to identify this order in their system.
+// The PSP order ID.
 func (r ApiListPaymentOrdersRequest) PspOrderId(pspOrderId string) ApiListPaymentOrdersRequest {
 	r.pspOrderId = &pspOrderId
 	return r
 }
 
-// A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:  - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)  - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)  - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details) 
+// A list of  statuses of order, refund or settle request.
 func (r ApiListPaymentOrdersRequest) Statuses(statuses string) ApiListPaymentOrdersRequest {
 	r.statuses = &statuses
 	return r
@@ -3410,7 +4060,7 @@ type ApiListPaymentWalletBalancesRequest struct {
 	walletIds *string
 }
 
-// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
+// The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
 func (r ApiListPaymentWalletBalancesRequest) TokenId(tokenId string) ApiListPaymentWalletBalancesRequest {
 	r.tokenId = &tokenId
 	return r
@@ -3429,7 +4079,7 @@ func (r ApiListPaymentWalletBalancesRequest) Execute() (*ListPaymentWalletBalanc
 /*
 ListPaymentWalletBalances List payment wallet balances
 
-This operation retrieves the balance information for specified payment wallets. The balance information is grouped by token. If you do not specify the `wallet_ids` parameter, the balance information for all payment wallets will be returned.
+This operation retrieves the information of payment wallet balances.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3561,13 +4211,13 @@ func (r ApiListSettlementDetailsRequest) Limit(limit int32) ApiListSettlementDet
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListSettlementDetailsRequest) Before(before string) ApiListSettlementDetailsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListSettlementDetailsRequest) After(after string) ApiListSettlementDetailsRequest {
 	r.after = &after
 	return r
@@ -3579,7 +4229,7 @@ func (r ApiListSettlementDetailsRequest) MerchantId(merchantId string) ApiListSe
 	return r
 }
 
-// A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:  - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)  - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)  - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details) 
+// A list of  statuses of order, refund or settle request.
 func (r ApiListSettlementDetailsRequest) Statuses(statuses string) ApiListSettlementDetailsRequest {
 	r.statuses = &statuses
 	return r
@@ -3734,13 +4384,13 @@ func (r ApiListSettlementRequestsRequest) Limit(limit int32) ApiListSettlementRe
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListSettlementRequestsRequest) Before(before string) ApiListSettlementRequestsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListSettlementRequestsRequest) After(after string) ApiListSettlementRequestsRequest {
 	r.after = &after
 	return r
@@ -3883,20 +4533,739 @@ func (a *PaymentAPIService) ListSettlementRequestsExecute(r ApiListSettlementReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListTopUpPayersRequest struct {
+type ApiListSubscriptionActionsRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
-	merchantId *string
 	limit *int32
 	before *string
 	after *string
-	payerId *string
+	planId *string
+	merchantId *string
+	subscriptionId *string
+	requestId *string
+	actionType *PaymentSubscriptionActionType
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListSubscriptionActionsRequest) Limit(limit int32) ApiListSubscriptionActionsRequest {
+	r.limit = &limit
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
+func (r ApiListSubscriptionActionsRequest) Before(before string) ApiListSubscriptionActionsRequest {
+	r.before = &before
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+func (r ApiListSubscriptionActionsRequest) After(after string) ApiListSubscriptionActionsRequest {
+	r.after = &after
+	return r
+}
+
+// A unique identifier plan.
+func (r ApiListSubscriptionActionsRequest) PlanId(planId string) ApiListSubscriptionActionsRequest {
+	r.planId = &planId
+	return r
 }
 
 // The merchant ID.
-func (r ApiListTopUpPayersRequest) MerchantId(merchantId string) ApiListTopUpPayersRequest {
+func (r ApiListSubscriptionActionsRequest) MerchantId(merchantId string) ApiListSubscriptionActionsRequest {
 	r.merchantId = &merchantId
 	return r
+}
+
+// A unique identifier subscription.
+func (r ApiListSubscriptionActionsRequest) SubscriptionId(subscriptionId string) ApiListSubscriptionActionsRequest {
+	r.subscriptionId = &subscriptionId
+	return r
+}
+
+// The request ID.
+func (r ApiListSubscriptionActionsRequest) RequestId(requestId string) ApiListSubscriptionActionsRequest {
+	r.requestId = &requestId
+	return r
+}
+
+func (r ApiListSubscriptionActionsRequest) ActionType(actionType PaymentSubscriptionActionType) ApiListSubscriptionActionsRequest {
+	r.actionType = &actionType
+	return r
+}
+
+func (r ApiListSubscriptionActionsRequest) Execute() (*ListSubscriptionActions200Response, *http.Response, error) {
+	return r.ApiService.ListSubscriptionActionsExecute(r)
+}
+
+/*
+ListSubscriptionActions List subscription actions
+
+This operation retrieves the information of subscription actions. You can filter the result by plan id.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListSubscriptionActionsRequest
+*/
+func (a *PaymentAPIService) ListSubscriptionActions(ctx context.Context) ApiListSubscriptionActionsRequest {
+	return ApiListSubscriptionActionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListSubscriptionActions200Response
+func (a *PaymentAPIService) ListSubscriptionActionsExecute(r ApiListSubscriptionActionsRequest) (*ListSubscriptionActions200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListSubscriptionActions200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.ListSubscriptionActions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/subscription_actions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.planId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "plan_id", r.planId, "")
+	}
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
+	if r.subscriptionId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "subscription_id", r.subscriptionId, "")
+	}
+	if r.requestId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
+	}
+	if r.actionType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "action_type", r.actionType, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListSubscriptionPlansRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	limit *int32
+	before *string
+	after *string
+	developerPlanId *string
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListSubscriptionPlansRequest) Limit(limit int32) ApiListSubscriptionPlansRequest {
+	r.limit = &limit
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
+func (r ApiListSubscriptionPlansRequest) Before(before string) ApiListSubscriptionPlansRequest {
+	r.before = &before
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+func (r ApiListSubscriptionPlansRequest) After(after string) ApiListSubscriptionPlansRequest {
+	r.after = &after
+	return r
+}
+
+// A unique identifier assigned by the developer to track and identify individual subscription plan in their system.
+func (r ApiListSubscriptionPlansRequest) DeveloperPlanId(developerPlanId string) ApiListSubscriptionPlansRequest {
+	r.developerPlanId = &developerPlanId
+	return r
+}
+
+func (r ApiListSubscriptionPlansRequest) Execute() (*ListSubscriptionPlans200Response, *http.Response, error) {
+	return r.ApiService.ListSubscriptionPlansExecute(r)
+}
+
+/*
+ListSubscriptionPlans List subscription plans
+
+This operation retrieves the information of subscription plans. You can filter the result by developer plan id.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListSubscriptionPlansRequest
+*/
+func (a *PaymentAPIService) ListSubscriptionPlans(ctx context.Context) ApiListSubscriptionPlansRequest {
+	return ApiListSubscriptionPlansRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListSubscriptionPlans200Response
+func (a *PaymentAPIService) ListSubscriptionPlansExecute(r ApiListSubscriptionPlansRequest) (*ListSubscriptionPlans200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListSubscriptionPlans200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.ListSubscriptionPlans")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/subscription_plans"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.developerPlanId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "developer_plan_id", r.developerPlanId, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListSubscriptionsRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	limit *int32
+	before *string
+	after *string
+	planId *string
+	merchantId *string
+	subscriptionActionId *string
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListSubscriptionsRequest) Limit(limit int32) ApiListSubscriptionsRequest {
+	r.limit = &limit
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
+func (r ApiListSubscriptionsRequest) Before(before string) ApiListSubscriptionsRequest {
+	r.before = &before
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+func (r ApiListSubscriptionsRequest) After(after string) ApiListSubscriptionsRequest {
+	r.after = &after
+	return r
+}
+
+// A unique identifier plan.
+func (r ApiListSubscriptionsRequest) PlanId(planId string) ApiListSubscriptionsRequest {
+	r.planId = &planId
+	return r
+}
+
+// The merchant ID.
+func (r ApiListSubscriptionsRequest) MerchantId(merchantId string) ApiListSubscriptionsRequest {
+	r.merchantId = &merchantId
+	return r
+}
+
+// A unique identifier subscription action.
+func (r ApiListSubscriptionsRequest) SubscriptionActionId(subscriptionActionId string) ApiListSubscriptionsRequest {
+	r.subscriptionActionId = &subscriptionActionId
+	return r
+}
+
+func (r ApiListSubscriptionsRequest) Execute() (*ListSubscriptions200Response, *http.Response, error) {
+	return r.ApiService.ListSubscriptionsExecute(r)
+}
+
+/*
+ListSubscriptions List subscriptions
+
+This operation retrieves the information of subscriptions. You can filter the result by plan id.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListSubscriptionsRequest
+*/
+func (a *PaymentAPIService) ListSubscriptions(ctx context.Context) ApiListSubscriptionsRequest {
+	return ApiListSubscriptionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListSubscriptions200Response
+func (a *PaymentAPIService) ListSubscriptionsExecute(r ApiListSubscriptionsRequest) (*ListSubscriptions200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListSubscriptions200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.ListSubscriptions")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/subscriptions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.planId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "plan_id", r.planId, "")
+	}
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
+	if r.subscriptionActionId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "subscription_action_id", r.subscriptionActionId, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListTopUpPayerAccountsRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	limit *int32
+	before *string
+	after *string
+	merchantId *string
+	payerId *string
+}
+
+// The maximum number of objects to return. For most operations, the value range is [1, 50].
+func (r ApiListTopUpPayerAccountsRequest) Limit(limit int32) ApiListTopUpPayerAccountsRequest {
+	r.limit = &limit
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
+func (r ApiListTopUpPayerAccountsRequest) Before(before string) ApiListTopUpPayerAccountsRequest {
+	r.before = &before
+	return r
+}
+
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
+func (r ApiListTopUpPayerAccountsRequest) After(after string) ApiListTopUpPayerAccountsRequest {
+	r.after = &after
+	return r
+}
+
+// The merchant ID.
+func (r ApiListTopUpPayerAccountsRequest) MerchantId(merchantId string) ApiListTopUpPayerAccountsRequest {
+	r.merchantId = &merchantId
+	return r
+}
+
+// Unique payer identifier on the Cobo side, auto-generated by the system.
+func (r ApiListTopUpPayerAccountsRequest) PayerId(payerId string) ApiListTopUpPayerAccountsRequest {
+	r.payerId = &payerId
+	return r
+}
+
+func (r ApiListTopUpPayerAccountsRequest) Execute() (*ListTopUpPayerAccounts200Response, *http.Response, error) {
+	return r.ApiService.ListTopUpPayerAccountsExecute(r)
+}
+
+/*
+ListTopUpPayerAccounts List top-up payer accounts
+
+This operation retrieves the accounts of all payers. You can filter the result by merchant ID and payer_id.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListTopUpPayerAccountsRequest
+*/
+func (a *PaymentAPIService) ListTopUpPayerAccounts(ctx context.Context) ApiListTopUpPayerAccountsRequest {
+	return ApiListTopUpPayerAccountsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListTopUpPayerAccounts200Response
+func (a *PaymentAPIService) ListTopUpPayerAccountsExecute(r ApiListTopUpPayerAccountsRequest) (*ListTopUpPayerAccounts200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListTopUpPayerAccounts200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.ListTopUpPayerAccounts")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/topup/payer_accounts"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	} else {
+		var defaultValue int32 = 10
+		r.limit = &defaultValue
+	}
+	if r.before != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "before", r.before, "")
+	}
+	if r.after != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
+	}
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
+	if r.payerId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "payer_id", r.payerId, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListTopUpPayersRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	limit *int32
+	before *string
+	after *string
+	merchantId *string
+	payerId *string
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -3905,19 +5274,25 @@ func (r ApiListTopUpPayersRequest) Limit(limit int32) ApiListTopUpPayersRequest 
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListTopUpPayersRequest) Before(before string) ApiListTopUpPayersRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListTopUpPayersRequest) After(after string) ApiListTopUpPayersRequest {
 	r.after = &after
 	return r
 }
 
-// A unique identifier assigned by Cobo to track and identify individual payers.
+// The merchant ID.
+func (r ApiListTopUpPayersRequest) MerchantId(merchantId string) ApiListTopUpPayersRequest {
+	r.merchantId = &merchantId
+	return r
+}
+
+// Unique payer identifier on the Cobo side, auto-generated by the system.
 func (r ApiListTopUpPayersRequest) PayerId(payerId string) ApiListTopUpPayersRequest {
 	r.payerId = &payerId
 	return r
@@ -3928,11 +5303,9 @@ func (r ApiListTopUpPayersRequest) Execute() (*ListTopUpPayers200Response, *http
 }
 
 /*
-ListTopUpPayers List payers
+ListTopUpPayers List top-up payers
 
-This operation retrieves the information of all payers under a merchant. 
-
-You can filter the result by the payer ID.
+This operation retrieves the information of all payers. You can filter the result by merchant ID and payer_id.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3965,9 +5338,6 @@ func (a *PaymentAPIService) ListTopUpPayersExecute(r ApiListTopUpPayersRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.merchantId == nil {
-		return localVarReturnValue, nil, reportError("merchantId is required and must be specified")
-	}
 
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -3981,7 +5351,9 @@ func (a *PaymentAPIService) ListTopUpPayersExecute(r ApiListTopUpPayersRequest) 
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "")
 	}
-	parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	if r.merchantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
+	}
 	if r.payerId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "payer_id", r.payerId, "")
 	}
@@ -4002,6 +5374,270 @@ func (a *PaymentAPIService) ListTopUpPayersExecute(r ApiListTopUpPayersRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPaymentEstimateFeeRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	paymentEstimateFeeRequest *PaymentEstimateFeeRequest
+}
+
+// The request body to create a estimated fee request.
+func (r ApiPaymentEstimateFeeRequest) PaymentEstimateFeeRequest(paymentEstimateFeeRequest PaymentEstimateFeeRequest) ApiPaymentEstimateFeeRequest {
+	r.paymentEstimateFeeRequest = &paymentEstimateFeeRequest
+	return r
+}
+
+func (r ApiPaymentEstimateFeeRequest) Execute() (*PaymentEstimateFee201Response, *http.Response, error) {
+	return r.ApiService.PaymentEstimateFeeExecute(r)
+}
+
+/*
+PaymentEstimateFee Payment estimate fee
+
+This operation to payment estimate fee.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiPaymentEstimateFeeRequest
+*/
+func (a *PaymentAPIService) PaymentEstimateFee(ctx context.Context) ApiPaymentEstimateFeeRequest {
+	return ApiPaymentEstimateFeeRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return PaymentEstimateFee201Response
+func (a *PaymentAPIService) PaymentEstimateFeeExecute(r ApiPaymentEstimateFeeRequest) (*PaymentEstimateFee201Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PaymentEstimateFee201Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.PaymentEstimateFee")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/estimate_fee"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.paymentEstimateFeeRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdateBankAccountByIdRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	bankAccountId string
+	updateBankAccountByIdRequest *UpdateBankAccountByIdRequest
+}
+
+// The request body for updating an existing bank account.
+func (r ApiUpdateBankAccountByIdRequest) UpdateBankAccountByIdRequest(updateBankAccountByIdRequest UpdateBankAccountByIdRequest) ApiUpdateBankAccountByIdRequest {
+	r.updateBankAccountByIdRequest = &updateBankAccountByIdRequest
+	return r
+}
+
+func (r ApiUpdateBankAccountByIdRequest) Execute() (*BankAccount, *http.Response, error) {
+	return r.ApiService.UpdateBankAccountByIdExecute(r)
+}
+
+/*
+UpdateBankAccountById Update bank account
+
+This operation updates the information of an existing bank account.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param bankAccountId The bank account ID.
+ @return ApiUpdateBankAccountByIdRequest
+*/
+func (a *PaymentAPIService) UpdateBankAccountById(ctx context.Context, bankAccountId string) ApiUpdateBankAccountByIdRequest {
+	return ApiUpdateBankAccountByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		bankAccountId: bankAccountId,
+	}
+}
+
+// Execute executes the request
+//  @return BankAccount
+func (a *PaymentAPIService) UpdateBankAccountByIdExecute(r ApiUpdateBankAccountByIdRequest) (*BankAccount, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *BankAccount
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.UpdateBankAccountById")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/bank_accounts/{bank_account_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"bank_account_id"+"}", url.PathEscape(parameterValueToString(r.bankAccountId, "bankAccountId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updateBankAccountByIdRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -4346,9 +5982,9 @@ func (r ApiUpdateRefundByIdRequest) Execute() (*Refund, *http.Response, error) {
 }
 
 /*
-UpdateRefundById Update refund order
+UpdateRefundById Update refund order information
 
-This operation updates a specified refund order by modifying its recipient address. You can only update the recipient address for refund orders that have not been processed yet.
+This operation updates a specified refund order.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -4468,7 +6104,7 @@ type ApiUpdateTopUpAddressRequest struct {
 	updateTopUpAddress *UpdateTopUpAddress
 }
 
-// The request body to update top-up address.
+// The request body to update top up address.
 func (r ApiUpdateTopUpAddressRequest) UpdateTopUpAddress(updateTopUpAddress UpdateTopUpAddress) ApiUpdateTopUpAddressRequest {
 	r.updateTopUpAddress = &updateTopUpAddress
 	return r
@@ -4481,7 +6117,7 @@ func (r ApiUpdateTopUpAddressRequest) Execute() (*TopUpAddress, *http.Response, 
 /*
 UpdateTopUpAddress Update top-up address
 
-This operation updates the dedicated top-up address assigned to a specific payer under a merchant on a specified chain.
+Update the top-up address for a payer under a specific merchant and token.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

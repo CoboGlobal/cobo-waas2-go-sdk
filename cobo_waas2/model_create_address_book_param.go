@@ -17,15 +17,15 @@ import (
 // checks if the CreateAddressBookParam type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateAddressBookParam{}
 
-// CreateAddressBookParam The request body to add an address to your Address Book.
+// CreateAddressBookParam The request body to create address book.
 type CreateAddressBookParam struct {
 	// A list of chain IDs.
 	ChainIds []string `json:"chain_ids"`
 	// The wallet address.
 	Address string `json:"address"`
-	// Optional memo or tag required by some chains.
+	// The memo.
 	Memo *string `json:"memo,omitempty"`
-	// A user-defined label for the address.
+	// The address label.
 	Label *string `json:"label,omitempty"`
 	// The email of the address owner.
 	Email *string `json:"email,omitempty"`

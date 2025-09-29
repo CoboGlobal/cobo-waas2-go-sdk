@@ -177,7 +177,7 @@ A transaction can be cancelled if its status is either of the following:
 - `Submitted`
 - `PendingScreening`
 - `PendingAuthorization`
-- `PendingSignature` (Only when the sub-status is `Queue`, `InsufficientBalance`, `InsufficientBalanceFundLocked`, `PendingSignerApproval`, `PendingSystemProcessing`, or `Built`)
+- `PendingSignature` (excluding the `SystemProcessingOngoing` and `SignatureVerificationSuccess` sub-statuses)
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -468,7 +468,7 @@ This operation creates a transaction to interact with a smart contract on the bl
 
 You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
-<Note>Currently, this operation only applies to the transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
+<Note>Currently, this operation only applies to the transactions from MPC Wallets or Smart Contract Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
 
 <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
 
@@ -606,11 +606,7 @@ In some scenarios, you want to sign a message for identity authentication or tra
 
 You can get the signature result by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information). 
 
-<Note>
-This operation only supports message signing transactions from the following wallets and chains:
-- MPC Wallets: BTC, EVM-compatible chains, Cosmos, and Solana.  
-- Web3 Wallets: EVM-compatible chains.
-</Note>
+<Note>This operation only applies to transactions from MPC Wallets.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -883,7 +879,7 @@ This operation drops a specified transaction. Dropping a transaction leverages R
 
 A transaction can be sped up only if its status is `Broadcasting`.
 
-<Note>This operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
+<Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
 You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
 
@@ -1414,11 +1410,9 @@ func (r ApiListApprovalDetailsRequest) Execute() ([]ApprovalDetail, *http.Respon
 }
 
 /*
-ListApprovalDetails List approval details
+ListApprovalDetails List transaction approval details
 
-This operation retrieves comprehensive approval information for transactions, including approval status, reviewer details, signatures, and approval history. You can filter the results by transaction IDs, Cobo IDs, or request IDs. 
-
-This operation is commonly used to monitor approval progress and identify delays in multi-signature workflows.
+This operation retrieves detailed approval information for a specified transaction.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1684,13 +1678,13 @@ type ApiListTransactionTemplatesRequest struct {
 	templateVersion *string
 }
 
-// Key of the transaction template used to create an approval message. 
+// The key of the transaction template to be used for creating a transaction approval message. 
 func (r ApiListTransactionTemplatesRequest) TemplateKey(templateKey string) ApiListTransactionTemplatesRequest {
 	r.templateKey = &templateKey
 	return r
 }
 
-// Version of the template.
+// The version of the template used for the transaction approval.
 func (r ApiListTransactionTemplatesRequest) TemplateVersion(templateVersion string) ApiListTransactionTemplatesRequest {
 	r.templateVersion = &templateVersion
 	return r
@@ -1701,11 +1695,10 @@ func (r ApiListTransactionTemplatesRequest) Execute() ([]ApprovalTemplate, *http
 }
 
 /*
-ListTransactionTemplates List transaction templates
+ListTransactionTemplates list transaction templates
 
-This operation retrieves approval templates based on the specified template key and template version.
-
-These templates define the content used to generate approval messages displayed to users, including messages for transaction approvals and other approval workflows.
+This operation retrieves transaction templates based on the specified transaction type and template version.
+The response includes a list of templates that can be used for creating transactions approval message.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1924,19 +1917,19 @@ func (r ApiListTransactionsRequest) WalletSubtype(walletSubtype WalletSubtype) A
 	return r
 }
 
-// (This parameter is only applicable to User-Controlled Wallets.) The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
+// The project ID, which you can retrieve by calling [List all projects](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-projects). 
 func (r ApiListTransactionsRequest) ProjectId(projectId string) ApiListTransactionsRequest {
 	r.projectId = &projectId
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If not provided, the default value is 90 days before the current time. This default value is subject to change. 
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.
 func (r ApiListTransactionsRequest) MinCreatedTimestamp(minCreatedTimestamp int64) ApiListTransactionsRequest {
 	r.minCreatedTimestamp = &minCreatedTimestamp
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If not provided, the default value is the current time. This default value is subject to change. 
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.
 func (r ApiListTransactionsRequest) MaxCreatedTimestamp(maxCreatedTimestamp int64) ApiListTransactionsRequest {
 	r.maxCreatedTimestamp = &maxCreatedTimestamp
 	return r
@@ -1948,13 +1941,13 @@ func (r ApiListTransactionsRequest) Limit(limit int32) ApiListTransactionsReques
 	return r
 }
 
-// A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned. 
 func (r ApiListTransactionsRequest) Before(before string) ApiListTransactionsRequest {
 	r.before = &before
 	return r
 }
 
-// A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response. 
+// This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. 
 func (r ApiListTransactionsRequest) After(after string) ApiListTransactionsRequest {
 	r.after = &after
 	return r
@@ -2172,7 +2165,7 @@ ResendTransactionById Resend transaction
 
 This operation resends a specified transaction. Resending a transaction means retrying a previously failed transaction. For more details about resending a transaction, see [Resend a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#resend-a-transaction).
 
-Resending a transaction is a high‑risk operation. Ensure that the original transaction has not been broadcast to the blockchain, has already expired, and will never be confirmed. Otherwise, the same transaction may be confirmed on‑chain twice.
+A transaction can be resent if its status is `failed`.
 
 <Note>This operation only applies to transactions from MPC Wallets in the SOL token.</Note>
 
@@ -2443,7 +2436,7 @@ You can use the `address` or `included_utxos` properties in the request body to 
 
 A transaction can be sped up only if its status is `Broadcasting`.
 
-<Note>This operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
+<Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
 <Info>If you speed up a transaction from a Smart Contract Wallet, two RBF transactions will be triggered, one for the transaction from the Smart Contract Wallet, and the other for the transaction from the Delegate.</Info>
 

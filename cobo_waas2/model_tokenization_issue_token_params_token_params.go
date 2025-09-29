@@ -16,6 +16,7 @@ import (
 // TokenizationIssueTokenParamsTokenParams - struct for TokenizationIssueTokenParamsTokenParams
 type TokenizationIssueTokenParamsTokenParams struct {
 	TokenizationERC20TokenParams *TokenizationERC20TokenParams
+	TokenizationERC20WrappedTokenParams *TokenizationERC20WrappedTokenParams
 	TokenizationSOLTokenParams *TokenizationSOLTokenParams
 }
 
@@ -23,6 +24,13 @@ type TokenizationIssueTokenParamsTokenParams struct {
 func TokenizationERC20TokenParamsAsTokenizationIssueTokenParamsTokenParams(v *TokenizationERC20TokenParams) TokenizationIssueTokenParamsTokenParams {
 	return TokenizationIssueTokenParamsTokenParams{
 		TokenizationERC20TokenParams: v,
+	}
+}
+
+// TokenizationERC20WrappedTokenParamsAsTokenizationIssueTokenParamsTokenParams is a convenience function that returns TokenizationERC20WrappedTokenParams wrapped in TokenizationIssueTokenParamsTokenParams
+func TokenizationERC20WrappedTokenParamsAsTokenizationIssueTokenParamsTokenParams(v *TokenizationERC20WrappedTokenParams) TokenizationIssueTokenParamsTokenParams {
+	return TokenizationIssueTokenParamsTokenParams{
+		TokenizationERC20WrappedTokenParams: v,
 	}
 }
 
@@ -56,6 +64,18 @@ func (dst *TokenizationIssueTokenParamsTokenParams) UnmarshalJSON(data []byte) e
 		}
 	}
 
+	// check if the discriminator value is 'ERC20Wrapper'
+	if jsonDict["standard"] == "ERC20Wrapper" {
+		// try to unmarshal JSON data into TokenizationERC20WrappedTokenParams
+		err = json.Unmarshal(data, &dst.TokenizationERC20WrappedTokenParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationERC20WrappedTokenParams, return on the first match
+		} else {
+			dst.TokenizationERC20WrappedTokenParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationERC20WrappedTokenParams: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'SPLToken2022'
 	if jsonDict["standard"] == "SPLToken2022" {
 		// try to unmarshal JSON data into TokenizationSOLTokenParams
@@ -80,6 +100,18 @@ func (dst *TokenizationIssueTokenParamsTokenParams) UnmarshalJSON(data []byte) e
 		}
 	}
 
+	// check if the discriminator value is 'TokenizationERC20WrappedTokenParams'
+	if jsonDict["standard"] == "TokenizationERC20WrappedTokenParams" {
+		// try to unmarshal JSON data into TokenizationERC20WrappedTokenParams
+		err = json.Unmarshal(data, &dst.TokenizationERC20WrappedTokenParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationERC20WrappedTokenParams, return on the first match
+		} else {
+			dst.TokenizationERC20WrappedTokenParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationERC20WrappedTokenParams: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TokenizationSOLTokenParams'
 	if jsonDict["standard"] == "TokenizationSOLTokenParams" {
 		// try to unmarshal JSON data into TokenizationSOLTokenParams
@@ -101,6 +133,10 @@ func (src TokenizationIssueTokenParamsTokenParams) MarshalJSON() ([]byte, error)
 		return json.Marshal(&src.TokenizationERC20TokenParams)
 	}
 
+	if src.TokenizationERC20WrappedTokenParams != nil {
+		return json.Marshal(&src.TokenizationERC20WrappedTokenParams)
+	}
+
 	if src.TokenizationSOLTokenParams != nil {
 		return json.Marshal(&src.TokenizationSOLTokenParams)
 	}
@@ -115,6 +151,10 @@ func (obj *TokenizationIssueTokenParamsTokenParams) GetActualInstance() (interfa
 	}
 	if obj.TokenizationERC20TokenParams != nil {
 		return obj.TokenizationERC20TokenParams
+	}
+
+	if obj.TokenizationERC20WrappedTokenParams != nil {
+		return obj.TokenizationERC20WrappedTokenParams
 	}
 
 	if obj.TokenizationSOLTokenParams != nil {

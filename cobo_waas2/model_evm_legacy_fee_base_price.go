@@ -15,7 +15,7 @@ import (
 // checks if the EvmLegacyFeeBasePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmLegacyFeeBasePrice{}
 
-// EvmLegacyFeeBasePrice struct for EvmLegacyFeeBasePrice
+// EvmLegacyFeeBasePrice The transaction gas price based on the legacy fee model.
 type EvmLegacyFeeBasePrice struct {
 	// The gas price, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions per gas unit used.
 	GasPrice *string `json:"gas_price,omitempty"`

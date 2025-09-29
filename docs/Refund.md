@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | Pointer to **string** | The request ID provided by you when creating the refund request. | [optional] 
 **RefundId** | **string** | The refund order ID. | 
-**OrderId** | Pointer to **string** | The ID of the pay-in order corresponding to this refund. | [optional] 
+**OrderId** | Pointer to **string** | The order ID corresponding to this refund. | [optional] 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **TokenId** | **string** | The ID of the cryptocurrency used for refund. | 
 **ChainId** | **string** | The ID of the blockchain network on which the refund transaction occurs. | 
@@ -14,13 +14,14 @@ Name | Type | Description | Notes
 **ToAddress** | **string** | The recipient&#39;s wallet address where the refund will be sent. | 
 **Status** | [**RefundStatus**](RefundStatus.md) |  | 
 **RefundType** | Pointer to [**RefundType**](RefundType.md) |  | [optional] 
-**CreatedTimestamp** | Pointer to **int32** | The creation time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The last update time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
-**Initiator** | Pointer to **string** |  The initiator of this settlement request. Can return either an API key or the Payment Management App&#39;s ID.  - Format &#x60;api_key_&lt;API_KEY&gt;&#x60;: Indicates the settlement request was initiated via the Payment API using the API key. - Format &#x60;app_&lt;APP_ID&gt;&#x60;: Indicates the settlement request was initiated through the Payment Management App using the App ID.  | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
+**Initiator** | Pointer to **string** | The initiator of this refund order, usually the user&#39;s API key. | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process. | [optional] 
-**ChargeMerchantFee** | Pointer to **bool** | Whether to charge developer fee to the merchant for the refund.    - &#x60;true&#x60;: The fee amount (specified in &#x60;merchant_fee_amount&#x60;) will be deducted from the merchant&#39;s balance and added to the developer&#39;s balance    - &#x60;false&#x60;: The merchant is not charged any developer fee.  | [optional] 
-**MerchantFeeAmount** | Pointer to **string** | The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by &#x60;merchant_fee_token_id&#x60;. This is only applicable if &#x60;charge_merchant_fee&#x60; is set to &#x60;true&#x60;. | [optional] 
-**MerchantFeeTokenId** | Pointer to **string** | The ID of the cryptocurrency used for the developer fee. This is only applicable if &#x60;charge_merchant_fee&#x60; is set to true. | [optional] 
+**ChargeMerchantFee** | Pointer to **bool** | Whether to charge developer fee to the merchant.  - &#x60;true&#x60;: The fee amount (specified in &#x60;merchant_fee_amount&#x60;) will be deducted from the merchant&#39;s balance and added to the developer&#39;s balance - &#x60;false&#x60;: The merchant is not charged any developer fee.  | [optional] 
+**MerchantFeeAmount** | Pointer to **string** | The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by &#x60;merchant_fee_token_id&#x60;. | [optional] 
+**MerchantFeeTokenId** | Pointer to **string** | The ID of the cryptocurrency used for the developer fee. | [optional] 
+**CommissionFee** | Pointer to [**CommissionFee**](CommissionFee.md) |  | [optional] 
 
 ## Methods
 
@@ -435,6 +436,31 @@ SetMerchantFeeTokenId sets MerchantFeeTokenId field to given value.
 `func (o *Refund) HasMerchantFeeTokenId() bool`
 
 HasMerchantFeeTokenId returns a boolean if a field has been set.
+
+### GetCommissionFee
+
+`func (o *Refund) GetCommissionFee() CommissionFee`
+
+GetCommissionFee returns the CommissionFee field if non-nil, zero value otherwise.
+
+### GetCommissionFeeOk
+
+`func (o *Refund) GetCommissionFeeOk() (*CommissionFee, bool)`
+
+GetCommissionFeeOk returns a tuple with the CommissionFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCommissionFee
+
+`func (o *Refund) SetCommissionFee(v CommissionFee)`
+
+SetCommissionFee sets CommissionFee field to given value.
+
+### HasCommissionFee
+
+`func (o *Refund) HasCommissionFee() bool`
+
+HasCommissionFee returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

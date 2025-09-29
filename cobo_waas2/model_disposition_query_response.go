@@ -19,7 +19,7 @@ var _ MappedNullable = &DispositionQueryResponse{}
 
 // DispositionQueryResponse The response for a disposition query request.
 type DispositionQueryResponse struct {
-	// The UUID of the transaction that the disposition applies to.
+	// The UUID of the transaction that was disposed.
 	TransactionId string `json:"transaction_id"`
 	DispositionType DispositionType `json:"disposition_type"`
 	DispositionStatus DispositionStatus `json:"disposition_status"`
