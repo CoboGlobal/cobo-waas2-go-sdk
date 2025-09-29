@@ -19,17 +19,17 @@ var _ MappedNullable = &PspBalance{}
 
 // PspBalance struct for PspBalance
 type PspBalance struct {
-	// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`.
+	// The ID of the cryptocurrency.
 	TokenId string `json:"token_id"`
-	// The total amount of the token that has been received as developer fee.
+	// The psp developer fee amount.
 	DeveloperFeeAmount *string `json:"developer_fee_amount,omitempty"`
-	// The total amount of the token that has been settled from the developer's balance.
+	// The psp settled amount.
 	SettledAmount *string `json:"settled_amount,omitempty"`
-	// The total amount of the token that has been refunded from the developer's balance.
+	// The psp total refunded amount.
 	RefundedAmount *string `json:"refunded_amount,omitempty"`
-	// The total balance of the token for the developer.
+	// The psp total balance.
 	TotalBalance *string `json:"total_balance,omitempty"`
-	// The balance available for settlement or refund, in the specified cryptocurrency.
+	// The psp available balance.
 	AvailableBalance *string `json:"available_balance,omitempty"`
 }
 

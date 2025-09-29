@@ -24,7 +24,7 @@ type TransactionRequestEvmEip1559Fee struct {
 	// The maximum priority fee per gas unit used, in wei. The maximum priority fee represents the highest amount of miner tips that you are willing to pay for your transaction.
 	MaxPriorityFeePerGas string `json:"max_priority_fee_per_gas"`
 	FeeType FeeType `json:"fee_type"`
-	// The token used to pay the transaction fee.
+	// The token ID of the transaction fee.
 	TokenId string `json:"token_id"`
 	// The gas limit. It represents the maximum number of gas units that you are willing to pay for the execution of a transaction or Ethereum Virtual Machine (EVM) operation. The gas unit cost of each operation varies.
 	GasLimit *string `json:"gas_limit,omitempty"`

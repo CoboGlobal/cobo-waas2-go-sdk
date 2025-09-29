@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SettleRequestStatus The current status of a settlement request: - `Pending`: The settlement request has been created and is awaiting processing. - `Processing`: The settlement request is currently being processed, with at least one settlement in progress. - `Completed`: All requested settlements have been completed. - `PartiallyCompleted`: Some requested settlements have been completed successfully, while others have failed. - `Failed`: All requested settlements have failed. 
+// SettleRequestStatus The current status of the settlement request: - `Pending`: The settlement request has been created and is awaiting processing. - `Processing`: The settlement request is currently being processed, with at least one settlement in progress. - `Completed`: All requested settlements have been completed. - `PartiallyCompleted`: Some requested settlements have been completed successfully, while others have failed. - `Failed`: All requested settlements have failed. 
 type SettleRequestStatus string
 
 // List of SettleRequestStatus
@@ -23,6 +23,7 @@ const (
 	SETTLEREQUESTSTATUS_COMPLETED SettleRequestStatus = "Completed"
 	SETTLEREQUESTSTATUS_PARTIALLY_COMPLETED SettleRequestStatus = "PartiallyCompleted"
 	SETTLEREQUESTSTATUS_FAILED SettleRequestStatus = "Failed"
+	SETTLEREQUESTSTATUS_CANCELED SettleRequestStatus = "Canceled"
 )
 
 // All allowed values of SettleRequestStatus enum
@@ -32,6 +33,7 @@ var AllowedSettleRequestStatusEnumValues = []SettleRequestStatus{
 	"Completed",
 	"PartiallyCompleted",
 	"Failed",
+	"Canceled",
 }
 
 func (v *SettleRequestStatus) UnmarshalJSON(src []byte) error {

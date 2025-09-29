@@ -19,7 +19,7 @@ var _ MappedNullable = &DeleteAddressBookById201Response{}
 
 // DeleteAddressBookById201Response struct for DeleteAddressBookById201Response
 type DeleteAddressBookById201Response struct {
-	// Whether the request to delete the Address Book entry (record) has been successfully submitted. - `true`: The request has been successfully submitted. - `false`: The request has not been submitted. 
+	// Whether the request to delete the address book has been successfully submitted. - `true`: The request to delete the address book has been successfully submitted. - `false`: The request to delete the address book has not been submitted. 
 	Submitted bool `json:"submitted"`
 }
 

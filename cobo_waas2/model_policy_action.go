@@ -17,7 +17,7 @@ import (
 // checks if the PolicyAction type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &PolicyAction{}
 
-// PolicyAction The action to be executed when the policy conditions are satisfied.
+// PolicyAction The information of an app workflow policy action, content is valuable when action_type is Quorum.
 type PolicyAction struct {
 	ActionType PolicyActionType `json:"action_type"`
 	Content *PolicyActionContent `json:"content,omitempty"`

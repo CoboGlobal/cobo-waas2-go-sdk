@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Address** | **string** | The receiving address. | 
-**TotalReceivedAmount** | **string** | The total amount of the token that has been received at this address. | 
+**Address** | **string** | Receiving address. | 
+**TotalReceivedAmount** | **string** | Total tokens received at this address, as a decimal string. | 
 
 ## Methods
 

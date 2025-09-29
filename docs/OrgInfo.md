@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | **string** | The organization ID. | 
-**BizOrgId** | Pointer to **int32** | An internal business ID assigned by Cobo. Used mainly by Cobo&#39;s customer support to locate the organization. | [optional] 
+**BizOrgId** | Pointer to **int32** | The organization biz ID. | [optional] 
 **Name** | Pointer to **string** | The organization name. | [optional] 
 **CreatedTimestamp** | Pointer to **int64** | The organization&#39;s creation time in Unix timestamp format, measured in milliseconds. | [optional] 
 

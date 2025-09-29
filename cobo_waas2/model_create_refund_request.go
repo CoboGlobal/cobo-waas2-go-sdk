@@ -23,20 +23,20 @@ type CreateRefundRequest struct {
 	RequestId string `json:"request_id"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The amount to refund in cryptocurrency. The amount must be a positive number and can have up to two decimal places
+	// The amount to refund in cryptocurrency.
 	PayableAmount string `json:"payable_amount"`
 	// The address where the refunded cryptocurrency will be sent.
 	ToAddress *string `json:"to_address,omitempty"`
-	// The ID of the cryptocurrency used for refund. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency used for refund. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
 	RefundType RefundType `json:"refund_type"`
 	// The ID of the original pay-in order associated with this refund. Use this to track refunds against specific payments.
 	OrderId *string `json:"order_id,omitempty"`
-	// Whether to charge developer fee to the merchant.     - `true`: The fee amount (specified in `merchant_fee_amount`) will be deducted from the merchant's balance and added to the developer's balance    - `false`: The merchant is not charged any developer fee  When enabled, ensure both `merchant_fee_amount` and `merchant_fee_token_id` are properly specified. 
+	// Indicates whether the merchant should bear the transaction fee for the refund.  If true, the fee will be deducted from merchant's account balance. 
 	ChargeMerchantFee *bool `json:"charge_merchant_fee,omitempty"`
-	// The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by `merchant_fee_token_id`. Required when `charge_merchant_fee` is `true`. Must be:   - A positive integer with up to two decimal places.   - Less than the refund amount 
+	// The amount of the transaction fee that the merchant will bear for the refund.  This is only applicable if `charge_merchant_fee` is set to true. 
 	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
-	// The ID of the cryptocurrency used for the developer fee. It must be the same as `token_id`. Supported values:   - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency used for the transaction fee.  This is only applicable if `charge_merchant_fee` is set to true. 
 	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
 }
 

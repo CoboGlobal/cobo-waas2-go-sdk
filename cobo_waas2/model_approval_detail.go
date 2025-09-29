@@ -15,13 +15,13 @@ import (
 // checks if the ApprovalDetail type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApprovalDetail{}
 
-// ApprovalDetail Details of the transaction approval.
+// ApprovalDetail The approval detail data for transaction.
 type ApprovalDetail struct {
-	// Transaction ID.
+	// The transaction ID.
 	TransactionId *string `json:"transaction_id,omitempty"`
-	// Cobo ID used to track a transaction.
+	// The Cobo ID, which can be used to track a transaction.
 	CoboId *string `json:"cobo_id,omitempty"`
-	// Request ID used to track a transaction request.
+	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
 	RequestId *string `json:"request_id,omitempty"`
 	AddressOwner *RoleDetail `json:"address_owner,omitempty"`
 	Spender *RoleDetail `json:"spender,omitempty"`

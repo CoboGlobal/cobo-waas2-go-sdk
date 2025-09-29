@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**TransactionDestinationType**](TransactionDestinationType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**TradingAccountType** | Pointer to **string** | The trading account type. This field is only applicable when &#x60;destination_type&#x60; is &#x60;ExchangeWallet&#x60;. | [optional] 
+**TradingAccountType** | Pointer to **string** | The trading account type. Only available for &#x60;ExchangeWallet&#x60;. | [optional] 
 **ExchangeId** | Pointer to [**ExchangeId**](ExchangeId.md) |  | [optional] 
 **Amount** | **string** | The transfer amount. For example, if you trade 1.5 BTC, then the value is &#x60;1.5&#x60;.  | 
 

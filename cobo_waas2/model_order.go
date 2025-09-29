@@ -23,9 +23,9 @@ type Order struct {
 	OrderId string `json:"order_id"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	//  The ID of the cryptocurrency used for payment. Supported tokens:  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency used for payment.
 	TokenId string `json:"token_id"`
-	//  The ID of the blockchain network where the payment transaction should be made. Supported chains:  - USDC: `ETH`, `ARBITRUM`, `SOL`, `BASE`, `MATIC`, `BSC` - USDT: `TRON`, `ETH`, `ARBITRUM`, `SOL`, `BASE`, `MATIC`, `BSC` 
+	// The ID of the blockchain network where the payment transaction should be made.
 	ChainId string `json:"chain_id"`
 	// The cryptocurrency amount to be paid for this order.
 	PayableAmount string `json:"payable_amount"`
@@ -48,11 +48,11 @@ type Order struct {
 	Status OrderStatus `json:"status"`
 	// The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT).
 	ReceivedTokenAmount string `json:"received_token_amount"`
-	// The creation time of the order, represented as a UNIX timestamp in seconds.
+	// The created time of the order, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The last update time of the order, represented as a UNIX timestamp in seconds.
+	// The updated time of the order, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process.
+	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
 }

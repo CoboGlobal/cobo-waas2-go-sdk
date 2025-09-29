@@ -21,7 +21,7 @@ var _ MappedNullable = &OrgInfo{}
 type OrgInfo struct {
 	// The organization ID.
 	OrgId string `json:"org_id"`
-	// An internal business ID assigned by Cobo. Used mainly by Cobo's customer support to locate the organization.
+	// The organization biz ID.
 	BizOrgId *int32 `json:"biz_org_id,omitempty"`
 	// The organization name.
 	Name *string `json:"name,omitempty"`

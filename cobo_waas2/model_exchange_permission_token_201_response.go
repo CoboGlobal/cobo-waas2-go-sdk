@@ -17,13 +17,13 @@ var _ MappedNullable = &ExchangePermissionToken201Response{}
 
 // ExchangePermissionToken201Response struct for ExchangePermissionToken201Response
 type ExchangePermissionToken201Response struct {
-	// The Access Token.
+	// The new Permission Access Token.
 	AccessToken *string `json:"access_token,omitempty"`
-	// The token type. This is always `Bearer`.
+	// The type of the tokens, which is Bearer.
 	TokenType *string `json:"token_type,omitempty"`
-	// The time in seconds until the Access Token expires. This is always `3600`, indicating the token expires 1 hour after issuance.
+	// The time in seconds in which the new Permission Access Token expires.
 	ExpiresIn *int32 `json:"expires_in,omitempty"`
-	// The Refresh Token. Use it to obtain a new Access Token when the current one expires. The Refresh Token is valid for 7 days.
+	// The Refresh Token, used to obtain another Org Access Token when the new Permission Access Token expires. The expiration time for Refresh Tokens is currently set to 7 days and is subject to change.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
 

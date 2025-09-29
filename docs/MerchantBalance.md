@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MerchantId** | **string** | The merchant ID. | 
-**TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. | 
+**TokenId** | **string** | The ID of the cryptocurrency. | 
 **AcquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
-**TotalReceivedAmount** | Pointer to **string** | The total amount of the token that has been received by the merchant. | [optional] 
-**SettledAmount** | Pointer to **string** | The total amount of the token that has been settled from the merchant&#39;s balance. | [optional] 
-**RefundedAmount** | Pointer to **string** | The total amount of the token that has been refunded from the merchant&#39;s balance. | [optional] 
-**TotalBalance** | Pointer to **string** | The total balance of the token for the merchant. | [optional] 
-**AvailableBalance** | Pointer to **string** | The balance available for settlement or refund, in the specified cryptocurrency. | [optional] 
+**TotalReceivedAmount** | Pointer to **string** | The merchant total received amount. | [optional] 
+**SettledAmount** | Pointer to **string** | The merchant settled amount. | [optional] 
+**RefundedAmount** | Pointer to **string** | The merchant total refunded amount. | [optional] 
+**TotalBalance** | Pointer to **string** | The merchant total balance. | [optional] 
+**AvailableBalance** | Pointer to **string** | The merchant available balance. | [optional] 
 
 ## Methods
 

@@ -21,11 +21,11 @@ var _ MappedNullable = &ChainInfo{}
 type ChainInfo struct {
 	// The chain ID, which is the unique identifier of a blockchain.
 	ChainId string `json:"chain_id"`
-	// The chain symbol for display purposes, which is the abbreviated name of a chain.
+	// The chain symbol, which is the abbreviated name of a chain.
 	Symbol *string `json:"symbol,omitempty"`
 	// The URL of the chain icon.
 	IconUrl *string `json:"icon_url,omitempty"`
-	// A functional identifier used to group blockchains with similar execution logic. For example, `ETH` for all EVM-compatible chains (Ethereum, BNB Smart Chain, Polygon).
+	// The chain identifier, which is the identifier of a blockchain for similar function, such as ETH for ETH, BSC_BNB eth.
 	ChainIdentifier *string `json:"chain_identifier,omitempty"`
 	// The transaction URL pattern on the blockchain explorer. You can use it to concatenate the transaction URLs.
 	ExplorerTxUrl *string `json:"explorer_tx_url,omitempty"`
@@ -35,7 +35,7 @@ type ChainInfo struct {
 	RequireMemo *bool `json:"require_memo,omitempty"`
 	// The number of confirmations required for an on-chain transaction, such as 64 for Ethereum.
 	ConfirmingThreshold *int32 `json:"confirming_threshold,omitempty"`
-	// The number of confirmations required before a coinbase transaction is considered mature and can be spent, for example, 100 confirmations for BTC.
+	// The number of confirmations required for a coinbase transaction to be mature, such as 100 for BTC.
 	CoinbaseMaturity *int32 `json:"coinbase_maturity,omitempty"`
 }
 

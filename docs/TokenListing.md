@@ -4,17 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | **string** | The unique identifier of the token listing request. | 
-**ChainId** | **string** | The ID of the blockchain where the token is deployed. | 
-**ContractAddress** | **string** | The token&#39;s contract address on the specified blockchain. | 
+**RequestId** | **string** | Unique identifier of the token listing request | 
+**ChainId** | **string** | chain_id of the blockchain where the token exists | 
+**ContractAddress** | **string** | Contract address of the token | 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **Token** | Pointer to [**TokenInfo**](TokenInfo.md) |  | [optional] 
 **Status** | [**TokenListingRequestStatus**](TokenListingRequestStatus.md) |  | 
 **Source** | Pointer to [**TokenListingRequestSource**](TokenListingRequestSource.md) |  | [optional] 
-**Feedback** | Pointer to **string** | The feedback provided by Cobo when a token listing request is rejected. | [optional] 
-**CreatedTimestamp** | Pointer to **int64** | The time when the request was created in Unix timestamp format, measured in milliseconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int64** | The time when the request was last updated in Unix timestamp format, measured in milliseconds. | [optional] 
+**Feedback** | Pointer to **string** | Feedback provided by the admin for rejected requests | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | Timestamp when the request was created (in milliseconds since Unix epoch) | [optional] 
+**UpdatedTimestamp** | Pointer to **int64** | Timestamp when the request was last updated (in milliseconds since Unix epoch) | [optional] 
 
 ## Methods
 

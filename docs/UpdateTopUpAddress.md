@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MerchantId** | **string** | The merchant ID. | 
-**TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
-**CustomPayerId** | **string** | A unique identifier assigned by the developer to track and identify individual payers in their system. | 
+**MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
+**TokenId** | **string** | The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
+**CustomPayerId** | **string** | Unique customer identifier on the merchant side, used to allocate a dedicated top-up address  | 
 
 ## Methods
 
 ### NewUpdateTopUpAddress
 
-`func NewUpdateTopUpAddress(merchantId string, tokenId string, customPayerId string, ) *UpdateTopUpAddress`
+`func NewUpdateTopUpAddress(tokenId string, customPayerId string, ) *UpdateTopUpAddress`
 
 NewUpdateTopUpAddress instantiates a new UpdateTopUpAddress object
 This constructor will assign default values to properties that have it defined,
@@ -46,6 +46,11 @@ and a boolean to check if the value has been set.
 
 SetMerchantId sets MerchantId field to given value.
 
+### HasMerchantId
+
+`func (o *UpdateTopUpAddress) HasMerchantId() bool`
+
+HasMerchantId returns a boolean if a field has been set.
 
 ### GetTokenId
 

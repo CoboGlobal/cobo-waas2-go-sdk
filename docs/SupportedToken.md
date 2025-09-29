@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **ChainSymbol** | **NullableString** | Symbol of the underlying blockchain | 
 **ChainIconUrl** | Pointer to **NullableString** | URL to the blockchain&#39;s icon image | [optional] 
 **TokenIconUrl** | Pointer to **NullableString** | URL to the token&#39;s icon image | [optional] 
+**CanOffRamp** | Pointer to **bool** | Whether the token can by off ramp settlement | [optional] 
 
 ## Methods
 
@@ -263,6 +264,31 @@ HasTokenIconUrl returns a boolean if a field has been set.
 `func (o *SupportedToken) UnsetTokenIconUrl()`
 
 UnsetTokenIconUrl ensures that no value is present for TokenIconUrl, not even an explicit nil
+### GetCanOffRamp
+
+`func (o *SupportedToken) GetCanOffRamp() bool`
+
+GetCanOffRamp returns the CanOffRamp field if non-nil, zero value otherwise.
+
+### GetCanOffRampOk
+
+`func (o *SupportedToken) GetCanOffRampOk() (*bool, bool)`
+
+GetCanOffRampOk returns a tuple with the CanOffRamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanOffRamp
+
+`func (o *SupportedToken) SetCanOffRamp(v bool)`
+
+SetCanOffRamp sets CanOffRamp field to given value.
+
+### HasCanOffRamp
+
+`func (o *SupportedToken) HasCanOffRamp() bool`
+
+HasCanOffRamp returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

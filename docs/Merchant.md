@@ -7,9 +7,10 @@ Name | Type | Description | Notes
 **MerchantId** | **string** | The merchant ID. | 
 **Name** | **string** | The merchant name. | 
 **WalletId** | **string** | The ID of the linked wallet. | 
-**DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to this merchant. Expressed as a string in decimal format where \&quot;0.1\&quot; represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions. If you are a merchant (directly serving the payer), you do not need to configure the developer fee rate. | [optional] 
-**CreatedTimestamp** | Pointer to **int32** | The creation time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The last update time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
+**DeveloperFeeRate** | Pointer to **string** | Developer fee rate for this token. For example, 0.01 represents a 1% fee.  | [optional] 
+**WalletSetup** | Pointer to [**WalletSetup**](WalletSetup.md) |  | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
 
 ## Methods
 
@@ -114,6 +115,31 @@ SetDeveloperFeeRate sets DeveloperFeeRate field to given value.
 `func (o *Merchant) HasDeveloperFeeRate() bool`
 
 HasDeveloperFeeRate returns a boolean if a field has been set.
+
+### GetWalletSetup
+
+`func (o *Merchant) GetWalletSetup() WalletSetup`
+
+GetWalletSetup returns the WalletSetup field if non-nil, zero value otherwise.
+
+### GetWalletSetupOk
+
+`func (o *Merchant) GetWalletSetupOk() (*WalletSetup, bool)`
+
+GetWalletSetupOk returns a tuple with the WalletSetup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWalletSetup
+
+`func (o *Merchant) SetWalletSetup(v WalletSetup)`
+
+SetWalletSetup sets WalletSetup field to given value.
+
+### HasWalletSetup
+
+`func (o *Merchant) HasWalletSetup() bool`
+
+HasWalletSetup returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

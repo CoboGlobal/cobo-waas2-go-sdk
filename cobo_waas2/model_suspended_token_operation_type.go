@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SuspendedTokenOperationType The operation type applied to the list of suspended tokens: - Added: The token was added to the suspension list. - Removed: The token was removed from the suspension list. 
+// SuspendedTokenOperationType The operation type of the suspended tokens,remove from the suspended tokens or add to the suspended tokens.
 type SuspendedTokenOperationType string
 
 // List of SuspendedTokenOperationType

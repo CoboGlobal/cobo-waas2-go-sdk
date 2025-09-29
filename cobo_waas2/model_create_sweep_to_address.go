@@ -17,7 +17,7 @@ import (
 // checks if the CreateSweepToAddress type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateSweepToAddress{}
 
-// CreateSweepToAddress Information of the new sweep-to address to be created.
+// CreateSweepToAddress The information of create sweep to address.
 type CreateSweepToAddress struct {
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`

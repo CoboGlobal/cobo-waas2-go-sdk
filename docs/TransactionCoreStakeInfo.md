@@ -5,11 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ExtraType** | [**TransactionExtraType**](TransactionExtraType.md) |  | 
-**StakeAmount** | Pointer to **string** | The original staking amount. | [optional] 
+**StakeAmount** | Pointer to **string** | The origin staking amount. | [optional] 
 **Timelock** | Pointer to **int32** | The Unix timestamp (in seconds) when the staking position will be unlocked and available for withdrawal. | [optional] 
 **ChangeAddress** | Pointer to **string** | The change address on the Bitcoin chain. If not provided, the source wallet&#39;s address will be used as the change address. | [optional] 
 **ValidatorAddress** | Pointer to **string** | The validator&#39;s EVM address. | [optional] 
-**RewardAddress** | Pointer to **string** | The EVM address used to receive staking rewards. | [optional] 
+**RewardAddress** | Pointer to **string** | The EVM address to receive staking rewards. | [optional] 
 
 ## Methods
 

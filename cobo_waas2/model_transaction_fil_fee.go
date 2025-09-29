@@ -17,23 +17,25 @@ import (
 // checks if the TransactionFILFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionFILFee{}
 
-// TransactionFILFee The transaction fee actually charged by the chain that uses the Filecoin fee model.  In this model, the fee is calculated as: fee = base fee * gas used + gas premium * gas limit. For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionFILFee The transaction fee actually charged by the chain that uses the FIL fee model.  In the Fil fee model, the calculation method for the fee is: fee = gas_fee_cap * gas_limit, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionFILFee struct {
-	// The minimum fee required for a transaction to be included in a block. The base fee is dynamically adjusted based on network congestion to maintain target block utilization. It is burned rather than paid to miners, reducing the total Filecoin supply over time.
+	// This is the minimum fee required to include a transaction in a block. It is determined by the network's congestion level, which adjusts to maintain a target block utilization rate. The base fee is burned, reducing the total supply of Filecoin over time.
 	GasBase *string `json:"gas_base,omitempty"`
-	// An optional tip you can include to prioritize your transaction. The gas premium incentivizes miners to include your transaction sooner than those offering only the base fee.
+	// An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee.
 	GasPremium *string `json:"gas_premium,omitempty"`
-	// The maximum gas price you are willing to pay per unit of gas.
+	// The gas_fee_cap is a user-defined limit on how much they are willing to pay per unit of gas.
 	GasFeeCap *string `json:"gas_fee_cap,omitempty"`
-	// The maximum amount of gas your transaction is allowed to consume.
+	// This defines the maximum amount of computational effort that a transaction is allowed to consume. It's a way to cap the resources that a transaction can use, ensuring it doesn't consume excessive network resources.
 	GasLimit *string `json:"gas_limit,omitempty"`
 	FeeType FeeType `json:"fee_type"`
-	// The token used to pay the transaction fee.
+	// The token ID of the transaction fee.
 	TokenId *string `json:"token_id,omitempty"`
-	// The actually charged transaction fee.
+	// The transaction fee.
 	FeeUsed *string `json:"fee_used,omitempty"`
 	// The estimated transaction fee.
 	EstimatedFeeUsed *string `json:"estimated_fee_used,omitempty"`
+	// The gas units used in the transaction.
+	GasUsed *string `json:"gas_used,omitempty"`
 }
 
 type _TransactionFILFee TransactionFILFee
@@ -306,6 +308,38 @@ func (o *TransactionFILFee) SetEstimatedFeeUsed(v string) {
 	o.EstimatedFeeUsed = &v
 }
 
+// GetGasUsed returns the GasUsed field value if set, zero value otherwise.
+func (o *TransactionFILFee) GetGasUsed() string {
+	if o == nil || IsNil(o.GasUsed) {
+		var ret string
+		return ret
+	}
+	return *o.GasUsed
+}
+
+// GetGasUsedOk returns a tuple with the GasUsed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionFILFee) GetGasUsedOk() (*string, bool) {
+	if o == nil || IsNil(o.GasUsed) {
+		return nil, false
+	}
+	return o.GasUsed, true
+}
+
+// HasGasUsed returns a boolean if a field has been set.
+func (o *TransactionFILFee) HasGasUsed() bool {
+	if o != nil && !IsNil(o.GasUsed) {
+		return true
+	}
+
+	return false
+}
+
+// SetGasUsed gets a reference to the given string and assigns it to the GasUsed field.
+func (o *TransactionFILFee) SetGasUsed(v string) {
+	o.GasUsed = &v
+}
+
 func (o TransactionFILFee) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -337,6 +371,9 @@ func (o TransactionFILFee) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EstimatedFeeUsed) {
 		toSerialize["estimated_fee_used"] = o.EstimatedFeeUsed
+	}
+	if !IsNil(o.GasUsed) {
+		toSerialize["gas_used"] = o.GasUsed
 	}
 	return toSerialize, nil
 }

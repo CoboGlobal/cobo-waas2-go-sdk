@@ -19,7 +19,7 @@ var _ MappedNullable = &UpdateMerchantByIdRequest{}
 type UpdateMerchantByIdRequest struct {
 	// The merchant name.
 	Name *string `json:"name,omitempty"`
-	// The developer fee rate applied to this merchant. Expressed as a string in decimal format where \"0.1\" represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions. If you are a merchant (directly serving the payer), you do not need to configure the developer fee rate.
+	// The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \"0.1\" means 10%).
 	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
 }
 

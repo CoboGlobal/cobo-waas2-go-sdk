@@ -21,21 +21,21 @@ var _ MappedNullable = &CreatePaymentOrderRequest{}
 type CreatePaymentOrderRequest struct {
 	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
-	// The ID of the cryptocurrency used for payment. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency used for payment. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// The fiat currency for the base order amount and the developer fee. Currently, only `USD` is supported.  If left empty, both `order_amount` and `fee_amount` will be denominated in the cryptocurrency specified by `token_id` 
+	// The fiat currency of the order.
 	Currency *string `json:"currency,omitempty"`
-	//  The base amount of the order, excluding the developer fee (specified in `fee_amount`), in the currency specified by `currency`. If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`.   Values must be greater than `0` and contain two decimal places.  
+	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places.
 	OrderAmount string `json:"order_amount"`
-	//  The developer fee for the order, in the currency specified by `currency`. If `currency` is not specified, the fee is in the cryptocurrency specified by `token_id`.  If you are a merchant directly serving payers, set this field to `0`. Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.  The developer fee is added to the base amount (`order_amount`) to determine the final charge. For example: - Base amount (`order_amount`): \"100.00\" - Developer fee (`fee_amount`): \"2.00\"  - Total charged to customer: \"102.00\"  Values can contain up to two decimal places. 
+	// The developer fee for the order in fiat currency. It is added to the base amount (`order_amount`) to determine the final charge. For example, if order_amount is \"100.00\" and fee_amount is \"2.00\", the customer will be charged \"102.00\" in total, with \"100.00\" being settled to the merchant and \"2.00\" settled to the developer. Values must be greater than 0 and contain two decimal places.
 	FeeAmount string `json:"fee_amount"`
-	// A unique reference code assigned by the merchant to identify this order in their system. The code should have a maximum length of 128 characters.
+	// A unique reference code assigned by the merchant to identify this order in their system.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
-	// A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters. 
+	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
-	// The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
+	// The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
-	// Whether to allocate a dedicated address for this order.  - `true`: A dedicated address will be allocated for this order. - `false`: A shared address from the address pool will be used. 
+	// Indicates whether to allocate a dedicated address for this order.  If false, a shared address from the address pool will be used. 
 	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
 }
 
@@ -54,8 +54,6 @@ func NewCreatePaymentOrderRequest(merchantId string, tokenId string, orderAmount
 	this.OrderAmount = orderAmount
 	this.FeeAmount = feeAmount
 	this.PspOrderCode = pspOrderCode
-	var expiredIn int32 = 1800
-	this.ExpiredIn = &expiredIn
 	return &this
 }
 
@@ -66,8 +64,6 @@ func NewCreatePaymentOrderRequestWithDefaults() *CreatePaymentOrderRequest {
 	this := CreatePaymentOrderRequest{}
 	var currency string = ""
 	this.Currency = &currency
-	var expiredIn int32 = 1800
-	this.ExpiredIn = &expiredIn
 	return &this
 }
 
