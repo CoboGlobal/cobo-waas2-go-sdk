@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Result** | Pointer to [**ApprovalTransactionResult**](ApprovalTransactionResult.md) |  | [optional] 
-**ReviewThreshold** | Pointer to **int32** | Minimum number of approvals required for this role. | [optional] 
+**ReviewThreshold** | Pointer to **int32** | The threshold for the transaction approval. | [optional] 
 **Initiator** | Pointer to **string** | The initiator of the transaction. | [optional] 
 **IsUpgraded** | Pointer to **bool** | Indicates whether the transaction approval has been upgraded. | [optional] 
-**CompleteTime** | Pointer to **string** | Time when the role completed the approval. | [optional] 
+**CompleteTime** | Pointer to **string** | Time to complete the review. | [optional] 
 **UserDetails** | Pointer to [**[]ApprovalUserDetail**](ApprovalUserDetail.md) |  | [optional] 
 
 ## Methods

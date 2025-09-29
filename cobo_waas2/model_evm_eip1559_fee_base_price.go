@@ -15,7 +15,7 @@ import (
 // checks if the EvmEip1559FeeBasePrice type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EvmEip1559FeeBasePrice{}
 
-// EvmEip1559FeeBasePrice struct for EvmEip1559FeeBasePrice
+// EvmEip1559FeeBasePrice The transaction gas price based on the EIP-1559 fee model.
 type EvmEip1559FeeBasePrice struct {
 	// The maximum gas fee per gas unit used on the chain, in wei.
 	MaxFeePerGas *string `json:"max_fee_per_gas,omitempty"`

@@ -7,14 +7,16 @@ Name | Type | Description | Notes
 **DestinationType** | [**ContractCallDestinationType**](ContractCallDestinationType.md) |  | 
 **Address** | **string** | The destination address. | 
 **Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
-**Calldata** | **string** | The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.  | 
+**Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
+**AddressLookupTableAccounts** | Pointer to [**[]SolContractCallAddressLookupTableAccount**](SolContractCallAddressLookupTableAccount.md) |  | [optional] 
+**ContractParam** | [**StellarContractCallContractParam**](StellarContractCallContractParam.md) |  | 
 
 ## Methods
 
 ### NewContractCallDestination
 
-`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, ) *ContractCallDestination`
+`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, contractParam StellarContractCallContractParam, ) *ContractCallDestination`
 
 NewContractCallDestination instantiates a new ContractCallDestination object
 This constructor will assign default values to properties that have it defined,
@@ -132,6 +134,51 @@ and a boolean to check if the value has been set.
 `func (o *ContractCallDestination) SetInstructions(v []SolContractCallInstruction)`
 
 SetInstructions sets Instructions field to given value.
+
+
+### GetAddressLookupTableAccounts
+
+`func (o *ContractCallDestination) GetAddressLookupTableAccounts() []SolContractCallAddressLookupTableAccount`
+
+GetAddressLookupTableAccounts returns the AddressLookupTableAccounts field if non-nil, zero value otherwise.
+
+### GetAddressLookupTableAccountsOk
+
+`func (o *ContractCallDestination) GetAddressLookupTableAccountsOk() (*[]SolContractCallAddressLookupTableAccount, bool)`
+
+GetAddressLookupTableAccountsOk returns a tuple with the AddressLookupTableAccounts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddressLookupTableAccounts
+
+`func (o *ContractCallDestination) SetAddressLookupTableAccounts(v []SolContractCallAddressLookupTableAccount)`
+
+SetAddressLookupTableAccounts sets AddressLookupTableAccounts field to given value.
+
+### HasAddressLookupTableAccounts
+
+`func (o *ContractCallDestination) HasAddressLookupTableAccounts() bool`
+
+HasAddressLookupTableAccounts returns a boolean if a field has been set.
+
+### GetContractParam
+
+`func (o *ContractCallDestination) GetContractParam() StellarContractCallContractParam`
+
+GetContractParam returns the ContractParam field if non-nil, zero value otherwise.
+
+### GetContractParamOk
+
+`func (o *ContractCallDestination) GetContractParamOk() (*StellarContractCallContractParam, bool)`
+
+GetContractParamOk returns a tuple with the ContractParam field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContractParam
+
+`func (o *ContractCallDestination) SetContractParam(v StellarContractCallContractParam)`
+
+SetContractParam sets ContractParam field to given value.
 
 
 

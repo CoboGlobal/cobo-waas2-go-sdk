@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. | 
-**Symbol** | Pointer to **string** | The chain symbol for display purposes, which is the abbreviated name of a chain. | [optional] 
+**Symbol** | Pointer to **string** | The chain symbol, which is the abbreviated name of a chain. | [optional] 
 **IconUrl** | Pointer to **string** | The URL of the chain icon. | [optional] 
-**ChainIdentifier** | Pointer to **string** | A functional identifier used to group blockchains with similar execution logic. For example, &#x60;ETH&#x60; for all EVM-compatible chains (Ethereum, BNB Smart Chain, Polygon). | [optional] 
+**ChainIdentifier** | Pointer to **string** | The chain identifier, which is the identifier of a blockchain for similar function, such as ETH for ETH, BSC_BNB eth. | [optional] 
 **ExplorerTxUrl** | Pointer to **string** | The transaction URL pattern on the blockchain explorer. You can use it to concatenate the transaction URLs. | [optional] 
 **ExplorerAddressUrl** | Pointer to **string** | The address URL pattern on the blockchain explorer. You can use it to concatenate the address URLs. | [optional] 
 **RequireMemo** | Pointer to **bool** | Whether the chain requires a memo. | [optional] 
 **ConfirmingThreshold** | Pointer to **int32** | The number of confirmations required for an on-chain transaction, such as 64 for Ethereum. | [optional] 
-**CoinbaseMaturity** | Pointer to **int32** | The number of confirmations required before a coinbase transaction is considered mature and can be spent, for example, 100 confirmations for BTC. | [optional] 
+**CoinbaseMaturity** | Pointer to **int32** | The number of confirmations required for a coinbase transaction to be mature, such as 100 for BTC. | [optional] 
 
 ## Methods
 

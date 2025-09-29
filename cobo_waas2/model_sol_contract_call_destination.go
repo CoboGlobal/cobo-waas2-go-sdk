@@ -21,6 +21,7 @@ var _ MappedNullable = &SolContractCallDestination{}
 type SolContractCallDestination struct {
 	DestinationType ContractCallDestinationType `json:"destination_type"`
 	Instructions []SolContractCallInstruction `json:"instructions"`
+	AddressLookupTableAccounts []SolContractCallAddressLookupTableAccount `json:"address_lookup_table_accounts,omitempty"`
 }
 
 type _SolContractCallDestination SolContractCallDestination
@@ -92,6 +93,38 @@ func (o *SolContractCallDestination) SetInstructions(v []SolContractCallInstruct
 	o.Instructions = v
 }
 
+// GetAddressLookupTableAccounts returns the AddressLookupTableAccounts field value if set, zero value otherwise.
+func (o *SolContractCallDestination) GetAddressLookupTableAccounts() []SolContractCallAddressLookupTableAccount {
+	if o == nil || IsNil(o.AddressLookupTableAccounts) {
+		var ret []SolContractCallAddressLookupTableAccount
+		return ret
+	}
+	return o.AddressLookupTableAccounts
+}
+
+// GetAddressLookupTableAccountsOk returns a tuple with the AddressLookupTableAccounts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SolContractCallDestination) GetAddressLookupTableAccountsOk() ([]SolContractCallAddressLookupTableAccount, bool) {
+	if o == nil || IsNil(o.AddressLookupTableAccounts) {
+		return nil, false
+	}
+	return o.AddressLookupTableAccounts, true
+}
+
+// HasAddressLookupTableAccounts returns a boolean if a field has been set.
+func (o *SolContractCallDestination) HasAddressLookupTableAccounts() bool {
+	if o != nil && !IsNil(o.AddressLookupTableAccounts) {
+		return true
+	}
+
+	return false
+}
+
+// SetAddressLookupTableAccounts gets a reference to the given []SolContractCallAddressLookupTableAccount and assigns it to the AddressLookupTableAccounts field.
+func (o *SolContractCallDestination) SetAddressLookupTableAccounts(v []SolContractCallAddressLookupTableAccount) {
+	o.AddressLookupTableAccounts = v
+}
+
 func (o SolContractCallDestination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -104,6 +137,9 @@ func (o SolContractCallDestination) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["destination_type"] = o.DestinationType
 	toSerialize["instructions"] = o.Instructions
+	if !IsNil(o.AddressLookupTableAccounts) {
+		toSerialize["address_lookup_table_accounts"] = o.AddressLookupTableAccounts
+	}
 	return toSerialize, nil
 }
 

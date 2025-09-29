@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **DestinationType** | [**MessageSignDestinationType**](MessageSignDestinationType.md) |  | 
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **StructuredData** | **map[string]interface{}** | The structured data to be signed, formatted as a JSON object according to the EIP-712 standard. | 
-**MsgHash** | **string** | Message hash to be signed, in hexadecimal format. | 
 **MessageBip137** | **string** | Message to be signed, in hexadecimal format. | 
 **MessageBip322** | **string** | Message to be signed, in hexadecimal format. | 
 **MessageCosmosAdr36** | **string** | Message to be signed, in hexadecimal format. | 
@@ -16,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewMessageSignDestination
 
-`func NewMessageSignDestination(destinationType MessageSignDestinationType, message string, structuredData map[string]interface{}, msgHash string, messageBip137 string, messageBip322 string, messageCosmosAdr36 string, ) *MessageSignDestination`
+`func NewMessageSignDestination(destinationType MessageSignDestinationType, message string, structuredData map[string]interface{}, messageBip137 string, messageBip322 string, messageCosmosAdr36 string, ) *MessageSignDestination`
 
 NewMessageSignDestination instantiates a new MessageSignDestination object
 This constructor will assign default values to properties that have it defined,
@@ -89,26 +88,6 @@ and a boolean to check if the value has been set.
 `func (o *MessageSignDestination) SetStructuredData(v map[string]interface{})`
 
 SetStructuredData sets StructuredData field to given value.
-
-
-### GetMsgHash
-
-`func (o *MessageSignDestination) GetMsgHash() string`
-
-GetMsgHash returns the MsgHash field if non-nil, zero value otherwise.
-
-### GetMsgHashOk
-
-`func (o *MessageSignDestination) GetMsgHashOk() (*string, bool)`
-
-GetMsgHashOk returns a tuple with the MsgHash field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMsgHash
-
-`func (o *MessageSignDestination) SetMsgHash(v string)`
-
-SetMsgHash sets MsgHash field to given value.
 
 
 ### GetMessageBip137

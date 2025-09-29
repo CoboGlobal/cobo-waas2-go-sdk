@@ -15,17 +15,17 @@ import (
 // checks if the TokenizationSolTokenPermissionParams type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TokenizationSolTokenPermissionParams{}
 
-// TokenizationSolTokenPermissionParams Role-based permission settings for the Solana Token-2022 Program. If not provided, all permissions will be granted to the issuing wallet by default.
+// TokenizationSolTokenPermissionParams Role-based permission settings for Solana SPL Token 2022. If not provided, all permissions will be granted to the issuance wallet by default.
 type TokenizationSolTokenPermissionParams struct {
-	// Solana wallet address assigned as the permanent delegate authority. It can perform delegated operations on behalf of token holders.
+	// Solana wallet address that acts as a permanent delegate authority for the token. This authority can perform delegated operations on behalf of token holders.
 	PermanentDelegate *string `json:"permanent_delegate,omitempty"`
-	// Solana wallet address assigned as the mint authority. It can mint new tokens.
+	// Solana wallet addres that acts as a minter authority for the token. This authority can mint new tokens.
 	Minter *string `json:"minter,omitempty"`
-	// Solana wallet address assigned as the freeze authority. It can freeze token accounts.
+	// Solana wallet address that acts as a freezer authority for the token. This authority can freeze token accounts.
 	Freezer *string `json:"freezer,omitempty"`
-	// Solana wallet address assigned as the update authority. It can update token metadata.
+	// Solana wallet address that acts as an updater authority for the token. This authority can update token metadata.
 	Updater *string `json:"updater,omitempty"`
-	// Solana wallet address assigned as the pause authority. It can pause or unpause all token activities including transfers, burns, and mints.
+	// Solana wallet address that acts as a pauser authority for the token. This authority can pause token transfers.
 	Pauser *string `json:"pauser,omitempty"`
 }
 

@@ -17,15 +17,13 @@ import (
 // checks if the PolicyActionContent type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &PolicyActionContent{}
 
-// PolicyActionContent The definition of the quorum action. This property is applicable only when `action_type` is `Quorum`.
+// PolicyActionContent The information of an app workflow policy quorum action content.
 type PolicyActionContent struct {
-	// The quorum type. Possible values include:    - `FULL_APPROVAL`: Requires approval from all participants.   - `PART_APPROVAL`: Requires approval from a specified number of participants. 
+	// The quorum action content type. Possible values include:    - `FULL_APPROVAL`: The content type is approved by all persons.   - `PART_APPROVAL`: The content type is approved by some persons. 
 	Type string `json:"type"`
-	// The roles included in the quorum. Possible values include `admin`, `spender`, `operator`, and `approver`.
 	Roles []string `json:"roles,omitempty"`
-	// The ID of the users included in the quorum.
 	UserIds []string `json:"user_ids,omitempty"`
-	// The number of approvers required to meet the quorum.
+	// The number of persons need approved, such as 2.
 	Threshold *int32 `json:"threshold,omitempty"`
 }
 

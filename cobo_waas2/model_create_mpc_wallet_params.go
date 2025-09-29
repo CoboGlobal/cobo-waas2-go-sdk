@@ -23,7 +23,7 @@ type CreateMpcWalletParams struct {
 	Name string `json:"name"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
-	// Enable the auto-sweep feature for the wallet. This parameter only applies to MPC Wallets and Web3 Wallets.
+	// Enable the auto sweep feature for the wallet. This parameter only applies to MPC and Web3 wallets.
 	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	// The ID of the owning vault. You can call [List all vaults](https://www.cobo.com/developers/v2/api-references/wallets--mpc-wallets/list-all-vaults) to retrieve all vault IDs under your organization.
 	VaultId string `json:"vault_id"`

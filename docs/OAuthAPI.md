@@ -4,9 +4,9 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ExchangePermissionToken**](OAuthAPI.md#ExchangePermissionToken) | **Post** /oauth/permission_token/exchange | Get Access Token
+[**ExchangePermissionToken**](OAuthAPI.md#ExchangePermissionToken) | **Post** /oauth/permission_token/exchange | Exchange Permission Access Token by API Key
 [**GetToken**](OAuthAPI.md#GetToken) | **Get** /oauth/token | Get Org Access Token
-[**RefreshPermissionToken**](OAuthAPI.md#RefreshPermissionToken) | **Post** /oauth/permission_token/refresh | Refresh Access Token
+[**RefreshPermissionToken**](OAuthAPI.md#RefreshPermissionToken) | **Post** /oauth/permission_token/refresh | Refresh Permission Access Token by Permission Refresh Token
 [**RefreshToken**](OAuthAPI.md#RefreshToken) | **Post** /oauth/token | Refresh Org Access Token
 
 
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 > ExchangePermissionToken201Response ExchangePermissionToken(ctx).ExchangePermissionTokenRequest(exchangePermissionTokenRequest).Execute()
 
-Get Access Token
+Exchange Permission Access Token by API Key
 
 
 
@@ -67,7 +67,7 @@ Other parameters are passed through a pointer to a apiExchangePermissionTokenReq
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **exchangePermissionTokenRequest** | [**ExchangePermissionTokenRequest**](ExchangePermissionTokenRequest.md) | The request body to acquire an Access Token. | 
+ **exchangePermissionTokenRequest** | [**ExchangePermissionTokenRequest**](ExchangePermissionTokenRequest.md) | The request body for exchanging an Permission Access Token. | 
 
 ### Return type
 
@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 
 > ExchangePermissionToken201Response RefreshPermissionToken(ctx).RefreshPermissionTokenRequest(refreshPermissionTokenRequest).Execute()
 
-Refresh Access Token
+Refresh Permission Access Token by Permission Refresh Token
 
 
 
@@ -223,7 +223,7 @@ Other parameters are passed through a pointer to a apiRefreshPermissionTokenRequ
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **refreshPermissionTokenRequest** | [**RefreshPermissionTokenRequest**](RefreshPermissionTokenRequest.md) | The request body to refresh the Access Token and the Refresh Token. | 
+ **refreshPermissionTokenRequest** | [**RefreshPermissionTokenRequest**](RefreshPermissionTokenRequest.md) | The request body for refreshing an Permission Access Token. | 
 
 ### Return type
 

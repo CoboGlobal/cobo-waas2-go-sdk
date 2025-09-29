@@ -32,7 +32,7 @@ func (r ApiGetOrgInfoRequest) Execute() (*OrgInfo, *http.Response, error) {
 /*
 GetOrgInfo Get organization information
 
-This operation retrieves the detailed information about the organization associated with the current API key.
+This operation retrieves the detailed information about the organization linked with current APIKey.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

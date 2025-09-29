@@ -17,15 +17,15 @@ import (
 // checks if the UpdateAddressBookParam type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UpdateAddressBookParam{}
 
-// UpdateAddressBookParam The request body to update Address Book.
+// UpdateAddressBookParam The request body to update address book.
 type UpdateAddressBookParam struct {
 	// A list of chain IDs.
 	ChainIds []string `json:"chain_ids"`
-	// Optional memo or tag required by some chains.
+	// The memo.
 	Memo *string `json:"memo,omitempty"`
-	// A user-defined label for the address.
+	// The address label.
 	Label *string `json:"label,omitempty"`
-	// Email of the address owner.
+	// The email of the address owner.
 	Email *string `json:"email,omitempty"`
 }
 

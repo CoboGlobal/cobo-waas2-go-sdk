@@ -20,7 +20,7 @@ var _ MappedNullable = &UtxoFeeRate{}
 // UtxoFeeRate The transaction fee rate for UTXO-based chains.
 type UtxoFeeRate struct {
 	FeeType FeeType `json:"fee_type"`
-	// The token used to pay the transaction fee.
+	// The token ID of the transaction fee.
 	TokenId string `json:"token_id"`
 	Slow *UtxoFeeBasePrice `json:"slow,omitempty"`
 	Recommended UtxoFeeBasePrice `json:"recommended"`

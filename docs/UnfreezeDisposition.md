@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TransactionId** | **string** | The UUID of the transaction whose funds are to be unfrozen. | 
+**TransactionId** | **string** | The UUID of the transaction to be unfrozen. This identifies the frozen transaction that needs to be released. | 
 
 ## Methods
 

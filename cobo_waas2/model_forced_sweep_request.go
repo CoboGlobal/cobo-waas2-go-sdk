@@ -17,15 +17,15 @@ import (
 // checks if the ForcedSweepRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ForcedSweepRequest{}
 
-// ForcedSweepRequest struct for ForcedSweepRequest
+// ForcedSweepRequest The information about the request to force sweep.
 type ForcedSweepRequest struct {
-	// The request ID that is used to track a forced sweep. The request ID is provided by you and must be unique.
+	// The request id of the force sweep.
 	RequestId string `json:"request_id"`
-	// The ID of the wallet in which the funds will be forcefully swept.
+	// The wallet ID to force sweep, which is the unique identifier of a wallet.
 	WalletId string `json:"wallet_id"`
-	// The ID of the token to be forcefully swept.
+	// The token ID to force sweep, which is the unique identifier of a token.
 	TokenId string `json:"token_id"`
-	// The amount of the token to be forcefully swept.
+	// The amount of needing force sweep.
 	Amount string `json:"amount"`
 }
 

@@ -17,11 +17,11 @@ import (
 // checks if the CreateAutoSweepTask type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateAutoSweepTask{}
 
-// CreateAutoSweepTask Wallet and token information required to create an auto-sweep task.
+// CreateAutoSweepTask The sweep to address information.
 type CreateAutoSweepTask struct {
-	// ID of the wallet where the token will be swept.
+	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// ID of the token to be swept. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+	// The token ID of the swept token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
 }
 

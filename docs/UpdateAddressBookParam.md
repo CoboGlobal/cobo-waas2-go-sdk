@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ChainIds** | **[]string** | A list of chain IDs. | 
-**Memo** | Pointer to **string** | Optional memo or tag required by some chains. | [optional] 
-**Label** | Pointer to **string** | A user-defined label for the address. | [optional] 
-**Email** | Pointer to **string** | Email of the address owner. | [optional] 
+**Memo** | Pointer to **string** | The memo. | [optional] 
+**Label** | Pointer to **string** | The address label. | [optional] 
+**Email** | Pointer to **string** | The email of the address owner. | [optional] 
 
 ## Methods
 

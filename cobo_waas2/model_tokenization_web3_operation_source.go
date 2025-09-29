@@ -22,7 +22,7 @@ type TokenizationWeb3OperationSource struct {
 	SourceType TokenizationOperationSourceType `json:"source_type"`
 	// The wallet ID.
 	WalletId string `json:"wallet_id"`
-	// The wallet address used to interact with the token contract.
+	// The wallet address to interact with the token contract from.
 	Address string `json:"address"`
 }
 

@@ -23,9 +23,9 @@ type DispositionEventData struct {
 	TransactionId string `json:"transaction_id"`
 	DispositionType DispositionType `json:"disposition_type"`
 	DispositionStatus DispositionStatus `json:"disposition_status"`
-	// The blockchain address to receive the refunded/isolated funds.
+	// The blockchain address where the refund/isolated funds will be sent.
 	DestinationAddress *string `json:"destination_address,omitempty"`
-	// The amount to be refunded/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction. 
+	// The amount to be refund/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction. 
 	DispositionAmount *string `json:"disposition_amount,omitempty"`
 	// The time when the disposition was updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp int64 `json:"updated_timestamp"`

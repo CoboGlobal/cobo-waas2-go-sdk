@@ -15,36 +15,36 @@ import (
 // checks if the ApprovalUserDetail type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApprovalUserDetail{}
 
-// ApprovalUserDetail Details about a user involved in a transaction approval workflow. 
+// ApprovalUserDetail The user detail for a transaction approval. This includes the user's email, public key, signature, statement UUID, result of the approval, creation time, template version, header title, whether it is for signing, and additional information to show. 
 type ApprovalUserDetail struct {
-	// Name of the user who approved the transaction.
+	// The name of the user who approved the transaction.
 	Name *string `json:"name,omitempty"`
-	// Email of the user.
+	// The email address of the user who approved the transaction.
 	Email *string `json:"email,omitempty"`
-	// Public key of the user.
+	// The public key of the user who approved the transaction.
 	Pubkey *string `json:"pubkey,omitempty"`
-	// Signature produced by the user for this approval.
+	// The signature of the transaction approval.
 	Signature *string `json:"signature,omitempty"`
-	// UUID of the statement associated with this approval.
+	// The UUID of the statement associated with the transaction approval.
 	StatementUuid *string `json:"statement_uuid,omitempty"`
 	Result *ApprovalResult `json:"result,omitempty"`
-	// Integer value representing the result of the approval.
+	// The integer value representing the result of the approval.
 	ApprovalResultCode *int32 `json:"approval_result_code,omitempty"`
-	// Timestamp when the approval was created.
+	// The timestamp when the approval was created.
 	CreatedTime *int32 `json:"created_time,omitempty"`
-	// Version of the template used for the transaction approval.
+	// The version of the template used for the transaction approval.
 	TemplateVersion *string `json:"template_version,omitempty"`
-	// Display title used in the transaction approval.
+	// The title of the header for the transaction approval.
 	HeaderTitle *string `json:"header_title,omitempty"`
-	// Indicates whether this approval requires signing: - `true`: The user must sign the transaction. - `false`: The user only needs to approve or reject without signing. 
+	// Indicates whether the approval is for signing.
 	IsForSign *bool `json:"is_for_sign,omitempty"`
 	// Additional information to show for the transaction approval.
 	ShowInfo *string `json:"show_info,omitempty"`
-	// Language used for the transaction approval.
+	// The language used for the transaction approval.
 	Language *string `json:"language,omitempty"`
-	// Version of the message format used for the transaction approval.
+	// The version of the message format used for the transaction approval.
 	MessageVersion *string `json:"message_version,omitempty"`
-	// Message associated with the transaction approval.
+	// The message associated with the transaction approval.
 	Message *string `json:"message,omitempty"`
 	// Any additional message or information related to the transaction approval.
 	ExtraMessage *string `json:"extra_message,omitempty"`

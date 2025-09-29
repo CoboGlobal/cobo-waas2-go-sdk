@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**PermissionType** | **string** | Set the value to &#x60;payment_orders_payin&#x60;. | 
+**PermissionType** | **string** | The OAuth permission type. Set the value as &#x60;payment_orders_payin&#x60;. | 
 
 ## Methods
 

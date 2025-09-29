@@ -17,16 +17,16 @@ import (
 // checks if the RequestApproval type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RequestApproval{}
 
-// RequestApproval The information about a approval request.
+// RequestApproval The information about a request that approve an operation.
 type RequestApproval struct {
-	// The unique ID of the approval workflow.
+	// The operation id of workflow approval request.
 	OperationId string `json:"operation_id"`
-	// An identifier provided by you to track this request.
+	// The request id of workflow approval request.
 	RequestId string `json:"request_id"`
-	// The email of the user who requested the approval.
+	// The initiator email of workflow approval request.
 	InitiatorEmail string `json:"initiator_email"`
 	Fields []AppWorkflowField `json:"fields"`
-	// The template of a Cobo Guard message. Please connect [help@cobo.com](mailto:help@cobo.com) to get the template content.
+	// The guard template content of workflow approval request, need to connect cobo.
 	GuardTemplate string `json:"guard_template"`
 }
 

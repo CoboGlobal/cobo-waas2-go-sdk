@@ -19,13 +19,13 @@ var _ MappedNullable = &PaymentRefundEventData{}
 
 // PaymentRefundEventData struct for PaymentRefundEventData
 type PaymentRefundEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The payment address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The suspended token event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
 	DataType string `json:"data_type"`
 	// The request ID provided by you when creating the refund request.
 	RequestId *string `json:"request_id,omitempty"`
 	// The refund order ID.
 	RefundId string `json:"refund_id"`
-	// The ID of the pay-in order corresponding to this refund.
+	// The order ID corresponding to this refund.
 	OrderId *string `json:"order_id,omitempty"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
@@ -39,20 +39,21 @@ type PaymentRefundEventData struct {
 	ToAddress string `json:"to_address"`
 	Status RefundStatus `json:"status"`
 	RefundType *RefundType `json:"refund_type,omitempty"`
-	// The creation time of the refund order, represented as a UNIX timestamp in seconds.
+	// The created time of the refund order, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The last update time of the refund order, represented as a UNIX timestamp in seconds.
+	// The updated time of the refund order, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	//  The initiator of this settlement request. Can return either an API key or the Payment Management App's ID.  - Format `api_key_<API_KEY>`: Indicates the settlement request was initiated via the Payment API using the API key. - Format `app_<APP_ID>`: Indicates the settlement request was initiated through the Payment Management App using the App ID. 
+	// The initiator of this refund order, usually the user's API key.
 	Initiator *string `json:"initiator,omitempty"`
 	// An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
-	// Whether to charge developer fee to the merchant for the refund.    - `true`: The fee amount (specified in `merchant_fee_amount`) will be deducted from the merchant's balance and added to the developer's balance    - `false`: The merchant is not charged any developer fee. 
+	// Whether to charge developer fee to the merchant.  - `true`: The fee amount (specified in `merchant_fee_amount`) will be deducted from the merchant's balance and added to the developer's balance - `false`: The merchant is not charged any developer fee. 
 	ChargeMerchantFee *bool `json:"charge_merchant_fee,omitempty"`
-	// The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by `merchant_fee_token_id`. This is only applicable if `charge_merchant_fee` is set to `true`.
+	// The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by `merchant_fee_token_id`.
 	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
-	// The ID of the cryptocurrency used for the developer fee. This is only applicable if `charge_merchant_fee` is set to true.
+	// The ID of the cryptocurrency used for the developer fee.
 	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
+	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
 }
 
 type _PaymentRefundEventData PaymentRefundEventData
@@ -601,6 +602,38 @@ func (o *PaymentRefundEventData) SetMerchantFeeTokenId(v string) {
 	o.MerchantFeeTokenId = &v
 }
 
+// GetCommissionFee returns the CommissionFee field value if set, zero value otherwise.
+func (o *PaymentRefundEventData) GetCommissionFee() CommissionFee {
+	if o == nil || IsNil(o.CommissionFee) {
+		var ret CommissionFee
+		return ret
+	}
+	return *o.CommissionFee
+}
+
+// GetCommissionFeeOk returns a tuple with the CommissionFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentRefundEventData) GetCommissionFeeOk() (*CommissionFee, bool) {
+	if o == nil || IsNil(o.CommissionFee) {
+		return nil, false
+	}
+	return o.CommissionFee, true
+}
+
+// HasCommissionFee returns a boolean if a field has been set.
+func (o *PaymentRefundEventData) HasCommissionFee() bool {
+	if o != nil && !IsNil(o.CommissionFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommissionFee gets a reference to the given CommissionFee and assigns it to the CommissionFee field.
+func (o *PaymentRefundEventData) SetCommissionFee(v CommissionFee) {
+	o.CommissionFee = &v
+}
+
 func (o PaymentRefundEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -650,6 +683,9 @@ func (o PaymentRefundEventData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MerchantFeeTokenId) {
 		toSerialize["merchant_fee_token_id"] = o.MerchantFeeTokenId
+	}
+	if !IsNil(o.CommissionFee) {
+		toSerialize["commission_fee"] = o.CommissionFee
 	}
 	return toSerialize, nil
 }

@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**PermanentDelegate** | Pointer to **string** | Solana wallet address assigned as the permanent delegate authority. It can perform delegated operations on behalf of token holders. | [optional] 
-**Minter** | Pointer to **string** | Solana wallet address assigned as the mint authority. It can mint new tokens. | [optional] 
-**Freezer** | Pointer to **string** | Solana wallet address assigned as the freeze authority. It can freeze token accounts. | [optional] 
-**Updater** | Pointer to **string** | Solana wallet address assigned as the update authority. It can update token metadata. | [optional] 
-**Pauser** | Pointer to **string** | Solana wallet address assigned as the pause authority. It can pause or unpause all token activities including transfers, burns, and mints. | [optional] 
+**PermanentDelegate** | Pointer to **string** | Solana wallet address that acts as a permanent delegate authority for the token. This authority can perform delegated operations on behalf of token holders. | [optional] 
+**Minter** | Pointer to **string** | Solana wallet addres that acts as a minter authority for the token. This authority can mint new tokens. | [optional] 
+**Freezer** | Pointer to **string** | Solana wallet address that acts as a freezer authority for the token. This authority can freeze token accounts. | [optional] 
+**Updater** | Pointer to **string** | Solana wallet address that acts as an updater authority for the token. This authority can update token metadata. | [optional] 
+**Pauser** | Pointer to **string** | Solana wallet address that acts as a pauser authority for the token. This authority can pause token transfers. | [optional] 
 
 ## Methods
 

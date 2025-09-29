@@ -40,6 +40,18 @@ func Test_cobo_waas2_ComplianceAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ComplianceAPIService GetKytScreeningStatus", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ComplianceAPI.GetKytScreeningStatus(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ComplianceAPIService IsolateFunds", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -57,6 +69,30 @@ func Test_cobo_waas2_ComplianceAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ComplianceAPI.RefundFunds(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ComplianceAPIService SubmitKytManualReview", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ComplianceAPI.SubmitKytManualReview(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ComplianceAPIService SubmitKytScreeningDecisions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ComplianceAPI.SubmitKytScreeningDecisions(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

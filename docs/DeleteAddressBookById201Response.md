@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Submitted** | **bool** | Whether the request to delete the Address Book entry (record) has been successfully submitted. - &#x60;true&#x60;: The request has been successfully submitted. - &#x60;false&#x60;: The request has not been submitted.  | 
+**Submitted** | **bool** | Whether the request to delete the address book has been successfully submitted. - &#x60;true&#x60;: The request to delete the address book has been successfully submitted. - &#x60;false&#x60;: The request to delete the address book has not been submitted.  | 
 
 ## Methods
 

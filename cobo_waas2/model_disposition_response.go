@@ -17,7 +17,7 @@ import (
 // checks if the DispositionResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &DispositionResponse{}
 
-// DispositionResponse The response for a disposition request.
+// DispositionResponse The response for a disposition creation request.
 type DispositionResponse struct {
 	// The UUID of the transaction being processed for disposition.
 	TransactionId string `json:"transaction_id"`

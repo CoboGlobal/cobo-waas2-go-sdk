@@ -19,24 +19,24 @@ var _ MappedNullable = &TokenListingEventData{}
 
 // TokenListingEventData struct for TokenListingEventData
 type TokenListingEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The payment address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The suspended token event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
 	DataType string `json:"data_type"`
-	// The unique identifier of the token listing request.
+	// Unique identifier of the token listing request
 	RequestId string `json:"request_id"`
-	// The ID of the blockchain where the token is deployed.
+	// chain_id of the blockchain where the token exists
 	ChainId string `json:"chain_id"`
-	// The token's contract address on the specified blockchain.
+	// Contract address of the token
 	ContractAddress string `json:"contract_address"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
 	Token *TokenInfo `json:"token,omitempty"`
 	Status TokenListingRequestStatus `json:"status"`
 	Source *TokenListingRequestSource `json:"source,omitempty"`
-	// The feedback provided by Cobo when a token listing request is rejected.
+	// Feedback provided by the admin for rejected requests
 	Feedback *string `json:"feedback,omitempty"`
-	// The time when the request was created in Unix timestamp format, measured in milliseconds.
+	// Timestamp when the request was created (in milliseconds since Unix epoch)
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
-	// The time when the request was last updated in Unix timestamp format, measured in milliseconds.
+	// Timestamp when the request was last updated (in milliseconds since Unix epoch)
 	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 }
 

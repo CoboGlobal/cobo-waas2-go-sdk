@@ -17,17 +17,17 @@ import (
 // checks if the IsolateDisposition type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &IsolateDisposition{}
 
-// IsolateDisposition The information about a request to isolate funds.
+// IsolateDisposition The information about a fund isolate disposition request.
 type IsolateDisposition struct {
-	// The UUID of the transaction whose funds are to be isolated. This identifies the original transaction that requires fund isolation.
+	// The UUID of the transaction to be isolated. This identifies the original transaction that requires isolation processing.
 	TransactionId string `json:"transaction_id"`
-	// The blockchain address to receive the isolated funds.
+	// The blockchain address where the isolated funds will be sent.
 	DestinationAddress string `json:"destination_address"`
 	// The amount to be isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction. 
 	DispositionAmount string `json:"disposition_amount"`
-	// Custom categories to identify and track this isolation transaction. Used for transaction classification and reporting.
+	// Custom categories to identify and track this isolate transaction. Used for transaction classification and reporting.
 	CategoryNames []string `json:"category_names,omitempty"`
-	// Additional notes or description for the isolation.
+	// Additional notes or description for this isolate disposition.
 	Description *string `json:"description,omitempty"`
 }
 

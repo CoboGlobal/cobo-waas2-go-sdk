@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **Timeline** | Pointer to [**[]SwapActivityTimeline**](SwapActivityTimeline.md) |  | [optional] 
 **Approvers** | Pointer to [**[]SwapActivityApprovers**](SwapActivityApprovers.md) |  | [optional] 
 **Signers** | Pointer to [**[]SwapActivitySigners**](SwapActivitySigners.md) |  | [optional] 
+**ReceivingTransaction** | Pointer to [**SwapReceivingTransaction**](SwapReceivingTransaction.md) |  | [optional] 
 
 ## Methods
 
@@ -579,6 +580,31 @@ SetSigners sets Signers field to given value.
 `func (o *SwapActivityDetail) HasSigners() bool`
 
 HasSigners returns a boolean if a field has been set.
+
+### GetReceivingTransaction
+
+`func (o *SwapActivityDetail) GetReceivingTransaction() SwapReceivingTransaction`
+
+GetReceivingTransaction returns the ReceivingTransaction field if non-nil, zero value otherwise.
+
+### GetReceivingTransactionOk
+
+`func (o *SwapActivityDetail) GetReceivingTransactionOk() (*SwapReceivingTransaction, bool)`
+
+GetReceivingTransactionOk returns a tuple with the ReceivingTransaction field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReceivingTransaction
+
+`func (o *SwapActivityDetail) SetReceivingTransaction(v SwapReceivingTransaction)`
+
+SetReceivingTransaction sets ReceivingTransaction field to given value.
+
+### HasReceivingTransaction
+
+`func (o *SwapActivityDetail) HasReceivingTransaction() bool`
+
+HasReceivingTransaction returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

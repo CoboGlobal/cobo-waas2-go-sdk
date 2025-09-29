@@ -19,7 +19,6 @@ var _ MappedNullable = &CreateApprovalRequest201Response{}
 
 // CreateApprovalRequest201Response struct for CreateApprovalRequest201Response
 type CreateApprovalRequest201Response struct {
-	// The system-generated unique ID of the approval request. You can use this ID to query the approval request status or revoke the request.
 	ApprovalId string `json:"approval_id"`
 }
 

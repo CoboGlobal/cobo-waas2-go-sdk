@@ -19,7 +19,7 @@ var _ MappedNullable = &ExchangePermissionTokenRequest{}
 
 // ExchangePermissionTokenRequest struct for ExchangePermissionTokenRequest
 type ExchangePermissionTokenRequest struct {
-	// Set the value to `payment_orders_payin`.
+	// The OAuth permission type. Set the value as `payment_orders_payin`.
 	PermissionType string `json:"permission_type"`
 }
 

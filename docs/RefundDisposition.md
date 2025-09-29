@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TransactionId** | **string** | The UUID of the transaction whose funds are to be refunded. This identifies the original transaction that requires refund processing. | 
-**DestinationAddress** | **string** | The blockchain address to receive the refunded funds. | 
+**TransactionId** | **string** | The UUID of the transaction to be refunded. This identifies the original transaction that requires refund processing. | 
+**DestinationAddress** | **string** | The blockchain address where the refunded funds will be sent. | 
 **DispositionAmount** | **string** | The amount to be refunded from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.  | 
 **CategoryNames** | Pointer to **[]string** | Custom categories to identify and track this refund transaction. Used for transaction classification and reporting. | [optional] 
-**Description** | Pointer to **string** | Additional notes or description for the refund. | [optional] 
+**Description** | Pointer to **string** | Additional notes or description for this refund disposition. | [optional] 
 
 ## Methods
 

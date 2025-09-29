@@ -24,7 +24,7 @@ type GetMaxTransferableValueWithFeeModelRequest struct {
 	Fee TransactionRequestFee `json:"fee"`
 	// The recipient's address.
 	ToAddress string `json:"to_address"`
-	// The sender's address. This property is required when using an EVM address in an MPC Wallet.
+	// The sender's address. For EVM addresses in MPC Wallets, this parameter is required.
 	FromAddress *string `json:"from_address,omitempty"`
 }
 
