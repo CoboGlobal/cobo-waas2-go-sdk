@@ -19,7 +19,7 @@ var _ MappedNullable = &RevokeApprovalRequestRequest{}
 
 // RevokeApprovalRequestRequest struct for RevokeApprovalRequestRequest
 type RevokeApprovalRequestRequest struct {
-	// The email of the user who requested the approval.
+	// The initiator email of workflow approval request.
 	InitiatorEmail string `json:"initiator_email"`
 }
 

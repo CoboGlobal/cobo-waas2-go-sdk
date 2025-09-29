@@ -15,16 +15,16 @@ import (
 // checks if the RoleDetail type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RoleDetail{}
 
-// RoleDetail Details of the role in a transaction approval.
+// RoleDetail Transaction approval details response schema.
 type RoleDetail struct {
 	Result *ApprovalTransactionResult `json:"result,omitempty"`
-	// Minimum number of approvals required for this role.
+	// The threshold for the transaction approval.
 	ReviewThreshold *int32 `json:"review_threshold,omitempty"`
 	// The initiator of the transaction.
 	Initiator *string `json:"initiator,omitempty"`
 	// Indicates whether the transaction approval has been upgraded.
 	IsUpgraded *bool `json:"is_upgraded,omitempty"`
-	// Time when the role completed the approval.
+	// Time to complete the review.
 	CompleteTime *string `json:"complete_time,omitempty"`
 	UserDetails []ApprovalUserDetail `json:"user_details,omitempty"`
 }

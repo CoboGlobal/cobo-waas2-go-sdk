@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BusinessKey** | Pointer to **string** | Business key used to identify the type of approval template. | [optional] 
-**TemplateText** | Pointer to **string** | Text content defined in the approval template used to generate approval messages shown to users | [optional] 
-**TemplateVersion** | Pointer to **string** | Version of the approval template. | [optional] 
+**BusinessKey** | Pointer to **string** | The business key that is used to identify the transaction. | [optional] 
+**TemplateText** | Pointer to **string** | The template text that is used for the transaction approval. | [optional] 
+**TemplateVersion** | Pointer to **string** | The version of the template used for the transaction approval. | [optional] 
 
 ## Methods
 

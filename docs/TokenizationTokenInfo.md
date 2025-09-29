@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **TokenAddress** | Pointer to **string** | The address of the token contract. | [optional] 
 **TokenName** | Pointer to **string** | The name of the token. | [optional] 
 **TokenSymbol** | **string** | The unique token symbol. | 
+**TokenStandard** | [**TokenizationTokenStandard**](TokenizationTokenStandard.md) |  | 
 **Decimals** | **int32** | The number of decimals of the token. | 
 **TokenAccessActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. | [optional] 
 **Status** | [**TokenizationStatus**](TokenizationStatus.md) |  | 
@@ -19,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewTokenizationTokenInfo
 
-`func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, decimals int32, status TokenizationStatus, ) *TokenizationTokenInfo`
+`func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, ) *TokenizationTokenInfo`
 
 NewTokenizationTokenInfo instantiates a new TokenizationTokenInfo object
 This constructor will assign default values to properties that have it defined,
@@ -142,6 +143,26 @@ and a boolean to check if the value has been set.
 `func (o *TokenizationTokenInfo) SetTokenSymbol(v string)`
 
 SetTokenSymbol sets TokenSymbol field to given value.
+
+
+### GetTokenStandard
+
+`func (o *TokenizationTokenInfo) GetTokenStandard() TokenizationTokenStandard`
+
+GetTokenStandard returns the TokenStandard field if non-nil, zero value otherwise.
+
+### GetTokenStandardOk
+
+`func (o *TokenizationTokenInfo) GetTokenStandardOk() (*TokenizationTokenStandard, bool)`
+
+GetTokenStandardOk returns a tuple with the TokenStandard field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenStandard
+
+`func (o *TokenizationTokenInfo) SetTokenStandard(v TokenizationTokenStandard)`
+
+SetTokenStandard sets TokenStandard field to given value.
 
 
 ### GetDecimals

@@ -4,11 +4,11 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateAutoSweepTask**](AutoSweepAPI.md#CreateAutoSweepTask) | **Post** /auto_sweep/tasks | Create auto-sweep task
-[**CreateWalletSweepToAddresses**](AutoSweepAPI.md#CreateWalletSweepToAddresses) | **Post** /auto_sweep/sweep_to_addresses | create sweep-to address
-[**GetAutoSweepTaskById**](AutoSweepAPI.md#GetAutoSweepTaskById) | **Get** /auto_sweep/tasks/{task_id} | Get auto-sweep task details
-[**ListAutoSweepTask**](AutoSweepAPI.md#ListAutoSweepTask) | **Get** /auto_sweep/tasks | List auto-sweep tasks
-[**ListWalletSweepToAddresses**](AutoSweepAPI.md#ListWalletSweepToAddresses) | **Get** /auto_sweep/sweep_to_addresses | List sweep-to addresses
+[**CreateAutoSweepTask**](AutoSweepAPI.md#CreateAutoSweepTask) | **Post** /auto_sweep/tasks | create auto sweep task
+[**CreateWalletSweepToAddresses**](AutoSweepAPI.md#CreateWalletSweepToAddresses) | **Post** /auto_sweep/sweep_to_addresses | create wallet sweep to addresses
+[**GetAutoSweepTaskById**](AutoSweepAPI.md#GetAutoSweepTaskById) | **Get** /auto_sweep/tasks/{task_id} | Get auto sweep task information
+[**ListAutoSweepTask**](AutoSweepAPI.md#ListAutoSweepTask) | **Get** /auto_sweep/tasks | List wallet auto sweep task
+[**ListWalletSweepToAddresses**](AutoSweepAPI.md#ListWalletSweepToAddresses) | **Get** /auto_sweep/sweep_to_addresses | List wallet sweep to addresses
 
 
 
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 > AutoSweepTask CreateAutoSweepTask(ctx).CreateAutoSweepTask(createAutoSweepTask).Execute()
 
-Create auto-sweep task
+create auto sweep task
 
 
 
@@ -68,7 +68,7 @@ Other parameters are passed through a pointer to a apiCreateAutoSweepTaskRequest
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createAutoSweepTask** | [**CreateAutoSweepTask**](CreateAutoSweepTask.md) | The request body to create an auto-sweep task. | 
+ **createAutoSweepTask** | [**CreateAutoSweepTask**](CreateAutoSweepTask.md) | The request body to generates a new sweep to addresses within a specified wallet. | 
 
 ### Return type
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 > SweepToAddress CreateWalletSweepToAddresses(ctx).CreateSweepToAddress(createSweepToAddress).Execute()
 
-create sweep-to address
+create wallet sweep to addresses
 
 
 
@@ -144,7 +144,7 @@ Other parameters are passed through a pointer to a apiCreateWalletSweepToAddress
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createSweepToAddress** | [**CreateSweepToAddress**](CreateSweepToAddress.md) | The request body to generates a new sweep-to address within a specified wallet. | 
+ **createSweepToAddress** | [**CreateSweepToAddress**](CreateSweepToAddress.md) | The request body to generates a new sweep to addresses within a specified wallet. | 
 
 ### Return type
 
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 
 > AutoSweepTask GetAutoSweepTaskById(ctx, taskId).Execute()
 
-Get auto-sweep task details
+Get auto sweep task information
 
 
 
@@ -248,7 +248,7 @@ Name | Type | Description  | Notes
 
 > ListAutoSweepTask200Response ListAutoSweepTask(ctx).WalletId(walletId).TokenId(tokenId).TaskIds(taskIds).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).Limit(limit).Before(before).After(after).Direction(direction).Execute()
 
-List auto-sweep tasks
+List wallet auto sweep task
 
 
 
@@ -310,12 +310,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **walletId** | **string** | The wallet ID. | 
  **tokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
- **taskIds** | **string** | A list of auto-sweep task IDs, separated by comma. | 
- **minCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If not provided, the default value is 90 days before the current time. This default value is subject to change.  | 
- **maxCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If not provided, the default value is the current time. This default value is subject to change.  | 
+ **taskIds** | **string** | A list of auto sweep task IDs, separated by comma. | 
+ **minCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time. | 
+ **maxCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time. | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
- **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
- **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
  **direction** | **string** | The sort direction. Possible values include:   - &#x60;ASC&#x60;: Sort the results in ascending order.   - &#x60;DESC&#x60;: Sort the results in descending order.  | [default to &quot;ASC&quot;]
 
 ### Return type
@@ -340,7 +340,7 @@ Name | Type | Description  | Notes
 
 > ListWalletSweepToAddresses200Response ListWalletSweepToAddresses(ctx).WalletId(walletId).Execute()
 
-List sweep-to addresses
+List wallet sweep to addresses
 
 
 

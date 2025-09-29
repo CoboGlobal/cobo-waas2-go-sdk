@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BaseFee** | Pointer to **string** | A fixed fee charged per signature. The default is 5,000 lamports per signature. | [optional] 
-**RentAmount** | Pointer to **string** | The rent fee charged by the network to store non–rent-exempt accounts on-chain. It is deducted periodically until the account maintains the minimum balance required for rent exemption. | [optional] 
-**ComputeUnitPrice** | Pointer to **string** | The price paid per compute unit. This value determines the priority fee for the transaction, allowing you to increase inclusion probability in congested conditions. | [optional] 
-**ComputeUnitLimit** | Pointer to **string** | The maximum number of compute units your transaction is allowed to consume. It sets an upper bound on computational resource usage to prevent overload. | [optional] 
+**BaseFee** | Pointer to **string** | The fundamental fee required for each transaction. It is charged to prevent spam transactions and network congestion, ensuring that only meaningful transactions consume network resources. | [optional] 
+**RentAmount** | Pointer to **string** | The fee charged as rent for maintaining the state of accounts on the blockchain. This rent ensures accounts are stored on-chain over the long term and that there&#39;s sufficient balance to sustain the account state. | [optional] 
+**ComputeUnitPrice** | Pointer to **string** | The cost per compute unit. Transactions consume computational resources measured in compute units, and this price helps determine the cost of executing transactions, especially complex ones involving smart contracts. | [optional] 
+**ComputeUnitLimit** | Pointer to **string** | The maximum number of compute units allowed for a transaction. This limits the resources any single transaction can consume, preventing excessive resource usage that could impact network performance negatively. | [optional] 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**TokenId** | Pointer to **string** | The token used to pay the transaction fee. | [optional] 
-**FeeUsed** | Pointer to **string** | The actually charged transaction fee. | [optional] 
+**TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
+**FeeUsed** | Pointer to **string** | The transaction fee. | [optional] 
 **EstimatedFeeUsed** | Pointer to **string** | The estimated transaction fee. | [optional] 
 
 ## Methods

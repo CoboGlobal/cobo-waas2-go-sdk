@@ -19,17 +19,17 @@ var _ MappedNullable = &Account{}
 
 // Account Details of a payment account used for top-up operations, including address and balance metadata.
 type Account struct {
-	// The ID of the cryptocurrency that this account is configured to handle.
+	// The ID of the cryptocurrency.
 	TokenId string `json:"token_id"`
-	// The top-up address corresponding to the account.
+	// The token receiving address of the account.
 	Address string `json:"address"`
-	// The amount of merchant funds under this account.
+	// The merchant account balance, as a decimal string.
 	MerchantBalance string `json:"merchant_balance"`
-	// The amount of developer funds under this account.
+	// The PSP account balance, as a decimal string.
 	PspBalance string `json:"psp_balance"`
-	// The creation time of the account, in Unix timestamp format, measured in milliseconds.
+	// The time when the account was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
-	// The last update time of the account, in Unix timestamp format, measured in milliseconds.
+	// The time when the account was updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 }
 

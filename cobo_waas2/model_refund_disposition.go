@@ -17,17 +17,17 @@ import (
 // checks if the RefundDisposition type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RefundDisposition{}
 
-// RefundDisposition The information about a request to refund funds.
+// RefundDisposition The information about a fund refund disposition request.
 type RefundDisposition struct {
-	// The UUID of the transaction whose funds are to be refunded. This identifies the original transaction that requires refund processing.
+	// The UUID of the transaction to be refunded. This identifies the original transaction that requires refund processing.
 	TransactionId string `json:"transaction_id"`
-	// The blockchain address to receive the refunded funds.
+	// The blockchain address where the refunded funds will be sent.
 	DestinationAddress string `json:"destination_address"`
 	// The amount to be refunded from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction. 
 	DispositionAmount string `json:"disposition_amount"`
 	// Custom categories to identify and track this refund transaction. Used for transaction classification and reporting.
 	CategoryNames []string `json:"category_names,omitempty"`
-	// Additional notes or description for the refund.
+	// Additional notes or description for this refund disposition.
 	Description *string `json:"description,omitempty"`
 }
 

@@ -21,15 +21,15 @@ var _ MappedNullable = &PaymentWalletBalance{}
 type PaymentWalletBalance struct {
 	// The unique identifier of the wallet.
 	WalletId string `json:"wallet_id"`
-	// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`.
+	// The ID of the cryptocurrency.
 	TokenId string `json:"token_id"`
-	// The total amount of the token on the sweep-to address of the payment wallet.
+	// The payment wallet swept balance.
 	SweptBalance *string `json:"swept_balance,omitempty"`
-	// The balance available for settlement or refund, in the specified cryptocurrency.
+	// The payment wallet available balance.
 	AvailableBalance *string `json:"available_balance,omitempty"`
-	// The total balance of the token for the payment wallet.
+	// The payment wallet total balance.
 	TotalBalance *string `json:"total_balance,omitempty"`
-	// The total amount of funds that exceed the sweep threshold across all receiving addresses in the payment wallet. When the balance on a receiving address exceeds the sweep threshold, those funds become eligible for automatic sweeping and are included in this balance.
+	// The payment wallet above sweep threshold balance.
 	AboveSweepThresholdBalance *string `json:"above_sweep_threshold_balance,omitempty"`
 }
 

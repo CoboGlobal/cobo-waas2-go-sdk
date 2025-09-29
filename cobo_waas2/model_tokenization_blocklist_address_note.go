@@ -19,11 +19,11 @@ var _ MappedNullable = &TokenizationBlocklistAddressNote{}
 
 // TokenizationBlocklistAddressNote struct for TokenizationBlocklistAddressNote
 type TokenizationBlocklistAddressNote struct {
-	// The address on the blocklist.
+	// The allowed address.
 	Address string `json:"address"`
-	// The note for the address on the blocklist.
+	// The note for the allowed address.
 	Note *string `json:"note,omitempty"`
-	// The time when the address was added to the blocklist, in Unix timestamp format, measured in milliseconds.
+	// The time when the blocklist address was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 }
 

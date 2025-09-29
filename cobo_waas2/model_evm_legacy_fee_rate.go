@@ -20,7 +20,7 @@ var _ MappedNullable = &EvmLegacyFeeRate{}
 // EvmLegacyFeeRate The transaction fee rate based on the legacy fee model.
 type EvmLegacyFeeRate struct {
 	FeeType FeeType `json:"fee_type"`
-	// The token used to pay the transaction fee.
+	// The token ID of the transaction fee.
 	TokenId string `json:"token_id"`
 	Slow *EvmLegacyFeeBasePrice `json:"slow,omitempty"`
 	Recommended EvmLegacyFeeBasePrice `json:"recommended"`

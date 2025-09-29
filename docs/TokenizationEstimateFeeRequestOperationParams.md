@@ -12,16 +12,18 @@ Name | Type | Description | Notes
 **Mints** | [**[]TokenizationMintTokenParamsMintsInner**](TokenizationMintTokenParamsMintsInner.md) | Details for each token mint, including amount and address to mint to. | 
 **TokenId** | **string** | The ID of the token. | 
 **Burns** | [**[]TokenizationBurnTokenParamsBurnsInner**](TokenizationBurnTokenParamsBurnsInner.md) | Details for each token burn, including amount and address to burn from. | 
-**Action** | [**TokenizationUpdateAddressAction**](TokenizationUpdateAddressAction.md) |  | 
+**Action** | [**TokenizationPermissionAction**](TokenizationPermissionAction.md) |  | 
 **Addresses** | [**[]TokenizationUpdateBlocklistAddressesParamsAddressesInner**](TokenizationUpdateBlocklistAddressesParamsAddressesInner.md) | A list of addresses to manage. For &#39;add&#39; operations, notes can be provided. For &#39;remove&#39; operations, notes are ignored. | 
 **Activation** | **bool** | Whether to activate the allowlist feature for the token. | 
 **Data** | Pointer to [**TokenizationContractCallParamsData**](TokenizationContractCallParamsData.md) |  | [optional] 
+**Address** | **string** | The address to manage permissions for. | 
+**Permissions** | [**[]TokenizationTokenPermissionType**](TokenizationTokenPermissionType.md) | The list of permissions to operate on. | 
 
 ## Methods
 
 ### NewTokenizationEstimateFeeRequestOperationParams
 
-`func NewTokenizationEstimateFeeRequestOperationParams(chainId string, source TokenizationTokenOperationSource, tokenParams TokenizationIssueTokenParamsTokenParams, operationType TokenizationOperationType, mints []TokenizationMintTokenParamsMintsInner, tokenId string, burns []TokenizationBurnTokenParamsBurnsInner, action TokenizationUpdateAddressAction, addresses []TokenizationUpdateBlocklistAddressesParamsAddressesInner, activation bool, ) *TokenizationEstimateFeeRequestOperationParams`
+`func NewTokenizationEstimateFeeRequestOperationParams(chainId string, source TokenizationTokenOperationSource, tokenParams TokenizationIssueTokenParamsTokenParams, operationType TokenizationOperationType, mints []TokenizationMintTokenParamsMintsInner, tokenId string, burns []TokenizationBurnTokenParamsBurnsInner, action TokenizationPermissionAction, addresses []TokenizationUpdateBlocklistAddressesParamsAddressesInner, activation bool, address string, permissions []TokenizationTokenPermissionType, ) *TokenizationEstimateFeeRequestOperationParams`
 
 NewTokenizationEstimateFeeRequestOperationParams instantiates a new TokenizationEstimateFeeRequestOperationParams object
 This constructor will assign default values to properties that have it defined,
@@ -203,20 +205,20 @@ SetBurns sets Burns field to given value.
 
 ### GetAction
 
-`func (o *TokenizationEstimateFeeRequestOperationParams) GetAction() TokenizationUpdateAddressAction`
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetAction() TokenizationPermissionAction`
 
 GetAction returns the Action field if non-nil, zero value otherwise.
 
 ### GetActionOk
 
-`func (o *TokenizationEstimateFeeRequestOperationParams) GetActionOk() (*TokenizationUpdateAddressAction, bool)`
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetActionOk() (*TokenizationPermissionAction, bool)`
 
 GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAction
 
-`func (o *TokenizationEstimateFeeRequestOperationParams) SetAction(v TokenizationUpdateAddressAction)`
+`func (o *TokenizationEstimateFeeRequestOperationParams) SetAction(v TokenizationPermissionAction)`
 
 SetAction sets Action field to given value.
 
@@ -285,6 +287,46 @@ SetData sets Data field to given value.
 `func (o *TokenizationEstimateFeeRequestOperationParams) HasData() bool`
 
 HasData returns a boolean if a field has been set.
+
+### GetAddress
+
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetAddress() string`
+
+GetAddress returns the Address field if non-nil, zero value otherwise.
+
+### GetAddressOk
+
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetAddressOk() (*string, bool)`
+
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddress
+
+`func (o *TokenizationEstimateFeeRequestOperationParams) SetAddress(v string)`
+
+SetAddress sets Address field to given value.
+
+
+### GetPermissions
+
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetPermissions() []TokenizationTokenPermissionType`
+
+GetPermissions returns the Permissions field if non-nil, zero value otherwise.
+
+### GetPermissionsOk
+
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetPermissionsOk() (*[]TokenizationTokenPermissionType, bool)`
+
+GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPermissions
+
+`func (o *TokenizationEstimateFeeRequestOperationParams) SetPermissions(v []TokenizationTokenPermissionType)`
+
+SetPermissions sets Permissions field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

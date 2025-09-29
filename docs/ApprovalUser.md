@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Email** | **string** | The user email. | 
-**Name** | Pointer to **string** | The user name. | [optional] 
+**Email** | **string** | The approval user email. | 
+**Name** | Pointer to **string** | The approval user name. | [optional] 
 **Status** | [**ApprovalStatus**](ApprovalStatus.md) |  | 
 **CreatedTimestamp** | **int64** | The time when the approval was created, in Unix timestamp format, measured in milliseconds. | 
 

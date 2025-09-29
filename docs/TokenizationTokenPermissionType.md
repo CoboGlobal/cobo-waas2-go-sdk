@@ -11,6 +11,8 @@
 
 * `BURN_TOKENS` (value: `"BurnTokens"`)
 
+* `WRAP_TOKENS` (value: `"WrapTokens"`)
+
 * `RECOVER_TOKENS` (value: `"RecoverTokens"`)
 
 * `UPGRADE_CONTRACT` (value: `"UpgradeContract"`)

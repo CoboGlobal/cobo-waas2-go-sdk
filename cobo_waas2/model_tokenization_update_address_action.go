@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TokenizationUpdateAddressAction The operation to perform on the blocklist or allowlist.
+// TokenizationUpdateAddressAction The operation to perform on the blocklist or allowlist addresses list.
 type TokenizationUpdateAddressAction string
 
 // List of TokenizationUpdateAddressAction

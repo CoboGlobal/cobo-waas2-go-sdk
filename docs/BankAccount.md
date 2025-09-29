@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **BankAccountId** | **string** | The bank account ID. | 
 **Info** | **map[string]interface{}** | JSON-formatted bank account details. | 
-**CreatedTimestamp** | Pointer to **int32** | The creation time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The last update time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
 
 ## Methods
 

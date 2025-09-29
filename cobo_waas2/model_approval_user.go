@@ -17,11 +17,11 @@ import (
 // checks if the ApprovalUser type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApprovalUser{}
 
-// ApprovalUser The information of the user.
+// ApprovalUser The information of an app workflow approval user entry.
 type ApprovalUser struct {
-	// The user email.
+	// The approval user email.
 	Email string `json:"email"`
-	// The user name.
+	// The approval user name.
 	Name *string `json:"name,omitempty"`
 	Status ApprovalStatus `json:"status"`
 	// The time when the approval was created, in Unix timestamp format, measured in milliseconds.

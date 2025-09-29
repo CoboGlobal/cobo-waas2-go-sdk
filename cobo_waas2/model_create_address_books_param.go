@@ -17,7 +17,7 @@ import (
 // checks if the CreateAddressBooksParam type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateAddressBooksParam{}
 
-// CreateAddressBooksParam The request body to add addresses in batches to your Address Book.
+// CreateAddressBooksParam The request body to batch create address book.
 type CreateAddressBooksParam struct {
 	AddressBooks []CreateAddressBookParam `json:"address_books"`
 }

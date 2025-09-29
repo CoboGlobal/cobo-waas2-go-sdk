@@ -17,13 +17,13 @@ import (
 // checks if the AppWorkflow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AppWorkflow{}
 
-// AppWorkflow The information of an approval workflow
+// AppWorkflow The information of an app workflow approval user entry.
 type AppWorkflow struct {
-	// The unique ID distinguishing the approval workflow instance among organizations.
+	// The workflow id.
 	WorkflowId string `json:"workflow_id"`
-	// The unique ID of the approval workflow.
+	// The workflow operation id.
 	OperationId string `json:"operation_id"`
-	// The name of the approval workflow.
+	// The workflow operation name.
 	OperationName string `json:"operation_name"`
 	CurrentPolicies []AppWorkflowPolicy `json:"current_policies"`
 }

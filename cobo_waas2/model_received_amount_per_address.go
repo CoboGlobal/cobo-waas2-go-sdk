@@ -17,11 +17,11 @@ import (
 // checks if the ReceivedAmountPerAddress type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ReceivedAmountPerAddress{}
 
-// ReceivedAmountPerAddress The total amount of the token that has been received at a given address.
+// ReceivedAmountPerAddress Total amount of a specific token received at a given address.
 type ReceivedAmountPerAddress struct {
-	// The receiving address.
+	// Receiving address.
 	Address string `json:"address"`
-	// The total amount of the token that has been received at this address.
+	// Total tokens received at this address, as a decimal string.
 	TotalReceivedAmount string `json:"total_received_amount"`
 }
 

@@ -17,9 +17,8 @@ import (
 // checks if the ApprovalRequestDetail type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ApprovalRequestDetail{}
 
-// ApprovalRequestDetail The information of an approval request detail.
+// ApprovalRequestDetail The information of an app workflow approval detail.
 type ApprovalRequestDetail struct {
-	// The system-generated unique ID of the approval request.
 	ApprovalId *string `json:"approval_id,omitempty"`
 	Initiator ApprovalUser `json:"initiator"`
 	ApprovedList []ApprovalEntry `json:"approved_list,omitempty"`
