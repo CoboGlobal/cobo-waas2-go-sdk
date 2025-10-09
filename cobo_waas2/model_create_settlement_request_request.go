@@ -29,6 +29,8 @@ type CreateSettlementRequestRequest struct {
 	BankAccountId *string `json:"bank_account_id,omitempty"`
 	// The fiat currency for the settlement request.
 	Currency *string `json:"currency,omitempty"`
+	// The remark for the settlement request.
+	Remark *string `json:"remark,omitempty"`
 }
 
 type _CreateSettlementRequestRequest CreateSettlementRequestRequest
@@ -260,6 +262,38 @@ func (o *CreateSettlementRequestRequest) SetCurrency(v string) {
 	o.Currency = &v
 }
 
+// GetRemark returns the Remark field value if set, zero value otherwise.
+func (o *CreateSettlementRequestRequest) GetRemark() string {
+	if o == nil || IsNil(o.Remark) {
+		var ret string
+		return ret
+	}
+	return *o.Remark
+}
+
+// GetRemarkOk returns a tuple with the Remark field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlementRequestRequest) GetRemarkOk() (*string, bool) {
+	if o == nil || IsNil(o.Remark) {
+		return nil, false
+	}
+	return o.Remark, true
+}
+
+// HasRemark returns a boolean if a field has been set.
+func (o *CreateSettlementRequestRequest) HasRemark() bool {
+	if o != nil && !IsNil(o.Remark) {
+		return true
+	}
+
+	return false
+}
+
+// SetRemark gets a reference to the given string and assigns it to the Remark field.
+func (o *CreateSettlementRequestRequest) SetRemark(v string) {
+	o.Remark = &v
+}
+
 func (o CreateSettlementRequestRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -286,6 +320,9 @@ func (o CreateSettlementRequestRequest) ToMap() (map[string]interface{}, error) 
 	}
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.Remark) {
+		toSerialize["remark"] = o.Remark
 	}
 	return toSerialize, nil
 }

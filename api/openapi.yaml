@@ -8377,6 +8377,47 @@ paths:
       summary: Estimate transaction fee
       tags:
       - FeeStation
+  /fee_station/check_fee_station_usage:
+    post:
+      description: "This operation evaluates the fee station usage for the current\
+        \ transaction. \n\nIt determines whether the fee station needs to be applied,\
+        \ checks if the available fee station balance is sufficient, \n\nand returns\
+        \ a detailed breakdown of the amounts involved, including any portion that\
+        \ must be covered by the user or sponsored in USDT (U)..\n"
+      operationId: check_fee_station_usage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeeStationCheckFeeStationUsage'
+        description: The information about a fee station pre transfer.
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeStationCheckFeeStationUsageResponse'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.estimate_fee
+      summary: fee station pre check
+      tags:
+      - FeeStation
   /swaps/activities:
     get:
       description: |
@@ -9108,6 +9149,16 @@ paths:
         required: false
         schema:
           description: The keyword.
+          type: string
+        style: form
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: wallet_id
+        required: false
+        schema:
+          format: uuid
           type: string
         style: form
       - description: |
@@ -11502,6 +11553,36 @@ paths:
       summary: Get subscription by id
       tags:
       - Payment
+  /payments/links/orders:
+    post:
+      description: |
+        This operation creates a payment link of a pay-in order.
+      operationId: create_order_link
+      requestBody:
+        $ref: '#/components/requestBodies/createPaymentOrderLinkRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+          description: Infos of a newly initiated payment link.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Create order link
+      tags:
+      - Payment
   /tokenization/activities:
     get:
       description: |
@@ -11894,6 +11975,8 @@ paths:
       description: |
         This operation mints new tokens to a specified address.
         Creates a mint transaction that will increase the token supply.
+
+        **Note**: This operation is not supported for CoboERC20Wrapper tokens.
       operationId: mint_tokenization
       parameters:
       - description: "The token ID, which is the unique identifier of a token."
@@ -11939,6 +12022,8 @@ paths:
       description: |
         This operation burns tokens from a specified address.
         Creates a burn transaction that will decrease the token supply.
+
+        **Note**: This operation is not supported for CoboERC20Wrapper tokens.
       operationId: burn_tokenization
       parameters:
       - description: "The token ID, which is the unique identifier of a token."
@@ -15798,6 +15883,12 @@ components:
           schema:
             $ref: '#/components/schemas/PaymentCreateSubscriptionPlan'
       description: The request body to create subscription plan.
+    createPaymentOrderLinkRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_order_link_request'
+      description: The request body to create a payment link of a pay-in order.
     estimateFeeStationFeeBody:
       content:
         application/json:
@@ -16920,6 +17011,12 @@ components:
           schema:
             $ref: '#/components/schemas/PaymentSubscriptionDetail'
       description: The request was successful.
+    createPaymentLinkResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Link'
+      description: Infos of a newly initiated payment link.
     createDispositionResponse:
       content:
         application/json:
@@ -19491,6 +19588,7 @@ components:
         status: Submitted
         fueling_info:
           transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
           request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         transaction_id:
@@ -19754,6 +19852,7 @@ components:
         status: Submitted
         fueling_info:
           transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
           request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
     TransactionApprover:
       description: The approver data for transaction.
@@ -21538,6 +21637,7 @@ components:
         current transaction.
       example:
         transaction_id: b0530b27-104f-4338-87de-de01500326ea
+        main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
         request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         request_id:
@@ -21546,6 +21646,13 @@ components:
           type: string
         transaction_id:
           description: The transaction ID.
+          example: b0530b27-104f-4338-87de-de01500326ea
+          format: uuid
+          type: string
+        main_transaction_id:
+          description: The UUID of the parent (main) transaction that this record
+            is associated with. Set only when the current record is a gas/fee transaction
+            initiated by FeeStation; omit for main transactions.
           example: b0530b27-104f-4338-87de-de01500326ea
           format: uuid
           type: string
@@ -23526,6 +23633,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         created_timestamp: 1701396866000
         type: wallets.transaction.created
@@ -23752,6 +23860,7 @@ components:
         status: Submitted
         fueling_info:
           transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
           request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       title: Transaction
     TSSRequestWebhookEventData:
@@ -24183,6 +24292,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
@@ -26475,6 +26585,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         updated_timestamp: 1640918000000
         created_timestamp: 1640918000000
@@ -27594,6 +27705,118 @@ components:
           type: string
       required:
       - amount
+      type: object
+    FeeStationGasStationType:
+      description: "The fee station mode used for automatic gas payment:\n- `FeeStation`:\
+        \ The client uses their own Fee Station balance to cover the gas fee. \n-\
+        \ `CoboOperationStation`: Cobo covers the gas fee on behalf of the client.\n"
+      enum:
+      - FeeStation
+      - CoboOperationStation
+      example: CoboOperationStation
+      type: string
+    FeeStationCheckFeeStationUsage:
+      description: The information about a check fee station usage.
+      example:
+        amount: "100.5"
+        token_id: ETH_USDT
+        estimated_fee_amount: "0.0021"
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        from_address: 0x1234567890abcdef1234567890abcdef12345678
+        from_wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      properties:
+        request_id:
+          description: The request ID that is used to track a transaction request.
+            The request ID is provided by you and must be unique within your organization.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        amount:
+          description: The amount of tokens to be transferred in this request.
+          example: "100.5"
+          type: string
+        token_id:
+          description: "The token ID of the transferred token. You can retrieve the\
+            \ IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH_USDT
+          type: string
+        estimated_fee_amount:
+          description: "The estimated transaction fee required for this transfer,\
+            \ before applying any fee station rules."
+          example: "0.0021"
+          type: string
+        from_address:
+          description: The blockchain address that initiates the transfer.
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        from_wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+      required:
+      - amount
+      - estimated_fee_amount
+      - from_address
+      - from_wallet_id
+      - request_id
+      - token_id
+      type: object
+    FeeStationCheckFeeStationUsageResponse:
+      description: The fee station evaluation result for the transfer request.
+      example:
+        token_id: ETH
+        is_balance_sufficient: false
+        balance: "0.0021"
+        gas_station_type: CoboOperationStation
+        is_sponsor_applicable: true
+        sponsored_fee_amount: "0.0021"
+        total_fee_amount: "0.0021"
+        is_fee_station_applicable: true
+      properties:
+        token_id:
+          description: "The token used to pay the gas fee for this specific transaction.\
+            \ You can retrieve the IDs of all supported tokens by calling [List enabled\
+            \ tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH
+          type: string
+        gas_station_type:
+          $ref: '#/components/schemas/FeeStationGasStationType'
+        is_fee_station_applicable:
+          description: Indicates whether the fee station is applied for this transfer
+            request.
+          example: true
+          type: boolean
+        is_balance_sufficient:
+          description: "If the fee station is used, indicates whether its balance\
+            \ is sufficient to cover the required gas fee."
+          example: false
+          type: boolean
+        balance:
+          description: The current token balance available in the fee station.
+          example: "0.0021"
+          type: string
+        total_fee_amount:
+          description: The total gas amount required for this transfer request.
+          example: "0.0021"
+          type: string
+        is_sponsor_applicable:
+          description: Indicates whether USDT (U) sponsorship is applied when the
+            fee station balance is insufficient.
+          example: true
+          type: boolean
+        sponsored_fee_amount:
+          description: The amount of gas fee sponsored by USDT (U) when applicable.
+          example: "0.0021"
+          type: string
+      required:
+      - balance
+      - gas_station_type
+      - is_balance_sufficient
+      - is_fee_station_applicable
+      - is_sponsor_applicable
+      - sponsored_fee_amount
+      - token_id
+      - total_fee_amount
       type: object
     BankAccount:
       example:
@@ -29609,6 +29832,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         - is_loop: false
           chain_id: ETH
@@ -29704,6 +29928,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         actions:
         - subscription_id: 123e457-e89b-12d3-a456-426614174004
@@ -29898,6 +30123,137 @@ components:
           description: The periods needed updated.
           example: 18
           type: integer
+      type: object
+    Link:
+      example:
+        url: https://checkout.cobo.com/payment
+        token: 01EJ5QW8KtSBesqnRZsmadPgihYf754OnVnNhimKKBi6QQO5PNyr9EXPyFRJGGOF
+      properties:
+        url:
+          description: |
+            The base URL of the payment page. This URL should be combined with the token parameter to form the complete payment link.
+
+            Example: `https://checkout.cobo.com/payment`
+          example: https://checkout.cobo.com/payment
+          format: uri
+          type: string
+        token:
+          description: |
+            The unique payment token that should be appended to the URL as a query parameter. This token authenticates and identifies the specific payment session.
+
+            The complete payment link should be constructed as: `[url]?token=[token]`
+          example: 01EJ5QW8KtSBesqnRZsmadPgihYf754OnVnNhimKKBi6QQO5PNyr9EXPyFRJGGOF
+          type: string
+      required:
+      - token
+      - url
+      type: object
+    LinkDisplayInfo:
+      properties:
+        developer_name:
+          description: |
+            Optional display name for the developer/platform. This name may be shown to end users during the payment process.
+          example: Acme Payment Solutions
+          maxLength: 128
+          type: string
+        logo:
+          description: "Optional URL to the developer's logo image. The logo may be\
+            \ displayed to end users during the payment process. \nSupported formats:\
+            \ PNG, JPG, SVG. Maximum file size: 2MB.\n"
+          example: https://example.com/logo.png
+          format: uri
+          type: string
+      type: object
+    OrderLinkBusinessInfo:
+      properties:
+        token_ids:
+          description: |
+            List of supported cryptocurrency token IDs for this payment. Each token ID must be from the supported values.
+          example:
+          - ETH_USDT
+          - SOL_USDC
+          - TRON_USDT
+          items:
+            example: ETH_USDT
+            type: string
+          type: array
+        custom_exchange_rates:
+          description: |
+            Optional list of final exchange rates for different tokens. If provided, these rates will be used instead of real-time market rates.
+          example:
+          - token_id: ETH_USDT
+            exchange_rate: "0.99"
+          - token_id: SOL_USDC
+            exchange_rate: "1.02"
+          items:
+            $ref: '#/components/schemas/OrderLinkBusinessInfo_custom_exchange_rates_inner'
+          type: array
+        currency:
+          default: ""
+          description: |
+            The fiat currency for the base order amount and the developer fee. Currently, only `USD` is supported.
+
+            If left empty, both `order_amount` and `fee_amount` will be denominated in the cryptocurrency specified by `token_id`
+          example: USD
+          type: string
+        fee_amount:
+          description: "The developer fee for the order, in the currency specified\
+            \ by `currency`. If `currency` is not specified, the fee is in the cryptocurrency\
+            \ specified by `token_id`.\n\nIf you are a merchant directly serving payers,\
+            \ set this field to `0`. Developer fees are only relevant for platforms\
+            \ like payment service providers (PSPs) that charge fees to their downstream\
+            \ merchants.\n\nThe developer fee is added to the base amount (`order_amount`)\
+            \ to determine the final charge. For example:\n- Base amount (`order_amount`):\
+            \ \"100.00\"\n- Developer fee (`fee_amount`): \"2.00\" \n- Total charged\
+            \ to customer: \"102.00\"\n\nValues can contain up to two decimal places.\n"
+          example: "2.00"
+          type: string
+        merchant_id:
+          description: The merchant ID.
+          example: "1001"
+          type: string
+        order_amount:
+          description: "The base amount of the order, excluding the developer fee\
+            \ (specified in `fee_amount`), in the currency specified by `currency`.\
+            \ If `currency` is not specified, the amount is in the cryptocurrency\
+            \ specified by `token_id`. \n\nValues must be greater than `0` and contain\
+            \ two decimal places. \n"
+          example: "100.00"
+          type: string
+        merchant_order_code:
+          description: A unique reference code assigned by the merchant to identify
+            this order in their system. The code should have a maximum length of 128
+            characters.
+          example: M20240201001
+          type: string
+        psp_order_code:
+          description: |
+            A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters.
+          example: P20240201001
+          type: string
+        expired_in:
+          default: 1800
+          description: |
+            The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:
+
+            - The order status becomes final and cannot be changed
+            - The `received_token_amount` field will no longer be updated
+            - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance.
+            - A late payment will trigger a `transactionLate` webhook event.
+          example: 1800
+          type: integer
+        use_dedicated_address:
+          description: "Whether to allocate a dedicated address for this order. \n\
+            - `true`: A dedicated address will be allocated for this order.\n- `false`:\
+            \ A shared address from the address pool will be used.\n"
+          example: false
+          type: boolean
+      required:
+      - fee_amount
+      - merchant_id
+      - order_amount
+      - psp_order_code
+      - token_ids
       type: object
     DispositionStatus:
       description: The status of a disposition operation.
@@ -31432,11 +31788,6 @@ components:
           description: The symbol of the token.
           example: MAT
           type: string
-        decimals:
-          description: The number of decimals for the token.
-          example: 18
-          format: int32
-          type: integer
         permissions:
           $ref: '#/components/schemas/TokenizationERC20WrappedTokenPermissionParams'
         token_access_activated:
@@ -31489,6 +31840,31 @@ components:
       - name
       - standard
       - symbol
+      type: object
+    TokenizationSOLWrappedTokenParams:
+      properties:
+        standard:
+          $ref: '#/components/schemas/TokenizationTokenStandard'
+        name:
+          description: The name of the token.
+          example: My Awesome Token
+          type: string
+        symbol:
+          description: The symbol of the token.
+          example: MAT
+          type: string
+        permissions:
+          $ref: '#/components/schemas/TokenizationSolWrappedTokenPermissionParams'
+        underlying_token:
+          description: The address of the underlying token that this tokenized asset
+            represents.
+          example: 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          type: string
+      required:
+      - name
+      - standard
+      - symbol
+      - underlying_token
       type: object
     TokenizationEstimateFeeRequest:
       example:
@@ -32169,6 +32545,30 @@ components:
           example: 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
           type: string
       type: object
+    TokenizationSolWrappedTokenPermissionParams:
+      description: Role-based permission settings for Solana wrapped token. The owner
+        is automatically set to the address that calls the initialize function (typically
+        the issuance wallet) and cannot be specified here. Only wrapper and pauser
+        roles can be configured during initialization.
+      properties:
+        wrapper:
+          description: List of Solana wallet addresses that can perform wrap/unwrap
+            operations. Multiple addresses can be assigned this role.
+          example:
+          - 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          - 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
+          items:
+            type: string
+          type: array
+        pauser:
+          description: List of Solana wallet addresses that can pause/unpause the
+            contract. Multiple addresses can be assigned this role.
+          example:
+          - 9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM
+          items:
+            type: string
+          type: array
+      type: object
     TokenizationTokenPermissionType:
       description: |
         The type of permission for token operations. Each permission grants specific capabilities:
@@ -32219,6 +32619,7 @@ components:
       - ERC20
       - SPLToken2022
       - ERC20Wrapper
+      - SOLWrapper
       example: ERC20
       type: string
     TokenizationOperationType:
@@ -34055,6 +34456,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         - is_loop: false
           chain_id: ETH
@@ -34150,6 +34552,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         data:
@@ -34714,6 +35117,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
@@ -34818,6 +35222,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
@@ -34938,6 +35343,7 @@ components:
               status: Submitted
               fueling_info:
                 transaction_id: b0530b27-104f-4338-87de-de01500326ea
+                main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
                 request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
             created_timestamp: 1701396866000
             type: wallets.transaction.created
@@ -35051,6 +35457,7 @@ components:
               status: Submitted
               fueling_info:
                 transaction_id: b0530b27-104f-4338-87de-de01500326ea
+                main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
                 request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
             created_timestamp: 1701396866000
             type: wallets.transaction.created
@@ -35812,6 +36219,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           updated_timestamp: 1640918000000
           created_timestamp: 1640918000000
@@ -35917,6 +36325,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           updated_timestamp: 1640918000000
           created_timestamp: 1640918000000
@@ -36897,6 +37306,15 @@ components:
             \ order. \nIf false, a shared address from the address pool will be used.\n"
           example: false
           type: boolean
+        custom_exchange_rate:
+          description: "A custom exchange rate specified by the merchant.  \n- Only\
+            \ effective when `currency` is `\"USD\"`.  \n- Expressed as the amount\
+            \ of USD per 1 unit of the specified cryptocurrency.  \n- If not provided,\
+            \ the system will use the default internal rate.  \nExample: If the cryptocurrency\
+            \ is USDT and `custom_exchange_rate` = `\"0.99\"`, it means 1 USDT = 0.99\
+            \ USD.\n"
+          example: "1.00"
+          type: string
       required:
       - fee_amount
       - merchant_id
@@ -37303,6 +37721,10 @@ components:
         currency:
           description: The fiat currency for the settlement request.
           example: USD
+          type: string
+        remark:
+          description: The remark for the settlement request.
+          example: Settlement request for customer 123
           type: string
       required:
       - request_id
@@ -37886,6 +38308,15 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
+    create_order_link_request:
+      properties:
+        business_info:
+          $ref: '#/components/schemas/OrderLinkBusinessInfo'
+        display_info:
+          $ref: '#/components/schemas/LinkDisplayInfo'
+      required:
+      - business_info
+      type: object
     list_tokenization_blocklist_addresses_200_response:
       example:
         pagination:
@@ -38420,6 +38851,20 @@ components:
       required:
       - type
       type: object
+    OrderLinkBusinessInfo_custom_exchange_rates_inner:
+      properties:
+        token_id:
+          description: The cryptocurrency token ID
+          example: ETH_USDT
+          type: string
+        exchange_rate:
+          description: The fixed exchange rate to use for this token
+          example: "0.99"
+          type: string
+      required:
+      - exchange_rate
+      - token_id
+      type: object
     TokenizationUpdateAllowlistAddressesParams_addresses_inner:
       properties:
         address:
@@ -38471,11 +38916,13 @@ components:
           ERC20: '#/components/schemas/TokenizationERC20TokenParams'
           SPLToken2022: '#/components/schemas/TokenizationSOLTokenParams'
           ERC20Wrapper: '#/components/schemas/TokenizationERC20WrappedTokenParams'
+          SOLWrapper: '#/components/schemas/TokenizationSOLWrappedTokenParams'
         propertyName: standard
       oneOf:
       - $ref: '#/components/schemas/TokenizationERC20TokenParams'
       - $ref: '#/components/schemas/TokenizationERC20WrappedTokenParams'
       - $ref: '#/components/schemas/TokenizationSOLTokenParams'
+      - $ref: '#/components/schemas/TokenizationSOLWrappedTokenParams'
     TokenizationEstimateFeeRequest_operation_params:
       discriminator:
         mapping:

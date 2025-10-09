@@ -672,6 +672,136 @@ func (a *PaymentAPIService) CreateMerchantExecute(r ApiCreateMerchantRequest) (*
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiCreateOrderLinkRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	createOrderLinkRequest *CreateOrderLinkRequest
+}
+
+// The request body to create a payment link of a pay-in order.
+func (r ApiCreateOrderLinkRequest) CreateOrderLinkRequest(createOrderLinkRequest CreateOrderLinkRequest) ApiCreateOrderLinkRequest {
+	r.createOrderLinkRequest = &createOrderLinkRequest
+	return r
+}
+
+func (r ApiCreateOrderLinkRequest) Execute() (*Link, *http.Response, error) {
+	return r.ApiService.CreateOrderLinkExecute(r)
+}
+
+/*
+CreateOrderLink Create order link
+
+This operation creates a payment link of a pay-in order.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateOrderLinkRequest
+*/
+func (a *PaymentAPIService) CreateOrderLink(ctx context.Context) ApiCreateOrderLinkRequest {
+	return ApiCreateOrderLinkRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return Link
+func (a *PaymentAPIService) CreateOrderLinkExecute(r ApiCreateOrderLinkRequest) (*Link, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Link
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.CreateOrderLink")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/links/orders"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrderLinkRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreatePaymentOrderRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
@@ -3579,6 +3709,7 @@ type ApiListMerchantsRequest struct {
 	before *string
 	after *string
 	keyword *string
+	walletId *string
 	walletSetup *WalletSetup
 }
 
@@ -3603,6 +3734,12 @@ func (r ApiListMerchantsRequest) After(after string) ApiListMerchantsRequest {
 // A search term used for fuzzy matching of merchant names.
 func (r ApiListMerchantsRequest) Keyword(keyword string) ApiListMerchantsRequest {
 	r.keyword = &keyword
+	return r
+}
+
+// The wallet ID.
+func (r ApiListMerchantsRequest) WalletId(walletId string) ApiListMerchantsRequest {
+	r.walletId = &walletId
 	return r
 }
 
@@ -3669,6 +3806,9 @@ func (a *PaymentAPIService) ListMerchantsExecute(r ApiListMerchantsRequest) (*Li
 	}
 	if r.keyword != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "keyword", r.keyword, "")
+	}
+	if r.walletId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_id", r.walletId, "")
 	}
 	if r.walletSetup != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "wallet_setup", r.walletSetup, "")

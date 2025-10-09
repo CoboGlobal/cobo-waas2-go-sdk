@@ -4,12 +4,89 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CheckFeeStationUsage**](FeeStationAPI.md#CheckFeeStationUsage) | **Post** /fee_station/check_fee_station_usage | fee station pre check
 [**EstimateFeeStationFee**](FeeStationAPI.md#EstimateFeeStationFee) | **Post** /fee_station/transactions/estimate_fee | Estimate transaction fee
 [**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get Fee Station transaction information
 [**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List Fee Station addresses
 [**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all Fee Station transactions
 [**ListTokenBalancesForFeeStation**](FeeStationAPI.md#ListTokenBalancesForFeeStation) | **Get** /fee_station/tokens | List Fee Station token balances
 
+
+
+## CheckFeeStationUsage
+
+> FeeStationCheckFeeStationUsageResponse CheckFeeStationUsage(ctx).FeeStationCheckFeeStationUsage(feeStationCheckFeeStationUsage).Execute()
+
+fee station pre check
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	feeStationCheckFeeStationUsage := *coboWaas2.NewFeeStationCheckFeeStationUsage("f47ac10b-58cc-4372-a567-0e02b2c3d479", "100.5", "ETH_USDT", "0.0021", "0x1234567890abcdef1234567890abcdef12345678", "f47ac10b-58cc-4372-a567-0e02b2c3d479")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.FeeStationAPI.CheckFeeStationUsage(ctx).FeeStationCheckFeeStationUsage(feeStationCheckFeeStationUsage).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `FeeStationAPI.CheckFeeStationUsage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CheckFeeStationUsage`: FeeStationCheckFeeStationUsageResponse
+	fmt.Fprintf(os.Stdout, "Response from `FeeStationAPI.CheckFeeStationUsage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCheckFeeStationUsageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **feeStationCheckFeeStationUsage** | [**FeeStationCheckFeeStationUsage**](FeeStationCheckFeeStationUsage.md) | The information about a fee station pre transfer. | 
+
+### Return type
+
+[**FeeStationCheckFeeStationUsageResponse**](FeeStationCheckFeeStationUsageResponse.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## EstimateFeeStationFee

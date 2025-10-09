@@ -151,6 +151,7 @@ docs/CreateMerchantRequest.md
 docs/CreateMpcProjectRequest.md
 docs/CreateMpcVaultRequest.md
 docs/CreateMpcWalletParams.md
+docs/CreateOrderLinkRequest.md
 docs/CreatePaymentOrderRequest.md
 docs/CreatePrimeBrokerAddress201Response.md
 docs/CreatePrimeBrokerAddressRequest.md
@@ -249,7 +250,10 @@ docs/FeeGasLimit.md
 docs/FeeRate.md
 docs/FeeReserved.md
 docs/FeeStationAPI.md
+docs/FeeStationCheckFeeStationUsage.md
+docs/FeeStationCheckFeeStationUsageResponse.md
 docs/FeeStationDestination.md
+docs/FeeStationGasStationType.md
 docs/FeeStationTransactionType.md
 docs/FeeStationTransfer.md
 docs/FeeType.md
@@ -287,6 +291,8 @@ docs/KytScreeningsEventData.md
 docs/KytScreeningsReviewType.md
 docs/KytScreeningsTransaction.md
 docs/KytScreeningsTransactionType.md
+docs/Link.md
+docs/LinkDisplayInfo.md
 docs/ListAddressBalancesByToken200Response.md
 docs/ListAddressBooks200Response.md
 docs/ListAddresses200Response.md
@@ -366,6 +372,8 @@ docs/MpcStakeSource.md
 docs/MpcTransferSource.md
 docs/OAuthAPI.md
 docs/Order.md
+docs/OrderLinkBusinessInfo.md
+docs/OrderLinkBusinessInfoCustomExchangeRatesInner.md
 docs/OrderStatus.md
 docs/OrgInfo.md
 docs/OrganizationsAPI.md
@@ -601,8 +609,10 @@ docs/TokenizationPauseTokenParams.md
 docs/TokenizationPauseTokenRequest.md
 docs/TokenizationPermissionAction.md
 docs/TokenizationSOLTokenParams.md
+docs/TokenizationSOLWrappedTokenParams.md
 docs/TokenizationSolContractCallParams.md
 docs/TokenizationSolTokenPermissionParams.md
+docs/TokenizationSolWrappedTokenPermissionParams.md
 docs/TokenizationStatus.md
 docs/TokenizationToggleAllowlistEstimateFeeParams.md
 docs/TokenizationTokenDetailInfo.md
@@ -896,6 +906,7 @@ model_create_merchant_request.go
 model_create_mpc_project_request.go
 model_create_mpc_vault_request.go
 model_create_mpc_wallet_params.go
+model_create_order_link_request.go
 model_create_payment_order_request.go
 model_create_prime_broker_address_201_response.go
 model_create_prime_broker_address_request.go
@@ -989,7 +1000,10 @@ model_fee_amount.go
 model_fee_gas_limit.go
 model_fee_rate.go
 model_fee_reserved.go
+model_fee_station_check_fee_station_usage.go
+model_fee_station_check_fee_station_usage_response.go
 model_fee_station_destination.go
+model_fee_station_gas_station_type.go
 model_fee_station_transaction_type.go
 model_fee_station_transfer.go
 model_fee_type.go
@@ -1028,6 +1042,8 @@ model_kyt_screenings_event_data.go
 model_kyt_screenings_review_type.go
 model_kyt_screenings_transaction.go
 model_kyt_screenings_transaction_type.go
+model_link.go
+model_link_display_info.go
 model_list_address_balances_by_token_200_response.go
 model_list_address_books_200_response.go
 model_list_addresses_200_response.go
@@ -1106,6 +1122,8 @@ model_mpc_vault_event_data.go
 model_mpc_vault_type.go
 model_mpc_wallet_info.go
 model_order.go
+model_order_link_business_info.go
+model_order_link_business_info_custom_exchange_rates_inner.go
 model_order_status.go
 model_org_info.go
 model_otc_fee.go
@@ -1297,6 +1315,8 @@ model_tokenization_permission_action.go
 model_tokenization_sol_contract_call_params.go
 model_tokenization_sol_token_params.go
 model_tokenization_sol_token_permission_params.go
+model_tokenization_sol_wrapped_token_params.go
+model_tokenization_sol_wrapped_token_permission_params.go
 model_tokenization_status.go
 model_tokenization_toggle_allowlist_estimate_fee_params.go
 model_tokenization_token_detail_info.go
