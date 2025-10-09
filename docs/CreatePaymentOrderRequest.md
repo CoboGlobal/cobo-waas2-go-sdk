@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **PspOrderCode** | **string** | A unique reference code assigned by the developer to identify this order in their system. | 
 **ExpiredIn** | Pointer to **int32** | The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] 
 **UseDedicatedAddress** | Pointer to **bool** | Indicates whether to allocate a dedicated address for this order.  If false, a shared address from the address pool will be used.  | [optional] 
+**CustomExchangeRate** | Pointer to **string** | A custom exchange rate specified by the merchant.   - Only effective when &#x60;currency&#x60; is &#x60;\&quot;USD\&quot;&#x60;.   - Expressed as the amount of USD per 1 unit of the specified cryptocurrency.   - If not provided, the system will use the default internal rate.   Example: If the cryptocurrency is USDT and &#x60;custom_exchange_rate&#x60; &#x3D; &#x60;\&quot;0.99\&quot;&#x60;, it means 1 USDT &#x3D; 0.99 USD.  | [optional] 
 
 ## Methods
 
@@ -232,6 +233,31 @@ SetUseDedicatedAddress sets UseDedicatedAddress field to given value.
 `func (o *CreatePaymentOrderRequest) HasUseDedicatedAddress() bool`
 
 HasUseDedicatedAddress returns a boolean if a field has been set.
+
+### GetCustomExchangeRate
+
+`func (o *CreatePaymentOrderRequest) GetCustomExchangeRate() string`
+
+GetCustomExchangeRate returns the CustomExchangeRate field if non-nil, zero value otherwise.
+
+### GetCustomExchangeRateOk
+
+`func (o *CreatePaymentOrderRequest) GetCustomExchangeRateOk() (*string, bool)`
+
+GetCustomExchangeRateOk returns a tuple with the CustomExchangeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomExchangeRate
+
+`func (o *CreatePaymentOrderRequest) SetCustomExchangeRate(v string)`
+
+SetCustomExchangeRate sets CustomExchangeRate field to given value.
+
+### HasCustomExchangeRate
+
+`func (o *CreatePaymentOrderRequest) HasCustomExchangeRate() bool`
+
+HasCustomExchangeRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

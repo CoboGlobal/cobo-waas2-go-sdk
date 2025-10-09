@@ -24,8 +24,6 @@ type TokenizationERC20WrappedTokenParams struct {
 	Name string `json:"name"`
 	// The symbol of the token.
 	Symbol string `json:"symbol"`
-	// The number of decimals for the token.
-	Decimals int32 `json:"decimals"`
 	Permissions *TokenizationERC20WrappedTokenPermissionParams `json:"permissions,omitempty"`
 	// Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations.
 	TokenAccessActivated *bool `json:"token_access_activated,omitempty"`
@@ -39,12 +37,11 @@ type _TokenizationERC20WrappedTokenParams TokenizationERC20WrappedTokenParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenizationERC20WrappedTokenParams(standard TokenizationTokenStandard, name string, symbol string, decimals int32, underlyingToken string) *TokenizationERC20WrappedTokenParams {
+func NewTokenizationERC20WrappedTokenParams(standard TokenizationTokenStandard, name string, symbol string, underlyingToken string) *TokenizationERC20WrappedTokenParams {
 	this := TokenizationERC20WrappedTokenParams{}
 	this.Standard = standard
 	this.Name = name
 	this.Symbol = symbol
-	this.Decimals = decimals
 	var tokenAccessActivated bool = false
 	this.TokenAccessActivated = &tokenAccessActivated
 	this.UnderlyingToken = underlyingToken
@@ -131,30 +128,6 @@ func (o *TokenizationERC20WrappedTokenParams) GetSymbolOk() (*string, bool) {
 // SetSymbol sets field value
 func (o *TokenizationERC20WrappedTokenParams) SetSymbol(v string) {
 	o.Symbol = v
-}
-
-// GetDecimals returns the Decimals field value
-func (o *TokenizationERC20WrappedTokenParams) GetDecimals() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.Decimals
-}
-
-// GetDecimalsOk returns a tuple with the Decimals field value
-// and a boolean to check if the value has been set.
-func (o *TokenizationERC20WrappedTokenParams) GetDecimalsOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Decimals, true
-}
-
-// SetDecimals sets field value
-func (o *TokenizationERC20WrappedTokenParams) SetDecimals(v int32) {
-	o.Decimals = v
 }
 
 // GetPermissions returns the Permissions field value if set, zero value otherwise.
@@ -258,7 +231,6 @@ func (o TokenizationERC20WrappedTokenParams) ToMap() (map[string]interface{}, er
 	toSerialize["standard"] = o.Standard
 	toSerialize["name"] = o.Name
 	toSerialize["symbol"] = o.Symbol
-	toSerialize["decimals"] = o.Decimals
 	if !IsNil(o.Permissions) {
 		toSerialize["permissions"] = o.Permissions
 	}
@@ -277,7 +249,6 @@ func (o *TokenizationERC20WrappedTokenParams) UnmarshalJSON(data []byte) (err er
 		"standard",
 		"name",
 		"symbol",
-		"decimals",
 		"underlying_token",
 	}
 

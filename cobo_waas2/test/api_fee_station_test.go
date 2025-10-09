@@ -28,6 +28,18 @@ func Test_cobo_waas2_FeeStationAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test FeeStationAPIService CheckFeeStationUsage", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.FeeStationAPI.CheckFeeStationUsage(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test FeeStationAPIService EstimateFeeStationFee", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

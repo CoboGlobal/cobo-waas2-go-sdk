@@ -18,6 +18,7 @@ type TokenizationIssueTokenParamsTokenParams struct {
 	TokenizationERC20TokenParams *TokenizationERC20TokenParams
 	TokenizationERC20WrappedTokenParams *TokenizationERC20WrappedTokenParams
 	TokenizationSOLTokenParams *TokenizationSOLTokenParams
+	TokenizationSOLWrappedTokenParams *TokenizationSOLWrappedTokenParams
 }
 
 // TokenizationERC20TokenParamsAsTokenizationIssueTokenParamsTokenParams is a convenience function that returns TokenizationERC20TokenParams wrapped in TokenizationIssueTokenParamsTokenParams
@@ -38,6 +39,13 @@ func TokenizationERC20WrappedTokenParamsAsTokenizationIssueTokenParamsTokenParam
 func TokenizationSOLTokenParamsAsTokenizationIssueTokenParamsTokenParams(v *TokenizationSOLTokenParams) TokenizationIssueTokenParamsTokenParams {
 	return TokenizationIssueTokenParamsTokenParams{
 		TokenizationSOLTokenParams: v,
+	}
+}
+
+// TokenizationSOLWrappedTokenParamsAsTokenizationIssueTokenParamsTokenParams is a convenience function that returns TokenizationSOLWrappedTokenParams wrapped in TokenizationIssueTokenParamsTokenParams
+func TokenizationSOLWrappedTokenParamsAsTokenizationIssueTokenParamsTokenParams(v *TokenizationSOLWrappedTokenParams) TokenizationIssueTokenParamsTokenParams {
+	return TokenizationIssueTokenParamsTokenParams{
+		TokenizationSOLWrappedTokenParams: v,
 	}
 }
 
@@ -73,6 +81,18 @@ func (dst *TokenizationIssueTokenParamsTokenParams) UnmarshalJSON(data []byte) e
 		} else {
 			dst.TokenizationERC20WrappedTokenParams = nil
 			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationERC20WrappedTokenParams: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'SOLWrapper'
+	if jsonDict["standard"] == "SOLWrapper" {
+		// try to unmarshal JSON data into TokenizationSOLWrappedTokenParams
+		err = json.Unmarshal(data, &dst.TokenizationSOLWrappedTokenParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationSOLWrappedTokenParams, return on the first match
+		} else {
+			dst.TokenizationSOLWrappedTokenParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationSOLWrappedTokenParams: %s", err.Error())
 		}
 	}
 
@@ -124,6 +144,18 @@ func (dst *TokenizationIssueTokenParamsTokenParams) UnmarshalJSON(data []byte) e
 		}
 	}
 
+	// check if the discriminator value is 'TokenizationSOLWrappedTokenParams'
+	if jsonDict["standard"] == "TokenizationSOLWrappedTokenParams" {
+		// try to unmarshal JSON data into TokenizationSOLWrappedTokenParams
+		err = json.Unmarshal(data, &dst.TokenizationSOLWrappedTokenParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationSOLWrappedTokenParams, return on the first match
+		} else {
+			dst.TokenizationSOLWrappedTokenParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationSOLWrappedTokenParams: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
@@ -139,6 +171,10 @@ func (src TokenizationIssueTokenParamsTokenParams) MarshalJSON() ([]byte, error)
 
 	if src.TokenizationSOLTokenParams != nil {
 		return json.Marshal(&src.TokenizationSOLTokenParams)
+	}
+
+	if src.TokenizationSOLWrappedTokenParams != nil {
+		return json.Marshal(&src.TokenizationSOLWrappedTokenParams)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -159,6 +195,10 @@ func (obj *TokenizationIssueTokenParamsTokenParams) GetActualInstance() (interfa
 
 	if obj.TokenizationSOLTokenParams != nil {
 		return obj.TokenizationSOLTokenParams
+	}
+
+	if obj.TokenizationSOLWrappedTokenParams != nil {
+		return obj.TokenizationSOLWrappedTokenParams
 	}
 
 	// all schemas are nil

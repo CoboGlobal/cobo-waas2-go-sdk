@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **Standard** | [**TokenizationTokenStandard**](TokenizationTokenStandard.md) |  | 
 **Name** | **string** | The name of the token. | 
 **Symbol** | **string** | The symbol of the token. | 
-**Decimals** | **int32** | The number of decimals for the token. | 
 **Permissions** | Pointer to [**TokenizationERC20WrappedTokenPermissionParams**](TokenizationERC20WrappedTokenPermissionParams.md) |  | [optional] 
 **TokenAccessActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations. | [optional] [default to false]
 **UnderlyingToken** | **string** | The address of the underlying token that this tokenized asset represents. | 
@@ -16,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewTokenizationERC20WrappedTokenParams
 
-`func NewTokenizationERC20WrappedTokenParams(standard TokenizationTokenStandard, name string, symbol string, decimals int32, underlyingToken string, ) *TokenizationERC20WrappedTokenParams`
+`func NewTokenizationERC20WrappedTokenParams(standard TokenizationTokenStandard, name string, symbol string, underlyingToken string, ) *TokenizationERC20WrappedTokenParams`
 
 NewTokenizationERC20WrappedTokenParams instantiates a new TokenizationERC20WrappedTokenParams object
 This constructor will assign default values to properties that have it defined,
@@ -89,26 +88,6 @@ and a boolean to check if the value has been set.
 `func (o *TokenizationERC20WrappedTokenParams) SetSymbol(v string)`
 
 SetSymbol sets Symbol field to given value.
-
-
-### GetDecimals
-
-`func (o *TokenizationERC20WrappedTokenParams) GetDecimals() int32`
-
-GetDecimals returns the Decimals field if non-nil, zero value otherwise.
-
-### GetDecimalsOk
-
-`func (o *TokenizationERC20WrappedTokenParams) GetDecimalsOk() (*int32, bool)`
-
-GetDecimalsOk returns a tuple with the Decimals field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDecimals
-
-`func (o *TokenizationERC20WrappedTokenParams) SetDecimals(v int32)`
-
-SetDecimals sets Decimals field to given value.
 
 
 ### GetPermissions
