@@ -9,12 +9,15 @@ Name | Type | Description | Notes
 **RequestId** | **string** | The request ID provided by you when creating the settlement request. | 
 **Status** | [**SettleRequestStatus**](SettleRequestStatus.md) |  | 
 **Settlements** | [**[]SettlementDetail**](SettlementDetail.md) |  | 
-**CreatedTimestamp** | Pointer to **int32** | The creation time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The last update time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
-**Initiator** | Pointer to **string** |  The initiator of this settlement request. Can return either an API key or the Payment Management App&#39;s ID.  - Format &#x60;api_key_&lt;API_KEY&gt;&#x60;: Indicates the settlement request was initiated via the Payment API using the API key. - Format &#x60;app_&lt;APP_ID&gt;&#x60;: Indicates the settlement request was initiated through the Payment Management App using the App ID.  | [optional] 
+**CreatedTimestamp** | Pointer to **int32** | The created time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int32** | The updated time of the settlement request, represented as a UNIX timestamp in seconds. | [optional] 
+**Initiator** | Pointer to **string** |  The initiator of this settlement request. Can return either an API key or the Payments App&#39;s ID.  - Format &#x60;api_key_&lt;API_KEY&gt;&#x60;: Indicates the settlement request was initiated via the Payments API using the API key. - Format &#x60;app_&lt;APP_ID&gt;&#x60;: Indicates the settlement request was initiated through the Payments App using the App ID.  | [optional] 
 **AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
 **SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
+**Currency** | Pointer to **string** | The fiat currency for the settlement request. | [optional] 
+**ReceivedAmountFiat** | Pointer to **string** | The received fiat amount of this settlement request.  | [optional] 
+**BankAccount** | Pointer to [**BankAccount**](BankAccount.md) |  | [optional] 
 
 ## Methods
 
@@ -284,6 +287,81 @@ SetSettlementType sets SettlementType field to given value.
 `func (o *PaymentSettlementEvent) HasSettlementType() bool`
 
 HasSettlementType returns a boolean if a field has been set.
+
+### GetCurrency
+
+`func (o *PaymentSettlementEvent) GetCurrency() string`
+
+GetCurrency returns the Currency field if non-nil, zero value otherwise.
+
+### GetCurrencyOk
+
+`func (o *PaymentSettlementEvent) GetCurrencyOk() (*string, bool)`
+
+GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrency
+
+`func (o *PaymentSettlementEvent) SetCurrency(v string)`
+
+SetCurrency sets Currency field to given value.
+
+### HasCurrency
+
+`func (o *PaymentSettlementEvent) HasCurrency() bool`
+
+HasCurrency returns a boolean if a field has been set.
+
+### GetReceivedAmountFiat
+
+`func (o *PaymentSettlementEvent) GetReceivedAmountFiat() string`
+
+GetReceivedAmountFiat returns the ReceivedAmountFiat field if non-nil, zero value otherwise.
+
+### GetReceivedAmountFiatOk
+
+`func (o *PaymentSettlementEvent) GetReceivedAmountFiatOk() (*string, bool)`
+
+GetReceivedAmountFiatOk returns a tuple with the ReceivedAmountFiat field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReceivedAmountFiat
+
+`func (o *PaymentSettlementEvent) SetReceivedAmountFiat(v string)`
+
+SetReceivedAmountFiat sets ReceivedAmountFiat field to given value.
+
+### HasReceivedAmountFiat
+
+`func (o *PaymentSettlementEvent) HasReceivedAmountFiat() bool`
+
+HasReceivedAmountFiat returns a boolean if a field has been set.
+
+### GetBankAccount
+
+`func (o *PaymentSettlementEvent) GetBankAccount() BankAccount`
+
+GetBankAccount returns the BankAccount field if non-nil, zero value otherwise.
+
+### GetBankAccountOk
+
+`func (o *PaymentSettlementEvent) GetBankAccountOk() (*BankAccount, bool)`
+
+GetBankAccountOk returns a tuple with the BankAccount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankAccount
+
+`func (o *PaymentSettlementEvent) SetBankAccount(v BankAccount)`
+
+SetBankAccount sets BankAccount field to given value.
+
+### HasBankAccount
+
+`func (o *PaymentSettlementEvent) HasBankAccount() bool`
+
+HasBankAccount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -23,19 +23,19 @@ type SettlementInfo struct {
 	MerchantId *string `json:"merchant_id,omitempty"`
 	// The ID of the cryptocurrency.
 	TokenId *string `json:"token_id,omitempty"`
-	// This field is no longer in use and can be ignored.
+	// This field has been deprecated.
 	AvailableAmount string `json:"available_amount"`
-	// This field is no longer in use and can be ignored.
+	// This field has been deprecated.
 	AvailableCurrencyBalance *string `json:"available_currency_balance,omitempty"`
-	// This field is no longer in use and can be ignored.
+	// This field has been deprecated.
 	PendingAmount *string `json:"pending_amount,omitempty"`
-	// This field is no longer in use and can be ignored.
+	// This field has been deprecated.
 	PendingCurrencyBalance *string `json:"pending_currency_balance,omitempty"`
 	// The amount already settled, in the specified cryptocurrency.
 	SettledAmount *string `json:"settled_amount,omitempty"`
-	// The balance available for settlement or refund, in the specified cryptocurrency.
+	// This field has been deprecated.
 	AvailableBalance *string `json:"available_balance,omitempty"`
-	//  The total unsettled balance in the specified cryptocurrency, including: - Available balance that can be settled immediately - Amounts below the sweep threshold that require forced sweep before settlement 
+	// The total balance in the specified cryptocurrency.
 	TotalBalance *string `json:"total_balance,omitempty"`
 	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 	// The creation time of the settlement, represented as a UNIX timestamp in seconds.

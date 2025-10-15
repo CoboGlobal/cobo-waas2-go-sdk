@@ -4,17 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**QuoteId** | **string** | The unique id of quote. | 
-**PayTokenId** | **string** | The token ID to pay. | 
-**PayAmount** | **string** | The amount of tokens to pay. | 
-**ReceiveTokenId** | **string** | The token ID to receive. | 
-**ReceiveAmount** | **string** | The amount of tokens to receive. | 
-**FeeTokenId** | **string** | The token ID for the service fee. | 
-**FeeAmount** | **string** | The amount of tokens for the service fee. | 
-**EstimatedNetworkFeeAmount** | Pointer to **string** | The estimated amount of tokens for the network fee. | [optional] 
-**MinReceiveAmount** | Pointer to **string** | The minimum amount of tokens to receive if the pay amount is specified. | [optional] 
-**MaxPayAmount** | Pointer to **string** | The maximum amount of tokens to pay if the receive amount is specified. | [optional] 
-**QuoteExpiredTimestamp** | **int32** | The time when the quote will expire, in Unix timestamp format, measured in milliseconds. | 
+**QuoteId** | **string** | The unique identifier of the swap quote. | 
+**PayTokenId** | **string** | The ID of the token to pay. | 
+**PayAmount** | **string** | The amount of the token to pay. | 
+**ReceiveTokenId** | **string** | The ID of the token to receive. | 
+**ReceiveAmount** | **string** | The amount of the token to receive. | 
+**FeeTokenId** | **string** | The ID of the token for the service fee. | 
+**FeeAmount** | **string** | The amount of the token for the service fee. | 
+**MinReceiveAmount** | Pointer to **string** | The minimum amount of the token to receive if &#x60;pay_amount&#x60; is specified. | [optional] 
+**MaxPayAmount** | Pointer to **string** | The maximum amount of the token to pay if &#x60;receive_amount&#x60; is specified. | [optional] 
+**QuoteExpiredTimestamp** | **int32** | The time when the swap quote expires, in Unix timestamp format, measured in milliseconds. | 
 
 ## Methods
 
@@ -174,31 +173,6 @@ and a boolean to check if the value has been set.
 
 SetFeeAmount sets FeeAmount field to given value.
 
-
-### GetEstimatedNetworkFeeAmount
-
-`func (o *SwapQuote) GetEstimatedNetworkFeeAmount() string`
-
-GetEstimatedNetworkFeeAmount returns the EstimatedNetworkFeeAmount field if non-nil, zero value otherwise.
-
-### GetEstimatedNetworkFeeAmountOk
-
-`func (o *SwapQuote) GetEstimatedNetworkFeeAmountOk() (*string, bool)`
-
-GetEstimatedNetworkFeeAmountOk returns a tuple with the EstimatedNetworkFeeAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEstimatedNetworkFeeAmount
-
-`func (o *SwapQuote) SetEstimatedNetworkFeeAmount(v string)`
-
-SetEstimatedNetworkFeeAmount sets EstimatedNetworkFeeAmount field to given value.
-
-### HasEstimatedNetworkFeeAmount
-
-`func (o *SwapQuote) HasEstimatedNetworkFeeAmount() bool`
-
-HasEstimatedNetworkFeeAmount returns a boolean if a field has been set.
 
 ### GetMinReceiveAmount
 

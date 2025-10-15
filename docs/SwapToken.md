@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | The token id. | 
-**ChainId** | **string** | The chain id. | 
-**AssetId** | **string** | The asset id. | 
-**TokenAddress** | Pointer to **string** | The token address. | [optional] 
-**MinAmount** | Pointer to **string** | The minimum amount. | [optional] 
-**MaxAmount** | Pointer to **string** | The maximum amount. | [optional] 
+**TokenId** | **string** | The token ID. | 
+**ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. | 
+**AssetId** | **string** | The asset ID. | 
+**TokenAddress** | Pointer to **string** | The on-chain contract address of the token. | [optional] 
+**MinAmount** | Pointer to **string** | The minimum amount allowed for a swap. | [optional] 
+**MaxAmount** | Pointer to **string** | The maximum amount allowed for a swap. | [optional] 
 
 ## Methods
 

@@ -468,7 +468,7 @@ This operation creates a transaction to interact with a smart contract on the bl
 
 You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
-<Note>Currently, this operation only applies to the transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
+<Note>Currently, this operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets on EVM-compatible chains and Solana. Solana v0 transactions are not supported.</Note>
 
 <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
 
@@ -608,7 +608,7 @@ You can get the signature result by calling [Get transaction information](https:
 
 <Note>
 This operation only supports message signing transactions from the following wallets and chains:
-- MPC Wallets: BTC, EVM-compatible chains, Cosmos, and Solana.  
+- MPC Wallets: BTC, EVM-compatible chains, and Cosmos.  
 - Web3 Wallets: EVM-compatible chains.
 </Note>
 

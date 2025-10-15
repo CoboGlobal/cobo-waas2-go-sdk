@@ -7,24 +7,25 @@ Name | Type | Description | Notes
 **ActivityId** | Pointer to **string** | The unique identifier of the swap activity. | [optional] 
 **SwapType** | Pointer to [**SwapType**](SwapType.md) |  | [optional] 
 **Status** | Pointer to [**SwapActivityStatus**](SwapActivityStatus.md) |  | [optional] 
-**RequestId** | Pointer to **string** | The request id of the swap activity. | [optional] 
-**WalletId** | Pointer to **string** | The unique identifier of the wallet. | [optional] 
-**PayTokenId** | Pointer to **string** | The token ID to pay. | [optional] 
-**ReceiveTokenId** | Pointer to **string** | The token ID to receive. | [optional] 
-**PayAmount** | Pointer to **string** | The amount of tokens to bridge. | [optional] 
-**ReceiveAmount** | Pointer to **string** | The amount of tokens to receive. | [optional] 
-**FeeTokenId** | Pointer to **string** | The fee token ID. | [optional] 
-**FeeAmount** | Pointer to **string** | The amount of fee. | [optional] 
+**RequestId** | Pointer to **string** | The request ID of the swap transaction. | [optional] 
+**WalletId** | Pointer to **string** | The ID of the wallet used to pay. | [optional] 
+**PayTokenId** | Pointer to **string** | The ID of the token to pay. | [optional] 
+**ReceiveTokenId** | Pointer to **string** | The ID of the token to receive. | [optional] 
+**PayAmount** | Pointer to **string** | The amount of the token to pay. | [optional] 
+**ReceiveAmount** | Pointer to **string** | The amount of the token to receive. | [optional] 
+**FeeTokenId** | Pointer to **string** | The ID of the token used for paying the service fee. | [optional] 
+**FeeAmount** | Pointer to **string** | The amount of the service fee. | [optional] 
 **Initiator** | Pointer to **NullableString** | The initiator of the swap activity. | [optional] 
 **InitiatorType** | Pointer to [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | [optional] 
 **Description** | Pointer to **string** | The description of the swap activity. | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The time when the swap activity was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **NetworkFee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
-**DestinationAddress** | Pointer to **string** | the destination address of web3/mpc wallets. | [optional] 
+**DestinationAddress** | Pointer to **string** | The address of an MPC Wallet or Web3 Wallet that receives the swapped or bridged assets. | [optional] 
 **Timeline** | Pointer to [**[]SwapActivityTimeline**](SwapActivityTimeline.md) |  | [optional] 
 **Approvers** | Pointer to [**[]SwapActivityApprovers**](SwapActivityApprovers.md) |  | [optional] 
 **Signers** | Pointer to [**[]SwapActivitySigners**](SwapActivitySigners.md) |  | [optional] 
+**ReceivingTransaction** | Pointer to [**SwapReceivingTransaction**](SwapReceivingTransaction.md) |  | [optional] 
 
 ## Methods
 
@@ -579,6 +580,31 @@ SetSigners sets Signers field to given value.
 `func (o *SwapActivityDetail) HasSigners() bool`
 
 HasSigners returns a boolean if a field has been set.
+
+### GetReceivingTransaction
+
+`func (o *SwapActivityDetail) GetReceivingTransaction() SwapReceivingTransaction`
+
+GetReceivingTransaction returns the ReceivingTransaction field if non-nil, zero value otherwise.
+
+### GetReceivingTransactionOk
+
+`func (o *SwapActivityDetail) GetReceivingTransactionOk() (*SwapReceivingTransaction, bool)`
+
+GetReceivingTransactionOk returns a tuple with the ReceivingTransaction field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReceivingTransaction
+
+`func (o *SwapActivityDetail) SetReceivingTransaction(v SwapReceivingTransaction)`
+
+SetReceivingTransaction sets ReceivingTransaction field to given value.
+
+### HasReceivingTransaction
+
+`func (o *SwapActivityDetail) HasReceivingTransaction() bool`
+
+HasReceivingTransaction returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

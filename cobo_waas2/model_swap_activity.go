@@ -21,21 +21,21 @@ type SwapActivity struct {
 	ActivityId *string `json:"activity_id,omitempty"`
 	SwapType *SwapType `json:"swap_type,omitempty"`
 	Status *SwapActivityStatus `json:"status,omitempty"`
-	// The request id of the swap activity.
+	// The request ID of the swap transaction.
 	RequestId *string `json:"request_id,omitempty"`
-	// The unique identifier of the wallet.
+	// The ID of the wallet used to pay.
 	WalletId *string `json:"wallet_id,omitempty"`
-	// The token ID to pay.
+	// The ID of the token to pay.
 	PayTokenId *string `json:"pay_token_id,omitempty"`
-	// The token ID to receive.
+	// The ID of the token to receive.
 	ReceiveTokenId *string `json:"receive_token_id,omitempty"`
-	// The amount of tokens to bridge.
+	// The amount of the token to pay.
 	PayAmount *string `json:"pay_amount,omitempty"`
-	// The amount of tokens to receive.
+	// The amount of the token to receive.
 	ReceiveAmount *string `json:"receive_amount,omitempty"`
-	// The fee token ID.
+	// The ID of the token used for paying the service fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The amount of fee.
+	// The amount of the service fee.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 	// The initiator of the swap activity.
 	Initiator NullableString `json:"initiator,omitempty"`
@@ -47,7 +47,7 @@ type SwapActivity struct {
 	// The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 	NetworkFee *TransactionRequestFee `json:"network_fee,omitempty"`
-	// the destination address of web3/mpc wallets.
+	// The address of an MPC Wallet or Web3 Wallet that receives the swapped or bridged assets.
 	DestinationAddress *string `json:"destination_address,omitempty"`
 }
 

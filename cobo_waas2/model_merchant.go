@@ -27,6 +27,7 @@ type Merchant struct {
 	WalletId string `json:"wallet_id"`
 	// The developer fee rate applied to this merchant. Expressed as a string in decimal format where \"0.1\" represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions. If you are a merchant (directly serving the payer), you do not need to configure the developer fee rate.
 	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
+	WalletSetup *WalletSetup `json:"wallet_setup,omitempty"`
 	// The creation time of the merchant, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The last update time of the merchant, represented as a UNIX timestamp in seconds.
@@ -159,6 +160,38 @@ func (o *Merchant) SetDeveloperFeeRate(v string) {
 	o.DeveloperFeeRate = &v
 }
 
+// GetWalletSetup returns the WalletSetup field value if set, zero value otherwise.
+func (o *Merchant) GetWalletSetup() WalletSetup {
+	if o == nil || IsNil(o.WalletSetup) {
+		var ret WalletSetup
+		return ret
+	}
+	return *o.WalletSetup
+}
+
+// GetWalletSetupOk returns a tuple with the WalletSetup field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Merchant) GetWalletSetupOk() (*WalletSetup, bool) {
+	if o == nil || IsNil(o.WalletSetup) {
+		return nil, false
+	}
+	return o.WalletSetup, true
+}
+
+// HasWalletSetup returns a boolean if a field has been set.
+func (o *Merchant) HasWalletSetup() bool {
+	if o != nil && !IsNil(o.WalletSetup) {
+		return true
+	}
+
+	return false
+}
+
+// SetWalletSetup gets a reference to the given WalletSetup and assigns it to the WalletSetup field.
+func (o *Merchant) SetWalletSetup(v WalletSetup) {
+	o.WalletSetup = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *Merchant) GetCreatedTimestamp() int32 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -238,6 +271,9 @@ func (o Merchant) ToMap() (map[string]interface{}, error) {
 	toSerialize["wallet_id"] = o.WalletId
 	if !IsNil(o.DeveloperFeeRate) {
 		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
+	}
+	if !IsNil(o.WalletSetup) {
+		toSerialize["wallet_setup"] = o.WalletSetup
 	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp

@@ -41,6 +41,7 @@ func (r ApiCreateAddressBooksRequest) Execute() (*CreateAddressBooks201Response,
 CreateAddressBooks Create Address Book entries
 
 This operation adds new entries (records) to your Address Book.
+<Note>This operation is available upon request. Please contact our [customer support](mailto:help@cobo.com) to enable it.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -165,6 +166,7 @@ func (r ApiDeleteAddressBookByIdRequest) Execute() (*DeleteAddressBookById201Res
 DeleteAddressBookById Delete Address Book entry
 
 This operation deletes a specified Address Book entry (record).
+<Note>This operation is available upon request. Please contact our [customer support](mailto:help@cobo.com) to enable it.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -606,6 +608,7 @@ func (r ApiUpdateAddressBookByIdRequest) Execute() (*AddressBook, *http.Response
 UpdateAddressBookById Update Address Book entry
 
 This operation updates the information of a specified Address Book entry (record).
+<Note>This operation is available upon request. Please contact our [customer support](mailto:help@cobo.com) to enable it.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

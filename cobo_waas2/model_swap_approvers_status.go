@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SwapApproversStatus The status of the approval. Possible values include:   - `Pending`: Waiting for approval from the approver.   - `Approved`: The approver has agreed to the approval.   - `Rejected`: The approver has rejected the approval. 
+// SwapApproversStatus The status of the approver. Possible values include:   - `Pending`: Waiting for the approver's decision.   - `Approved`: The approver has approved the swap request.   - `Rejected`: The approver has rejected the swap request. 
 type SwapApproversStatus string
 
 // List of SwapApproversStatus

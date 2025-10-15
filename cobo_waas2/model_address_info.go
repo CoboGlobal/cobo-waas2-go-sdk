@@ -38,6 +38,8 @@ type AddressInfo struct {
 	TaprootScriptTreeHash *string `json:"taproot_script_tree_hash,omitempty"`
 	// The Taproot address before tweaking.
 	TaprootInternalAddress *string `json:"taproot_internal_address,omitempty"`
+	// The list of token IDs for which this address has already established trustlines on the Stellar network.
+	StellarTrustedTokenIds []string `json:"stellar_trusted_token_ids,omitempty"`
 }
 
 type _AddressInfo AddressInfo
@@ -365,6 +367,38 @@ func (o *AddressInfo) SetTaprootInternalAddress(v string) {
 	o.TaprootInternalAddress = &v
 }
 
+// GetStellarTrustedTokenIds returns the StellarTrustedTokenIds field value if set, zero value otherwise.
+func (o *AddressInfo) GetStellarTrustedTokenIds() []string {
+	if o == nil || IsNil(o.StellarTrustedTokenIds) {
+		var ret []string
+		return ret
+	}
+	return o.StellarTrustedTokenIds
+}
+
+// GetStellarTrustedTokenIdsOk returns a tuple with the StellarTrustedTokenIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddressInfo) GetStellarTrustedTokenIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.StellarTrustedTokenIds) {
+		return nil, false
+	}
+	return o.StellarTrustedTokenIds, true
+}
+
+// HasStellarTrustedTokenIds returns a boolean if a field has been set.
+func (o *AddressInfo) HasStellarTrustedTokenIds() bool {
+	if o != nil && !IsNil(o.StellarTrustedTokenIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetStellarTrustedTokenIds gets a reference to the given []string and assigns it to the StellarTrustedTokenIds field.
+func (o *AddressInfo) SetStellarTrustedTokenIds(v []string) {
+	o.StellarTrustedTokenIds = v
+}
+
 func (o AddressInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -400,6 +434,9 @@ func (o AddressInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TaprootInternalAddress) {
 		toSerialize["taproot_internal_address"] = o.TaprootInternalAddress
+	}
+	if !IsNil(o.StellarTrustedTokenIds) {
+		toSerialize["stellar_trusted_token_ids"] = o.StellarTrustedTokenIds
 	}
 	return toSerialize, nil
 }

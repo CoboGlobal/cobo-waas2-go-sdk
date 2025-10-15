@@ -43,7 +43,7 @@ type PaymentRefundEventData struct {
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The last update time of the refund order, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	//  The initiator of this settlement request. Can return either an API key or the Payment Management App's ID.  - Format `api_key_<API_KEY>`: Indicates the settlement request was initiated via the Payment API using the API key. - Format `app_<APP_ID>`: Indicates the settlement request was initiated through the Payment Management App using the App ID. 
+	//  The initiator of this settlement request. Can return either an API key or the Payments App's ID.  - Format `api_key_<API_KEY>`: Indicates the settlement request was initiated via the Payments API using the API key. - Format `app_<APP_ID>`: Indicates the settlement request was initiated through the Payments App using the App ID. 
 	Initiator *string `json:"initiator,omitempty"`
 	// An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
@@ -53,6 +53,7 @@ type PaymentRefundEventData struct {
 	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
 	// The ID of the cryptocurrency used for the developer fee. This is only applicable if `charge_merchant_fee` is set to true.
 	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
+	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
 }
 
 type _PaymentRefundEventData PaymentRefundEventData
@@ -601,6 +602,38 @@ func (o *PaymentRefundEventData) SetMerchantFeeTokenId(v string) {
 	o.MerchantFeeTokenId = &v
 }
 
+// GetCommissionFee returns the CommissionFee field value if set, zero value otherwise.
+func (o *PaymentRefundEventData) GetCommissionFee() CommissionFee {
+	if o == nil || IsNil(o.CommissionFee) {
+		var ret CommissionFee
+		return ret
+	}
+	return *o.CommissionFee
+}
+
+// GetCommissionFeeOk returns a tuple with the CommissionFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentRefundEventData) GetCommissionFeeOk() (*CommissionFee, bool) {
+	if o == nil || IsNil(o.CommissionFee) {
+		return nil, false
+	}
+	return o.CommissionFee, true
+}
+
+// HasCommissionFee returns a boolean if a field has been set.
+func (o *PaymentRefundEventData) HasCommissionFee() bool {
+	if o != nil && !IsNil(o.CommissionFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommissionFee gets a reference to the given CommissionFee and assigns it to the CommissionFee field.
+func (o *PaymentRefundEventData) SetCommissionFee(v CommissionFee) {
+	o.CommissionFee = &v
+}
+
 func (o PaymentRefundEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -650,6 +683,9 @@ func (o PaymentRefundEventData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MerchantFeeTokenId) {
 		toSerialize["merchant_fee_token_id"] = o.MerchantFeeTokenId
+	}
+	if !IsNil(o.CommissionFee) {
+		toSerialize["commission_fee"] = o.CommissionFee
 	}
 	return toSerialize, nil
 }

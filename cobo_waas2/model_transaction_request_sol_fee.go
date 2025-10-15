@@ -17,7 +17,7 @@ import (
 // checks if the TransactionRequestSOLFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionRequestSOLFee{}
 
-// TransactionRequestSOLFee The preset properties to limit transaction fee.  In the Solana fee model, the transaction fee is calculated by adding the base fee to the product of the compute unit limit and the compute unit price. This can be expressed as: Transaction fee = base fee + (CU limit * CU price). For more information about the Solana fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify CU price and CU limit to adjust the priority and resource allocation of your transaction.  Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionRequestSOLFee The preset properties to limit transaction fee.  For more information about the SOL fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify CU price and CU limit to adjust the priority and resource allocation of your transaction.  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionRequestSOLFee struct {
 	// The price paid per compute unit. This value determines the priority fee for the transaction, allowing you to increase inclusion probability in congested conditions.
 	ComputeUnitPrice string `json:"compute_unit_price"`

@@ -19,11 +19,11 @@ var _ MappedNullable = &SwapActivityTimeline{}
 
 // SwapActivityTimeline The timeline of the swap activity.
 type SwapActivityTimeline struct {
-	// The action of the swap activity. Possible values include:   - `Submitted`: The swap request is submitted.   - `Pending Authorization`: The swap request is pending authorization.   - `Bridge {Token}`: The token is being bridged to the target chain.   - `Swap {Token}`: The token is being swapped on the target chain.   - `Cobo Confirmation`: The swap result is waiting for Cobo confirmation. 
+	// The action in the swap activity. Possible values include:   - `Submitted`: The swap request has been submitted.   - `Pending Authorization`: The swap request is pending authorization.   - `Bridge {Token}`: The token is being bridged to the destination chain.   - `Swap {Token}`: The token is being exchanged to the destination token.   - `Cobo Confirmation`: The swap result is pending Cobo's final confirmation. 
 	Action string `json:"action"`
-	// The status of the action. Possible values include:   - `Success`: The action is successfully completed.   - `Processing`: The action is being processed.   - `Failed`: The action has failed. 
+	// The status of the action. Possible values include:   - `Success`: The action completed successfully.   - `Processing`: The action is being processed.   - `Failed`: The action failed. 
 	Status string `json:"status"`
-	// The time when the action took place, in Unix timestamp format, measured in milliseconds.  
+	// The time when the action occurred, in Unix timestamp format, measured in milliseconds.  
 	Timestamp *int32 `json:"timestamp,omitempty"`
 }
 

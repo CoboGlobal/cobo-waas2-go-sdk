@@ -37,7 +37,7 @@ type SettlementDetail struct {
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The last update time of the settlement, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// The ID of the crypto address used for crypto withdrawal.
+	// The ID of the crypto address used for crypto payouts.
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
 	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
@@ -45,6 +45,8 @@ type SettlementDetail struct {
 	SettlementRequestId *string `json:"settlement_request_id,omitempty"`
 	// A list of unique order IDs to be included in this settlement.  - This field is only applicable when `settlement_type` is set to `Merchant`. - If provided, the settlement will only apply to the specified orders. 
 	OrderIds []string `json:"order_ids,omitempty"`
+	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
+	BridgingFee *BridgingFee `json:"bridging_fee,omitempty"`
 }
 
 // NewSettlementDetail instantiates a new SettlementDetail object
@@ -576,6 +578,70 @@ func (o *SettlementDetail) SetOrderIds(v []string) {
 	o.OrderIds = v
 }
 
+// GetCommissionFee returns the CommissionFee field value if set, zero value otherwise.
+func (o *SettlementDetail) GetCommissionFee() CommissionFee {
+	if o == nil || IsNil(o.CommissionFee) {
+		var ret CommissionFee
+		return ret
+	}
+	return *o.CommissionFee
+}
+
+// GetCommissionFeeOk returns a tuple with the CommissionFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetCommissionFeeOk() (*CommissionFee, bool) {
+	if o == nil || IsNil(o.CommissionFee) {
+		return nil, false
+	}
+	return o.CommissionFee, true
+}
+
+// HasCommissionFee returns a boolean if a field has been set.
+func (o *SettlementDetail) HasCommissionFee() bool {
+	if o != nil && !IsNil(o.CommissionFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommissionFee gets a reference to the given CommissionFee and assigns it to the CommissionFee field.
+func (o *SettlementDetail) SetCommissionFee(v CommissionFee) {
+	o.CommissionFee = &v
+}
+
+// GetBridgingFee returns the BridgingFee field value if set, zero value otherwise.
+func (o *SettlementDetail) GetBridgingFee() BridgingFee {
+	if o == nil || IsNil(o.BridgingFee) {
+		var ret BridgingFee
+		return ret
+	}
+	return *o.BridgingFee
+}
+
+// GetBridgingFeeOk returns a tuple with the BridgingFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SettlementDetail) GetBridgingFeeOk() (*BridgingFee, bool) {
+	if o == nil || IsNil(o.BridgingFee) {
+		return nil, false
+	}
+	return o.BridgingFee, true
+}
+
+// HasBridgingFee returns a boolean if a field has been set.
+func (o *SettlementDetail) HasBridgingFee() bool {
+	if o != nil && !IsNil(o.BridgingFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetBridgingFee gets a reference to the given BridgingFee and assigns it to the BridgingFee field.
+func (o *SettlementDetail) SetBridgingFee(v BridgingFee) {
+	o.BridgingFee = &v
+}
+
 func (o SettlementDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -633,6 +699,12 @@ func (o SettlementDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OrderIds) {
 		toSerialize["order_ids"] = o.OrderIds
+	}
+	if !IsNil(o.CommissionFee) {
+		toSerialize["commission_fee"] = o.CommissionFee
+	}
+	if !IsNil(o.BridgingFee) {
+		toSerialize["bridging_fee"] = o.BridgingFee
 	}
 	return toSerialize, nil
 }

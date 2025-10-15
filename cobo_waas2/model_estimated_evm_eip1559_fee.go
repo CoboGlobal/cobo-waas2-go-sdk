@@ -17,7 +17,7 @@ import (
 // checks if the EstimatedEvmEip1559Fee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EstimatedEvmEip1559Fee{}
 
-// EstimatedEvmEip1559Fee The estimated transaction fee based on the EIP-1559 fee model.
+// EstimatedEvmEip1559Fee The estimated transaction fee based on the EIP-1559 fee model.  For more details about the EIP-1559 fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models). 
 type EstimatedEvmEip1559Fee struct {
 	FeeType FeeType `json:"fee_type"`
 	// The token used to pay the transaction fee.

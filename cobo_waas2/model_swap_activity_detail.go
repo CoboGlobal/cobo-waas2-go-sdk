@@ -21,21 +21,21 @@ type SwapActivityDetail struct {
 	ActivityId *string `json:"activity_id,omitempty"`
 	SwapType *SwapType `json:"swap_type,omitempty"`
 	Status *SwapActivityStatus `json:"status,omitempty"`
-	// The request id of the swap activity.
+	// The request ID of the swap transaction.
 	RequestId *string `json:"request_id,omitempty"`
-	// The unique identifier of the wallet.
+	// The ID of the wallet used to pay.
 	WalletId *string `json:"wallet_id,omitempty"`
-	// The token ID to pay.
+	// The ID of the token to pay.
 	PayTokenId *string `json:"pay_token_id,omitempty"`
-	// The token ID to receive.
+	// The ID of the token to receive.
 	ReceiveTokenId *string `json:"receive_token_id,omitempty"`
-	// The amount of tokens to bridge.
+	// The amount of the token to pay.
 	PayAmount *string `json:"pay_amount,omitempty"`
-	// The amount of tokens to receive.
+	// The amount of the token to receive.
 	ReceiveAmount *string `json:"receive_amount,omitempty"`
-	// The fee token ID.
+	// The ID of the token used for paying the service fee.
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The amount of fee.
+	// The amount of the service fee.
 	FeeAmount *string `json:"fee_amount,omitempty"`
 	// The initiator of the swap activity.
 	Initiator NullableString `json:"initiator,omitempty"`
@@ -47,11 +47,12 @@ type SwapActivityDetail struct {
 	// The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 	NetworkFee *TransactionRequestFee `json:"network_fee,omitempty"`
-	// the destination address of web3/mpc wallets.
+	// The address of an MPC Wallet or Web3 Wallet that receives the swapped or bridged assets.
 	DestinationAddress *string `json:"destination_address,omitempty"`
 	Timeline []SwapActivityTimeline `json:"timeline,omitempty"`
 	Approvers []SwapActivityApprovers `json:"approvers,omitempty"`
 	Signers []SwapActivitySigners `json:"signers,omitempty"`
+	ReceivingTransaction *SwapReceivingTransaction `json:"receiving_transaction,omitempty"`
 }
 
 // NewSwapActivityDetail instantiates a new SwapActivityDetail object
@@ -753,6 +754,38 @@ func (o *SwapActivityDetail) SetSigners(v []SwapActivitySigners) {
 	o.Signers = v
 }
 
+// GetReceivingTransaction returns the ReceivingTransaction field value if set, zero value otherwise.
+func (o *SwapActivityDetail) GetReceivingTransaction() SwapReceivingTransaction {
+	if o == nil || IsNil(o.ReceivingTransaction) {
+		var ret SwapReceivingTransaction
+		return ret
+	}
+	return *o.ReceivingTransaction
+}
+
+// GetReceivingTransactionOk returns a tuple with the ReceivingTransaction field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapActivityDetail) GetReceivingTransactionOk() (*SwapReceivingTransaction, bool) {
+	if o == nil || IsNil(o.ReceivingTransaction) {
+		return nil, false
+	}
+	return o.ReceivingTransaction, true
+}
+
+// HasReceivingTransaction returns a boolean if a field has been set.
+func (o *SwapActivityDetail) HasReceivingTransaction() bool {
+	if o != nil && !IsNil(o.ReceivingTransaction) {
+		return true
+	}
+
+	return false
+}
+
+// SetReceivingTransaction gets a reference to the given SwapReceivingTransaction and assigns it to the ReceivingTransaction field.
+func (o *SwapActivityDetail) SetReceivingTransaction(v SwapReceivingTransaction) {
+	o.ReceivingTransaction = &v
+}
+
 func (o SwapActivityDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -825,6 +858,9 @@ func (o SwapActivityDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Signers) {
 		toSerialize["signers"] = o.Signers
+	}
+	if !IsNil(o.ReceivingTransaction) {
+		toSerialize["receiving_transaction"] = o.ReceivingTransaction
 	}
 	return toSerialize, nil
 }

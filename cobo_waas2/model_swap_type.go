@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SwapType The type of the swap activity. Possible values include: - `Bridge`: The activity is a bridge activity. - `Exchange`: The activity is an exchange activity. 
+// SwapType The type of the swap activity. Possible values include: - `Bridge`: The activity involves bridging tokens across chains. - `Exchange`: The activity involves token-to-token exchange (a swap within the same chain). 
 type SwapType string
 
 // List of SwapType

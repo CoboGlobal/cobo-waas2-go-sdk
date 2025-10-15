@@ -19,27 +19,25 @@ var _ MappedNullable = &SwapQuote{}
 
 // SwapQuote struct for SwapQuote
 type SwapQuote struct {
-	// The unique id of quote.
+	// The unique identifier of the swap quote.
 	QuoteId string `json:"quote_id"`
-	// The token ID to pay.
+	// The ID of the token to pay.
 	PayTokenId string `json:"pay_token_id"`
-	// The amount of tokens to pay.
+	// The amount of the token to pay.
 	PayAmount string `json:"pay_amount"`
-	// The token ID to receive.
+	// The ID of the token to receive.
 	ReceiveTokenId string `json:"receive_token_id"`
-	// The amount of tokens to receive.
+	// The amount of the token to receive.
 	ReceiveAmount string `json:"receive_amount"`
-	// The token ID for the service fee.
+	// The ID of the token for the service fee.
 	FeeTokenId string `json:"fee_token_id"`
-	// The amount of tokens for the service fee.
+	// The amount of the token for the service fee.
 	FeeAmount string `json:"fee_amount"`
-	// The estimated amount of tokens for the network fee.
-	EstimatedNetworkFeeAmount *string `json:"estimated_network_fee_amount,omitempty"`
-	// The minimum amount of tokens to receive if the pay amount is specified.
+	// The minimum amount of the token to receive if `pay_amount` is specified.
 	MinReceiveAmount *string `json:"min_receive_amount,omitempty"`
-	// The maximum amount of tokens to pay if the receive amount is specified.
+	// The maximum amount of the token to pay if `receive_amount` is specified.
 	MaxPayAmount *string `json:"max_pay_amount,omitempty"`
-	// The time when the quote will expire, in Unix timestamp format, measured in milliseconds.
+	// The time when the swap quote expires, in Unix timestamp format, measured in milliseconds.
 	QuoteExpiredTimestamp int32 `json:"quote_expired_timestamp"`
 }
 
@@ -238,38 +236,6 @@ func (o *SwapQuote) SetFeeAmount(v string) {
 	o.FeeAmount = v
 }
 
-// GetEstimatedNetworkFeeAmount returns the EstimatedNetworkFeeAmount field value if set, zero value otherwise.
-func (o *SwapQuote) GetEstimatedNetworkFeeAmount() string {
-	if o == nil || IsNil(o.EstimatedNetworkFeeAmount) {
-		var ret string
-		return ret
-	}
-	return *o.EstimatedNetworkFeeAmount
-}
-
-// GetEstimatedNetworkFeeAmountOk returns a tuple with the EstimatedNetworkFeeAmount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SwapQuote) GetEstimatedNetworkFeeAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.EstimatedNetworkFeeAmount) {
-		return nil, false
-	}
-	return o.EstimatedNetworkFeeAmount, true
-}
-
-// HasEstimatedNetworkFeeAmount returns a boolean if a field has been set.
-func (o *SwapQuote) HasEstimatedNetworkFeeAmount() bool {
-	if o != nil && !IsNil(o.EstimatedNetworkFeeAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetEstimatedNetworkFeeAmount gets a reference to the given string and assigns it to the EstimatedNetworkFeeAmount field.
-func (o *SwapQuote) SetEstimatedNetworkFeeAmount(v string) {
-	o.EstimatedNetworkFeeAmount = &v
-}
-
 // GetMinReceiveAmount returns the MinReceiveAmount field value if set, zero value otherwise.
 func (o *SwapQuote) GetMinReceiveAmount() string {
 	if o == nil || IsNil(o.MinReceiveAmount) {
@@ -375,9 +341,6 @@ func (o SwapQuote) ToMap() (map[string]interface{}, error) {
 	toSerialize["receive_amount"] = o.ReceiveAmount
 	toSerialize["fee_token_id"] = o.FeeTokenId
 	toSerialize["fee_amount"] = o.FeeAmount
-	if !IsNil(o.EstimatedNetworkFeeAmount) {
-		toSerialize["estimated_network_fee_amount"] = o.EstimatedNetworkFeeAmount
-	}
 	if !IsNil(o.MinReceiveAmount) {
 		toSerialize["min_receive_amount"] = o.MinReceiveAmount
 	}

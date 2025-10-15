@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SwapActivityStatus The status of the swap activity. Possible values include: - `Success`: The activity is successfully completed. - `Processing`: The activity is being processed. - `Failed`: The activity has failed. 
+// SwapActivityStatus The status of the swap activity. Possible values include: - `Success`: The activity completed successfully. - `Processing`: The activity is being processed. - `Failed`: The activity failed. 
 type SwapActivityStatus string
 
 // List of SwapActivityStatus

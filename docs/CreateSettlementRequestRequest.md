@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
 **SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
 **Settlements** | [**[]CreateSettlement**](CreateSettlement.md) |  | 
+**BankAccountId** | Pointer to **string** | ｜ Only used in OffRamp payout channel. The ID of the bank account where the settled funds will be deposited. | [optional] 
+**Currency** | Pointer to **string** | The fiat currency for the settlement request. | [optional] 
+**Remark** | Pointer to **string** | The remark for the settlement request. | [optional] 
 
 ## Methods
 
@@ -143,6 +146,81 @@ and a boolean to check if the value has been set.
 
 SetSettlements sets Settlements field to given value.
 
+
+### GetBankAccountId
+
+`func (o *CreateSettlementRequestRequest) GetBankAccountId() string`
+
+GetBankAccountId returns the BankAccountId field if non-nil, zero value otherwise.
+
+### GetBankAccountIdOk
+
+`func (o *CreateSettlementRequestRequest) GetBankAccountIdOk() (*string, bool)`
+
+GetBankAccountIdOk returns a tuple with the BankAccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankAccountId
+
+`func (o *CreateSettlementRequestRequest) SetBankAccountId(v string)`
+
+SetBankAccountId sets BankAccountId field to given value.
+
+### HasBankAccountId
+
+`func (o *CreateSettlementRequestRequest) HasBankAccountId() bool`
+
+HasBankAccountId returns a boolean if a field has been set.
+
+### GetCurrency
+
+`func (o *CreateSettlementRequestRequest) GetCurrency() string`
+
+GetCurrency returns the Currency field if non-nil, zero value otherwise.
+
+### GetCurrencyOk
+
+`func (o *CreateSettlementRequestRequest) GetCurrencyOk() (*string, bool)`
+
+GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrency
+
+`func (o *CreateSettlementRequestRequest) SetCurrency(v string)`
+
+SetCurrency sets Currency field to given value.
+
+### HasCurrency
+
+`func (o *CreateSettlementRequestRequest) HasCurrency() bool`
+
+HasCurrency returns a boolean if a field has been set.
+
+### GetRemark
+
+`func (o *CreateSettlementRequestRequest) GetRemark() string`
+
+GetRemark returns the Remark field if non-nil, zero value otherwise.
+
+### GetRemarkOk
+
+`func (o *CreateSettlementRequestRequest) GetRemarkOk() (*string, bool)`
+
+GetRemarkOk returns a tuple with the Remark field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRemark
+
+`func (o *CreateSettlementRequestRequest) SetRemark(v string)`
+
+SetRemark sets Remark field to given value.
+
+### HasRemark
+
+`func (o *CreateSettlementRequestRequest) HasRemark() bool`
+
+HasRemark returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

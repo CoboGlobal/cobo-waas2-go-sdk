@@ -12,7 +12,8 @@ Name | Type | Description | Notes
 **MerchantOrderCode** | Pointer to **string** | A unique reference code assigned by the merchant to identify this order in their system. The code should have a maximum length of 128 characters. | [optional] 
 **PspOrderCode** | **string** | A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters.  | 
 **ExpiredIn** | Pointer to **int32** | The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to &#x60;1800&#x60;, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] [default to 1800]
-**UseDedicatedAddress** | Pointer to **bool** | Whether to allocate a dedicated address for this order.  - &#x60;true&#x60;: A dedicated address will be allocated for this order. - &#x60;false&#x60;: A shared address from the address pool will be used.  | [optional] 
+**UseDedicatedAddress** | Pointer to **bool** | This field has been deprecated.  | [optional] 
+**CustomExchangeRate** | Pointer to **string** | A custom exchange rate specified by the merchant.   - Only effective when &#x60;currency&#x60; is &#x60;\&quot;USD\&quot;&#x60;.   - Expressed as the amount of USD per 1 unit of the specified cryptocurrency.   - If not provided, the system will use the default internal rate.   Example: If the cryptocurrency is USDT and &#x60;custom_exchange_rate&#x60; &#x3D; &#x60;\&quot;0.99\&quot;&#x60;, it means 1 USDT &#x3D; 0.99 USD.  | [optional] 
 
 ## Methods
 
@@ -232,6 +233,31 @@ SetUseDedicatedAddress sets UseDedicatedAddress field to given value.
 `func (o *CreatePaymentOrderRequest) HasUseDedicatedAddress() bool`
 
 HasUseDedicatedAddress returns a boolean if a field has been set.
+
+### GetCustomExchangeRate
+
+`func (o *CreatePaymentOrderRequest) GetCustomExchangeRate() string`
+
+GetCustomExchangeRate returns the CustomExchangeRate field if non-nil, zero value otherwise.
+
+### GetCustomExchangeRateOk
+
+`func (o *CreatePaymentOrderRequest) GetCustomExchangeRateOk() (*string, bool)`
+
+GetCustomExchangeRateOk returns a tuple with the CustomExchangeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomExchangeRate
+
+`func (o *CreatePaymentOrderRequest) SetCustomExchangeRate(v string)`
+
+SetCustomExchangeRate sets CustomExchangeRate field to given value.
+
+### HasCustomExchangeRate
+
+`func (o *CreatePaymentOrderRequest) HasCustomExchangeRate() bool`
+
+HasCustomExchangeRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

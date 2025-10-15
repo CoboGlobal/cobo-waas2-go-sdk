@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MerchantId** | Pointer to **string** | The merchant ID. For developer balance, this field will be empty. | [optional] 
 **TokenId** | Pointer to **string** | The ID of the cryptocurrency. | [optional] 
-**AvailableAmount** | **string** | This field is no longer in use and can be ignored. | 
-**AvailableCurrencyBalance** | Pointer to **string** | This field is no longer in use and can be ignored. | [optional] 
-**PendingAmount** | Pointer to **string** | This field is no longer in use and can be ignored. | [optional] 
-**PendingCurrencyBalance** | Pointer to **string** | This field is no longer in use and can be ignored. | [optional] 
+**AvailableAmount** | **string** | This field has been deprecated. | 
+**AvailableCurrencyBalance** | Pointer to **string** | This field has been deprecated. | [optional] 
+**PendingAmount** | Pointer to **string** | This field has been deprecated. | [optional] 
+**PendingCurrencyBalance** | Pointer to **string** | This field has been deprecated. | [optional] 
 **SettledAmount** | Pointer to **string** | The amount already settled, in the specified cryptocurrency. | [optional] 
-**AvailableBalance** | Pointer to **string** | The balance available for settlement or refund, in the specified cryptocurrency. | [optional] 
-**TotalBalance** | Pointer to **string** |  The total unsettled balance in the specified cryptocurrency, including: - Available balance that can be settled immediately - Amounts below the sweep threshold that require forced sweep before settlement  | [optional] 
+**AvailableBalance** | Pointer to **string** | This field has been deprecated. | [optional] 
+**TotalBalance** | Pointer to **string** | The total balance in the specified cryptocurrency. | [optional] 
 **AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The creation time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The last update time of the settlement, represented as a UNIX timestamp in seconds. | [optional] 

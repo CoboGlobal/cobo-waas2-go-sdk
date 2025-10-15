@@ -17,7 +17,7 @@ import (
 // checks if the TransactionUtxoFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionUtxoFee{}
 
-// TransactionUtxoFee The transaction fee actually charged by the chain that uses the UTXO fee model, such as Bitcoin.  The transaction fee is calculated by multiplying the fee rate by the transaction size. This can be expressed as: Transaction fee = fee rate * transaction size.  Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionUtxoFee The transaction fee actually charged by the chain that uses the UTXO fee model, such as Bitcoin.  For more information about the UTXO fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionUtxoFee struct {
 	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate *string `json:"fee_rate,omitempty"`

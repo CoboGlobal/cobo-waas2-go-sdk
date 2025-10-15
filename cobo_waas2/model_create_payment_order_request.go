@@ -35,8 +35,10 @@ type CreatePaymentOrderRequest struct {
 	PspOrderCode string `json:"psp_order_code"`
 	// The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
-	// Whether to allocate a dedicated address for this order.  - `true`: A dedicated address will be allocated for this order. - `false`: A shared address from the address pool will be used. 
+	// This field has been deprecated. 
 	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
+	// A custom exchange rate specified by the merchant.   - Only effective when `currency` is `\"USD\"`.   - Expressed as the amount of USD per 1 unit of the specified cryptocurrency.   - If not provided, the system will use the default internal rate.   Example: If the cryptocurrency is USDT and `custom_exchange_rate` = `\"0.99\"`, it means 1 USDT = 0.99 USD. 
+	CustomExchangeRate *string `json:"custom_exchange_rate,omitempty"`
 }
 
 type _CreatePaymentOrderRequest CreatePaymentOrderRequest
@@ -319,6 +321,38 @@ func (o *CreatePaymentOrderRequest) SetUseDedicatedAddress(v bool) {
 	o.UseDedicatedAddress = &v
 }
 
+// GetCustomExchangeRate returns the CustomExchangeRate field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetCustomExchangeRate() string {
+	if o == nil || IsNil(o.CustomExchangeRate) {
+		var ret string
+		return ret
+	}
+	return *o.CustomExchangeRate
+}
+
+// GetCustomExchangeRateOk returns a tuple with the CustomExchangeRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetCustomExchangeRateOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomExchangeRate) {
+		return nil, false
+	}
+	return o.CustomExchangeRate, true
+}
+
+// HasCustomExchangeRate returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasCustomExchangeRate() bool {
+	if o != nil && !IsNil(o.CustomExchangeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomExchangeRate gets a reference to the given string and assigns it to the CustomExchangeRate field.
+func (o *CreatePaymentOrderRequest) SetCustomExchangeRate(v string) {
+	o.CustomExchangeRate = &v
+}
+
 func (o CreatePaymentOrderRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -345,6 +379,9 @@ func (o CreatePaymentOrderRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UseDedicatedAddress) {
 		toSerialize["use_dedicated_address"] = o.UseDedicatedAddress
+	}
+	if !IsNil(o.CustomExchangeRate) {
+		toSerialize["custom_exchange_rate"] = o.CustomExchangeRate
 	}
 	return toSerialize, nil
 }

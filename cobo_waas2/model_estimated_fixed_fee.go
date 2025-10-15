@@ -17,7 +17,7 @@ import (
 // checks if the EstimatedFixedFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EstimatedFixedFee{}
 
-// EstimatedFixedFee The estimated transaction fee based on the fixed fee model.
+// EstimatedFixedFee The estimated transaction fee based on the fixed fee model.  For more details about the fixed fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models). 
 type EstimatedFixedFee struct {
 	// The transaction fee that you need to pay for the transaction.
 	FeeAmount string `json:"fee_amount"`
