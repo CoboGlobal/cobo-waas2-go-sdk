@@ -6,10 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. | 
 **DeveloperFeeAmount** | Pointer to **string** | The total amount of the token that has been received as developer fee. | [optional] 
-**SettledAmount** | Pointer to **string** | The total amount of the token that has been settled from the developer&#39;s balance. | [optional] 
+**SettledAmount** | Pointer to **string** | The total amount of the token that has been paid out from the developer&#39;s balance. | [optional] 
 **RefundedAmount** | Pointer to **string** | The total amount of the token that has been refunded from the developer&#39;s balance. | [optional] 
-**TotalBalance** | Pointer to **string** | The total balance of the token for the developer. | [optional] 
-**AvailableBalance** | Pointer to **string** | The balance available for settlement or refund, in the specified cryptocurrency. | [optional] 
+**TotalBalance** | Pointer to **string** |  The total balance of the token available for payout or refund for the developer.  &#x60;total_balance&#x60; &#x3D; &#x60;developer_fee_amount&#x60; - &#x60;settled_amount&#x60; - &#x60;refunded_amount&#x60;  For more information, please refer to [Amounts and Balances](/v2_cn/payments/amounts-and-balances)  | [optional] 
+**AvailableBalance** | Pointer to **string** | This field has been deprecated. | [optional] 
 
 ## Methods
 

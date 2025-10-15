@@ -17,7 +17,7 @@ import (
 // checks if the TransactionFILFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionFILFee{}
 
-// TransactionFILFee The transaction fee actually charged by the chain that uses the Filecoin fee model.  In this model, the fee is calculated as: fee = base fee * gas used + gas premium * gas limit. For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionFILFee The transaction fee actually charged by the chain that uses the Filecoin fee model.  For more details about the Filecoin fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionFILFee struct {
 	// The minimum fee required for a transaction to be included in a block. The base fee is dynamically adjusted based on network congestion to maintain target block utilization. It is burned rather than paid to miners, reducing the total Filecoin supply over time.
 	GasBase *string `json:"gas_base,omitempty"`

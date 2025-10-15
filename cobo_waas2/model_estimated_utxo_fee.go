@@ -17,7 +17,7 @@ import (
 // checks if the EstimatedUtxoFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EstimatedUtxoFee{}
 
-// EstimatedUtxoFee The estimated transaction fee for UTXO-based chains.
+// EstimatedUtxoFee The estimated transaction fee for UTXO-based chains.  For more details about the UTXO fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models). 
 type EstimatedUtxoFee struct {
 	FeeType FeeType `json:"fee_type"`
 	// The token used to pay the transaction fee.

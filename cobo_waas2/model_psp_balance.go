@@ -23,13 +23,13 @@ type PspBalance struct {
 	TokenId string `json:"token_id"`
 	// The total amount of the token that has been received as developer fee.
 	DeveloperFeeAmount *string `json:"developer_fee_amount,omitempty"`
-	// The total amount of the token that has been settled from the developer's balance.
+	// The total amount of the token that has been paid out from the developer's balance.
 	SettledAmount *string `json:"settled_amount,omitempty"`
 	// The total amount of the token that has been refunded from the developer's balance.
 	RefundedAmount *string `json:"refunded_amount,omitempty"`
-	// The total balance of the token for the developer.
+	//  The total balance of the token available for payout or refund for the developer.  `total_balance` = `developer_fee_amount` - `settled_amount` - `refunded_amount`  For more information, please refer to [Amounts and Balances](/v2_cn/payments/amounts-and-balances) 
 	TotalBalance *string `json:"total_balance,omitempty"`
-	// The balance available for settlement or refund, in the specified cryptocurrency.
+	// This field has been deprecated.
 	AvailableBalance *string `json:"available_balance,omitempty"`
 }
 

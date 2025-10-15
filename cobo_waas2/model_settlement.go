@@ -25,15 +25,20 @@ type Settlement struct {
 	RequestId string `json:"request_id"`
 	Status SettleRequestStatus `json:"status"`
 	Settlements []SettlementDetail `json:"settlements"`
-	// The creation time of the settlement request, represented as a UNIX timestamp in seconds.
+	// The created time of the settlement request, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The last update time of the settlement request, represented as a UNIX timestamp in seconds.
+	// The updated time of the settlement request, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	//  The initiator of this settlement request. Can return either an API key or the Payment Management App's ID.  - Format `api_key_<API_KEY>`: Indicates the settlement request was initiated via the Payment API using the API key. - Format `app_<APP_ID>`: Indicates the settlement request was initiated through the Payment Management App using the App ID. 
+	//  The initiator of this settlement request. Can return either an API key or the Payments App's ID.  - Format `api_key_<API_KEY>`: Indicates the settlement request was initiated via the Payments API using the API key. - Format `app_<APP_ID>`: Indicates the settlement request was initiated through the Payments App using the App ID. 
 	Initiator *string `json:"initiator,omitempty"`
 	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
 	SettlementType *SettlementType `json:"settlement_type,omitempty"`
+	// The fiat currency for the settlement request.
+	Currency *string `json:"currency,omitempty"`
+	// The received fiat amount of this settlement request. 
+	ReceivedAmountFiat *string `json:"received_amount_fiat,omitempty"`
+	BankAccount *BankAccount `json:"bank_account,omitempty"`
 }
 
 type _Settlement Settlement
@@ -347,6 +352,102 @@ func (o *Settlement) SetSettlementType(v SettlementType) {
 	o.SettlementType = &v
 }
 
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *Settlement) GetCurrency() string {
+	if o == nil || IsNil(o.Currency) {
+		var ret string
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Settlement) GetCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *Settlement) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *Settlement) SetCurrency(v string) {
+	o.Currency = &v
+}
+
+// GetReceivedAmountFiat returns the ReceivedAmountFiat field value if set, zero value otherwise.
+func (o *Settlement) GetReceivedAmountFiat() string {
+	if o == nil || IsNil(o.ReceivedAmountFiat) {
+		var ret string
+		return ret
+	}
+	return *o.ReceivedAmountFiat
+}
+
+// GetReceivedAmountFiatOk returns a tuple with the ReceivedAmountFiat field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Settlement) GetReceivedAmountFiatOk() (*string, bool) {
+	if o == nil || IsNil(o.ReceivedAmountFiat) {
+		return nil, false
+	}
+	return o.ReceivedAmountFiat, true
+}
+
+// HasReceivedAmountFiat returns a boolean if a field has been set.
+func (o *Settlement) HasReceivedAmountFiat() bool {
+	if o != nil && !IsNil(o.ReceivedAmountFiat) {
+		return true
+	}
+
+	return false
+}
+
+// SetReceivedAmountFiat gets a reference to the given string and assigns it to the ReceivedAmountFiat field.
+func (o *Settlement) SetReceivedAmountFiat(v string) {
+	o.ReceivedAmountFiat = &v
+}
+
+// GetBankAccount returns the BankAccount field value if set, zero value otherwise.
+func (o *Settlement) GetBankAccount() BankAccount {
+	if o == nil || IsNil(o.BankAccount) {
+		var ret BankAccount
+		return ret
+	}
+	return *o.BankAccount
+}
+
+// GetBankAccountOk returns a tuple with the BankAccount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Settlement) GetBankAccountOk() (*BankAccount, bool) {
+	if o == nil || IsNil(o.BankAccount) {
+		return nil, false
+	}
+	return o.BankAccount, true
+}
+
+// HasBankAccount returns a boolean if a field has been set.
+func (o *Settlement) HasBankAccount() bool {
+	if o != nil && !IsNil(o.BankAccount) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAccount gets a reference to the given BankAccount and assigns it to the BankAccount field.
+func (o *Settlement) SetBankAccount(v BankAccount) {
+	o.BankAccount = &v
+}
+
 func (o Settlement) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -378,6 +479,15 @@ func (o Settlement) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SettlementType) {
 		toSerialize["settlement_type"] = o.SettlementType
+	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.ReceivedAmountFiat) {
+		toSerialize["received_amount_fiat"] = o.ReceivedAmountFiat
+	}
+	if !IsNil(o.BankAccount) {
+		toSerialize["bank_account"] = o.BankAccount
 	}
 	return toSerialize, nil
 }

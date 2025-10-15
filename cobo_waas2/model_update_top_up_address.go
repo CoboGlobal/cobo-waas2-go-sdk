@@ -20,7 +20,7 @@ var _ MappedNullable = &UpdateTopUpAddress{}
 // UpdateTopUpAddress The request body to update top-up address.
 type UpdateTopUpAddress struct {
 	// The merchant ID.
-	MerchantId string `json:"merchant_id"`
+	MerchantId *string `json:"merchant_id,omitempty"`
 	// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:   - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
 	// A unique identifier assigned by the developer to track and identify individual payers in their system.
@@ -33,9 +33,8 @@ type _UpdateTopUpAddress UpdateTopUpAddress
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateTopUpAddress(merchantId string, tokenId string, customPayerId string) *UpdateTopUpAddress {
+func NewUpdateTopUpAddress(tokenId string, customPayerId string) *UpdateTopUpAddress {
 	this := UpdateTopUpAddress{}
-	this.MerchantId = merchantId
 	this.TokenId = tokenId
 	this.CustomPayerId = customPayerId
 	return &this
@@ -49,28 +48,36 @@ func NewUpdateTopUpAddressWithDefaults() *UpdateTopUpAddress {
 	return &this
 }
 
-// GetMerchantId returns the MerchantId field value
+// GetMerchantId returns the MerchantId field value if set, zero value otherwise.
 func (o *UpdateTopUpAddress) GetMerchantId() string {
-	if o == nil {
+	if o == nil || IsNil(o.MerchantId) {
 		var ret string
 		return ret
 	}
-
-	return o.MerchantId
+	return *o.MerchantId
 }
 
-// GetMerchantIdOk returns a tuple with the MerchantId field value
+// GetMerchantIdOk returns a tuple with the MerchantId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UpdateTopUpAddress) GetMerchantIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MerchantId) {
 		return nil, false
 	}
-	return &o.MerchantId, true
+	return o.MerchantId, true
 }
 
-// SetMerchantId sets field value
+// HasMerchantId returns a boolean if a field has been set.
+func (o *UpdateTopUpAddress) HasMerchantId() bool {
+	if o != nil && !IsNil(o.MerchantId) {
+		return true
+	}
+
+	return false
+}
+
+// SetMerchantId gets a reference to the given string and assigns it to the MerchantId field.
 func (o *UpdateTopUpAddress) SetMerchantId(v string) {
-	o.MerchantId = v
+	o.MerchantId = &v
 }
 
 // GetTokenId returns the TokenId field value
@@ -131,7 +138,9 @@ func (o UpdateTopUpAddress) MarshalJSON() ([]byte, error) {
 
 func (o UpdateTopUpAddress) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["merchant_id"] = o.MerchantId
+	if !IsNil(o.MerchantId) {
+		toSerialize["merchant_id"] = o.MerchantId
+	}
 	toSerialize["token_id"] = o.TokenId
 	toSerialize["custom_payer_id"] = o.CustomPayerId
 	return toSerialize, nil
@@ -142,7 +151,6 @@ func (o *UpdateTopUpAddress) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"merchant_id",
 		"token_id",
 		"custom_payer_id",
 	}

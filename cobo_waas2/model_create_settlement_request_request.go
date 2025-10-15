@@ -25,6 +25,12 @@ type CreateSettlementRequestRequest struct {
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
 	SettlementType *SettlementType `json:"settlement_type,omitempty"`
 	Settlements []CreateSettlement `json:"settlements"`
+	// ｜ Only used in OffRamp payout channel. The ID of the bank account where the settled funds will be deposited.
+	BankAccountId *string `json:"bank_account_id,omitempty"`
+	// The fiat currency for the settlement request.
+	Currency *string `json:"currency,omitempty"`
+	// The remark for the settlement request.
+	Remark *string `json:"remark,omitempty"`
 }
 
 type _CreateSettlementRequestRequest CreateSettlementRequestRequest
@@ -192,6 +198,102 @@ func (o *CreateSettlementRequestRequest) SetSettlements(v []CreateSettlement) {
 	o.Settlements = v
 }
 
+// GetBankAccountId returns the BankAccountId field value if set, zero value otherwise.
+func (o *CreateSettlementRequestRequest) GetBankAccountId() string {
+	if o == nil || IsNil(o.BankAccountId) {
+		var ret string
+		return ret
+	}
+	return *o.BankAccountId
+}
+
+// GetBankAccountIdOk returns a tuple with the BankAccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlementRequestRequest) GetBankAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.BankAccountId) {
+		return nil, false
+	}
+	return o.BankAccountId, true
+}
+
+// HasBankAccountId returns a boolean if a field has been set.
+func (o *CreateSettlementRequestRequest) HasBankAccountId() bool {
+	if o != nil && !IsNil(o.BankAccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAccountId gets a reference to the given string and assigns it to the BankAccountId field.
+func (o *CreateSettlementRequestRequest) SetBankAccountId(v string) {
+	o.BankAccountId = &v
+}
+
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *CreateSettlementRequestRequest) GetCurrency() string {
+	if o == nil || IsNil(o.Currency) {
+		var ret string
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlementRequestRequest) GetCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *CreateSettlementRequestRequest) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *CreateSettlementRequestRequest) SetCurrency(v string) {
+	o.Currency = &v
+}
+
+// GetRemark returns the Remark field value if set, zero value otherwise.
+func (o *CreateSettlementRequestRequest) GetRemark() string {
+	if o == nil || IsNil(o.Remark) {
+		var ret string
+		return ret
+	}
+	return *o.Remark
+}
+
+// GetRemarkOk returns a tuple with the Remark field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlementRequestRequest) GetRemarkOk() (*string, bool) {
+	if o == nil || IsNil(o.Remark) {
+		return nil, false
+	}
+	return o.Remark, true
+}
+
+// HasRemark returns a boolean if a field has been set.
+func (o *CreateSettlementRequestRequest) HasRemark() bool {
+	if o != nil && !IsNil(o.Remark) {
+		return true
+	}
+
+	return false
+}
+
+// SetRemark gets a reference to the given string and assigns it to the Remark field.
+func (o *CreateSettlementRequestRequest) SetRemark(v string) {
+	o.Remark = &v
+}
+
 func (o CreateSettlementRequestRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -213,6 +315,15 @@ func (o CreateSettlementRequestRequest) ToMap() (map[string]interface{}, error) 
 		toSerialize["settlement_type"] = o.SettlementType
 	}
 	toSerialize["settlements"] = o.Settlements
+	if !IsNil(o.BankAccountId) {
+		toSerialize["bank_account_id"] = o.BankAccountId
+	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.Remark) {
+		toSerialize["remark"] = o.Remark
+	}
 	return toSerialize, nil
 }
 

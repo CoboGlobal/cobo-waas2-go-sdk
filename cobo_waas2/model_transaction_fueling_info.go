@@ -21,6 +21,8 @@ type TransactionFuelingInfo struct {
 	RequestId *string `json:"request_id,omitempty"`
 	// The transaction ID.
 	TransactionId *string `json:"transaction_id,omitempty"`
+	// The UUID of the parent (main) transaction that this record is associated with. Set only when the current record is a gas/fee transaction initiated by Fee Station; omit for main transactions.
+	MainTransactionId *string `json:"main_transaction_id,omitempty"`
 }
 
 // NewTransactionFuelingInfo instantiates a new TransactionFuelingInfo object
@@ -104,6 +106,38 @@ func (o *TransactionFuelingInfo) SetTransactionId(v string) {
 	o.TransactionId = &v
 }
 
+// GetMainTransactionId returns the MainTransactionId field value if set, zero value otherwise.
+func (o *TransactionFuelingInfo) GetMainTransactionId() string {
+	if o == nil || IsNil(o.MainTransactionId) {
+		var ret string
+		return ret
+	}
+	return *o.MainTransactionId
+}
+
+// GetMainTransactionIdOk returns a tuple with the MainTransactionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionFuelingInfo) GetMainTransactionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MainTransactionId) {
+		return nil, false
+	}
+	return o.MainTransactionId, true
+}
+
+// HasMainTransactionId returns a boolean if a field has been set.
+func (o *TransactionFuelingInfo) HasMainTransactionId() bool {
+	if o != nil && !IsNil(o.MainTransactionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetMainTransactionId gets a reference to the given string and assigns it to the MainTransactionId field.
+func (o *TransactionFuelingInfo) SetMainTransactionId(v string) {
+	o.MainTransactionId = &v
+}
+
 func (o TransactionFuelingInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -119,6 +153,9 @@ func (o TransactionFuelingInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TransactionId) {
 		toSerialize["transaction_id"] = o.TransactionId
+	}
+	if !IsNil(o.MainTransactionId) {
+		toSerialize["main_transaction_id"] = o.MainTransactionId
 	}
 	return toSerialize, nil
 }

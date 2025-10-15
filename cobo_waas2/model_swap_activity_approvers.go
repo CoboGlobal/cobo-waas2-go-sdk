@@ -17,7 +17,7 @@ import (
 // checks if the SwapActivityApprovers type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SwapActivityApprovers{}
 
-// SwapActivityApprovers The approvers data for swap activity.
+// SwapActivityApprovers The approver information of the swap activity.
 type SwapActivityApprovers struct {
 	// The approver name of the swap activity. 
 	Name string `json:"name"`

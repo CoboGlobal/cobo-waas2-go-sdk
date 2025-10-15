@@ -17,7 +17,7 @@ import (
 // checks if the EstimatedFILFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EstimatedFILFee{}
 
-// EstimatedFILFee The estimated transaction fee based on the fil fee model.
+// EstimatedFILFee The estimated transaction fee based on the FIL fee model.  For more details about the FIL fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models). 
 type EstimatedFILFee struct {
 	FeeType FeeType `json:"fee_type"`
 	// The token used to pay the transaction fee.

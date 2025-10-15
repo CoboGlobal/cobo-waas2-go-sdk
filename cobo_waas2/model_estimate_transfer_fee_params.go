@@ -19,7 +19,7 @@ var _ MappedNullable = &EstimateTransferFeeParams{}
 
 // EstimateTransferFeeParams The information about a token transfer.
 type EstimateTransferFeeParams struct {
-	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. It is recommended to use the same request ID as the transaction for which you want to estimate the transaction fee.
+	// The request ID that is used to track a transaction request.
 	RequestId *string `json:"request_id,omitempty"`
 	RequestType EstimateFeeRequestType `json:"request_type"`
 	Source TransferSource `json:"source"`

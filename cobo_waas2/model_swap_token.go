@@ -19,17 +19,17 @@ var _ MappedNullable = &SwapToken{}
 
 // SwapToken struct for SwapToken
 type SwapToken struct {
-	// The token id.
+	// The token ID.
 	TokenId string `json:"token_id"`
-	// The chain id.
+	// The chain ID, which is the unique identifier of a blockchain.
 	ChainId string `json:"chain_id"`
-	// The asset id.
+	// The asset ID.
 	AssetId string `json:"asset_id"`
-	// The token address.
+	// The on-chain contract address of the token.
 	TokenAddress *string `json:"token_address,omitempty"`
-	// The minimum amount.
+	// The minimum amount allowed for a swap.
 	MinAmount *string `json:"min_amount,omitempty"`
-	// The maximum amount.
+	// The maximum amount allowed for a swap.
 	MaxAmount *string `json:"max_amount,omitempty"`
 }
 

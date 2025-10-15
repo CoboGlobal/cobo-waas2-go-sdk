@@ -49,7 +49,7 @@ tags:
   name: OAuth
 - description: Operations related to developers.
   name: Developers
-- description: Operations related to Address Books.
+- description: Operations related to address books.
   name: AddressBooks
 - description: Operations related to travel rule.
   name: TravelRule
@@ -3710,7 +3710,7 @@ paths:
 
         You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
-        <Note>Currently, this operation only applies to the transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
+        <Note>Currently, this operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets on EVM-compatible chains and Solana. Solana v0 transactions are not supported.</Note>
 
         <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
       operationId: create_contract_call_transaction
@@ -3754,7 +3754,7 @@ paths:
         \ transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information).\
         \ \n\n<Note>\nThis operation only supports message signing transactions from\
         \ the following wallets and chains:\n- MPC Wallets: BTC, EVM-compatible chains,\
-        \ Cosmos, and Solana.  \n- Web3 Wallets: EVM-compatible chains.\n</Note>\n"
+        \ and Cosmos.  \n- Web3 Wallets: EVM-compatible chains.\n</Note>\n"
       operationId: create_message_sign_transaction
       requestBody:
         $ref: '#/components/requestBodies/createMessageSignBody'
@@ -6875,6 +6875,7 @@ paths:
     post:
       description: |
         This operation adds new entries (records) to your Address Book.
+        <Note>This operation is available upon request. Please contact our [customer support](mailto:help@cobo.com) to enable it.</Note>
       operationId: create_address_books
       requestBody:
         $ref: '#/components/requestBodies/createAddressBooksRequestBody'
@@ -6951,6 +6952,7 @@ paths:
     put:
       description: |
         This operation updates the information of a specified Address Book entry (record).
+        <Note>This operation is available upon request. Please contact our [customer support](mailto:help@cobo.com) to enable it.</Note>
       operationId: update_address_book_by_id
       parameters:
       - description: The Address Book entry ID.
@@ -6996,6 +6998,7 @@ paths:
     post:
       description: |
         This operation deletes a specified Address Book entry (record).
+        <Note>This operation is available upon request. Please contact our [customer support](mailto:help@cobo.com) to enable it.</Note>
       operationId: delete_address_book_by_id
       parameters:
       - description: The Address Book entry ID.
@@ -7939,6 +7942,463 @@ paths:
       summary: Estimate fee for Fee Station transaction
       tags:
       - FeeStation
+  /fee_station/check_fee_station_usage:
+    post:
+      description: "This operation evaluates Fee Station usage for the current transaction.\
+        \ \n\nIt determines whether Fee station can be used, checks if the Fee Station\
+        \ balance is sufficient, and returns a breakdown of the amounts involved,\
+        \ including any portion that must be covered by the user or sponsored in USDT\
+        \ (U).\n"
+      operationId: check_fee_station_usage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeeStationCheckFeeStationUsage'
+        description: The information for evaluating Fee Station usage.
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeStationCheckFeeStationUsageResponse'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.estimate_fee
+      summary: Check Fee Station usage
+      tags:
+      - FeeStation
+  /swaps/activities:
+    get:
+      description: |
+        This operation retrieves a list of swap activities. You can filter the results by swap type, status, initiator, and time range.
+      operationId: list_swap_activities
+      parameters:
+      - example: Bridge
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          $ref: '#/components/schemas/SwapType'
+        style: form
+      - example: Success
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/SwapActivityStatus'
+        style: form
+      - description: "The start time of the query. All swap activities updated after\
+          \ the specified time will be retrieved. The time is in Unix timestamp format,\
+          \ measured in milliseconds."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: min_updated_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "The end time of the query. All swap activities updated before\
+          \ the specified time will be retrieved. The time is in Unix timestamp format,\
+          \ measured in milliseconds."
+        example: 1635744000000
+        explode: true
+        in: query
+        name: max_updated_timestamp
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: The initiator of the swap activity. It is optional when creating
+          the activity and defaults to your API key if not specified.
+        example: steve@example.com
+        explode: true
+        in: query
+        name: initiator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The field to sort the results by. \n\nPossible values include:\n\
+          - `created_timestamp`: Sort by the time when the data was created.\n- `updated_timestamp`:\
+          \ Sort by the time when the data was last updated.\n"
+        example: created_timestamp
+        explode: true
+        in: query
+        name: sort_by
+        required: false
+        schema:
+          enum:
+          - created_timestamp
+          - updated_timestamp
+          type: string
+        style: form
+      - description: |
+          The sort direction. Possible values include:
+            - `ASC`: Sort the results in ascending order.
+            - `DESC`: Sort the results in descending order.
+        example: ASC
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_swap_activities_200_response'
+          description: A list of swap activities successfully retrieved.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: List swap activities
+      tags:
+      - Swaps
+  /swaps/activities/{activity_id}:
+    get:
+      description: |
+        This operation retrieves detailed information about a specified swap activity.
+      operationId: get_swap_activity
+      parameters:
+      - description: The unique identifier of the swap activity.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: activity_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapActivityDetail'
+          description: The swap activity details successfully retrieved.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Get swap activity
+      tags:
+      - Swaps
+  /swaps/enabled_tokens:
+    get:
+      description: |
+        This operation retrieves a list of tokens that are enabled for the swap feature. You can filter the results by swap type, asset ID, and chain ID.
+      operationId: list_swap_enabled_tokens
+      parameters:
+      - example: Bridge
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          $ref: '#/components/schemas/SwapType'
+        style: form
+      - description: (This concept applies to Exchange Wallets only) The asset ID.
+          An asset ID is the unique identifier of the asset held within your linked
+          exchange account.
+        example: USDT
+        explode: true
+        in: query
+        name: asset_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The chain ID, which is the unique identifier of a blockchain.\
+          \ You can retrieve the IDs of all the chains you can use by calling [List\
+          \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+        example: ETH
+        explode: true
+        in: query
+        name: chain_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_swap_enabled_tokens_200_response'
+          description: A list of enabled tokens successfully retrieved.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: List enabled tokens for swap
+      tags:
+      - Swaps
+  /swaps/quote:
+    get:
+      description: |
+        This operation retrieves the current market exchange rate and estimated service fee. You need to provide `wallet_id`, `pay_token_id`, and `receive_token_id`, along with either `pay_amount` or `receive_amount`.
+      operationId: get_swap_quote
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: true
+        in: query
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: The ID of the token to pay.
+        example: ETH
+        explode: true
+        in: query
+        name: pay_token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The ID of the token to receive.
+        example: USDT
+        explode: true
+        in: query
+        name: receive_token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The amount of the token to pay.
+        example: "1.5"
+        explode: true
+        in: query
+        name: pay_amount
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The amount of the token to receive.
+        example: "2000"
+        explode: true
+        in: query
+        name: receive_amount
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapQuote'
+          description: The swap quote successfully retrieved.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Get swap quote
+      tags:
+      - Swaps
+  /swaps/swap:
+    post:
+      description: |
+        This operation creates a swap activity. A swap activity can be either a bridge (cross-chain transfer) or an exchange (token-to-token swap on the same chain).
+      operationId: create_swap_activity
+      requestBody:
+        $ref: '#/components/requestBodies/createSwapActivityBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapActivityDetail'
+          description: The swap activity details successfully retrieved.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.withdraw
+        - swap_orders.create
+        - bridge_orders.create
+      summary: Create swap activity
+      tags:
+      - Swaps
+  /swaps/estimate_fee:
+    post:
+      description: |
+        This operation estimates the network fee of a swap activity. You can use this operation to estimate the network fee before initiating swap activities from MPC Wallets or Web3 Wallets.
+
+        It requires a valid `wallet_id` and `quote_id`, so you need to [get a swap quote](https://www.cobo.com/developers/v2/api-references/swaps/get-swap-quote) first.
+      operationId: estimate_swap_fee
+      requestBody:
+        $ref: '#/components/requestBodies/estimateSwapFeeBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimatedFee'
+          description: The estimated service fee for swap activity successfully retrieved.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2: []
+      summary: Estimate swap fee
+      tags:
+      - Swaps
   /app/workflows:
     get:
       description: |
@@ -8236,6 +8696,18 @@ paths:
         schema:
           format: uuid
           type: string
+        style: form
+      - description: |
+          WalletSetup defines the type of funds used in the merchant account, either "Shared" or "Separate" is allowed when creating a merchant:
+          - `Default`: Wallet of psp owned default merchant.
+          - `Shared`: Shared wallet of non-psp owned merchants.
+          - `Separate`: Separate wallet of non-psp owned merchants.
+        explode: true
+        in: query
+        name: wallet_setup
+        required: false
+        schema:
+          $ref: '#/components/schemas/WalletSetup'
         style: form
       responses:
         "200":
@@ -8639,6 +9111,52 @@ paths:
       summary: List all bank accounts
       tags:
       - Payment
+  /payments/bank_accounts/{bank_account_id}:
+    put:
+      description: |
+        This operation updates the information of an existing bank account.
+      operationId: update_bank_account_by_id
+      parameters:
+      - description: The bank account ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: bank_account_id
+        required: true
+        schema:
+          description: The bank account ID.
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/updateBankAccountBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccount'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.update
+      summary: Update bank account
+      tags:
+      - Payment
   /payments/orders:
     get:
       description: |
@@ -8908,6 +9426,7 @@ paths:
   /payments/settlement_info:
     get:
       description: |
+        <Warning>This operation has been deprecated.</Warning>
         This operation retrieves the balances of specified merchants or the developer.
       operationId: get_settlement_info_by_ids
       parameters:
@@ -9071,6 +9590,40 @@ paths:
       summary: Create settlement request
       tags:
       - Payment
+  /payments/estimate_fee:
+    post:
+      description: |
+        This operation to payment estimate fee.
+      operationId: payment_estimate_fee
+      requestBody:
+        $ref: '#/components/requestBodies/paymentEstimateFeeBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment_estimate_fee_201_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.create
+      summary: Payment estimate fee
+      tags:
+      - Payment
   /payments/settlement_requests/{settlement_request_id}:
     get:
       description: |
@@ -9116,7 +9669,7 @@ paths:
   /payments/crypto_addresses:
     get:
       description: "This operation retrieves a list of crypto addresses registered\
-        \ for crypto withdrawal. \n\nContact our support team at [help@cobo.com](mailto:help@cobo.com)\
+        \ for crypto payouts. \n\nContact our support team at [help@cobo.com](mailto:help@cobo.com)\
         \ to register a new crypto address.\n"
       operationId: list_crypto_addresses
       parameters:
@@ -9163,7 +9716,7 @@ paths:
       - Payment
     post:
       description: |
-        This operation registers a crypto address for crypto withdrawal.
+        This operation registers a crypto address for crypto payouts.
 
         The registered address can later be referenced by its ID when creating settlement requests.
       operationId: create_crypto_address
@@ -9291,7 +9844,7 @@ paths:
         explode: true
         in: query
         name: merchant_id
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -9420,7 +9973,7 @@ paths:
         explode: true
         in: query
         name: merchant_id
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -9461,9 +10014,94 @@ paths:
       summary: List payers
       tags:
       - Payment
+  /payments/topup/payer_accounts:
+    get:
+      description: |
+        This operation retrieves the accounts of all payers. You can filter the result by merchant ID and payer_id.
+      operationId: list_top_up_payer_accounts
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The merchant ID.
+        example: M1001
+        explode: true
+        in: query
+        name: merchant_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: A unique identifier assigned by Cobo to track and identify individual
+          payers.
+        example: P20250619T0310056d7aa
+        explode: true
+        in: query
+        name: payer_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_top_up_payer_accounts_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_orders_payin.read
+      summary: List top-up payer accounts
+      tags:
+      - Payment
   /payments/force_sweep_requests:
     get:
       description: |
+        <Warning>This operation has been deprecated.</Warning>
         This operation retrieves the information of all forced sweeps.
       operationId: list_forced_sweep_requests
       parameters:
@@ -9537,10 +10175,11 @@ paths:
       - Payment
     post:
       description: |
+        <Warning>This operation has been deprecated.</Warning>
         This operation creates a forced sweep to transfer funds from addresses within a specified wallet to its designated sweep-to address.
       operationId: create_forced_sweep_request
       requestBody:
-        $ref: '#/components/requestBodies/createForceSweepBody'
+        $ref: '#/components/requestBodies/createForcedSweepBody'
       responses:
         "201":
           content:
@@ -9566,6 +10205,240 @@ paths:
       - OAuth2:
         - payment_force_sweep.create
       summary: Create forced sweep
+      tags:
+      - Payment
+  /payments/balance/payment_wallets:
+    get:
+      description: |
+        <Warning>This operation has been deprecated.</Warning>
+        This operation retrieves the balance information for specified payment wallets. The balance information is grouped by token. If you do not specify the `wallet_ids` parameter, the balance information for all payment wallets will be returned.
+      operationId: list_payment_wallet_balances
+      parameters:
+      - description: A list of wallet IDs to query.
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d472"
+        explode: true
+        in: query
+        name: wallet_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_payment_wallet_balances_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: List payment wallet balances
+      tags:
+      - Payment
+  /payments/balance/merchants:
+    get:
+      description: |2
+
+        This operation retrieves the balance information for specified merchants. The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
+
+        For more information, please refer to [Amounts and Balances](/v2/payments/amounts-and-balances)
+      operationId: list_merchant_balances
+      parameters:
+      - description: A list of merchant IDs to query.
+        example: "M1001,M1002,M1003"
+        explode: true
+        in: query
+        name: merchant_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: |
+          The payment acquisition type.
+          - `Order`: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions.
+          - `TopUp`: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models.
+        explode: true
+        in: query
+        name: acquiring_type
+        required: true
+        schema:
+          $ref: '#/components/schemas/AcquiringType'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_merchant_balances_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: List merchant balances
+      tags:
+      - Payment
+  /payments/balance/psp:
+    get:
+      description: |
+        This operation retrieves the balance information for you as the developer. The balance information is grouped by token.
+
+        For more information, please refer to [Amounts and Balances](/v2/payments/amounts-and-balances)
+      operationId: get_psp_balance
+      parameters:
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PspBalance'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: Get developer balance
+      tags:
+      - Payment
+  /payments/balance/payer/address:
+    get:
+      description: |
+        This operation retrieves the total amount received for a specific payer. The information is grouped by token and receiving address.
+      operationId: get_payer_balance_by_address
+      parameters:
+      - description: The merchant ID.
+        example: M1001
+        explode: true
+        in: query
+        name: merchant_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Unique payer identifier on the Cobo side, auto-generated by\
+          \ the system."
+        example: P20250619T0310056d7aa
+        explode: true
+        in: query
+        name: payer_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayerBalanceByAddress'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: Get payer balance
       tags:
       - Payment
   /payments/settlement_details:
@@ -9653,234 +10526,6 @@ paths:
       - OAuth2:
         - payment_settlement.read
       summary: List all settlement details
-      tags:
-      - Payment
-  /payments/balance/payment_wallets:
-    get:
-      description: |
-        This operation retrieves the balance information for specified payment wallets. The balance information is grouped by token. If you do not specify the `wallet_ids` parameter, the balance information for all payment wallets will be returned.
-      operationId: list_payment_wallet_balances
-      parameters:
-      - description: A list of wallet IDs to query.
-        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d472"
-        explode: true
-        in: query
-        name: wallet_ids
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: |
-          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
-        example: ETH_USDT
-        explode: true
-        in: query
-        name: token_id
-        required: true
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_payment_wallet_balances_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_balance.read
-      summary: List payment wallet balances
-      tags:
-      - Payment
-  /payments/balance/merchants:
-    get:
-      description: |
-        This operation retrieves the balance information for specified merchants. The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
-      operationId: list_merchant_balances
-      parameters:
-      - description: A list of merchant IDs to query.
-        example: "M1001,M1002,M1003"
-        explode: true
-        in: query
-        name: merchant_ids
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: |
-          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
-        example: ETH_USDT
-        explode: true
-        in: query
-        name: token_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: |
-          The payment acquisition type.
-          - `Order`: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions.
-          - `TopUp`: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models.
-        explode: true
-        in: query
-        name: acquiring_type
-        required: true
-        schema:
-          $ref: '#/components/schemas/AcquiringType'
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_merchant_balances_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_balance.read
-      summary: List merchant balances
-      tags:
-      - Payment
-  /payments/balance/psp:
-    get:
-      description: |
-        This operation retrieves the balance information for you as the developer. The balance information is grouped by token.
-      operationId: get_psp_balance
-      parameters:
-      - description: |
-          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
-        example: ETH_USDT
-        explode: true
-        in: query
-        name: token_id
-        required: true
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PspBalance'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_balance.read
-      summary: Get developer balance
-      tags:
-      - Payment
-  /payments/balance/payer/address:
-    get:
-      description: |
-        This operation retrieves the total amount received for a specific payer. The information is grouped by token and receiving address.
-      operationId: get_payer_balance_by_address
-      parameters:
-      - description: The merchant ID.
-        example: M1001
-        explode: true
-        in: query
-        name: merchant_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: "Unique payer identifier on the Cobo side, auto-generated by\
-          \ the system."
-        example: P20250619T0310056d7aa
-        explode: true
-        in: query
-        name: payer_id
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: |
-          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
-        example: ETH_USDT
-        explode: true
-        in: query
-        name: token_id
-        required: true
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayerBalanceByAddress'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_balance.read
-      summary: Get payer balance
       tags:
       - Payment
   /auto_sweep/sweep_to_addresses:
@@ -12813,7 +13458,7 @@ components:
         type: string
       style: simple
     activityIdParam:
-      description: The unique id of the activity.
+      description: The unique identifier of the swap activity.
       example: f47ac10b-58cc-4372-a567-0e02b2c3d479
       explode: false
       in: path
@@ -12823,8 +13468,8 @@ components:
         type: string
       style: simple
     initiatorOptionalParam:
-      description: "The activity initiator, which is your API key by default. You\
-        \ can also specify the initiator when creating the activity."
+      description: The initiator of the swap activity. It is optional when creating
+        the activity and defaults to your API key if not specified.
       example: steve@example.com
       explode: true
       in: query
@@ -12844,7 +13489,7 @@ components:
         type: string
       style: form
     payAmountOptionalParam:
-      description: The amount of pay token.
+      description: The amount of the token to pay.
       example: "1.5"
       explode: true
       in: query
@@ -12864,7 +13509,7 @@ components:
         type: string
       style: form
     receiveAmountOptionalParam:
-      description: The amount of token to receive.
+      description: The amount of the token to receive.
       example: "2000"
       explode: true
       in: query
@@ -12874,7 +13519,7 @@ components:
         type: string
       style: form
     payTokenIdRequiredParam:
-      description: Unique id of the token to pay.
+      description: The ID of the token to pay.
       example: ETH
       explode: true
       in: query
@@ -12884,7 +13529,7 @@ components:
         type: string
       style: form
     receiveTokenIdRequiredParam:
-      description: Unique id of the token to receive.
+      description: The ID of the token to receive.
       example: USDT
       explode: true
       in: query
@@ -12912,7 +13557,7 @@ components:
         $ref: '#/components/schemas/SwapType'
       style: form
     swapActivityMinUpdatedTimestampOptionalParam:
-      description: "The start time of the query. All staking activities updated after\
+      description: "The start time of the query. All swap activities updated after\
         \ the specified time will be retrieved. The time is in Unix timestamp format,\
         \ measured in milliseconds."
       example: 1635744000000
@@ -12925,7 +13570,7 @@ components:
         type: integer
       style: form
     swapActivityMaxUpdatedTimestampOptionalParam:
-      description: "The end time of the query. All staking activities updated before\
+      description: "The end time of the query. All swap activities updated before\
         \ the specified time will be retrieved. The time is in Unix timestamp format,\
         \ measured in milliseconds."
       example: 1635744000000
@@ -12936,6 +13581,21 @@ components:
       schema:
         format: int64
         type: integer
+      style: form
+    swapActivitySortByParam:
+      description: "The field to sort the results by. \n\nPossible values include:\n\
+        - `created_timestamp`: Sort by the time when the data was created.\n- `updated_timestamp`:\
+        \ Sort by the time when the data was last updated.\n"
+      example: created_timestamp
+      explode: true
+      in: query
+      name: sort_by
+      required: false
+      schema:
+        enum:
+        - created_timestamp
+        - updated_timestamp
+        type: string
       style: form
     ApprovalIdParam:
       description: The system-generated unique ID of the approval request.
@@ -13231,6 +13891,28 @@ components:
       schema:
         $ref: '#/components/schemas/AcquiringType'
       style: form
+    AcquiringTypeRequiredParam:
+      description: |
+        The payment acquisition type.
+        - `Order`: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions.
+        - `TopUp`: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models.
+      explode: true
+      in: query
+      name: acquiring_type
+      required: true
+      schema:
+        $ref: '#/components/schemas/AcquiringType'
+      style: form
+    WalletIdRequiredParam:
+      description: A list of wallet IDs to query.
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d472"
+      explode: true
+      in: query
+      name: wallet_ids
+      required: false
+      schema:
+        type: string
+      style: form
     PaymentStatusesParam:
       description: |
         A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
@@ -13256,28 +13938,6 @@ components:
         description: The crypto address ID.
         type: string
       style: simple
-    AcquiringTypeRequiredParam:
-      description: |
-        The payment acquisition type.
-        - `Order`: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions.
-        - `TopUp`: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models.
-      explode: true
-      in: query
-      name: acquiring_type
-      required: true
-      schema:
-        $ref: '#/components/schemas/AcquiringType'
-      style: form
-    WalletIdRequiredParam:
-      description: A list of wallet IDs to query.
-      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,f47ac10b-58cc-4372-a567-0e02b2c3d472"
-      explode: true
-      in: query
-      name: wallet_ids
-      required: false
-      schema:
-        type: string
-      style: form
     tokenizationActivityIdPathParam:
       description: The ID of the activity.
       example: b7c8e9d0-f1a2-3b4c-5d6e-7f8a9b0c1d2e
@@ -13406,18 +14066,6 @@ components:
             $ref: '#/components/schemas/get_max_transferable_value_with_fee_model_request'
       description: The request body for retrieving the maximum transferable value
         from a specified wallet.
-    createAddressBooksRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateAddressBooksParam'
-      description: The request body of the create Address Books operation.
-    updateAddressBookRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdateAddressBookParam'
-      description: The request body of the update Address Book operation.
     createKeyShareHolderGroupBody:
       content:
         application/json:
@@ -13593,64 +14241,15 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              wallet_id:
-                description: The unique identifier of the wallet to pay.
-                example: 123e4567-e89b-12d3-a456-426614174000
-                type: string
-              address:
-                description: The wallet address.
-                example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-                type: string
-              quote_id:
-                description: The unique identifier of the quote.
-                example: 123e4567-e89b-12d3-a456-426614174001
-                format: uuid
-                type: string
-              app_initiator:
-                description: "The initiator of the app activity. If you do not specify\
-                  \ this property, the WaaS service will automatically designate the\
-                  \ API key as the initiator."
-                example: steve@example.com
-                type: string
-              request_id:
-                description: The request id of the swap activity.
-                example: 123e4567-e89b-12d3-a456-426614174002
-                type: string
-              destination:
-                $ref: '#/components/schemas/AddressTransferDestination'
-            required:
-            - quote_id
-            - wallet_id
-            type: object
+            $ref: '#/components/schemas/create_swap_activity_request'
       description: The request body for creating a swap activity.
       required: true
     estimateSwapFeeBody:
       content:
         application/json:
           schema:
-            properties:
-              wallet_id:
-                description: The unique identifier of the wallet to pay.
-                example: 123e4567-e89b-12d3-a456-426614174000
-                type: string
-              address:
-                description: "The wallet address, required when the wallet is not\
-                  \ a custodial wallet."
-                example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-                type: string
-              quote_id:
-                description: The unique identifier of the quote.
-                example: 123e4567-e89b-12d3-a456-426614174001
-                format: uuid
-                type: string
-              fee_type:
-                $ref: '#/components/schemas/FeeType'
-            required:
-            - quote_id
-            - wallet_id
-            type: object
-      description: The request body for estimating the fee of a swap activity.
+            $ref: '#/components/schemas/SwapEstimateFee'
+      description: The request body for estimating the network fee of a swap activity.
       required: true
     graphQLRequestBody:
       content:
@@ -13675,6 +14274,8 @@ components:
         application/json:
           schema:
             properties:
+              otc_bank_account_id:
+                type: string
               info:
                 additionalProperties: true
                 description: |
@@ -13696,35 +14297,14 @@ components:
                 type: object
             required:
             - info
+            - otc_bank_account_id
             type: object
       description: The request body to register a bank account.
     updateBankAccountBody:
       content:
         application/json:
           schema:
-            properties:
-              info:
-                additionalProperties: true
-                description: |
-                  JSON-formatted bank account details. The object should include the following fields:
-                  - beneficiary_name: Name of the account holder
-                  - beneficiary_address: Address of the account holder
-                  - account_number: Bank account number
-                  - bank_name: Name of the bank
-                  - bank_address: Address of the bank
-                  - iban: (Optional) International Bank Account Number
-                  - swift_or_bic: SWIFT or BIC code of the bank
-                example:
-                  beneficiary_name: John Doe
-                  beneficiary_address: "123 Main St, Anytown, USA"
-                  account_number: "4111111111111111"
-                  bank_name: ABC Bank
-                  bank_address: "456 Bank Ave, Cityville, USA"
-                  swift_or_bic: ABCDEFGH
-                type: object
-            required:
-            - info
-            type: object
+            $ref: '#/components/schemas/update_bank_account_by_id_request'
       description: The request body for updating an existing bank account.
     createPaymentOrderBody:
       content:
@@ -13762,12 +14342,18 @@ components:
           schema:
             $ref: '#/components/schemas/create_crypto_address_request'
       description: The request body to register a crypto address.
-    createForceSweepBody:
+    createForcedSweepBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ForcedSweepRequest'
       description: The request body for forced sweep.
+    paymentEstimateFeeBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/payment_estimate_fee_request'
+      description: The request body to create a estimated fee request.
     estimateFeeStationFeeBody:
       content:
         application/json:
@@ -13870,6 +14456,18 @@ components:
           schema:
             $ref: '#/components/schemas/CreateAutoSweepTask'
       description: The request body to create an auto-sweep task.
+    createAddressBooksRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateAddressBooksParam'
+      description: The request body of the create Address Books operation.
+    updateAddressBookRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateAddressBookParam'
+      description: The request body of the update Address Book operation.
   responses:
     badRequestError:
       content:
@@ -14601,45 +15199,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SwapActivityDetail'
-      description: The swap activity details have been successfully retrieved.
+      description: The swap activity details successfully retrieved.
     listSwapActivitiesResponse:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/SwapActivity'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            type: object
-      description: A list of swap activities have been successfully retrieved.
+            $ref: '#/components/schemas/list_swap_activities_200_response'
+      description: A list of swap activities successfully retrieved.
     listSwapEnabledTokensResponse:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/SwapToken'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            type: object
-      description: A list of enabled tokens have been successfully retrieved.
+            $ref: '#/components/schemas/list_swap_enabled_tokens_200_response'
+      description: A list of enabled tokens successfully retrieved.
     getSwapQuoteResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/SwapQuote'
-      description: The swap quote has been successfully retrieved.
+      description: The swap quote successfully retrieved.
     estimateSwapFeeResponse:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/EstimatedFee'
-      description: Successfully retrieved the estimated fee for swap activity.
+      description: The estimated service fee for swap activity successfully retrieved.
     graphqlResponse:
       content:
         application/json:
@@ -14784,14 +15368,7 @@ components:
       content:
         application/json:
           schema:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/PayerAccount'
-                type: array
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-            type: object
+            $ref: '#/components/schemas/list_top_up_payer_accounts_200_response'
       description: The request was successful.
     createForcedSweepResponse:
       content:
@@ -14804,12 +15381,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/list_forced_sweep_requests_200_response'
-      description: The request was successful.
-    listSettlementDetailResponse:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/list_settlement_details_200_response'
       description: The request was successful.
     listPaymentWalletBalancesResponse:
       content:
@@ -14834,6 +15405,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/list_merchant_balances_200_response'
+      description: The request was successful.
+    listSettlementDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_settlement_details_200_response'
+      description: The request was successful.
+    estimateFeePaymentResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/payment_estimate_fee_201_response'
       description: The request was successful.
     createDispositionResponse:
       content:
@@ -15781,6 +16364,9 @@ components:
         address: 0x0000000000000000000000000000000000000000
         chain_id: ETH
         x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
+        stellar_trusted_token_ids:
+        - XLM_USDC
+        - XLM_USDC
         memo: "82840924"
         taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
         taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
@@ -15832,6 +16418,13 @@ components:
           description: The Taproot address before tweaking.
           example: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
           type: string
+        stellar_trusted_token_ids:
+          description: The list of token IDs for which this address has already established
+            trustlines on the Stellar network.
+          items:
+            example: XLM_USDC
+            type: string
+          type: array
       required:
       - address
       - chain_id
@@ -16939,7 +17532,10 @@ components:
             type: boolean
         type: object
       - $ref: '#/components/schemas/FeeAmount'
-      description: The estimated transaction fee based on the fixed fee model.
+      description: |
+        The estimated transaction fee based on the fixed fee model.
+
+        For more details about the fixed fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
       example:
         is_loop: false
         fee_amount: "0.1"
@@ -16952,7 +17548,10 @@ components:
       title: Fixed
       type: object
     EstimatedEvmEip1559Fee:
-      description: The estimated transaction fee based on the EIP-1559 fee model.
+      description: |
+        The estimated transaction fee based on the EIP-1559 fee model.
+
+        For more details about the EIP-1559 fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -16973,7 +17572,10 @@ components:
       title: EVM_EIP_1559
       type: object
     EstimatedEvmLegacyFee:
-      description: The estimated transaction fee based on the legacy fee model.
+      description: |
+        The estimated transaction fee based on the Legacy fee model.
+
+        For more details about the Legacy fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -16994,7 +17596,10 @@ components:
       title: EVM_Legacy
       type: object
     EstimatedUtxoFee:
-      description: The estimated transaction fee for UTXO-based chains.
+      description: |
+        The estimated transaction fee for UTXO-based chains.
+
+        For more details about the UTXO fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -17015,7 +17620,10 @@ components:
       title: UTXO
       type: object
     EstimatedSOLFee:
-      description: The estimated transaction fee based on the sol fee model.
+      description: |
+        The estimated transaction fee based on the SOL fee model.
+
+        For more details about the SOL fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -17036,7 +17644,10 @@ components:
       title: SOL
       type: object
     EstimatedFILFee:
-      description: The estimated transaction fee based on the fil fee model.
+      description: |
+        The estimated transaction fee based on the FIL fee model.
+
+        For more details about the FIL fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
       properties:
         fee_type:
           $ref: '#/components/schemas/FeeType'
@@ -17119,11 +17730,8 @@ components:
             type: string
         type: object
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
-      description: "The preset properties to limit transaction fee.\n\nIn the EIP-1559\
-        \ fee model, the transaction fee is calculated by multiplying the gas price\
-        \ and the gas units used by the transaction. This can be expressed as: Transaction\
-        \ fee = gas price * gas units used. For more information about the EIP-1559\
-        \ fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).\n\
+      description: "The preset properties to limit transaction fee.\n\nFor more information\
+        \ about the EIP-1559 fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).\n\
         \nYou can specify the maximum gas fee per gas unit, maximum priority fee per\
         \ gas unit, and the gas limit to limit the gas price, priority fee per gas\
         \ unit, gas units used in the transaction. \n\nSwitch between the tabs to\
@@ -17156,7 +17764,7 @@ components:
       description: |
         The preset properties to limit transaction fee.
 
-        In the legacy fee model, the transaction fee is calculated by multiplying the gas price by the gas units used by the transaction. This can be expressed as: Transaction fee =  (gas price * gas units used). For more information about the legacy fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        For more information about the Legacy fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         You can specify the gas limit to limit the gas units used in the transaction.
 
@@ -17187,7 +17795,7 @@ components:
       description: |
         The preset properties to limit transaction fee.
 
-        In the UTXO fee model, the transaction fee is calculated by multiplying the fee rate by the transaction size. This can be expressed as: Transaction fee = fee rate * transaction size. For more information about the UTXO fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        For more information about the UTXO fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         You can specify the maximum fee amount to limit the transaction fee. The transaction will fail if the transaction fee exceeds the specified maximum fee amount.
 
@@ -17211,7 +17819,7 @@ components:
       description: |
         The preset properties to limit transaction fee.
 
-        In the Solana fee model, the transaction fee is calculated by adding the base fee to the product of the compute unit limit and the compute unit price. This can be expressed as: Transaction fee = base fee + (CU limit * CU price). For more information about the Solana fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        For more information about the SOL fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         You can specify CU price and CU limit to adjust the priority and resource allocation of your transaction.
 
@@ -17237,7 +17845,7 @@ components:
       description: |
         The preset properties to limit transaction fee.
 
-        In the Filecoin fee model, the transaction fee is calculated using the minimum of your specified gas fee cap and the sum of the base fee and gas premium, then multiplied by the gas limit. This can be expressed as: Transaction fee = min(gas fee cap, base fee + gas premium) * gas limit. For more information about the Filecoin fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        For more information about the FIL fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         You can specify the gas fee cap, gas premium, and gas limit to control fee behavior and prioritization.
 
@@ -17363,6 +17971,7 @@ components:
         status: Submitted
         fueling_info:
           transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
           request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         transaction_id:
@@ -17625,6 +18234,7 @@ components:
         status: Submitted
         fueling_info:
           transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
           request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
     TransactionApprover:
       description: The approver data for transaction.
@@ -18156,6 +18766,7 @@ components:
       - ExchangeWallet
       - EVM_Contract
       - SOL_Contract
+      - STELLAR_Contract
       - COSMOS_Contract
       - EVM_EIP_191_Signature
       - EVM_EIP_712_Signature
@@ -18369,6 +18980,10 @@ components:
           items:
             $ref: '#/components/schemas/TransactionSolContractInstruction'
           type: array
+        address_lookup_table_accounts:
+          items:
+            $ref: '#/components/schemas/TransactionSolContractAddressLookupTableAccount'
+          type: array
       required:
       - destination_type
       title: SOL_Contract
@@ -18390,6 +19005,21 @@ components:
       - message
       - type_url
       title: Cosmos Message
+      type: object
+    TransactionStellarDestination:
+      description: "The information about the transaction destination type `STELLAR_Contract`.\
+        \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        contract_param:
+          $ref: '#/components/schemas/TransactionStellarContractParam'
+      required:
+      - contract_param
+      - destination_type
+      title: STELLAR_Contract
       type: object
     TransactionCosmosContractDestination:
       description: |
@@ -18413,6 +19043,44 @@ components:
       - destination_type
       title: Cosmos Contract
       type: object
+    TransactionStellarContractType:
+      description: |
+        The type of the Stellar contract.
+      enum:
+      - TrustLine
+      example: TrustLine
+      type: string
+    TransactionStellarContractParam:
+      discriminator:
+        mapping:
+          TrustLine: '#/components/schemas/TransactionStellarTrustLineParam'
+        propertyName: contract_type
+      oneOf:
+      - $ref: '#/components/schemas/TransactionStellarTrustLineParam'
+    TransactionStellarTrustLineParam:
+      description: Parameters related to Stellar trustline operations.
+      properties:
+        contract_type:
+          $ref: '#/components/schemas/TransactionStellarContractType'
+        token_id:
+          description: "The token ID, which is the unique identifier of a token."
+          example: XLM_USDC
+          type: string
+        operation_type:
+          $ref: '#/components/schemas/TransactionStellarTrustLineOperationType'
+      required:
+      - contract_type
+      - operation_type
+      - token_id
+      title: Stellar_TrustLine_Param
+      type: object
+    TransactionStellarTrustLineOperationType:
+      description: |
+        Operations to manage trustlines on the Stellar network.
+      enum:
+      - ChangeTrust
+      example: ChangeTrust
+      type: string
     TransactionSolContractAccount:
       description: sol contract instruction account
       properties:
@@ -18451,6 +19119,26 @@ components:
           example: MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr
           type: string
       title: SOL Instruction
+      type: object
+    TransactionSolContractAddressLookupTableAccount:
+      description: The information about a Solana Address Lookup Table account.
+      properties:
+        alt_account_key:
+          description: "The on-chain public key of the Address Lookup Table (ALT)\
+            \ account, identifying the specific lookup table."
+          example: ALT1Xyz9A1b2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q
+          type: string
+        addresses:
+          description: "An array of stored account addresses within the lookup table,\
+            \ which can be referenced in transactions by index."
+          items:
+            example: G7a1b2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9
+            type: string
+          type: array
+      required:
+      - addresses
+      - alt_account_key
+      title: SOL Address Lookup Table Account
       type: object
     TransactionMessageSignEIP191Destination:
       description: |
@@ -18828,8 +19516,10 @@ components:
         type: object
       - $ref: '#/components/schemas/MaxFeeAmount'
       description: "The transaction fee actually charged by the chain that uses the\
-        \ fixed fee model. \n\nSwitch between the tabs to display the properties for\
-        \ different transaction fee models.\n"
+        \ fixed fee model. \n\nFor more information about the fixed fee model, see\
+        \ [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).\n\
+        \nSwitch between the tabs to display the properties for different transaction\
+        \ fee models.\n"
       required:
       - fee_type
       title: Fixed
@@ -18865,10 +19555,10 @@ components:
       - $ref: '#/components/schemas/EvmEip1559FeeBasePrice'
       - $ref: '#/components/schemas/FeeGasLimit'
       description: "The transaction fee actually charged by the chain that uses the\
-        \ EIP-1559 fee model. \n\nThe transaction fee is calculated by multiplying\
-        \ the gas price by the used gas units. This can be expressed as: Transaction\
-        \ fee = gas price * used gas units.\n\nSwitch between the tabs to display\
-        \ the properties for different transaction fee models.\n"
+        \ EIP-1559 fee model. \n\nFor more information about the EIP-1559 fee model,\
+        \ see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).\n\
+        \nSwitch between the tabs to display the properties for different transaction\
+        \ fee models.\n"
       example:
         effective_gas_price: "100000000"
         max_priority_fee_per_gas: "1000000000000"
@@ -18908,10 +19598,10 @@ components:
       - $ref: '#/components/schemas/EvmLegacyFeeBasePrice'
       - $ref: '#/components/schemas/FeeGasLimit'
       description: "The transaction fee actually charged by the chain that uses the\
-        \ legacy fee model. \n\nThe transaction fee is calculated by multiplying the\
-        \ gas price by the used gas. This can be expressed as: Transaction fee = gas\
-        \ price * used gas units.\n\nSwitch between the tabs to display the properties\
-        \ for different transaction fee models.\n"
+        \ legacy fee model. \n\nFor more information about the Legacy fee model, see\
+        \ [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).\n\
+        \nSwitch between the tabs to display the properties for different transaction\
+        \ fee models.\n"
       required:
       - fee_type
       title: EVM_Legacy
@@ -18944,7 +19634,7 @@ components:
       description: |
         The transaction fee actually charged by the chain that uses the UTXO fee model, such as Bitcoin.
 
-        The transaction fee is calculated by multiplying the fee rate by the transaction size. This can be expressed as: Transaction fee = fee rate * transaction size.
+        For more information about the UTXO fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         Switch between the tabs to display the properties for different transaction fee models.
       required:
@@ -18974,7 +19664,7 @@ components:
       description: |
         The transaction fee actually charged by the chain that uses the Solana fee model.
 
-        In this model, the fee is calculated as: fee = base fee + (compute unit price * compute unit limit) + rent (if applicable). For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        For more details about the Solana fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         Switch between the tabs to display the properties for different transaction fee models.
       required:
@@ -19004,7 +19694,7 @@ components:
       description: |
         The transaction fee actually charged by the chain that uses the Filecoin fee model.
 
-        In this model, the fee is calculated as: fee = base fee * gas used + gas premium * gas limit. For more details, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        For more details about the Filecoin fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
 
         Switch between the tabs to display the properties for different transaction fee models.
       required:
@@ -19330,6 +20020,7 @@ components:
         current transaction.
       example:
         transaction_id: b0530b27-104f-4338-87de-de01500326ea
+        main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
         request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         request_id:
@@ -19338,6 +20029,13 @@ components:
           type: string
         transaction_id:
           description: The transaction ID.
+          example: b0530b27-104f-4338-87de-de01500326ea
+          format: uuid
+          type: string
+        main_transaction_id:
+          description: The UUID of the parent (main) transaction that this record
+            is associated with. Set only when the current record is a gas/fee transaction
+            initiated by Fee Station; omit for main transactions.
           example: b0530b27-104f-4338-87de-de01500326ea
           format: uuid
           type: string
@@ -19375,7 +20073,8 @@ components:
         \ A refund transaction initiated through the Screening App.\n  - `ScreenAppIsolate`:\
         \ An isolation transaction initiated through the Screening App.\n  - `ComplianceRefund`:\
         \ A refund transaction initiated by Cobo KYT.\n  - `ComplianceIsolate`: An\
-        \ isolation transaction initiated by Cobo KYT.\n"
+        \ isolation transaction initiated by Cobo KYT.\n  - `StellarChangeTrust`:\
+        \ A transaction to manage trustlines on the Stellar network.\n"
       enum:
       - AutoFueling
       - AutoFuelingRefund
@@ -19408,6 +20107,7 @@ components:
       - ScreenAppIsolate
       - ComplianceRefund
       - ComplianceIsolate
+      - StellarChangeTrust
       example: AutoSweep
       type: string
     SafeTxExtraData:
@@ -20329,6 +21029,8 @@ components:
 
         A Custodial Wallet (Asset Wallet) can only receive transfers from another Custodial Wallet (Asset Wallet) by using [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop).
 
+        <Note>This destination type is available upon request. Please contact our [customer support](mailto:help@cobo.com) to enable it.</Note>
+
         Switch between the tabs to display the properties for different transaction destinations.
       properties:
         destination_type:
@@ -20523,9 +21225,6 @@ components:
       properties:
         request_id:
           description: The request ID that is used to track a transaction request.
-            The request ID is provided by you and must be unique within your organization.
-            It is recommended to use the same request ID as the transaction for which
-            you want to estimate the transaction fee.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         request_type:
@@ -20558,9 +21257,6 @@ components:
       properties:
         request_id:
           description: The request ID that is used to track a transaction request.
-            The request ID is provided by you and must be unique within your organization.
-            It is recommended to use the same request ID as the transaction for which
-            you want to estimate the transaction fee.
           example: f47ac10b-58cc-4372-a567-0e02b2c3d479
           type: string
         request_type:
@@ -20675,6 +21371,7 @@ components:
       enum:
       - EVM_Contract
       - SOL_Contract
+      - STELLAR_Contract
       example: EVM_Contract
       type: string
     EvmContractCallDestination:
@@ -20762,6 +21459,10 @@ components:
           items:
             $ref: '#/components/schemas/SolContractCallInstruction'
           type: array
+        address_lookup_table_accounts:
+          items:
+            $ref: '#/components/schemas/SolContractCallAddressLookupTableAccount'
+          type: array
       required:
       - destination_type
       - instructions
@@ -20817,15 +21518,90 @@ components:
       - program_id
       title: SOL Instruction
       type: object
+    SolContractCallAddressLookupTableAccount:
+      description: The information about a Solana Address Lookup Table account.
+      properties:
+        alt_account_key:
+          description: "The on-chain public key of the Address Lookup Table (ALT)\
+            \ account, identifying the specific lookup table."
+          example: ALT1Xyz9A1b2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q
+          type: string
+        addresses:
+          description: "An array of stored account addresses within the lookup table,\
+            \ which can be referenced in transactions by index."
+          items:
+            example: G7a1b2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9
+            type: string
+          type: array
+      required:
+      - addresses
+      - alt_account_key
+      title: SOL Address Lookup Table Account
+      type: object
+    StellarContractCallDestination:
+      description: "The information about the transaction destination. Refer to [Transaction\
+        \ sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/ContractCallDestinationType'
+        contract_param:
+          $ref: '#/components/schemas/StellarContractCallContractParam'
+      required:
+      - contract_param
+      - destination_type
+      title: STELLAR_Contract
+      type: object
+    StellarContractCallContractType:
+      description: |
+        The type of the Stellar contract.
+      enum:
+      - TrustLine
+      example: TrustLine
+      type: string
+    StellarContractCallContractParam:
+      discriminator:
+        mapping:
+          TrustLine: '#/components/schemas/StellarContractCallTrustLineParam'
+        propertyName: contract_type
+      oneOf:
+      - $ref: '#/components/schemas/StellarContractCallTrustLineParam'
+    StellarContractCallTrustLineParam:
+      description: Parameters related to Stellar trustline operations.
+      properties:
+        contract_type:
+          $ref: '#/components/schemas/StellarContractCallContractType'
+        token_id:
+          description: "The token ID, which is the unique identifier of a token."
+          example: XLM_USDC
+          type: string
+        operation_type:
+          $ref: '#/components/schemas/StellarContractCallTrustLineOperationType'
+      required:
+      - contract_type
+      - operation_type
+      - token_id
+      title: Stellar_TrustLine_Param
+      type: object
+    StellarContractCallTrustLineOperationType:
+      description: |
+        Operations to manage trustlines on the Stellar network.
+      enum:
+      - ChangeTrust
+      example: ChangeTrust
+      type: string
     ContractCallDestination:
       discriminator:
         mapping:
           EVM_Contract: '#/components/schemas/EvmContractCallDestination'
           SOL_Contract: '#/components/schemas/SolContractCallDestination'
+          STELLAR_Contract: '#/components/schemas/StellarContractCallDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/EvmContractCallDestination'
       - $ref: '#/components/schemas/SolContractCallDestination'
+      - $ref: '#/components/schemas/StellarContractCallDestination'
     ContractCallParams:
       description: The information about a transaction that interacts with a smart
         contract
@@ -20997,24 +21773,6 @@ components:
       - message
       title: EVM_EIP_191_Signature
       type: object
-    BTCEIP191MessageSignDestination:
-      description: "The information about the destination `BTC_EIP_191_Signature`.\
-        \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
-        \ for a detailed introduction about the supported sources and destinations\
-        \ for each transaction type."
-      properties:
-        destination_type:
-          $ref: '#/components/schemas/MessageSignDestinationType'
-        message:
-          description: "The raw data of the message to be signed, encoded in Base64\
-            \ format."
-          example: YWFhYQ==
-          type: string
-      required:
-      - destination_type
-      - message
-      title: BTC_EIP_191_Signature
-      type: object
     EvmEIP712MessageSignDestination:
       description: "The information about the destination `EVM_EIP_712_Signature`.\
         \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
@@ -21034,22 +21792,6 @@ components:
       - destination_type
       - structured_data
       title: EVM_EIP_712_Signature
-      type: object
-    RawMessageSignDestination:
-      description: "The information about the destination `Raw_Message_Signature`.\
-        \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
-        \ for a detailed introduction about the supported sources and destinations\
-        \ for each transaction type."
-      properties:
-        destination_type:
-          $ref: '#/components/schemas/MessageSignDestinationType'
-        msg_hash:
-          description: "Message hash to be signed, in hexadecimal format."
-          type: string
-      required:
-      - destination_type
-      - msg_hash
-      title: Raw_Message_Signature
       type: object
     BTCBIP322MessageSignDestination:
       description: "The information about the destination `BTC_BIP_322_Signature`.\
@@ -21119,17 +21861,13 @@ components:
         mapping:
           EVM_EIP_191_Signature: '#/components/schemas/EvmEIP191MessageSignDestination'
           EVM_EIP_712_Signature: '#/components/schemas/EvmEIP712MessageSignDestination'
-          BTC_EIP_191_Signature: '#/components/schemas/BTCEIP191MessageSignDestination'
           BTC_BIP_137_Signature: '#/components/schemas/BTCBIP137MessageSignDestination'
           BTC_BIP_322_Signature: '#/components/schemas/BTCBIP322MessageSignDestination'
           COSMOS_ADR_36_Signature: '#/components/schemas/CosmosAdr36MessageSignDestination'
-          Raw_Message_Signature: '#/components/schemas/RawMessageSignDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/EvmEIP191MessageSignDestination'
       - $ref: '#/components/schemas/EvmEIP712MessageSignDestination'
-      - $ref: '#/components/schemas/RawMessageSignDestination'
-      - $ref: '#/components/schemas/BTCEIP191MessageSignDestination'
       - $ref: '#/components/schemas/BTCBIP137MessageSignDestination'
       - $ref: '#/components/schemas/BTCBIP322MessageSignDestination'
       - $ref: '#/components/schemas/CosmosAdr36MessageSignDestination'
@@ -21290,6 +22028,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         created_timestamp: 1701396866000
         type: wallets.transaction.created
@@ -21514,6 +22253,7 @@ components:
         status: Submitted
         fueling_info:
           transaction_id: b0530b27-104f-4338-87de-de01500326ea
+          main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
           request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       title: Transaction
     TSSRequestWebhookEventData:
@@ -21934,6 +22674,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
@@ -24156,6 +24897,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         updated_timestamp: 1640918000000
         created_timestamp: 1640918000000
@@ -24227,6 +24969,28 @@ components:
       - url
       type: object
     SwapActivity:
+      example:
+        destination_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+        pay_amount: "100"
+        initiator: John Doe
+        pay_token_id: BTC
+        description: This is a description of the swap activity.
+        receive_token_id: ETH_WBTC
+        created_timestamp: 1677587333000
+        fee_token_id: BTC
+        network_fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        initiator_type: API
+        swap_type: Bridge
+        wallet_id: 123e4567-e89b-12d3-a456-426614174001
+        fee_amount: "0.3"
+        updated_timestamp: 1677587393000
+        activity_id: 123e4567-e89b-12d3-a456-426614174000
+        receive_amount: "100"
+        request_id: 123e4567-e89b-12d3-a456-426614174000
+        status: Success
       properties:
         activity_id:
           description: The unique identifier of the swap activity.
@@ -24238,36 +25002,36 @@ components:
         status:
           $ref: '#/components/schemas/SwapActivityStatus'
         request_id:
-          description: The request id of the swap activity.
+          description: The request ID of the swap transaction.
           example: 123e4567-e89b-12d3-a456-426614174000
           type: string
         wallet_id:
-          description: The unique identifier of the wallet.
+          description: The ID of the wallet used to pay.
           example: 123e4567-e89b-12d3-a456-426614174001
           format: uuid
           type: string
         pay_token_id:
-          description: The token ID to pay.
+          description: The ID of the token to pay.
           example: BTC
           type: string
         receive_token_id:
-          description: The token ID to receive.
+          description: The ID of the token to receive.
           example: ETH_WBTC
           type: string
         pay_amount:
-          description: The amount of tokens to bridge.
+          description: The amount of the token to pay.
           example: "100"
           type: string
         receive_amount:
-          description: The amount of tokens to receive.
+          description: The amount of the token to receive.
           example: "100"
           type: string
         fee_token_id:
-          description: The fee token ID.
+          description: The ID of the token used for paying the service fee.
           example: BTC
           type: string
         fee_amount:
-          description: The amount of fee.
+          description: The amount of the service fee.
           example: "0.3"
           type: string
         initiator:
@@ -24294,7 +25058,8 @@ components:
         network_fee:
           $ref: '#/components/schemas/TransactionRequestFee'
         destination_address:
-          description: the destination address of web3/mpc wallets.
+          description: The address of an MPC Wallet or Web3 Wallet that receives the
+            swapped or bridged assets.
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           type: string
       type: object
@@ -24314,31 +25079,85 @@ components:
             items:
               $ref: '#/components/schemas/SwapActivitySigners'
             type: array
+          receiving_transaction:
+            $ref: '#/components/schemas/SwapReceivingTransaction'
         type: object
+      example:
+        destination_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+        pay_amount: "100"
+        initiator: John Doe
+        pay_token_id: BTC
+        description: This is a description of the swap activity.
+        approvers:
+        - name: Emily Johnson
+          status: Pending
+        - name: Emily Johnson
+          status: Pending
+        receive_token_id: ETH_WBTC
+        created_timestamp: 1677587333000
+        fee_token_id: BTC
+        network_fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        initiator_type: API
+        swap_type: Bridge
+        signers:
+        - failed_reason: Rejected by signer Cobo TSS
+          signer: Cobo TSS
+          status: Pending
+        - failed_reason: Rejected by signer Cobo TSS
+          signer: Cobo TSS
+          status: Pending
+        wallet_id: 123e4567-e89b-12d3-a456-426614174001
+        fee_amount: "0.3"
+        updated_timestamp: 1677587393000
+        activity_id: 123e4567-e89b-12d3-a456-426614174000
+        timeline:
+        - action: Submitted
+          status: Success
+          timestamp: 1640995200000
+        - action: Submitted
+          status: Success
+          timestamp: 1640995200000
+        receive_amount: "100"
+        request_id: 123e4567-e89b-12d3-a456-426614174000
+        receiving_transaction:
+          is_loop: false
+          chain_id: ETH
+          transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        status: Success
     SwapToken:
+      example:
+        token_id: ETH_USDT
+        chain_id: ETH
+        min_amount: "1000"
+        max_amount: "100000"
+        token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
+        asset_id: ETH
       properties:
         token_id:
-          description: The token id.
+          description: The token ID.
           example: ETH_USDT
           type: string
         chain_id:
-          description: The chain id.
+          description: "The chain ID, which is the unique identifier of a blockchain."
           example: ETH
           type: string
         asset_id:
-          description: The asset id.
+          description: The asset ID.
           example: ETH
           type: string
         token_address:
-          description: The token address.
+          description: The on-chain contract address of the token.
           example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
           type: string
         min_amount:
-          description: The minimum amount.
+          description: The minimum amount allowed for a swap.
           example: "1000"
           type: string
         max_amount:
-          description: The maximum amount.
+          description: The maximum amount allowed for a swap.
           example: "100000"
           type: string
       required:
@@ -24347,51 +25166,58 @@ components:
       - token_id
       type: object
     SwapQuote:
+      example:
+        min_receive_amount: "0"
+        fee_amount: "0.3"
+        quote_expired_timestamp: 1677587393000
+        quote_id: 2ec094034044ffa50f4294d48363fef31eb5755fc783ba3837a03c91b4904659
+        pay_amount: "100"
+        pay_token_id: BTC
+        receive_token_id: ETH_WBTC
+        receive_amount: "100"
+        max_pay_amount: "10000"
+        fee_token_id: BTC
       properties:
         quote_id:
-          description: The unique id of quote.
+          description: The unique identifier of the swap quote.
           example: 2ec094034044ffa50f4294d48363fef31eb5755fc783ba3837a03c91b4904659
           type: string
         pay_token_id:
-          description: The token ID to pay.
+          description: The ID of the token to pay.
           example: BTC
           type: string
         pay_amount:
-          description: The amount of tokens to pay.
+          description: The amount of the token to pay.
           example: "100"
           type: string
         receive_token_id:
-          description: The token ID to receive.
+          description: The ID of the token to receive.
           example: ETH_WBTC
           type: string
         receive_amount:
-          description: The amount of tokens to receive.
+          description: The amount of the token to receive.
           example: "100"
           type: string
         fee_token_id:
-          description: The token ID for the service fee.
+          description: The ID of the token for the service fee.
           example: BTC
           type: string
         fee_amount:
-          description: The amount of tokens for the service fee.
-          example: "0.3"
-          type: string
-        estimated_network_fee_amount:
-          description: The estimated amount of tokens for the network fee.
+          description: The amount of the token for the service fee.
           example: "0.3"
           type: string
         min_receive_amount:
-          description: The minimum amount of tokens to receive if the pay amount is
-            specified.
+          description: The minimum amount of the token to receive if `pay_amount`
+            is specified.
           example: "0"
           type: string
         max_pay_amount:
-          description: The maximum amount of tokens to pay if the receive amount is
-            specified.
+          description: The maximum amount of the token to pay if `receive_amount`
+            is specified.
           example: "10000"
           type: string
         quote_expired_timestamp:
-          description: "The time when the quote will expire, in Unix timestamp format,\
+          description: "The time when the swap quote expires, in Unix timestamp format,\
             \ measured in milliseconds."
           example: 1677587393000
           type: integer
@@ -24408,8 +25234,8 @@ components:
     SwapType:
       description: |
         The type of the swap activity. Possible values include:
-        - `Bridge`: The activity is a bridge activity.
-        - `Exchange`: The activity is an exchange activity.
+        - `Bridge`: The activity involves bridging tokens across chains.
+        - `Exchange`: The activity involves token-to-token exchange (a swap within the same chain).
       enum:
       - Bridge
       - Exchange
@@ -24418,9 +25244,9 @@ components:
     SwapActivityStatus:
       description: |
         The status of the swap activity. Possible values include:
-        - `Success`: The activity is successfully completed.
+        - `Success`: The activity completed successfully.
         - `Processing`: The activity is being processed.
-        - `Failed`: The activity has failed.
+        - `Failed`: The activity failed.
       enum:
       - Success
       - Processing
@@ -24429,27 +25255,31 @@ components:
       type: string
     SwapActivityTimeline:
       description: The timeline of the swap activity.
+      example:
+        action: Submitted
+        status: Success
+        timestamp: 1640995200000
       properties:
         action:
           description: |
-            The action of the swap activity. Possible values include:
-              - `Submitted`: The swap request is submitted.
+            The action in the swap activity. Possible values include:
+              - `Submitted`: The swap request has been submitted.
               - `Pending Authorization`: The swap request is pending authorization.
-              - `Bridge {Token}`: The token is being bridged to the target chain.
-              - `Swap {Token}`: The token is being swapped on the target chain.
-              - `Cobo Confirmation`: The swap result is waiting for Cobo confirmation.
+              - `Bridge {Token}`: The token is being bridged to the destination chain.
+              - `Swap {Token}`: The token is being exchanged to the destination token.
+              - `Cobo Confirmation`: The swap result is pending Cobo's final confirmation.
           example: Submitted
           type: string
         status:
           description: |
             The status of the action. Possible values include:
-              - `Success`: The action is successfully completed.
+              - `Success`: The action completed successfully.
               - `Processing`: The action is being processed.
-              - `Failed`: The action has failed.
+              - `Failed`: The action failed.
           example: Success
           type: string
         timestamp:
-          description: "The time when the action took place, in Unix timestamp format,\
+          description: "The time when the action occurred, in Unix timestamp format,\
             \ measured in milliseconds. \n"
           example: 1640995200000
           type: integer
@@ -24458,12 +25288,15 @@ components:
       - status
       type: object
     SwapActivityApprovers:
-      description: The approvers data for swap activity.
+      description: The approver information of the swap activity.
+      example:
+        name: Emily Johnson
+        status: Pending
       properties:
         name:
           description: |
             The approver name of the swap activity.
-          example: Wenyu.Xiao
+          example: Emily Johnson
           type: string
         status:
           $ref: '#/components/schemas/SwapApproversStatus'
@@ -24472,7 +25305,11 @@ components:
       - status
       type: object
     SwapActivitySigners:
-      description: The signer data for swap activity.
+      description: The signer information of the swap activity.
+      example:
+        failed_reason: Rejected by signer Cobo TSS
+        signer: Cobo TSS
+        status: Pending
       properties:
         signer:
           description: The signer name.
@@ -24481,16 +25318,46 @@ components:
         status:
           $ref: '#/components/schemas/SwapSingingStatus'
         failed_reason:
-          description: Failed reason of signing process.
+          description: The reason for the signing failure.
           example: Rejected by signer Cobo TSS
           type: string
       type: object
+    SwapReceivingTransaction:
+      description: The transaction that delivers the swapped or bridged assets to
+        the destination address.
+      example:
+        is_loop: false
+        chain_id: ETH
+        transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+      properties:
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain.\
+            \ You can retrieve the IDs of all the chains you can use by calling [List\
+            \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+          example: ETH
+          type: string
+        transaction_hash:
+          description: The transaction hash.
+          example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          type: string
+        is_loop:
+          description: |
+            Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer.
+            - `true`: The transaction was executed as a Cobo Loop transfer.
+            - `false`: The transaction was not executed as a Cobo Loop transfer.
+          example: false
+          type: boolean
+      required:
+      - chain_id
+      - tx_hash
+      - use_loop_network
+      type: object
     SwapApproversStatus:
       description: |
-        The status of the approval. Possible values include:
-          - `Pending`: Waiting for approval from the approver.
-          - `Approved`: The approver has agreed to the approval.
-          - `Rejected`: The approver has rejected the approval.
+        The status of the approver. Possible values include:
+          - `Pending`: Waiting for the approver's decision.
+          - `Approved`: The approver has approved the swap request.
+          - `Rejected`: The approver has rejected the swap request.
       enum:
       - Pending
       - Approved
@@ -24498,11 +25365,12 @@ components:
       example: Pending
       type: string
     SwapSingingStatus:
-      description: "The transaction signing result. Possible values include: \n  -\
-        \ `Pending`: Waiting for signing from the signer.\n  - `Approved`: The signer\
-        \ has signed to the signing request.\n  - `Timeout`: The signing request has\
-        \ expired due to no response from the signer.\n  - `Rejected`: The signer\
-        \ has rejected the signing request.\n"
+      description: |
+        The result of the swap transaction signing. Possible values include:
+          - `Pending`: The transaction is awaiting the signer's signature.
+          - `Signed`: The transaction has been signed by the signer.
+          - `Timeout`: The signature request has expired due to no response from the signer.
+          - `Rejected`: The transaction has been rejected by the signer.
       enum:
       - Pending
       - Signed
@@ -24510,6 +25378,33 @@ components:
       - Rejected
       example: Pending
       type: string
+    SwapEstimateFee:
+      example:
+        wallet_id: 123e4567-e89b-12d3-a456-426614174000
+        address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+        quote_id: 123e4567-e89b-12d3-a456-426614174001
+        fee_type: EVM_EIP_1559
+      properties:
+        wallet_id:
+          description: The ID of the wallet to pay.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        address:
+          description: The wallet address. This property is required when the wallet
+            to pay is not a Custodial Wallet (Asset Wallet).
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        quote_id:
+          description: The ID of the swap quote.
+          example: 123e4567-e89b-12d3-a456-426614174001
+          format: uuid
+          type: string
+        fee_type:
+          $ref: '#/components/schemas/FeeType'
+      required:
+      - quote_id
+      - wallet_id
+      type: object
     GraphQLRequest:
       description: The request body for a GraphQL query or mutation.
       properties:
@@ -25100,6 +25995,118 @@ components:
       required:
       - amount
       type: object
+    FeeStationGasStationType:
+      description: "The Fee Station mode used for automatic gas payment:\n- `FeeStation`:\
+        \ The client uses their own Fee Station balance to cover the gas fee. \n-\
+        \ `CoboOperationStation`: Cobo covers the gas fee on behalf of the client.\n"
+      enum:
+      - FeeStation
+      - CoboOperationStation
+      example: CoboOperationStation
+      type: string
+    FeeStationCheckFeeStationUsage:
+      description: The information for evaluating Fee Station usage.
+      example:
+        amount: "100.5"
+        token_id: ETH_USDT
+        estimated_fee_amount: "0.0021"
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        from_address: 0x1234567890abcdef1234567890abcdef12345678
+        from_wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      properties:
+        request_id:
+          description: The request ID that is used to track a transaction request.
+            The request ID is provided by you and must be unique within your organization.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        amount:
+          description: The amount of tokens to be transferred in this request.
+          example: "100.5"
+          type: string
+        token_id:
+          description: "The token ID of the transferred token. You can retrieve the\
+            \ IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH_USDT
+          type: string
+        estimated_fee_amount:
+          description: "The estimated transaction fee required for this transfer,\
+            \ before applying any Fee Station rules."
+          example: "0.0021"
+          type: string
+        from_address:
+          description: The blockchain address that initiates the transfer.
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        from_wallet_id:
+          description: The wallet ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+      required:
+      - amount
+      - estimated_fee_amount
+      - from_address
+      - from_wallet_id
+      - request_id
+      - token_id
+      type: object
+    FeeStationCheckFeeStationUsageResponse:
+      description: The Fee Station usage evaluation result for the transfer request.
+      example:
+        token_id: ETH
+        is_balance_sufficient: false
+        balance: "0.0021"
+        gas_station_type: CoboOperationStation
+        is_sponsor_applicable: true
+        sponsored_fee_amount: "0.0021"
+        total_fee_amount: "0.0021"
+        is_fee_station_applicable: true
+      properties:
+        token_id:
+          description: "The token used to pay the gas fee for this specific transaction.\
+            \ You can retrieve the IDs of all supported tokens by calling [List enabled\
+            \ tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+          example: ETH
+          type: string
+        gas_station_type:
+          $ref: '#/components/schemas/FeeStationGasStationType'
+        is_fee_station_applicable:
+          description: Indicates whether Fee Station is applied for this transfer
+            request.
+          example: true
+          type: boolean
+        is_balance_sufficient:
+          description: "If Fee Station is used, indicates whether its balance is sufficient\
+            \ to cover the required gas fee."
+          example: false
+          type: boolean
+        balance:
+          description: The current token balance available in Fee Station.
+          example: "0.0021"
+          type: string
+        total_fee_amount:
+          description: The total gas amount required for this transfer request.
+          example: "0.0021"
+          type: string
+        is_sponsor_applicable:
+          description: Indicates whether USDT (U) sponsorship is applied when Fee
+            Station balance is insufficient.
+          example: true
+          type: boolean
+        sponsored_fee_amount:
+          description: The amount of gas fee sponsored by USDT (U) when applicable.
+          example: "0.0021"
+          type: string
+      required:
+      - balance
+      - gas_station_type
+      - is_balance_sufficient
+      - is_fee_station_applicable
+      - is_sponsor_applicable
+      - sponsored_fee_amount
+      - token_id
+      - total_fee_amount
+      type: object
     BankAccount:
       example:
         bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25174,15 +26181,15 @@ components:
         bank_account_id:
           description: |
             The ID of the bank account where the settled funds will be deposited. This field is only applicable when `payout_channel` is set to `OffRamp`.
-            Call [List all bank accounts](/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts.
+            Call [List all bank accounts](https://www.cobo.com/developers/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts.
           example: 0123e457-e89b-12d3-a456-426614174004
           format: uuid
           type: string
         crypto_address_id:
           description: |
-            The ID of the crypto address used for crypto withdrawal. Specify this field when `payout_channel` is set to `Crypto`.
+            The ID of the crypto address used for crypto payouts. Specify this field when `payout_channel` is set to `Crypto`.
 
-            Call [List all crypto addresses](/v2/api-references/payments/list-all-crypto-addresses) to retrieve registered crypto addresses.
+            Call [List crypto addresses](https://www.cobo.com/developers/v2/api-references/payment/list-crypto-addresses) to retrieve registered crypto addresses.
           example: addr_ethusdt_20250506T123456_ab12cd
           type: string
         order_ids:
@@ -25196,6 +26203,7 @@ components:
       example:
         wallet_id: 123e4567-e89b-12d3-a456-426614174001
         updated_timestamp: 1744689600
+        wallet_setup: Shared
         name: Merchant-1
         created_timestamp: 1744689600
         merchant_id: "1"
@@ -25222,6 +26230,8 @@ components:
             \ to configure the developer fee rate."
           example: "0.01"
           type: string
+        wallet_setup:
+          $ref: '#/components/schemas/WalletSetup'
         created_timestamp:
           description: "The creation time of the merchant, represented as a UNIX timestamp\
             \ in seconds."
@@ -25444,6 +26454,8 @@ components:
         merchant_fee_token_id: ETH_USDT
         request_id: 123e4567-e89b-12d3-a456-426614174004
         order_id: O20250304-M1001-1001
+        commission_fee:
+          fee_amount: fee_amount
         status: Pending
         charge_merchant_fee: false
       properties:
@@ -25497,10 +26509,10 @@ components:
           type: integer
         initiator:
           description: "\nThe initiator of this settlement request. Can return either\
-            \ an API key or the Payment Management App's ID. \n- Format `api_key_<API_KEY>`:\
-            \ Indicates the settlement request was initiated via the Payment API using\
-            \ the API key.\n- Format `app_<APP_ID>`: Indicates the settlement request\
-            \ was initiated through the Payment Management App using the App ID.\n"
+            \ an API key or the Payments App's ID. \n- Format `api_key_<API_KEY>`:\
+            \ Indicates the settlement request was initiated via the Payments API\
+            \ using the API key.\n- Format `app_<APP_ID>`: Indicates the settlement\
+            \ request was initiated through the Payments App using the App ID.\n"
           example: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b85b81dcc15f920e9d
           type: string
         transactions:
@@ -25530,6 +26542,8 @@ components:
             is only applicable if `charge_merchant_fee` is set to true.
           example: ETH_USDT
           type: string
+        commission_fee:
+          $ref: '#/components/schemas/CommissionFee'
       required:
       - amount
       - chain_id
@@ -25547,7 +26561,9 @@ components:
         \ All refund transactions have been completed successfully.\n- `PartiallyCompleted`:\
         \ Some refund transactions have been completed successfully, while others\
         \ have failed.\n- `Failed`: All refund transactions have failed.\n- `PendingConfirmation`:\
-        \ The refund order has been completed but the address to send is pending confirmation.\n"
+        \ The refund order has been created but the address to send (`to_address`)\
+        \ has not been specified. Once you use the [Update refund order](https://www.cobo.com/developers/v2/api-references/payment/update-refund-order)\
+        \ operation to specify the address, the status will be updated to `Pending`.\n"
       enum:
       - Pending
       - Processing
@@ -25581,6 +26597,7 @@ components:
       - Completed
       - PartiallyCompleted
       - Failed
+      - Canceled
       example: Pending
       type: string
     SettleStatus:
@@ -25606,6 +26623,10 @@ components:
         - settlement_request_id: S20250304-1001
           amount: "500.00"
           chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
           created_timestamp: 1744689600
           order_ids:
           - O20250304-M1001-1001
@@ -25637,6 +26658,8 @@ components:
           payout_channel: Crypto
           currency: USD
           acquiring_type: Order
+          commission_fee:
+            fee_amount: fee_amount
           status: Pending
           bank_account:
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25653,6 +26676,10 @@ components:
         - settlement_request_id: S20250304-1001
           amount: "500.00"
           chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
           created_timestamp: 1744689600
           order_ids:
           - O20250304-M1001-1001
@@ -25684,6 +26711,8 @@ components:
           payout_channel: Crypto
           currency: USD
           acquiring_type: Order
+          commission_fee:
+            fee_amount: fee_amount
           status: Pending
           bank_account:
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25697,14 +26726,28 @@ components:
               bank_country: USA
               bank_address: "456 Bank Ave, Cityville, USA"
               swift_or_bic: ABCDEFGH
+        initiator: api_key_b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        received_amount_fiat: "500.00"
+        created_timestamp: 1744689600
         updated_timestamp: 1744689600
         payout_channel: Crypto
-        initiator: api_key_b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
-        created_timestamp: 1744689600
+        currency: USD
         acquiring_type: Order
         request_id: SETTLEMENT123
         status: Pending
         settlement_type: Merchant
+        bank_account:
+          bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
+          info:
+            beneficiary_name: John Doe
+            beneficiary_address: "123 Main St, Anytown, USA"
+            account_number: "4111111111111111"
+            bank_name: ABC Bank
+            bank_country: USA
+            bank_address: "456 Bank Ave, Cityville, USA"
+            swift_or_bic: ABCDEFGH
       properties:
         settlement_request_id:
           description: The settlement request ID generated by Cobo.
@@ -25722,21 +26765,21 @@ components:
             $ref: '#/components/schemas/SettlementDetail'
           type: array
         created_timestamp:
-          description: "The creation time of the settlement request, represented as\
+          description: "The created time of the settlement request, represented as\
             \ a UNIX timestamp in seconds."
           example: 1744689600
           type: integer
         updated_timestamp:
-          description: "The last update time of the settlement request, represented\
-            \ as a UNIX timestamp in seconds."
+          description: "The updated time of the settlement request, represented as\
+            \ a UNIX timestamp in seconds."
           example: 1744689600
           type: integer
         initiator:
           description: "\nThe initiator of this settlement request. Can return either\
-            \ an API key or the Payment Management App's ID. \n- Format `api_key_<API_KEY>`:\
-            \ Indicates the settlement request was initiated via the Payment API using\
-            \ the API key.\n- Format `app_<APP_ID>`: Indicates the settlement request\
-            \ was initiated through the Payment Management App using the App ID.\n"
+            \ an API key or the Payments App's ID. \n- Format `api_key_<API_KEY>`:\
+            \ Indicates the settlement request was initiated via the Payments API\
+            \ using the API key.\n- Format `app_<APP_ID>`: Indicates the settlement\
+            \ request was initiated through the Payments App using the App ID.\n"
           example: api_key_b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
           type: string
         acquiring_type:
@@ -25745,6 +26788,17 @@ components:
           $ref: '#/components/schemas/PayoutChannel'
         settlement_type:
           $ref: '#/components/schemas/SettlementType'
+        currency:
+          description: The fiat currency for the settlement request.
+          example: USD
+          type: string
+        received_amount_fiat:
+          description: |
+            The received fiat amount of this settlement request.
+          example: "500.00"
+          type: string
+        bank_account:
+          $ref: '#/components/schemas/BankAccount'
       required:
       - request_id
       - settlement_request_id
@@ -25756,6 +26810,10 @@ components:
         settlement_request_id: S20250304-1001
         amount: "500.00"
         chain_id: ETH
+        bridging_fee:
+          fee_amount: fee_amount
+          received_amount: received_amount
+          received_token_id: received_token_id
         created_timestamp: 1744689600
         order_ids:
         - O20250304-M1001-1001
@@ -25787,6 +26845,8 @@ components:
         payout_channel: Crypto
         currency: USD
         acquiring_type: Order
+        commission_fee:
+          fee_amount: fee_amount
         status: Pending
         bank_account:
           bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -25855,7 +26915,7 @@ components:
           example: 1744689600
           type: integer
         crypto_address_id:
-          description: The ID of the crypto address used for crypto withdrawal.
+          description: The ID of the crypto address used for crypto payouts.
           example: addr_ethusdt_20250429T134512_a8c31f
           type: string
         payout_channel:
@@ -25875,6 +26935,10 @@ components:
           items:
             $ref: '#/components/schemas/OrderId'
           type: array
+        commission_fee:
+          $ref: '#/components/schemas/CommissionFee'
+        bridging_fee:
+          $ref: '#/components/schemas/BridgingFee'
       type: object
     SettlementInfo:
       example:
@@ -25901,19 +26965,19 @@ components:
           example: ETH_USDT
           type: string
         available_amount:
-          description: This field is no longer in use and can be ignored.
+          description: This field has been deprecated.
           example: "500.00"
           type: string
         available_currency_balance:
-          description: This field is no longer in use and can be ignored.
+          description: This field has been deprecated.
           example: "500.00"
           type: string
         pending_amount:
-          description: This field is no longer in use and can be ignored.
+          description: This field has been deprecated.
           example: "500.00"
           type: string
         pending_currency_balance:
-          description: This field is no longer in use and can be ignored.
+          description: This field has been deprecated.
           example: "500.00"
           type: string
         settled_amount:
@@ -25921,16 +26985,11 @@ components:
           example: "500.00"
           type: string
         available_balance:
-          description: "The balance available for settlement or refund, in the specified\
-            \ cryptocurrency."
+          description: This field has been deprecated.
           example: "500.00"
           type: string
         total_balance:
-          description: |2
-
-            The total unsettled balance in the specified cryptocurrency, including:
-            - Available balance that can be settled immediately
-            - Amounts below the sweep threshold that require forced sweep before settlement
+          description: The total balance in the specified cryptocurrency.
           example: "500.00"
           type: string
         acquiring_type:
@@ -26090,6 +27149,7 @@ components:
         name: Tether USD
         token_icon_url: https://example.com/icons/usdt.png
         token_address: 0xdac17f958d2ee523a2206206994597c13d831ec7
+        can_off_ramp: true
         decimal: 6
         chain_symbol: ETH
         chain_icon_url: https://example.com/icons/eth.png
@@ -26134,6 +27194,9 @@ components:
           example: https://example.com/icons/usdt.png
           nullable: true
           type: string
+        can_off_ramp:
+          description: Whether the token can by off ramp settlement
+          type: boolean
       required:
       - chain_id
       - chain_symbol
@@ -26146,6 +27209,13 @@ components:
     Account:
       description: "Details of a payment account used for top-up operations, including\
         \ address and balance metadata."
+      example:
+        merchant_balance: "0.15"
+        address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+        token_id: ETH_USDT
+        updated_timestamp: 1610445878970
+        created_timestamp: 1610445878970
+        psp_balance: "0.15"
       properties:
         token_id:
           description: The ID of the cryptocurrency that this account is configured
@@ -26183,6 +27253,25 @@ components:
       - token_id
       type: object
     PayerAccount:
+      example:
+        updated_timestamp: 1744693200
+        payer_id: P20250619T0310056d7aa
+        created_timestamp: 1744689600
+        merchant_id: M1001
+        accounts:
+        - merchant_balance: "0.15"
+          address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          created_timestamp: 1610445878970
+          psp_balance: "0.15"
+        - merchant_balance: "0.15"
+          address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          created_timestamp: 1610445878970
+          psp_balance: "0.15"
+        developer_fee_rate: "0.01"
       properties:
         merchant_id:
           description: The merchant ID.
@@ -26217,104 +27306,6 @@ components:
       - developer_fee_rate
       - merchant_id
       - payer_id
-      type: object
-    TopUpAddress:
-      example:
-        chain: ETH
-        address: 0x1234567890abcdef...
-        token_id: ETH_USDT
-        updated_timestamp: 1744689600
-        custom_payer_id: user_abc_10001
-        min_amount: "0.1"
-        payer_id: P20250619T0310056d7aa
-        created_timestamp: 1744689600
-        merchant_id: M1001
-        developer_fee_rate: "0.01"
-      properties:
-        address:
-          description: The dedicated top-up address assigned to a specific payer under
-            a merchant on a specified chain.
-          example: 0x1234567890abcdef...
-          type: string
-        payer_id:
-          description: A unique identifier assigned by Cobo to track and identify
-            individual payers.
-          example: P20250619T0310056d7aa
-          type: string
-        custom_payer_id:
-          description: A unique identifier assigned by the developer to track and
-            identify individual payers in their system.
-          example: user_abc_10001
-          type: string
-        merchant_id:
-          description: The merchant ID.
-          example: M1001
-          type: string
-        token_id:
-          description: "The token ID, which is a unique identifier that specifies\
-            \ both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`."
-          example: ETH_USDT
-          type: string
-        chain:
-          description: The chain ID.
-          example: ETH
-          type: string
-        developer_fee_rate:
-          description: The developer fee rate applied to top-up transactions made
-            to this address. Expressed as a decimal string where "0.1" represents
-            10%.
-          example: "0.01"
-          type: string
-        min_amount:
-          description: The minimum top-up amount allowed for this address. Top-ups
-            below this threshold will not be credited to merchant or developer funds.
-          example: "0.1"
-          type: string
-        created_timestamp:
-          description: "The creation time of the top-up address, represented as a\
-            \ UNIX timestamp in seconds."
-          example: 1744689600
-          type: integer
-        updated_timestamp:
-          description: "The last update time of the top-up address, represented as\
-            \ a UNIX timestamp in seconds."
-          example: 1744689600
-          type: integer
-      required:
-      - address
-      - custom_payer_id
-      - merchant_id
-      - min_amount
-      - payer_id
-      - token_id
-      type: object
-    UpdateTopUpAddress:
-      description: The request body to update top-up address.
-      example:
-        token_id: ETH_USDT
-        custom_payer_id: payer_0001
-        merchant_id: M1001
-      properties:
-        merchant_id:
-          description: The merchant ID.
-          example: M1001
-          type: string
-        token_id:
-          description: |
-            The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
-              - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
-          example: ETH_USDT
-          type: string
-        custom_payer_id:
-          description: A unique identifier assigned by the developer to track and
-            identify individual payers in their system.
-          example: payer_0001
-          type: string
-      required:
-      - custom_payer_id
-      - merchant_id
-      - token_id
       type: object
     ForcedSweepRequest:
       example:
@@ -26483,7 +27474,7 @@ components:
           example: "1.23"
           type: string
         settled_amount:
-          description: The total amount of the token that has been settled from the
+          description: The total amount of the token that has been paid out from the
             merchant's balance.
           example: "1.23"
           type: string
@@ -26493,12 +27484,17 @@ components:
           example: "1.23"
           type: string
         total_balance:
-          description: The total balance of the token for the merchant.
+          description: |2
+
+            The total balance of the token available for payout or refund for the merchant.
+
+            `total_balance` = `total_received_amount` - `settled_amount` - `refunded_amount`
+
+            For more information, please refer to [Amounts and Balances](/v2_cn/payments/amounts-and-balances)
           example: "1.23"
           type: string
         available_balance:
-          description: "The balance available for settlement or refund, in the specified\
-            \ cryptocurrency."
+          description: This field has been deprecated.
           example: "1.23"
           type: string
       required:
@@ -26526,7 +27522,7 @@ components:
           example: "1.23"
           type: string
         settled_amount:
-          description: The total amount of the token that has been settled from the
+          description: The total amount of the token that has been paid out from the
             developer's balance.
           example: "1.23"
           type: string
@@ -26535,12 +27531,17 @@ components:
             developer's balance.
           type: string
         total_balance:
-          description: The total balance of the token for the developer.
+          description: |2
+
+            The total balance of the token available for payout or refund for the developer.
+
+            `total_balance` = `developer_fee_amount` - `settled_amount` - `refunded_amount`
+
+            For more information, please refer to [Amounts and Balances](/v2_cn/payments/amounts-and-balances)
           example: "1.23"
           type: string
         available_balance:
-          description: "The balance available for settlement or refund, in the specified\
-            \ cryptocurrency."
+          description: This field has been deprecated.
           example: "1.23"
           type: string
       required:
@@ -26572,6 +27573,120 @@ components:
       - address
       - total_received_amount
       type: object
+    BridgingFee:
+      example:
+        fee_amount: fee_amount
+        received_amount: received_amount
+        received_token_id: received_token_id
+      properties:
+        fee_amount:
+          description: The bridging fee amount.
+          type: string
+        received_token_id:
+          description: The received token id after bridge.
+          type: string
+        received_amount:
+          description: The received amount after bridge.
+          type: string
+      required:
+      - fee_amount
+      type: object
+    CommissionFee:
+      example:
+        fee_amount: fee_amount
+      properties:
+        fee_amount:
+          description: The commission fee amount.
+          type: string
+      required:
+      - fee_amount
+      type: object
+    OtcFee:
+      example:
+        token_id: token_id
+        fee_rate: fee_rate
+      properties:
+        fee_rate:
+          description: The otc fee rate.
+          type: string
+        token_id:
+          description: The token id in otc.
+          type: string
+      required:
+      - fee_rate
+      type: object
+    PaymentEstimatedFee:
+      example:
+        otc_fee:
+          token_id: token_id
+          fee_rate: fee_rate
+        amount: "500.00"
+        token_id: token_id
+        bridging_fee:
+          fee_amount: fee_amount
+          received_amount: received_amount
+          received_token_id: received_token_id
+        commission_fee:
+          fee_amount: fee_amount
+      properties:
+        token_id:
+          description: The ID of the cryptocurrency you want to payment.
+          type: string
+        amount:
+          description: |
+            The payment amount.
+          example: "500.00"
+          type: string
+        commission_fee:
+          $ref: '#/components/schemas/CommissionFee'
+        bridging_fee:
+          $ref: '#/components/schemas/BridgingFee'
+        otc_fee:
+          $ref: '#/components/schemas/OtcFee'
+      required:
+      - amount
+      - token_id
+      type: object
+    PaymentEstimateFee:
+      properties:
+        token_id:
+          description: The ID of the cryptocurrency you want to OffRamp settle.
+          type: string
+        amount:
+          description: |
+            The OffRamp settlement amount.
+          example: "500.00"
+          type: string
+      required:
+      - amount
+      - token_id
+      type: object
+    PaymentFeeType:
+      description: |
+        The current status of the force sweep request:
+        - `Order`: The order fee type.
+        - `Refund`: The refund fee type.
+        - `CryptoSettlement`: The crypto settlement fee type.
+        - `OffRampSettlement`: The off ramp settlement fee type.
+      enum:
+      - Order
+      - Refund
+      - CryptoSettlement
+      - OffRampSettlement
+      example: Order
+      type: string
+    WalletSetup:
+      description: |
+        WalletSetup defines the type of funds used in the merchant account, either "Shared" or "Separate" is allowed when creating a merchant:
+        - `Default`: Wallet of psp owned default merchant.
+        - `Shared`: Shared wallet of non-psp owned merchants.
+        - `Separate`: Separate wallet of non-psp owned merchants.
+      enum:
+      - Default
+      - Shared
+      - Separate
+      example: Shared
+      type: string
     DispositionStatus:
       description: The status of a disposition operation.
       enum:
@@ -28944,6 +30059,103 @@ components:
       - SOL_Contract
       example: EVM_Contract
       type: string
+    TopUpAddress:
+      example:
+        chain: ETH
+        address: 0x1234567890abcdef...
+        token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        custom_payer_id: user_abc_10001
+        min_amount: "0.1"
+        payer_id: P20250619T0310056d7aa
+        created_timestamp: 1744689600
+        merchant_id: M1001
+        developer_fee_rate: "0.01"
+      properties:
+        address:
+          description: The dedicated top-up address assigned to a specific payer under
+            a merchant on a specified chain.
+          example: 0x1234567890abcdef...
+          type: string
+        payer_id:
+          description: A unique identifier assigned by Cobo to track and identify
+            individual payers.
+          example: P20250619T0310056d7aa
+          type: string
+        custom_payer_id:
+          description: A unique identifier assigned by the developer to track and
+            identify individual payers in their system.
+          example: user_abc_10001
+          type: string
+        merchant_id:
+          description: The merchant ID.
+          example: M1001
+          type: string
+        token_id:
+          description: "The token ID, which is a unique identifier that specifies\
+            \ both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`."
+          example: ETH_USDT
+          type: string
+        chain:
+          description: The chain ID.
+          example: ETH
+          type: string
+        developer_fee_rate:
+          description: The developer fee rate applied to top-up transactions made
+            to this address. Expressed as a decimal string where "0.1" represents
+            10%.
+          example: "0.01"
+          type: string
+        min_amount:
+          description: The minimum top-up amount allowed for this address. Top-ups
+            below this threshold will not be credited to merchant or developer funds.
+          example: "0.1"
+          type: string
+        created_timestamp:
+          description: "The creation time of the top-up address, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The last update time of the top-up address, represented as\
+            \ a UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+      required:
+      - address
+      - custom_payer_id
+      - merchant_id
+      - min_amount
+      - payer_id
+      - token_id
+      type: object
+    UpdateTopUpAddress:
+      description: The request body to update top-up address.
+      example:
+        token_id: ETH_USDT
+        custom_payer_id: payer_0001
+        merchant_id: M1001
+      properties:
+        merchant_id:
+          description: The merchant ID.
+          example: M1001
+          type: string
+        token_id:
+          description: |
+            The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+              - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+          example: ETH_USDT
+          type: string
+        custom_payer_id:
+          description: A unique identifier assigned by the developer to track and
+            identify individual payers in their system.
+          example: payer_0001
+          type: string
+      required:
+      - custom_payer_id
+      - token_id
+      type: object
     SweepToAddress:
       description: Information about the sweep-to address.
       example:
@@ -29460,6 +30672,9 @@ components:
           address: 0x0000000000000000000000000000000000000000
           chain_id: ETH
           x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
+          stellar_trusted_token_ids:
+          - XLM_USDC
+          - XLM_USDC
           memo: "82840924"
           taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
           taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
@@ -29470,6 +30685,9 @@ components:
           address: 0x0000000000000000000000000000000000000000
           chain_id: ETH
           x_only_pubkey: 0x165ed2f04462ec0d3d44dc8690fa9000903b5a96f14ad7f233c21ff748a17b54
+          stellar_trusted_token_ids:
+          - XLM_USDC
+          - XLM_USDC
           memo: "82840924"
           taproot_internal_address: 3HYV6ta67197syD1ZVFganpmL2wLz4RyoC
           taproot_script_tree_hash: 0x138fdd0f6c3803d45553e730c25924baf7be741b8a72a4e6fdbd9d44cb19f85b
@@ -30212,6 +31430,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         - is_loop: false
           chain_id: ETH
@@ -30307,6 +31526,7 @@ components:
           status: Submitted
           fueling_info:
             transaction_id: b0530b27-104f-4338-87de-de01500326ea
+            main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
       properties:
         data:
@@ -30868,6 +32088,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
@@ -30972,6 +32193,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           created_timestamp: 1701396866000
           type: wallets.transaction.created
@@ -31092,6 +32314,7 @@ components:
               status: Submitted
               fueling_info:
                 transaction_id: b0530b27-104f-4338-87de-de01500326ea
+                main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
                 request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
             created_timestamp: 1701396866000
             type: wallets.transaction.created
@@ -31205,6 +32428,7 @@ components:
               status: Submitted
               fueling_info:
                 transaction_id: b0530b27-104f-4338-87de-de01500326ea
+                main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
                 request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
             created_timestamp: 1701396866000
             type: wallets.transaction.created
@@ -31924,6 +33148,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           updated_timestamp: 1640918000000
           created_timestamp: 1640918000000
@@ -32029,6 +33254,7 @@ components:
             status: Submitted
             fueling_info:
               transaction_id: b0530b27-104f-4338-87de-de01500326ea
+              main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
               request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
           updated_timestamp: 1640918000000
           created_timestamp: 1640918000000
@@ -32407,6 +33633,126 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
+    list_swap_activities_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - destination_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          pay_amount: "100"
+          initiator: John Doe
+          pay_token_id: BTC
+          description: This is a description of the swap activity.
+          receive_token_id: ETH_WBTC
+          created_timestamp: 1677587333000
+          fee_token_id: BTC
+          network_fee:
+            max_fee_amount: "0.1"
+            token_id: TRON
+            fee_type: EVM_EIP_1559
+          initiator_type: API
+          swap_type: Bridge
+          wallet_id: 123e4567-e89b-12d3-a456-426614174001
+          fee_amount: "0.3"
+          updated_timestamp: 1677587393000
+          activity_id: 123e4567-e89b-12d3-a456-426614174000
+          receive_amount: "100"
+          request_id: 123e4567-e89b-12d3-a456-426614174000
+          status: Success
+        - destination_address: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          pay_amount: "100"
+          initiator: John Doe
+          pay_token_id: BTC
+          description: This is a description of the swap activity.
+          receive_token_id: ETH_WBTC
+          created_timestamp: 1677587333000
+          fee_token_id: BTC
+          network_fee:
+            max_fee_amount: "0.1"
+            token_id: TRON
+            fee_type: EVM_EIP_1559
+          initiator_type: API
+          swap_type: Bridge
+          wallet_id: 123e4567-e89b-12d3-a456-426614174001
+          fee_amount: "0.3"
+          updated_timestamp: 1677587393000
+          activity_id: 123e4567-e89b-12d3-a456-426614174000
+          receive_amount: "100"
+          request_id: 123e4567-e89b-12d3-a456-426614174000
+          status: Success
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SwapActivity'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    list_swap_enabled_tokens_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - token_id: ETH_USDT
+          chain_id: ETH
+          min_amount: "1000"
+          max_amount: "100000"
+          token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
+          asset_id: ETH
+        - token_id: ETH_USDT
+          chain_id: ETH
+          min_amount: "1000"
+          max_amount: "100000"
+          token_address: 0xdAC17F958D2ee523a2206206994597C13D831ec7
+          asset_id: ETH
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SwapToken'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    create_swap_activity_request:
+      properties:
+        wallet_id:
+          description: The ID of the wallet used to pay.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        address:
+          description: The address of the wallet used to pay.
+          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
+          type: string
+        quote_id:
+          description: The unique identifier of the swap quote.
+          example: 123e4567-e89b-12d3-a456-426614174001
+          format: uuid
+          type: string
+        app_initiator:
+          description: The initiator of the swap activity. It is optional and defaults
+            to your API key if not specified.
+          example: steve@example.com
+          type: string
+        request_id:
+          description: The request ID of the swap activity.
+          example: 123e4567-e89b-12d3-a456-426614174002
+          type: string
+        receiver_address:
+          description: The destination address of the swap activity. This property
+            is required only when the swap type is `Bridge` and the wallet is not
+            a Custodial Wallet (Asset Wallet).
+          example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          type: string
+        fee:
+          $ref: '#/components/schemas/TransactionRequestFee'
+      required:
+      - quote_id
+      - wallet_id
+      type: object
     list_approval_requests_200_response:
       example:
         pagination:
@@ -32490,12 +33836,14 @@ components:
         data:
         - wallet_id: 123e4567-e89b-12d3-a456-426614174001
           updated_timestamp: 1744689600
+          wallet_setup: Shared
           name: Merchant-1
           created_timestamp: 1744689600
           merchant_id: "1"
           developer_fee_rate: "0.01"
         - wallet_id: 123e4567-e89b-12d3-a456-426614174001
           updated_timestamp: 1744689600
+          wallet_setup: Shared
           name: Merchant-1
           created_timestamp: 1744689600
           merchant_id: "1"
@@ -32527,9 +33875,10 @@ components:
             \ to configure the developer fee rate."
           example: "0.1"
           type: string
+        wallet_setup:
+          $ref: '#/components/schemas/WalletSetup'
       required:
       - name
-      - wallet_id
       type: object
     update_merchant_by_id_request:
       properties:
@@ -32586,6 +33935,8 @@ components:
           merchant_fee_token_id: ETH_USDT
           request_id: 123e4567-e89b-12d3-a456-426614174004
           order_id: O20250304-M1001-1001
+          commission_fee:
+            fee_amount: fee_amount
           status: Pending
           charge_merchant_fee: false
         - amount: "0.0025"
@@ -32621,6 +33972,8 @@ components:
           merchant_fee_token_id: ETH_USDT
           request_id: 123e4567-e89b-12d3-a456-426614174004
           order_id: O20250304-M1001-1001
+          commission_fee:
+            fee_amount: fee_amount
           status: Pending
           charge_merchant_fee: false
       properties:
@@ -32702,6 +34055,30 @@ components:
           type: string
       required:
       - to_address
+      type: object
+    update_bank_account_by_id_request:
+      properties:
+        info:
+          additionalProperties: true
+          description: |
+            JSON-formatted bank account details. The object should include the following fields:
+            - beneficiary_name: Name of the account holder
+            - beneficiary_address: Address of the account holder
+            - account_number: Bank account number
+            - bank_name: Name of the bank
+            - bank_address: Address of the bank
+            - iban: (Optional) International Bank Account Number
+            - swift_or_bic: SWIFT or BIC code of the bank
+          example:
+            beneficiary_name: John Doe
+            beneficiary_address: "123 Main St, Anytown, USA"
+            account_number: "4111111111111111"
+            bank_name: ABC Bank
+            bank_address: "456 Bank Ave, Cityville, USA"
+            swift_or_bic: ABCDEFGH
+          type: object
+      required:
+      - info
       type: object
     list_payment_orders_200_response:
       example:
@@ -32856,11 +34233,19 @@ components:
           example: 1800
           type: integer
         use_dedicated_address:
-          description: "Whether to allocate a dedicated address for this order. \n\
-            - `true`: A dedicated address will be allocated for this order.\n- `false`:\
-            \ A shared address from the address pool will be used.\n"
+          description: |
+            This field has been deprecated.
           example: false
           type: boolean
+        custom_exchange_rate:
+          description: "A custom exchange rate specified by the merchant.  \n- Only\
+            \ effective when `currency` is `\"USD\"`.  \n- Expressed as the amount\
+            \ of USD per 1 unit of the specified cryptocurrency.  \n- If not provided,\
+            \ the system will use the default internal rate.  \nExample: If the cryptocurrency\
+            \ is USDT and `custom_exchange_rate` = `\"0.99\"`, it means 1 USDT = 0.99\
+            \ USD.\n"
+          example: "1.00"
+          type: string
       required:
       - fee_amount
       - merchant_id
@@ -32979,6 +34364,10 @@ components:
           - settlement_request_id: S20250304-1001
             amount: "500.00"
             chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
             created_timestamp: 1744689600
             order_ids:
             - O20250304-M1001-1001
@@ -33010,6 +34399,8 @@ components:
             payout_channel: Crypto
             currency: USD
             acquiring_type: Order
+            commission_fee:
+              fee_amount: fee_amount
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -33026,6 +34417,10 @@ components:
           - settlement_request_id: S20250304-1001
             amount: "500.00"
             chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
             created_timestamp: 1744689600
             order_ids:
             - O20250304-M1001-1001
@@ -33057,6 +34452,8 @@ components:
             payout_channel: Crypto
             currency: USD
             acquiring_type: Order
+            commission_fee:
+              fee_amount: fee_amount
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -33070,19 +34467,37 @@ components:
                 bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
+          initiator: api_key_b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          received_amount_fiat: "500.00"
+          created_timestamp: 1744689600
           updated_timestamp: 1744689600
           payout_channel: Crypto
-          initiator: api_key_b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
-          created_timestamp: 1744689600
+          currency: USD
           acquiring_type: Order
           request_id: SETTLEMENT123
           status: Pending
           settlement_type: Merchant
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
         - settlement_request_id: S20250304-1001
           settlements:
           - settlement_request_id: S20250304-1001
             amount: "500.00"
             chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
             created_timestamp: 1744689600
             order_ids:
             - O20250304-M1001-1001
@@ -33114,6 +34529,8 @@ components:
             payout_channel: Crypto
             currency: USD
             acquiring_type: Order
+            commission_fee:
+              fee_amount: fee_amount
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -33130,6 +34547,10 @@ components:
           - settlement_request_id: S20250304-1001
             amount: "500.00"
             chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
             created_timestamp: 1744689600
             order_ids:
             - O20250304-M1001-1001
@@ -33161,6 +34582,8 @@ components:
             payout_channel: Crypto
             currency: USD
             acquiring_type: Order
+            commission_fee:
+              fee_amount: fee_amount
             status: Pending
             bank_account:
               bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -33174,14 +34597,28 @@ components:
                 bank_country: USA
                 bank_address: "456 Bank Ave, Cityville, USA"
                 swift_or_bic: ABCDEFGH
+          initiator: api_key_b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          received_amount_fiat: "500.00"
+          created_timestamp: 1744689600
           updated_timestamp: 1744689600
           payout_channel: Crypto
-          initiator: api_key_b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
-          created_timestamp: 1744689600
+          currency: USD
           acquiring_type: Order
           request_id: SETTLEMENT123
           status: Pending
           settlement_type: Merchant
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
       properties:
         data:
           items:
@@ -33207,9 +34644,65 @@ components:
           items:
             $ref: '#/components/schemas/CreateSettlement'
           type: array
+        bank_account_id:
+          description: ｜ Only used in OffRamp payout channel. The ID of the bank account
+            where the settled funds will be deposited.
+          example: 0123e457-e89b-12d3-a456-426614174004
+          format: uuid
+          type: string
+        currency:
+          description: The fiat currency for the settlement request.
+          example: USD
+          type: string
+        remark:
+          description: The remark for the settlement request.
+          example: Settlement request for customer 123
+          type: string
       required:
       - request_id
       - settlements
+      type: object
+    payment_estimate_fee_request:
+      properties:
+        fee_type:
+          $ref: '#/components/schemas/PaymentFeeType'
+        estimate_fees:
+          items:
+            $ref: '#/components/schemas/PaymentEstimateFee'
+          type: array
+      required:
+      - estimate_fees
+      type: object
+    payment_estimate_fee_201_response:
+      example:
+        data:
+        - otc_fee:
+            token_id: token_id
+            fee_rate: fee_rate
+          amount: "500.00"
+          token_id: token_id
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          commission_fee:
+            fee_amount: fee_amount
+        - otc_fee:
+            token_id: token_id
+            fee_rate: fee_rate
+          amount: "500.00"
+          token_id: token_id
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          commission_fee:
+            fee_amount: fee_amount
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PaymentEstimatedFee'
+          type: array
       type: object
     create_crypto_address_request:
       properties:
@@ -33370,6 +34863,57 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       type: object
+    list_top_up_payer_accounts_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - updated_timestamp: 1744693200
+          payer_id: P20250619T0310056d7aa
+          created_timestamp: 1744689600
+          merchant_id: M1001
+          accounts:
+          - merchant_balance: "0.15"
+            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            created_timestamp: 1610445878970
+            psp_balance: "0.15"
+          - merchant_balance: "0.15"
+            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            created_timestamp: 1610445878970
+            psp_balance: "0.15"
+          developer_fee_rate: "0.01"
+        - updated_timestamp: 1744693200
+          payer_id: P20250619T0310056d7aa
+          created_timestamp: 1744689600
+          merchant_id: M1001
+          accounts:
+          - merchant_balance: "0.15"
+            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            created_timestamp: 1610445878970
+            psp_balance: "0.15"
+          - merchant_balance: "0.15"
+            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            created_timestamp: 1610445878970
+            psp_balance: "0.15"
+          developer_fee_rate: "0.01"
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PayerAccount'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
     list_forced_sweep_requests_200_response:
       example:
         pagination:
@@ -33397,115 +34941,6 @@ components:
         data:
           items:
             $ref: '#/components/schemas/ForcedSweep'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    list_settlement_details_200_response:
-      example:
-        pagination:
-          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-          total_count: 10000
-          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        data:
-        - settlement_request_id: S20250304-1001
-          amount: "500.00"
-          chain_id: ETH
-          created_timestamp: 1744689600
-          order_ids:
-          - O20250304-M1001-1001
-          - O20250304-M1001-1001
-          merchant_id: M1001
-          transactions:
-          - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
-            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            status: Submitted
-          - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
-            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            status: Submitted
-          settled_amount: "500.00"
-          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-          token_id: ETH_USDT
-          updated_timestamp: 1744689600
-          payout_channel: Crypto
-          currency: USD
-          acquiring_type: Order
-          status: Pending
-          bank_account:
-            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
-            updated_timestamp: 1744689600
-            created_timestamp: 1744689600
-            info:
-              beneficiary_name: John Doe
-              beneficiary_address: "123 Main St, Anytown, USA"
-              account_number: "4111111111111111"
-              bank_name: ABC Bank
-              bank_country: USA
-              bank_address: "456 Bank Ave, Cityville, USA"
-              swift_or_bic: ABCDEFGH
-        - settlement_request_id: S20250304-1001
-          amount: "500.00"
-          chain_id: ETH
-          created_timestamp: 1744689600
-          order_ids:
-          - O20250304-M1001-1001
-          - O20250304-M1001-1001
-          merchant_id: M1001
-          transactions:
-          - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
-            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            status: Submitted
-          - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
-            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            status: Submitted
-          settled_amount: "500.00"
-          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
-          token_id: ETH_USDT
-          updated_timestamp: 1744689600
-          payout_channel: Crypto
-          currency: USD
-          acquiring_type: Order
-          status: Pending
-          bank_account:
-            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
-            updated_timestamp: 1744689600
-            created_timestamp: 1744689600
-            info:
-              beneficiary_name: John Doe
-              beneficiary_address: "123 Main St, Anytown, USA"
-              account_number: "4111111111111111"
-              bank_name: ABC Bank
-              bank_country: USA
-              bank_address: "456 Bank Ave, Cityville, USA"
-              swift_or_bic: ABCDEFGH
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/SettlementDetail'
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
@@ -33555,6 +34990,127 @@ components:
           items:
             $ref: '#/components/schemas/MerchantBalance'
           type: array
+      type: object
+    list_settlement_details_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - settlement_request_id: S20250304-1001
+          amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          created_timestamp: 1744689600
+          order_ids:
+          - O20250304-M1001-1001
+          - O20250304-M1001-1001
+          merchant_id: M1001
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          settled_amount: "500.00"
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          currency: USD
+          acquiring_type: Order
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
+        - settlement_request_id: S20250304-1001
+          amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          created_timestamp: 1744689600
+          order_ids:
+          - O20250304-M1001-1001
+          - O20250304-M1001-1001
+          merchant_id: M1001
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          settled_amount: "500.00"
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          currency: USD
+          acquiring_type: Order
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SettlementDetail'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
       type: object
     list_wallet_sweep_to_addresses_200_response:
       example:
@@ -33753,6 +35309,7 @@ components:
           Raw_Message_Signature: '#/components/schemas/TransactionRawMessageSignDestination'
           DepositToAddress: '#/components/schemas/TransactionDepositToAddressDestination'
           DepositToWallet: '#/components/schemas/TransactionDepositToWalletDestination'
+          STELLAR_Contract: '#/components/schemas/TransactionStellarDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/TransactionTransferToAddressDestination'
@@ -33768,6 +35325,7 @@ components:
       - $ref: '#/components/schemas/TransactionBIP137Destination'
       - $ref: '#/components/schemas/TransactionBIP322Destination'
       - $ref: '#/components/schemas/TransactionCosmosAdr36Destination'
+      - $ref: '#/components/schemas/TransactionStellarDestination'
     Transaction_replacement:
       example:
         replaced_transaction_hash: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
@@ -34222,7 +35780,7 @@ components:
         authorizationCode:
           authorizationUrl: https://auth.cobo.com/authorize
           scopes:
-            address_book.read: Read Address Book
+            address_book.read: Read address book
             api_key.read: Read API key information
             callback.read: Read callback message
             callback.resend: Resend callback message
@@ -34267,8 +35825,8 @@ components:
             payment_merchant.create: Create payment merchant
             payment_merchant.read: Read payment merchant information
             payment_merchant.update: Update payment merchant
-            payment_force_sweep.create: Create payment force sweep request
-            payment_force_sweep.read: Read payment force sweep request information
+            payment_forced_sweep.create: Create payment force sweep request
+            payment_forced_sweep.read: Read payment force sweep request information
             compliance_funds.refund: Refund compliance funds request
             compliance_funds.isolate: Isolate compliance funds request
             compliance_funds.unfreeze: Unfreeze compliance funds request

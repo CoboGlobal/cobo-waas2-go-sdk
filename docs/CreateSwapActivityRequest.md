@@ -1,0 +1,202 @@
+# CreateSwapActivityRequest
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**WalletId** | **string** | The ID of the wallet used to pay. | 
+**Address** | Pointer to **string** | The address of the wallet used to pay. | [optional] 
+**QuoteId** | **string** | The unique identifier of the swap quote. | 
+**AppInitiator** | Pointer to **string** | The initiator of the swap activity. It is optional and defaults to your API key if not specified. | [optional] 
+**RequestId** | Pointer to **string** | The request ID of the swap activity. | [optional] 
+**ReceiverAddress** | Pointer to **string** | The destination address of the swap activity. This property is required only when the swap type is &#x60;Bridge&#x60; and the wallet is not a Custodial Wallet (Asset Wallet). | [optional] 
+**Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+
+## Methods
+
+### NewCreateSwapActivityRequest
+
+`func NewCreateSwapActivityRequest(walletId string, quoteId string, ) *CreateSwapActivityRequest`
+
+NewCreateSwapActivityRequest instantiates a new CreateSwapActivityRequest object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewCreateSwapActivityRequestWithDefaults
+
+`func NewCreateSwapActivityRequestWithDefaults() *CreateSwapActivityRequest`
+
+NewCreateSwapActivityRequestWithDefaults instantiates a new CreateSwapActivityRequest object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetWalletId
+
+`func (o *CreateSwapActivityRequest) GetWalletId() string`
+
+GetWalletId returns the WalletId field if non-nil, zero value otherwise.
+
+### GetWalletIdOk
+
+`func (o *CreateSwapActivityRequest) GetWalletIdOk() (*string, bool)`
+
+GetWalletIdOk returns a tuple with the WalletId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWalletId
+
+`func (o *CreateSwapActivityRequest) SetWalletId(v string)`
+
+SetWalletId sets WalletId field to given value.
+
+
+### GetAddress
+
+`func (o *CreateSwapActivityRequest) GetAddress() string`
+
+GetAddress returns the Address field if non-nil, zero value otherwise.
+
+### GetAddressOk
+
+`func (o *CreateSwapActivityRequest) GetAddressOk() (*string, bool)`
+
+GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddress
+
+`func (o *CreateSwapActivityRequest) SetAddress(v string)`
+
+SetAddress sets Address field to given value.
+
+### HasAddress
+
+`func (o *CreateSwapActivityRequest) HasAddress() bool`
+
+HasAddress returns a boolean if a field has been set.
+
+### GetQuoteId
+
+`func (o *CreateSwapActivityRequest) GetQuoteId() string`
+
+GetQuoteId returns the QuoteId field if non-nil, zero value otherwise.
+
+### GetQuoteIdOk
+
+`func (o *CreateSwapActivityRequest) GetQuoteIdOk() (*string, bool)`
+
+GetQuoteIdOk returns a tuple with the QuoteId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuoteId
+
+`func (o *CreateSwapActivityRequest) SetQuoteId(v string)`
+
+SetQuoteId sets QuoteId field to given value.
+
+
+### GetAppInitiator
+
+`func (o *CreateSwapActivityRequest) GetAppInitiator() string`
+
+GetAppInitiator returns the AppInitiator field if non-nil, zero value otherwise.
+
+### GetAppInitiatorOk
+
+`func (o *CreateSwapActivityRequest) GetAppInitiatorOk() (*string, bool)`
+
+GetAppInitiatorOk returns a tuple with the AppInitiator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppInitiator
+
+`func (o *CreateSwapActivityRequest) SetAppInitiator(v string)`
+
+SetAppInitiator sets AppInitiator field to given value.
+
+### HasAppInitiator
+
+`func (o *CreateSwapActivityRequest) HasAppInitiator() bool`
+
+HasAppInitiator returns a boolean if a field has been set.
+
+### GetRequestId
+
+`func (o *CreateSwapActivityRequest) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *CreateSwapActivityRequest) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *CreateSwapActivityRequest) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *CreateSwapActivityRequest) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
+
+### GetReceiverAddress
+
+`func (o *CreateSwapActivityRequest) GetReceiverAddress() string`
+
+GetReceiverAddress returns the ReceiverAddress field if non-nil, zero value otherwise.
+
+### GetReceiverAddressOk
+
+`func (o *CreateSwapActivityRequest) GetReceiverAddressOk() (*string, bool)`
+
+GetReceiverAddressOk returns a tuple with the ReceiverAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReceiverAddress
+
+`func (o *CreateSwapActivityRequest) SetReceiverAddress(v string)`
+
+SetReceiverAddress sets ReceiverAddress field to given value.
+
+### HasReceiverAddress
+
+`func (o *CreateSwapActivityRequest) HasReceiverAddress() bool`
+
+HasReceiverAddress returns a boolean if a field has been set.
+
+### GetFee
+
+`func (o *CreateSwapActivityRequest) GetFee() TransactionRequestFee`
+
+GetFee returns the Fee field if non-nil, zero value otherwise.
+
+### GetFeeOk
+
+`func (o *CreateSwapActivityRequest) GetFeeOk() (*TransactionRequestFee, bool)`
+
+GetFeeOk returns a tuple with the Fee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFee
+
+`func (o *CreateSwapActivityRequest) SetFee(v TransactionRequestFee)`
+
+SetFee sets Fee field to given value.
+
+### HasFee
+
+`func (o *CreateSwapActivityRequest) HasFee() bool`
+
+HasFee returns a boolean if a field has been set.
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

@@ -15,12 +15,12 @@ import (
 // checks if the SwapActivitySigners type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SwapActivitySigners{}
 
-// SwapActivitySigners The signer data for swap activity.
+// SwapActivitySigners The signer information of the swap activity.
 type SwapActivitySigners struct {
 	// The signer name.
 	Signer *string `json:"signer,omitempty"`
 	Status *SwapSingingStatus `json:"status,omitempty"`
-	// Failed reason of signing process.
+	// The reason for the signing failure.
 	FailedReason *string `json:"failed_reason,omitempty"`
 }
 

@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **Calldata** | **string** | The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.  | 
 **CalldataInfo** | Pointer to [**TransactionEvmCalldataInfo**](TransactionEvmCalldataInfo.md) |  | [optional] 
 **Instructions** | Pointer to [**[]TransactionSolContractInstruction**](TransactionSolContractInstruction.md) |  | [optional] 
+**AddressLookupTableAccounts** | Pointer to [**[]TransactionSolContractAddressLookupTableAccount**](TransactionSolContractAddressLookupTableAccount.md) |  | [optional] 
 **CosmosMessages** | [**[]TransactionCosmosMessage**](TransactionCosmosMessage.md) |  | 
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **RawStructuredData** | Pointer to **string** | The raw structured data to be signed, formatted as a JSON string. | [optional] 
@@ -32,12 +33,13 @@ Name | Type | Description | Notes
 **MessageBip137** | **string** | Message to be signed, in hexadecimal format. | 
 **MessageBip322** | **string** | Message to be signed, in hexadecimal format. | 
 **MessageCosmosAdr36** | **string** | Message to be signed, in hexadecimal format. | 
+**ContractParam** | [**TransactionStellarContractParam**](TransactionStellarContractParam.md) |  | 
 
 ## Methods
 
 ### NewTransactionDestination
 
-`func NewTransactionDestination(destinationType TransactionDestinationType, walletId string, amount string, address string, calldata string, cosmosMessages []TransactionCosmosMessage, message string, structuredData map[string]interface{}, walletType WalletType, walletSubtype WalletSubtype, messageBip137 string, messageBip322 string, messageCosmosAdr36 string, ) *TransactionDestination`
+`func NewTransactionDestination(destinationType TransactionDestinationType, walletId string, amount string, address string, calldata string, cosmosMessages []TransactionCosmosMessage, message string, structuredData map[string]interface{}, walletType WalletType, walletSubtype WalletSubtype, messageBip137 string, messageBip322 string, messageCosmosAdr36 string, contractParam TransactionStellarContractParam, ) *TransactionDestination`
 
 NewTransactionDestination instantiates a new TransactionDestination object
 This constructor will assign default values to properties that have it defined,
@@ -402,6 +404,31 @@ SetInstructions sets Instructions field to given value.
 
 HasInstructions returns a boolean if a field has been set.
 
+### GetAddressLookupTableAccounts
+
+`func (o *TransactionDestination) GetAddressLookupTableAccounts() []TransactionSolContractAddressLookupTableAccount`
+
+GetAddressLookupTableAccounts returns the AddressLookupTableAccounts field if non-nil, zero value otherwise.
+
+### GetAddressLookupTableAccountsOk
+
+`func (o *TransactionDestination) GetAddressLookupTableAccountsOk() (*[]TransactionSolContractAddressLookupTableAccount, bool)`
+
+GetAddressLookupTableAccountsOk returns a tuple with the AddressLookupTableAccounts field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAddressLookupTableAccounts
+
+`func (o *TransactionDestination) SetAddressLookupTableAccounts(v []TransactionSolContractAddressLookupTableAccount)`
+
+SetAddressLookupTableAccounts sets AddressLookupTableAccounts field to given value.
+
+### HasAddressLookupTableAccounts
+
+`func (o *TransactionDestination) HasAddressLookupTableAccounts() bool`
+
+HasAddressLookupTableAccounts returns a boolean if a field has been set.
+
 ### GetCosmosMessages
 
 `func (o *TransactionDestination) GetCosmosMessages() []TransactionCosmosMessage`
@@ -685,6 +712,26 @@ and a boolean to check if the value has been set.
 `func (o *TransactionDestination) SetMessageCosmosAdr36(v string)`
 
 SetMessageCosmosAdr36 sets MessageCosmosAdr36 field to given value.
+
+
+### GetContractParam
+
+`func (o *TransactionDestination) GetContractParam() TransactionStellarContractParam`
+
+GetContractParam returns the ContractParam field if non-nil, zero value otherwise.
+
+### GetContractParamOk
+
+`func (o *TransactionDestination) GetContractParamOk() (*TransactionStellarContractParam, bool)`
+
+GetContractParamOk returns a tuple with the ContractParam field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContractParam
+
+`func (o *TransactionDestination) SetContractParam(v TransactionStellarContractParam)`
+
+SetContractParam sets ContractParam field to given value.
 
 
 

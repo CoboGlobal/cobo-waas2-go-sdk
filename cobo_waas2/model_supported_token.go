@@ -37,6 +37,8 @@ type SupportedToken struct {
 	ChainIconUrl NullableString `json:"chain_icon_url,omitempty"`
 	// URL to the token's icon image
 	TokenIconUrl NullableString `json:"token_icon_url,omitempty"`
+	// Whether the token can by off ramp settlement
+	CanOffRamp *bool `json:"can_off_ramp,omitempty"`
 }
 
 type _SupportedToken SupportedToken
@@ -321,6 +323,38 @@ func (o *SupportedToken) UnsetTokenIconUrl() {
 	o.TokenIconUrl.Unset()
 }
 
+// GetCanOffRamp returns the CanOffRamp field value if set, zero value otherwise.
+func (o *SupportedToken) GetCanOffRamp() bool {
+	if o == nil || IsNil(o.CanOffRamp) {
+		var ret bool
+		return ret
+	}
+	return *o.CanOffRamp
+}
+
+// GetCanOffRampOk returns a tuple with the CanOffRamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SupportedToken) GetCanOffRampOk() (*bool, bool) {
+	if o == nil || IsNil(o.CanOffRamp) {
+		return nil, false
+	}
+	return o.CanOffRamp, true
+}
+
+// HasCanOffRamp returns a boolean if a field has been set.
+func (o *SupportedToken) HasCanOffRamp() bool {
+	if o != nil && !IsNil(o.CanOffRamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetCanOffRamp gets a reference to the given bool and assigns it to the CanOffRamp field.
+func (o *SupportedToken) SetCanOffRamp(v bool) {
+	o.CanOffRamp = &v
+}
+
 func (o SupportedToken) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -343,6 +377,9 @@ func (o SupportedToken) ToMap() (map[string]interface{}, error) {
 	}
 	if o.TokenIconUrl.IsSet() {
 		toSerialize["token_icon_url"] = o.TokenIconUrl.Get()
+	}
+	if !IsNil(o.CanOffRamp) {
+		toSerialize["can_off_ramp"] = o.CanOffRamp
 	}
 	return toSerialize, nil
 }

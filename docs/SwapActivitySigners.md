@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Signer** | Pointer to **string** | The signer name. | [optional] 
 **Status** | Pointer to [**SwapSingingStatus**](SwapSingingStatus.md) |  | [optional] 
-**FailedReason** | Pointer to **string** | Failed reason of signing process. | [optional] 
+**FailedReason** | Pointer to **string** | The reason for the signing failure. | [optional] 
 
 ## Methods
 

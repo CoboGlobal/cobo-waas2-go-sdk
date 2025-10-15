@@ -17,7 +17,7 @@ import (
 // checks if the EstimatedEvmLegacyFee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &EstimatedEvmLegacyFee{}
 
-// EstimatedEvmLegacyFee The estimated transaction fee based on the legacy fee model.
+// EstimatedEvmLegacyFee The estimated transaction fee based on the Legacy fee model.  For more details about the Legacy fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models). 
 type EstimatedEvmLegacyFee struct {
 	FeeType FeeType `json:"fee_type"`
 	// The token used to pay the transaction fee.

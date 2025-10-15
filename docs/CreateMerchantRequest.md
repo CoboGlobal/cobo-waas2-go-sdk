@@ -5,14 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The merchant name. | 
-**WalletId** | **string** | The ID of the wallet linked to the merchant. | 
+**WalletId** | Pointer to **string** | The ID of the wallet linked to the merchant. | [optional] 
 **DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to this merchant. Expressed as a string in decimal format where \&quot;0.1\&quot; represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions. If you are a merchant (directly serving the payer), you do not need to configure the developer fee rate. | [optional] 
+**WalletSetup** | Pointer to [**WalletSetup**](WalletSetup.md) |  | [optional] 
 
 ## Methods
 
 ### NewCreateMerchantRequest
 
-`func NewCreateMerchantRequest(name string, walletId string, ) *CreateMerchantRequest`
+`func NewCreateMerchantRequest(name string, ) *CreateMerchantRequest`
 
 NewCreateMerchantRequest instantiates a new CreateMerchantRequest object
 This constructor will assign default values to properties that have it defined,
@@ -66,6 +67,11 @@ and a boolean to check if the value has been set.
 
 SetWalletId sets WalletId field to given value.
 
+### HasWalletId
+
+`func (o *CreateMerchantRequest) HasWalletId() bool`
+
+HasWalletId returns a boolean if a field has been set.
 
 ### GetDeveloperFeeRate
 
@@ -91,6 +97,31 @@ SetDeveloperFeeRate sets DeveloperFeeRate field to given value.
 `func (o *CreateMerchantRequest) HasDeveloperFeeRate() bool`
 
 HasDeveloperFeeRate returns a boolean if a field has been set.
+
+### GetWalletSetup
+
+`func (o *CreateMerchantRequest) GetWalletSetup() WalletSetup`
+
+GetWalletSetup returns the WalletSetup field if non-nil, zero value otherwise.
+
+### GetWalletSetupOk
+
+`func (o *CreateMerchantRequest) GetWalletSetupOk() (*WalletSetup, bool)`
+
+GetWalletSetupOk returns a tuple with the WalletSetup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWalletSetup
+
+`func (o *CreateMerchantRequest) SetWalletSetup(v WalletSetup)`
+
+SetWalletSetup sets WalletSetup field to given value.
+
+### HasWalletSetup
+
+`func (o *CreateMerchantRequest) HasWalletSetup() bool`
+
+HasWalletSetup returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

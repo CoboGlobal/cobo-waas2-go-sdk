@@ -74,6 +74,8 @@ type APIClient struct {
 
 	StakingsAPI *StakingsAPIService
 
+	SwapsAPI *SwapsAPIService
+
 	TokenizationAPI *TokenizationAPIService
 
 	TransactionsAPI *TransactionsAPIService
@@ -117,6 +119,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.PaymentAPI = (*PaymentAPIService)(&c.common)
 	c.PrimeBrokerAPI = (*PrimeBrokerAPIService)(&c.common)
 	c.StakingsAPI = (*StakingsAPIService)(&c.common)
+	c.SwapsAPI = (*SwapsAPIService)(&c.common)
 	c.TokenizationAPI = (*TokenizationAPIService)(&c.common)
 	c.TransactionsAPI = (*TransactionsAPIService)(&c.common)
 	c.TravelRuleAPI = (*TravelRuleAPIService)(&c.common)

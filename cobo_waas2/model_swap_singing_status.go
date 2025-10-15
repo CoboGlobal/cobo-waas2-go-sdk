@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// SwapSingingStatus The transaction signing result. Possible values include:    - `Pending`: Waiting for signing from the signer.   - `Approved`: The signer has signed to the signing request.   - `Timeout`: The signing request has expired due to no response from the signer.   - `Rejected`: The signer has rejected the signing request. 
+// SwapSingingStatus The result of the swap transaction signing. Possible values include:   - `Pending`: The transaction is awaiting the signer's signature.   - `Signed`: The transaction has been signed by the signer.   - `Timeout`: The signature request has expired due to no response from the signer.   - `Rejected`: The transaction has been rejected by the signer. 
 type SwapSingingStatus string
 
 // List of SwapSingingStatus

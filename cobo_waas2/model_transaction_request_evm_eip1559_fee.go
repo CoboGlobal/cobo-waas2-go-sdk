@@ -17,7 +17,7 @@ import (
 // checks if the TransactionRequestEvmEip1559Fee type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TransactionRequestEvmEip1559Fee{}
 
-// TransactionRequestEvmEip1559Fee The preset properties to limit transaction fee.  In the EIP-1559 fee model, the transaction fee is calculated by multiplying the gas price and the gas units used by the transaction. This can be expressed as: Transaction fee = gas price * gas units used. For more information about the EIP-1559 fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify the maximum gas fee per gas unit, maximum priority fee per gas unit, and the gas limit to limit the gas price, priority fee per gas unit, gas units used in the transaction.   Switch between the tabs to display the properties for different transaction fee models. 
+// TransactionRequestEvmEip1559Fee The preset properties to limit transaction fee.  For more information about the EIP-1559 fee model, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify the maximum gas fee per gas unit, maximum priority fee per gas unit, and the gas limit to limit the gas price, priority fee per gas unit, gas units used in the transaction.   Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionRequestEvmEip1559Fee struct {
 	// The maximum gas fee per gas unit used on the chain, in wei.
 	MaxFeePerGas string `json:"max_fee_per_gas"`
