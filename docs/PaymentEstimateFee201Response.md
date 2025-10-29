@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**[]PaymentEstimatedFee**](PaymentEstimatedFee.md) |  | [optional] 
+**Data** | Pointer to [**[]PaymentEstimatedFee**](PaymentEstimatedFee.md) | A list of estimated fees for the requested operations. | [optional] 
 
 ## Methods
 

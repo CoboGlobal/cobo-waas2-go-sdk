@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
 **SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
-**Currency** | Pointer to **string** | The fiat currency for the settlement request. | [optional] 
-**ReceivedAmountFiat** | Pointer to **string** | The received fiat amount of this settlement request.  | [optional] 
+**Currency** | Pointer to **string** | The fiat currency for the off-ramp. | [optional] 
+**ReceivedAmountFiat** | Pointer to **string** | The estimated amount of the fiat currency to receive after off-ramping. This amount is subject to change due to bank transfer fees. | [optional] 
 **BankAccount** | Pointer to [**BankAccount**](BankAccount.md) |  | [optional] 
 
 ## Methods

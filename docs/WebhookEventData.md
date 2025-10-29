@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
@@ -35,7 +35,7 @@ Name | Type | Description | Notes
 **Extra** | Pointer to **[]string** | A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the &#x60;extra_type&#x60; field in the JSON object (for example, \&quot;BabylonBusinessInfo\&quot;, \&quot;BtcAddressInfo\&quot;).  | [optional] 
 **FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
 **CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
-**UpdatedTimestamp** | **int64** | The time when the disposition was updated, in Unix timestamp format, measured in milliseconds. | 
+**UpdatedTimestamp** | **int64** | The time when the KYT screening information was updated, in Unix timestamp format, measured in milliseconds. | 
 **TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
 **SourceKeyShareHolderGroup** | Pointer to [**SourceGroup**](SourceGroup.md) |  | [optional] 
 **TargetKeyShareHolderGroupId** | Pointer to **string** | The target key share holder group ID. | [optional] 
@@ -62,7 +62,7 @@ Name | Type | Description | Notes
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
 **PayableAmount** | **string** | The cryptocurrency amount to be paid for this order. | 
 **ReceiveAddress** | **string** | The recipient wallet address to be used for the payment transaction. | 
-**Currency** | **string** | The fiat currency for the settlement request. | 
+**Currency** | **string** | The fiat currency for the off-ramp. | 
 **OrderAmount** | **string** | The base amount of the order in fiat currency, excluding the developer fee (specified in &#x60;fee_amount&#x60;). | 
 **FeeAmount** | **string** | The developer fee for the order in fiat currency. It is added to the base amount (&#x60;order_amount&#x60;) to determine the final charge. | 
 **ExchangeRate** | **string** | The exchange rate between a currency pair. Expressed as the amount of fiat currency per one unit of cryptocurrency. For example, if the cryptocurrency is USDT and the fiat currency is USD, a rate of \&quot;0.99\&quot; means 1 USDT &#x3D; 0.99 USD. | 
@@ -72,6 +72,7 @@ Name | Type | Description | Notes
 **ReceivedTokenAmount** | **string** | The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT). | 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process. | [optional] 
 **SettlementStatus** | Pointer to [**SettleStatus**](SettleStatus.md) |  | [optional] 
+**AmountTolerance** | Pointer to **string** | Allowed amount deviation. | [optional] 
 **RefundId** | **string** | The refund order ID. | 
 **Amount** | **string** | The amount in cryptocurrency to be returned for this refund order. | 
 **ToAddress** | **string** | The recipient&#39;s wallet address where the refund will be sent. | 
@@ -85,7 +86,7 @@ Name | Type | Description | Notes
 **AcquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
 **SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
-**ReceivedAmountFiat** | Pointer to **string** | The received fiat amount of this settlement request.  | [optional] 
+**ReceivedAmountFiat** | Pointer to **string** | The estimated amount of the fiat currency to receive after off-ramping. This amount is subject to change due to bank transfer fees. | [optional] 
 **BankAccount** | Pointer to [**BankAccount**](BankAccount.md) |  | [optional] 
 **PayerId** | **string** | A unique identifier assigned by Cobo to track and identify individual payers. | 
 **CustomPayerId** | **string** | A unique identifier assigned by the developer to track and identify individual payers in their system. | 
@@ -96,12 +97,15 @@ Name | Type | Description | Notes
 **DispositionStatus** | [**DispositionStatus**](DispositionStatus.md) |  | 
 **DestinationAddress** | Pointer to **string** | The blockchain address to receive the refunded/isolated funds. | [optional] 
 **DispositionAmount** | Pointer to **string** | The amount to be refunded/isolated from the original transaction, specified as a numeric string. This value cannot exceed the total amount of the original transaction.  | [optional] 
+**TransactionType** | [**KytScreeningsTransactionType**](KytScreeningsTransactionType.md) |  | 
+**ReviewStatus** | [**ReviewStatusType**](ReviewStatusType.md) |  | 
+**FundsStatus** | [**FundsStatusType**](FundsStatusType.md) |  | 
 
 ## Methods
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status TransactionStatus, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, dispositionType DispositionType, dispositionStatus DispositionStatus, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status TransactionStatus, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, dispositionType DispositionType, dispositionStatus DispositionStatus, transactionType KytScreeningsTransactionType, reviewStatus ReviewStatusType, fundsStatus FundsStatusType, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -1661,6 +1665,31 @@ SetSettlementStatus sets SettlementStatus field to given value.
 
 HasSettlementStatus returns a boolean if a field has been set.
 
+### GetAmountTolerance
+
+`func (o *WebhookEventData) GetAmountTolerance() string`
+
+GetAmountTolerance returns the AmountTolerance field if non-nil, zero value otherwise.
+
+### GetAmountToleranceOk
+
+`func (o *WebhookEventData) GetAmountToleranceOk() (*string, bool)`
+
+GetAmountToleranceOk returns a tuple with the AmountTolerance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAmountTolerance
+
+`func (o *WebhookEventData) SetAmountTolerance(v string)`
+
+SetAmountTolerance sets AmountTolerance field to given value.
+
+### HasAmountTolerance
+
+`func (o *WebhookEventData) HasAmountTolerance() bool`
+
+HasAmountTolerance returns a boolean if a field has been set.
+
 ### GetRefundId
 
 `func (o *WebhookEventData) GetRefundId() string`
@@ -2195,6 +2224,66 @@ SetDispositionAmount sets DispositionAmount field to given value.
 `func (o *WebhookEventData) HasDispositionAmount() bool`
 
 HasDispositionAmount returns a boolean if a field has been set.
+
+### GetTransactionType
+
+`func (o *WebhookEventData) GetTransactionType() KytScreeningsTransactionType`
+
+GetTransactionType returns the TransactionType field if non-nil, zero value otherwise.
+
+### GetTransactionTypeOk
+
+`func (o *WebhookEventData) GetTransactionTypeOk() (*KytScreeningsTransactionType, bool)`
+
+GetTransactionTypeOk returns a tuple with the TransactionType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransactionType
+
+`func (o *WebhookEventData) SetTransactionType(v KytScreeningsTransactionType)`
+
+SetTransactionType sets TransactionType field to given value.
+
+
+### GetReviewStatus
+
+`func (o *WebhookEventData) GetReviewStatus() ReviewStatusType`
+
+GetReviewStatus returns the ReviewStatus field if non-nil, zero value otherwise.
+
+### GetReviewStatusOk
+
+`func (o *WebhookEventData) GetReviewStatusOk() (*ReviewStatusType, bool)`
+
+GetReviewStatusOk returns a tuple with the ReviewStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReviewStatus
+
+`func (o *WebhookEventData) SetReviewStatus(v ReviewStatusType)`
+
+SetReviewStatus sets ReviewStatus field to given value.
+
+
+### GetFundsStatus
+
+`func (o *WebhookEventData) GetFundsStatus() FundsStatusType`
+
+GetFundsStatus returns the FundsStatus field if non-nil, zero value otherwise.
+
+### GetFundsStatusOk
+
+`func (o *WebhookEventData) GetFundsStatusOk() (*FundsStatusType, bool)`
+
+GetFundsStatusOk returns a tuple with the FundsStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFundsStatus
+
+`func (o *WebhookEventData) SetFundsStatus(v FundsStatusType)`
+
+SetFundsStatus sets FundsStatus field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

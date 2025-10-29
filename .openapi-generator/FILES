@@ -115,6 +115,7 @@ docs/CoboSafeDelegateType.md
 docs/CommissionFee.md
 docs/ComplianceAPI.md
 docs/ComplianceDispositionUpdateEventData.md
+docs/ComplianceKytScreeningsUpdateEventData.md
 docs/ContractCallDestination.md
 docs/ContractCallDestinationType.md
 docs/ContractCallParams.md
@@ -147,6 +148,7 @@ docs/CreateMerchantRequest.md
 docs/CreateMpcProjectRequest.md
 docs/CreateMpcVaultRequest.md
 docs/CreateMpcWalletParams.md
+docs/CreateOrderLinkRequest.md
 docs/CreatePaymentOrderRequest.md
 docs/CreatePrimeBrokerAddress201Response.md
 docs/CreatePrimeBrokerAddressRequest.md
@@ -256,6 +258,7 @@ docs/FixedFeeRate.md
 docs/ForcedSweep.md
 docs/ForcedSweepRequest.md
 docs/ForcedSweepStatus.md
+docs/FundsStatusType.md
 docs/GetApiKeyInfo200Response.md
 docs/GetExchangeRate200Response.md
 docs/GetMaxTransferableValueWithFeeModelRequest.md
@@ -279,6 +282,13 @@ docs/KeyShareHolderGroupStatus.md
 docs/KeyShareHolderGroupType.md
 docs/KeyShareHolderStatus.md
 docs/KeyShareHolderType.md
+docs/KytScreeningsDecisionsType.md
+docs/KytScreeningsEventData.md
+docs/KytScreeningsReviewType.md
+docs/KytScreeningsTransaction.md
+docs/KytScreeningsTransactionType.md
+docs/Link.md
+docs/LinkDisplayInfo.md
 docs/ListAddressBalancesByToken200Response.md
 docs/ListAddressBooks200Response.md
 docs/ListAddresses200Response.md
@@ -355,6 +365,8 @@ docs/MpcStakeSource.md
 docs/MpcTransferSource.md
 docs/OAuthAPI.md
 docs/Order.md
+docs/OrderLinkBusinessInfo.md
+docs/OrderLinkBusinessInfoCustomExchangeRatesInner.md
 docs/OrderStatus.md
 docs/OrgInfo.md
 docs/OrganizationsAPI.md
@@ -403,6 +415,7 @@ docs/ReplaceType.md
 docs/RequestApproval.md
 docs/RetryCallbackMessage201Response.md
 docs/RetryWebhookEventById201Response.md
+docs/ReviewStatusType.md
 docs/RevokeApprovalRequest201Response.md
 docs/RevokeApprovalRequestRequest.md
 docs/RoleDetail.md
@@ -452,6 +465,9 @@ docs/StellarContractCallTrustLineOperationType.md
 docs/StellarContractCallTrustLineParam.md
 docs/SubWalletAssetBalance.md
 docs/SubmitDepositTravelRuleInfo201Response.md
+docs/SubmitKytResponse.md
+docs/SubmitKytScreeningsDecisionsBody.md
+docs/SubmitKytScreeningsReviewBody.md
 docs/SupportedToken.md
 docs/SuspendedTokenEventData.md
 docs/SuspendedTokenOperationType.md
@@ -821,6 +837,7 @@ model_cobo_safe_delegate.go
 model_cobo_safe_delegate_type.go
 model_commission_fee.go
 model_compliance_disposition_update_event_data.go
+model_compliance_kyt_screenings_update_event_data.go
 model_contract_call_destination.go
 model_contract_call_destination_type.go
 model_contract_call_params.go
@@ -853,6 +870,7 @@ model_create_merchant_request.go
 model_create_mpc_project_request.go
 model_create_mpc_vault_request.go
 model_create_mpc_wallet_params.go
+model_create_order_link_request.go
 model_create_payment_order_request.go
 model_create_prime_broker_address_201_response.go
 model_create_prime_broker_address_request.go
@@ -959,6 +977,7 @@ model_fixed_fee_rate.go
 model_forced_sweep.go
 model_forced_sweep_request.go
 model_forced_sweep_status.go
+model_funds_status_type.go
 model_get_api_key_info_200_response.go
 model_get_exchange_rate_200_response.go
 model_get_max_transferable_value_with_fee_model_request.go
@@ -982,6 +1001,13 @@ model_key_share_holder_group_status.go
 model_key_share_holder_group_type.go
 model_key_share_holder_status.go
 model_key_share_holder_type.go
+model_kyt_screenings_decisions_type.go
+model_kyt_screenings_event_data.go
+model_kyt_screenings_review_type.go
+model_kyt_screenings_transaction.go
+model_kyt_screenings_transaction_type.go
+model_link.go
+model_link_display_info.go
 model_list_address_balances_by_token_200_response.go
 model_list_address_books_200_response.go
 model_list_addresses_200_response.go
@@ -1057,6 +1083,8 @@ model_mpc_vault_event_data.go
 model_mpc_vault_type.go
 model_mpc_wallet_info.go
 model_order.go
+model_order_link_business_info.go
+model_order_link_business_info_custom_exchange_rates_inner.go
 model_order_status.go
 model_org_info.go
 model_otc_fee.go
@@ -1102,6 +1130,7 @@ model_replace_type.go
 model_request_approval.go
 model_retry_callback_message_201_response.go
 model_retry_webhook_event_by_id_201_response.go
+model_review_status_type.go
 model_revoke_approval_request_201_response.go
 model_revoke_approval_request_request.go
 model_role_detail.go
@@ -1150,6 +1179,9 @@ model_stellar_contract_call_trust_line_operation_type.go
 model_stellar_contract_call_trust_line_param.go
 model_sub_wallet_asset_balance.go
 model_submit_deposit_travel_rule_info_201_response.go
+model_submit_kyt_response.go
+model_submit_kyt_screenings_decisions_body.go
+model_submit_kyt_screenings_review_body.go
 model_supported_token.go
 model_suspended_token_event_data.go
 model_suspended_token_operation_type.go

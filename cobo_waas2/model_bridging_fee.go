@@ -19,11 +19,11 @@ var _ MappedNullable = &BridgingFee{}
 
 // BridgingFee struct for BridgingFee
 type BridgingFee struct {
-	// The bridging fee amount.
+	// The fee charged for bridging tokens to another blockchain during an off-ramp operation. Bridging fees apply when tokens are on a blockchain not directly supported by the off-ramp service. 
 	FeeAmount string `json:"fee_amount"`
-	// The received token id after bridge.
+	// The ID of the destination token received after bridging.
 	ReceivedTokenId *string `json:"received_token_id,omitempty"`
-	// The received amount after bridge.
+	// The final amount of destination tokens received after bridging.
 	ReceivedAmount *string `json:"received_amount,omitempty"`
 }
 

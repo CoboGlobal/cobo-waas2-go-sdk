@@ -55,6 +55,8 @@ type Order struct {
 	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
+	// Allowed amount deviation.
+	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 }
 
 type _Order Order
@@ -600,6 +602,38 @@ func (o *Order) SetSettlementStatus(v SettleStatus) {
 	o.SettlementStatus = &v
 }
 
+// GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
+func (o *Order) GetAmountTolerance() string {
+	if o == nil || IsNil(o.AmountTolerance) {
+		var ret string
+		return ret
+	}
+	return *o.AmountTolerance
+}
+
+// GetAmountToleranceOk returns a tuple with the AmountTolerance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Order) GetAmountToleranceOk() (*string, bool) {
+	if o == nil || IsNil(o.AmountTolerance) {
+		return nil, false
+	}
+	return o.AmountTolerance, true
+}
+
+// HasAmountTolerance returns a boolean if a field has been set.
+func (o *Order) HasAmountTolerance() bool {
+	if o != nil && !IsNil(o.AmountTolerance) {
+		return true
+	}
+
+	return false
+}
+
+// SetAmountTolerance gets a reference to the given string and assigns it to the AmountTolerance field.
+func (o *Order) SetAmountTolerance(v string) {
+	o.AmountTolerance = &v
+}
+
 func (o Order) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -642,6 +676,9 @@ func (o Order) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SettlementStatus) {
 		toSerialize["settlement_status"] = o.SettlementStatus
+	}
+	if !IsNil(o.AmountTolerance) {
+		toSerialize["amount_tolerance"] = o.AmountTolerance
 	}
 	return toSerialize, nil
 }

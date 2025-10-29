@@ -428,11 +428,7 @@ func (r ApiCreateMerchantRequest) Execute() (*Merchant, *http.Response, error) {
 /*
 CreateMerchant Create merchant
 
-This operation creates a merchant and links it to a specified wallet. Payments to the merchant will be deposited into the linked wallet.
-
-Upon successful creation, a merchant ID is generated and returned along with the merchant's information.
-
-If you are a merchant (directly serving the payer), you only need to create one merchant and do not need to configure the developer fee rate. The developer fee rate only applies to platforms such as payment service providers (PSPs) that charge fees to their downstream merchants.
+This operation creates a merchant. Upon successful creation, a merchant ID is generated and returned along with the merchant's information. For more information on merchant creation, please refer to [Preparation](https://www.cobo.com/developers/v2/payments/preparation#create-merchant).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -485,6 +481,136 @@ func (a *PaymentAPIService) CreateMerchantExecute(r ApiCreateMerchantRequest) (*
 	}
 	// body params
 	localVarPostBody = r.createMerchantRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateOrderLinkRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	createOrderLinkRequest *CreateOrderLinkRequest
+}
+
+// The request body to create a payment link of a pay-in order.
+func (r ApiCreateOrderLinkRequest) CreateOrderLinkRequest(createOrderLinkRequest CreateOrderLinkRequest) ApiCreateOrderLinkRequest {
+	r.createOrderLinkRequest = &createOrderLinkRequest
+	return r
+}
+
+func (r ApiCreateOrderLinkRequest) Execute() (*Link, *http.Response, error) {
+	return r.ApiService.CreateOrderLinkExecute(r)
+}
+
+/*
+CreateOrderLink Create order link
+
+This operation creates a payment link of a pay-in order.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateOrderLinkRequest
+*/
+func (a *PaymentAPIService) CreateOrderLink(ctx context.Context) ApiCreateOrderLinkRequest {
+	return ApiCreateOrderLinkRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return Link
+func (a *PaymentAPIService) CreateOrderLinkExecute(r ApiCreateOrderLinkRequest) (*Link, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Link
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.CreateOrderLink")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/links/orders"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createOrderLinkRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -948,7 +1074,7 @@ func (r ApiDeleteCryptoAddressRequest) Execute() (*DeleteCryptoAddress201Respons
 /*
 DeleteCryptoAddress Delete crypto address
 
-This operation unregisters a crypto address from being used for crypto withdrawals.
+This operation unregisters a crypto address from being used for crypto payouts.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1085,7 +1211,9 @@ func (r ApiGetExchangeRateRequest) Execute() (*GetExchangeRate200Response, *http
 /*
 GetExchangeRate Get exchange rate
 
-This operation retrieves the current exchange rate between a specified currency pair.
+This operation retrieves the current exchange rate between a specified currency pair. The exchange rate is updated approximately every 10 minutes.
+
+<Note>This operation returns the exchange rate for reference only. The actual exchange rate may vary due to market fluctuations and other factors.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1499,7 +1627,7 @@ GetPspBalance Get developer balance
 
 This operation retrieves the balance information for you as the developer. The balance information is grouped by token.
 
-For more information, please refer to [Amounts and Balances](/v2/payments/amounts-and-balances)
+For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2273,11 +2401,11 @@ func (a *PaymentAPIService) GetTopUpAddressExecute(r ApiGetTopUpAddressRequest) 
 		return localVarReturnValue, nil, reportError("customPayerId is required and must be specified")
 	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "custom_payer_id", r.customPayerId, "")
 	if r.merchantId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_id", r.merchantId, "")
 	}
-	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "custom_payer_id", r.customPayerId, "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -2808,7 +2936,7 @@ ListMerchantBalances List merchant balances
 
 This operation retrieves the balance information for specified merchants. The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
 
-For more information, please refer to [Amounts and Balances](/v2/payments/amounts-and-balances)
+For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2963,13 +3091,13 @@ func (r ApiListMerchantsRequest) Keyword(keyword string) ApiListMerchantsRequest
 	return r
 }
 
-// The wallet ID.
+// This parameter has been deprecated.
 func (r ApiListMerchantsRequest) WalletId(walletId string) ApiListMerchantsRequest {
 	r.walletId = &walletId
 	return r
 }
 
-// WalletSetup defines the type of funds used in the merchant account, either \&quot;Shared\&quot; or \&quot;Separate\&quot; is allowed when creating a merchant: - &#x60;Default&#x60;: Wallet of psp owned default merchant. - &#x60;Shared&#x60;: Shared wallet of non-psp owned merchants. - &#x60;Separate&#x60;: Separate wallet of non-psp owned merchants. 
+// The type of wallet setup for the merchant. Each wallet contains multiple cryptocurrency addresses that serve as the merchant’s receiving addresses.  - &#x60;Shared&#x60;: Multiple merchants share the same wallet. The wallet’s addresses may be used to receive payments for multiple merchants simultaneously. - &#x60;Separate&#x60;: Create a dedicated wallet for the merchant to achieve complete fund isolation. All addresses in this wallet are only used to receive payments for this merchant. - &#x60;Default&#x60;: The default wallet automatically created by the system for the default merchant (the merchant that shares the same name as your organization). 
 func (r ApiListMerchantsRequest) WalletSetup(walletSetup WalletSetup) ApiListMerchantsRequest {
 	r.walletSetup = &walletSetup
 	return r
@@ -4256,7 +4384,7 @@ type ApiPaymentEstimateFeeRequest struct {
 	paymentEstimateFeeRequest *PaymentEstimateFeeRequest
 }
 
-// The request body to create a estimated fee request.
+// The request body for fee estimation.
 func (r ApiPaymentEstimateFeeRequest) PaymentEstimateFeeRequest(paymentEstimateFeeRequest PaymentEstimateFeeRequest) ApiPaymentEstimateFeeRequest {
 	r.paymentEstimateFeeRequest = &paymentEstimateFeeRequest
 	return r
@@ -4267,9 +4395,15 @@ func (r ApiPaymentEstimateFeeRequest) Execute() (*PaymentEstimateFee201Response,
 }
 
 /*
-PaymentEstimateFee Payment estimate fee
+PaymentEstimateFee Estimate fees
 
-This operation to payment estimate fee.
+This operation calculates fees for payment-related operations, including:
+- **Pay-in**: Fees for accepting payments
+- **Refunds**: Fees for refunding the payment
+- **Crypto payouts**: Fees for payouts in crypto
+- **Fiat off-ramp**: Fees for fiat currency transfers via off-ramp. 
+
+ The returned fees represent the charges that would apply if the operation were executed immediately. Note that actual fees may vary over time based on your usage volume and applicable fee rates.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

@@ -37,8 +37,10 @@ type CreatePaymentOrderRequest struct {
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
 	// This field has been deprecated. 
 	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
-	// A custom exchange rate specified by the merchant.   - Only effective when `currency` is `\"USD\"`.   - Expressed as the amount of USD per 1 unit of the specified cryptocurrency.   - If not provided, the system will use the default internal rate.   Example: If the cryptocurrency is USDT and `custom_exchange_rate` = `\"0.99\"`, it means 1 USDT = 0.99 USD. 
+	//  A custom exchange rate that defines how much fiat currency equals 1 unit of cryptocurrency. If not provided, the system's default exchange rate will be used.  For example, if the fiat currency is USD and the cryptocurrency is USDT, setting `custom_exchange_rate` to `\"0.99\"` means that 1 USDT will be valued at 0.99 USD. 
 	CustomExchangeRate *string `json:"custom_exchange_rate,omitempty"`
+	// Allowed amount deviation, precision to 1 decimal place.
+	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 }
 
 type _CreatePaymentOrderRequest CreatePaymentOrderRequest
@@ -353,6 +355,38 @@ func (o *CreatePaymentOrderRequest) SetCustomExchangeRate(v string) {
 	o.CustomExchangeRate = &v
 }
 
+// GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetAmountTolerance() string {
+	if o == nil || IsNil(o.AmountTolerance) {
+		var ret string
+		return ret
+	}
+	return *o.AmountTolerance
+}
+
+// GetAmountToleranceOk returns a tuple with the AmountTolerance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetAmountToleranceOk() (*string, bool) {
+	if o == nil || IsNil(o.AmountTolerance) {
+		return nil, false
+	}
+	return o.AmountTolerance, true
+}
+
+// HasAmountTolerance returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasAmountTolerance() bool {
+	if o != nil && !IsNil(o.AmountTolerance) {
+		return true
+	}
+
+	return false
+}
+
+// SetAmountTolerance gets a reference to the given string and assigns it to the AmountTolerance field.
+func (o *CreatePaymentOrderRequest) SetAmountTolerance(v string) {
+	o.AmountTolerance = &v
+}
+
 func (o CreatePaymentOrderRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -382,6 +416,9 @@ func (o CreatePaymentOrderRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CustomExchangeRate) {
 		toSerialize["custom_exchange_rate"] = o.CustomExchangeRate
+	}
+	if !IsNil(o.AmountTolerance) {
+		toSerialize["amount_tolerance"] = o.AmountTolerance
 	}
 	return toSerialize, nil
 }

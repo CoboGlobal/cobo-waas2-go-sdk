@@ -19,6 +19,7 @@ type WebhookEventData struct {
 	BalanceUpdateInfoEventData *BalanceUpdateInfoEventData
 	ChainsEventData *ChainsEventData
 	ComplianceDispositionUpdateEventData *ComplianceDispositionUpdateEventData
+	ComplianceKytScreeningsUpdateEventData *ComplianceKytScreeningsUpdateEventData
 	MPCVaultEventData *MPCVaultEventData
 	PaymentAddressUpdateEventData *PaymentAddressUpdateEventData
 	PaymentOrderEventData *PaymentOrderEventData
@@ -58,6 +59,13 @@ func ChainsEventDataAsWebhookEventData(v *ChainsEventData) WebhookEventData {
 func ComplianceDispositionUpdateEventDataAsWebhookEventData(v *ComplianceDispositionUpdateEventData) WebhookEventData {
 	return WebhookEventData{
 		ComplianceDispositionUpdateEventData: v,
+	}
+}
+
+// ComplianceKytScreeningsUpdateEventDataAsWebhookEventData is a convenience function that returns ComplianceKytScreeningsUpdateEventData wrapped in WebhookEventData
+func ComplianceKytScreeningsUpdateEventDataAsWebhookEventData(v *ComplianceKytScreeningsUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		ComplianceKytScreeningsUpdateEventData: v,
 	}
 }
 
@@ -201,6 +209,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.ComplianceDispositionUpdateEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as ComplianceDispositionUpdateEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'ComplianceKytScreenings'
+	if jsonDict["data_type"] == "ComplianceKytScreenings" {
+		// try to unmarshal JSON data into ComplianceKytScreeningsUpdateEventData
+		err = json.Unmarshal(data, &dst.ComplianceKytScreeningsUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.ComplianceKytScreeningsUpdateEventData, return on the first match
+		} else {
+			dst.ComplianceKytScreeningsUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as ComplianceKytScreeningsUpdateEventData: %s", err.Error())
 		}
 	}
 
@@ -396,6 +416,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'ComplianceKytScreeningsUpdateEventData'
+	if jsonDict["data_type"] == "ComplianceKytScreeningsUpdateEventData" {
+		// try to unmarshal JSON data into ComplianceKytScreeningsUpdateEventData
+		err = json.Unmarshal(data, &dst.ComplianceKytScreeningsUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.ComplianceKytScreeningsUpdateEventData, return on the first match
+		} else {
+			dst.ComplianceKytScreeningsUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as ComplianceKytScreeningsUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MPCVaultEventData'
 	if jsonDict["data_type"] == "MPCVaultEventData" {
 		// try to unmarshal JSON data into MPCVaultEventData
@@ -561,6 +593,10 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.ComplianceDispositionUpdateEventData)
 	}
 
+	if src.ComplianceKytScreeningsUpdateEventData != nil {
+		return json.Marshal(&src.ComplianceKytScreeningsUpdateEventData)
+	}
+
 	if src.MPCVaultEventData != nil {
 		return json.Marshal(&src.MPCVaultEventData)
 	}
@@ -631,6 +667,10 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 
 	if obj.ComplianceDispositionUpdateEventData != nil {
 		return obj.ComplianceDispositionUpdateEventData
+	}
+
+	if obj.ComplianceKytScreeningsUpdateEventData != nil {
+		return obj.ComplianceKytScreeningsUpdateEventData
 	}
 
 	if obj.MPCVaultEventData != nil {

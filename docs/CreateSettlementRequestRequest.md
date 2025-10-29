@@ -9,9 +9,9 @@ Name | Type | Description | Notes
 **PayoutChannel** | Pointer to [**PayoutChannel**](PayoutChannel.md) |  | [optional] 
 **SettlementType** | Pointer to [**SettlementType**](SettlementType.md) |  | [optional] 
 **Settlements** | [**[]CreateSettlement**](CreateSettlement.md) |  | 
-**BankAccountId** | Pointer to **string** | ｜ Only used in OffRamp payout channel. The ID of the bank account where the settled funds will be deposited. | [optional] 
-**Currency** | Pointer to **string** | The fiat currency for the settlement request. | [optional] 
-**Remark** | Pointer to **string** | The remark for the settlement request. | [optional] 
+**BankAccountId** | Pointer to **string** |  The ID of the bank account where the funds will be deposited. You can call [List all bank accounts](https://www.cobo.com/developers/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts.  This field is only applicable for off-ramp.  | [optional] 
+**Currency** | Pointer to **string** | The fiat currency to receive after off-ramping. Currently, only &#x60;USD&#x60; is supported. Specify this field when &#x60;payout_channel&#x60; is set to &#x60;OffRamp&#x60;. | [optional] 
+**Remark** | Pointer to **string** | The remark for the payout request. | [optional] 
 
 ## Methods
 

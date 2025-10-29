@@ -20,6 +20,7 @@ var _ MappedNullable = &PaymentEstimateFeeRequest{}
 // PaymentEstimateFeeRequest struct for PaymentEstimateFeeRequest
 type PaymentEstimateFeeRequest struct {
 	FeeType *PaymentFeeType `json:"fee_type,omitempty"`
+	// A list of token IDs and amounts for which fees will be calculated.
 	EstimateFees []PaymentEstimateFee `json:"estimate_fees"`
 }
 

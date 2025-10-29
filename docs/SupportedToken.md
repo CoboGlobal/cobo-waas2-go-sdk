@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **ChainSymbol** | **NullableString** | Symbol of the underlying blockchain | 
 **ChainIconUrl** | Pointer to **NullableString** | URL to the blockchain&#39;s icon image | [optional] 
 **TokenIconUrl** | Pointer to **NullableString** | URL to the token&#39;s icon image | [optional] 
-**CanOffRamp** | Pointer to **bool** | Whether the token can by off ramp settlement | [optional] 
+**CanOffRamp** | Pointer to **bool** | Whether the token is supported by the off-ramp service. | [optional] 
 
 ## Methods
 

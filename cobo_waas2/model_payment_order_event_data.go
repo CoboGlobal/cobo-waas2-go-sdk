@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentOrderEventData{}
 
 // PaymentOrderEventData struct for PaymentOrderEventData
 type PaymentOrderEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
 	DataType string `json:"data_type"`
 	// The order ID.
 	OrderId string `json:"order_id"`
@@ -57,6 +57,8 @@ type PaymentOrderEventData struct {
 	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
+	// Allowed amount deviation.
+	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 }
 
 type _PaymentOrderEventData PaymentOrderEventData
@@ -627,6 +629,38 @@ func (o *PaymentOrderEventData) SetSettlementStatus(v SettleStatus) {
 	o.SettlementStatus = &v
 }
 
+// GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetAmountTolerance() string {
+	if o == nil || IsNil(o.AmountTolerance) {
+		var ret string
+		return ret
+	}
+	return *o.AmountTolerance
+}
+
+// GetAmountToleranceOk returns a tuple with the AmountTolerance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetAmountToleranceOk() (*string, bool) {
+	if o == nil || IsNil(o.AmountTolerance) {
+		return nil, false
+	}
+	return o.AmountTolerance, true
+}
+
+// HasAmountTolerance returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasAmountTolerance() bool {
+	if o != nil && !IsNil(o.AmountTolerance) {
+		return true
+	}
+
+	return false
+}
+
+// SetAmountTolerance gets a reference to the given string and assigns it to the AmountTolerance field.
+func (o *PaymentOrderEventData) SetAmountTolerance(v string) {
+	o.AmountTolerance = &v
+}
+
 func (o PaymentOrderEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -670,6 +704,9 @@ func (o PaymentOrderEventData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SettlementStatus) {
 		toSerialize["settlement_status"] = o.SettlementStatus
+	}
+	if !IsNil(o.AmountTolerance) {
+		toSerialize["amount_tolerance"] = o.AmountTolerance
 	}
 	return toSerialize, nil
 }
