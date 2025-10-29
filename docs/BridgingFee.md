@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeAmount** | **string** | The bridging fee amount. | 
-**ReceivedTokenId** | Pointer to **string** | The received token id after bridge. | [optional] 
-**ReceivedAmount** | Pointer to **string** | The received amount after bridge. | [optional] 
+**FeeAmount** | **string** | The fee charged for bridging tokens to another blockchain during an off-ramp operation. Bridging fees apply when tokens are on a blockchain not directly supported by the off-ramp service.  | 
+**ReceivedTokenId** | Pointer to **string** | The ID of the destination token received after bridging. | [optional] 
+**ReceivedAmount** | Pointer to **string** | The final amount of destination tokens received after bridging. | [optional] 
 
 ## Methods
 

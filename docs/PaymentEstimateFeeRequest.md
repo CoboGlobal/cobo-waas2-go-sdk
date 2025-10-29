@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | Pointer to [**PaymentFeeType**](PaymentFeeType.md) |  | [optional] 
-**EstimateFees** | [**[]PaymentEstimateFee**](PaymentEstimateFee.md) |  | 
+**EstimateFees** | [**[]PaymentEstimateFee**](PaymentEstimateFee.md) | A list of token IDs and amounts for which fees will be calculated. | 
 
 ## Methods
 

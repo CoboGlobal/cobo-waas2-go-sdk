@@ -25,11 +25,11 @@ type CreateSettlementRequestRequest struct {
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
 	SettlementType *SettlementType `json:"settlement_type,omitempty"`
 	Settlements []CreateSettlement `json:"settlements"`
-	// ｜ Only used in OffRamp payout channel. The ID of the bank account where the settled funds will be deposited.
+	//  The ID of the bank account where the funds will be deposited. You can call [List all bank accounts](https://www.cobo.com/developers/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts.  This field is only applicable for off-ramp. 
 	BankAccountId *string `json:"bank_account_id,omitempty"`
-	// The fiat currency for the settlement request.
+	// The fiat currency to receive after off-ramping. Currently, only `USD` is supported. Specify this field when `payout_channel` is set to `OffRamp`.
 	Currency *string `json:"currency,omitempty"`
-	// The remark for the settlement request.
+	// The remark for the payout request.
 	Remark *string `json:"remark,omitempty"`
 }
 

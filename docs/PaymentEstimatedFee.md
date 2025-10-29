@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | The ID of the cryptocurrency you want to payment. | 
-**Amount** | **string** | The payment amount.  | 
+**TokenId** | **string** | The token ID for which fees will be calculated. | 
+**Amount** | **string** | The transaction amount for which fees will be calculated. | 
 **CommissionFee** | Pointer to [**CommissionFee**](CommissionFee.md) |  | [optional] 
 **BridgingFee** | Pointer to [**BridgingFee**](BridgingFee.md) |  | [optional] 
 **OtcFee** | Pointer to [**OtcFee**](OtcFee.md) |  | [optional] 

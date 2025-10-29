@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// WebhookEventType The event type. To learn the trigger condition of each event type, refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type).
+// WebhookEventType The event type. To learn the trigger condition of each event type, refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type).   **Currently, you can only trigger test webhook events with the event data types `Transaction` and `TSSRequest`.** 
 type WebhookEventType string
 
 // List of WebhookEventType
@@ -47,11 +47,13 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_LATE WebhookEventType = "payment.transaction.late"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_COMPLETED WebhookEventType = "payment.transaction.completed"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_HELD WebhookEventType = "payment.transaction.held"
+	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_FAILED WebhookEventType = "payment.transaction.failed"
 	WEBHOOKEVENTTYPE_PAYMENT_STATUS_UPDATED WebhookEventType = "payment.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_REFUND_STATUS_UPDATED WebhookEventType = "payment.refund.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_SETTLEMENT_STATUS_UPDATED WebhookEventType = "payment.settlement.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_ADDRESS_UPDATED WebhookEventType = "payment.address.updated"
 	WEBHOOKEVENTTYPE_COMPLIANCE_DISPOSITION_STATUS_UPDATED WebhookEventType = "compliance.disposition.status.updated"
+	WEBHOOKEVENTTYPE_COMPLIANCE_KYT_SCREENINGS_STATUS_UPDATED WebhookEventType = "compliance.kyt.screenings.status.updated"
 )
 
 // All allowed values of WebhookEventType enum
@@ -85,11 +87,13 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.transaction.late",
 	"payment.transaction.completed",
 	"payment.transaction.held",
+	"payment.transaction.failed",
 	"payment.status.updated",
 	"payment.refund.status.updated",
 	"payment.settlement.status.updated",
 	"payment.address.updated",
 	"compliance.disposition.status.updated",
+	"compliance.kyt.screenings.status.updated",
 }
 
 func (v *WebhookEventType) UnmarshalJSON(src []byte) error {

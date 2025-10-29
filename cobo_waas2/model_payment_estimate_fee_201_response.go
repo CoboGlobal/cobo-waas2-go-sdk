@@ -17,6 +17,7 @@ var _ MappedNullable = &PaymentEstimateFee201Response{}
 
 // PaymentEstimateFee201Response struct for PaymentEstimateFee201Response
 type PaymentEstimateFee201Response struct {
+	// A list of estimated fees for the requested operations.
 	Data []PaymentEstimatedFee `json:"data,omitempty"`
 }
 

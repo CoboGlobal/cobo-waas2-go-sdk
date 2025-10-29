@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | The merchant name. | 
-**WalletId** | Pointer to **string** | The ID of the wallet linked to the merchant. | [optional] 
-**DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to this merchant. Expressed as a string in decimal format where \&quot;0.1\&quot; represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions. If you are a merchant (directly serving the payer), you do not need to configure the developer fee rate. | [optional] 
+**WalletId** | Pointer to **string** | This field has been deprecated. | [optional] 
+**DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to this merchant. Expressed as a string in decimal format where \&quot;0.1\&quot; represents 10%. For more information on developer fee rate, please refer to [Amounts and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances). | [optional] 
 **WalletSetup** | Pointer to [**WalletSetup**](WalletSetup.md) |  | [optional] 
 
 ## Methods

@@ -37,7 +37,7 @@ type SupportedToken struct {
 	ChainIconUrl NullableString `json:"chain_icon_url,omitempty"`
 	// URL to the token's icon image
 	TokenIconUrl NullableString `json:"token_icon_url,omitempty"`
-	// Whether the token can by off ramp settlement
+	// Whether the token is supported by the off-ramp service.
 	CanOffRamp *bool `json:"can_off_ramp,omitempty"`
 }
 

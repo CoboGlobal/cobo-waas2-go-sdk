@@ -19,9 +19,9 @@ var _ MappedNullable = &PaymentEstimatedFee{}
 
 // PaymentEstimatedFee struct for PaymentEstimatedFee
 type PaymentEstimatedFee struct {
-	// The ID of the cryptocurrency you want to payment.
+	// The token ID for which fees will be calculated.
 	TokenId string `json:"token_id"`
-	// The payment amount. 
+	// The transaction amount for which fees will be calculated.
 	Amount string `json:"amount"`
 	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
 	BridgingFee *BridgingFee `json:"bridging_fee,omitempty"`

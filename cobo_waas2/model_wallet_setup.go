@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// WalletSetup WalletSetup defines the type of funds used in the merchant account, either \"Shared\" or \"Separate\" is allowed when creating a merchant: - `Default`: Wallet of psp owned default merchant. - `Shared`: Shared wallet of non-psp owned merchants. - `Separate`: Separate wallet of non-psp owned merchants. 
+// WalletSetup The type of wallet setup for the merchant. Each wallet contains multiple cryptocurrency addresses that serve as the merchant’s receiving addresses.  - `Shared`: (Default) Multiple merchants share the same wallet. The wallet’s addresses may be used to receive payments for multiple merchants simultaneously. - `Separate`: Create a dedicated wallet for the merchant to achieve complete fund isolation. All addresses in this wallet are only used to receive payments for this merchant. - `Default`: The default wallet automatically created by the system for the default merchant (the merchant that shares the same name as your organization). **Do not select this option when creating a merchant.** 
 type WalletSetup string
 
 // List of WalletSetup

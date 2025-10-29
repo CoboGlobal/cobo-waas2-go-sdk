@@ -34,9 +34,9 @@ type Settlement struct {
 	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
 	SettlementType *SettlementType `json:"settlement_type,omitempty"`
-	// The fiat currency for the settlement request.
+	// The fiat currency for the off-ramp.
 	Currency *string `json:"currency,omitempty"`
-	// The received fiat amount of this settlement request. 
+	// The estimated amount of the fiat currency to receive after off-ramping. This amount is subject to change due to bank transfer fees.
 	ReceivedAmountFiat *string `json:"received_amount_fiat,omitempty"`
 	BankAccount *BankAccount `json:"bank_account,omitempty"`
 }

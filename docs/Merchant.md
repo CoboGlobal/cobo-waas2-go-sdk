@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MerchantId** | **string** | The merchant ID. | 
 **Name** | **string** | The merchant name. | 
-**WalletId** | **string** | The ID of the linked wallet. | 
-**DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to this merchant. Expressed as a string in decimal format where \&quot;0.1\&quot; represents 10%. This fee is deducted from the payment amount and only applies to top-up transactions. If you are a merchant (directly serving the payer), you do not need to configure the developer fee rate. | [optional] 
+**WalletId** | **string** | This field has been deprecated. | 
+**DeveloperFeeRate** | Pointer to **string** | The developer fee rate applied to this merchant. | [optional] 
 **WalletSetup** | Pointer to [**WalletSetup**](WalletSetup.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The creation time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The last update time of the merchant, represented as a UNIX timestamp in seconds. | [optional] 
