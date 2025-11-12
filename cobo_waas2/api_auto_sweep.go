@@ -168,7 +168,7 @@ func (r ApiCreateWalletSweepToAddressesRequest) Execute() (*SweepToAddress, *htt
 }
 
 /*
-CreateWalletSweepToAddresses create sweep-to address
+CreateWalletSweepToAddresses Create sweep-to address
 
 This operation creates a new sweep-to address for the specified wallet. The previously sweep-to address for the same token becomes invalid once the new one is created.
 

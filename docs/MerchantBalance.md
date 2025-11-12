@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **TotalReceivedAmount** | Pointer to **string** | The total amount of the token that has been received by the merchant. | [optional] 
 **SettledAmount** | Pointer to **string** | The total amount of the token that has been paid out from the merchant&#39;s balance. | [optional] 
 **RefundedAmount** | Pointer to **string** | The total amount of the token that has been refunded from the merchant&#39;s balance. | [optional] 
-**TotalBalance** | Pointer to **string** |  The total balance of the token available for payout or refund for the merchant.  &#x60;total_balance&#x60; &#x3D; &#x60;total_received_amount&#x60; - &#x60;settled_amount&#x60; - &#x60;refunded_amount&#x60;  For more information, please refer to [Amounts and Balances](/v2_cn/payments/amounts-and-balances)  | [optional] 
+**TotalBalance** | Pointer to **string** |  The total balance of the token available for payout or refund for the merchant.  &#x60;total_balance&#x60; &#x3D; &#x60;total_received_amount&#x60; - &#x60;settled_amount&#x60; - &#x60;refunded_amount&#x60;  For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances)  | [optional] 
 **AvailableBalance** | Pointer to **string** | This field has been deprecated. | [optional] 
 
 ## Methods

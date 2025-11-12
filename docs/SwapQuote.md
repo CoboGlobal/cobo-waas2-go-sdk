@@ -4,22 +4,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**QuoteId** | **string** | The unique identifier of the swap quote. | 
-**PayTokenId** | **string** | The ID of the token to pay. | 
-**PayAmount** | **string** | The amount of the token to pay. | 
-**ReceiveTokenId** | **string** | The ID of the token to receive. | 
-**ReceiveAmount** | **string** | The amount of the token to receive. | 
-**FeeTokenId** | **string** | The ID of the token for the service fee. | 
-**FeeAmount** | **string** | The amount of the token for the service fee. | 
-**MinReceiveAmount** | Pointer to **string** | The minimum amount of the token to receive if &#x60;pay_amount&#x60; is specified. | [optional] 
-**MaxPayAmount** | Pointer to **string** | The maximum amount of the token to pay if &#x60;receive_amount&#x60; is specified. | [optional] 
-**QuoteExpiredTimestamp** | **int32** | The time when the swap quote expires, in Unix timestamp format, measured in milliseconds. | 
+**QuoteId** | **string** | The unique id of quote. | 
+**PayTokenId** | **string** | The token ID to pay. | 
+**PayAmount** | **string** | The amount of tokens to pay. | 
+**ReceiveTokenId** | **string** | The token ID to receive. | 
+**ReceiveAmount** | **string** | The amount of tokens to receive. | 
+**FeeTokenId** | **string** | The token ID for the service fee. | 
+**FeeAmount** | **string** | The amount of tokens for the service fee. | 
+**MinReceiveAmount** | Pointer to **string** | The minimum amount of tokens to receive if the pay amount is specified. | [optional] 
+**MaxPayAmount** | Pointer to **string** | The maximum amount of tokens to pay if the receive amount is specified. | [optional] 
+**QuoteExpiredTimestamp** | **int64** | The time when the quote will expire, in Unix timestamp format, measured in milliseconds. | 
 
 ## Methods
 
 ### NewSwapQuote
 
-`func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int32, ) *SwapQuote`
+`func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int64, ) *SwapQuote`
 
 NewSwapQuote instantiates a new SwapQuote object
 This constructor will assign default values to properties that have it defined,
@@ -226,20 +226,20 @@ HasMaxPayAmount returns a boolean if a field has been set.
 
 ### GetQuoteExpiredTimestamp
 
-`func (o *SwapQuote) GetQuoteExpiredTimestamp() int32`
+`func (o *SwapQuote) GetQuoteExpiredTimestamp() int64`
 
 GetQuoteExpiredTimestamp returns the QuoteExpiredTimestamp field if non-nil, zero value otherwise.
 
 ### GetQuoteExpiredTimestampOk
 
-`func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int32, bool)`
+`func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int64, bool)`
 
 GetQuoteExpiredTimestampOk returns a tuple with the QuoteExpiredTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetQuoteExpiredTimestamp
 
-`func (o *SwapQuote) SetQuoteExpiredTimestamp(v int32)`
+`func (o *SwapQuote) SetQuoteExpiredTimestamp(v int64)`
 
 SetQuoteExpiredTimestamp sets QuoteExpiredTimestamp field to given value.
 

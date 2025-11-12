@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | The action in the swap activity. Possible values include:   - &#x60;Submitted&#x60;: The swap request has been submitted.   - &#x60;Pending Authorization&#x60;: The swap request is pending authorization.   - &#x60;Bridge {Token}&#x60;: The token is being bridged to the destination chain.   - &#x60;Swap {Token}&#x60;: The token is being exchanged to the destination token.   - &#x60;Cobo Confirmation&#x60;: The swap result is pending Cobo&#39;s final confirmation.  | 
 **Status** | **string** | The status of the action. Possible values include:   - &#x60;Success&#x60;: The action completed successfully.   - &#x60;Processing&#x60;: The action is being processed.   - &#x60;Failed&#x60;: The action failed.  | 
-**Timestamp** | Pointer to **int32** | The time when the action occurred, in Unix timestamp format, measured in milliseconds.   | [optional] 
+**Timestamp** | Pointer to **int64** | The time when the action occurred, in Unix timestamp format, measured in milliseconds.   | [optional] 
 
 ## Methods
 
@@ -69,20 +69,20 @@ SetStatus sets Status field to given value.
 
 ### GetTimestamp
 
-`func (o *SwapActivityTimeline) GetTimestamp() int32`
+`func (o *SwapActivityTimeline) GetTimestamp() int64`
 
 GetTimestamp returns the Timestamp field if non-nil, zero value otherwise.
 
 ### GetTimestampOk
 
-`func (o *SwapActivityTimeline) GetTimestampOk() (*int32, bool)`
+`func (o *SwapActivityTimeline) GetTimestampOk() (*int64, bool)`
 
 GetTimestampOk returns a tuple with the Timestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTimestamp
 
-`func (o *SwapActivityTimeline) SetTimestamp(v int32)`
+`func (o *SwapActivityTimeline) SetTimestamp(v int64)`
 
 SetTimestamp sets Timestamp field to given value.
 

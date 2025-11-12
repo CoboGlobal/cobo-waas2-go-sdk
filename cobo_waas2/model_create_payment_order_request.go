@@ -19,15 +19,15 @@ var _ MappedNullable = &CreatePaymentOrderRequest{}
 
 // CreatePaymentOrderRequest struct for CreatePaymentOrderRequest
 type CreatePaymentOrderRequest struct {
-	// The merchant ID.
+	// The merchant ID. This ID is assigned by Cobo when you create the merchant.
 	MerchantId string `json:"merchant_id"`
 	// The ID of the cryptocurrency used for payment. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// The fiat currency for the base order amount and the developer fee. Currently, only `USD` is supported.  If left empty, both `order_amount` and `fee_amount` will be denominated in the cryptocurrency specified by `token_id` 
+	// The fiat currency for the base order amount and the developer fee. If left empty, both `order_amount` and `fee_amount` will be denominated in the cryptocurrency specified by `token_id`  Currently, only `USD` is supported. 
 	Currency *string `json:"currency,omitempty"`
-	//  The base amount of the order, excluding the developer fee (specified in `fee_amount`), in the currency specified by `currency`. If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`.   Values must be greater than `0` and contain two decimal places.  
+	//  The base amount of the order, excluding the developer fee (specified in `fee_amount`). The denomination of the amount depends on if `currency` is specified: - If `currency` is specified, the amount is in the currency specified by `currency`, e.g. \"USD\". - If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`, e.g. \"ETH_USDT\".   Values must be greater than `0` and contain two decimal places.  
 	OrderAmount string `json:"order_amount"`
-	//  The developer fee for the order, in the currency specified by `currency`. If `currency` is not specified, the fee is in the cryptocurrency specified by `token_id`.  If you are a merchant directly serving payers, set this field to `0`. Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.  The developer fee is added to the base amount (`order_amount`) to determine the final charge. For example: - Base amount (`order_amount`): \"100.00\" - Developer fee (`fee_amount`): \"2.00\"  - Total charged to customer: \"102.00\"  Values can contain up to two decimal places. 
+	//  The developer fee for the order.  - **When to set:**     If you are a merchant serving payers directly, set this field to `0`.     Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.   For details, see [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).  - **Denomination:**     The denomination of `fee_amount` depends on the presence of `currency`:       - If `currency` is set, the amount is denominated in that currency (e.g., \"USD\").       - If `currency` is not set, the amount is denominated in the cryptocurrency specified by `token_id` (e.g., \"ETH_USDT\").  - **Calculation:**     The developer fee is added to the base order amount (`order_amount`) to determine the final amount charged to the customer.     For example:       - Base amount (`order_amount`): \"100.00\"       - Developer fee (`fee_amount`): \"2.00\"       - **Total charged:** \"102.00\"  - **Formatting:**     The value can contain up to two decimal places. 
 	FeeAmount string `json:"fee_amount"`
 	// A unique reference code assigned by the merchant to identify this order in their system. The code should have a maximum length of 128 characters.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
@@ -39,7 +39,7 @@ type CreatePaymentOrderRequest struct {
 	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
 	//  A custom exchange rate that defines how much fiat currency equals 1 unit of cryptocurrency. If not provided, the system's default exchange rate will be used.  For example, if the fiat currency is USD and the cryptocurrency is USDT, setting `custom_exchange_rate` to `\"0.99\"` means that 1 USDT will be valued at 0.99 USD. 
 	CustomExchangeRate *string `json:"custom_exchange_rate,omitempty"`
-	// Allowed amount deviation, precision to 1 decimal place.
+	// The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`. 
 	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 }
 

@@ -18,8 +18,8 @@ Name | Type | Description | Notes
 **Initiator** | Pointer to **NullableString** | The initiator of the swap activity. | [optional] 
 **InitiatorType** | Pointer to [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | [optional] 
 **Description** | Pointer to **string** | The description of the swap activity. | [optional] 
-**CreatedTimestamp** | Pointer to **int32** | The time when the swap activity was created, in Unix timestamp format, measured in milliseconds. | [optional] 
-**UpdatedTimestamp** | Pointer to **int32** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
+**CreatedTimestamp** | Pointer to **int64** | The time when the swap activity was created, in Unix timestamp format, measured in milliseconds. | [optional] 
+**UpdatedTimestamp** | Pointer to **int64** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **NetworkFee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
 **DestinationAddress** | Pointer to **string** | The address of an MPC Wallet or Web3 Wallet that receives the swapped or bridged assets. | [optional] 
 
@@ -404,20 +404,20 @@ HasDescription returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 
-`func (o *SwapActivity) GetCreatedTimestamp() int32`
+`func (o *SwapActivity) GetCreatedTimestamp() int64`
 
 GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
 ### GetCreatedTimestampOk
 
-`func (o *SwapActivity) GetCreatedTimestampOk() (*int32, bool)`
+`func (o *SwapActivity) GetCreatedTimestampOk() (*int64, bool)`
 
 GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedTimestamp
 
-`func (o *SwapActivity) SetCreatedTimestamp(v int32)`
+`func (o *SwapActivity) SetCreatedTimestamp(v int64)`
 
 SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
@@ -429,20 +429,20 @@ HasCreatedTimestamp returns a boolean if a field has been set.
 
 ### GetUpdatedTimestamp
 
-`func (o *SwapActivity) GetUpdatedTimestamp() int32`
+`func (o *SwapActivity) GetUpdatedTimestamp() int64`
 
 GetUpdatedTimestamp returns the UpdatedTimestamp field if non-nil, zero value otherwise.
 
 ### GetUpdatedTimestampOk
 
-`func (o *SwapActivity) GetUpdatedTimestampOk() (*int32, bool)`
+`func (o *SwapActivity) GetUpdatedTimestampOk() (*int64, bool)`
 
 GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUpdatedTimestamp
 
-`func (o *SwapActivity) SetUpdatedTimestamp(v int32)`
+`func (o *SwapActivity) SetUpdatedTimestamp(v int64)`
 
 SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 

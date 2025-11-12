@@ -29,6 +29,7 @@ type TokenizationTokenInfo struct {
 	TokenName *string `json:"token_name,omitempty"`
 	// The unique token symbol.
 	TokenSymbol string `json:"token_symbol"`
+	TokenStandard TokenizationTokenStandard `json:"token_standard"`
 	// The number of decimals of the token.
 	Decimals int32 `json:"decimals"`
 	// Whether the allowlist feature is activated for the token.
@@ -38,6 +39,8 @@ type TokenizationTokenInfo struct {
 	TotalSupply *string `json:"total_supply,omitempty"`
 	// The amount of tokens held by the organization.
 	Holdings *string `json:"holdings,omitempty"`
+	// Whether the token is archived. If the token is archived, no operations can be initiated on it.
+	Archived bool `json:"archived"`
 }
 
 type _TokenizationTokenInfo TokenizationTokenInfo
@@ -46,13 +49,15 @@ type _TokenizationTokenInfo TokenizationTokenInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, decimals int32, status TokenizationStatus) *TokenizationTokenInfo {
+func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, archived bool) *TokenizationTokenInfo {
 	this := TokenizationTokenInfo{}
 	this.TokenId = tokenId
 	this.ChainId = chainId
 	this.TokenSymbol = tokenSymbol
+	this.TokenStandard = tokenStandard
 	this.Decimals = decimals
 	this.Status = status
+	this.Archived = archived
 	return &this
 }
 
@@ -200,6 +205,30 @@ func (o *TokenizationTokenInfo) SetTokenSymbol(v string) {
 	o.TokenSymbol = v
 }
 
+// GetTokenStandard returns the TokenStandard field value
+func (o *TokenizationTokenInfo) GetTokenStandard() TokenizationTokenStandard {
+	if o == nil {
+		var ret TokenizationTokenStandard
+		return ret
+	}
+
+	return o.TokenStandard
+}
+
+// GetTokenStandardOk returns a tuple with the TokenStandard field value
+// and a boolean to check if the value has been set.
+func (o *TokenizationTokenInfo) GetTokenStandardOk() (*TokenizationTokenStandard, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TokenStandard, true
+}
+
+// SetTokenStandard sets field value
+func (o *TokenizationTokenInfo) SetTokenStandard(v TokenizationTokenStandard) {
+	o.TokenStandard = v
+}
+
 // GetDecimals returns the Decimals field value
 func (o *TokenizationTokenInfo) GetDecimals() int32 {
 	if o == nil {
@@ -344,6 +373,30 @@ func (o *TokenizationTokenInfo) SetHoldings(v string) {
 	o.Holdings = &v
 }
 
+// GetArchived returns the Archived field value
+func (o *TokenizationTokenInfo) GetArchived() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Archived
+}
+
+// GetArchivedOk returns a tuple with the Archived field value
+// and a boolean to check if the value has been set.
+func (o *TokenizationTokenInfo) GetArchivedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Archived, true
+}
+
+// SetArchived sets field value
+func (o *TokenizationTokenInfo) SetArchived(v bool) {
+	o.Archived = v
+}
+
 func (o TokenizationTokenInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -363,6 +416,7 @@ func (o TokenizationTokenInfo) ToMap() (map[string]interface{}, error) {
 		toSerialize["token_name"] = o.TokenName
 	}
 	toSerialize["token_symbol"] = o.TokenSymbol
+	toSerialize["token_standard"] = o.TokenStandard
 	toSerialize["decimals"] = o.Decimals
 	if !IsNil(o.TokenAccessActivated) {
 		toSerialize["token_access_activated"] = o.TokenAccessActivated
@@ -374,6 +428,7 @@ func (o TokenizationTokenInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Holdings) {
 		toSerialize["holdings"] = o.Holdings
 	}
+	toSerialize["archived"] = o.Archived
 	return toSerialize, nil
 }
 
@@ -385,8 +440,10 @@ func (o *TokenizationTokenInfo) UnmarshalJSON(data []byte) (err error) {
 		"token_id",
 		"chain_id",
 		"token_symbol",
+		"token_standard",
 		"decimals",
 		"status",
+		"archived",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -19,17 +19,17 @@ var _ MappedNullable = &OrderLinkBusinessInfo{}
 
 // OrderLinkBusinessInfo struct for OrderLinkBusinessInfo
 type OrderLinkBusinessInfo struct {
-	// List of supported cryptocurrency token IDs for this payment. Each token ID must be from the supported values. 
+	// An array of token IDs representing the cryptocurrencies and chains available for payment. These options will be shown to users on the payment page for them to choose from. Supported token IDs include:   - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenIds []string `json:"token_ids"`
-	// Optional list of final exchange rates for different tokens. If provided, these rates will be used instead of real-time market rates. 
+	// A list of custom exchange rates defining how much one unit of a specific cryptocurrency (`token_id`) is valued in the selected fiat or crypto currency (`currency`). If this field is omitted, the system’s default exchange rates will apply.  Each item specifies a `token_id` and its corresponding `exchange_rate`. For example, to treat 1 USDT (on Ethereum) as equivalent to 0.99 USD, provide:  ```json {   \"custom_exchange_rates\": [     {       \"token_id\": \"ETH_USDT\",       \"exchange_rate\": \"0.99\"     }   ],   \"currency\": \"USD\" } ``` 
 	CustomExchangeRates []OrderLinkBusinessInfoCustomExchangeRatesInner `json:"custom_exchange_rates,omitempty"`
-	// The currency for the base order amount and the developer fee. Currently, only `USD`/`USDT`/`USDC` are supported. 
+	// The currency in which both the order amount (`order_amount`) and the developer fee (`fee_amount`) are denominated. Only the following values are supported: `USD`, `USDT`, or `USDC`. 
 	Currency string `json:"currency"`
-	// The developer fee for the order, in the currency specified by `currency`. If `currency` is not specified, the fee is in the cryptocurrency specified by `token_id`.  If you are a merchant directly serving payers, set this field to `0`. Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.  The developer fee is added to the base amount (`order_amount`) to determine the final charge. For example: - Base amount (`order_amount`): \"100.00\" - Developer fee (`fee_amount`): \"2.00\"  - Total charged to customer: \"102.00\"  Values can contain up to two decimal places. 
+	// The developer fee for the order, denominated in the currency specified by `currency`.   If you are a merchant directly serving payers, set this field to `0`. Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.  The developer fee is added to the base amount (`order_amount`) to determine the final charge. For example: - Base amount (`order_amount`): \"100.00\" - Developer fee (`fee_amount`): \"2.00\"  - Total charged to customer: \"102.00\"  Values can contain up to two decimal places. 
 	FeeAmount string `json:"fee_amount"`
 	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
-	// The base amount of the order, excluding the developer fee (specified in `fee_amount`), in the currency specified by `currency`. If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`.   Values must be greater than `0` and contain two decimal places.  
+	// The base amount of the order, excluding the developer fee (specified in `fee_amount`), denominated in the currency specified by `currency`.  Values must be greater than `0` and contain two decimal places.  
 	OrderAmount string `json:"order_amount"`
 	// A unique reference code assigned by the merchant to identify this order in their system. The code should have a maximum length of 128 characters.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
@@ -37,9 +37,9 @@ type OrderLinkBusinessInfo struct {
 	PspOrderCode string `json:"psp_order_code"`
 	// The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
-	// Whether to allocate a dedicated address for this order.  - `true`: A dedicated address will be allocated for this order. - `false`: A shared address from the address pool will be used. 
+	// This field has been deprecated. 
 	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
-	// Allowed amount deviation, precision to 1 decimal place.
+	// The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`. 
 	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 }
 

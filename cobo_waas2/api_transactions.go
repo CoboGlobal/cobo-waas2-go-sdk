@@ -2170,6 +2170,8 @@ func (r ApiResendTransactionByIdRequest) Execute() (*CreateTransferTransaction20
 /*
 ResendTransactionById Resend transaction
 
+<Note>Resending failed transactions is not supported on the Solana network.</Note>
+
 This operation resends a specified transaction. Resending a transaction means retrying a previously failed transaction. For more details about resending a transaction, see [Resend a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#resend-a-transaction).
 
 Resending a transaction is a high‑risk operation. Ensure that the original transaction has not been broadcast to the blockchain, has already expired, and will never be confirmed. Otherwise, the same transaction may be confirmed on‑chain twice.

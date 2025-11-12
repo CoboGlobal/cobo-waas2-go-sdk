@@ -23,7 +23,7 @@ type CreateCryptoAddressRequest struct {
 	TokenId string `json:"token_id"`
 	// The blockchain address in its native format. This is the actual destination address where funds will be sent. The address must match the format required by the specified blockchain. For example:   - For `SOL_USDC`: Provide a Solana address   - For `ETH_USDT`: Provide an Ethereum address 
 	Address string `json:"address"`
-	// A label to help identify the address's purpose.
+	// A label to help identify the address's purpose. Can contain up to 128 characters.
 	Label *string `json:"label,omitempty"`
 }
 

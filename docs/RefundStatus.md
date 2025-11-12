@@ -3,6 +3,10 @@
 ## Enum
 
 
+* `ADDRESS_PENDING` (value: `"AddressPending"`)
+
+* `ADDRESS_SUBMITTED` (value: `"AddressSubmitted"`)
+
 * `PENDING` (value: `"Pending"`)
 
 * `PROCESSING` (value: `"Processing"`)

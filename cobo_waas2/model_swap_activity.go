@@ -43,9 +43,9 @@ type SwapActivity struct {
 	// The description of the swap activity.
 	Description *string `json:"description,omitempty"`
 	// The time when the swap activity was created, in Unix timestamp format, measured in milliseconds.
-	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
+	CreatedTimestamp *int64 `json:"created_timestamp,omitempty"`
 	// The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds.
-	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
+	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 	NetworkFee *TransactionRequestFee `json:"network_fee,omitempty"`
 	// The address of an MPC Wallet or Web3 Wallet that receives the swapped or bridged assets.
 	DestinationAddress *string `json:"destination_address,omitempty"`
@@ -527,9 +527,9 @@ func (o *SwapActivity) SetDescription(v string) {
 }
 
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
-func (o *SwapActivity) GetCreatedTimestamp() int32 {
+func (o *SwapActivity) GetCreatedTimestamp() int64 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.CreatedTimestamp
@@ -537,7 +537,7 @@ func (o *SwapActivity) GetCreatedTimestamp() int32 {
 
 // GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SwapActivity) GetCreatedTimestampOk() (*int32, bool) {
+func (o *SwapActivity) GetCreatedTimestampOk() (*int64, bool) {
 	if o == nil || IsNil(o.CreatedTimestamp) {
 		return nil, false
 	}
@@ -553,15 +553,15 @@ func (o *SwapActivity) HasCreatedTimestamp() bool {
 	return false
 }
 
-// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
-func (o *SwapActivity) SetCreatedTimestamp(v int32) {
+// SetCreatedTimestamp gets a reference to the given int64 and assigns it to the CreatedTimestamp field.
+func (o *SwapActivity) SetCreatedTimestamp(v int64) {
 	o.CreatedTimestamp = &v
 }
 
 // GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
-func (o *SwapActivity) GetUpdatedTimestamp() int32 {
+func (o *SwapActivity) GetUpdatedTimestamp() int64 {
 	if o == nil || IsNil(o.UpdatedTimestamp) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.UpdatedTimestamp
@@ -569,7 +569,7 @@ func (o *SwapActivity) GetUpdatedTimestamp() int32 {
 
 // GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SwapActivity) GetUpdatedTimestampOk() (*int32, bool) {
+func (o *SwapActivity) GetUpdatedTimestampOk() (*int64, bool) {
 	if o == nil || IsNil(o.UpdatedTimestamp) {
 		return nil, false
 	}
@@ -585,8 +585,8 @@ func (o *SwapActivity) HasUpdatedTimestamp() bool {
 	return false
 }
 
-// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
-func (o *SwapActivity) SetUpdatedTimestamp(v int32) {
+// SetUpdatedTimestamp gets a reference to the given int64 and assigns it to the UpdatedTimestamp field.
+func (o *SwapActivity) SetUpdatedTimestamp(v int64) {
 	o.UpdatedTimestamp = &v
 }
 

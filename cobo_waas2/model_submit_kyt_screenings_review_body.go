@@ -17,7 +17,7 @@ import (
 // checks if the SubmitKytScreeningsReviewBody type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SubmitKytScreeningsReviewBody{}
 
-// SubmitKytScreeningsReviewBody The information about submitting a manual KYT review result for KYT screening cases that require human analysis.
+// SubmitKytScreeningsReviewBody Submission of a manual KYT review result.
 type SubmitKytScreeningsReviewBody struct {
 	// The UUID of the transaction that requires a manual KYT review.
 	TransactionId string `json:"transaction_id"`
