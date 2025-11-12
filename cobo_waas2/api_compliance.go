@@ -570,7 +570,7 @@ type ApiSubmitKytManualReviewRequest struct {
 	submitKytScreeningsReviewBody *SubmitKytScreeningsReviewBody
 }
 
-// The request body to submit a manual review result for KYT screening case that requires human analysis.
+// The request body to submit a manual review result for a KYT screening case that requires human analysis.
 func (r ApiSubmitKytManualReviewRequest) SubmitKytScreeningsReviewBody(submitKytScreeningsReviewBody SubmitKytScreeningsReviewBody) ApiSubmitKytManualReviewRequest {
 	r.submitKytScreeningsReviewBody = &submitKytScreeningsReviewBody
 	return r

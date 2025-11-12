@@ -21,16 +21,19 @@ var _ MappedNullable = &FeeStationCheckFeeStationUsage{}
 type FeeStationCheckFeeStationUsage struct {
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
 	RequestId string `json:"request_id"`
-	// The amount of tokens to be transferred in this request.
-	Amount string `json:"amount"`
-	// The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
-	TokenId string `json:"token_id"`
+	// Applicable to transfer requests only. The amount of tokens to be transferred in this request.
+	Amount *string `json:"amount,omitempty"`
+	// Applicable to transfer requests only. The token ID of the asset to be transferred.   You can retrieve available token IDs by calling   [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). 
+	TokenId *string `json:"token_id,omitempty"`
+	// The token ID used to pay the gas fee for the main transaction. You can retrieve available token IDs by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+	FeeTokenId *string `json:"fee_token_id,omitempty"`
 	// The estimated transaction fee required for this transfer, before applying any Fee Station rules.
 	EstimatedFeeAmount string `json:"estimated_fee_amount"`
 	// The blockchain address that initiates the transfer.
 	FromAddress string `json:"from_address"`
 	// The wallet ID.
 	FromWalletId string `json:"from_wallet_id"`
+	AutoFuel *AutoFuelType `json:"auto_fuel,omitempty"`
 }
 
 type _FeeStationCheckFeeStationUsage FeeStationCheckFeeStationUsage
@@ -39,11 +42,9 @@ type _FeeStationCheckFeeStationUsage FeeStationCheckFeeStationUsage
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFeeStationCheckFeeStationUsage(requestId string, amount string, tokenId string, estimatedFeeAmount string, fromAddress string, fromWalletId string) *FeeStationCheckFeeStationUsage {
+func NewFeeStationCheckFeeStationUsage(requestId string, estimatedFeeAmount string, fromAddress string, fromWalletId string) *FeeStationCheckFeeStationUsage {
 	this := FeeStationCheckFeeStationUsage{}
 	this.RequestId = requestId
-	this.Amount = amount
-	this.TokenId = tokenId
 	this.EstimatedFeeAmount = estimatedFeeAmount
 	this.FromAddress = fromAddress
 	this.FromWalletId = fromWalletId
@@ -82,52 +83,100 @@ func (o *FeeStationCheckFeeStationUsage) SetRequestId(v string) {
 	o.RequestId = v
 }
 
-// GetAmount returns the Amount field value
+// GetAmount returns the Amount field value if set, zero value otherwise.
 func (o *FeeStationCheckFeeStationUsage) GetAmount() string {
-	if o == nil {
+	if o == nil || IsNil(o.Amount) {
 		var ret string
 		return ret
 	}
-
-	return o.Amount
+	return *o.Amount
 }
 
-// GetAmountOk returns a tuple with the Amount field value
+// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FeeStationCheckFeeStationUsage) GetAmountOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Amount) {
 		return nil, false
 	}
-	return &o.Amount, true
+	return o.Amount, true
 }
 
-// SetAmount sets field value
+// HasAmount returns a boolean if a field has been set.
+func (o *FeeStationCheckFeeStationUsage) HasAmount() bool {
+	if o != nil && !IsNil(o.Amount) {
+		return true
+	}
+
+	return false
+}
+
+// SetAmount gets a reference to the given string and assigns it to the Amount field.
 func (o *FeeStationCheckFeeStationUsage) SetAmount(v string) {
-	o.Amount = v
+	o.Amount = &v
 }
 
-// GetTokenId returns the TokenId field value
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
 func (o *FeeStationCheckFeeStationUsage) GetTokenId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		var ret string
 		return ret
 	}
-
-	return o.TokenId
+	return *o.TokenId
 }
 
-// GetTokenIdOk returns a tuple with the TokenId field value
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *FeeStationCheckFeeStationUsage) GetTokenIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		return nil, false
 	}
-	return &o.TokenId, true
+	return o.TokenId, true
 }
 
-// SetTokenId sets field value
+// HasTokenId returns a boolean if a field has been set.
+func (o *FeeStationCheckFeeStationUsage) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
 func (o *FeeStationCheckFeeStationUsage) SetTokenId(v string) {
-	o.TokenId = v
+	o.TokenId = &v
+}
+
+// GetFeeTokenId returns the FeeTokenId field value if set, zero value otherwise.
+func (o *FeeStationCheckFeeStationUsage) GetFeeTokenId() string {
+	if o == nil || IsNil(o.FeeTokenId) {
+		var ret string
+		return ret
+	}
+	return *o.FeeTokenId
+}
+
+// GetFeeTokenIdOk returns a tuple with the FeeTokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FeeStationCheckFeeStationUsage) GetFeeTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.FeeTokenId) {
+		return nil, false
+	}
+	return o.FeeTokenId, true
+}
+
+// HasFeeTokenId returns a boolean if a field has been set.
+func (o *FeeStationCheckFeeStationUsage) HasFeeTokenId() bool {
+	if o != nil && !IsNil(o.FeeTokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetFeeTokenId gets a reference to the given string and assigns it to the FeeTokenId field.
+func (o *FeeStationCheckFeeStationUsage) SetFeeTokenId(v string) {
+	o.FeeTokenId = &v
 }
 
 // GetEstimatedFeeAmount returns the EstimatedFeeAmount field value
@@ -202,6 +251,38 @@ func (o *FeeStationCheckFeeStationUsage) SetFromWalletId(v string) {
 	o.FromWalletId = v
 }
 
+// GetAutoFuel returns the AutoFuel field value if set, zero value otherwise.
+func (o *FeeStationCheckFeeStationUsage) GetAutoFuel() AutoFuelType {
+	if o == nil || IsNil(o.AutoFuel) {
+		var ret AutoFuelType
+		return ret
+	}
+	return *o.AutoFuel
+}
+
+// GetAutoFuelOk returns a tuple with the AutoFuel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FeeStationCheckFeeStationUsage) GetAutoFuelOk() (*AutoFuelType, bool) {
+	if o == nil || IsNil(o.AutoFuel) {
+		return nil, false
+	}
+	return o.AutoFuel, true
+}
+
+// HasAutoFuel returns a boolean if a field has been set.
+func (o *FeeStationCheckFeeStationUsage) HasAutoFuel() bool {
+	if o != nil && !IsNil(o.AutoFuel) {
+		return true
+	}
+
+	return false
+}
+
+// SetAutoFuel gets a reference to the given AutoFuelType and assigns it to the AutoFuel field.
+func (o *FeeStationCheckFeeStationUsage) SetAutoFuel(v AutoFuelType) {
+	o.AutoFuel = &v
+}
+
 func (o FeeStationCheckFeeStationUsage) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -213,11 +294,21 @@ func (o FeeStationCheckFeeStationUsage) MarshalJSON() ([]byte, error) {
 func (o FeeStationCheckFeeStationUsage) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
-	toSerialize["amount"] = o.Amount
-	toSerialize["token_id"] = o.TokenId
+	if !IsNil(o.Amount) {
+		toSerialize["amount"] = o.Amount
+	}
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
+	if !IsNil(o.FeeTokenId) {
+		toSerialize["fee_token_id"] = o.FeeTokenId
+	}
 	toSerialize["estimated_fee_amount"] = o.EstimatedFeeAmount
 	toSerialize["from_address"] = o.FromAddress
 	toSerialize["from_wallet_id"] = o.FromWalletId
+	if !IsNil(o.AutoFuel) {
+		toSerialize["auto_fuel"] = o.AutoFuel
+	}
 	return toSerialize, nil
 }
 
@@ -227,8 +318,6 @@ func (o *FeeStationCheckFeeStationUsage) UnmarshalJSON(data []byte) (err error) 
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"request_id",
-		"amount",
-		"token_id",
 		"estimated_fee_amount",
 		"from_address",
 		"from_wallet_id",

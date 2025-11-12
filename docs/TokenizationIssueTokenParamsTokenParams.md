@@ -9,13 +9,14 @@ Name | Type | Description | Notes
 **Symbol** | **string** | The symbol of the token. | 
 **Decimals** | **int32** | The number of decimals for the token (0-18). | 
 **TokenAccessActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations. | [optional] [default to false]
-**Permissions** | Pointer to [**TokenizationSolTokenPermissionParams**](TokenizationSolTokenPermissionParams.md) |  | [optional] 
+**Permissions** | Pointer to [**TokenizationSolWrappedTokenPermissionParams**](TokenizationSolWrappedTokenPermissionParams.md) |  | [optional] 
+**UnderlyingToken** | **string** | The address of the underlying token that this tokenized asset represents. | 
 
 ## Methods
 
 ### NewTokenizationIssueTokenParamsTokenParams
 
-`func NewTokenizationIssueTokenParamsTokenParams(standard TokenizationTokenStandard, name string, symbol string, decimals int32, ) *TokenizationIssueTokenParamsTokenParams`
+`func NewTokenizationIssueTokenParamsTokenParams(standard TokenizationTokenStandard, name string, symbol string, decimals int32, underlyingToken string, ) *TokenizationIssueTokenParamsTokenParams`
 
 NewTokenizationIssueTokenParamsTokenParams instantiates a new TokenizationIssueTokenParamsTokenParams object
 This constructor will assign default values to properties that have it defined,
@@ -137,20 +138,20 @@ HasTokenAccessActivated returns a boolean if a field has been set.
 
 ### GetPermissions
 
-`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissions() TokenizationSolTokenPermissionParams`
+`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissions() TokenizationSolWrappedTokenPermissionParams`
 
 GetPermissions returns the Permissions field if non-nil, zero value otherwise.
 
 ### GetPermissionsOk
 
-`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissionsOk() (*TokenizationSolTokenPermissionParams, bool)`
+`func (o *TokenizationIssueTokenParamsTokenParams) GetPermissionsOk() (*TokenizationSolWrappedTokenPermissionParams, bool)`
 
 GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPermissions
 
-`func (o *TokenizationIssueTokenParamsTokenParams) SetPermissions(v TokenizationSolTokenPermissionParams)`
+`func (o *TokenizationIssueTokenParamsTokenParams) SetPermissions(v TokenizationSolWrappedTokenPermissionParams)`
 
 SetPermissions sets Permissions field to given value.
 
@@ -159,6 +160,26 @@ SetPermissions sets Permissions field to given value.
 `func (o *TokenizationIssueTokenParamsTokenParams) HasPermissions() bool`
 
 HasPermissions returns a boolean if a field has been set.
+
+### GetUnderlyingToken
+
+`func (o *TokenizationIssueTokenParamsTokenParams) GetUnderlyingToken() string`
+
+GetUnderlyingToken returns the UnderlyingToken field if non-nil, zero value otherwise.
+
+### GetUnderlyingTokenOk
+
+`func (o *TokenizationIssueTokenParamsTokenParams) GetUnderlyingTokenOk() (*string, bool)`
+
+GetUnderlyingTokenOk returns a tuple with the UnderlyingToken field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUnderlyingToken
+
+`func (o *TokenizationIssueTokenParamsTokenParams) SetUnderlyingToken(v string)`
+
+SetUnderlyingToken sets UnderlyingToken field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

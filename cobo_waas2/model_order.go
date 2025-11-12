@@ -55,7 +55,7 @@ type Order struct {
 	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
-	// Allowed amount deviation.
+	// The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`. 
 	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 }
 

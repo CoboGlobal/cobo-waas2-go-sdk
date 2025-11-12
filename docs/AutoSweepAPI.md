@@ -5,7 +5,7 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateAutoSweepTask**](AutoSweepAPI.md#CreateAutoSweepTask) | **Post** /auto_sweep/tasks | Create auto-sweep task
-[**CreateWalletSweepToAddresses**](AutoSweepAPI.md#CreateWalletSweepToAddresses) | **Post** /auto_sweep/sweep_to_addresses | create sweep-to address
+[**CreateWalletSweepToAddresses**](AutoSweepAPI.md#CreateWalletSweepToAddresses) | **Post** /auto_sweep/sweep_to_addresses | Create sweep-to address
 [**GetAutoSweepTaskById**](AutoSweepAPI.md#GetAutoSweepTaskById) | **Get** /auto_sweep/tasks/{task_id} | Get auto-sweep task details
 [**ListAutoSweepTask**](AutoSweepAPI.md#ListAutoSweepTask) | **Get** /auto_sweep/tasks | List auto-sweep tasks
 [**ListWalletSweepToAddresses**](AutoSweepAPI.md#ListWalletSweepToAddresses) | **Get** /auto_sweep/sweep_to_addresses | List sweep-to addresses
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 > SweepToAddress CreateWalletSweepToAddresses(ctx).CreateSweepToAddress(createSweepToAddress).Execute()
 
-create sweep-to address
+Create sweep-to address
 
 
 

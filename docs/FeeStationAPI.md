@@ -5,7 +5,7 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CheckFeeStationUsage**](FeeStationAPI.md#CheckFeeStationUsage) | **Post** /fee_station/check_fee_station_usage | Check Fee Station usage
-[**EstimateFeeStationFee**](FeeStationAPI.md#EstimateFeeStationFee) | **Post** /fee_station/transactions/estimate_fee | Estimate fee for Fee Station transaction
+[**EstimateFeeStationFee**](FeeStationAPI.md#EstimateFeeStationFee) | **Post** /fee_station/transactions/estimate_fee | Estimate transaction fee
 [**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get Fee Station transaction information
 [**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List Fee Station addresses
 [**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all Fee Station transactions
@@ -35,7 +35,7 @@ import (
 )
 
 func main() {
-	feeStationCheckFeeStationUsage := *coboWaas2.NewFeeStationCheckFeeStationUsage("f47ac10b-58cc-4372-a567-0e02b2c3d479", "100.5", "ETH_USDT", "0.0021", "0x1234567890abcdef1234567890abcdef12345678", "f47ac10b-58cc-4372-a567-0e02b2c3d479")
+	feeStationCheckFeeStationUsage := *coboWaas2.NewFeeStationCheckFeeStationUsage("f47ac10b-58cc-4372-a567-0e02b2c3d479", "0.0021", "0x1234567890abcdef1234567890abcdef12345678", "f47ac10b-58cc-4372-a567-0e02b2c3d479")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 > EstimatedFixedFee EstimateFeeStationFee(ctx).FeeStationTransfer(feeStationTransfer).Execute()
 
-Estimate fee for Fee Station transaction
+Estimate transaction fee
 
 
 

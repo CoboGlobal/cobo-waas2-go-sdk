@@ -374,7 +374,7 @@ Other parameters are passed through a pointer to a apiSubmitKytManualReviewReque
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **submitKytScreeningsReviewBody** | [**SubmitKytScreeningsReviewBody**](SubmitKytScreeningsReviewBody.md) | The request body to submit a manual review result for KYT screening case that requires human analysis. | 
+ **submitKytScreeningsReviewBody** | [**SubmitKytScreeningsReviewBody**](SubmitKytScreeningsReviewBody.md) | The request body to submit a manual review result for a KYT screening case that requires human analysis. | 
 
 ### Return type
 

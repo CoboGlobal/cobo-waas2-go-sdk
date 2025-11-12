@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **UpdatedTimestamp** | Pointer to **int32** | The last update time of the order, represented as a UNIX timestamp in seconds. | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process. | [optional] 
 **SettlementStatus** | Pointer to [**SettleStatus**](SettleStatus.md) |  | [optional] 
-**AmountTolerance** | Pointer to **string** | Allowed amount deviation. | [optional] 
+**AmountTolerance** | Pointer to **string** | The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to &#x60;Completed&#x60; rather than &#x60;Underpaid&#x60;.  | [optional] 
 
 ## Methods
 

@@ -12,17 +12,17 @@ import (
 	"encoding/json"
 )
 
-// checks if the TokenizationTokenPermissionParams type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &TokenizationTokenPermissionParams{}
+// checks if the TokenizationERC20WrappedTokenPermissionParams type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &TokenizationERC20WrappedTokenPermissionParams{}
 
-// TokenizationTokenPermissionParams Role-based permission settings for token contract. If not provided, all permissions will be granted to the issuing wallet by default.
-type TokenizationTokenPermissionParams struct {
+// TokenizationERC20WrappedTokenPermissionParams Role-based permission settings for token contract. If not provided, all permissions will be granted to the issuing wallet by default.
+type TokenizationERC20WrappedTokenPermissionParams struct {
 	// List of addresses for the admin role.
 	Admin []string `json:"admin,omitempty"`
 	// List of addresses for the minter role.
 	Minter []string `json:"minter,omitempty"`
-	// List of addresses for the burner role.
-	Burner []string `json:"burner,omitempty"`
+	// List of addresses for the wrapper role.
+	Wrapper []string `json:"wrapper,omitempty"`
 	// List of addresses for the manager role.
 	Manager []string `json:"manager,omitempty"`
 	// List of addresses for the pauser role.
@@ -33,25 +33,25 @@ type TokenizationTokenPermissionParams struct {
 	Upgrader []string `json:"upgrader,omitempty"`
 }
 
-// NewTokenizationTokenPermissionParams instantiates a new TokenizationTokenPermissionParams object
+// NewTokenizationERC20WrappedTokenPermissionParams instantiates a new TokenizationERC20WrappedTokenPermissionParams object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenizationTokenPermissionParams() *TokenizationTokenPermissionParams {
-	this := TokenizationTokenPermissionParams{}
+func NewTokenizationERC20WrappedTokenPermissionParams() *TokenizationERC20WrappedTokenPermissionParams {
+	this := TokenizationERC20WrappedTokenPermissionParams{}
 	return &this
 }
 
-// NewTokenizationTokenPermissionParamsWithDefaults instantiates a new TokenizationTokenPermissionParams object
+// NewTokenizationERC20WrappedTokenPermissionParamsWithDefaults instantiates a new TokenizationERC20WrappedTokenPermissionParams object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewTokenizationTokenPermissionParamsWithDefaults() *TokenizationTokenPermissionParams {
-	this := TokenizationTokenPermissionParams{}
+func NewTokenizationERC20WrappedTokenPermissionParamsWithDefaults() *TokenizationERC20WrappedTokenPermissionParams {
+	this := TokenizationERC20WrappedTokenPermissionParams{}
 	return &this
 }
 
 // GetAdmin returns the Admin field value if set, zero value otherwise.
-func (o *TokenizationTokenPermissionParams) GetAdmin() []string {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetAdmin() []string {
 	if o == nil || IsNil(o.Admin) {
 		var ret []string
 		return ret
@@ -61,7 +61,7 @@ func (o *TokenizationTokenPermissionParams) GetAdmin() []string {
 
 // GetAdminOk returns a tuple with the Admin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenPermissionParams) GetAdminOk() ([]string, bool) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetAdminOk() ([]string, bool) {
 	if o == nil || IsNil(o.Admin) {
 		return nil, false
 	}
@@ -69,7 +69,7 @@ func (o *TokenizationTokenPermissionParams) GetAdminOk() ([]string, bool) {
 }
 
 // HasAdmin returns a boolean if a field has been set.
-func (o *TokenizationTokenPermissionParams) HasAdmin() bool {
+func (o *TokenizationERC20WrappedTokenPermissionParams) HasAdmin() bool {
 	if o != nil && !IsNil(o.Admin) {
 		return true
 	}
@@ -78,12 +78,12 @@ func (o *TokenizationTokenPermissionParams) HasAdmin() bool {
 }
 
 // SetAdmin gets a reference to the given []string and assigns it to the Admin field.
-func (o *TokenizationTokenPermissionParams) SetAdmin(v []string) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) SetAdmin(v []string) {
 	o.Admin = v
 }
 
 // GetMinter returns the Minter field value if set, zero value otherwise.
-func (o *TokenizationTokenPermissionParams) GetMinter() []string {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetMinter() []string {
 	if o == nil || IsNil(o.Minter) {
 		var ret []string
 		return ret
@@ -93,7 +93,7 @@ func (o *TokenizationTokenPermissionParams) GetMinter() []string {
 
 // GetMinterOk returns a tuple with the Minter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenPermissionParams) GetMinterOk() ([]string, bool) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetMinterOk() ([]string, bool) {
 	if o == nil || IsNil(o.Minter) {
 		return nil, false
 	}
@@ -101,7 +101,7 @@ func (o *TokenizationTokenPermissionParams) GetMinterOk() ([]string, bool) {
 }
 
 // HasMinter returns a boolean if a field has been set.
-func (o *TokenizationTokenPermissionParams) HasMinter() bool {
+func (o *TokenizationERC20WrappedTokenPermissionParams) HasMinter() bool {
 	if o != nil && !IsNil(o.Minter) {
 		return true
 	}
@@ -110,44 +110,44 @@ func (o *TokenizationTokenPermissionParams) HasMinter() bool {
 }
 
 // SetMinter gets a reference to the given []string and assigns it to the Minter field.
-func (o *TokenizationTokenPermissionParams) SetMinter(v []string) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) SetMinter(v []string) {
 	o.Minter = v
 }
 
-// GetBurner returns the Burner field value if set, zero value otherwise.
-func (o *TokenizationTokenPermissionParams) GetBurner() []string {
-	if o == nil || IsNil(o.Burner) {
+// GetWrapper returns the Wrapper field value if set, zero value otherwise.
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetWrapper() []string {
+	if o == nil || IsNil(o.Wrapper) {
 		var ret []string
 		return ret
 	}
-	return o.Burner
+	return o.Wrapper
 }
 
-// GetBurnerOk returns a tuple with the Burner field value if set, nil otherwise
+// GetWrapperOk returns a tuple with the Wrapper field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenPermissionParams) GetBurnerOk() ([]string, bool) {
-	if o == nil || IsNil(o.Burner) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetWrapperOk() ([]string, bool) {
+	if o == nil || IsNil(o.Wrapper) {
 		return nil, false
 	}
-	return o.Burner, true
+	return o.Wrapper, true
 }
 
-// HasBurner returns a boolean if a field has been set.
-func (o *TokenizationTokenPermissionParams) HasBurner() bool {
-	if o != nil && !IsNil(o.Burner) {
+// HasWrapper returns a boolean if a field has been set.
+func (o *TokenizationERC20WrappedTokenPermissionParams) HasWrapper() bool {
+	if o != nil && !IsNil(o.Wrapper) {
 		return true
 	}
 
 	return false
 }
 
-// SetBurner gets a reference to the given []string and assigns it to the Burner field.
-func (o *TokenizationTokenPermissionParams) SetBurner(v []string) {
-	o.Burner = v
+// SetWrapper gets a reference to the given []string and assigns it to the Wrapper field.
+func (o *TokenizationERC20WrappedTokenPermissionParams) SetWrapper(v []string) {
+	o.Wrapper = v
 }
 
 // GetManager returns the Manager field value if set, zero value otherwise.
-func (o *TokenizationTokenPermissionParams) GetManager() []string {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetManager() []string {
 	if o == nil || IsNil(o.Manager) {
 		var ret []string
 		return ret
@@ -157,7 +157,7 @@ func (o *TokenizationTokenPermissionParams) GetManager() []string {
 
 // GetManagerOk returns a tuple with the Manager field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenPermissionParams) GetManagerOk() ([]string, bool) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetManagerOk() ([]string, bool) {
 	if o == nil || IsNil(o.Manager) {
 		return nil, false
 	}
@@ -165,7 +165,7 @@ func (o *TokenizationTokenPermissionParams) GetManagerOk() ([]string, bool) {
 }
 
 // HasManager returns a boolean if a field has been set.
-func (o *TokenizationTokenPermissionParams) HasManager() bool {
+func (o *TokenizationERC20WrappedTokenPermissionParams) HasManager() bool {
 	if o != nil && !IsNil(o.Manager) {
 		return true
 	}
@@ -174,12 +174,12 @@ func (o *TokenizationTokenPermissionParams) HasManager() bool {
 }
 
 // SetManager gets a reference to the given []string and assigns it to the Manager field.
-func (o *TokenizationTokenPermissionParams) SetManager(v []string) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) SetManager(v []string) {
 	o.Manager = v
 }
 
 // GetPauser returns the Pauser field value if set, zero value otherwise.
-func (o *TokenizationTokenPermissionParams) GetPauser() []string {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetPauser() []string {
 	if o == nil || IsNil(o.Pauser) {
 		var ret []string
 		return ret
@@ -189,7 +189,7 @@ func (o *TokenizationTokenPermissionParams) GetPauser() []string {
 
 // GetPauserOk returns a tuple with the Pauser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenPermissionParams) GetPauserOk() ([]string, bool) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetPauserOk() ([]string, bool) {
 	if o == nil || IsNil(o.Pauser) {
 		return nil, false
 	}
@@ -197,7 +197,7 @@ func (o *TokenizationTokenPermissionParams) GetPauserOk() ([]string, bool) {
 }
 
 // HasPauser returns a boolean if a field has been set.
-func (o *TokenizationTokenPermissionParams) HasPauser() bool {
+func (o *TokenizationERC20WrappedTokenPermissionParams) HasPauser() bool {
 	if o != nil && !IsNil(o.Pauser) {
 		return true
 	}
@@ -206,12 +206,12 @@ func (o *TokenizationTokenPermissionParams) HasPauser() bool {
 }
 
 // SetPauser gets a reference to the given []string and assigns it to the Pauser field.
-func (o *TokenizationTokenPermissionParams) SetPauser(v []string) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) SetPauser(v []string) {
 	o.Pauser = v
 }
 
 // GetSalvager returns the Salvager field value if set, zero value otherwise.
-func (o *TokenizationTokenPermissionParams) GetSalvager() []string {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetSalvager() []string {
 	if o == nil || IsNil(o.Salvager) {
 		var ret []string
 		return ret
@@ -221,7 +221,7 @@ func (o *TokenizationTokenPermissionParams) GetSalvager() []string {
 
 // GetSalvagerOk returns a tuple with the Salvager field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenPermissionParams) GetSalvagerOk() ([]string, bool) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetSalvagerOk() ([]string, bool) {
 	if o == nil || IsNil(o.Salvager) {
 		return nil, false
 	}
@@ -229,7 +229,7 @@ func (o *TokenizationTokenPermissionParams) GetSalvagerOk() ([]string, bool) {
 }
 
 // HasSalvager returns a boolean if a field has been set.
-func (o *TokenizationTokenPermissionParams) HasSalvager() bool {
+func (o *TokenizationERC20WrappedTokenPermissionParams) HasSalvager() bool {
 	if o != nil && !IsNil(o.Salvager) {
 		return true
 	}
@@ -238,12 +238,12 @@ func (o *TokenizationTokenPermissionParams) HasSalvager() bool {
 }
 
 // SetSalvager gets a reference to the given []string and assigns it to the Salvager field.
-func (o *TokenizationTokenPermissionParams) SetSalvager(v []string) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) SetSalvager(v []string) {
 	o.Salvager = v
 }
 
 // GetUpgrader returns the Upgrader field value if set, zero value otherwise.
-func (o *TokenizationTokenPermissionParams) GetUpgrader() []string {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetUpgrader() []string {
 	if o == nil || IsNil(o.Upgrader) {
 		var ret []string
 		return ret
@@ -253,7 +253,7 @@ func (o *TokenizationTokenPermissionParams) GetUpgrader() []string {
 
 // GetUpgraderOk returns a tuple with the Upgrader field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationTokenPermissionParams) GetUpgraderOk() ([]string, bool) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) GetUpgraderOk() ([]string, bool) {
 	if o == nil || IsNil(o.Upgrader) {
 		return nil, false
 	}
@@ -261,7 +261,7 @@ func (o *TokenizationTokenPermissionParams) GetUpgraderOk() ([]string, bool) {
 }
 
 // HasUpgrader returns a boolean if a field has been set.
-func (o *TokenizationTokenPermissionParams) HasUpgrader() bool {
+func (o *TokenizationERC20WrappedTokenPermissionParams) HasUpgrader() bool {
 	if o != nil && !IsNil(o.Upgrader) {
 		return true
 	}
@@ -270,11 +270,11 @@ func (o *TokenizationTokenPermissionParams) HasUpgrader() bool {
 }
 
 // SetUpgrader gets a reference to the given []string and assigns it to the Upgrader field.
-func (o *TokenizationTokenPermissionParams) SetUpgrader(v []string) {
+func (o *TokenizationERC20WrappedTokenPermissionParams) SetUpgrader(v []string) {
 	o.Upgrader = v
 }
 
-func (o TokenizationTokenPermissionParams) MarshalJSON() ([]byte, error) {
+func (o TokenizationERC20WrappedTokenPermissionParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -282,7 +282,7 @@ func (o TokenizationTokenPermissionParams) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o TokenizationTokenPermissionParams) ToMap() (map[string]interface{}, error) {
+func (o TokenizationERC20WrappedTokenPermissionParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Admin) {
 		toSerialize["admin"] = o.Admin
@@ -290,8 +290,8 @@ func (o TokenizationTokenPermissionParams) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.Minter) {
 		toSerialize["minter"] = o.Minter
 	}
-	if !IsNil(o.Burner) {
-		toSerialize["burner"] = o.Burner
+	if !IsNil(o.Wrapper) {
+		toSerialize["wrapper"] = o.Wrapper
 	}
 	if !IsNil(o.Manager) {
 		toSerialize["manager"] = o.Manager
@@ -308,38 +308,38 @@ func (o TokenizationTokenPermissionParams) ToMap() (map[string]interface{}, erro
 	return toSerialize, nil
 }
 
-type NullableTokenizationTokenPermissionParams struct {
-	value *TokenizationTokenPermissionParams
+type NullableTokenizationERC20WrappedTokenPermissionParams struct {
+	value *TokenizationERC20WrappedTokenPermissionParams
 	isSet bool
 }
 
-func (v NullableTokenizationTokenPermissionParams) Get() *TokenizationTokenPermissionParams {
+func (v NullableTokenizationERC20WrappedTokenPermissionParams) Get() *TokenizationERC20WrappedTokenPermissionParams {
 	return v.value
 }
 
-func (v *NullableTokenizationTokenPermissionParams) Set(val *TokenizationTokenPermissionParams) {
+func (v *NullableTokenizationERC20WrappedTokenPermissionParams) Set(val *TokenizationERC20WrappedTokenPermissionParams) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableTokenizationTokenPermissionParams) IsSet() bool {
+func (v NullableTokenizationERC20WrappedTokenPermissionParams) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableTokenizationTokenPermissionParams) Unset() {
+func (v *NullableTokenizationERC20WrappedTokenPermissionParams) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableTokenizationTokenPermissionParams(val *TokenizationTokenPermissionParams) *NullableTokenizationTokenPermissionParams {
-	return &NullableTokenizationTokenPermissionParams{value: val, isSet: true}
+func NewNullableTokenizationERC20WrappedTokenPermissionParams(val *TokenizationERC20WrappedTokenPermissionParams) *NullableTokenizationERC20WrappedTokenPermissionParams {
+	return &NullableTokenizationERC20WrappedTokenPermissionParams{value: val, isSet: true}
 }
 
-func (v NullableTokenizationTokenPermissionParams) MarshalJSON() ([]byte, error) {
+func (v NullableTokenizationERC20WrappedTokenPermissionParams) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableTokenizationTokenPermissionParams) UnmarshalJSON(src []byte) error {
+func (v *NullableTokenizationERC20WrappedTokenPermissionParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

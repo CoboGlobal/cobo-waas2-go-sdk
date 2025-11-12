@@ -545,7 +545,7 @@ type ApiCreateOrderLinkRequest struct {
 	createOrderLinkRequest *CreateOrderLinkRequest
 }
 
-// The request body to create a payment link of a pay-in order.
+// The request body to create a payment link for a pay-in order.
 func (r ApiCreateOrderLinkRequest) CreateOrderLinkRequest(createOrderLinkRequest CreateOrderLinkRequest) ApiCreateOrderLinkRequest {
 	r.createOrderLinkRequest = &createOrderLinkRequest
 	return r
@@ -558,7 +558,9 @@ func (r ApiCreateOrderLinkRequest) Execute() (*Link, *http.Response, error) {
 /*
 CreateOrderLink Create order link
 
-This operation creates a payment link of a pay-in order.
+This operation generates a payment link for a pay-in order. The link directs users to a hosted payment page where they can complete their payment for the order. You can share the link directly with users or embed the payment page in your website or application using an iframe.
+
+For more details, see [Payment Link](https://www.cobo.com/developers/v2/payments/payment-link).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -873,6 +875,136 @@ func (a *PaymentAPIService) CreateRefundExecute(r ApiCreateRefundRequest) (*Refu
 	}
 	// body params
 	localVarPostBody = r.createRefundRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiCreateRefundLinkRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	createRefundLinkRequest *CreateRefundLinkRequest
+}
+
+// The request body to create a payment link for a refund.
+func (r ApiCreateRefundLinkRequest) CreateRefundLinkRequest(createRefundLinkRequest CreateRefundLinkRequest) ApiCreateRefundLinkRequest {
+	r.createRefundLinkRequest = &createRefundLinkRequest
+	return r
+}
+
+func (r ApiCreateRefundLinkRequest) Execute() (*Link, *http.Response, error) {
+	return r.ApiService.CreateRefundLinkExecute(r)
+}
+
+/*
+CreateRefundLink Create refund link
+
+This operation creates a payment link for a refund.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateRefundLinkRequest
+*/
+func (a *PaymentAPIService) CreateRefundLink(ctx context.Context) ApiCreateRefundLinkRequest {
+	return ApiCreateRefundLinkRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return Link
+func (a *PaymentAPIService) CreateRefundLinkExecute(r ApiCreateRefundLinkRequest) (*Link, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Link
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.CreateRefundLink")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/links/refunds"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.createRefundLinkRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -5070,6 +5202,10 @@ func (r ApiUpdateTopUpAddressRequest) Execute() (*TopUpAddress, *http.Response, 
 UpdateTopUpAddress Update top-up address
 
 This operation updates the dedicated top-up address assigned to a specific payer under a merchant on a specified chain.
+
+<Note>
+  You can update the top-up address for a given payer a maximum of 10 times. If you exceed this limit, the API request will return an error.
+</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

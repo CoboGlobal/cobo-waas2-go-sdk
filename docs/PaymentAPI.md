@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**CreateOrderLink**](PaymentAPI.md#CreateOrderLink) | **Post** /payments/links/orders | Create order link
 [**CreatePaymentOrder**](PaymentAPI.md#CreatePaymentOrder) | **Post** /payments/orders | Create pay-in order
 [**CreateRefund**](PaymentAPI.md#CreateRefund) | **Post** /payments/refunds | Create refund order
+[**CreateRefundLink**](PaymentAPI.md#CreateRefundLink) | **Post** /payments/links/refunds | Create refund link
 [**CreateSettlementRequest**](PaymentAPI.md#CreateSettlementRequest) | **Post** /payments/settlement_requests | Create settlement request
 [**DeleteCryptoAddress**](PaymentAPI.md#DeleteCryptoAddress) | **Post** /payments/crypto_addresses/{crypto_address_id}/delete | Delete crypto address
 [**GetExchangeRate**](PaymentAPI.md#GetExchangeRate) | **Get** /payments/exchange_rates/{token_id}/{currency} | Get exchange rate
@@ -407,7 +408,7 @@ Other parameters are passed through a pointer to a apiCreateOrderLinkRequest str
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createOrderLinkRequest** | [**CreateOrderLinkRequest**](CreateOrderLinkRequest.md) | The request body to create a payment link of a pay-in order. | 
+ **createOrderLinkRequest** | [**CreateOrderLinkRequest**](CreateOrderLinkRequest.md) | The request body to create a payment link for a pay-in order. | 
 
 ### Return type
 
@@ -568,6 +569,82 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateRefundLink
+
+> Link CreateRefundLink(ctx).CreateRefundLinkRequest(createRefundLinkRequest).Execute()
+
+Create refund link
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createRefundLinkRequest := *coboWaas2.NewCreateRefundLinkRequest(*coboWaas2.NewRefundLinkBusinessInfo("aff0e1cb-15b2-4e1f-9b9d-a9133715986f", "0.0025", coboWaas2.RefundType("Merchant")))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateRefundLink(ctx).CreateRefundLinkRequest(createRefundLinkRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateRefundLink``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateRefundLink`: Link
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateRefundLink`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateRefundLinkRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createRefundLinkRequest** | [**CreateRefundLinkRequest**](CreateRefundLinkRequest.md) | The request body to create a payment link for a refund. | 
+
+### Return type
+
+[**Link**](Link.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
 
 ### HTTP request headers
 

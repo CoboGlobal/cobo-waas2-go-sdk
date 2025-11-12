@@ -30,7 +30,7 @@ type MerchantBalance struct {
 	SettledAmount *string `json:"settled_amount,omitempty"`
 	// The total amount of the token that has been refunded from the merchant's balance.
 	RefundedAmount *string `json:"refunded_amount,omitempty"`
-	//  The total balance of the token available for payout or refund for the merchant.  `total_balance` = `total_received_amount` - `settled_amount` - `refunded_amount`  For more information, please refer to [Amounts and Balances](/v2_cn/payments/amounts-and-balances) 
+	//  The total balance of the token available for payout or refund for the merchant.  `total_balance` = `total_received_amount` - `settled_amount` - `refunded_amount`  For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances) 
 	TotalBalance *string `json:"total_balance,omitempty"`
 	// This field has been deprecated.
 	AvailableBalance *string `json:"available_balance,omitempty"`

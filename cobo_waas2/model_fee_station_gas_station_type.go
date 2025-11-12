@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// FeeStationGasStationType The Fee Station mode used for automatic gas payment: - `FeeStation`: The client uses their own Fee Station balance to cover the gas fee.  - `CoboOperationStation`: Cobo covers the gas fee on behalf of the client. 
+// FeeStationGasStationType The Fee Station mode used for automatic gas payment: - `FeeStation`: The user uses their own Fee Station balance to cover the gas fee.  - `CoboOperationStation`: Cobo covers the gas fee on behalf of the user. 
 type FeeStationGasStationType string
 
 // List of FeeStationGasStationType

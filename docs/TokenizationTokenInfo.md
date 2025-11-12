@@ -9,17 +9,19 @@ Name | Type | Description | Notes
 **TokenAddress** | Pointer to **string** | The address of the token contract. | [optional] 
 **TokenName** | Pointer to **string** | The name of the token. | [optional] 
 **TokenSymbol** | **string** | The unique token symbol. | 
+**TokenStandard** | [**TokenizationTokenStandard**](TokenizationTokenStandard.md) |  | 
 **Decimals** | **int32** | The number of decimals of the token. | 
 **TokenAccessActivated** | Pointer to **bool** | Whether the allowlist feature is activated for the token. | [optional] 
 **Status** | [**TokenizationStatus**](TokenizationStatus.md) |  | 
 **TotalSupply** | Pointer to **string** | The total supply of the token. | [optional] 
 **Holdings** | Pointer to **string** | The amount of tokens held by the organization. | [optional] 
+**Archived** | **bool** | Whether the token is archived. If the token is archived, no operations can be initiated on it. | 
 
 ## Methods
 
 ### NewTokenizationTokenInfo
 
-`func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, decimals int32, status TokenizationStatus, ) *TokenizationTokenInfo`
+`func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, archived bool, ) *TokenizationTokenInfo`
 
 NewTokenizationTokenInfo instantiates a new TokenizationTokenInfo object
 This constructor will assign default values to properties that have it defined,
@@ -144,6 +146,26 @@ and a boolean to check if the value has been set.
 SetTokenSymbol sets TokenSymbol field to given value.
 
 
+### GetTokenStandard
+
+`func (o *TokenizationTokenInfo) GetTokenStandard() TokenizationTokenStandard`
+
+GetTokenStandard returns the TokenStandard field if non-nil, zero value otherwise.
+
+### GetTokenStandardOk
+
+`func (o *TokenizationTokenInfo) GetTokenStandardOk() (*TokenizationTokenStandard, bool)`
+
+GetTokenStandardOk returns a tuple with the TokenStandard field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenStandard
+
+`func (o *TokenizationTokenInfo) SetTokenStandard(v TokenizationTokenStandard)`
+
+SetTokenStandard sets TokenStandard field to given value.
+
+
 ### GetDecimals
 
 `func (o *TokenizationTokenInfo) GetDecimals() int32`
@@ -258,6 +280,26 @@ SetHoldings sets Holdings field to given value.
 `func (o *TokenizationTokenInfo) HasHoldings() bool`
 
 HasHoldings returns a boolean if a field has been set.
+
+### GetArchived
+
+`func (o *TokenizationTokenInfo) GetArchived() bool`
+
+GetArchived returns the Archived field if non-nil, zero value otherwise.
+
+### GetArchivedOk
+
+`func (o *TokenizationTokenInfo) GetArchivedOk() (*bool, bool)`
+
+GetArchivedOk returns a tuple with the Archived field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetArchived
+
+`func (o *TokenizationTokenInfo) SetArchived(v bool)`
+
+SetArchived sets Archived field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

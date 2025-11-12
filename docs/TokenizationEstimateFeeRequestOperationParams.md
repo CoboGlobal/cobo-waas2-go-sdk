@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **TokenId** | **string** | The ID of the token. | 
 **Burns** | [**[]TokenizationBurnTokenParamsBurnsInner**](TokenizationBurnTokenParamsBurnsInner.md) | Details for each token burn, including amount and address to burn from. | 
 **Action** | [**TokenizationUpdateAddressAction**](TokenizationUpdateAddressAction.md) |  | 
-**Addresses** | [**[]TokenizationUpdateBlocklistAddressesParamsAddressesInner**](TokenizationUpdateBlocklistAddressesParamsAddressesInner.md) | A list of addresses to manage. For &#39;add&#39; operations, notes can be provided. For &#39;remove&#39; operations, notes are ignored. | 
+**Addresses** | [**[]TokenizationUpdateAddressPermissions**](TokenizationUpdateAddressPermissions.md) |  | 
 **Activation** | **bool** | Whether to activate the allowlist feature for the token. | 
 **Data** | Pointer to [**TokenizationContractCallParamsData**](TokenizationContractCallParamsData.md) |  | [optional] 
 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewTokenizationEstimateFeeRequestOperationParams
 
-`func NewTokenizationEstimateFeeRequestOperationParams(chainId string, source TokenizationTokenOperationSource, tokenParams TokenizationIssueTokenParamsTokenParams, operationType TokenizationOperationType, mints []TokenizationMintTokenParamsMintsInner, tokenId string, burns []TokenizationBurnTokenParamsBurnsInner, action TokenizationUpdateAddressAction, addresses []TokenizationUpdateBlocklistAddressesParamsAddressesInner, activation bool, ) *TokenizationEstimateFeeRequestOperationParams`
+`func NewTokenizationEstimateFeeRequestOperationParams(chainId string, source TokenizationTokenOperationSource, tokenParams TokenizationIssueTokenParamsTokenParams, operationType TokenizationOperationType, mints []TokenizationMintTokenParamsMintsInner, tokenId string, burns []TokenizationBurnTokenParamsBurnsInner, action TokenizationUpdateAddressAction, addresses []TokenizationUpdateAddressPermissions, activation bool, ) *TokenizationEstimateFeeRequestOperationParams`
 
 NewTokenizationEstimateFeeRequestOperationParams instantiates a new TokenizationEstimateFeeRequestOperationParams object
 This constructor will assign default values to properties that have it defined,
@@ -223,20 +223,20 @@ SetAction sets Action field to given value.
 
 ### GetAddresses
 
-`func (o *TokenizationEstimateFeeRequestOperationParams) GetAddresses() []TokenizationUpdateBlocklistAddressesParamsAddressesInner`
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetAddresses() []TokenizationUpdateAddressPermissions`
 
 GetAddresses returns the Addresses field if non-nil, zero value otherwise.
 
 ### GetAddressesOk
 
-`func (o *TokenizationEstimateFeeRequestOperationParams) GetAddressesOk() (*[]TokenizationUpdateBlocklistAddressesParamsAddressesInner, bool)`
+`func (o *TokenizationEstimateFeeRequestOperationParams) GetAddressesOk() (*[]TokenizationUpdateAddressPermissions, bool)`
 
 GetAddressesOk returns a tuple with the Addresses field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAddresses
 
-`func (o *TokenizationEstimateFeeRequestOperationParams) SetAddresses(v []TokenizationUpdateBlocklistAddressesParamsAddressesInner)`
+`func (o *TokenizationEstimateFeeRequestOperationParams) SetAddresses(v []TokenizationUpdateAddressPermissions)`
 
 SetAddresses sets Addresses field to given value.
 

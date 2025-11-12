@@ -19,26 +19,26 @@ var _ MappedNullable = &SwapQuote{}
 
 // SwapQuote struct for SwapQuote
 type SwapQuote struct {
-	// The unique identifier of the swap quote.
+	// The unique id of quote.
 	QuoteId string `json:"quote_id"`
-	// The ID of the token to pay.
+	// The token ID to pay.
 	PayTokenId string `json:"pay_token_id"`
-	// The amount of the token to pay.
+	// The amount of tokens to pay.
 	PayAmount string `json:"pay_amount"`
-	// The ID of the token to receive.
+	// The token ID to receive.
 	ReceiveTokenId string `json:"receive_token_id"`
-	// The amount of the token to receive.
+	// The amount of tokens to receive.
 	ReceiveAmount string `json:"receive_amount"`
-	// The ID of the token for the service fee.
+	// The token ID for the service fee.
 	FeeTokenId string `json:"fee_token_id"`
-	// The amount of the token for the service fee.
+	// The amount of tokens for the service fee.
 	FeeAmount string `json:"fee_amount"`
-	// The minimum amount of the token to receive if `pay_amount` is specified.
+	// The minimum amount of tokens to receive if the pay amount is specified.
 	MinReceiveAmount *string `json:"min_receive_amount,omitempty"`
-	// The maximum amount of the token to pay if `receive_amount` is specified.
+	// The maximum amount of tokens to pay if the receive amount is specified.
 	MaxPayAmount *string `json:"max_pay_amount,omitempty"`
-	// The time when the swap quote expires, in Unix timestamp format, measured in milliseconds.
-	QuoteExpiredTimestamp int32 `json:"quote_expired_timestamp"`
+	// The time when the quote will expire, in Unix timestamp format, measured in milliseconds.
+	QuoteExpiredTimestamp int64 `json:"quote_expired_timestamp"`
 }
 
 type _SwapQuote SwapQuote
@@ -47,7 +47,7 @@ type _SwapQuote SwapQuote
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int32) *SwapQuote {
+func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int64) *SwapQuote {
 	this := SwapQuote{}
 	this.QuoteId = quoteId
 	this.PayTokenId = payTokenId
@@ -301,9 +301,9 @@ func (o *SwapQuote) SetMaxPayAmount(v string) {
 }
 
 // GetQuoteExpiredTimestamp returns the QuoteExpiredTimestamp field value
-func (o *SwapQuote) GetQuoteExpiredTimestamp() int32 {
+func (o *SwapQuote) GetQuoteExpiredTimestamp() int64 {
 	if o == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 
@@ -312,7 +312,7 @@ func (o *SwapQuote) GetQuoteExpiredTimestamp() int32 {
 
 // GetQuoteExpiredTimestampOk returns a tuple with the QuoteExpiredTimestamp field value
 // and a boolean to check if the value has been set.
-func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int32, bool) {
+func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -320,7 +320,7 @@ func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int32, bool) {
 }
 
 // SetQuoteExpiredTimestamp sets field value
-func (o *SwapQuote) SetQuoteExpiredTimestamp(v int32) {
+func (o *SwapQuote) SetQuoteExpiredTimestamp(v int64) {
 	o.QuoteExpiredTimestamp = v
 }
 
