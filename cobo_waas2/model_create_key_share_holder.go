@@ -20,7 +20,7 @@ type CreateKeyShareHolder struct {
 	// Key share holder's name.
 	Name *string `json:"name,omitempty"`
 	Type *KeyShareHolderType `json:"type,omitempty"`
-	// Key share holder's TSS Node ID. You can obtain the TSS Node ID using either mobile co-signer or server co-signer. See the \"Primary Purposes\" row on the table in [Create a Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups#create-a-main-group).
+	// Key share holder's TSS Node ID. For detailed information about signer types and their setup, see the [**Signer Type** table](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/holder-group-main-group). Mobile signers can view their TSS Node ID in the [Cobo Guard app](https://manuals.cobo.com/en/guard/manage).
 	TssNodeId *string `json:"tss_node_id,omitempty"`
 	// Whether the key share holder has been selected as the designated transaction signer. For example, in a 2-3 [Threshold Signature Scheme (TSS)](https://manuals.cobo.com/en/portal/mpc-wallets/introduction#threshold-signature-scheme-tss), Cobo will serve as one signer, and you can choose one of the other two key share holders to act as the second transaction signer. - `true`: The key share holder is a designated transaction signer.  - `false`: The key share holder is not a designated transaction signer. 
 	Signer *bool `json:"signer,omitempty"`

@@ -434,7 +434,7 @@ import (
 )
 
 func main() {
-	transferParams := *coboWaas2.NewTransferParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", coboWaas2.TransferSource{CustodialTransferSource: coboWaas2.NewCustodialTransferSource(coboWaas2.WalletSubtype("Asset"), "f47ac10b-58cc-4372-a567-0e02b2c3d479")}, "ETH_USDT", coboWaas2.TransferDestination{AddressTransferDestination: coboWaas2.NewAddressTransferDestination(coboWaas2.TransferDestinationType("Address"))})
+	transferParams := *coboWaas2.NewTransferParams("f47ac10b-58cc-4372-a567-0e02b2c3d479", coboWaas2.TransferSource{CustodialTransferSource: coboWaas2.NewCustodialTransferSource(coboWaas2.WalletSubtype("Asset"), "d3fcfaef-f415-4210-9e5c-fbed0e090495")}, "ETH_USDT", coboWaas2.TransferDestination{AddressTransferDestination: coboWaas2.NewAddressTransferDestination(coboWaas2.TransferDestinationType("Address"))})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
