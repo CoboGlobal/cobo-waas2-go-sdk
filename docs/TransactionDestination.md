@@ -15,8 +15,8 @@ Name | Type | Description | Notes
 **ExchangeId** | Pointer to [**ExchangeId**](ExchangeId.md) |  | [optional] 
 **Amount** | **string** | The transfer amount. For example, if you trade 1.5 BTC, then the value is &#x60;1.5&#x60;.  | 
 **Address** | **string** | The destination address. | 
-**Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
-**Calldata** | **string** | The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.  | 
+**Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 TRX, then the value is &#x60;1.5&#x60;.  | [optional] 
+**Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **CalldataInfo** | Pointer to [**TransactionEvmCalldataInfo**](TransactionEvmCalldataInfo.md) |  | [optional] 
 **Instructions** | Pointer to [**[]TransactionSolContractInstruction**](TransactionSolContractInstruction.md) |  | [optional] 
 **AddressLookupTableAccounts** | Pointer to [**[]TransactionSolContractAddressLookupTableAccount**](TransactionSolContractAddressLookupTableAccount.md) |  | [optional] 

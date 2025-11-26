@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **ToAddress** | **string** | The destination address of the transaction. | 
 **Amount** | **string** | The amount of cryptocurrency transferred, as a decimal string. | 
 **Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
+**Counterparty** | Pointer to [**Counterparty**](Counterparty.md) |  | [optional] 
+**Destination** | Pointer to [**Destination**](Destination.md) |  | [optional] 
 **CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
 **UpdatedTimestamp** | **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | 
 
@@ -182,6 +184,56 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetCounterparty
+
+`func (o *PaymentTransaction) GetCounterparty() Counterparty`
+
+GetCounterparty returns the Counterparty field if non-nil, zero value otherwise.
+
+### GetCounterpartyOk
+
+`func (o *PaymentTransaction) GetCounterpartyOk() (*Counterparty, bool)`
+
+GetCounterpartyOk returns a tuple with the Counterparty field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCounterparty
+
+`func (o *PaymentTransaction) SetCounterparty(v Counterparty)`
+
+SetCounterparty sets Counterparty field to given value.
+
+### HasCounterparty
+
+`func (o *PaymentTransaction) HasCounterparty() bool`
+
+HasCounterparty returns a boolean if a field has been set.
+
+### GetDestination
+
+`func (o *PaymentTransaction) GetDestination() Destination`
+
+GetDestination returns the Destination field if non-nil, zero value otherwise.
+
+### GetDestinationOk
+
+`func (o *PaymentTransaction) GetDestinationOk() (*Destination, bool)`
+
+GetDestinationOk returns a tuple with the Destination field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDestination
+
+`func (o *PaymentTransaction) SetDestination(v Destination)`
+
+SetDestination sets Destination field to given value.
+
+### HasDestination
+
+`func (o *PaymentTransaction) HasDestination() bool`
+
+HasDestination returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

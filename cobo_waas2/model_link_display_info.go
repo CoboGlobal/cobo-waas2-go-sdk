@@ -17,9 +17,9 @@ var _ MappedNullable = &LinkDisplayInfo{}
 
 // LinkDisplayInfo struct for LinkDisplayInfo
 type LinkDisplayInfo struct {
-	// The brand name to display to end users during the payment process. 
+	// The brand name to display to end users on the page. This helps users identify who is providing the payment service. 
 	DeveloperName *string `json:"developer_name,omitempty"`
-	// The URL of your logo image to display to end users during the payment process. 
+	// The URL of the logo image to display to end users on the page. 
 	Logo *string `json:"logo,omitempty"`
 }
 

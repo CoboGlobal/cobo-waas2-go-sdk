@@ -20,7 +20,7 @@ var _ MappedNullable = &EvmContractCallDestination{}
 // EvmContractCallDestination The information about the transaction destination. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
 type EvmContractCallDestination struct {
 	DestinationType ContractCallDestinationType `json:"destination_type"`
-	// The destination address.
+	// The destination address.  If you are deploying a new contract on an EVM chain, set this address to `0x0000000000000000000000000000000000000000`. 
 	Address string `json:"address"`
 	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
 	Value *string `json:"value,omitempty"`

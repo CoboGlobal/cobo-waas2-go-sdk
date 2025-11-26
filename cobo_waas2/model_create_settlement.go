@@ -27,6 +27,8 @@ type CreateSettlement struct {
 	Amount *string `json:"amount,omitempty"`
 	// The ID of the crypto address used for crypto payouts. Specify this field when `payout_channel` is set to `Crypto`.  Call [List crypto addresses](https://www.cobo.com/developers/v2/api-references/payment/list-crypto-addresses) to retrieve registered crypto addresses. 
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
+	// Only used in Crypto payout channel. The actual blockchain address to which funds will be transferred. If enable destination whitelist, this address must be associated with a destination. 
+	CryptoAddress *string `json:"crypto_address,omitempty"`
 	OrderIds []string `json:"order_ids,omitempty"`
 }
 
@@ -170,6 +172,38 @@ func (o *CreateSettlement) SetCryptoAddressId(v string) {
 	o.CryptoAddressId = &v
 }
 
+// GetCryptoAddress returns the CryptoAddress field value if set, zero value otherwise.
+func (o *CreateSettlement) GetCryptoAddress() string {
+	if o == nil || IsNil(o.CryptoAddress) {
+		var ret string
+		return ret
+	}
+	return *o.CryptoAddress
+}
+
+// GetCryptoAddressOk returns a tuple with the CryptoAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlement) GetCryptoAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.CryptoAddress) {
+		return nil, false
+	}
+	return o.CryptoAddress, true
+}
+
+// HasCryptoAddress returns a boolean if a field has been set.
+func (o *CreateSettlement) HasCryptoAddress() bool {
+	if o != nil && !IsNil(o.CryptoAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetCryptoAddress gets a reference to the given string and assigns it to the CryptoAddress field.
+func (o *CreateSettlement) SetCryptoAddress(v string) {
+	o.CryptoAddress = &v
+}
+
 // GetOrderIds returns the OrderIds field value if set, zero value otherwise.
 func (o *CreateSettlement) GetOrderIds() []string {
 	if o == nil || IsNil(o.OrderIds) {
@@ -221,6 +255,9 @@ func (o CreateSettlement) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CryptoAddressId) {
 		toSerialize["crypto_address_id"] = o.CryptoAddressId
+	}
+	if !IsNil(o.CryptoAddress) {
+		toSerialize["crypto_address"] = o.CryptoAddress
 	}
 	if !IsNil(o.OrderIds) {
 		toSerialize["order_ids"] = o.OrderIds

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DeveloperName** | Pointer to **string** | The brand name to display to end users during the payment process.  | [optional] 
-**Logo** | Pointer to **string** | The URL of your logo image to display to end users during the payment process.  | [optional] 
+**DeveloperName** | Pointer to **string** | The brand name to display to end users on the page. This helps users identify who is providing the payment service.  | [optional] 
+**Logo** | Pointer to **string** | The URL of the logo image to display to end users on the page.  | [optional] 
 
 ## Methods
 
