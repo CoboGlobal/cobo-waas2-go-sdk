@@ -21,6 +21,8 @@ var _ MappedNullable = &TransactionRequestUtxoFee{}
 type TransactionRequestUtxoFee struct {
 	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate *string `json:"fee_rate,omitempty"`
+	// Indicates whether the estimated fee is generated from Cobo’s fallback mechanism. When the estimated transaction belongs to a UTXO-based chain and the specified address does not have sufficient balance to cover the on-chain fee, this field will be set to `true`. In this case, the returned fee value is estimated by Cobo’s internal fallback strategy, which is typically higher than the actual on-chain fee. When `fallback` is `true`, please use the estimated fee value with caution.
+	Fallback *bool `json:"fallback,omitempty"`
 	FeeType FeeType `json:"fee_type"`
 	// The token ID of the transaction fee.
 	TokenId string `json:"token_id"`
@@ -81,6 +83,38 @@ func (o *TransactionRequestUtxoFee) HasFeeRate() bool {
 // SetFeeRate gets a reference to the given string and assigns it to the FeeRate field.
 func (o *TransactionRequestUtxoFee) SetFeeRate(v string) {
 	o.FeeRate = &v
+}
+
+// GetFallback returns the Fallback field value if set, zero value otherwise.
+func (o *TransactionRequestUtxoFee) GetFallback() bool {
+	if o == nil || IsNil(o.Fallback) {
+		var ret bool
+		return ret
+	}
+	return *o.Fallback
+}
+
+// GetFallbackOk returns a tuple with the Fallback field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionRequestUtxoFee) GetFallbackOk() (*bool, bool) {
+	if o == nil || IsNil(o.Fallback) {
+		return nil, false
+	}
+	return o.Fallback, true
+}
+
+// HasFallback returns a boolean if a field has been set.
+func (o *TransactionRequestUtxoFee) HasFallback() bool {
+	if o != nil && !IsNil(o.Fallback) {
+		return true
+	}
+
+	return false
+}
+
+// SetFallback gets a reference to the given bool and assigns it to the Fallback field.
+func (o *TransactionRequestUtxoFee) SetFallback(v bool) {
+	o.Fallback = &v
 }
 
 // GetFeeType returns the FeeType field value
@@ -175,6 +209,9 @@ func (o TransactionRequestUtxoFee) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.FeeRate) {
 		toSerialize["fee_rate"] = o.FeeRate
+	}
+	if !IsNil(o.Fallback) {
+		toSerialize["fallback"] = o.Fallback
 	}
 	toSerialize["fee_type"] = o.FeeType
 	toSerialize["token_id"] = o.TokenId

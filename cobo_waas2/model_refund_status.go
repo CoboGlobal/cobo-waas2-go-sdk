@@ -13,11 +13,13 @@ import (
 	"fmt"
 )
 
-// RefundStatus The current status of the refund order. For information about transaction status, see [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status).  - `Pending`: The refund order has been created but the transaction has not been initiated. - `Processing`: The refund order is currently being processed, with at least one refund transaction in progress. - `Completed`: All refund transactions have been completed successfully. - `PartiallyCompleted`: Some refund transactions have been completed successfully, while others have failed. - `Failed`: All refund transactions have failed. - `PendingConfirmation`: The refund order has been completed but the address to send is pending confirmation. 
+// RefundStatus The current status of the refund order. For information about transaction status, see [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status).  - `AddressPending`: The refund link has been created and opened but the address is not yet submitted. - `AddressSubmitted`: The address of the refund link has been submitted. - `Pending`: The refund order has been created but the transaction has not been initiated. - `Processing`: The refund order is currently being processed, with at least one refund transaction in progress. - `Completed`: All refund transactions have been completed successfully. - `PartiallyCompleted`: Some refund transactions have been completed successfully, while others have failed. - `Failed`: All refund transactions have failed. - `PendingConfirmation`: The refund order has been completed but the address to send is pending confirmation. 
 type RefundStatus string
 
 // List of RefundStatus
 const (
+	REFUNDSTATUS_ADDRESS_PENDING RefundStatus = "AddressPending"
+	REFUNDSTATUS_ADDRESS_SUBMITTED RefundStatus = "AddressSubmitted"
 	REFUNDSTATUS_PENDING RefundStatus = "Pending"
 	REFUNDSTATUS_PROCESSING RefundStatus = "Processing"
 	REFUNDSTATUS_COMPLETED RefundStatus = "Completed"
@@ -28,6 +30,8 @@ const (
 
 // All allowed values of RefundStatus enum
 var AllowedRefundStatusEnumValues = []RefundStatus{
+	"AddressPending",
+	"AddressSubmitted",
 	"Pending",
 	"Processing",
 	"Completed",

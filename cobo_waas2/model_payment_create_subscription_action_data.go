@@ -22,12 +22,9 @@ type PaymentCreateSubscriptionActionData struct {
 	ActionType PaymentSubscriptionActionType `json:"action_type"`
 	// The subscription user address.
 	UserAddress string `json:"user_address"`
-	// The subscription crypto amount. 
-	Amount string `json:"amount"`
 	// The ID of the cryptocurrency you want to subscription. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC` - USDT: `ETH_USDT`, `ARBITRUM_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// the discount rate, discount_rate/10000
-	DiscountRate *int32 `json:"discount_rate,omitempty"`
+	ChargeAmount string `json:"charge_amount"`
 }
 
 type _PaymentCreateSubscriptionActionData PaymentCreateSubscriptionActionData
@@ -36,12 +33,12 @@ type _PaymentCreateSubscriptionActionData PaymentCreateSubscriptionActionData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentCreateSubscriptionActionData(actionType PaymentSubscriptionActionType, userAddress string, amount string, tokenId string) *PaymentCreateSubscriptionActionData {
+func NewPaymentCreateSubscriptionActionData(actionType PaymentSubscriptionActionType, userAddress string, tokenId string, chargeAmount string) *PaymentCreateSubscriptionActionData {
 	this := PaymentCreateSubscriptionActionData{}
 	this.ActionType = actionType
 	this.UserAddress = userAddress
-	this.Amount = amount
 	this.TokenId = tokenId
+	this.ChargeAmount = chargeAmount
 	return &this
 }
 
@@ -101,30 +98,6 @@ func (o *PaymentCreateSubscriptionActionData) SetUserAddress(v string) {
 	o.UserAddress = v
 }
 
-// GetAmount returns the Amount field value
-func (o *PaymentCreateSubscriptionActionData) GetAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Amount
-}
-
-// GetAmountOk returns a tuple with the Amount field value
-// and a boolean to check if the value has been set.
-func (o *PaymentCreateSubscriptionActionData) GetAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Amount, true
-}
-
-// SetAmount sets field value
-func (o *PaymentCreateSubscriptionActionData) SetAmount(v string) {
-	o.Amount = v
-}
-
 // GetTokenId returns the TokenId field value
 func (o *PaymentCreateSubscriptionActionData) GetTokenId() string {
 	if o == nil {
@@ -149,36 +122,28 @@ func (o *PaymentCreateSubscriptionActionData) SetTokenId(v string) {
 	o.TokenId = v
 }
 
-// GetDiscountRate returns the DiscountRate field value if set, zero value otherwise.
-func (o *PaymentCreateSubscriptionActionData) GetDiscountRate() int32 {
-	if o == nil || IsNil(o.DiscountRate) {
-		var ret int32
+// GetChargeAmount returns the ChargeAmount field value
+func (o *PaymentCreateSubscriptionActionData) GetChargeAmount() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return *o.DiscountRate
+
+	return o.ChargeAmount
 }
 
-// GetDiscountRateOk returns a tuple with the DiscountRate field value if set, nil otherwise
+// GetChargeAmountOk returns a tuple with the ChargeAmount field value
 // and a boolean to check if the value has been set.
-func (o *PaymentCreateSubscriptionActionData) GetDiscountRateOk() (*int32, bool) {
-	if o == nil || IsNil(o.DiscountRate) {
+func (o *PaymentCreateSubscriptionActionData) GetChargeAmountOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.DiscountRate, true
+	return &o.ChargeAmount, true
 }
 
-// HasDiscountRate returns a boolean if a field has been set.
-func (o *PaymentCreateSubscriptionActionData) HasDiscountRate() bool {
-	if o != nil && !IsNil(o.DiscountRate) {
-		return true
-	}
-
-	return false
-}
-
-// SetDiscountRate gets a reference to the given int32 and assigns it to the DiscountRate field.
-func (o *PaymentCreateSubscriptionActionData) SetDiscountRate(v int32) {
-	o.DiscountRate = &v
+// SetChargeAmount sets field value
+func (o *PaymentCreateSubscriptionActionData) SetChargeAmount(v string) {
+	o.ChargeAmount = v
 }
 
 func (o PaymentCreateSubscriptionActionData) MarshalJSON() ([]byte, error) {
@@ -193,11 +158,8 @@ func (o PaymentCreateSubscriptionActionData) ToMap() (map[string]interface{}, er
 	toSerialize := map[string]interface{}{}
 	toSerialize["action_type"] = o.ActionType
 	toSerialize["user_address"] = o.UserAddress
-	toSerialize["amount"] = o.Amount
 	toSerialize["token_id"] = o.TokenId
-	if !IsNil(o.DiscountRate) {
-		toSerialize["discount_rate"] = o.DiscountRate
-	}
+	toSerialize["charge_amount"] = o.ChargeAmount
 	return toSerialize, nil
 }
 
@@ -208,8 +170,8 @@ func (o *PaymentCreateSubscriptionActionData) UnmarshalJSON(data []byte) (err er
 	requiredProperties := []string{
 		"action_type",
 		"user_address",
-		"amount",
 		"token_id",
+		"charge_amount",
 	}
 
 	allProperties := make(map[string]interface{})

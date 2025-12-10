@@ -18,7 +18,7 @@ var _ MappedNullable = &TransactionRawTxInfo{}
 // TransactionRawTxInfo The raw transaction information.
 type TransactionRawTxInfo struct {
 	// The transaction nonce.
-	UsedNonce *int32 `json:"used_nonce,omitempty"`
+	UsedNonce *int64 `json:"used_nonce,omitempty"`
 	// The selected UTXOs to be consumed in the transaction.
 	SelectedUtxos []TransactionSelectedUtxo `json:"selected_utxos,omitempty"`
 	// The raw transaction data.
@@ -46,9 +46,9 @@ func NewTransactionRawTxInfoWithDefaults() *TransactionRawTxInfo {
 }
 
 // GetUsedNonce returns the UsedNonce field value if set, zero value otherwise.
-func (o *TransactionRawTxInfo) GetUsedNonce() int32 {
+func (o *TransactionRawTxInfo) GetUsedNonce() int64 {
 	if o == nil || IsNil(o.UsedNonce) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.UsedNonce
@@ -56,7 +56,7 @@ func (o *TransactionRawTxInfo) GetUsedNonce() int32 {
 
 // GetUsedNonceOk returns a tuple with the UsedNonce field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransactionRawTxInfo) GetUsedNonceOk() (*int32, bool) {
+func (o *TransactionRawTxInfo) GetUsedNonceOk() (*int64, bool) {
 	if o == nil || IsNil(o.UsedNonce) {
 		return nil, false
 	}
@@ -72,8 +72,8 @@ func (o *TransactionRawTxInfo) HasUsedNonce() bool {
 	return false
 }
 
-// SetUsedNonce gets a reference to the given int32 and assigns it to the UsedNonce field.
-func (o *TransactionRawTxInfo) SetUsedNonce(v int32) {
+// SetUsedNonce gets a reference to the given int64 and assigns it to the UsedNonce field.
+func (o *TransactionRawTxInfo) SetUsedNonce(v int64) {
 	o.UsedNonce = &v
 }
 

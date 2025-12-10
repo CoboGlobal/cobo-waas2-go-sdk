@@ -28,6 +28,20 @@ func Test_cobo_waas2_TokenizationAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test TokenizationAPIService ArchiveTokenization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var tokenId string
+
+		resp, httpRes, err := apiClient.TokenizationAPI.ArchiveTokenization(ctx, tokenId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test TokenizationAPIService BurnTokenization", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -235,6 +249,20 @@ func Test_cobo_waas2_TokenizationAPIService(t *testing.T) {
 		var tokenId string
 
 		resp, httpRes, err := apiClient.TokenizationAPI.TokenizationContractCall(ctx, tokenId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TokenizationAPIService UnarchiveTokenization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var tokenId string
+
+		resp, httpRes, err := apiClient.TokenizationAPI.UnarchiveTokenization(ctx, tokenId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

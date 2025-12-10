@@ -25,6 +25,7 @@ const (
 	TRANSACTIONDESTINATIONTYPE_SOL_CONTRACT TransactionDestinationType = "SOL_Contract"
 	TRANSACTIONDESTINATIONTYPE_STELLAR_CONTRACT TransactionDestinationType = "STELLAR_Contract"
 	TRANSACTIONDESTINATIONTYPE_COSMOS_CONTRACT TransactionDestinationType = "COSMOS_Contract"
+	TRANSACTIONDESTINATIONTYPE_TRON_CONTRACT TransactionDestinationType = "TRON_Contract"
 	TRANSACTIONDESTINATIONTYPE_EVM_EIP_191_SIGNATURE TransactionDestinationType = "EVM_EIP_191_Signature"
 	TRANSACTIONDESTINATIONTYPE_EVM_EIP_712_SIGNATURE TransactionDestinationType = "EVM_EIP_712_Signature"
 	TRANSACTIONDESTINATIONTYPE_BTC_BIP_137_SIGNATURE TransactionDestinationType = "BTC_BIP_137_Signature"
@@ -44,6 +45,7 @@ var AllowedTransactionDestinationTypeEnumValues = []TransactionDestinationType{
 	"SOL_Contract",
 	"STELLAR_Contract",
 	"COSMOS_Contract",
+	"TRON_Contract",
 	"EVM_EIP_191_Signature",
 	"EVM_EIP_712_Signature",
 	"BTC_BIP_137_Signature",

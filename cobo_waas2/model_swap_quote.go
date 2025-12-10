@@ -38,7 +38,7 @@ type SwapQuote struct {
 	// The maximum amount of tokens to pay if the receive amount is specified.
 	MaxPayAmount *string `json:"max_pay_amount,omitempty"`
 	// The time when the quote will expire, in Unix timestamp format, measured in milliseconds.
-	QuoteExpiredTimestamp int32 `json:"quote_expired_timestamp"`
+	QuoteExpiredTimestamp int64 `json:"quote_expired_timestamp"`
 }
 
 type _SwapQuote SwapQuote
@@ -47,7 +47,7 @@ type _SwapQuote SwapQuote
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int32) *SwapQuote {
+func NewSwapQuote(quoteId string, payTokenId string, payAmount string, receiveTokenId string, receiveAmount string, feeTokenId string, feeAmount string, quoteExpiredTimestamp int64) *SwapQuote {
 	this := SwapQuote{}
 	this.QuoteId = quoteId
 	this.PayTokenId = payTokenId
@@ -301,9 +301,9 @@ func (o *SwapQuote) SetMaxPayAmount(v string) {
 }
 
 // GetQuoteExpiredTimestamp returns the QuoteExpiredTimestamp field value
-func (o *SwapQuote) GetQuoteExpiredTimestamp() int32 {
+func (o *SwapQuote) GetQuoteExpiredTimestamp() int64 {
 	if o == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 
@@ -312,7 +312,7 @@ func (o *SwapQuote) GetQuoteExpiredTimestamp() int32 {
 
 // GetQuoteExpiredTimestampOk returns a tuple with the QuoteExpiredTimestamp field value
 // and a boolean to check if the value has been set.
-func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int32, bool) {
+func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -320,7 +320,7 @@ func (o *SwapQuote) GetQuoteExpiredTimestampOk() (*int32, bool) {
 }
 
 // SetQuoteExpiredTimestamp sets field value
-func (o *SwapQuote) SetQuoteExpiredTimestamp(v int32) {
+func (o *SwapQuote) SetQuoteExpiredTimestamp(v int64) {
 	o.QuoteExpiredTimestamp = v
 }
 

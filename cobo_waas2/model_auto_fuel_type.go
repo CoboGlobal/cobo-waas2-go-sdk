@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// AutoFuelType The mode of transaction fee payment using Fee Station. Currently, Fee Station supports EVM-compatible and TRON transactions initiated from MPC Wallets (Organization-Controlled). For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction). - `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees. - `PassiveAutoFuel`: Use Fee Station only when the source address balance is insufficient to cover the transaction fees. - `UsePortalPreference`: Use fueling strategy based on Portal configuration.  Please note that the TRON chain does not support `PassiveAutoFuel` due to its fee delegation mechanism. 
+// AutoFuelType The mode of transaction fee payment using Fee Station. Currently, Fee Station supports transactions made with MPC Wallets on EVM-compatible chains, TRON, and Solana. For more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).  - `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees.   - `PassiveAutoFuel`: Use Fee Station only when the source address balance is insufficient to cover transaction fees.   - `UsePortalPreference`: Use fueling strategy based on the Portal configuration.   - `DisableAutoFuel`: Do not use Fee Station for transaction fee payment under any circumstances.    If this parameter is **not specified**, it defaults to the behavior of `UsePortalPreference`.  **Note**: TRON and Solana does not support `PassiveAutoFuel` due to its fee delegation mechanism. 
 type AutoFuelType string
 
 // List of AutoFuelType
@@ -21,6 +21,7 @@ const (
 	AUTOFUELTYPE_PASSIVE_AUTO_FUEL AutoFuelType = "PassiveAutoFuel"
 	AUTOFUELTYPE_PRO_ACTIVE_AUTO_FUEL AutoFuelType = "ProActiveAutoFuel"
 	AUTOFUELTYPE_USE_PORTAL_PREFERENCE AutoFuelType = "UsePortalPreference"
+	AUTOFUELTYPE_DISABLE_AUTO_FUEL AutoFuelType = "DisableAutoFuel"
 )
 
 // All allowed values of AutoFuelType enum
@@ -28,6 +29,7 @@ var AllowedAutoFuelTypeEnumValues = []AutoFuelType{
 	"PassiveAutoFuel",
 	"ProActiveAutoFuel",
 	"UsePortalPreference",
+	"DisableAutoFuel",
 }
 
 func (v *AutoFuelType) UnmarshalJSON(src []byte) error {

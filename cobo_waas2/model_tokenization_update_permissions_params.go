@@ -20,11 +20,7 @@ var _ MappedNullable = &TokenizationUpdatePermissionsParams{}
 // TokenizationUpdatePermissionsParams struct for TokenizationUpdatePermissionsParams
 type TokenizationUpdatePermissionsParams struct {
 	Source TokenizationTokenOperationSource `json:"source"`
-	Action TokenizationPermissionAction `json:"action"`
-	// The address to manage permissions for.
-	Address string `json:"address"`
-	// The list of permissions to operate on.
-	Permissions []TokenizationTokenPermissionType `json:"permissions"`
+	Addresses []TokenizationUpdateAddressPermissions `json:"addresses"`
 }
 
 type _TokenizationUpdatePermissionsParams TokenizationUpdatePermissionsParams
@@ -33,12 +29,10 @@ type _TokenizationUpdatePermissionsParams TokenizationUpdatePermissionsParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenizationUpdatePermissionsParams(source TokenizationTokenOperationSource, action TokenizationPermissionAction, address string, permissions []TokenizationTokenPermissionType) *TokenizationUpdatePermissionsParams {
+func NewTokenizationUpdatePermissionsParams(source TokenizationTokenOperationSource, addresses []TokenizationUpdateAddressPermissions) *TokenizationUpdatePermissionsParams {
 	this := TokenizationUpdatePermissionsParams{}
 	this.Source = source
-	this.Action = action
-	this.Address = address
-	this.Permissions = permissions
+	this.Addresses = addresses
 	return &this
 }
 
@@ -74,76 +68,28 @@ func (o *TokenizationUpdatePermissionsParams) SetSource(v TokenizationTokenOpera
 	o.Source = v
 }
 
-// GetAction returns the Action field value
-func (o *TokenizationUpdatePermissionsParams) GetAction() TokenizationPermissionAction {
+// GetAddresses returns the Addresses field value
+func (o *TokenizationUpdatePermissionsParams) GetAddresses() []TokenizationUpdateAddressPermissions {
 	if o == nil {
-		var ret TokenizationPermissionAction
+		var ret []TokenizationUpdateAddressPermissions
 		return ret
 	}
 
-	return o.Action
+	return o.Addresses
 }
 
-// GetActionOk returns a tuple with the Action field value
+// GetAddressesOk returns a tuple with the Addresses field value
 // and a boolean to check if the value has been set.
-func (o *TokenizationUpdatePermissionsParams) GetActionOk() (*TokenizationPermissionAction, bool) {
+func (o *TokenizationUpdatePermissionsParams) GetAddressesOk() ([]TokenizationUpdateAddressPermissions, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Action, true
+	return o.Addresses, true
 }
 
-// SetAction sets field value
-func (o *TokenizationUpdatePermissionsParams) SetAction(v TokenizationPermissionAction) {
-	o.Action = v
-}
-
-// GetAddress returns the Address field value
-func (o *TokenizationUpdatePermissionsParams) GetAddress() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Address
-}
-
-// GetAddressOk returns a tuple with the Address field value
-// and a boolean to check if the value has been set.
-func (o *TokenizationUpdatePermissionsParams) GetAddressOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Address, true
-}
-
-// SetAddress sets field value
-func (o *TokenizationUpdatePermissionsParams) SetAddress(v string) {
-	o.Address = v
-}
-
-// GetPermissions returns the Permissions field value
-func (o *TokenizationUpdatePermissionsParams) GetPermissions() []TokenizationTokenPermissionType {
-	if o == nil {
-		var ret []TokenizationTokenPermissionType
-		return ret
-	}
-
-	return o.Permissions
-}
-
-// GetPermissionsOk returns a tuple with the Permissions field value
-// and a boolean to check if the value has been set.
-func (o *TokenizationUpdatePermissionsParams) GetPermissionsOk() ([]TokenizationTokenPermissionType, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Permissions, true
-}
-
-// SetPermissions sets field value
-func (o *TokenizationUpdatePermissionsParams) SetPermissions(v []TokenizationTokenPermissionType) {
-	o.Permissions = v
+// SetAddresses sets field value
+func (o *TokenizationUpdatePermissionsParams) SetAddresses(v []TokenizationUpdateAddressPermissions) {
+	o.Addresses = v
 }
 
 func (o TokenizationUpdatePermissionsParams) MarshalJSON() ([]byte, error) {
@@ -157,9 +103,7 @@ func (o TokenizationUpdatePermissionsParams) MarshalJSON() ([]byte, error) {
 func (o TokenizationUpdatePermissionsParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["source"] = o.Source
-	toSerialize["action"] = o.Action
-	toSerialize["address"] = o.Address
-	toSerialize["permissions"] = o.Permissions
+	toSerialize["addresses"] = o.Addresses
 	return toSerialize, nil
 }
 
@@ -169,9 +113,7 @@ func (o *TokenizationUpdatePermissionsParams) UnmarshalJSON(data []byte) (err er
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"source",
-		"action",
-		"address",
-		"permissions",
+		"addresses",
 	}
 
 	allProperties := make(map[string]interface{})

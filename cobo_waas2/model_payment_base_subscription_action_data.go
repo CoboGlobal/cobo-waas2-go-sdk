@@ -22,8 +22,10 @@ type PaymentBaseSubscriptionActionData struct {
 	ActionType PaymentSubscriptionActionType `json:"action_type"`
 	// The subscription id in cobo.
 	SubscriptionId string `json:"subscription_id"`
-	// The signature for transaction.
+	// The signature for transaction. charge action is not required.
 	Signature string `json:"signature"`
+	// The signature deadline for transaction. charge action is not required.
+	Deadline int32 `json:"deadline"`
 }
 
 type _PaymentBaseSubscriptionActionData PaymentBaseSubscriptionActionData
@@ -32,11 +34,12 @@ type _PaymentBaseSubscriptionActionData PaymentBaseSubscriptionActionData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentBaseSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string) *PaymentBaseSubscriptionActionData {
+func NewPaymentBaseSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, deadline int32) *PaymentBaseSubscriptionActionData {
 	this := PaymentBaseSubscriptionActionData{}
 	this.ActionType = actionType
 	this.SubscriptionId = subscriptionId
 	this.Signature = signature
+	this.Deadline = deadline
 	return &this
 }
 
@@ -120,6 +123,30 @@ func (o *PaymentBaseSubscriptionActionData) SetSignature(v string) {
 	o.Signature = v
 }
 
+// GetDeadline returns the Deadline field value
+func (o *PaymentBaseSubscriptionActionData) GetDeadline() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Deadline
+}
+
+// GetDeadlineOk returns a tuple with the Deadline field value
+// and a boolean to check if the value has been set.
+func (o *PaymentBaseSubscriptionActionData) GetDeadlineOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Deadline, true
+}
+
+// SetDeadline sets field value
+func (o *PaymentBaseSubscriptionActionData) SetDeadline(v int32) {
+	o.Deadline = v
+}
+
 func (o PaymentBaseSubscriptionActionData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -133,6 +160,7 @@ func (o PaymentBaseSubscriptionActionData) ToMap() (map[string]interface{}, erro
 	toSerialize["action_type"] = o.ActionType
 	toSerialize["subscription_id"] = o.SubscriptionId
 	toSerialize["signature"] = o.Signature
+	toSerialize["deadline"] = o.Deadline
 	return toSerialize, nil
 }
 
@@ -144,6 +172,7 @@ func (o *PaymentBaseSubscriptionActionData) UnmarshalJSON(data []byte) (err erro
 		"action_type",
 		"subscription_id",
 		"signature",
+		"deadline",
 	}
 
 	allProperties := make(map[string]interface{})

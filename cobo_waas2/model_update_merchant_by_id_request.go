@@ -21,6 +21,8 @@ type UpdateMerchantByIdRequest struct {
 	Name *string `json:"name,omitempty"`
 	// The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \"0.1\" means 10%).
 	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
+	// The fee rate applied when subscribe the merchant account. Represented as a string percentage (e.g., \"0.1\" means 10%).
+	SubscriptionDeveloperFeeRate *string `json:"subscription_developer_fee_rate,omitempty"`
 }
 
 // NewUpdateMerchantByIdRequest instantiates a new UpdateMerchantByIdRequest object
@@ -104,6 +106,38 @@ func (o *UpdateMerchantByIdRequest) SetDeveloperFeeRate(v string) {
 	o.DeveloperFeeRate = &v
 }
 
+// GetSubscriptionDeveloperFeeRate returns the SubscriptionDeveloperFeeRate field value if set, zero value otherwise.
+func (o *UpdateMerchantByIdRequest) GetSubscriptionDeveloperFeeRate() string {
+	if o == nil || IsNil(o.SubscriptionDeveloperFeeRate) {
+		var ret string
+		return ret
+	}
+	return *o.SubscriptionDeveloperFeeRate
+}
+
+// GetSubscriptionDeveloperFeeRateOk returns a tuple with the SubscriptionDeveloperFeeRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateMerchantByIdRequest) GetSubscriptionDeveloperFeeRateOk() (*string, bool) {
+	if o == nil || IsNil(o.SubscriptionDeveloperFeeRate) {
+		return nil, false
+	}
+	return o.SubscriptionDeveloperFeeRate, true
+}
+
+// HasSubscriptionDeveloperFeeRate returns a boolean if a field has been set.
+func (o *UpdateMerchantByIdRequest) HasSubscriptionDeveloperFeeRate() bool {
+	if o != nil && !IsNil(o.SubscriptionDeveloperFeeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubscriptionDeveloperFeeRate gets a reference to the given string and assigns it to the SubscriptionDeveloperFeeRate field.
+func (o *UpdateMerchantByIdRequest) SetSubscriptionDeveloperFeeRate(v string) {
+	o.SubscriptionDeveloperFeeRate = &v
+}
+
 func (o UpdateMerchantByIdRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -119,6 +153,9 @@ func (o UpdateMerchantByIdRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DeveloperFeeRate) {
 		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
+	}
+	if !IsNil(o.SubscriptionDeveloperFeeRate) {
+		toSerialize["subscription_developer_fee_rate"] = o.SubscriptionDeveloperFeeRate
 	}
 	return toSerialize, nil
 }

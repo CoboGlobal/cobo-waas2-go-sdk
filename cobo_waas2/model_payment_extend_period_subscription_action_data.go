@@ -19,13 +19,15 @@ var _ MappedNullable = &PaymentExtendPeriodSubscriptionActionData{}
 
 // PaymentExtendPeriodSubscriptionActionData struct for PaymentExtendPeriodSubscriptionActionData
 type PaymentExtendPeriodSubscriptionActionData struct {
-	// The periods needed updated.
-	Periods *int32 `json:"periods,omitempty"`
 	ActionType PaymentSubscriptionActionType `json:"action_type"`
 	// The subscription id in cobo.
 	SubscriptionId string `json:"subscription_id"`
-	// The signature for transaction.
+	// The signature for transaction. charge action is not required.
 	Signature string `json:"signature"`
+	// The signature deadline for transaction. charge action is not required.
+	Deadline int32 `json:"deadline"`
+	// The periods needed updated.
+	Periods int32 `json:"periods"`
 }
 
 type _PaymentExtendPeriodSubscriptionActionData PaymentExtendPeriodSubscriptionActionData
@@ -34,11 +36,13 @@ type _PaymentExtendPeriodSubscriptionActionData PaymentExtendPeriodSubscriptionA
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string) *PaymentExtendPeriodSubscriptionActionData {
+func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, deadline int32, periods int32) *PaymentExtendPeriodSubscriptionActionData {
 	this := PaymentExtendPeriodSubscriptionActionData{}
 	this.ActionType = actionType
 	this.SubscriptionId = subscriptionId
 	this.Signature = signature
+	this.Deadline = deadline
+	this.Periods = periods
 	return &this
 }
 
@@ -48,38 +52,6 @@ func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscription
 func NewPaymentExtendPeriodSubscriptionActionDataWithDefaults() *PaymentExtendPeriodSubscriptionActionData {
 	this := PaymentExtendPeriodSubscriptionActionData{}
 	return &this
-}
-
-// GetPeriods returns the Periods field value if set, zero value otherwise.
-func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriods() int32 {
-	if o == nil || IsNil(o.Periods) {
-		var ret int32
-		return ret
-	}
-	return *o.Periods
-}
-
-// GetPeriodsOk returns a tuple with the Periods field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriodsOk() (*int32, bool) {
-	if o == nil || IsNil(o.Periods) {
-		return nil, false
-	}
-	return o.Periods, true
-}
-
-// HasPeriods returns a boolean if a field has been set.
-func (o *PaymentExtendPeriodSubscriptionActionData) HasPeriods() bool {
-	if o != nil && !IsNil(o.Periods) {
-		return true
-	}
-
-	return false
-}
-
-// SetPeriods gets a reference to the given int32 and assigns it to the Periods field.
-func (o *PaymentExtendPeriodSubscriptionActionData) SetPeriods(v int32) {
-	o.Periods = &v
 }
 
 // GetActionType returns the ActionType field value
@@ -154,6 +126,54 @@ func (o *PaymentExtendPeriodSubscriptionActionData) SetSignature(v string) {
 	o.Signature = v
 }
 
+// GetDeadline returns the Deadline field value
+func (o *PaymentExtendPeriodSubscriptionActionData) GetDeadline() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Deadline
+}
+
+// GetDeadlineOk returns a tuple with the Deadline field value
+// and a boolean to check if the value has been set.
+func (o *PaymentExtendPeriodSubscriptionActionData) GetDeadlineOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Deadline, true
+}
+
+// SetDeadline sets field value
+func (o *PaymentExtendPeriodSubscriptionActionData) SetDeadline(v int32) {
+	o.Deadline = v
+}
+
+// GetPeriods returns the Periods field value
+func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriods() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Periods
+}
+
+// GetPeriodsOk returns a tuple with the Periods field value
+// and a boolean to check if the value has been set.
+func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriodsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Periods, true
+}
+
+// SetPeriods sets field value
+func (o *PaymentExtendPeriodSubscriptionActionData) SetPeriods(v int32) {
+	o.Periods = v
+}
+
 func (o PaymentExtendPeriodSubscriptionActionData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -164,12 +184,11 @@ func (o PaymentExtendPeriodSubscriptionActionData) MarshalJSON() ([]byte, error)
 
 func (o PaymentExtendPeriodSubscriptionActionData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Periods) {
-		toSerialize["periods"] = o.Periods
-	}
 	toSerialize["action_type"] = o.ActionType
 	toSerialize["subscription_id"] = o.SubscriptionId
 	toSerialize["signature"] = o.Signature
+	toSerialize["deadline"] = o.Deadline
+	toSerialize["periods"] = o.Periods
 	return toSerialize, nil
 }
 
@@ -181,6 +200,8 @@ func (o *PaymentExtendPeriodSubscriptionActionData) UnmarshalJSON(data []byte) (
 		"action_type",
 		"subscription_id",
 		"signature",
+		"deadline",
+		"periods",
 	}
 
 	allProperties := make(map[string]interface{})

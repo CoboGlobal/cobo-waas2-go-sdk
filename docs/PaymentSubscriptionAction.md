@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **MerchantId** | **string** | The merchant id in cobo. | 
 **MerchantAddress** | **string** | The merchant address in cobo. | 
 **Data** | [**PaymentSubscriptionActionData**](PaymentSubscriptionActionData.md) |  | 
+**TransactionIds** | Pointer to **[]string** |  | [optional] 
 **Status** | [**PaymentSubscriptionActionStatus**](PaymentSubscriptionActionStatus.md) |  | 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the subscription action, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the subscription action, represented as a UNIX timestamp in seconds. | [optional] 
@@ -173,6 +174,31 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
+
+### GetTransactionIds
+
+`func (o *PaymentSubscriptionAction) GetTransactionIds() []string`
+
+GetTransactionIds returns the TransactionIds field if non-nil, zero value otherwise.
+
+### GetTransactionIdsOk
+
+`func (o *PaymentSubscriptionAction) GetTransactionIdsOk() (*[]string, bool)`
+
+GetTransactionIdsOk returns a tuple with the TransactionIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransactionIds
+
+`func (o *PaymentSubscriptionAction) SetTransactionIds(v []string)`
+
+SetTransactionIds sets TransactionIds field to given value.
+
+### HasTransactionIds
+
+`func (o *PaymentSubscriptionAction) HasTransactionIds() bool`
+
+HasTransactionIds returns a boolean if a field has been set.
 
 ### GetStatus
 

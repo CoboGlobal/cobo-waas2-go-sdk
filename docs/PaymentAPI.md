@@ -4,37 +4,69 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**BatchGetExchangeRates**](PaymentAPI.md#BatchGetExchangeRates) | **Get** /payments/exchange_rates | Batch get exchange rates
 [**CancelRefundById**](PaymentAPI.md#CancelRefundById) | **Put** /payments/refunds/{refund_id}/cancel | Cancel refund order
 [**CreateBankAccount**](PaymentAPI.md#CreateBankAccount) | **Post** /payments/bank_accounts | Create bank account
+[**CreateBatchAllocation**](PaymentAPI.md#CreateBatchAllocation) | **Post** /payments/batch_allocations | Create batch allocation
+[**CreateCounterparty**](PaymentAPI.md#CreateCounterparty) | **Post** /payments/counterparty | Create counterparty
+[**CreateCounterpartyWalletAddress**](PaymentAPI.md#CreateCounterpartyWalletAddress) | **Post** /payments/counterparty/wallet_address | Create counterparty wallet address
 [**CreateCryptoAddress**](PaymentAPI.md#CreateCryptoAddress) | **Post** /payments/crypto_addresses | Create crypto address
+[**CreateDestination**](PaymentAPI.md#CreateDestination) | **Post** /payments/destination | Create destination
+[**CreateDestinationBankAccount**](PaymentAPI.md#CreateDestinationBankAccount) | **Post** /payments/destination/bank_account | Create destination bank account
+[**CreateDestinationWalletAddress**](PaymentAPI.md#CreateDestinationWalletAddress) | **Post** /payments/destination/wallet_address | Create destination wallet address
 [**CreateForcedSweepRequest**](PaymentAPI.md#CreateForcedSweepRequest) | **Post** /payments/force_sweep_requests | Create force sweep request
 [**CreateMerchant**](PaymentAPI.md#CreateMerchant) | **Post** /payments/merchants | Create merchant
 [**CreateOrderLink**](PaymentAPI.md#CreateOrderLink) | **Post** /payments/links/orders | Create order link
 [**CreatePaymentOrder**](PaymentAPI.md#CreatePaymentOrder) | **Post** /payments/orders | Create pay-in order
+[**CreatePayout**](PaymentAPI.md#CreatePayout) | **Post** /payments/payouts | Create payout
 [**CreateRefund**](PaymentAPI.md#CreateRefund) | **Post** /payments/refunds | Create refund order
+[**CreateRefundLink**](PaymentAPI.md#CreateRefundLink) | **Post** /payments/links/refunds | Create refund link
+[**CreateReport**](PaymentAPI.md#CreateReport) | **Post** /payments/reports | Create report
 [**CreateSettlementRequest**](PaymentAPI.md#CreateSettlementRequest) | **Post** /payments/settlement_requests | Create settlement request
 [**CreateSubscriptionAction**](PaymentAPI.md#CreateSubscriptionAction) | **Post** /payments/subscription_actions | Create a subscription action
 [**CreateSubscriptionPlan**](PaymentAPI.md#CreateSubscriptionPlan) | **Post** /payments/subscription_plans | Create subscription plan
+[**DeleteCounterparty**](PaymentAPI.md#DeleteCounterparty) | **Put** /payments/counterparty/{counterparty_id}/delete | Delete counterparty
+[**DeleteCounterpartyWalletAddress**](PaymentAPI.md#DeleteCounterpartyWalletAddress) | **Put** /payments/counterparty/wallet_address/{wallet_address_id}/delete | Delete counterparty wallet address
 [**DeleteCryptoAddress**](PaymentAPI.md#DeleteCryptoAddress) | **Post** /payments/crypto_addresses/{crypto_address_id}/delete | Delete crypto address
+[**DeleteDestination**](PaymentAPI.md#DeleteDestination) | **Put** /payments/destination/{destination_id}/delete | Delete destination
+[**DeleteDestinationBankAccount**](PaymentAPI.md#DeleteDestinationBankAccount) | **Put** /payments/destination/bank_account/{bank_account_id}/delete | Delete destination bank account
+[**DeleteDestinationWalletAddress**](PaymentAPI.md#DeleteDestinationWalletAddress) | **Put** /payments/destination/wallet_address/{wallet_address_id}/delete | Delete destination wallet address
+[**EnableDestinationWhitelist**](PaymentAPI.md#EnableDestinationWhitelist) | **Post** /payments/destination/enable_whitelist | Enable or disable destination whitelist
+[**GetAvailableAllocationAmount**](PaymentAPI.md#GetAvailableAllocationAmount) | **Get** /payments/allocation_amount | Get available allocation amount
+[**GetBatchAllocationById**](PaymentAPI.md#GetBatchAllocationById) | **Get** /payments/batch_allocations/{batch_allocation_id} | Get batch allocation by id
+[**GetCounterpartyDetailById**](PaymentAPI.md#GetCounterpartyDetailById) | **Get** /payments/counterparty/{counterparty_id}/detail | Get counterparty information
+[**GetDestinationBankAccountDetailById**](PaymentAPI.md#GetDestinationBankAccountDetailById) | **Get** /payments/destination/bank_account/{bank_account_id}/detail | Get destination bank account information
+[**GetDestinationDetailById**](PaymentAPI.md#GetDestinationDetailById) | **Get** /payments/destination/{destination_id}/detail | Get destination information
 [**GetExchangeRate**](PaymentAPI.md#GetExchangeRate) | **Get** /payments/exchange_rates/{token_id}/{currency} | Get exchange rate
-[**GetPayerBalanceByAddress**](PaymentAPI.md#GetPayerBalanceByAddress) | **Get** /payments/balance/payer/address | Get payer balance by address
 [**GetPaymentOrderDetailById**](PaymentAPI.md#GetPaymentOrderDetailById) | **Get** /payments/orders/{order_id} | Get pay-in order information
+[**GetPayoutById**](PaymentAPI.md#GetPayoutById) | **Get** /payments/payouts/{payout_id} | Get payout information
 [**GetPspBalance**](PaymentAPI.md#GetPspBalance) | **Get** /payments/balance/psp | Get psp balance
 [**GetRefundDetailById**](PaymentAPI.md#GetRefundDetailById) | **Get** /payments/refunds/{refund_id} | Get refund order information
 [**GetRefunds**](PaymentAPI.md#GetRefunds) | **Get** /payments/refunds | List all refund orders
+[**GetReports**](PaymentAPI.md#GetReports) | **Get** /payments/reports | List all reports
 [**GetSettlementById**](PaymentAPI.md#GetSettlementById) | **Get** /payments/settlement_requests/{settlement_request_id} | Get settlement request information
 [**GetSettlementInfoByIds**](PaymentAPI.md#GetSettlementInfoByIds) | **Get** /payments/settlement_info | Get withdrawable balances
+[**GetSubscriptionActionById**](PaymentAPI.md#GetSubscriptionActionById) | **Get** /payments/subscription_actions/{action_id} | Get subscription action by id
 [**GetSubscriptionById**](PaymentAPI.md#GetSubscriptionById) | **Get** /payments/subscriptions/{subscription_id} | Get subscription by id
 [**GetSubscriptionPlanById**](PaymentAPI.md#GetSubscriptionPlanById) | **Get** /payments/subscription_plans/{plan_id} | Get subscription plan by id
 [**GetTopUpAddress**](PaymentAPI.md#GetTopUpAddress) | **Get** /payments/topup/address | Get top-up address
+[**ListAllocations**](PaymentAPI.md#ListAllocations) | **Get** /payments/allocation_records | List all allocations
 [**ListBankAccounts**](PaymentAPI.md#ListBankAccounts) | **Get** /payments/bank_accounts | List all bank accounts
+[**ListBatchAllocations**](PaymentAPI.md#ListBatchAllocations) | **Get** /payments/batch_allocations | List all batch allocations
+[**ListCounterparties**](PaymentAPI.md#ListCounterparties) | **Get** /payments/counterparty | List all counterparties
+[**ListCounterpartyWalletAddress**](PaymentAPI.md#ListCounterpartyWalletAddress) | **Get** /payments/counterparty/wallet_address | List counterparty wallet addresses
 [**ListCryptoAddresses**](PaymentAPI.md#ListCryptoAddresses) | **Get** /payments/crypto_addresses | List crypto addresses
+[**ListDestinationBankAccounts**](PaymentAPI.md#ListDestinationBankAccounts) | **Get** /payments/destination/bank_account | List destination bank accounts
+[**ListDestinationWalletAddresses**](PaymentAPI.md#ListDestinationWalletAddresses) | **Get** /payments/destination/wallet_address | List destination wallet addresses
+[**ListDestinations**](PaymentAPI.md#ListDestinations) | **Get** /payments/destination | List all destinations
 [**ListForcedSweepRequests**](PaymentAPI.md#ListForcedSweepRequests) | **Get** /payments/force_sweep_requests | List force sweep requests
 [**ListMerchantBalances**](PaymentAPI.md#ListMerchantBalances) | **Get** /payments/balance/merchants | List merchant balances
 [**ListMerchants**](PaymentAPI.md#ListMerchants) | **Get** /payments/merchants | List all merchants
 [**ListPaymentOrders**](PaymentAPI.md#ListPaymentOrders) | **Get** /payments/orders | List all pay-in orders
 [**ListPaymentSupportedTokens**](PaymentAPI.md#ListPaymentSupportedTokens) | **Get** /payments/supported_tokens | List all supported tokens
 [**ListPaymentWalletBalances**](PaymentAPI.md#ListPaymentWalletBalances) | **Get** /payments/balance/payment_wallets | List payment wallet balances
+[**ListPayoutItems**](PaymentAPI.md#ListPayoutItems) | **Get** /payments/payout_items | List all payout items
+[**ListPayouts**](PaymentAPI.md#ListPayouts) | **Get** /payments/payouts | List all payouts
 [**ListSettlementDetails**](PaymentAPI.md#ListSettlementDetails) | **Get** /payments/settlement_details | List all settlement details
 [**ListSettlementRequests**](PaymentAPI.md#ListSettlementRequests) | **Get** /payments/settlement_requests | List all settlement requests
 [**ListSubscriptionActions**](PaymentAPI.md#ListSubscriptionActions) | **Get** /payments/subscription_actions | List subscription actions
@@ -43,12 +75,94 @@ Method | HTTP request | Description
 [**ListTopUpPayerAccounts**](PaymentAPI.md#ListTopUpPayerAccounts) | **Get** /payments/topup/payer_accounts | List top-up payer accounts
 [**ListTopUpPayers**](PaymentAPI.md#ListTopUpPayers) | **Get** /payments/topup/payers | List top-up payers
 [**PaymentEstimateFee**](PaymentAPI.md#PaymentEstimateFee) | **Post** /payments/estimate_fee | Payment estimate fee
+[**QueryDestinationWhitelistEnabled**](PaymentAPI.md#QueryDestinationWhitelistEnabled) | **Get** /payments/destination/enable_whitelist | Query destination whitelist enabled status
 [**UpdateBankAccountById**](PaymentAPI.md#UpdateBankAccountById) | **Put** /payments/bank_accounts/{bank_account_id} | Update bank account
+[**UpdateCounterpartyById**](PaymentAPI.md#UpdateCounterpartyById) | **Put** /payments/counterparty/{counterparty_id}/update | Update counterparty
+[**UpdateDestinationBankAccountById**](PaymentAPI.md#UpdateDestinationBankAccountById) | **Put** /payments/destination/bank_account/{bank_account_id}/update | Update destination bank account
+[**UpdateDestinationById**](PaymentAPI.md#UpdateDestinationById) | **Put** /payments/destination/{destination_id}/update | Update destination
 [**UpdateMerchantById**](PaymentAPI.md#UpdateMerchantById) | **Put** /payments/merchants/{merchant_id} | Update merchant
 [**UpdatePaymentOrder**](PaymentAPI.md#UpdatePaymentOrder) | **Put** /payments/orders/{order_id} | Update pay-in order
 [**UpdateRefundById**](PaymentAPI.md#UpdateRefundById) | **Put** /payments/refunds/{refund_id} | Update refund order information
 [**UpdateTopUpAddress**](PaymentAPI.md#UpdateTopUpAddress) | **Put** /payments/topup/address | Update top-up address
 
+
+
+## BatchGetExchangeRates
+
+> []ExchangeRate BatchGetExchangeRates(ctx).TokenIds(tokenIds).Currencies(currencies).Execute()
+
+Batch get exchange rates
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	tokenIds := "ETH_USDT,ETH_USDC,BTC_USDT"
+	currencies := "USD"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.BatchGetExchangeRates(ctx).TokenIds(tokenIds).Currencies(currencies).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.BatchGetExchangeRates``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BatchGetExchangeRates`: []ExchangeRate
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.BatchGetExchangeRates`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBatchGetExchangeRatesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tokenIds** | **string** | A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).  | 
+ **currencies** | **string** | List of the fiat currencies, separated by comma. Currently, only &#x60;USD&#x60; is supported.  | 
+
+### Return type
+
+[**[]ExchangeRate**](ExchangeRate.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CancelRefundById
@@ -207,6 +321,234 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateBatchAllocation
+
+> BatchAllocation CreateBatchAllocation(ctx).CreateBatchAllocationRequest(createBatchAllocationRequest).Execute()
+
+Create batch allocation
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createBatchAllocationRequest := *coboWaas2.NewCreateBatchAllocationRequest("123e457-e89b-12d3-a456-426614174004", coboWaas2.PaymentSourceType("Merchant"), []coboWaas2.AllocationRequest{*coboWaas2.NewAllocationRequest("ETH_USDT", "500.00", "Description_example")})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateBatchAllocation(ctx).CreateBatchAllocationRequest(createBatchAllocationRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateBatchAllocation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateBatchAllocation`: BatchAllocation
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateBatchAllocation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateBatchAllocationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createBatchAllocationRequest** | [**CreateBatchAllocationRequest**](CreateBatchAllocationRequest.md) | The request body to create a settlement request. | 
+
+### Return type
+
+[**BatchAllocation**](BatchAllocation.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateCounterparty
+
+> CounterpartyDetail CreateCounterparty(ctx).CreateCounterpartyRequest(createCounterpartyRequest).Execute()
+
+Create counterparty
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createCounterpartyRequest := *coboWaas2.NewCreateCounterpartyRequest("Counterparty A", coboWaas2.CounterpartyType("Individual"), []coboWaas2.CreateWalletAddress{*coboWaas2.NewCreateWalletAddress("0x1234567890abcdef...", "TRON")})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateCounterparty(ctx).CreateCounterpartyRequest(createCounterpartyRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateCounterparty``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateCounterparty`: CounterpartyDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateCounterparty`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateCounterpartyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createCounterpartyRequest** | [**CreateCounterpartyRequest**](CreateCounterpartyRequest.md) | The request body to create a counterparty. | 
+
+### Return type
+
+[**CounterpartyDetail**](CounterpartyDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateCounterpartyWalletAddress
+
+> WalletAddress CreateCounterpartyWalletAddress(ctx).CreateCounterpartyWalletAddressRequest(createCounterpartyWalletAddressRequest).Execute()
+
+Create counterparty wallet address
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createCounterpartyWalletAddressRequest := *coboWaas2.NewCreateCounterpartyWalletAddressRequest("123e4567-e89b-12d3-a456-426614174003", "0x1234567890abcdef...", "TRON")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateCounterpartyWalletAddress(ctx).CreateCounterpartyWalletAddressRequest(createCounterpartyWalletAddressRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateCounterpartyWalletAddress``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateCounterpartyWalletAddress`: WalletAddress
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateCounterpartyWalletAddress`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateCounterpartyWalletAddressRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createCounterpartyWalletAddressRequest** | [**CreateCounterpartyWalletAddressRequest**](CreateCounterpartyWalletAddressRequest.md) | The request body to create a counterparty wallet address. | 
+
+### Return type
+
+[**WalletAddress**](WalletAddress.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## CreateCryptoAddress
 
 > CryptoAddress CreateCryptoAddress(ctx).CreateCryptoAddressRequest(createCryptoAddressRequest).Execute()
@@ -268,6 +610,234 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CryptoAddress**](CryptoAddress.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateDestination
+
+> DestinationDetail CreateDestination(ctx).CreateDestinationRequest(createDestinationRequest).Execute()
+
+Create destination
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createDestinationRequest := *coboWaas2.NewCreateDestinationRequest("Destination A", coboWaas2.DestinationType("Individual"))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateDestination(ctx).CreateDestinationRequest(createDestinationRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateDestination``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateDestination`: DestinationDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateDestination`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateDestinationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createDestinationRequest** | [**CreateDestinationRequest**](CreateDestinationRequest.md) | The request body to create a destination. | 
+
+### Return type
+
+[**DestinationDetail**](DestinationDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateDestinationBankAccount
+
+> DestinationBankAccount CreateDestinationBankAccount(ctx).CreateDestinationBankAccountRequest(createDestinationBankAccountRequest).Execute()
+
+Create destination bank account
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createDestinationBankAccountRequest := *coboWaas2.NewCreateDestinationBankAccountRequest("123e4567-e89b-12d3-a456-426614174003", "Main Payout Account", "4111111111111111", "BOFAUS33", "USD", "John Doe", "123 Main St, Anytown, USA", "ABC Bank", "456 Bank Ave, Cityville, USA")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateDestinationBankAccount(ctx).CreateDestinationBankAccountRequest(createDestinationBankAccountRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateDestinationBankAccount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateDestinationBankAccount`: DestinationBankAccount
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateDestinationBankAccount`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateDestinationBankAccountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createDestinationBankAccountRequest** | [**CreateDestinationBankAccountRequest**](CreateDestinationBankAccountRequest.md) | The request body to create a destination bank account. | 
+
+### Return type
+
+[**DestinationBankAccount**](DestinationBankAccount.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateDestinationWalletAddress
+
+> WalletAddress CreateDestinationWalletAddress(ctx).CreateDestinationWalletAddressRequest(createDestinationWalletAddressRequest).Execute()
+
+Create destination wallet address
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createDestinationWalletAddressRequest := *coboWaas2.NewCreateDestinationWalletAddressRequest("123e4567-e89b-12d3-a456-426614174003", "0x1234567890abcdef...", "TRON")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateDestinationWalletAddress(ctx).CreateDestinationWalletAddressRequest(createDestinationWalletAddressRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateDestinationWalletAddress``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateDestinationWalletAddress`: WalletAddress
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateDestinationWalletAddress`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateDestinationWalletAddressRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createDestinationWalletAddressRequest** | [**CreateDestinationWalletAddressRequest**](CreateDestinationWalletAddressRequest.md) | The request body to create a destination wallet address. | 
+
+### Return type
+
+[**WalletAddress**](WalletAddress.md)
 
 ### Authorization
 
@@ -457,7 +1027,7 @@ import (
 )
 
 func main() {
-	createOrderLinkRequest := *coboWaas2.NewCreateOrderLinkRequest(*coboWaas2.NewOrderLinkBusinessInfo([]string{"ETH_USDT"}, "2.00", "1001", "100.00", "P20240201001"))
+	createOrderLinkRequest := *coboWaas2.NewCreateOrderLinkRequest(*coboWaas2.NewOrderLinkBusinessInfo("1001", "P20240201001", "2.00"))
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -533,7 +1103,7 @@ import (
 )
 
 func main() {
-	createPaymentOrderRequest := *coboWaas2.NewCreatePaymentOrderRequest("1001", "ETH_USDT", "100.00", "2.00", "P20240201001")
+	createPaymentOrderRequest := *coboWaas2.NewCreatePaymentOrderRequest("1001", "P20240201001", "2.00")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -572,6 +1142,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Order**](Order.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreatePayout
+
+> PaymentPayout CreatePayout(ctx).CreatePayoutRequest(createPayoutRequest).Execute()
+
+Create payout
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createPayoutRequest := *coboWaas2.NewCreatePayoutRequest("123e457-e89b-12d3-a456-426614174004", coboWaas2.PayoutChannel("Crypto"), coboWaas2.PaymentSourceType("Merchant"), []coboWaas2.PaymentPayoutParam{*coboWaas2.NewPaymentPayoutParam("ETH_USDT", "500.00")})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreatePayout(ctx).CreatePayoutRequest(createPayoutRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreatePayout``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreatePayout`: PaymentPayout
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreatePayout`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreatePayoutRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createPayoutRequest** | [**CreatePayoutRequest**](CreatePayoutRequest.md) | The request body to create a payout. | 
+
+### Return type
+
+[**PaymentPayout**](PaymentPayout.md)
 
 ### Authorization
 
@@ -648,6 +1294,158 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Refund**](Refund.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateRefundLink
+
+> Link CreateRefundLink(ctx).CreateRefundLinkRequest(createRefundLinkRequest).Execute()
+
+Create refund link
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createRefundLinkRequest := *coboWaas2.NewCreateRefundLinkRequest(*coboWaas2.NewRefundLinkBusinessInfo("aff0e1cb-15b2-4e1f-9b9d-a9133715986f", "0.0025", coboWaas2.RefundType("Merchant")))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateRefundLink(ctx).CreateRefundLinkRequest(createRefundLinkRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateRefundLink``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateRefundLink`: Link
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateRefundLink`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateRefundLinkRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createRefundLinkRequest** | [**CreateRefundLinkRequest**](CreateRefundLinkRequest.md) | The request body to create a payment link for a refund. | 
+
+### Return type
+
+[**Link**](Link.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateReport
+
+> Report CreateReport(ctx).CreateReportRequest(createReportRequest).Execute()
+
+Create report
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createReportRequest := *coboWaas2.NewCreateReportRequest(int32(1764237462), int32(1764237462), coboWaas2.ReportExportFormat("CSV"), []coboWaas2.ReportType{coboWaas2.ReportType("Order")})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateReport(ctx).CreateReportRequest(createReportRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateReport``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateReport`: Report
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateReport`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateReportRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createReportRequest** | [**CreateReportRequest**](CreateReportRequest.md) | The request body to create payment reports. | 
+
+### Return type
+
+[**Report**](Report.md)
 
 ### Authorization
 
@@ -891,6 +1689,166 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteCounterparty
+
+> DeleteCounterparty200Response DeleteCounterparty(ctx, counterpartyId).Execute()
+
+Delete counterparty
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	counterpartyId := "5b0ed293-f728-40b4-b1f6-86b88cd51384"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.DeleteCounterparty(ctx, counterpartyId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.DeleteCounterparty``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteCounterparty`: DeleteCounterparty200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.DeleteCounterparty`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**counterpartyId** | **string** | The counterparty ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteCounterpartyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeleteCounterparty200Response**](DeleteCounterparty200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteCounterpartyWalletAddress
+
+> DeleteCounterpartyWalletAddress200Response DeleteCounterpartyWalletAddress(ctx, walletAddressId).Execute()
+
+Delete counterparty wallet address
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	walletAddressId := "445bac57-7428-4d25-bce1-b3cd017f47a1"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.DeleteCounterpartyWalletAddress(ctx, walletAddressId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.DeleteCounterpartyWalletAddress``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteCounterpartyWalletAddress`: DeleteCounterpartyWalletAddress200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.DeleteCounterpartyWalletAddress`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**walletAddressId** | **string** | The wallet address ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteCounterpartyWalletAddressRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeleteCounterpartyWalletAddress200Response**](DeleteCounterpartyWalletAddress200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteCryptoAddress
 
 > DeleteCryptoAddress201Response DeleteCryptoAddress(ctx, cryptoAddressId).Execute()
@@ -956,6 +1914,724 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DeleteCryptoAddress201Response**](DeleteCryptoAddress201Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteDestination
+
+> DeleteDestination200Response DeleteDestination(ctx, destinationId).Execute()
+
+Delete destination
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	destinationId := "46beeab4-6a8e-476e-bc69-99b89aacbc6f"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.DeleteDestination(ctx, destinationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.DeleteDestination``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteDestination`: DeleteDestination200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.DeleteDestination`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**destinationId** | **string** | The destination ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDestinationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeleteDestination200Response**](DeleteDestination200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteDestinationBankAccount
+
+> DeleteDestinationBankAccount200Response DeleteDestinationBankAccount(ctx, bankAccountId).Execute()
+
+Delete destination bank account
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	bankAccountId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.DeleteDestinationBankAccount(ctx, bankAccountId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.DeleteDestinationBankAccount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteDestinationBankAccount`: DeleteDestinationBankAccount200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.DeleteDestinationBankAccount`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**bankAccountId** | **string** | The bank account ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDestinationBankAccountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeleteDestinationBankAccount200Response**](DeleteDestinationBankAccount200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteDestinationWalletAddress
+
+> DeleteDestinationWalletAddress200Response DeleteDestinationWalletAddress(ctx, walletAddressId).Execute()
+
+Delete destination wallet address
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	walletAddressId := "445bac57-7428-4d25-bce1-b3cd017f47a1"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.DeleteDestinationWalletAddress(ctx, walletAddressId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.DeleteDestinationWalletAddress``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteDestinationWalletAddress`: DeleteDestinationWalletAddress200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.DeleteDestinationWalletAddress`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**walletAddressId** | **string** | The wallet address ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDestinationWalletAddressRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeleteDestinationWalletAddress200Response**](DeleteDestinationWalletAddress200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## EnableDestinationWhitelist
+
+> QueryDestinationWhitelistEnabled200Response EnableDestinationWhitelist(ctx).EnableDestinationWhitelistRequest(enableDestinationWhitelistRequest).Execute()
+
+Enable or disable destination whitelist
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	enableDestinationWhitelistRequest := *coboWaas2.NewEnableDestinationWhitelistRequest(false)
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.EnableDestinationWhitelist(ctx).EnableDestinationWhitelistRequest(enableDestinationWhitelistRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.EnableDestinationWhitelist``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `EnableDestinationWhitelist`: QueryDestinationWhitelistEnabled200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.EnableDestinationWhitelist`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiEnableDestinationWhitelistRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **enableDestinationWhitelistRequest** | [**EnableDestinationWhitelistRequest**](EnableDestinationWhitelistRequest.md) | The request body to enable or disable the destination whitelist. | 
+
+### Return type
+
+[**QueryDestinationWhitelistEnabled200Response**](QueryDestinationWhitelistEnabled200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAvailableAllocationAmount
+
+> PaymentAllocationAmount GetAvailableAllocationAmount(ctx).SourceType(sourceType).TokenId(tokenId).FromMerchantId(fromMerchantId).ToMerchantId(toMerchantId).Execute()
+
+Get available allocation amount
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	sourceType := coboWaas2.PaymentSourceType("Merchant")
+	tokenId := "ETH_USDT"
+	fromMerchantId := "M1001"
+	toMerchantId := "M1001"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetAvailableAllocationAmount(ctx).SourceType(sourceType).TokenId(tokenId).FromMerchantId(fromMerchantId).ToMerchantId(toMerchantId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetAvailableAllocationAmount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAvailableAllocationAmount`: PaymentAllocationAmount
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetAvailableAllocationAmount`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAvailableAllocationAmountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sourceType** | [**PaymentSourceType**](PaymentSourceType.md) | SourceType defines the allocation logic used in the payment flow: - &#x60;Merchant&#x60; - &#x60;Psp&#x60;  | 
+ **tokenId** | **string** | The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
+ **fromMerchantId** | **string** | The merchant ID. | 
+ **toMerchantId** | **string** | The merchant ID. | 
+
+### Return type
+
+[**PaymentAllocationAmount**](PaymentAllocationAmount.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetBatchAllocationById
+
+> BatchAllocationDetail GetBatchAllocationById(ctx, batchAllocationId).Execute()
+
+Get batch allocation by id
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	batchAllocationId := "5b0ed293-f728-40b4-b1f6-86b88cd51384"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetBatchAllocationById(ctx, batchAllocationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetBatchAllocationById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetBatchAllocationById`: BatchAllocationDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetBatchAllocationById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**batchAllocationId** | **string** | The batch allocation ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetBatchAllocationByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**BatchAllocationDetail**](BatchAllocationDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetCounterpartyDetailById
+
+> CounterpartyDetail GetCounterpartyDetailById(ctx, counterpartyId).Execute()
+
+Get counterparty information
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	counterpartyId := "5b0ed293-f728-40b4-b1f6-86b88cd51384"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetCounterpartyDetailById(ctx, counterpartyId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetCounterpartyDetailById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCounterpartyDetailById`: CounterpartyDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetCounterpartyDetailById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**counterpartyId** | **string** | The counterparty ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCounterpartyDetailByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**CounterpartyDetail**](CounterpartyDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetDestinationBankAccountDetailById
+
+> DestinationBankAccountDetail GetDestinationBankAccountDetailById(ctx, bankAccountId).Execute()
+
+Get destination bank account information
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	bankAccountId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetDestinationBankAccountDetailById(ctx, bankAccountId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetDestinationBankAccountDetailById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDestinationBankAccountDetailById`: DestinationBankAccountDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetDestinationBankAccountDetailById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**bankAccountId** | **string** | The bank account ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDestinationBankAccountDetailByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DestinationBankAccountDetail**](DestinationBankAccountDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetDestinationDetailById
+
+> DestinationDetail GetDestinationDetailById(ctx, destinationId).Execute()
+
+Get destination information
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	destinationId := "46beeab4-6a8e-476e-bc69-99b89aacbc6f"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetDestinationDetailById(ctx, destinationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetDestinationDetailById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDestinationDetailById`: DestinationDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetDestinationDetailById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**destinationId** | **string** | The destination ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDestinationDetailByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DestinationDetail**](DestinationDetail.md)
 
 ### Authorization
 
@@ -1054,86 +2730,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetPayerBalanceByAddress
-
-> []ReceivedAmountPerAddress GetPayerBalanceByAddress(ctx).PayerId(payerId).TokenId(tokenId).MerchantId(merchantId).Execute()
-
-Get payer balance by address
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
-    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
-)
-
-func main() {
-	payerId := "P20250619T0310056d7aa"
-	tokenId := "ETH_USDT"
-	merchantId := "M1001"
-
-	configuration := coboWaas2.NewConfiguration()
-	// Initialize the API client
-	apiClient := coboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-
-    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
-	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
-    // Replace `<YOUR_PRIVATE_KEY>` with your private key
-	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_PRIVATE_KEY>",
-	})
-	resp, r, err := apiClient.PaymentAPI.GetPayerBalanceByAddress(ctx).PayerId(payerId).TokenId(tokenId).MerchantId(merchantId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetPayerBalanceByAddress``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetPayerBalanceByAddress`: []ReceivedAmountPerAddress
-	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetPayerBalanceByAddress`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetPayerBalanceByAddressRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **payerId** | **string** | Unique payer identifier on the Cobo side, auto-generated by the system. | 
- **tokenId** | **string** | The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
- **merchantId** | **string** | The merchant ID. | 
-
-### Return type
-
-[**[]ReceivedAmountPerAddress**](ReceivedAmountPerAddress.md)
-
-### Authorization
-
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetPaymentOrderDetailById
 
 > Order GetPaymentOrderDetailById(ctx, orderId).Execute()
@@ -1199,6 +2795,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Order**](Order.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetPayoutById
+
+> PaymentPayoutDetail GetPayoutById(ctx, payoutId).Execute()
+
+Get payout information
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	payoutId := "aff0e1cb-15b2-4e1f-9b9d-a9133715986f"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetPayoutById(ctx, payoutId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetPayoutById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetPayoutById`: PaymentPayoutDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetPayoutById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**payoutId** | **string** | The payout ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetPayoutByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**PaymentPayoutDetail**](PaymentPayoutDetail.md)
 
 ### Authorization
 
@@ -1456,6 +3132,90 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetReports
+
+> GetReports200Response GetReports(ctx).Limit(limit).Before(before).After(after).ReportType(reportType).ReportStatus(reportStatus).Execute()
+
+List all reports
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	reportType := coboWaas2.ReportType("Order")
+	reportStatus := coboWaas2.ReportStatus("Completed")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetReports(ctx).Limit(limit).Before(before).After(after).ReportType(reportType).ReportStatus(reportStatus).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetReports``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetReports`: GetReports200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetReports`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetReportsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **reportType** | [**ReportType**](ReportType.md) | ReportType defines the type of the report: - &#x60;Order&#x60;: Summary of all merchants&#39; order. - &#x60;OrderTransaction&#x60;: Transaction summary of all merchants&#39; orders. - &#x60;TopUpTransaction&#x60;: Transaction summary of all top ups. - &#x60;PayinWeeklyStatement&#x60;: Weekly report of all payins (including order-in and top up). - &#x60;PayinDailyStatement&#x60;: Daily report of all payins (including order-in and top up). - &#x60;CryptoPayout&#x60;: Transaction summary of all crypto settlements. - &#x60;OffRamp&#x60;: Transaction summary of all off ramp settlements. - &#x60;Refund&#x60;: Transaction summary of all refunds. - &#x60;PayoutWeeklyStatement&#x60;: Weekly report of all payouts (including crypto settlements, off ramp settlements and refund). - &#x60;PayoutDailyStatement&#x60;: Daily report of all payouts (including crypto settlements, off ramp settlements and refund). - &#x60;PayinCommissionFee&#x60;: Commission fee summary of all payins. - &#x60;PayoutCommissionFee&#x60;: Commission fee summary of all payouts. - &#x60;BalanceChange&#x60;: Balance change summary of all merchants. - &#x60;Summary&#x60;: Summary of all payins, payouts and commission fees.  | 
+ **reportStatus** | [**ReportStatus**](ReportStatus.md) | ReportStatus defines the status of the report: - &#x60;Completed&#x60;: The report has been completed. - &#x60;Failed&#x60;: The report has failed. - &#x60;Expired&#x60;: The report is expired.  | 
+
+### Return type
+
+[**GetReports200Response**](GetReports200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetSettlementById
 
 > Settlement GetSettlementById(ctx, settlementRequestId).Execute()
@@ -1601,6 +3361,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetSettlementInfoByIds200Response**](GetSettlementInfoByIds200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSubscriptionActionById
+
+> PaymentSubscriptionActionDetail GetSubscriptionActionById(ctx, actionId).Execute()
+
+Get subscription action by id
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	actionId := "123e457-e89b-12d3-a456-426614174004"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetSubscriptionActionById(ctx, actionId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetSubscriptionActionById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSubscriptionActionById`: PaymentSubscriptionActionDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetSubscriptionActionById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**actionId** | **string** | A unique identifier subscription action. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSubscriptionActionByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**PaymentSubscriptionActionDetail**](PaymentSubscriptionActionDetail.md)
 
 ### Authorization
 
@@ -1858,6 +3698,94 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListAllocations
+
+> ListAllocations200Response ListAllocations(ctx).Limit(limit).Before(before).After(after).SourceType(sourceType).MerchantIds(merchantIds).TokenId(tokenId).BatchAllocationId(batchAllocationId).Execute()
+
+List all allocations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	sourceType := coboWaas2.PaymentSourceType("Merchant")
+	merchantIds := "M1001,M1002,M1003"
+	tokenId := "ETH_USDT"
+	batchAllocationId := "5b0ed293-f728-40b4-b1f6-86b88cd51384"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListAllocations(ctx).Limit(limit).Before(before).After(after).SourceType(sourceType).MerchantIds(merchantIds).TokenId(tokenId).BatchAllocationId(batchAllocationId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListAllocations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListAllocations`: ListAllocations200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListAllocations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListAllocationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **sourceType** | [**PaymentSourceType**](PaymentSourceType.md) | SourceType defines the allocation logic used in the payment flow: - &#x60;Merchant&#x60; - &#x60;Psp&#x60;  | 
+ **merchantIds** | **string** | A list of merchant IDs to query. | 
+ **tokenId** | **string** | The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
+ **batchAllocationId** | **string** | The batch allocation ID. | 
+
+### Return type
+
+[**ListAllocations200Response**](ListAllocations200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListBankAccounts
 
 > []BankAccount ListBankAccounts(ctx).Execute()
@@ -1914,6 +3842,260 @@ Other parameters are passed through a pointer to a apiListBankAccountsRequest st
 ### Return type
 
 [**[]BankAccount**](BankAccount.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListBatchAllocations
+
+> ListBatchAllocations200Response ListBatchAllocations(ctx).Limit(limit).Before(before).After(after).RequestId(requestId).Execute()
+
+List all batch allocations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	requestId := "random_request_id"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListBatchAllocations(ctx).Limit(limit).Before(before).After(after).RequestId(requestId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListBatchAllocations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBatchAllocations`: ListBatchAllocations200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListBatchAllocations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBatchAllocationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **requestId** | **string** | The request ID. | 
+
+### Return type
+
+[**ListBatchAllocations200Response**](ListBatchAllocations200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListCounterparties
+
+> ListCounterparties200Response ListCounterparties(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).CounterpartyType(counterpartyType).Country(country).Execute()
+
+List all counterparties
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	keyword := "keyword"
+	counterpartyType := coboWaas2.CounterpartyType("Individual")
+	country := "USA"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListCounterparties(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).CounterpartyType(counterpartyType).Country(country).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListCounterparties``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListCounterparties`: ListCounterparties200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListCounterparties`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListCounterpartiesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **keyword** | **string** | A search term used for fuzzy matching of merchant names. | 
+ **counterpartyType** | [**CounterpartyType**](CounterpartyType.md) | CounterpartyType defines the type of the counterparty: - &#x60;Individual&#x60;: The counterparty is an individual. - &#x60;Organization&#x60;: The counterparty is an organization.  | 
+ **country** | **string** | The country of the destination, in ISO 3166-1 alpha-3 format. | 
+
+### Return type
+
+[**ListCounterparties200Response**](ListCounterparties200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListCounterpartyWalletAddress
+
+> ListCounterpartyWalletAddress200Response ListCounterpartyWalletAddress(ctx).Limit(limit).Before(before).After(after).CounterpartyId(counterpartyId).ChainIds(chainIds).WalletAddress(walletAddress).Execute()
+
+List counterparty wallet addresses
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	counterpartyId := "5b0ed293-f728-40b4-b1f6-86b88cd51384"
+	chainIds := "BTC,ETH"
+	walletAddress := "0x1234567890abcdef..."
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListCounterpartyWalletAddress(ctx).Limit(limit).Before(before).After(after).CounterpartyId(counterpartyId).ChainIds(chainIds).WalletAddress(walletAddress).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListCounterpartyWalletAddress``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListCounterpartyWalletAddress`: ListCounterpartyWalletAddress200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListCounterpartyWalletAddress`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListCounterpartyWalletAddressRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **counterpartyId** | **string** | The counterparty ID. | 
+ **chainIds** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
+ **walletAddress** | **string** | The wallet address. | 
+
+### Return type
+
+[**ListCounterpartyWalletAddress200Response**](ListCounterpartyWalletAddress200Response.md)
 
 ### Authorization
 
@@ -1990,6 +4172,266 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]CryptoAddress**](CryptoAddress.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListDestinationBankAccounts
+
+> ListDestinationBankAccounts200Response ListDestinationBankAccounts(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationId(destinationId).BankAccountStatus(bankAccountStatus).Execute()
+
+List destination bank accounts
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	keyword := "keyword"
+	destinationId := "46beeab4-6a8e-476e-bc69-99b89aacbc6f"
+	bankAccountStatus := coboWaas2.BankAccountStatus("Pending")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListDestinationBankAccounts(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationId(destinationId).BankAccountStatus(bankAccountStatus).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListDestinationBankAccounts``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListDestinationBankAccounts`: ListDestinationBankAccounts200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListDestinationBankAccounts`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListDestinationBankAccountsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **keyword** | **string** | A search term used for fuzzy matching of merchant names. | 
+ **destinationId** | **string** | The destination ID. | 
+ **bankAccountStatus** | [**BankAccountStatus**](BankAccountStatus.md) | BankAccountStatus defines the status of the bank account: - &#x60;Pending&#x60;: The bank account is pending verification by Cobo. - &#x60;Approved&#x60;: The bank account has been approved by Cobo. - &#x60;Rejected&#x60;: The bank account has been rejected by Cobo.  | 
+
+### Return type
+
+[**ListDestinationBankAccounts200Response**](ListDestinationBankAccounts200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListDestinationWalletAddresses
+
+> ListDestinationWalletAddresses200Response ListDestinationWalletAddresses(ctx).Limit(limit).Before(before).After(after).DestinationId(destinationId).ChainIds(chainIds).WalletAddress(walletAddress).Execute()
+
+List destination wallet addresses
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	destinationId := "46beeab4-6a8e-476e-bc69-99b89aacbc6f"
+	chainIds := "BTC,ETH"
+	walletAddress := "0x1234567890abcdef..."
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListDestinationWalletAddresses(ctx).Limit(limit).Before(before).After(after).DestinationId(destinationId).ChainIds(chainIds).WalletAddress(walletAddress).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListDestinationWalletAddresses``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListDestinationWalletAddresses`: ListDestinationWalletAddresses200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListDestinationWalletAddresses`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListDestinationWalletAddressesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **destinationId** | **string** | The destination ID. | 
+ **chainIds** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
+ **walletAddress** | **string** | The wallet address. | 
+
+### Return type
+
+[**ListDestinationWalletAddresses200Response**](ListDestinationWalletAddresses200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListDestinations
+
+> ListDestinations200Response ListDestinations(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationType(destinationType).Country(country).MerchantIds(merchantIds).Execute()
+
+List all destinations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	keyword := "keyword"
+	destinationType := coboWaas2.DestinationType("Individual")
+	country := "USA"
+	merchantIds := "M1001,M1002,M1003"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListDestinations(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationType(destinationType).Country(country).MerchantIds(merchantIds).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListDestinations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListDestinations`: ListDestinations200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListDestinations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListDestinationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **keyword** | **string** | A search term used for fuzzy matching of merchant names. | 
+ **destinationType** | [**DestinationType**](DestinationType.md) | DestinationType defines the type of the destination: - &#x60;Individual&#x60;: The destination is an individual. - &#x60;Organization&#x60;: The destination is an organization.  | 
+ **country** | **string** | The country of the destination, in ISO 3166-1 alpha-3 format. | 
+ **merchantIds** | **string** | A list of merchant IDs to query. | 
+
+### Return type
+
+[**ListDestinations200Response**](ListDestinations200Response.md)
 
 ### Authorization
 
@@ -2089,7 +4531,7 @@ Name | Type | Description  | Notes
 
 ## ListMerchantBalances
 
-> ListMerchantBalances200Response ListMerchantBalances(ctx).TokenId(tokenId).AcquiringType(acquiringType).MerchantIds(merchantIds).Execute()
+> ListMerchantBalances200Response ListMerchantBalances(ctx).TokenId(tokenId).MerchantIds(merchantIds).AcquiringType(acquiringType).Execute()
 
 List merchant balances
 
@@ -2110,8 +4552,8 @@ import (
 
 func main() {
 	tokenId := "ETH_USDT"
-	acquiringType := coboWaas2.AcquiringType("Order")
 	merchantIds := "M1001,M1002,M1003"
+	acquiringType := coboWaas2.AcquiringType("Order")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -2124,7 +4566,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.PaymentAPI.ListMerchantBalances(ctx).TokenId(tokenId).AcquiringType(acquiringType).MerchantIds(merchantIds).Execute()
+	resp, r, err := apiClient.PaymentAPI.ListMerchantBalances(ctx).TokenId(tokenId).MerchantIds(merchantIds).AcquiringType(acquiringType).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListMerchantBalances``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2146,8 +4588,8 @@ Other parameters are passed through a pointer to a apiListMerchantBalancesReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tokenId** | **string** | The token ID, which identifies the cryptocurrency. Supported values:    - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
- **acquiringType** | [**AcquiringType**](AcquiringType.md) | AcquiringType defines the acquisition logic used in the payment flow: - &#x60;Order&#x60;: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis. - &#x60;TopUp&#x60;: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models.  | 
  **merchantIds** | **string** | A list of merchant IDs to query. | 
+ **acquiringType** | [**AcquiringType**](AcquiringType.md) | AcquiringType defines the acquisition logic used in the payment flow: - &#x60;Order&#x60;: Each order is created with a specific amount and associated payment request. Funds are settled on a per-order basis. - &#x60;TopUp&#x60;: Recharge-style flow where funds are topped up to a payer balance or account. Useful for flexible or usage-based payment models.  | 
 
 ### Return type
 
@@ -2473,6 +4915,172 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListPaymentWalletBalances200Response**](ListPaymentWalletBalances200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListPayoutItems
+
+> ListPayoutItems200Response ListPayoutItems(ctx).Limit(limit).Before(before).After(after).MerchantId(merchantId).Statuses(statuses).Execute()
+
+List all payout items
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	merchantId := "M1001"
+	statuses := "Pending,Processing"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListPayoutItems(ctx).Limit(limit).Before(before).After(after).MerchantId(merchantId).Statuses(statuses).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListPayoutItems``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListPayoutItems`: ListPayoutItems200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListPayoutItems`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListPayoutItemsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **merchantId** | **string** | The merchant ID. | 
+ **statuses** | **string** | A list of  statuses of order, refund or settle request. | 
+
+### Return type
+
+[**ListPayoutItems200Response**](ListPayoutItems200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListPayouts
+
+> ListPayouts200Response ListPayouts(ctx).Limit(limit).Before(before).After(after).RequestId(requestId).Execute()
+
+List all payouts
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	requestId := "random_request_id"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListPayouts(ctx).Limit(limit).Before(before).After(after).RequestId(requestId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListPayouts``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListPayouts`: ListPayouts200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListPayouts`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListPayoutsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
+ **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
+ **requestId** | **string** | The request ID. | 
+
+### Return type
+
+[**ListPayouts200Response**](ListPayouts200Response.md)
 
 ### Authorization
 
@@ -3156,6 +5764,77 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## QueryDestinationWhitelistEnabled
+
+> QueryDestinationWhitelistEnabled200Response QueryDestinationWhitelistEnabled(ctx).Execute()
+
+Query destination whitelist enabled status
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.QueryDestinationWhitelistEnabled(ctx).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.QueryDestinationWhitelistEnabled``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `QueryDestinationWhitelistEnabled`: QueryDestinationWhitelistEnabled200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.QueryDestinationWhitelistEnabled`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiQueryDestinationWhitelistEnabledRequest struct via the builder pattern
+
+
+### Return type
+
+[**QueryDestinationWhitelistEnabled200Response**](QueryDestinationWhitelistEnabled200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateBankAccountById
 
 > BankAccount UpdateBankAccountById(ctx, bankAccountId).UpdateBankAccountByIdRequest(updateBankAccountByIdRequest).Execute()
@@ -3223,6 +5902,252 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BankAccount**](BankAccount.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateCounterpartyById
+
+> Counterparty UpdateCounterpartyById(ctx, counterpartyId).UpdateCounterpartyByIdRequest(updateCounterpartyByIdRequest).Execute()
+
+Update counterparty
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	counterpartyId := "5b0ed293-f728-40b4-b1f6-86b88cd51384"
+	updateCounterpartyByIdRequest := *coboWaas2.NewUpdateCounterpartyByIdRequest("Counterparty A", coboWaas2.CounterpartyType("Individual"))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.UpdateCounterpartyById(ctx, counterpartyId).UpdateCounterpartyByIdRequest(updateCounterpartyByIdRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.UpdateCounterpartyById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateCounterpartyById`: Counterparty
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.UpdateCounterpartyById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**counterpartyId** | **string** | The counterparty ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateCounterpartyByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateCounterpartyByIdRequest** | [**UpdateCounterpartyByIdRequest**](UpdateCounterpartyByIdRequest.md) | The request body to update a counterparty. | 
+
+### Return type
+
+[**Counterparty**](Counterparty.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateDestinationBankAccountById
+
+> DestinationBankAccount UpdateDestinationBankAccountById(ctx, bankAccountId).UpdateDestinationBankAccount(updateDestinationBankAccount).Execute()
+
+Update destination bank account
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	bankAccountId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	updateDestinationBankAccount := *coboWaas2.NewUpdateDestinationBankAccount("Main Payout Account", "4111111111111111", "BOFAUS33", "USD", "John Doe", "123 Main St, Anytown, USA", "ABC Bank", "456 Bank Ave, Cityville, USA")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.UpdateDestinationBankAccountById(ctx, bankAccountId).UpdateDestinationBankAccount(updateDestinationBankAccount).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.UpdateDestinationBankAccountById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateDestinationBankAccountById`: DestinationBankAccount
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.UpdateDestinationBankAccountById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**bankAccountId** | **string** | The bank account ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateDestinationBankAccountByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateDestinationBankAccount** | [**UpdateDestinationBankAccount**](UpdateDestinationBankAccount.md) | The request body to update a destination bank account. | 
+
+### Return type
+
+[**DestinationBankAccount**](DestinationBankAccount.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateDestinationById
+
+> Destination UpdateDestinationById(ctx, destinationId).UpdateDestinationByIdRequest(updateDestinationByIdRequest).Execute()
+
+Update destination
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	destinationId := "46beeab4-6a8e-476e-bc69-99b89aacbc6f"
+	updateDestinationByIdRequest := *coboWaas2.NewUpdateDestinationByIdRequest("Destination A", coboWaas2.DestinationType("Individual"))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.UpdateDestinationById(ctx, destinationId).UpdateDestinationByIdRequest(updateDestinationByIdRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.UpdateDestinationById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateDestinationById`: Destination
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.UpdateDestinationById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**destinationId** | **string** | The destination ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateDestinationByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateDestinationByIdRequest** | [**UpdateDestinationByIdRequest**](UpdateDestinationByIdRequest.md) | The request body to create a destination. | 
+
+### Return type
+
+[**Destination**](Destination.md)
 
 ### Authorization
 

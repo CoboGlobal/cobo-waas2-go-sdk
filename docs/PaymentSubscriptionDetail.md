@@ -4,15 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Actions** | Pointer to [**[]PaymentSubscriptionAction**](PaymentSubscriptionAction.md) | An array of subscription actions. | [optional] 
-**Transactions** | Pointer to [**[]Transaction**](Transaction.md) | An array of subscription transactions. | [optional] 
 **PlanId** | **string** | The plan id in cobo. | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
 **MerchantId** | **string** | The merchant id in cobo. | 
 **MerchantAddress** | **string** | The merchant address in cobo. | 
 **UserAddress** | **string** | The user address in subscription. | 
 **TokenId** | **string** | The token_id in subscription. | 
-**Amount** | **string** | The amount in subscription. | 
+**ChargeAmount** | Pointer to **string** | The charge amount in subscription. | [optional] 
 **StartTime** | **int32** | The subscription start timestamp. | 
 **ExpirationTime** | **int32** | The subscription expired timestamp. | 
 **ChargesMade** | **int32** | The subscription charge times. | 
@@ -22,12 +20,14 @@ Name | Type | Description | Notes
 **Status** | [**PaymentSubscriptionStatus**](PaymentSubscriptionStatus.md) |  | 
 **CreatedTimestamp** | **int32** | The created time of the subscription, represented as a UNIX timestamp in seconds. | 
 **UpdatedTimestamp** | **int32** | The updated time of the subscription, represented as a UNIX timestamp in seconds. | 
+**Actions** | Pointer to [**[]PaymentSubscriptionAction**](PaymentSubscriptionAction.md) | An array of subscription actions. | [optional] 
+**Transactions** | Pointer to [**[]Transaction**](Transaction.md) | An array of subscription transactions. | [optional] 
 
 ## Methods
 
 ### NewPaymentSubscriptionDetail
 
-`func NewPaymentSubscriptionDetail(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, amount string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32, ) *PaymentSubscriptionDetail`
+`func NewPaymentSubscriptionDetail(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32, ) *PaymentSubscriptionDetail`
 
 NewPaymentSubscriptionDetail instantiates a new PaymentSubscriptionDetail object
 This constructor will assign default values to properties that have it defined,
@@ -41,56 +41,6 @@ will change when the set of required properties is changed
 NewPaymentSubscriptionDetailWithDefaults instantiates a new PaymentSubscriptionDetail object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetActions
-
-`func (o *PaymentSubscriptionDetail) GetActions() []PaymentSubscriptionAction`
-
-GetActions returns the Actions field if non-nil, zero value otherwise.
-
-### GetActionsOk
-
-`func (o *PaymentSubscriptionDetail) GetActionsOk() (*[]PaymentSubscriptionAction, bool)`
-
-GetActionsOk returns a tuple with the Actions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetActions
-
-`func (o *PaymentSubscriptionDetail) SetActions(v []PaymentSubscriptionAction)`
-
-SetActions sets Actions field to given value.
-
-### HasActions
-
-`func (o *PaymentSubscriptionDetail) HasActions() bool`
-
-HasActions returns a boolean if a field has been set.
-
-### GetTransactions
-
-`func (o *PaymentSubscriptionDetail) GetTransactions() []Transaction`
-
-GetTransactions returns the Transactions field if non-nil, zero value otherwise.
-
-### GetTransactionsOk
-
-`func (o *PaymentSubscriptionDetail) GetTransactionsOk() (*[]Transaction, bool)`
-
-GetTransactionsOk returns a tuple with the Transactions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTransactions
-
-`func (o *PaymentSubscriptionDetail) SetTransactions(v []Transaction)`
-
-SetTransactions sets Transactions field to given value.
-
-### HasTransactions
-
-`func (o *PaymentSubscriptionDetail) HasTransactions() bool`
-
-HasTransactions returns a boolean if a field has been set.
 
 ### GetPlanId
 
@@ -212,25 +162,30 @@ and a boolean to check if the value has been set.
 SetTokenId sets TokenId field to given value.
 
 
-### GetAmount
+### GetChargeAmount
 
-`func (o *PaymentSubscriptionDetail) GetAmount() string`
+`func (o *PaymentSubscriptionDetail) GetChargeAmount() string`
 
-GetAmount returns the Amount field if non-nil, zero value otherwise.
+GetChargeAmount returns the ChargeAmount field if non-nil, zero value otherwise.
 
-### GetAmountOk
+### GetChargeAmountOk
 
-`func (o *PaymentSubscriptionDetail) GetAmountOk() (*string, bool)`
+`func (o *PaymentSubscriptionDetail) GetChargeAmountOk() (*string, bool)`
 
-GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
+GetChargeAmountOk returns a tuple with the ChargeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAmount
+### SetChargeAmount
 
-`func (o *PaymentSubscriptionDetail) SetAmount(v string)`
+`func (o *PaymentSubscriptionDetail) SetChargeAmount(v string)`
 
-SetAmount sets Amount field to given value.
+SetChargeAmount sets ChargeAmount field to given value.
 
+### HasChargeAmount
+
+`func (o *PaymentSubscriptionDetail) HasChargeAmount() bool`
+
+HasChargeAmount returns a boolean if a field has been set.
 
 ### GetStartTime
 
@@ -411,6 +366,56 @@ and a boolean to check if the value has been set.
 
 SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
+
+### GetActions
+
+`func (o *PaymentSubscriptionDetail) GetActions() []PaymentSubscriptionAction`
+
+GetActions returns the Actions field if non-nil, zero value otherwise.
+
+### GetActionsOk
+
+`func (o *PaymentSubscriptionDetail) GetActionsOk() (*[]PaymentSubscriptionAction, bool)`
+
+GetActionsOk returns a tuple with the Actions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetActions
+
+`func (o *PaymentSubscriptionDetail) SetActions(v []PaymentSubscriptionAction)`
+
+SetActions sets Actions field to given value.
+
+### HasActions
+
+`func (o *PaymentSubscriptionDetail) HasActions() bool`
+
+HasActions returns a boolean if a field has been set.
+
+### GetTransactions
+
+`func (o *PaymentSubscriptionDetail) GetTransactions() []Transaction`
+
+GetTransactions returns the Transactions field if non-nil, zero value otherwise.
+
+### GetTransactionsOk
+
+`func (o *PaymentSubscriptionDetail) GetTransactionsOk() (*[]Transaction, bool)`
+
+GetTransactionsOk returns a tuple with the Transactions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransactions
+
+`func (o *PaymentSubscriptionDetail) SetTransactions(v []Transaction)`
+
+SetTransactions sets Transactions field to given value.
+
+### HasTransactions
+
+`func (o *PaymentSubscriptionDetail) HasTransactions() bool`
+
+HasTransactions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

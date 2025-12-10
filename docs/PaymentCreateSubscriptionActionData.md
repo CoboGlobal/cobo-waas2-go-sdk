@@ -6,15 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **UserAddress** | **string** | The subscription user address. | 
-**Amount** | **string** | The subscription crypto amount.  | 
 **TokenId** | **string** | The ID of the cryptocurrency you want to subscription. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
-**DiscountRate** | Pointer to **int32** | the discount rate, discount_rate/10000 | [optional] 
+**ChargeAmount** | **string** |  | 
 
 ## Methods
 
 ### NewPaymentCreateSubscriptionActionData
 
-`func NewPaymentCreateSubscriptionActionData(actionType PaymentSubscriptionActionType, userAddress string, amount string, tokenId string, ) *PaymentCreateSubscriptionActionData`
+`func NewPaymentCreateSubscriptionActionData(actionType PaymentSubscriptionActionType, userAddress string, tokenId string, chargeAmount string, ) *PaymentCreateSubscriptionActionData`
 
 NewPaymentCreateSubscriptionActionData instantiates a new PaymentCreateSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -69,26 +68,6 @@ and a boolean to check if the value has been set.
 SetUserAddress sets UserAddress field to given value.
 
 
-### GetAmount
-
-`func (o *PaymentCreateSubscriptionActionData) GetAmount() string`
-
-GetAmount returns the Amount field if non-nil, zero value otherwise.
-
-### GetAmountOk
-
-`func (o *PaymentCreateSubscriptionActionData) GetAmountOk() (*string, bool)`
-
-GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAmount
-
-`func (o *PaymentCreateSubscriptionActionData) SetAmount(v string)`
-
-SetAmount sets Amount field to given value.
-
-
 ### GetTokenId
 
 `func (o *PaymentCreateSubscriptionActionData) GetTokenId() string`
@@ -109,30 +88,25 @@ and a boolean to check if the value has been set.
 SetTokenId sets TokenId field to given value.
 
 
-### GetDiscountRate
+### GetChargeAmount
 
-`func (o *PaymentCreateSubscriptionActionData) GetDiscountRate() int32`
+`func (o *PaymentCreateSubscriptionActionData) GetChargeAmount() string`
 
-GetDiscountRate returns the DiscountRate field if non-nil, zero value otherwise.
+GetChargeAmount returns the ChargeAmount field if non-nil, zero value otherwise.
 
-### GetDiscountRateOk
+### GetChargeAmountOk
 
-`func (o *PaymentCreateSubscriptionActionData) GetDiscountRateOk() (*int32, bool)`
+`func (o *PaymentCreateSubscriptionActionData) GetChargeAmountOk() (*string, bool)`
 
-GetDiscountRateOk returns a tuple with the DiscountRate field if it's non-nil, zero value otherwise
+GetChargeAmountOk returns a tuple with the ChargeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDiscountRate
+### SetChargeAmount
 
-`func (o *PaymentCreateSubscriptionActionData) SetDiscountRate(v int32)`
+`func (o *PaymentCreateSubscriptionActionData) SetChargeAmount(v string)`
 
-SetDiscountRate sets DiscountRate field to given value.
+SetChargeAmount sets ChargeAmount field to given value.
 
-### HasDiscountRate
-
-`func (o *PaymentCreateSubscriptionActionData) HasDiscountRate() bool`
-
-HasDiscountRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

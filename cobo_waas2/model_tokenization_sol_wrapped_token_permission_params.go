@@ -19,8 +19,12 @@ var _ MappedNullable = &TokenizationSolWrappedTokenPermissionParams{}
 type TokenizationSolWrappedTokenPermissionParams struct {
 	// List of Solana wallet addresses that can perform wrap/unwrap operations. Multiple addresses can be assigned this role.
 	Wrapper []string `json:"wrapper,omitempty"`
-	// List of Solana wallet addresses that can pause/unpause the contract. Multiple addresses can be assigned this role.
-	Pauser []string `json:"pauser,omitempty"`
+	// Solana wallet address that acts as a pauser authority for the token. This authority can pause token transfers.
+	Pauser *string `json:"pauser,omitempty"`
+	// Solana wallet address that acts as a freezer authority for the token. This authority can freeze token accounts.
+	Freezer *string `json:"freezer,omitempty"`
+	// Solana wallet address that acts as an updater authority for the token. This authority can update token metadata.
+	Updater *string `json:"updater,omitempty"`
 }
 
 // NewTokenizationSolWrappedTokenPermissionParams instantiates a new TokenizationSolWrappedTokenPermissionParams object
@@ -73,17 +77,17 @@ func (o *TokenizationSolWrappedTokenPermissionParams) SetWrapper(v []string) {
 }
 
 // GetPauser returns the Pauser field value if set, zero value otherwise.
-func (o *TokenizationSolWrappedTokenPermissionParams) GetPauser() []string {
+func (o *TokenizationSolWrappedTokenPermissionParams) GetPauser() string {
 	if o == nil || IsNil(o.Pauser) {
-		var ret []string
+		var ret string
 		return ret
 	}
-	return o.Pauser
+	return *o.Pauser
 }
 
 // GetPauserOk returns a tuple with the Pauser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TokenizationSolWrappedTokenPermissionParams) GetPauserOk() ([]string, bool) {
+func (o *TokenizationSolWrappedTokenPermissionParams) GetPauserOk() (*string, bool) {
 	if o == nil || IsNil(o.Pauser) {
 		return nil, false
 	}
@@ -99,9 +103,73 @@ func (o *TokenizationSolWrappedTokenPermissionParams) HasPauser() bool {
 	return false
 }
 
-// SetPauser gets a reference to the given []string and assigns it to the Pauser field.
-func (o *TokenizationSolWrappedTokenPermissionParams) SetPauser(v []string) {
-	o.Pauser = v
+// SetPauser gets a reference to the given string and assigns it to the Pauser field.
+func (o *TokenizationSolWrappedTokenPermissionParams) SetPauser(v string) {
+	o.Pauser = &v
+}
+
+// GetFreezer returns the Freezer field value if set, zero value otherwise.
+func (o *TokenizationSolWrappedTokenPermissionParams) GetFreezer() string {
+	if o == nil || IsNil(o.Freezer) {
+		var ret string
+		return ret
+	}
+	return *o.Freezer
+}
+
+// GetFreezerOk returns a tuple with the Freezer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenizationSolWrappedTokenPermissionParams) GetFreezerOk() (*string, bool) {
+	if o == nil || IsNil(o.Freezer) {
+		return nil, false
+	}
+	return o.Freezer, true
+}
+
+// HasFreezer returns a boolean if a field has been set.
+func (o *TokenizationSolWrappedTokenPermissionParams) HasFreezer() bool {
+	if o != nil && !IsNil(o.Freezer) {
+		return true
+	}
+
+	return false
+}
+
+// SetFreezer gets a reference to the given string and assigns it to the Freezer field.
+func (o *TokenizationSolWrappedTokenPermissionParams) SetFreezer(v string) {
+	o.Freezer = &v
+}
+
+// GetUpdater returns the Updater field value if set, zero value otherwise.
+func (o *TokenizationSolWrappedTokenPermissionParams) GetUpdater() string {
+	if o == nil || IsNil(o.Updater) {
+		var ret string
+		return ret
+	}
+	return *o.Updater
+}
+
+// GetUpdaterOk returns a tuple with the Updater field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenizationSolWrappedTokenPermissionParams) GetUpdaterOk() (*string, bool) {
+	if o == nil || IsNil(o.Updater) {
+		return nil, false
+	}
+	return o.Updater, true
+}
+
+// HasUpdater returns a boolean if a field has been set.
+func (o *TokenizationSolWrappedTokenPermissionParams) HasUpdater() bool {
+	if o != nil && !IsNil(o.Updater) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdater gets a reference to the given string and assigns it to the Updater field.
+func (o *TokenizationSolWrappedTokenPermissionParams) SetUpdater(v string) {
+	o.Updater = &v
 }
 
 func (o TokenizationSolWrappedTokenPermissionParams) MarshalJSON() ([]byte, error) {
@@ -119,6 +187,12 @@ func (o TokenizationSolWrappedTokenPermissionParams) ToMap() (map[string]interfa
 	}
 	if !IsNil(o.Pauser) {
 		toSerialize["pauser"] = o.Pauser
+	}
+	if !IsNil(o.Freezer) {
+		toSerialize["freezer"] = o.Freezer
+	}
+	if !IsNil(o.Updater) {
+		toSerialize["updater"] = o.Updater
 	}
 	return toSerialize, nil
 }

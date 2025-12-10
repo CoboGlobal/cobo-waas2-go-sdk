@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **WalletId** | Pointer to **string** | The ID of the wallet linked to the merchant. | [optional] 
 **DeveloperFeeRate** | Pointer to **string** | The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \&quot;0.1\&quot; means 10%). | [optional] 
 **WalletSetup** | Pointer to [**WalletSetup**](WalletSetup.md) |  | [optional] 
+**SubscriptionDeveloperFeeRate** | Pointer to **string** | The fee rate applied when subscribe the merchant account. Represented as a string percentage (e.g., \&quot;0.1\&quot; means 10%). | [optional] 
 
 ## Methods
 
@@ -122,6 +123,31 @@ SetWalletSetup sets WalletSetup field to given value.
 `func (o *CreateMerchantRequest) HasWalletSetup() bool`
 
 HasWalletSetup returns a boolean if a field has been set.
+
+### GetSubscriptionDeveloperFeeRate
+
+`func (o *CreateMerchantRequest) GetSubscriptionDeveloperFeeRate() string`
+
+GetSubscriptionDeveloperFeeRate returns the SubscriptionDeveloperFeeRate field if non-nil, zero value otherwise.
+
+### GetSubscriptionDeveloperFeeRateOk
+
+`func (o *CreateMerchantRequest) GetSubscriptionDeveloperFeeRateOk() (*string, bool)`
+
+GetSubscriptionDeveloperFeeRateOk returns a tuple with the SubscriptionDeveloperFeeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscriptionDeveloperFeeRate
+
+`func (o *CreateMerchantRequest) SetSubscriptionDeveloperFeeRate(v string)`
+
+SetSubscriptionDeveloperFeeRate sets SubscriptionDeveloperFeeRate field to given value.
+
+### HasSubscriptionDeveloperFeeRate
+
+`func (o *CreateMerchantRequest) HasSubscriptionDeveloperFeeRate() bool`
+
+HasSubscriptionDeveloperFeeRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

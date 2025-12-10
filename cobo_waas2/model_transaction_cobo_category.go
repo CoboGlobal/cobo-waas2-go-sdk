@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionCoboCategory The transaction category defined by Cobo. Possible values include:    - `AutoSweep`: An auto-sweep transaction.   - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your MPC Wallets.   - `AutoFuelingRefund`: A refund for an auto-fueling transaction.   - `SafeTxMessage`: A message signing transaction initiated by an MPC wallet to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction.   - `BillPayment`: A transaction to pay Cobo bills through Fee Station.   - `BillRefund`: A refund for a previously made bill payment.   - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station.   - `CommissionFeeRefund`: A refund of previously charged commission fees.   - `StakingBabylonBtcDelegation`: A transaction for delegating BTC in Babylon staking.   - `StakingBabylonBtcSignBabylon`: A transaction for signing Babylon operations with BTC.   - `StakingBabylonClaim`: A transaction for claiming rewards from Babylon staking.   - `StakingBabylonSlashing`: A transaction related to slashing penalties in Babylon staking.   - `StakingBabylonStake`: A transaction for staking assets in the Babylon platform.   - `StakingBabylonUnstake`: A transaction for unstaking assets from the Babylon platform.   - `StakingBabylonWithdraw`: A transaction for withdrawing assets from Babylon staking.   - `StakingBithiveClaim`: A transaction for claiming rewards from Bithive staking.   - `StakingBithiveStake`: A transaction for staking assets in the Bithive platform.   - `StakingBithiveUnstake`: A transaction for unstaking assets from the Bithive platform.   - `StakingBithiveWithdraw`: A transaction for withdrawing assets from Bithive staking.   - `StakingCoreStake`: A transaction for staking assets in the Core staking platform.   - `StakingCoreWithdraw`: A transaction for withdrawing assets from Core staking.   - `StakingEthClaim`: A transaction for claiming rewards from ETH staking.   - `StakingEthStake`: A transaction for staking ETH assets.   - `StakingEthUnstake`: A transaction for unstaking ETH assets.   - `StakingSkyfarmClaim`: A transaction for claiming rewards from Skyfarm staking.   - `StakingSkyfarmStake`: A transaction for staking assets in the Skyfarm platform.   - `StakingSkyfarmUnstake`: A transaction for unstaking assets from the Skyfarm platform.   - `StellarChangeTrust`: A transaction for establishing a trustline on the Stellar network.. 
+// TransactionCoboCategory The transaction category defined by Cobo. Possible values include:    - `AutoSweep`: An auto-sweep transaction.   - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your MPC Wallets.   - `AutoFuelingRefund`: A refund for an auto-fueling transaction.   - `SafeTxMessage`: A message signing transaction initiated by an MPC wallet to authorize a Smart Contract Wallet (Safe\\{Wallet\\}) transaction.   - `BillPayment`: A transaction to pay Cobo bills through Fee Station.   - `BillRefund`: A refund for a previously made bill payment.   - `CommissionFeeCharge`: A transaction for commission-fee users that charges the commission fee incurred from various services.   - `CommissionFeeRefund`: A refund of previously charged commission fees.   - `StakingBabylonBtcDelegation`: A transaction for delegating BTC in Babylon staking.   - `StakingBabylonBtcSignBabylon`: A transaction for signing Babylon operations with BTC.   - `StakingBabylonClaim`: A transaction for claiming rewards from Babylon staking.   - `StakingBabylonSlashing`: A transaction related to slashing penalties in Babylon staking.   - `StakingBabylonStake`: A transaction for staking assets in the Babylon platform.   - `StakingBabylonUnstake`: A transaction for unstaking assets from the Babylon platform.   - `StakingBabylonWithdraw`: A transaction for withdrawing assets from Babylon staking.   - `StakingBithiveClaim`: A transaction for claiming rewards from Bithive staking.   - `StakingBithiveStake`: A transaction for staking assets in the Bithive platform.   - `StakingBithiveUnstake`: A transaction for unstaking assets from the Bithive platform.   - `StakingBithiveWithdraw`: A transaction for withdrawing assets from Bithive staking.   - `StakingCoreStake`: A transaction for staking assets in the Core staking platform.   - `StakingCoreWithdraw`: A transaction for withdrawing assets from Core staking.   - `StakingEthClaim`: A transaction for claiming rewards from ETH staking.   - `StakingEthStake`: A transaction for staking ETH assets.   - `StakingEthUnstake`: A transaction for unstaking ETH assets.   - `StakingSkyfarmClaim`: A transaction for claiming rewards from Skyfarm staking.   - `StakingSkyfarmStake`: A transaction for staking assets in the Skyfarm platform.   - `StakingSkyfarmUnstake`: A transaction for unstaking assets from the Skyfarm platform.   - `StellarChangeTrust`: A transaction for establishing a trustline on the Stellar network..   - `Tokenization`: A transaction for managing tokenized assets, such as minting or wrapping tokens.   - `TokenizationGasSponsor`: A transaction where gas fees are sponsored for tokenization-related operations, ensuring the transaction proceeds even if the source address lacks sufficient balance.   - `TokenSwap`: A transaction for token swapping or cross-chain bridging.   - `NonceAccountSign`: A transaction signed using a **Solana nonce account**, enabling deterministic and replay-safe transaction execution on the Solana network.     - `FeePayerSign`: A transaction where a **designated Solana fee payer account** covers the transaction fees, separating the fee payment from the main signer or source account.   - `GasFeeSponsor`: A transaction where Fee Station pays the on-chain gas fee in USD stablecoin.   - `GasFeeSponsorRefund`: A transaction that refunds gas fees previously sponsored and paid by Fee Station. 
 type TransactionCoboCategory string
 
 // List of TransactionCoboCategory
@@ -50,6 +50,13 @@ const (
 	TRANSACTIONCOBOCATEGORY_COMPLIANCE_REFUND TransactionCoboCategory = "ComplianceRefund"
 	TRANSACTIONCOBOCATEGORY_COMPLIANCE_ISOLATE TransactionCoboCategory = "ComplianceIsolate"
 	TRANSACTIONCOBOCATEGORY_STELLAR_CHANGE_TRUST TransactionCoboCategory = "StellarChangeTrust"
+	TRANSACTIONCOBOCATEGORY_TOKENIZATION TransactionCoboCategory = "Tokenization"
+	TRANSACTIONCOBOCATEGORY_TOKENIZATION_GAS_SPONSOR TransactionCoboCategory = "TokenizationGasSponsor"
+	TRANSACTIONCOBOCATEGORY_TOKEN_SWAP TransactionCoboCategory = "TokenSwap"
+	TRANSACTIONCOBOCATEGORY_NONCE_ACCOUNT_SIGN TransactionCoboCategory = "NonceAccountSign"
+	TRANSACTIONCOBOCATEGORY_FEE_PAYER_SIGN TransactionCoboCategory = "FeePayerSign"
+	TRANSACTIONCOBOCATEGORY_GAS_FEE_SPONSOR TransactionCoboCategory = "GasFeeSponsor"
+	TRANSACTIONCOBOCATEGORY_GAS_FEE_SPONSOR_REFUND TransactionCoboCategory = "GasFeeSponsorRefund"
 )
 
 // All allowed values of TransactionCoboCategory enum
@@ -86,6 +93,13 @@ var AllowedTransactionCoboCategoryEnumValues = []TransactionCoboCategory{
 	"ComplianceRefund",
 	"ComplianceIsolate",
 	"StellarChangeTrust",
+	"Tokenization",
+	"TokenizationGasSponsor",
+	"TokenSwap",
+	"NonceAccountSign",
+	"FeePayerSign",
+	"GasFeeSponsor",
+	"GasFeeSponsorRefund",
 }
 
 func (v *TransactionCoboCategory) UnmarshalJSON(src []byte) error {

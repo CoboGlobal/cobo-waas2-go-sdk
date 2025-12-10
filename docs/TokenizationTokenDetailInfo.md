@@ -15,13 +15,15 @@ Name | Type | Description | Notes
 **Status** | [**TokenizationStatus**](TokenizationStatus.md) |  | 
 **TotalSupply** | Pointer to **string** | The total supply of the token. | [optional] 
 **Holdings** | Pointer to **string** | The amount of tokens held by the organization. | [optional] 
+**Archived** | **bool** | Whether the token is archived. If archived, no operations can be initiated on this token. | 
 **Permissions** | Pointer to [**[]TokenizationAddressPermission**](TokenizationAddressPermission.md) | List of execution addresses and their permissions. | [optional] 
+**UnderlyingToken** | Pointer to [**TokenizationTokenInfo**](TokenizationTokenInfo.md) |  | [optional] 
 
 ## Methods
 
 ### NewTokenizationTokenDetailInfo
 
-`func NewTokenizationTokenDetailInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, ) *TokenizationTokenDetailInfo`
+`func NewTokenizationTokenDetailInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, archived bool, ) *TokenizationTokenDetailInfo`
 
 NewTokenizationTokenDetailInfo instantiates a new TokenizationTokenDetailInfo object
 This constructor will assign default values to properties that have it defined,
@@ -281,6 +283,26 @@ SetHoldings sets Holdings field to given value.
 
 HasHoldings returns a boolean if a field has been set.
 
+### GetArchived
+
+`func (o *TokenizationTokenDetailInfo) GetArchived() bool`
+
+GetArchived returns the Archived field if non-nil, zero value otherwise.
+
+### GetArchivedOk
+
+`func (o *TokenizationTokenDetailInfo) GetArchivedOk() (*bool, bool)`
+
+GetArchivedOk returns a tuple with the Archived field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetArchived
+
+`func (o *TokenizationTokenDetailInfo) SetArchived(v bool)`
+
+SetArchived sets Archived field to given value.
+
+
 ### GetPermissions
 
 `func (o *TokenizationTokenDetailInfo) GetPermissions() []TokenizationAddressPermission`
@@ -305,6 +327,31 @@ SetPermissions sets Permissions field to given value.
 `func (o *TokenizationTokenDetailInfo) HasPermissions() bool`
 
 HasPermissions returns a boolean if a field has been set.
+
+### GetUnderlyingToken
+
+`func (o *TokenizationTokenDetailInfo) GetUnderlyingToken() TokenizationTokenInfo`
+
+GetUnderlyingToken returns the UnderlyingToken field if non-nil, zero value otherwise.
+
+### GetUnderlyingTokenOk
+
+`func (o *TokenizationTokenDetailInfo) GetUnderlyingTokenOk() (*TokenizationTokenInfo, bool)`
+
+GetUnderlyingTokenOk returns a tuple with the UnderlyingToken field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUnderlyingToken
+
+`func (o *TokenizationTokenDetailInfo) SetUnderlyingToken(v TokenizationTokenInfo)`
+
+SetUnderlyingToken sets UnderlyingToken field to given value.
+
+### HasUnderlyingToken
+
+`func (o *TokenizationTokenDetailInfo) HasUnderlyingToken() bool`
+
+HasUnderlyingToken returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

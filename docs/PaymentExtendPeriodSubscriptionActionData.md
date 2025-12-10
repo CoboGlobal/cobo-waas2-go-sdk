@@ -4,16 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Periods** | Pointer to **int32** | The periods needed updated. | [optional] 
 **ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
-**Signature** | **string** | The signature for transaction. | 
+**Signature** | **string** | The signature for transaction. charge action is not required. | 
+**Deadline** | **int32** | The signature deadline for transaction. charge action is not required. | 
+**Periods** | **int32** | The periods needed updated. | 
 
 ## Methods
 
 ### NewPaymentExtendPeriodSubscriptionActionData
 
-`func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, ) *PaymentExtendPeriodSubscriptionActionData`
+`func NewPaymentExtendPeriodSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, deadline int32, periods int32, ) *PaymentExtendPeriodSubscriptionActionData`
 
 NewPaymentExtendPeriodSubscriptionActionData instantiates a new PaymentExtendPeriodSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -27,31 +28,6 @@ will change when the set of required properties is changed
 NewPaymentExtendPeriodSubscriptionActionDataWithDefaults instantiates a new PaymentExtendPeriodSubscriptionActionData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetPeriods
-
-`func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriods() int32`
-
-GetPeriods returns the Periods field if non-nil, zero value otherwise.
-
-### GetPeriodsOk
-
-`func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriodsOk() (*int32, bool)`
-
-GetPeriodsOk returns a tuple with the Periods field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPeriods
-
-`func (o *PaymentExtendPeriodSubscriptionActionData) SetPeriods(v int32)`
-
-SetPeriods sets Periods field to given value.
-
-### HasPeriods
-
-`func (o *PaymentExtendPeriodSubscriptionActionData) HasPeriods() bool`
-
-HasPeriods returns a boolean if a field has been set.
 
 ### GetActionType
 
@@ -111,6 +87,46 @@ and a boolean to check if the value has been set.
 `func (o *PaymentExtendPeriodSubscriptionActionData) SetSignature(v string)`
 
 SetSignature sets Signature field to given value.
+
+
+### GetDeadline
+
+`func (o *PaymentExtendPeriodSubscriptionActionData) GetDeadline() int32`
+
+GetDeadline returns the Deadline field if non-nil, zero value otherwise.
+
+### GetDeadlineOk
+
+`func (o *PaymentExtendPeriodSubscriptionActionData) GetDeadlineOk() (*int32, bool)`
+
+GetDeadlineOk returns a tuple with the Deadline field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeadline
+
+`func (o *PaymentExtendPeriodSubscriptionActionData) SetDeadline(v int32)`
+
+SetDeadline sets Deadline field to given value.
+
+
+### GetPeriods
+
+`func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriods() int32`
+
+GetPeriods returns the Periods field if non-nil, zero value otherwise.
+
+### GetPeriodsOk
+
+`func (o *PaymentExtendPeriodSubscriptionActionData) GetPeriodsOk() (*int32, bool)`
+
+GetPeriodsOk returns a tuple with the Periods field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPeriods
+
+`func (o *PaymentExtendPeriodSubscriptionActionData) SetPeriods(v int32)`
+
+SetPeriods sets Periods field to given value.
 
 
 

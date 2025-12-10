@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**TransactionDestinationType**](TransactionDestinationType.md) |  | 
 **CosmosMessages** | [**[]TransactionCosmosMessage**](TransactionCosmosMessage.md) |  | 
-**Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
 
 ## Methods
 
@@ -66,31 +65,6 @@ and a boolean to check if the value has been set.
 
 SetCosmosMessages sets CosmosMessages field to given value.
 
-
-### GetValue
-
-`func (o *TransactionCosmosContractDestination) GetValue() string`
-
-GetValue returns the Value field if non-nil, zero value otherwise.
-
-### GetValueOk
-
-`func (o *TransactionCosmosContractDestination) GetValueOk() (*string, bool)`
-
-GetValueOk returns a tuple with the Value field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetValue
-
-`func (o *TransactionCosmosContractDestination) SetValue(v string)`
-
-SetValue sets Value field to given value.
-
-### HasValue
-
-`func (o *TransactionCosmosContractDestination) HasValue() bool`
-
-HasValue returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

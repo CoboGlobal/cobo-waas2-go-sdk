@@ -67,6 +67,20 @@
 
 * `STELLAR_CHANGE_TRUST` (value: `"StellarChangeTrust"`)
 
+* `TOKENIZATION` (value: `"Tokenization"`)
+
+* `TOKENIZATION_GAS_SPONSOR` (value: `"TokenizationGasSponsor"`)
+
+* `TOKEN_SWAP` (value: `"TokenSwap"`)
+
+* `NONCE_ACCOUNT_SIGN` (value: `"NonceAccountSign"`)
+
+* `FEE_PAYER_SIGN` (value: `"FeePayerSign"`)
+
+* `GAS_FEE_SPONSOR` (value: `"GasFeeSponsor"`)
+
+* `GAS_FEE_SPONSOR_REFUND` (value: `"GasFeeSponsorRefund"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

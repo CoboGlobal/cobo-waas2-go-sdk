@@ -5,17 +5,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
-**Amount** | **string** | The amount of tokens to be transferred in this request. | 
-**TokenId** | **string** | The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
+**Amount** | Pointer to **string** | Applicable to transfer requests only. The amount of tokens to be transferred in this request. | [optional] 
+**TokenId** | Pointer to **string** | Applicable to transfer requests only. The token ID of the asset to be transferred.   You can retrieve available token IDs by calling   [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).  | [optional] 
+**FeeTokenId** | Pointer to **string** | The token ID used to pay the gas fee for the main transaction. You can retrieve available token IDs by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | [optional] 
 **EstimatedFeeAmount** | **string** | The estimated transaction fee required for this transfer, before applying any fee station rules. | 
 **FromAddress** | **string** | The blockchain address that initiates the transfer. | 
 **FromWalletId** | **string** | The wallet ID. | 
+**AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 
 
 ## Methods
 
 ### NewFeeStationCheckFeeStationUsage
 
-`func NewFeeStationCheckFeeStationUsage(requestId string, amount string, tokenId string, estimatedFeeAmount string, fromAddress string, fromWalletId string, ) *FeeStationCheckFeeStationUsage`
+`func NewFeeStationCheckFeeStationUsage(requestId string, estimatedFeeAmount string, fromAddress string, fromWalletId string, ) *FeeStationCheckFeeStationUsage`
 
 NewFeeStationCheckFeeStationUsage instantiates a new FeeStationCheckFeeStationUsage object
 This constructor will assign default values to properties that have it defined,
@@ -69,6 +71,11 @@ and a boolean to check if the value has been set.
 
 SetAmount sets Amount field to given value.
 
+### HasAmount
+
+`func (o *FeeStationCheckFeeStationUsage) HasAmount() bool`
+
+HasAmount returns a boolean if a field has been set.
 
 ### GetTokenId
 
@@ -89,6 +96,36 @@ and a boolean to check if the value has been set.
 
 SetTokenId sets TokenId field to given value.
 
+### HasTokenId
+
+`func (o *FeeStationCheckFeeStationUsage) HasTokenId() bool`
+
+HasTokenId returns a boolean if a field has been set.
+
+### GetFeeTokenId
+
+`func (o *FeeStationCheckFeeStationUsage) GetFeeTokenId() string`
+
+GetFeeTokenId returns the FeeTokenId field if non-nil, zero value otherwise.
+
+### GetFeeTokenIdOk
+
+`func (o *FeeStationCheckFeeStationUsage) GetFeeTokenIdOk() (*string, bool)`
+
+GetFeeTokenIdOk returns a tuple with the FeeTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeeTokenId
+
+`func (o *FeeStationCheckFeeStationUsage) SetFeeTokenId(v string)`
+
+SetFeeTokenId sets FeeTokenId field to given value.
+
+### HasFeeTokenId
+
+`func (o *FeeStationCheckFeeStationUsage) HasFeeTokenId() bool`
+
+HasFeeTokenId returns a boolean if a field has been set.
 
 ### GetEstimatedFeeAmount
 
@@ -149,6 +186,31 @@ and a boolean to check if the value has been set.
 
 SetFromWalletId sets FromWalletId field to given value.
 
+
+### GetAutoFuel
+
+`func (o *FeeStationCheckFeeStationUsage) GetAutoFuel() AutoFuelType`
+
+GetAutoFuel returns the AutoFuel field if non-nil, zero value otherwise.
+
+### GetAutoFuelOk
+
+`func (o *FeeStationCheckFeeStationUsage) GetAutoFuelOk() (*AutoFuelType, bool)`
+
+GetAutoFuelOk returns a tuple with the AutoFuel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutoFuel
+
+`func (o *FeeStationCheckFeeStationUsage) SetAutoFuel(v AutoFuelType)`
+
+SetAutoFuel sets AutoFuel field to given value.
+
+### HasAutoFuel
+
+`func (o *FeeStationCheckFeeStationUsage) HasAutoFuel() bool`
+
+HasAutoFuel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

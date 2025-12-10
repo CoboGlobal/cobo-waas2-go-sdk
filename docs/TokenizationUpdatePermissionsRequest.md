@@ -5,9 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Source** | [**TokenizationTokenOperationSource**](TokenizationTokenOperationSource.md) |  | 
-**Action** | [**TokenizationPermissionAction**](TokenizationPermissionAction.md) |  | 
-**Address** | **string** | The address to manage permissions for. | 
-**Permissions** | [**[]TokenizationTokenPermissionType**](TokenizationTokenPermissionType.md) | The list of permissions to operate on. | 
+**Addresses** | [**[]TokenizationUpdateAddressPermissions**](TokenizationUpdateAddressPermissions.md) |  | 
 **AppInitiator** | Pointer to **string** | The initiator of the tokenization activity. If you do not specify this property, the WaaS service will automatically designate the API key as the initiator. | [optional] 
 **Fee** | [**TransactionRequestFee**](TransactionRequestFee.md) |  | 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
@@ -16,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewTokenizationUpdatePermissionsRequest
 
-`func NewTokenizationUpdatePermissionsRequest(source TokenizationTokenOperationSource, action TokenizationPermissionAction, address string, permissions []TokenizationTokenPermissionType, fee TransactionRequestFee, ) *TokenizationUpdatePermissionsRequest`
+`func NewTokenizationUpdatePermissionsRequest(source TokenizationTokenOperationSource, addresses []TokenizationUpdateAddressPermissions, fee TransactionRequestFee, ) *TokenizationUpdatePermissionsRequest`
 
 NewTokenizationUpdatePermissionsRequest instantiates a new TokenizationUpdatePermissionsRequest object
 This constructor will assign default values to properties that have it defined,
@@ -51,64 +49,24 @@ and a boolean to check if the value has been set.
 SetSource sets Source field to given value.
 
 
-### GetAction
+### GetAddresses
 
-`func (o *TokenizationUpdatePermissionsRequest) GetAction() TokenizationPermissionAction`
+`func (o *TokenizationUpdatePermissionsRequest) GetAddresses() []TokenizationUpdateAddressPermissions`
 
-GetAction returns the Action field if non-nil, zero value otherwise.
+GetAddresses returns the Addresses field if non-nil, zero value otherwise.
 
-### GetActionOk
+### GetAddressesOk
 
-`func (o *TokenizationUpdatePermissionsRequest) GetActionOk() (*TokenizationPermissionAction, bool)`
+`func (o *TokenizationUpdatePermissionsRequest) GetAddressesOk() (*[]TokenizationUpdateAddressPermissions, bool)`
 
-GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
+GetAddressesOk returns a tuple with the Addresses field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAction
+### SetAddresses
 
-`func (o *TokenizationUpdatePermissionsRequest) SetAction(v TokenizationPermissionAction)`
+`func (o *TokenizationUpdatePermissionsRequest) SetAddresses(v []TokenizationUpdateAddressPermissions)`
 
-SetAction sets Action field to given value.
-
-
-### GetAddress
-
-`func (o *TokenizationUpdatePermissionsRequest) GetAddress() string`
-
-GetAddress returns the Address field if non-nil, zero value otherwise.
-
-### GetAddressOk
-
-`func (o *TokenizationUpdatePermissionsRequest) GetAddressOk() (*string, bool)`
-
-GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAddress
-
-`func (o *TokenizationUpdatePermissionsRequest) SetAddress(v string)`
-
-SetAddress sets Address field to given value.
-
-
-### GetPermissions
-
-`func (o *TokenizationUpdatePermissionsRequest) GetPermissions() []TokenizationTokenPermissionType`
-
-GetPermissions returns the Permissions field if non-nil, zero value otherwise.
-
-### GetPermissionsOk
-
-`func (o *TokenizationUpdatePermissionsRequest) GetPermissionsOk() (*[]TokenizationTokenPermissionType, bool)`
-
-GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPermissions
-
-`func (o *TokenizationUpdatePermissionsRequest) SetPermissions(v []TokenizationTokenPermissionType)`
-
-SetPermissions sets Permissions field to given value.
+SetAddresses sets Addresses field to given value.
 
 
 ### GetAppInitiator

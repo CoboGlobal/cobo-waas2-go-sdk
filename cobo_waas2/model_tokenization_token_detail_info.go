@@ -39,8 +39,11 @@ type TokenizationTokenDetailInfo struct {
 	TotalSupply *string `json:"total_supply,omitempty"`
 	// The amount of tokens held by the organization.
 	Holdings *string `json:"holdings,omitempty"`
+	// Whether the token is archived. If archived, no operations can be initiated on this token.
+	Archived bool `json:"archived"`
 	// List of execution addresses and their permissions.
 	Permissions []TokenizationAddressPermission `json:"permissions,omitempty"`
+	UnderlyingToken *TokenizationTokenInfo `json:"underlying_token,omitempty"`
 }
 
 type _TokenizationTokenDetailInfo TokenizationTokenDetailInfo
@@ -49,7 +52,7 @@ type _TokenizationTokenDetailInfo TokenizationTokenDetailInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTokenizationTokenDetailInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus) *TokenizationTokenDetailInfo {
+func NewTokenizationTokenDetailInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, archived bool) *TokenizationTokenDetailInfo {
 	this := TokenizationTokenDetailInfo{}
 	this.TokenId = tokenId
 	this.ChainId = chainId
@@ -57,6 +60,7 @@ func NewTokenizationTokenDetailInfo(tokenId string, chainId string, tokenSymbol 
 	this.TokenStandard = tokenStandard
 	this.Decimals = decimals
 	this.Status = status
+	this.Archived = archived
 	return &this
 }
 
@@ -372,6 +376,30 @@ func (o *TokenizationTokenDetailInfo) SetHoldings(v string) {
 	o.Holdings = &v
 }
 
+// GetArchived returns the Archived field value
+func (o *TokenizationTokenDetailInfo) GetArchived() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.Archived
+}
+
+// GetArchivedOk returns a tuple with the Archived field value
+// and a boolean to check if the value has been set.
+func (o *TokenizationTokenDetailInfo) GetArchivedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Archived, true
+}
+
+// SetArchived sets field value
+func (o *TokenizationTokenDetailInfo) SetArchived(v bool) {
+	o.Archived = v
+}
+
 // GetPermissions returns the Permissions field value if set, zero value otherwise.
 func (o *TokenizationTokenDetailInfo) GetPermissions() []TokenizationAddressPermission {
 	if o == nil || IsNil(o.Permissions) {
@@ -402,6 +430,38 @@ func (o *TokenizationTokenDetailInfo) HasPermissions() bool {
 // SetPermissions gets a reference to the given []TokenizationAddressPermission and assigns it to the Permissions field.
 func (o *TokenizationTokenDetailInfo) SetPermissions(v []TokenizationAddressPermission) {
 	o.Permissions = v
+}
+
+// GetUnderlyingToken returns the UnderlyingToken field value if set, zero value otherwise.
+func (o *TokenizationTokenDetailInfo) GetUnderlyingToken() TokenizationTokenInfo {
+	if o == nil || IsNil(o.UnderlyingToken) {
+		var ret TokenizationTokenInfo
+		return ret
+	}
+	return *o.UnderlyingToken
+}
+
+// GetUnderlyingTokenOk returns a tuple with the UnderlyingToken field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenizationTokenDetailInfo) GetUnderlyingTokenOk() (*TokenizationTokenInfo, bool) {
+	if o == nil || IsNil(o.UnderlyingToken) {
+		return nil, false
+	}
+	return o.UnderlyingToken, true
+}
+
+// HasUnderlyingToken returns a boolean if a field has been set.
+func (o *TokenizationTokenDetailInfo) HasUnderlyingToken() bool {
+	if o != nil && !IsNil(o.UnderlyingToken) {
+		return true
+	}
+
+	return false
+}
+
+// SetUnderlyingToken gets a reference to the given TokenizationTokenInfo and assigns it to the UnderlyingToken field.
+func (o *TokenizationTokenDetailInfo) SetUnderlyingToken(v TokenizationTokenInfo) {
+	o.UnderlyingToken = &v
 }
 
 func (o TokenizationTokenDetailInfo) MarshalJSON() ([]byte, error) {
@@ -435,8 +495,12 @@ func (o TokenizationTokenDetailInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Holdings) {
 		toSerialize["holdings"] = o.Holdings
 	}
+	toSerialize["archived"] = o.Archived
 	if !IsNil(o.Permissions) {
 		toSerialize["permissions"] = o.Permissions
+	}
+	if !IsNil(o.UnderlyingToken) {
+		toSerialize["underlying_token"] = o.UnderlyingToken
 	}
 	return toSerialize, nil
 }
@@ -452,6 +516,7 @@ func (o *TokenizationTokenDetailInfo) UnmarshalJSON(data []byte) (err error) {
 		"token_standard",
 		"decimals",
 		"status",
+		"archived",
 	}
 
 	allProperties := make(map[string]interface{})

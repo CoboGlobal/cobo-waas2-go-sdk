@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **PeriodType** | [**PaymentSubscriptionPeriodType**](PaymentSubscriptionPeriodType.md) |  | 
 **Periods** | **int32** |  | 
 **Interval** | **int32** |  | 
+**TrialPeriod** | Pointer to **int32** | probation period | [optional] 
 **Amount** | **string** | The subscription plan amount.  - If &#x60;currency&#x60; is set, this represents the subscription amount in the specified fiat currency. - If &#x60;currency&#x60; isn&#39;t set, this represents the settlement amount in the specified cryptocurrency.  | 
 **TokenId** | Pointer to **string** | The ID of the cryptocurrency you want to subscription. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | [optional] 
 **Currency** | Pointer to **string** | The fiat currency for settling the cryptocurrency. Currently, only &#x60;USD&#x60; is supported. Specify this field when &#x60;payout_channel&#x60; is set to &#x60;OffRamp&#x60;. | [optional] 
@@ -131,6 +132,31 @@ and a boolean to check if the value has been set.
 
 SetInterval sets Interval field to given value.
 
+
+### GetTrialPeriod
+
+`func (o *PaymentSubscriptionPlan) GetTrialPeriod() int32`
+
+GetTrialPeriod returns the TrialPeriod field if non-nil, zero value otherwise.
+
+### GetTrialPeriodOk
+
+`func (o *PaymentSubscriptionPlan) GetTrialPeriodOk() (*int32, bool)`
+
+GetTrialPeriodOk returns a tuple with the TrialPeriod field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrialPeriod
+
+`func (o *PaymentSubscriptionPlan) SetTrialPeriod(v int32)`
+
+SetTrialPeriod sets TrialPeriod field to given value.
+
+### HasTrialPeriod
+
+`func (o *PaymentSubscriptionPlan) HasTrialPeriod() bool`
+
+HasTrialPeriod returns a boolean if a field has been set.
 
 ### GetAmount
 

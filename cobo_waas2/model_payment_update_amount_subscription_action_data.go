@@ -19,13 +19,17 @@ var _ MappedNullable = &PaymentUpdateAmountSubscriptionActionData{}
 
 // PaymentUpdateAmountSubscriptionActionData struct for PaymentUpdateAmountSubscriptionActionData
 type PaymentUpdateAmountSubscriptionActionData struct {
-	// The new plan id in cobo.
-	NewPlanId string `json:"new_plan_id"`
 	ActionType PaymentSubscriptionActionType `json:"action_type"`
 	// The subscription id in cobo.
 	SubscriptionId string `json:"subscription_id"`
-	// The signature for transaction.
+	// The new plan id in cobo.
+	NewPlanId string `json:"new_plan_id"`
+	// The subscription plan crypto amount with input token_id. 
+	ChargeAmount string `json:"charge_amount"`
+	// The signature for transaction. charge action is not required.
 	Signature string `json:"signature"`
+	// The signature deadline for transaction. charge action is not required.
+	Deadline int32 `json:"deadline"`
 }
 
 type _PaymentUpdateAmountSubscriptionActionData PaymentUpdateAmountSubscriptionActionData
@@ -34,11 +38,14 @@ type _PaymentUpdateAmountSubscriptionActionData PaymentUpdateAmountSubscriptionA
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentUpdateAmountSubscriptionActionData(newPlanId string, actionType PaymentSubscriptionActionType, subscriptionId string, signature string) *PaymentUpdateAmountSubscriptionActionData {
+func NewPaymentUpdateAmountSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, newPlanId string, chargeAmount string, signature string, deadline int32) *PaymentUpdateAmountSubscriptionActionData {
 	this := PaymentUpdateAmountSubscriptionActionData{}
 	this.ActionType = actionType
 	this.SubscriptionId = subscriptionId
+	this.NewPlanId = newPlanId
+	this.ChargeAmount = chargeAmount
 	this.Signature = signature
+	this.Deadline = deadline
 	return &this
 }
 
@@ -48,30 +55,6 @@ func NewPaymentUpdateAmountSubscriptionActionData(newPlanId string, actionType P
 func NewPaymentUpdateAmountSubscriptionActionDataWithDefaults() *PaymentUpdateAmountSubscriptionActionData {
 	this := PaymentUpdateAmountSubscriptionActionData{}
 	return &this
-}
-
-// GetNewPlanId returns the NewPlanId field value
-func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.NewPlanId
-}
-
-// GetNewPlanIdOk returns a tuple with the NewPlanId field value
-// and a boolean to check if the value has been set.
-func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.NewPlanId, true
-}
-
-// SetNewPlanId sets field value
-func (o *PaymentUpdateAmountSubscriptionActionData) SetNewPlanId(v string) {
-	o.NewPlanId = v
 }
 
 // GetActionType returns the ActionType field value
@@ -122,6 +105,54 @@ func (o *PaymentUpdateAmountSubscriptionActionData) SetSubscriptionId(v string) 
 	o.SubscriptionId = v
 }
 
+// GetNewPlanId returns the NewPlanId field value
+func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.NewPlanId
+}
+
+// GetNewPlanIdOk returns a tuple with the NewPlanId field value
+// and a boolean to check if the value has been set.
+func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.NewPlanId, true
+}
+
+// SetNewPlanId sets field value
+func (o *PaymentUpdateAmountSubscriptionActionData) SetNewPlanId(v string) {
+	o.NewPlanId = v
+}
+
+// GetChargeAmount returns the ChargeAmount field value
+func (o *PaymentUpdateAmountSubscriptionActionData) GetChargeAmount() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ChargeAmount
+}
+
+// GetChargeAmountOk returns a tuple with the ChargeAmount field value
+// and a boolean to check if the value has been set.
+func (o *PaymentUpdateAmountSubscriptionActionData) GetChargeAmountOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ChargeAmount, true
+}
+
+// SetChargeAmount sets field value
+func (o *PaymentUpdateAmountSubscriptionActionData) SetChargeAmount(v string) {
+	o.ChargeAmount = v
+}
+
 // GetSignature returns the Signature field value
 func (o *PaymentUpdateAmountSubscriptionActionData) GetSignature() string {
 	if o == nil {
@@ -146,6 +177,30 @@ func (o *PaymentUpdateAmountSubscriptionActionData) SetSignature(v string) {
 	o.Signature = v
 }
 
+// GetDeadline returns the Deadline field value
+func (o *PaymentUpdateAmountSubscriptionActionData) GetDeadline() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Deadline
+}
+
+// GetDeadlineOk returns a tuple with the Deadline field value
+// and a boolean to check if the value has been set.
+func (o *PaymentUpdateAmountSubscriptionActionData) GetDeadlineOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Deadline, true
+}
+
+// SetDeadline sets field value
+func (o *PaymentUpdateAmountSubscriptionActionData) SetDeadline(v int32) {
+	o.Deadline = v
+}
+
 func (o PaymentUpdateAmountSubscriptionActionData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,10 +211,12 @@ func (o PaymentUpdateAmountSubscriptionActionData) MarshalJSON() ([]byte, error)
 
 func (o PaymentUpdateAmountSubscriptionActionData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["new_plan_id"] = o.NewPlanId
 	toSerialize["action_type"] = o.ActionType
 	toSerialize["subscription_id"] = o.SubscriptionId
+	toSerialize["new_plan_id"] = o.NewPlanId
+	toSerialize["charge_amount"] = o.ChargeAmount
 	toSerialize["signature"] = o.Signature
+	toSerialize["deadline"] = o.Deadline
 	return toSerialize, nil
 }
 
@@ -168,10 +225,12 @@ func (o *PaymentUpdateAmountSubscriptionActionData) UnmarshalJSON(data []byte) (
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"new_plan_id",
 		"action_type",
 		"subscription_id",
+		"new_plan_id",
+		"charge_amount",
 		"signature",
+		"deadline",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -29,6 +29,8 @@ type PaymentCreateSubscriptionPlan struct {
 	TokenId *string `json:"token_id,omitempty"`
 	// The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported. Specify this field when `payout_channel` is set to `OffRamp`.
 	Currency *string `json:"currency,omitempty"`
+	// probation period
+	TrialPeriod *int32 `json:"trial_period,omitempty"`
 }
 
 type _PaymentCreateSubscriptionPlan PaymentCreateSubscriptionPlan
@@ -214,6 +216,38 @@ func (o *PaymentCreateSubscriptionPlan) SetCurrency(v string) {
 	o.Currency = &v
 }
 
+// GetTrialPeriod returns the TrialPeriod field value if set, zero value otherwise.
+func (o *PaymentCreateSubscriptionPlan) GetTrialPeriod() int32 {
+	if o == nil || IsNil(o.TrialPeriod) {
+		var ret int32
+		return ret
+	}
+	return *o.TrialPeriod
+}
+
+// GetTrialPeriodOk returns a tuple with the TrialPeriod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentCreateSubscriptionPlan) GetTrialPeriodOk() (*int32, bool) {
+	if o == nil || IsNil(o.TrialPeriod) {
+		return nil, false
+	}
+	return o.TrialPeriod, true
+}
+
+// HasTrialPeriod returns a boolean if a field has been set.
+func (o *PaymentCreateSubscriptionPlan) HasTrialPeriod() bool {
+	if o != nil && !IsNil(o.TrialPeriod) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrialPeriod gets a reference to the given int32 and assigns it to the TrialPeriod field.
+func (o *PaymentCreateSubscriptionPlan) SetTrialPeriod(v int32) {
+	o.TrialPeriod = &v
+}
+
 func (o PaymentCreateSubscriptionPlan) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -233,6 +267,9 @@ func (o PaymentCreateSubscriptionPlan) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.TrialPeriod) {
+		toSerialize["trial_period"] = o.TrialPeriod
 	}
 	return toSerialize, nil
 }

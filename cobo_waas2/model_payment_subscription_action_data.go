@@ -15,25 +15,27 @@ import (
 
 // PaymentSubscriptionActionData - struct for PaymentSubscriptionActionData
 type PaymentSubscriptionActionData struct {
-	PaymentApproveSubscriptionActionData *PaymentApproveSubscriptionActionData
 	PaymentBaseSubscriptionActionData *PaymentBaseSubscriptionActionData
+	PaymentChargeSubscriptionActionData *PaymentChargeSubscriptionActionData
 	PaymentCreateSubscriptionActionData *PaymentCreateSubscriptionActionData
 	PaymentDeveloperSubscriptionActionData *PaymentDeveloperSubscriptionActionData
 	PaymentExtendPeriodSubscriptionActionData *PaymentExtendPeriodSubscriptionActionData
+	PaymentSubscribeAndChargeSubscriptionActionData *PaymentSubscribeAndChargeSubscriptionActionData
 	PaymentUpdateAmountSubscriptionActionData *PaymentUpdateAmountSubscriptionActionData
-}
-
-// PaymentApproveSubscriptionActionDataAsPaymentSubscriptionActionData is a convenience function that returns PaymentApproveSubscriptionActionData wrapped in PaymentSubscriptionActionData
-func PaymentApproveSubscriptionActionDataAsPaymentSubscriptionActionData(v *PaymentApproveSubscriptionActionData) PaymentSubscriptionActionData {
-	return PaymentSubscriptionActionData{
-		PaymentApproveSubscriptionActionData: v,
-	}
+	PaymentUpdateTokenIdSubscriptionActionData *PaymentUpdateTokenIdSubscriptionActionData
 }
 
 // PaymentBaseSubscriptionActionDataAsPaymentSubscriptionActionData is a convenience function that returns PaymentBaseSubscriptionActionData wrapped in PaymentSubscriptionActionData
 func PaymentBaseSubscriptionActionDataAsPaymentSubscriptionActionData(v *PaymentBaseSubscriptionActionData) PaymentSubscriptionActionData {
 	return PaymentSubscriptionActionData{
 		PaymentBaseSubscriptionActionData: v,
+	}
+}
+
+// PaymentChargeSubscriptionActionDataAsPaymentSubscriptionActionData is a convenience function that returns PaymentChargeSubscriptionActionData wrapped in PaymentSubscriptionActionData
+func PaymentChargeSubscriptionActionDataAsPaymentSubscriptionActionData(v *PaymentChargeSubscriptionActionData) PaymentSubscriptionActionData {
+	return PaymentSubscriptionActionData{
+		PaymentChargeSubscriptionActionData: v,
 	}
 }
 
@@ -58,10 +60,24 @@ func PaymentExtendPeriodSubscriptionActionDataAsPaymentSubscriptionActionData(v 
 	}
 }
 
+// PaymentSubscribeAndChargeSubscriptionActionDataAsPaymentSubscriptionActionData is a convenience function that returns PaymentSubscribeAndChargeSubscriptionActionData wrapped in PaymentSubscriptionActionData
+func PaymentSubscribeAndChargeSubscriptionActionDataAsPaymentSubscriptionActionData(v *PaymentSubscribeAndChargeSubscriptionActionData) PaymentSubscriptionActionData {
+	return PaymentSubscriptionActionData{
+		PaymentSubscribeAndChargeSubscriptionActionData: v,
+	}
+}
+
 // PaymentUpdateAmountSubscriptionActionDataAsPaymentSubscriptionActionData is a convenience function that returns PaymentUpdateAmountSubscriptionActionData wrapped in PaymentSubscriptionActionData
 func PaymentUpdateAmountSubscriptionActionDataAsPaymentSubscriptionActionData(v *PaymentUpdateAmountSubscriptionActionData) PaymentSubscriptionActionData {
 	return PaymentSubscriptionActionData{
 		PaymentUpdateAmountSubscriptionActionData: v,
+	}
+}
+
+// PaymentUpdateTokenIdSubscriptionActionDataAsPaymentSubscriptionActionData is a convenience function that returns PaymentUpdateTokenIdSubscriptionActionData wrapped in PaymentSubscriptionActionData
+func PaymentUpdateTokenIdSubscriptionActionDataAsPaymentSubscriptionActionData(v *PaymentUpdateTokenIdSubscriptionActionData) PaymentSubscriptionActionData {
+	return PaymentSubscriptionActionData{
+		PaymentUpdateTokenIdSubscriptionActionData: v,
 	}
 }
 
@@ -88,8 +104,8 @@ func (dst *PaymentSubscriptionActionData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'Charge'
-	if jsonDict["action_type"] == "Charge" {
+	// check if the discriminator value is 'Cancel'
+	if jsonDict["action_type"] == "Cancel" {
 		// try to unmarshal JSON data into PaymentBaseSubscriptionActionData
 		err = json.Unmarshal(data, &dst.PaymentBaseSubscriptionActionData)
 		if err == nil {
@@ -97,6 +113,18 @@ func (dst *PaymentSubscriptionActionData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentBaseSubscriptionActionData = nil
 			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentBaseSubscriptionActionData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'Charge'
+	if jsonDict["action_type"] == "Charge" {
+		// try to unmarshal JSON data into PaymentChargeSubscriptionActionData
+		err = json.Unmarshal(data, &dst.PaymentChargeSubscriptionActionData)
+		if err == nil {
+			return nil // data stored in dst.PaymentChargeSubscriptionActionData, return on the first match
+		} else {
+			dst.PaymentChargeSubscriptionActionData = nil
+			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentChargeSubscriptionActionData: %s", err.Error())
 		}
 	}
 
@@ -174,13 +202,25 @@ func (dst *PaymentSubscriptionActionData) UnmarshalJSON(data []byte) error {
 
 	// check if the discriminator value is 'SubscribeAndCharge'
 	if jsonDict["action_type"] == "SubscribeAndCharge" {
-		// try to unmarshal JSON data into PaymentBaseSubscriptionActionData
-		err = json.Unmarshal(data, &dst.PaymentBaseSubscriptionActionData)
+		// try to unmarshal JSON data into PaymentSubscribeAndChargeSubscriptionActionData
+		err = json.Unmarshal(data, &dst.PaymentSubscribeAndChargeSubscriptionActionData)
 		if err == nil {
-			return nil // data stored in dst.PaymentBaseSubscriptionActionData, return on the first match
+			return nil // data stored in dst.PaymentSubscribeAndChargeSubscriptionActionData, return on the first match
 		} else {
-			dst.PaymentBaseSubscriptionActionData = nil
-			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentBaseSubscriptionActionData: %s", err.Error())
+			dst.PaymentSubscribeAndChargeSubscriptionActionData = nil
+			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentSubscribeAndChargeSubscriptionActionData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'UpdateTokenId'
+	if jsonDict["action_type"] == "UpdateTokenId" {
+		// try to unmarshal JSON data into PaymentUpdateTokenIdSubscriptionActionData
+		err = json.Unmarshal(data, &dst.PaymentUpdateTokenIdSubscriptionActionData)
+		if err == nil {
+			return nil // data stored in dst.PaymentUpdateTokenIdSubscriptionActionData, return on the first match
+		} else {
+			dst.PaymentUpdateTokenIdSubscriptionActionData = nil
+			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentUpdateTokenIdSubscriptionActionData: %s", err.Error())
 		}
 	}
 
@@ -196,18 +236,6 @@ func (dst *PaymentSubscriptionActionData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'PaymentApproveSubscriptionActionData'
-	if jsonDict["action_type"] == "PaymentApproveSubscriptionActionData" {
-		// try to unmarshal JSON data into PaymentApproveSubscriptionActionData
-		err = json.Unmarshal(data, &dst.PaymentApproveSubscriptionActionData)
-		if err == nil {
-			return nil // data stored in dst.PaymentApproveSubscriptionActionData, return on the first match
-		} else {
-			dst.PaymentApproveSubscriptionActionData = nil
-			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentApproveSubscriptionActionData: %s", err.Error())
-		}
-	}
-
 	// check if the discriminator value is 'PaymentBaseSubscriptionActionData'
 	if jsonDict["action_type"] == "PaymentBaseSubscriptionActionData" {
 		// try to unmarshal JSON data into PaymentBaseSubscriptionActionData
@@ -217,6 +245,18 @@ func (dst *PaymentSubscriptionActionData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentBaseSubscriptionActionData = nil
 			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentBaseSubscriptionActionData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentChargeSubscriptionActionData'
+	if jsonDict["action_type"] == "PaymentChargeSubscriptionActionData" {
+		// try to unmarshal JSON data into PaymentChargeSubscriptionActionData
+		err = json.Unmarshal(data, &dst.PaymentChargeSubscriptionActionData)
+		if err == nil {
+			return nil // data stored in dst.PaymentChargeSubscriptionActionData, return on the first match
+		} else {
+			dst.PaymentChargeSubscriptionActionData = nil
+			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentChargeSubscriptionActionData: %s", err.Error())
 		}
 	}
 
@@ -256,6 +296,18 @@ func (dst *PaymentSubscriptionActionData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentSubscribeAndChargeSubscriptionActionData'
+	if jsonDict["action_type"] == "PaymentSubscribeAndChargeSubscriptionActionData" {
+		// try to unmarshal JSON data into PaymentSubscribeAndChargeSubscriptionActionData
+		err = json.Unmarshal(data, &dst.PaymentSubscribeAndChargeSubscriptionActionData)
+		if err == nil {
+			return nil // data stored in dst.PaymentSubscribeAndChargeSubscriptionActionData, return on the first match
+		} else {
+			dst.PaymentSubscribeAndChargeSubscriptionActionData = nil
+			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentSubscribeAndChargeSubscriptionActionData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentUpdateAmountSubscriptionActionData'
 	if jsonDict["action_type"] == "PaymentUpdateAmountSubscriptionActionData" {
 		// try to unmarshal JSON data into PaymentUpdateAmountSubscriptionActionData
@@ -268,17 +320,29 @@ func (dst *PaymentSubscriptionActionData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentUpdateTokenIdSubscriptionActionData'
+	if jsonDict["action_type"] == "PaymentUpdateTokenIdSubscriptionActionData" {
+		// try to unmarshal JSON data into PaymentUpdateTokenIdSubscriptionActionData
+		err = json.Unmarshal(data, &dst.PaymentUpdateTokenIdSubscriptionActionData)
+		if err == nil {
+			return nil // data stored in dst.PaymentUpdateTokenIdSubscriptionActionData, return on the first match
+		} else {
+			dst.PaymentUpdateTokenIdSubscriptionActionData = nil
+			return fmt.Errorf("failed to unmarshal PaymentSubscriptionActionData as PaymentUpdateTokenIdSubscriptionActionData: %s", err.Error())
+		}
+	}
+
 	return nil
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src PaymentSubscriptionActionData) MarshalJSON() ([]byte, error) {
-	if src.PaymentApproveSubscriptionActionData != nil {
-		return json.Marshal(&src.PaymentApproveSubscriptionActionData)
-	}
-
 	if src.PaymentBaseSubscriptionActionData != nil {
 		return json.Marshal(&src.PaymentBaseSubscriptionActionData)
+	}
+
+	if src.PaymentChargeSubscriptionActionData != nil {
+		return json.Marshal(&src.PaymentChargeSubscriptionActionData)
 	}
 
 	if src.PaymentCreateSubscriptionActionData != nil {
@@ -293,8 +357,16 @@ func (src PaymentSubscriptionActionData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.PaymentExtendPeriodSubscriptionActionData)
 	}
 
+	if src.PaymentSubscribeAndChargeSubscriptionActionData != nil {
+		return json.Marshal(&src.PaymentSubscribeAndChargeSubscriptionActionData)
+	}
+
 	if src.PaymentUpdateAmountSubscriptionActionData != nil {
 		return json.Marshal(&src.PaymentUpdateAmountSubscriptionActionData)
+	}
+
+	if src.PaymentUpdateTokenIdSubscriptionActionData != nil {
+		return json.Marshal(&src.PaymentUpdateTokenIdSubscriptionActionData)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -305,12 +377,12 @@ func (obj *PaymentSubscriptionActionData) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
-	if obj.PaymentApproveSubscriptionActionData != nil {
-		return obj.PaymentApproveSubscriptionActionData
-	}
-
 	if obj.PaymentBaseSubscriptionActionData != nil {
 		return obj.PaymentBaseSubscriptionActionData
+	}
+
+	if obj.PaymentChargeSubscriptionActionData != nil {
+		return obj.PaymentChargeSubscriptionActionData
 	}
 
 	if obj.PaymentCreateSubscriptionActionData != nil {
@@ -325,8 +397,16 @@ func (obj *PaymentSubscriptionActionData) GetActualInstance() (interface{}) {
 		return obj.PaymentExtendPeriodSubscriptionActionData
 	}
 
+	if obj.PaymentSubscribeAndChargeSubscriptionActionData != nil {
+		return obj.PaymentSubscribeAndChargeSubscriptionActionData
+	}
+
 	if obj.PaymentUpdateAmountSubscriptionActionData != nil {
 		return obj.PaymentUpdateAmountSubscriptionActionData
+	}
+
+	if obj.PaymentUpdateTokenIdSubscriptionActionData != nil {
+		return obj.PaymentUpdateTokenIdSubscriptionActionData
 	}
 
 	// all schemas are nil

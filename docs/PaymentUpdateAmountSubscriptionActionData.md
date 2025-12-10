@@ -4,16 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**NewPlanId** | **string** | The new plan id in cobo. | 
 **ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
-**Signature** | **string** | The signature for transaction. | 
+**NewPlanId** | **string** | The new plan id in cobo. | 
+**ChargeAmount** | **string** | The subscription plan crypto amount with input token_id.  | 
+**Signature** | **string** | The signature for transaction. charge action is not required. | 
+**Deadline** | **int32** | The signature deadline for transaction. charge action is not required. | 
 
 ## Methods
 
 ### NewPaymentUpdateAmountSubscriptionActionData
 
-`func NewPaymentUpdateAmountSubscriptionActionData(newPlanId string, actionType PaymentSubscriptionActionType, subscriptionId string, signature string, ) *PaymentUpdateAmountSubscriptionActionData`
+`func NewPaymentUpdateAmountSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, newPlanId string, chargeAmount string, signature string, deadline int32, ) *PaymentUpdateAmountSubscriptionActionData`
 
 NewPaymentUpdateAmountSubscriptionActionData instantiates a new PaymentUpdateAmountSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -27,26 +29,6 @@ will change when the set of required properties is changed
 NewPaymentUpdateAmountSubscriptionActionDataWithDefaults instantiates a new PaymentUpdateAmountSubscriptionActionData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetNewPlanId
-
-`func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanId() string`
-
-GetNewPlanId returns the NewPlanId field if non-nil, zero value otherwise.
-
-### GetNewPlanIdOk
-
-`func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanIdOk() (*string, bool)`
-
-GetNewPlanIdOk returns a tuple with the NewPlanId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNewPlanId
-
-`func (o *PaymentUpdateAmountSubscriptionActionData) SetNewPlanId(v string)`
-
-SetNewPlanId sets NewPlanId field to given value.
-
 
 ### GetActionType
 
@@ -88,6 +70,46 @@ and a boolean to check if the value has been set.
 SetSubscriptionId sets SubscriptionId field to given value.
 
 
+### GetNewPlanId
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanId() string`
+
+GetNewPlanId returns the NewPlanId field if non-nil, zero value otherwise.
+
+### GetNewPlanIdOk
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetNewPlanIdOk() (*string, bool)`
+
+GetNewPlanIdOk returns a tuple with the NewPlanId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNewPlanId
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) SetNewPlanId(v string)`
+
+SetNewPlanId sets NewPlanId field to given value.
+
+
+### GetChargeAmount
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetChargeAmount() string`
+
+GetChargeAmount returns the ChargeAmount field if non-nil, zero value otherwise.
+
+### GetChargeAmountOk
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetChargeAmountOk() (*string, bool)`
+
+GetChargeAmountOk returns a tuple with the ChargeAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChargeAmount
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) SetChargeAmount(v string)`
+
+SetChargeAmount sets ChargeAmount field to given value.
+
+
 ### GetSignature
 
 `func (o *PaymentUpdateAmountSubscriptionActionData) GetSignature() string`
@@ -106,6 +128,26 @@ and a boolean to check if the value has been set.
 `func (o *PaymentUpdateAmountSubscriptionActionData) SetSignature(v string)`
 
 SetSignature sets Signature field to given value.
+
+
+### GetDeadline
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetDeadline() int32`
+
+GetDeadline returns the Deadline field if non-nil, zero value otherwise.
+
+### GetDeadlineOk
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) GetDeadlineOk() (*int32, bool)`
+
+GetDeadlineOk returns a tuple with the Deadline field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeadline
+
+`func (o *PaymentUpdateAmountSubscriptionActionData) SetDeadline(v int32)`
+
+SetDeadline sets Deadline field to given value.
 
 
 

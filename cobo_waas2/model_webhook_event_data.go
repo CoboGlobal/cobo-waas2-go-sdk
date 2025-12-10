@@ -19,12 +19,16 @@ type WebhookEventData struct {
 	BalanceUpdateInfoEventData *BalanceUpdateInfoEventData
 	ChainsEventData *ChainsEventData
 	ComplianceDispositionUpdateEventData *ComplianceDispositionUpdateEventData
+	ComplianceKyaScreeningsUpdateEventData *ComplianceKyaScreeningsUpdateEventData
 	ComplianceKytScreeningsUpdateEventData *ComplianceKytScreeningsUpdateEventData
 	MPCVaultEventData *MPCVaultEventData
 	PaymentAddressUpdateEventData *PaymentAddressUpdateEventData
+	PaymentChargeUpdateEventData *PaymentChargeUpdateEventData
 	PaymentOrderEventData *PaymentOrderEventData
+	PaymentPayoutEvent *PaymentPayoutEvent
 	PaymentRefundEventData *PaymentRefundEventData
 	PaymentSettlementEvent *PaymentSettlementEvent
+	PaymentSubscriptionUpdateEventData *PaymentSubscriptionUpdateEventData
 	PaymentTransactionEventData *PaymentTransactionEventData
 	SuspendedTokenEventData *SuspendedTokenEventData
 	TSSRequestWebhookEventData *TSSRequestWebhookEventData
@@ -62,6 +66,13 @@ func ComplianceDispositionUpdateEventDataAsWebhookEventData(v *ComplianceDisposi
 	}
 }
 
+// ComplianceKyaScreeningsUpdateEventDataAsWebhookEventData is a convenience function that returns ComplianceKyaScreeningsUpdateEventData wrapped in WebhookEventData
+func ComplianceKyaScreeningsUpdateEventDataAsWebhookEventData(v *ComplianceKyaScreeningsUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		ComplianceKyaScreeningsUpdateEventData: v,
+	}
+}
+
 // ComplianceKytScreeningsUpdateEventDataAsWebhookEventData is a convenience function that returns ComplianceKytScreeningsUpdateEventData wrapped in WebhookEventData
 func ComplianceKytScreeningsUpdateEventDataAsWebhookEventData(v *ComplianceKytScreeningsUpdateEventData) WebhookEventData {
 	return WebhookEventData{
@@ -83,10 +94,24 @@ func PaymentAddressUpdateEventDataAsWebhookEventData(v *PaymentAddressUpdateEven
 	}
 }
 
+// PaymentChargeUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentChargeUpdateEventData wrapped in WebhookEventData
+func PaymentChargeUpdateEventDataAsWebhookEventData(v *PaymentChargeUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentChargeUpdateEventData: v,
+	}
+}
+
 // PaymentOrderEventDataAsWebhookEventData is a convenience function that returns PaymentOrderEventData wrapped in WebhookEventData
 func PaymentOrderEventDataAsWebhookEventData(v *PaymentOrderEventData) WebhookEventData {
 	return WebhookEventData{
 		PaymentOrderEventData: v,
+	}
+}
+
+// PaymentPayoutEventAsWebhookEventData is a convenience function that returns PaymentPayoutEvent wrapped in WebhookEventData
+func PaymentPayoutEventAsWebhookEventData(v *PaymentPayoutEvent) WebhookEventData {
+	return WebhookEventData{
+		PaymentPayoutEvent: v,
 	}
 }
 
@@ -101,6 +126,13 @@ func PaymentRefundEventDataAsWebhookEventData(v *PaymentRefundEventData) Webhook
 func PaymentSettlementEventAsWebhookEventData(v *PaymentSettlementEvent) WebhookEventData {
 	return WebhookEventData{
 		PaymentSettlementEvent: v,
+	}
+}
+
+// PaymentSubscriptionUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentSubscriptionUpdateEventData wrapped in WebhookEventData
+func PaymentSubscriptionUpdateEventDataAsWebhookEventData(v *PaymentSubscriptionUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentSubscriptionUpdateEventData: v,
 	}
 }
 
@@ -212,6 +244,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'ComplianceKyaScreenings'
+	if jsonDict["data_type"] == "ComplianceKyaScreenings" {
+		// try to unmarshal JSON data into ComplianceKyaScreeningsUpdateEventData
+		err = json.Unmarshal(data, &dst.ComplianceKyaScreeningsUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.ComplianceKyaScreeningsUpdateEventData, return on the first match
+		} else {
+			dst.ComplianceKyaScreeningsUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as ComplianceKyaScreeningsUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ComplianceKytScreenings'
 	if jsonDict["data_type"] == "ComplianceKytScreenings" {
 		// try to unmarshal JSON data into ComplianceKytScreeningsUpdateEventData
@@ -248,6 +292,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentChargeUpdate'
+	if jsonDict["data_type"] == "PaymentChargeUpdate" {
+		// try to unmarshal JSON data into PaymentChargeUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentChargeUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentChargeUpdateEventData, return on the first match
+		} else {
+			dst.PaymentChargeUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentChargeUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentOrder'
 	if jsonDict["data_type"] == "PaymentOrder" {
 		// try to unmarshal JSON data into PaymentOrderEventData
@@ -257,6 +313,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentOrderEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentOrderEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentPayout'
+	if jsonDict["data_type"] == "PaymentPayout" {
+		// try to unmarshal JSON data into PaymentPayoutEvent
+		err = json.Unmarshal(data, &dst.PaymentPayoutEvent)
+		if err == nil {
+			return nil // data stored in dst.PaymentPayoutEvent, return on the first match
+		} else {
+			dst.PaymentPayoutEvent = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentPayoutEvent: %s", err.Error())
 		}
 	}
 
@@ -281,6 +349,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentSettlementEvent = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentSettlementEvent: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentSubscriptionUpdate'
+	if jsonDict["data_type"] == "PaymentSubscriptionUpdate" {
+		// try to unmarshal JSON data into PaymentSubscriptionUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentSubscriptionUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentSubscriptionUpdateEventData, return on the first match
+		} else {
+			dst.PaymentSubscriptionUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentSubscriptionUpdateEventData: %s", err.Error())
 		}
 	}
 
@@ -416,6 +496,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'ComplianceKyaScreeningsUpdateEventData'
+	if jsonDict["data_type"] == "ComplianceKyaScreeningsUpdateEventData" {
+		// try to unmarshal JSON data into ComplianceKyaScreeningsUpdateEventData
+		err = json.Unmarshal(data, &dst.ComplianceKyaScreeningsUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.ComplianceKyaScreeningsUpdateEventData, return on the first match
+		} else {
+			dst.ComplianceKyaScreeningsUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as ComplianceKyaScreeningsUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ComplianceKytScreeningsUpdateEventData'
 	if jsonDict["data_type"] == "ComplianceKytScreeningsUpdateEventData" {
 		// try to unmarshal JSON data into ComplianceKytScreeningsUpdateEventData
@@ -452,6 +544,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentChargeUpdateEventData'
+	if jsonDict["data_type"] == "PaymentChargeUpdateEventData" {
+		// try to unmarshal JSON data into PaymentChargeUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentChargeUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentChargeUpdateEventData, return on the first match
+		} else {
+			dst.PaymentChargeUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentChargeUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentOrderEventData'
 	if jsonDict["data_type"] == "PaymentOrderEventData" {
 		// try to unmarshal JSON data into PaymentOrderEventData
@@ -461,6 +565,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentOrderEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentOrderEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentPayoutEvent'
+	if jsonDict["data_type"] == "PaymentPayoutEvent" {
+		// try to unmarshal JSON data into PaymentPayoutEvent
+		err = json.Unmarshal(data, &dst.PaymentPayoutEvent)
+		if err == nil {
+			return nil // data stored in dst.PaymentPayoutEvent, return on the first match
+		} else {
+			dst.PaymentPayoutEvent = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentPayoutEvent: %s", err.Error())
 		}
 	}
 
@@ -485,6 +601,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentSettlementEvent = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentSettlementEvent: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentSubscriptionUpdateEventData'
+	if jsonDict["data_type"] == "PaymentSubscriptionUpdateEventData" {
+		// try to unmarshal JSON data into PaymentSubscriptionUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentSubscriptionUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentSubscriptionUpdateEventData, return on the first match
+		} else {
+			dst.PaymentSubscriptionUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentSubscriptionUpdateEventData: %s", err.Error())
 		}
 	}
 
@@ -593,6 +721,10 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.ComplianceDispositionUpdateEventData)
 	}
 
+	if src.ComplianceKyaScreeningsUpdateEventData != nil {
+		return json.Marshal(&src.ComplianceKyaScreeningsUpdateEventData)
+	}
+
 	if src.ComplianceKytScreeningsUpdateEventData != nil {
 		return json.Marshal(&src.ComplianceKytScreeningsUpdateEventData)
 	}
@@ -605,8 +737,16 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.PaymentAddressUpdateEventData)
 	}
 
+	if src.PaymentChargeUpdateEventData != nil {
+		return json.Marshal(&src.PaymentChargeUpdateEventData)
+	}
+
 	if src.PaymentOrderEventData != nil {
 		return json.Marshal(&src.PaymentOrderEventData)
+	}
+
+	if src.PaymentPayoutEvent != nil {
+		return json.Marshal(&src.PaymentPayoutEvent)
 	}
 
 	if src.PaymentRefundEventData != nil {
@@ -615,6 +755,10 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 
 	if src.PaymentSettlementEvent != nil {
 		return json.Marshal(&src.PaymentSettlementEvent)
+	}
+
+	if src.PaymentSubscriptionUpdateEventData != nil {
+		return json.Marshal(&src.PaymentSubscriptionUpdateEventData)
 	}
 
 	if src.PaymentTransactionEventData != nil {
@@ -669,6 +813,10 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 		return obj.ComplianceDispositionUpdateEventData
 	}
 
+	if obj.ComplianceKyaScreeningsUpdateEventData != nil {
+		return obj.ComplianceKyaScreeningsUpdateEventData
+	}
+
 	if obj.ComplianceKytScreeningsUpdateEventData != nil {
 		return obj.ComplianceKytScreeningsUpdateEventData
 	}
@@ -681,8 +829,16 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 		return obj.PaymentAddressUpdateEventData
 	}
 
+	if obj.PaymentChargeUpdateEventData != nil {
+		return obj.PaymentChargeUpdateEventData
+	}
+
 	if obj.PaymentOrderEventData != nil {
 		return obj.PaymentOrderEventData
+	}
+
+	if obj.PaymentPayoutEvent != nil {
+		return obj.PaymentPayoutEvent
 	}
 
 	if obj.PaymentRefundEventData != nil {
@@ -691,6 +847,10 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 
 	if obj.PaymentSettlementEvent != nil {
 		return obj.PaymentSettlementEvent
+	}
+
+	if obj.PaymentSubscriptionUpdateEventData != nil {
+		return obj.PaymentSubscriptionUpdateEventData
 	}
 
 	if obj.PaymentTransactionEventData != nil {

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeRate** | Pointer to **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | [optional] 
+**Fallback** | Pointer to **bool** | Indicates whether the estimated fee is generated from Cobo’s fallback mechanism. When the estimated transaction belongs to a UTXO-based chain and the specified address does not have sufficient balance to cover the on-chain fee, this field will be set to &#x60;true&#x60;. In this case, the returned fee value is estimated by Cobo’s internal fallback strategy, which is typically higher than the actual on-chain fee. When &#x60;fallback&#x60; is &#x60;true&#x60;, please use the estimated fee value with caution. | [optional] 
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
 **TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **FeeUsed** | Pointer to **string** | The transaction fee. | [optional] 
@@ -54,6 +55,31 @@ SetFeeRate sets FeeRate field to given value.
 `func (o *TransactionUtxoFee) HasFeeRate() bool`
 
 HasFeeRate returns a boolean if a field has been set.
+
+### GetFallback
+
+`func (o *TransactionUtxoFee) GetFallback() bool`
+
+GetFallback returns the Fallback field if non-nil, zero value otherwise.
+
+### GetFallbackOk
+
+`func (o *TransactionUtxoFee) GetFallbackOk() (*bool, bool)`
+
+GetFallbackOk returns a tuple with the Fallback field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFallback
+
+`func (o *TransactionUtxoFee) SetFallback(v bool)`
+
+SetFallback sets Fallback field to given value.
+
+### HasFallback
+
+`func (o *TransactionUtxoFee) HasFallback() bool`
+
+HasFallback returns a boolean if a field has been set.
 
 ### GetFeeType
 

@@ -19,10 +19,6 @@ var _ MappedNullable = &PaymentSubscriptionDetail{}
 
 // PaymentSubscriptionDetail struct for PaymentSubscriptionDetail
 type PaymentSubscriptionDetail struct {
-	// An array of subscription actions.
-	Actions []PaymentSubscriptionAction `json:"actions,omitempty"`
-	// An array of subscription transactions.
-	Transactions []Transaction `json:"transactions,omitempty"`
 	// The plan id in cobo.
 	PlanId string `json:"plan_id"`
 	// The subscription id in cobo.
@@ -35,8 +31,8 @@ type PaymentSubscriptionDetail struct {
 	UserAddress string `json:"user_address"`
 	// The token_id in subscription.
 	TokenId string `json:"token_id"`
-	// The amount in subscription.
-	Amount string `json:"amount"`
+	// The charge amount in subscription.
+	ChargeAmount *string `json:"charge_amount,omitempty"`
 	// The subscription start timestamp.
 	StartTime int32 `json:"start_time"`
 	// The subscription expired timestamp.
@@ -52,6 +48,10 @@ type PaymentSubscriptionDetail struct {
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The updated time of the subscription, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp int32 `json:"updated_timestamp"`
+	// An array of subscription actions.
+	Actions []PaymentSubscriptionAction `json:"actions,omitempty"`
+	// An array of subscription transactions.
+	Transactions []Transaction `json:"transactions,omitempty"`
 }
 
 type _PaymentSubscriptionDetail PaymentSubscriptionDetail
@@ -60,7 +60,7 @@ type _PaymentSubscriptionDetail PaymentSubscriptionDetail
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentSubscriptionDetail(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, amount string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32) *PaymentSubscriptionDetail {
+func NewPaymentSubscriptionDetail(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32) *PaymentSubscriptionDetail {
 	this := PaymentSubscriptionDetail{}
 	this.PlanId = planId
 	this.SubscriptionId = subscriptionId
@@ -68,7 +68,6 @@ func NewPaymentSubscriptionDetail(planId string, subscriptionId string, merchant
 	this.MerchantAddress = merchantAddress
 	this.UserAddress = userAddress
 	this.TokenId = tokenId
-	this.Amount = amount
 	this.StartTime = startTime
 	this.ExpirationTime = expirationTime
 	this.ChargesMade = chargesMade
@@ -87,70 +86,6 @@ func NewPaymentSubscriptionDetail(planId string, subscriptionId string, merchant
 func NewPaymentSubscriptionDetailWithDefaults() *PaymentSubscriptionDetail {
 	this := PaymentSubscriptionDetail{}
 	return &this
-}
-
-// GetActions returns the Actions field value if set, zero value otherwise.
-func (o *PaymentSubscriptionDetail) GetActions() []PaymentSubscriptionAction {
-	if o == nil || IsNil(o.Actions) {
-		var ret []PaymentSubscriptionAction
-		return ret
-	}
-	return o.Actions
-}
-
-// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentSubscriptionDetail) GetActionsOk() ([]PaymentSubscriptionAction, bool) {
-	if o == nil || IsNil(o.Actions) {
-		return nil, false
-	}
-	return o.Actions, true
-}
-
-// HasActions returns a boolean if a field has been set.
-func (o *PaymentSubscriptionDetail) HasActions() bool {
-	if o != nil && !IsNil(o.Actions) {
-		return true
-	}
-
-	return false
-}
-
-// SetActions gets a reference to the given []PaymentSubscriptionAction and assigns it to the Actions field.
-func (o *PaymentSubscriptionDetail) SetActions(v []PaymentSubscriptionAction) {
-	o.Actions = v
-}
-
-// GetTransactions returns the Transactions field value if set, zero value otherwise.
-func (o *PaymentSubscriptionDetail) GetTransactions() []Transaction {
-	if o == nil || IsNil(o.Transactions) {
-		var ret []Transaction
-		return ret
-	}
-	return o.Transactions
-}
-
-// GetTransactionsOk returns a tuple with the Transactions field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentSubscriptionDetail) GetTransactionsOk() ([]Transaction, bool) {
-	if o == nil || IsNil(o.Transactions) {
-		return nil, false
-	}
-	return o.Transactions, true
-}
-
-// HasTransactions returns a boolean if a field has been set.
-func (o *PaymentSubscriptionDetail) HasTransactions() bool {
-	if o != nil && !IsNil(o.Transactions) {
-		return true
-	}
-
-	return false
-}
-
-// SetTransactions gets a reference to the given []Transaction and assigns it to the Transactions field.
-func (o *PaymentSubscriptionDetail) SetTransactions(v []Transaction) {
-	o.Transactions = v
 }
 
 // GetPlanId returns the PlanId field value
@@ -297,28 +232,36 @@ func (o *PaymentSubscriptionDetail) SetTokenId(v string) {
 	o.TokenId = v
 }
 
-// GetAmount returns the Amount field value
-func (o *PaymentSubscriptionDetail) GetAmount() string {
-	if o == nil {
+// GetChargeAmount returns the ChargeAmount field value if set, zero value otherwise.
+func (o *PaymentSubscriptionDetail) GetChargeAmount() string {
+	if o == nil || IsNil(o.ChargeAmount) {
 		var ret string
 		return ret
 	}
-
-	return o.Amount
+	return *o.ChargeAmount
 }
 
-// GetAmountOk returns a tuple with the Amount field value
+// GetChargeAmountOk returns a tuple with the ChargeAmount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PaymentSubscriptionDetail) GetAmountOk() (*string, bool) {
-	if o == nil {
+func (o *PaymentSubscriptionDetail) GetChargeAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.ChargeAmount) {
 		return nil, false
 	}
-	return &o.Amount, true
+	return o.ChargeAmount, true
 }
 
-// SetAmount sets field value
-func (o *PaymentSubscriptionDetail) SetAmount(v string) {
-	o.Amount = v
+// HasChargeAmount returns a boolean if a field has been set.
+func (o *PaymentSubscriptionDetail) HasChargeAmount() bool {
+	if o != nil && !IsNil(o.ChargeAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetChargeAmount gets a reference to the given string and assigns it to the ChargeAmount field.
+func (o *PaymentSubscriptionDetail) SetChargeAmount(v string) {
+	o.ChargeAmount = &v
 }
 
 // GetStartTime returns the StartTime field value
@@ -537,6 +480,70 @@ func (o *PaymentSubscriptionDetail) SetUpdatedTimestamp(v int32) {
 	o.UpdatedTimestamp = v
 }
 
+// GetActions returns the Actions field value if set, zero value otherwise.
+func (o *PaymentSubscriptionDetail) GetActions() []PaymentSubscriptionAction {
+	if o == nil || IsNil(o.Actions) {
+		var ret []PaymentSubscriptionAction
+		return ret
+	}
+	return o.Actions
+}
+
+// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSubscriptionDetail) GetActionsOk() ([]PaymentSubscriptionAction, bool) {
+	if o == nil || IsNil(o.Actions) {
+		return nil, false
+	}
+	return o.Actions, true
+}
+
+// HasActions returns a boolean if a field has been set.
+func (o *PaymentSubscriptionDetail) HasActions() bool {
+	if o != nil && !IsNil(o.Actions) {
+		return true
+	}
+
+	return false
+}
+
+// SetActions gets a reference to the given []PaymentSubscriptionAction and assigns it to the Actions field.
+func (o *PaymentSubscriptionDetail) SetActions(v []PaymentSubscriptionAction) {
+	o.Actions = v
+}
+
+// GetTransactions returns the Transactions field value if set, zero value otherwise.
+func (o *PaymentSubscriptionDetail) GetTransactions() []Transaction {
+	if o == nil || IsNil(o.Transactions) {
+		var ret []Transaction
+		return ret
+	}
+	return o.Transactions
+}
+
+// GetTransactionsOk returns a tuple with the Transactions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSubscriptionDetail) GetTransactionsOk() ([]Transaction, bool) {
+	if o == nil || IsNil(o.Transactions) {
+		return nil, false
+	}
+	return o.Transactions, true
+}
+
+// HasTransactions returns a boolean if a field has been set.
+func (o *PaymentSubscriptionDetail) HasTransactions() bool {
+	if o != nil && !IsNil(o.Transactions) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactions gets a reference to the given []Transaction and assigns it to the Transactions field.
+func (o *PaymentSubscriptionDetail) SetTransactions(v []Transaction) {
+	o.Transactions = v
+}
+
 func (o PaymentSubscriptionDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -547,19 +554,15 @@ func (o PaymentSubscriptionDetail) MarshalJSON() ([]byte, error) {
 
 func (o PaymentSubscriptionDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Actions) {
-		toSerialize["actions"] = o.Actions
-	}
-	if !IsNil(o.Transactions) {
-		toSerialize["transactions"] = o.Transactions
-	}
 	toSerialize["plan_id"] = o.PlanId
 	toSerialize["subscription_id"] = o.SubscriptionId
 	toSerialize["merchant_id"] = o.MerchantId
 	toSerialize["merchant_address"] = o.MerchantAddress
 	toSerialize["user_address"] = o.UserAddress
 	toSerialize["token_id"] = o.TokenId
-	toSerialize["amount"] = o.Amount
+	if !IsNil(o.ChargeAmount) {
+		toSerialize["charge_amount"] = o.ChargeAmount
+	}
 	toSerialize["start_time"] = o.StartTime
 	toSerialize["expiration_time"] = o.ExpirationTime
 	toSerialize["charges_made"] = o.ChargesMade
@@ -569,6 +572,12 @@ func (o PaymentSubscriptionDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
+	}
+	if !IsNil(o.Transactions) {
+		toSerialize["transactions"] = o.Transactions
+	}
 	return toSerialize, nil
 }
 
@@ -583,7 +592,6 @@ func (o *PaymentSubscriptionDetail) UnmarshalJSON(data []byte) (err error) {
 		"merchant_address",
 		"user_address",
 		"token_id",
-		"amount",
 		"start_time",
 		"expiration_time",
 		"charges_made",
