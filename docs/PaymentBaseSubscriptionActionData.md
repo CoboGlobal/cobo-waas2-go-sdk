@@ -6,13 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
-**Signature** | **string** | The signature for transaction. | 
+**Signature** | **string** | The signature for transaction. charge action is not required. | 
+**Deadline** | **int32** | The signature deadline for transaction. charge action is not required. | 
 
 ## Methods
 
 ### NewPaymentBaseSubscriptionActionData
 
-`func NewPaymentBaseSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, ) *PaymentBaseSubscriptionActionData`
+`func NewPaymentBaseSubscriptionActionData(actionType PaymentSubscriptionActionType, subscriptionId string, signature string, deadline int32, ) *PaymentBaseSubscriptionActionData`
 
 NewPaymentBaseSubscriptionActionData instantiates a new PaymentBaseSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -85,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *PaymentBaseSubscriptionActionData) SetSignature(v string)`
 
 SetSignature sets Signature field to given value.
+
+
+### GetDeadline
+
+`func (o *PaymentBaseSubscriptionActionData) GetDeadline() int32`
+
+GetDeadline returns the Deadline field if non-nil, zero value otherwise.
+
+### GetDeadlineOk
+
+`func (o *PaymentBaseSubscriptionActionData) GetDeadlineOk() (*int32, bool)`
+
+GetDeadlineOk returns a tuple with the Deadline field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeadline
+
+`func (o *PaymentBaseSubscriptionActionData) SetDeadline(v int32)`
+
+SetDeadline sets Deadline field to given value.
 
 
 

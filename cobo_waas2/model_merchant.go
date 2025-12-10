@@ -27,6 +27,8 @@ type Merchant struct {
 	WalletId string `json:"wallet_id"`
 	// Developer fee rate for this token. For example, 0.01 represents a 1% fee. 
 	DeveloperFeeRate *string `json:"developer_fee_rate,omitempty"`
+	// The fee rate applied when subscribe the merchant account. Represented as a string percentage (e.g., \"0.1\" means 10%).
+	SubscriptionDeveloperFeeRate *string `json:"subscription_developer_fee_rate,omitempty"`
 	WalletSetup *WalletSetup `json:"wallet_setup,omitempty"`
 	// The created time of the merchant, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
@@ -160,6 +162,38 @@ func (o *Merchant) SetDeveloperFeeRate(v string) {
 	o.DeveloperFeeRate = &v
 }
 
+// GetSubscriptionDeveloperFeeRate returns the SubscriptionDeveloperFeeRate field value if set, zero value otherwise.
+func (o *Merchant) GetSubscriptionDeveloperFeeRate() string {
+	if o == nil || IsNil(o.SubscriptionDeveloperFeeRate) {
+		var ret string
+		return ret
+	}
+	return *o.SubscriptionDeveloperFeeRate
+}
+
+// GetSubscriptionDeveloperFeeRateOk returns a tuple with the SubscriptionDeveloperFeeRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Merchant) GetSubscriptionDeveloperFeeRateOk() (*string, bool) {
+	if o == nil || IsNil(o.SubscriptionDeveloperFeeRate) {
+		return nil, false
+	}
+	return o.SubscriptionDeveloperFeeRate, true
+}
+
+// HasSubscriptionDeveloperFeeRate returns a boolean if a field has been set.
+func (o *Merchant) HasSubscriptionDeveloperFeeRate() bool {
+	if o != nil && !IsNil(o.SubscriptionDeveloperFeeRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubscriptionDeveloperFeeRate gets a reference to the given string and assigns it to the SubscriptionDeveloperFeeRate field.
+func (o *Merchant) SetSubscriptionDeveloperFeeRate(v string) {
+	o.SubscriptionDeveloperFeeRate = &v
+}
+
 // GetWalletSetup returns the WalletSetup field value if set, zero value otherwise.
 func (o *Merchant) GetWalletSetup() WalletSetup {
 	if o == nil || IsNil(o.WalletSetup) {
@@ -271,6 +305,9 @@ func (o Merchant) ToMap() (map[string]interface{}, error) {
 	toSerialize["wallet_id"] = o.WalletId
 	if !IsNil(o.DeveloperFeeRate) {
 		toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
+	}
+	if !IsNil(o.SubscriptionDeveloperFeeRate) {
+		toSerialize["subscription_developer_fee_rate"] = o.SubscriptionDeveloperFeeRate
 	}
 	if !IsNil(o.WalletSetup) {
 		toSerialize["wallet_setup"] = o.WalletSetup

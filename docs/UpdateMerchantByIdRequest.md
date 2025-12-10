@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | Pointer to **string** | The merchant name. | [optional] 
 **DeveloperFeeRate** | Pointer to **string** | The fee rate applied when topping up the merchant account. Represented as a string percentage (e.g., \&quot;0.1\&quot; means 10%). | [optional] 
+**SubscriptionDeveloperFeeRate** | Pointer to **string** | The fee rate applied when subscribe the merchant account. Represented as a string percentage (e.g., \&quot;0.1\&quot; means 10%). | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetDeveloperFeeRate sets DeveloperFeeRate field to given value.
 `func (o *UpdateMerchantByIdRequest) HasDeveloperFeeRate() bool`
 
 HasDeveloperFeeRate returns a boolean if a field has been set.
+
+### GetSubscriptionDeveloperFeeRate
+
+`func (o *UpdateMerchantByIdRequest) GetSubscriptionDeveloperFeeRate() string`
+
+GetSubscriptionDeveloperFeeRate returns the SubscriptionDeveloperFeeRate field if non-nil, zero value otherwise.
+
+### GetSubscriptionDeveloperFeeRateOk
+
+`func (o *UpdateMerchantByIdRequest) GetSubscriptionDeveloperFeeRateOk() (*string, bool)`
+
+GetSubscriptionDeveloperFeeRateOk returns a tuple with the SubscriptionDeveloperFeeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscriptionDeveloperFeeRate
+
+`func (o *UpdateMerchantByIdRequest) SetSubscriptionDeveloperFeeRate(v string)`
+
+SetSubscriptionDeveloperFeeRate sets SubscriptionDeveloperFeeRate field to given value.
+
+### HasSubscriptionDeveloperFeeRate
+
+`func (o *UpdateMerchantByIdRequest) HasSubscriptionDeveloperFeeRate() bool`
+
+HasSubscriptionDeveloperFeeRate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

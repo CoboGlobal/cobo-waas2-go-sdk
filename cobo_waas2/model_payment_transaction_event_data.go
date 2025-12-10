@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentTransactionEventData{}
 
 // PaymentTransactionEventData struct for PaymentTransactionEventData
 type PaymentTransactionEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The payment address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The suspended token event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The payment address update event data. - `PaymentPayout`: The payment payout event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The suspended token event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data.
 	DataType string `json:"data_type"`
 	// The transaction ID.
 	TransactionId string `json:"transaction_id"`
@@ -82,6 +82,8 @@ type PaymentTransactionEventData struct {
 	CustomPayerId *string `json:"custom_payer_id,omitempty"`
 	// A unique identifier assigned by Cobo to track and identify subscription.
 	SubscriptionId *string `json:"subscription_id,omitempty"`
+	// A unique identifier assigned by Cobo to track and identify subscription action.
+	ActionId *string `json:"action_id,omitempty"`
 }
 
 type _PaymentTransactionEventData PaymentTransactionEventData
@@ -1249,6 +1251,38 @@ func (o *PaymentTransactionEventData) SetSubscriptionId(v string) {
 	o.SubscriptionId = &v
 }
 
+// GetActionId returns the ActionId field value if set, zero value otherwise.
+func (o *PaymentTransactionEventData) GetActionId() string {
+	if o == nil || IsNil(o.ActionId) {
+		var ret string
+		return ret
+	}
+	return *o.ActionId
+}
+
+// GetActionIdOk returns a tuple with the ActionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentTransactionEventData) GetActionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ActionId) {
+		return nil, false
+	}
+	return o.ActionId, true
+}
+
+// HasActionId returns a boolean if a field has been set.
+func (o *PaymentTransactionEventData) HasActionId() bool {
+	if o != nil && !IsNil(o.ActionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetActionId gets a reference to the given string and assigns it to the ActionId field.
+func (o *PaymentTransactionEventData) SetActionId(v string) {
+	o.ActionId = &v
+}
+
 func (o PaymentTransactionEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1352,6 +1386,9 @@ func (o PaymentTransactionEventData) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SubscriptionId) {
 		toSerialize["subscription_id"] = o.SubscriptionId
+	}
+	if !IsNil(o.ActionId) {
+		toSerialize["action_id"] = o.ActionId
 	}
 	return toSerialize, nil
 }

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **MerchantAddress** | **string** | The merchant address in cobo. | 
 **UserAddress** | **string** | The user address in subscription. | 
 **TokenId** | **string** | The token_id in subscription. | 
-**Amount** | **string** | The amount in subscription. | 
+**ChargeAmount** | Pointer to **string** | The charge amount in subscription. | [optional] 
 **StartTime** | **int32** | The subscription start timestamp. | 
 **ExpirationTime** | **int32** | The subscription expired timestamp. | 
 **ChargesMade** | **int32** | The subscription charge times. | 
@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 
 ### NewPaymentSubscription
 
-`func NewPaymentSubscription(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, amount string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32, ) *PaymentSubscription`
+`func NewPaymentSubscription(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32, ) *PaymentSubscription`
 
 NewPaymentSubscription instantiates a new PaymentSubscription object
 This constructor will assign default values to properties that have it defined,
@@ -160,25 +160,30 @@ and a boolean to check if the value has been set.
 SetTokenId sets TokenId field to given value.
 
 
-### GetAmount
+### GetChargeAmount
 
-`func (o *PaymentSubscription) GetAmount() string`
+`func (o *PaymentSubscription) GetChargeAmount() string`
 
-GetAmount returns the Amount field if non-nil, zero value otherwise.
+GetChargeAmount returns the ChargeAmount field if non-nil, zero value otherwise.
 
-### GetAmountOk
+### GetChargeAmountOk
 
-`func (o *PaymentSubscription) GetAmountOk() (*string, bool)`
+`func (o *PaymentSubscription) GetChargeAmountOk() (*string, bool)`
 
-GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
+GetChargeAmountOk returns a tuple with the ChargeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAmount
+### SetChargeAmount
 
-`func (o *PaymentSubscription) SetAmount(v string)`
+`func (o *PaymentSubscription) SetChargeAmount(v string)`
 
-SetAmount sets Amount field to given value.
+SetChargeAmount sets ChargeAmount field to given value.
 
+### HasChargeAmount
+
+`func (o *PaymentSubscription) HasChargeAmount() bool`
+
+HasChargeAmount returns a boolean if a field has been set.
 
 ### GetStartTime
 

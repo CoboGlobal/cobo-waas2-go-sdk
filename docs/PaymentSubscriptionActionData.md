@@ -6,20 +6,19 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ActionType** | [**PaymentSubscriptionActionType**](PaymentSubscriptionActionType.md) |  | 
 **UserAddress** | **string** | The subscription user address. | 
-**Amount** | **string** | The subscription crypto amount.  | 
 **TokenId** | **string** | The ID of the cryptocurrency you want to subscription. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
-**DiscountRate** | Pointer to **int32** | the discount rate, discount_rate/10000 | [optional] 
+**ChargeAmount** | **string** | The subscription plan crypto amount with input token_id.  | 
 **SubscriptionId** | **string** | The subscription id in cobo. | 
-**PermitData** | Pointer to **string** | The signature of permit. | [optional] 
-**Signature** | **string** | The signature for transaction. | 
-**Periods** | Pointer to **int32** | The periods needed updated. | [optional] 
+**Signature** | **string** | The signature for transaction. charge action is not required. | 
+**Deadline** | **int32** | The signature deadline for transaction. charge action is not required. | 
+**Periods** | **int32** | The periods needed updated. | 
 **NewPlanId** | **string** | The new plan id in cobo. | 
 
 ## Methods
 
 ### NewPaymentSubscriptionActionData
 
-`func NewPaymentSubscriptionActionData(actionType PaymentSubscriptionActionType, userAddress string, amount string, tokenId string, subscriptionId string, signature string, newPlanId string, ) *PaymentSubscriptionActionData`
+`func NewPaymentSubscriptionActionData(actionType PaymentSubscriptionActionType, userAddress string, tokenId string, chargeAmount string, subscriptionId string, signature string, deadline int32, periods int32, newPlanId string, ) *PaymentSubscriptionActionData`
 
 NewPaymentSubscriptionActionData instantiates a new PaymentSubscriptionActionData object
 This constructor will assign default values to properties that have it defined,
@@ -74,26 +73,6 @@ and a boolean to check if the value has been set.
 SetUserAddress sets UserAddress field to given value.
 
 
-### GetAmount
-
-`func (o *PaymentSubscriptionActionData) GetAmount() string`
-
-GetAmount returns the Amount field if non-nil, zero value otherwise.
-
-### GetAmountOk
-
-`func (o *PaymentSubscriptionActionData) GetAmountOk() (*string, bool)`
-
-GetAmountOk returns a tuple with the Amount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAmount
-
-`func (o *PaymentSubscriptionActionData) SetAmount(v string)`
-
-SetAmount sets Amount field to given value.
-
-
 ### GetTokenId
 
 `func (o *PaymentSubscriptionActionData) GetTokenId() string`
@@ -114,30 +93,25 @@ and a boolean to check if the value has been set.
 SetTokenId sets TokenId field to given value.
 
 
-### GetDiscountRate
+### GetChargeAmount
 
-`func (o *PaymentSubscriptionActionData) GetDiscountRate() int32`
+`func (o *PaymentSubscriptionActionData) GetChargeAmount() string`
 
-GetDiscountRate returns the DiscountRate field if non-nil, zero value otherwise.
+GetChargeAmount returns the ChargeAmount field if non-nil, zero value otherwise.
 
-### GetDiscountRateOk
+### GetChargeAmountOk
 
-`func (o *PaymentSubscriptionActionData) GetDiscountRateOk() (*int32, bool)`
+`func (o *PaymentSubscriptionActionData) GetChargeAmountOk() (*string, bool)`
 
-GetDiscountRateOk returns a tuple with the DiscountRate field if it's non-nil, zero value otherwise
+GetChargeAmountOk returns a tuple with the ChargeAmount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDiscountRate
+### SetChargeAmount
 
-`func (o *PaymentSubscriptionActionData) SetDiscountRate(v int32)`
+`func (o *PaymentSubscriptionActionData) SetChargeAmount(v string)`
 
-SetDiscountRate sets DiscountRate field to given value.
+SetChargeAmount sets ChargeAmount field to given value.
 
-### HasDiscountRate
-
-`func (o *PaymentSubscriptionActionData) HasDiscountRate() bool`
-
-HasDiscountRate returns a boolean if a field has been set.
 
 ### GetSubscriptionId
 
@@ -159,31 +133,6 @@ and a boolean to check if the value has been set.
 SetSubscriptionId sets SubscriptionId field to given value.
 
 
-### GetPermitData
-
-`func (o *PaymentSubscriptionActionData) GetPermitData() string`
-
-GetPermitData returns the PermitData field if non-nil, zero value otherwise.
-
-### GetPermitDataOk
-
-`func (o *PaymentSubscriptionActionData) GetPermitDataOk() (*string, bool)`
-
-GetPermitDataOk returns a tuple with the PermitData field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPermitData
-
-`func (o *PaymentSubscriptionActionData) SetPermitData(v string)`
-
-SetPermitData sets PermitData field to given value.
-
-### HasPermitData
-
-`func (o *PaymentSubscriptionActionData) HasPermitData() bool`
-
-HasPermitData returns a boolean if a field has been set.
-
 ### GetSignature
 
 `func (o *PaymentSubscriptionActionData) GetSignature() string`
@@ -202,6 +151,26 @@ and a boolean to check if the value has been set.
 `func (o *PaymentSubscriptionActionData) SetSignature(v string)`
 
 SetSignature sets Signature field to given value.
+
+
+### GetDeadline
+
+`func (o *PaymentSubscriptionActionData) GetDeadline() int32`
+
+GetDeadline returns the Deadline field if non-nil, zero value otherwise.
+
+### GetDeadlineOk
+
+`func (o *PaymentSubscriptionActionData) GetDeadlineOk() (*int32, bool)`
+
+GetDeadlineOk returns a tuple with the Deadline field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeadline
+
+`func (o *PaymentSubscriptionActionData) SetDeadline(v int32)`
+
+SetDeadline sets Deadline field to given value.
 
 
 ### GetPeriods
@@ -223,11 +192,6 @@ and a boolean to check if the value has been set.
 
 SetPeriods sets Periods field to given value.
 
-### HasPeriods
-
-`func (o *PaymentSubscriptionActionData) HasPeriods() bool`
-
-HasPeriods returns a boolean if a field has been set.
 
 ### GetNewPlanId
 

@@ -21,19 +21,21 @@ var _ MappedNullable = &FeeStationCheckFeeStationUsageResponse{}
 type FeeStationCheckFeeStationUsageResponse struct {
 	// The token used to pay the gas fee for this specific transaction. You can retrieve the IDs of all supported tokens by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
+	// The current token balance available in the fee station.
+	Balance string `json:"balance"`
 	GasStationType FeeStationGasStationType `json:"gas_station_type"`
 	// Indicates whether the fee station is applied for this transfer request.
 	IsFeeStationApplicable bool `json:"is_fee_station_applicable"`
 	// If the fee station is used, indicates whether its balance is sufficient to cover the required gas fee.
 	IsBalanceSufficient bool `json:"is_balance_sufficient"`
-	// The current token balance available in the fee station.
-	Balance string `json:"balance"`
 	// The total gas amount required for this transfer request.
 	TotalFeeAmount string `json:"total_fee_amount"`
 	// Indicates whether USDT (U) sponsorship is applied when the fee station balance is insufficient.
 	IsSponsorApplicable bool `json:"is_sponsor_applicable"`
 	// The amount of gas fee sponsored by USDT (U) when applicable.
 	SponsoredFeeAmount string `json:"sponsored_fee_amount"`
+	// The token ID used to sponsor the gas fee.
+	SponsoredTokenId *string `json:"sponsored_token_id,omitempty"`
 }
 
 type _FeeStationCheckFeeStationUsageResponse FeeStationCheckFeeStationUsageResponse
@@ -42,13 +44,13 @@ type _FeeStationCheckFeeStationUsageResponse FeeStationCheckFeeStationUsageRespo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFeeStationCheckFeeStationUsageResponse(tokenId string, gasStationType FeeStationGasStationType, isFeeStationApplicable bool, isBalanceSufficient bool, balance string, totalFeeAmount string, isSponsorApplicable bool, sponsoredFeeAmount string) *FeeStationCheckFeeStationUsageResponse {
+func NewFeeStationCheckFeeStationUsageResponse(tokenId string, balance string, gasStationType FeeStationGasStationType, isFeeStationApplicable bool, isBalanceSufficient bool, totalFeeAmount string, isSponsorApplicable bool, sponsoredFeeAmount string) *FeeStationCheckFeeStationUsageResponse {
 	this := FeeStationCheckFeeStationUsageResponse{}
 	this.TokenId = tokenId
+	this.Balance = balance
 	this.GasStationType = gasStationType
 	this.IsFeeStationApplicable = isFeeStationApplicable
 	this.IsBalanceSufficient = isBalanceSufficient
-	this.Balance = balance
 	this.TotalFeeAmount = totalFeeAmount
 	this.IsSponsorApplicable = isSponsorApplicable
 	this.SponsoredFeeAmount = sponsoredFeeAmount
@@ -85,6 +87,30 @@ func (o *FeeStationCheckFeeStationUsageResponse) GetTokenIdOk() (*string, bool) 
 // SetTokenId sets field value
 func (o *FeeStationCheckFeeStationUsageResponse) SetTokenId(v string) {
 	o.TokenId = v
+}
+
+// GetBalance returns the Balance field value
+func (o *FeeStationCheckFeeStationUsageResponse) GetBalance() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Balance
+}
+
+// GetBalanceOk returns a tuple with the Balance field value
+// and a boolean to check if the value has been set.
+func (o *FeeStationCheckFeeStationUsageResponse) GetBalanceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Balance, true
+}
+
+// SetBalance sets field value
+func (o *FeeStationCheckFeeStationUsageResponse) SetBalance(v string) {
+	o.Balance = v
 }
 
 // GetGasStationType returns the GasStationType field value
@@ -159,30 +185,6 @@ func (o *FeeStationCheckFeeStationUsageResponse) SetIsBalanceSufficient(v bool) 
 	o.IsBalanceSufficient = v
 }
 
-// GetBalance returns the Balance field value
-func (o *FeeStationCheckFeeStationUsageResponse) GetBalance() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Balance
-}
-
-// GetBalanceOk returns a tuple with the Balance field value
-// and a boolean to check if the value has been set.
-func (o *FeeStationCheckFeeStationUsageResponse) GetBalanceOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Balance, true
-}
-
-// SetBalance sets field value
-func (o *FeeStationCheckFeeStationUsageResponse) SetBalance(v string) {
-	o.Balance = v
-}
-
 // GetTotalFeeAmount returns the TotalFeeAmount field value
 func (o *FeeStationCheckFeeStationUsageResponse) GetTotalFeeAmount() string {
 	if o == nil {
@@ -255,6 +257,38 @@ func (o *FeeStationCheckFeeStationUsageResponse) SetSponsoredFeeAmount(v string)
 	o.SponsoredFeeAmount = v
 }
 
+// GetSponsoredTokenId returns the SponsoredTokenId field value if set, zero value otherwise.
+func (o *FeeStationCheckFeeStationUsageResponse) GetSponsoredTokenId() string {
+	if o == nil || IsNil(o.SponsoredTokenId) {
+		var ret string
+		return ret
+	}
+	return *o.SponsoredTokenId
+}
+
+// GetSponsoredTokenIdOk returns a tuple with the SponsoredTokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FeeStationCheckFeeStationUsageResponse) GetSponsoredTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SponsoredTokenId) {
+		return nil, false
+	}
+	return o.SponsoredTokenId, true
+}
+
+// HasSponsoredTokenId returns a boolean if a field has been set.
+func (o *FeeStationCheckFeeStationUsageResponse) HasSponsoredTokenId() bool {
+	if o != nil && !IsNil(o.SponsoredTokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSponsoredTokenId gets a reference to the given string and assigns it to the SponsoredTokenId field.
+func (o *FeeStationCheckFeeStationUsageResponse) SetSponsoredTokenId(v string) {
+	o.SponsoredTokenId = &v
+}
+
 func (o FeeStationCheckFeeStationUsageResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -266,13 +300,16 @@ func (o FeeStationCheckFeeStationUsageResponse) MarshalJSON() ([]byte, error) {
 func (o FeeStationCheckFeeStationUsageResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["token_id"] = o.TokenId
+	toSerialize["balance"] = o.Balance
 	toSerialize["gas_station_type"] = o.GasStationType
 	toSerialize["is_fee_station_applicable"] = o.IsFeeStationApplicable
 	toSerialize["is_balance_sufficient"] = o.IsBalanceSufficient
-	toSerialize["balance"] = o.Balance
 	toSerialize["total_fee_amount"] = o.TotalFeeAmount
 	toSerialize["is_sponsor_applicable"] = o.IsSponsorApplicable
 	toSerialize["sponsored_fee_amount"] = o.SponsoredFeeAmount
+	if !IsNil(o.SponsoredTokenId) {
+		toSerialize["sponsored_token_id"] = o.SponsoredTokenId
+	}
 	return toSerialize, nil
 }
 
@@ -282,10 +319,10 @@ func (o *FeeStationCheckFeeStationUsageResponse) UnmarshalJSON(data []byte) (err
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"token_id",
+		"balance",
 		"gas_station_type",
 		"is_fee_station_applicable",
 		"is_balance_sufficient",
-		"balance",
 		"total_fee_amount",
 		"is_sponsor_applicable",
 		"sponsored_fee_amount",

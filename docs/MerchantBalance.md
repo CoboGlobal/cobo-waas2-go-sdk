@@ -9,9 +9,11 @@ Name | Type | Description | Notes
 **AcquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
 **TotalReceivedAmount** | Pointer to **string** | The merchant total received amount. | [optional] 
 **SettledAmount** | Pointer to **string** | The merchant settled amount. | [optional] 
+**PayoutAmount** | Pointer to **string** | The merchant payout amount. | [optional] 
 **RefundedAmount** | Pointer to **string** | The merchant total refunded amount. | [optional] 
 **TotalBalance** | Pointer to **string** | The merchant total balance. | [optional] 
 **AvailableBalance** | Pointer to **string** | The merchant available balance. | [optional] 
+**LockedBalance** | Pointer to **string** | The merchant locked balance. | [optional] 
 
 ## Methods
 
@@ -142,6 +144,31 @@ SetSettledAmount sets SettledAmount field to given value.
 
 HasSettledAmount returns a boolean if a field has been set.
 
+### GetPayoutAmount
+
+`func (o *MerchantBalance) GetPayoutAmount() string`
+
+GetPayoutAmount returns the PayoutAmount field if non-nil, zero value otherwise.
+
+### GetPayoutAmountOk
+
+`func (o *MerchantBalance) GetPayoutAmountOk() (*string, bool)`
+
+GetPayoutAmountOk returns a tuple with the PayoutAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayoutAmount
+
+`func (o *MerchantBalance) SetPayoutAmount(v string)`
+
+SetPayoutAmount sets PayoutAmount field to given value.
+
+### HasPayoutAmount
+
+`func (o *MerchantBalance) HasPayoutAmount() bool`
+
+HasPayoutAmount returns a boolean if a field has been set.
+
 ### GetRefundedAmount
 
 `func (o *MerchantBalance) GetRefundedAmount() string`
@@ -216,6 +243,31 @@ SetAvailableBalance sets AvailableBalance field to given value.
 `func (o *MerchantBalance) HasAvailableBalance() bool`
 
 HasAvailableBalance returns a boolean if a field has been set.
+
+### GetLockedBalance
+
+`func (o *MerchantBalance) GetLockedBalance() string`
+
+GetLockedBalance returns the LockedBalance field if non-nil, zero value otherwise.
+
+### GetLockedBalanceOk
+
+`func (o *MerchantBalance) GetLockedBalanceOk() (*string, bool)`
+
+GetLockedBalanceOk returns a tuple with the LockedBalance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLockedBalance
+
+`func (o *MerchantBalance) SetLockedBalance(v string)`
+
+SetLockedBalance sets LockedBalance field to given value.
+
+### HasLockedBalance
+
+`func (o *MerchantBalance) HasLockedBalance() bool`
+
+HasLockedBalance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -25,12 +25,16 @@ type PspBalance struct {
 	DeveloperFeeAmount *string `json:"developer_fee_amount,omitempty"`
 	// The psp settled amount.
 	SettledAmount *string `json:"settled_amount,omitempty"`
+	// The psp payout amount.
+	PayoutAmount *string `json:"payout_amount,omitempty"`
 	// The psp total refunded amount.
 	RefundedAmount *string `json:"refunded_amount,omitempty"`
 	// The psp total balance.
 	TotalBalance *string `json:"total_balance,omitempty"`
 	// The psp available balance.
 	AvailableBalance *string `json:"available_balance,omitempty"`
+	// The psp locked balance.
+	LockedBalance *string `json:"locked_balance,omitempty"`
 }
 
 type _PspBalance PspBalance
@@ -141,6 +145,38 @@ func (o *PspBalance) SetSettledAmount(v string) {
 	o.SettledAmount = &v
 }
 
+// GetPayoutAmount returns the PayoutAmount field value if set, zero value otherwise.
+func (o *PspBalance) GetPayoutAmount() string {
+	if o == nil || IsNil(o.PayoutAmount) {
+		var ret string
+		return ret
+	}
+	return *o.PayoutAmount
+}
+
+// GetPayoutAmountOk returns a tuple with the PayoutAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PspBalance) GetPayoutAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.PayoutAmount) {
+		return nil, false
+	}
+	return o.PayoutAmount, true
+}
+
+// HasPayoutAmount returns a boolean if a field has been set.
+func (o *PspBalance) HasPayoutAmount() bool {
+	if o != nil && !IsNil(o.PayoutAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayoutAmount gets a reference to the given string and assigns it to the PayoutAmount field.
+func (o *PspBalance) SetPayoutAmount(v string) {
+	o.PayoutAmount = &v
+}
+
 // GetRefundedAmount returns the RefundedAmount field value if set, zero value otherwise.
 func (o *PspBalance) GetRefundedAmount() string {
 	if o == nil || IsNil(o.RefundedAmount) {
@@ -237,6 +273,38 @@ func (o *PspBalance) SetAvailableBalance(v string) {
 	o.AvailableBalance = &v
 }
 
+// GetLockedBalance returns the LockedBalance field value if set, zero value otherwise.
+func (o *PspBalance) GetLockedBalance() string {
+	if o == nil || IsNil(o.LockedBalance) {
+		var ret string
+		return ret
+	}
+	return *o.LockedBalance
+}
+
+// GetLockedBalanceOk returns a tuple with the LockedBalance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PspBalance) GetLockedBalanceOk() (*string, bool) {
+	if o == nil || IsNil(o.LockedBalance) {
+		return nil, false
+	}
+	return o.LockedBalance, true
+}
+
+// HasLockedBalance returns a boolean if a field has been set.
+func (o *PspBalance) HasLockedBalance() bool {
+	if o != nil && !IsNil(o.LockedBalance) {
+		return true
+	}
+
+	return false
+}
+
+// SetLockedBalance gets a reference to the given string and assigns it to the LockedBalance field.
+func (o *PspBalance) SetLockedBalance(v string) {
+	o.LockedBalance = &v
+}
+
 func (o PspBalance) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -254,6 +322,9 @@ func (o PspBalance) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SettledAmount) {
 		toSerialize["settled_amount"] = o.SettledAmount
 	}
+	if !IsNil(o.PayoutAmount) {
+		toSerialize["payout_amount"] = o.PayoutAmount
+	}
 	if !IsNil(o.RefundedAmount) {
 		toSerialize["refunded_amount"] = o.RefundedAmount
 	}
@@ -262,6 +333,9 @@ func (o PspBalance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AvailableBalance) {
 		toSerialize["available_balance"] = o.AvailableBalance
+	}
+	if !IsNil(o.LockedBalance) {
+		toSerialize["locked_balance"] = o.LockedBalance
 	}
 	return toSerialize, nil
 }

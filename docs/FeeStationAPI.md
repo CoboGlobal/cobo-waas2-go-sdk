@@ -35,7 +35,7 @@ import (
 )
 
 func main() {
-	feeStationCheckFeeStationUsage := *coboWaas2.NewFeeStationCheckFeeStationUsage("f47ac10b-58cc-4372-a567-0e02b2c3d479", "100.5", "ETH_USDT", "0.0021", "0x1234567890abcdef1234567890abcdef12345678", "f47ac10b-58cc-4372-a567-0e02b2c3d479")
+	feeStationCheckFeeStationUsage := *coboWaas2.NewFeeStationCheckFeeStationUsage("f47ac10b-58cc-4372-a567-0e02b2c3d479", "0.0021", "0x1234567890abcdef1234567890abcdef12345678", "f47ac10b-58cc-4372-a567-0e02b2c3d479")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

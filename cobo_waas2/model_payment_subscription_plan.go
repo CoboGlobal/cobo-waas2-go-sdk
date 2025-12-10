@@ -26,6 +26,8 @@ type PaymentSubscriptionPlan struct {
 	PeriodType PaymentSubscriptionPeriodType `json:"period_type"`
 	Periods int32 `json:"periods"`
 	Interval int32 `json:"interval"`
+	// probation period
+	TrialPeriod *int32 `json:"trial_period,omitempty"`
 	// The subscription plan amount.  - If `currency` is set, this represents the subscription amount in the specified fiat currency. - If `currency` isn't set, this represents the settlement amount in the specified cryptocurrency. 
 	Amount string `json:"amount"`
 	// The ID of the cryptocurrency you want to subscription. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC` - USDT: `ETH_USDT`, `ARBITRUM_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
@@ -179,6 +181,38 @@ func (o *PaymentSubscriptionPlan) SetInterval(v int32) {
 	o.Interval = v
 }
 
+// GetTrialPeriod returns the TrialPeriod field value if set, zero value otherwise.
+func (o *PaymentSubscriptionPlan) GetTrialPeriod() int32 {
+	if o == nil || IsNil(o.TrialPeriod) {
+		var ret int32
+		return ret
+	}
+	return *o.TrialPeriod
+}
+
+// GetTrialPeriodOk returns a tuple with the TrialPeriod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSubscriptionPlan) GetTrialPeriodOk() (*int32, bool) {
+	if o == nil || IsNil(o.TrialPeriod) {
+		return nil, false
+	}
+	return o.TrialPeriod, true
+}
+
+// HasTrialPeriod returns a boolean if a field has been set.
+func (o *PaymentSubscriptionPlan) HasTrialPeriod() bool {
+	if o != nil && !IsNil(o.TrialPeriod) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrialPeriod gets a reference to the given int32 and assigns it to the TrialPeriod field.
+func (o *PaymentSubscriptionPlan) SetTrialPeriod(v int32) {
+	o.TrialPeriod = &v
+}
+
 // GetAmount returns the Amount field value
 func (o *PaymentSubscriptionPlan) GetAmount() string {
 	if o == nil {
@@ -282,6 +316,9 @@ func (o PaymentSubscriptionPlan) ToMap() (map[string]interface{}, error) {
 	toSerialize["period_type"] = o.PeriodType
 	toSerialize["periods"] = o.Periods
 	toSerialize["interval"] = o.Interval
+	if !IsNil(o.TrialPeriod) {
+		toSerialize["trial_period"] = o.TrialPeriod
+	}
 	toSerialize["amount"] = o.Amount
 	if !IsNil(o.TokenId) {
 		toSerialize["token_id"] = o.TokenId

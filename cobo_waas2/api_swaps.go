@@ -648,7 +648,7 @@ func (r ApiListSwapActivitiesRequest) After(after string) ApiListSwapActivitiesR
 	return r
 }
 
-// The field used for sorting.
+// The field to sort the results by.   Possible values include: - &#x60;created_timestamp&#x60;: Sort by the time when the data was created. - &#x60;updated_timestamp&#x60;: Sort by the time when the data was last updated. 
 func (r ApiListSwapActivitiesRequest) SortBy(sortBy string) ApiListSwapActivitiesRequest {
 	r.sortBy = &sortBy
 	return r
@@ -730,9 +730,6 @@ func (a *SwapsAPIService) ListSwapActivitiesExecute(r ApiListSwapActivitiesReque
 	}
 	if r.sortBy != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort_by", r.sortBy, "")
-	} else {
-		var defaultValue string = ""
-		r.sortBy = &defaultValue
 	}
 	if r.direction != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "direction", r.direction, "")

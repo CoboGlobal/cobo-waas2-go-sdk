@@ -23,14 +23,12 @@ type CreateSettlement struct {
 	MerchantId *string `json:"merchant_id,omitempty"`
 	// Only used in Crypto payout channel. The ID of the cryptocurrency you want to settle. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// Only used in OffRamp payout channel. The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported. 
-	Currency *string `json:"currency,omitempty"`
 	// The settlement amount. - In Crypto payout channel, this represents the settlement amount in the specified cryptocurrency. - In OffRamp payout channel, this represents the settlement amount in the specified fiat currency. 
 	Amount *string `json:"amount,omitempty"`
-	// ｜ Only used in OffRamp payout channel. The ID of the bank account where the settled funds will be deposited.
-	BankAccountId *string `json:"bank_account_id,omitempty"`
 	// Only used in Crypto payout channel. The ID of the pre-approved crypto address used for Crypto settlements. - The value must refer to a valid address that has been pre-configured and approved for the given token. 
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
+	// Only used in Crypto payout channel. The actual blockchain address to which funds will be transferred. If enable destination whitelist, this address must be associated with a destination. 
+	CryptoAddress *string `json:"crypto_address,omitempty"`
 	// A list of unique order IDs to be included in this settlement.  - This field is only applicable when `settlement_type` is set to `Merchant`. - If provided, the settlement will only apply to the specified orders. - The settlement `amount` must exactly match the total eligible amount from these orders. - This ensures consistency between the declared amount and the actual order-level data being settled. 
 	OrderIds []string `json:"order_ids,omitempty"`
 }
@@ -111,38 +109,6 @@ func (o *CreateSettlement) SetTokenId(v string) {
 	o.TokenId = v
 }
 
-// GetCurrency returns the Currency field value if set, zero value otherwise.
-func (o *CreateSettlement) GetCurrency() string {
-	if o == nil || IsNil(o.Currency) {
-		var ret string
-		return ret
-	}
-	return *o.Currency
-}
-
-// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateSettlement) GetCurrencyOk() (*string, bool) {
-	if o == nil || IsNil(o.Currency) {
-		return nil, false
-	}
-	return o.Currency, true
-}
-
-// HasCurrency returns a boolean if a field has been set.
-func (o *CreateSettlement) HasCurrency() bool {
-	if o != nil && !IsNil(o.Currency) {
-		return true
-	}
-
-	return false
-}
-
-// SetCurrency gets a reference to the given string and assigns it to the Currency field.
-func (o *CreateSettlement) SetCurrency(v string) {
-	o.Currency = &v
-}
-
 // GetAmount returns the Amount field value if set, zero value otherwise.
 func (o *CreateSettlement) GetAmount() string {
 	if o == nil || IsNil(o.Amount) {
@@ -175,38 +141,6 @@ func (o *CreateSettlement) SetAmount(v string) {
 	o.Amount = &v
 }
 
-// GetBankAccountId returns the BankAccountId field value if set, zero value otherwise.
-func (o *CreateSettlement) GetBankAccountId() string {
-	if o == nil || IsNil(o.BankAccountId) {
-		var ret string
-		return ret
-	}
-	return *o.BankAccountId
-}
-
-// GetBankAccountIdOk returns a tuple with the BankAccountId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateSettlement) GetBankAccountIdOk() (*string, bool) {
-	if o == nil || IsNil(o.BankAccountId) {
-		return nil, false
-	}
-	return o.BankAccountId, true
-}
-
-// HasBankAccountId returns a boolean if a field has been set.
-func (o *CreateSettlement) HasBankAccountId() bool {
-	if o != nil && !IsNil(o.BankAccountId) {
-		return true
-	}
-
-	return false
-}
-
-// SetBankAccountId gets a reference to the given string and assigns it to the BankAccountId field.
-func (o *CreateSettlement) SetBankAccountId(v string) {
-	o.BankAccountId = &v
-}
-
 // GetCryptoAddressId returns the CryptoAddressId field value if set, zero value otherwise.
 func (o *CreateSettlement) GetCryptoAddressId() string {
 	if o == nil || IsNil(o.CryptoAddressId) {
@@ -237,6 +171,38 @@ func (o *CreateSettlement) HasCryptoAddressId() bool {
 // SetCryptoAddressId gets a reference to the given string and assigns it to the CryptoAddressId field.
 func (o *CreateSettlement) SetCryptoAddressId(v string) {
 	o.CryptoAddressId = &v
+}
+
+// GetCryptoAddress returns the CryptoAddress field value if set, zero value otherwise.
+func (o *CreateSettlement) GetCryptoAddress() string {
+	if o == nil || IsNil(o.CryptoAddress) {
+		var ret string
+		return ret
+	}
+	return *o.CryptoAddress
+}
+
+// GetCryptoAddressOk returns a tuple with the CryptoAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSettlement) GetCryptoAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.CryptoAddress) {
+		return nil, false
+	}
+	return o.CryptoAddress, true
+}
+
+// HasCryptoAddress returns a boolean if a field has been set.
+func (o *CreateSettlement) HasCryptoAddress() bool {
+	if o != nil && !IsNil(o.CryptoAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetCryptoAddress gets a reference to the given string and assigns it to the CryptoAddress field.
+func (o *CreateSettlement) SetCryptoAddress(v string) {
+	o.CryptoAddress = &v
 }
 
 // GetOrderIds returns the OrderIds field value if set, zero value otherwise.
@@ -285,17 +251,14 @@ func (o CreateSettlement) ToMap() (map[string]interface{}, error) {
 		toSerialize["merchant_id"] = o.MerchantId
 	}
 	toSerialize["token_id"] = o.TokenId
-	if !IsNil(o.Currency) {
-		toSerialize["currency"] = o.Currency
-	}
 	if !IsNil(o.Amount) {
 		toSerialize["amount"] = o.Amount
 	}
-	if !IsNil(o.BankAccountId) {
-		toSerialize["bank_account_id"] = o.BankAccountId
-	}
 	if !IsNil(o.CryptoAddressId) {
 		toSerialize["crypto_address_id"] = o.CryptoAddressId
+	}
+	if !IsNil(o.CryptoAddress) {
+		toSerialize["crypto_address"] = o.CryptoAddress
 	}
 	if !IsNil(o.OrderIds) {
 		toSerialize["order_ids"] = o.OrderIds

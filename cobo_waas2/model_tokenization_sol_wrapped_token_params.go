@@ -24,9 +24,11 @@ type TokenizationSOLWrappedTokenParams struct {
 	Name string `json:"name"`
 	// The symbol of the token.
 	Symbol string `json:"symbol"`
-	Permissions *TokenizationSolWrappedTokenPermissionParams `json:"permissions,omitempty"`
 	// The address of the underlying token that this tokenized asset represents.
 	UnderlyingToken string `json:"underlying_token"`
+	// Whether the allowlist feature is activated for the token. When activated, only addresses in the allowlist can perform token operations.
+	TokenAccessActivated *bool `json:"token_access_activated,omitempty"`
+	Permissions *TokenizationSolWrappedTokenPermissionParams `json:"permissions,omitempty"`
 }
 
 type _TokenizationSOLWrappedTokenParams TokenizationSOLWrappedTokenParams
@@ -41,6 +43,8 @@ func NewTokenizationSOLWrappedTokenParams(standard TokenizationTokenStandard, na
 	this.Name = name
 	this.Symbol = symbol
 	this.UnderlyingToken = underlyingToken
+	var tokenAccessActivated bool = false
+	this.TokenAccessActivated = &tokenAccessActivated
 	return &this
 }
 
@@ -49,6 +53,8 @@ func NewTokenizationSOLWrappedTokenParams(standard TokenizationTokenStandard, na
 // but it doesn't guarantee that properties required by API are set
 func NewTokenizationSOLWrappedTokenParamsWithDefaults() *TokenizationSOLWrappedTokenParams {
 	this := TokenizationSOLWrappedTokenParams{}
+	var tokenAccessActivated bool = false
+	this.TokenAccessActivated = &tokenAccessActivated
 	return &this
 }
 
@@ -124,6 +130,62 @@ func (o *TokenizationSOLWrappedTokenParams) SetSymbol(v string) {
 	o.Symbol = v
 }
 
+// GetUnderlyingToken returns the UnderlyingToken field value
+func (o *TokenizationSOLWrappedTokenParams) GetUnderlyingToken() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.UnderlyingToken
+}
+
+// GetUnderlyingTokenOk returns a tuple with the UnderlyingToken field value
+// and a boolean to check if the value has been set.
+func (o *TokenizationSOLWrappedTokenParams) GetUnderlyingTokenOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UnderlyingToken, true
+}
+
+// SetUnderlyingToken sets field value
+func (o *TokenizationSOLWrappedTokenParams) SetUnderlyingToken(v string) {
+	o.UnderlyingToken = v
+}
+
+// GetTokenAccessActivated returns the TokenAccessActivated field value if set, zero value otherwise.
+func (o *TokenizationSOLWrappedTokenParams) GetTokenAccessActivated() bool {
+	if o == nil || IsNil(o.TokenAccessActivated) {
+		var ret bool
+		return ret
+	}
+	return *o.TokenAccessActivated
+}
+
+// GetTokenAccessActivatedOk returns a tuple with the TokenAccessActivated field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TokenizationSOLWrappedTokenParams) GetTokenAccessActivatedOk() (*bool, bool) {
+	if o == nil || IsNil(o.TokenAccessActivated) {
+		return nil, false
+	}
+	return o.TokenAccessActivated, true
+}
+
+// HasTokenAccessActivated returns a boolean if a field has been set.
+func (o *TokenizationSOLWrappedTokenParams) HasTokenAccessActivated() bool {
+	if o != nil && !IsNil(o.TokenAccessActivated) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenAccessActivated gets a reference to the given bool and assigns it to the TokenAccessActivated field.
+func (o *TokenizationSOLWrappedTokenParams) SetTokenAccessActivated(v bool) {
+	o.TokenAccessActivated = &v
+}
+
 // GetPermissions returns the Permissions field value if set, zero value otherwise.
 func (o *TokenizationSOLWrappedTokenParams) GetPermissions() TokenizationSolWrappedTokenPermissionParams {
 	if o == nil || IsNil(o.Permissions) {
@@ -156,30 +218,6 @@ func (o *TokenizationSOLWrappedTokenParams) SetPermissions(v TokenizationSolWrap
 	o.Permissions = &v
 }
 
-// GetUnderlyingToken returns the UnderlyingToken field value
-func (o *TokenizationSOLWrappedTokenParams) GetUnderlyingToken() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.UnderlyingToken
-}
-
-// GetUnderlyingTokenOk returns a tuple with the UnderlyingToken field value
-// and a boolean to check if the value has been set.
-func (o *TokenizationSOLWrappedTokenParams) GetUnderlyingTokenOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.UnderlyingToken, true
-}
-
-// SetUnderlyingToken sets field value
-func (o *TokenizationSOLWrappedTokenParams) SetUnderlyingToken(v string) {
-	o.UnderlyingToken = v
-}
-
 func (o TokenizationSOLWrappedTokenParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -193,10 +231,13 @@ func (o TokenizationSOLWrappedTokenParams) ToMap() (map[string]interface{}, erro
 	toSerialize["standard"] = o.Standard
 	toSerialize["name"] = o.Name
 	toSerialize["symbol"] = o.Symbol
+	toSerialize["underlying_token"] = o.UnderlyingToken
+	if !IsNil(o.TokenAccessActivated) {
+		toSerialize["token_access_activated"] = o.TokenAccessActivated
+	}
 	if !IsNil(o.Permissions) {
 		toSerialize["permissions"] = o.Permissions
 	}
-	toSerialize["underlying_token"] = o.UnderlyingToken
 	return toSerialize, nil
 }
 

@@ -21,6 +21,140 @@ import (
 // TokenizationAPIService TokenizationAPI service
 type TokenizationAPIService service
 
+type ApiArchiveTokenizationRequest struct {
+	ctx context.Context
+	ApiService *TokenizationAPIService
+	tokenId string
+	tokenizationArchiveTokenRequest *TokenizationArchiveTokenRequest
+}
+
+// The request body for archiving tokens.
+func (r ApiArchiveTokenizationRequest) TokenizationArchiveTokenRequest(tokenizationArchiveTokenRequest TokenizationArchiveTokenRequest) ApiArchiveTokenizationRequest {
+	r.tokenizationArchiveTokenRequest = &tokenizationArchiveTokenRequest
+	return r
+}
+
+func (r ApiArchiveTokenizationRequest) Execute() (*TokenizationTokenDetailInfo, *http.Response, error) {
+	return r.ApiService.ArchiveTokenizationExecute(r)
+}
+
+/*
+ArchiveTokenization Archive token
+
+This operation marks the token as archived.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param tokenId The token ID, which is the unique identifier of a token.
+ @return ApiArchiveTokenizationRequest
+*/
+func (a *TokenizationAPIService) ArchiveTokenization(ctx context.Context, tokenId string) ApiArchiveTokenizationRequest {
+	return ApiArchiveTokenizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return TokenizationTokenDetailInfo
+func (a *TokenizationAPIService) ArchiveTokenizationExecute(r ApiArchiveTokenizationRequest) (*TokenizationTokenDetailInfo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TokenizationTokenDetailInfo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenizationAPIService.ArchiveTokenization")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tokenization/tokens/{token_id}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tokenizationArchiveTokenRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiBurnTokenizationRequest struct {
 	ctx context.Context
 	ApiService *TokenizationAPIService
@@ -44,7 +178,7 @@ BurnTokenization Burn tokens
 This operation burns tokens from a specified address.
 Creates a burn transaction that will decrease the token supply.
 
-**Note**: This operation is not supported for CoboERC20Wrapper tokens.
+**Note**: This operation is not supported for CoboERC20Wrapper and SOLWrapper tokens.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1879,9 +2013,16 @@ func (a *TokenizationAPIService) ListTokenizationPermissionsExecute(r ApiListTok
 type ApiListTokenizationSupportedChainsRequest struct {
 	ctx context.Context
 	ApiService *TokenizationAPIService
+	tokenStandard *TokenizationTokenStandard
 	limit *int32
 	after *string
 	before *string
+}
+
+// Filter by token standard.
+func (r ApiListTokenizationSupportedChainsRequest) TokenStandard(tokenStandard TokenizationTokenStandard) ApiListTokenizationSupportedChainsRequest {
+	r.tokenStandard = &tokenStandard
+	return r
 }
 
 // The maximum number of objects to return. For most operations, the value range is [1, 50].
@@ -1943,6 +2084,9 @@ func (a *TokenizationAPIService) ListTokenizationSupportedChainsExecute(r ApiLis
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.tokenStandard != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_standard", r.tokenStandard, "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	} else {
@@ -2053,7 +2197,7 @@ MintTokenization Mint tokens
 This operation mints new tokens to a specified address.
 Creates a mint transaction that will increase the token supply.
 
-**Note**: This operation is not supported for CoboERC20Wrapper tokens.
+**Note**: This operation is not supported for CoboERC20Wrapper and SOLWrapper tokens.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2380,6 +2524,140 @@ func (a *TokenizationAPIService) TokenizationContractCallExecute(r ApiTokenizati
 	}
 	// body params
 	localVarPostBody = r.tokenizationContractCallRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUnarchiveTokenizationRequest struct {
+	ctx context.Context
+	ApiService *TokenizationAPIService
+	tokenId string
+	tokenizationUnarchiveTokenRequest *TokenizationUnarchiveTokenRequest
+}
+
+// The request body for unarchiving tokens.
+func (r ApiUnarchiveTokenizationRequest) TokenizationUnarchiveTokenRequest(tokenizationUnarchiveTokenRequest TokenizationUnarchiveTokenRequest) ApiUnarchiveTokenizationRequest {
+	r.tokenizationUnarchiveTokenRequest = &tokenizationUnarchiveTokenRequest
+	return r
+}
+
+func (r ApiUnarchiveTokenizationRequest) Execute() (*TokenizationTokenDetailInfo, *http.Response, error) {
+	return r.ApiService.UnarchiveTokenizationExecute(r)
+}
+
+/*
+UnarchiveTokenization Unarchive token
+
+This operation removes the archived flag from the token.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param tokenId The token ID, which is the unique identifier of a token.
+ @return ApiUnarchiveTokenizationRequest
+*/
+func (a *TokenizationAPIService) UnarchiveTokenization(ctx context.Context, tokenId string) ApiUnarchiveTokenizationRequest {
+	return ApiUnarchiveTokenizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		tokenId: tokenId,
+	}
+}
+
+// Execute executes the request
+//  @return TokenizationTokenDetailInfo
+func (a *TokenizationAPIService) UnarchiveTokenizationExecute(r ApiUnarchiveTokenizationRequest) (*TokenizationTokenDetailInfo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TokenizationTokenDetailInfo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenizationAPIService.UnarchiveTokenization")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tokenization/tokens/{token_id}/unarchive"
+	localVarPath = strings.Replace(localVarPath, "{"+"token_id"+"}", url.PathEscape(parameterValueToString(r.tokenId, "tokenId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.tokenizationUnarchiveTokenRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2995,10 +3273,6 @@ func (r ApiUpdateTokenizationPermissionsRequest) Execute() (*TokenizationOperati
 UpdateTokenizationPermissions Update permissions of the token
 
 This operation updates permissions for tokenization contracts.
-
-**For Ethereum-based tokens:** Use `add` to grant permissions or `remove` to revoke permissions. Multiple permissions can be assigned to the same address.
-
-**For Solana tokens:** Use `set` to define the complete list of permissions for an address. This replaces any existing permissions.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

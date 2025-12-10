@@ -174,6 +174,8 @@ func (r ApiEstimateFeeStationFeeRequest) Execute() (*EstimatedFixedFee, *http.Re
 /*
 EstimateFeeStationFee Estimate transaction fee
 
+<Note>This operation is **deprecated**. Please use the enhanced version [Check Fee Station usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) instead.</Note> 
+
 This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
 
 You need to specify the transaction information, including destination address, token ID.

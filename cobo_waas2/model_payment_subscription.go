@@ -31,8 +31,8 @@ type PaymentSubscription struct {
 	UserAddress string `json:"user_address"`
 	// The token_id in subscription.
 	TokenId string `json:"token_id"`
-	// The amount in subscription.
-	Amount string `json:"amount"`
+	// The charge amount in subscription.
+	ChargeAmount *string `json:"charge_amount,omitempty"`
 	// The subscription start timestamp.
 	StartTime int32 `json:"start_time"`
 	// The subscription expired timestamp.
@@ -56,7 +56,7 @@ type _PaymentSubscription PaymentSubscription
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentSubscription(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, amount string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32) *PaymentSubscription {
+func NewPaymentSubscription(planId string, subscriptionId string, merchantId string, merchantAddress string, userAddress string, tokenId string, startTime int32, expirationTime int32, chargesMade int32, periodType PaymentSubscriptionPeriodType, periods int32, interval int32, status PaymentSubscriptionStatus, createdTimestamp int32, updatedTimestamp int32) *PaymentSubscription {
 	this := PaymentSubscription{}
 	this.PlanId = planId
 	this.SubscriptionId = subscriptionId
@@ -64,7 +64,6 @@ func NewPaymentSubscription(planId string, subscriptionId string, merchantId str
 	this.MerchantAddress = merchantAddress
 	this.UserAddress = userAddress
 	this.TokenId = tokenId
-	this.Amount = amount
 	this.StartTime = startTime
 	this.ExpirationTime = expirationTime
 	this.ChargesMade = chargesMade
@@ -229,28 +228,36 @@ func (o *PaymentSubscription) SetTokenId(v string) {
 	o.TokenId = v
 }
 
-// GetAmount returns the Amount field value
-func (o *PaymentSubscription) GetAmount() string {
-	if o == nil {
+// GetChargeAmount returns the ChargeAmount field value if set, zero value otherwise.
+func (o *PaymentSubscription) GetChargeAmount() string {
+	if o == nil || IsNil(o.ChargeAmount) {
 		var ret string
 		return ret
 	}
-
-	return o.Amount
+	return *o.ChargeAmount
 }
 
-// GetAmountOk returns a tuple with the Amount field value
+// GetChargeAmountOk returns a tuple with the ChargeAmount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PaymentSubscription) GetAmountOk() (*string, bool) {
-	if o == nil {
+func (o *PaymentSubscription) GetChargeAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.ChargeAmount) {
 		return nil, false
 	}
-	return &o.Amount, true
+	return o.ChargeAmount, true
 }
 
-// SetAmount sets field value
-func (o *PaymentSubscription) SetAmount(v string) {
-	o.Amount = v
+// HasChargeAmount returns a boolean if a field has been set.
+func (o *PaymentSubscription) HasChargeAmount() bool {
+	if o != nil && !IsNil(o.ChargeAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetChargeAmount gets a reference to the given string and assigns it to the ChargeAmount field.
+func (o *PaymentSubscription) SetChargeAmount(v string) {
+	o.ChargeAmount = &v
 }
 
 // GetStartTime returns the StartTime field value
@@ -485,7 +492,9 @@ func (o PaymentSubscription) ToMap() (map[string]interface{}, error) {
 	toSerialize["merchant_address"] = o.MerchantAddress
 	toSerialize["user_address"] = o.UserAddress
 	toSerialize["token_id"] = o.TokenId
-	toSerialize["amount"] = o.Amount
+	if !IsNil(o.ChargeAmount) {
+		toSerialize["charge_amount"] = o.ChargeAmount
+	}
 	toSerialize["start_time"] = o.StartTime
 	toSerialize["expiration_time"] = o.ExpirationTime
 	toSerialize["charges_made"] = o.ChargesMade
@@ -509,7 +518,6 @@ func (o *PaymentSubscription) UnmarshalJSON(data []byte) (err error) {
 		"merchant_address",
 		"user_address",
 		"token_id",
-		"amount",
 		"start_time",
 		"expiration_time",
 		"charges_made",

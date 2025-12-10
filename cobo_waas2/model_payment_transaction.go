@@ -32,6 +32,8 @@ type PaymentTransaction struct {
 	// The amount of cryptocurrency transferred, as a decimal string.
 	Amount string `json:"amount"`
 	Status TransactionStatus `json:"status"`
+	Counterparty *Counterparty `json:"counterparty,omitempty"`
+	Destination *Destination `json:"destination,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The time when the transaction was updated, in Unix timestamp format, measured in milliseconds.
@@ -248,6 +250,70 @@ func (o *PaymentTransaction) SetStatus(v TransactionStatus) {
 	o.Status = v
 }
 
+// GetCounterparty returns the Counterparty field value if set, zero value otherwise.
+func (o *PaymentTransaction) GetCounterparty() Counterparty {
+	if o == nil || IsNil(o.Counterparty) {
+		var ret Counterparty
+		return ret
+	}
+	return *o.Counterparty
+}
+
+// GetCounterpartyOk returns a tuple with the Counterparty field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentTransaction) GetCounterpartyOk() (*Counterparty, bool) {
+	if o == nil || IsNil(o.Counterparty) {
+		return nil, false
+	}
+	return o.Counterparty, true
+}
+
+// HasCounterparty returns a boolean if a field has been set.
+func (o *PaymentTransaction) HasCounterparty() bool {
+	if o != nil && !IsNil(o.Counterparty) {
+		return true
+	}
+
+	return false
+}
+
+// SetCounterparty gets a reference to the given Counterparty and assigns it to the Counterparty field.
+func (o *PaymentTransaction) SetCounterparty(v Counterparty) {
+	o.Counterparty = &v
+}
+
+// GetDestination returns the Destination field value if set, zero value otherwise.
+func (o *PaymentTransaction) GetDestination() Destination {
+	if o == nil || IsNil(o.Destination) {
+		var ret Destination
+		return ret
+	}
+	return *o.Destination
+}
+
+// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentTransaction) GetDestinationOk() (*Destination, bool) {
+	if o == nil || IsNil(o.Destination) {
+		return nil, false
+	}
+	return o.Destination, true
+}
+
+// HasDestination returns a boolean if a field has been set.
+func (o *PaymentTransaction) HasDestination() bool {
+	if o != nil && !IsNil(o.Destination) {
+		return true
+	}
+
+	return false
+}
+
+// SetDestination gets a reference to the given Destination and assigns it to the Destination field.
+func (o *PaymentTransaction) SetDestination(v Destination) {
+	o.Destination = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value
 func (o *PaymentTransaction) GetCreatedTimestamp() int64 {
 	if o == nil {
@@ -317,6 +383,12 @@ func (o PaymentTransaction) ToMap() (map[string]interface{}, error) {
 	toSerialize["to_address"] = o.ToAddress
 	toSerialize["amount"] = o.Amount
 	toSerialize["status"] = o.Status
+	if !IsNil(o.Counterparty) {
+		toSerialize["counterparty"] = o.Counterparty
+	}
+	if !IsNil(o.Destination) {
+		toSerialize["destination"] = o.Destination
+	}
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	return toSerialize, nil

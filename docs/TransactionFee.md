@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **GasPrice** | Pointer to **string** | The gas price, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions per gas unit used. | [optional] 
 **MaxFeeAmount** | Pointer to **string** | The maximum fee that you are willing to pay for the transaction. Provide the value without applying precision. The transaction will fail if the transaction fee exceeds the maximum fee. | [optional] 
 **FeeRate** | Pointer to **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | [optional] 
+**Fallback** | Pointer to **bool** | Indicates whether the estimated fee is generated from Cobo’s fallback mechanism. When the estimated transaction belongs to a UTXO-based chain and the specified address does not have sufficient balance to cover the on-chain fee, this field will be set to &#x60;true&#x60;. In this case, the returned fee value is estimated by Cobo’s internal fallback strategy, which is typically higher than the actual on-chain fee. When &#x60;fallback&#x60; is &#x60;true&#x60;, please use the estimated fee value with caution. | [optional] 
 **BaseFee** | Pointer to **string** | The fundamental fee required for each transaction. It is charged to prevent spam transactions and network congestion, ensuring that only meaningful transactions consume network resources. | [optional] 
 **RentAmount** | Pointer to **string** | The fee charged as rent for maintaining the state of accounts on the blockchain. This rent ensures accounts are stored on-chain over the long term and that there&#39;s sufficient balance to sustain the account state. | [optional] 
 **ComputeUnitPrice** | Pointer to **string** | The cost per compute unit. Transactions consume computational resources measured in compute units, and this price helps determine the cost of executing transactions, especially complex ones involving smart contracts. | [optional] 
@@ -337,6 +338,31 @@ SetFeeRate sets FeeRate field to given value.
 `func (o *TransactionFee) HasFeeRate() bool`
 
 HasFeeRate returns a boolean if a field has been set.
+
+### GetFallback
+
+`func (o *TransactionFee) GetFallback() bool`
+
+GetFallback returns the Fallback field if non-nil, zero value otherwise.
+
+### GetFallbackOk
+
+`func (o *TransactionFee) GetFallbackOk() (*bool, bool)`
+
+GetFallbackOk returns a tuple with the Fallback field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFallback
+
+`func (o *TransactionFee) SetFallback(v bool)`
+
+SetFallback sets Fallback field to given value.
+
+### HasFallback
+
+`func (o *TransactionFee) HasFallback() bool`
+
+HasFallback returns a boolean if a field has been set.
 
 ### GetBaseFee
 

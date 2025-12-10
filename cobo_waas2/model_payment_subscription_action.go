@@ -32,6 +32,7 @@ type PaymentSubscriptionAction struct {
 	// The merchant address in cobo.
 	MerchantAddress string `json:"merchant_address"`
 	Data PaymentSubscriptionActionData `json:"data"`
+	TransactionIds []string `json:"transaction_ids,omitempty"`
 	Status PaymentSubscriptionActionStatus `json:"status"`
 	// The created time of the subscription action, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
@@ -234,6 +235,38 @@ func (o *PaymentSubscriptionAction) SetData(v PaymentSubscriptionActionData) {
 	o.Data = v
 }
 
+// GetTransactionIds returns the TransactionIds field value if set, zero value otherwise.
+func (o *PaymentSubscriptionAction) GetTransactionIds() []string {
+	if o == nil || IsNil(o.TransactionIds) {
+		var ret []string
+		return ret
+	}
+	return o.TransactionIds
+}
+
+// GetTransactionIdsOk returns a tuple with the TransactionIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSubscriptionAction) GetTransactionIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TransactionIds) {
+		return nil, false
+	}
+	return o.TransactionIds, true
+}
+
+// HasTransactionIds returns a boolean if a field has been set.
+func (o *PaymentSubscriptionAction) HasTransactionIds() bool {
+	if o != nil && !IsNil(o.TransactionIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactionIds gets a reference to the given []string and assigns it to the TransactionIds field.
+func (o *PaymentSubscriptionAction) SetTransactionIds(v []string) {
+	o.TransactionIds = v
+}
+
 // GetStatus returns the Status field value
 func (o *PaymentSubscriptionAction) GetStatus() PaymentSubscriptionActionStatus {
 	if o == nil {
@@ -339,6 +372,9 @@ func (o PaymentSubscriptionAction) ToMap() (map[string]interface{}, error) {
 	toSerialize["merchant_id"] = o.MerchantId
 	toSerialize["merchant_address"] = o.MerchantAddress
 	toSerialize["data"] = o.Data
+	if !IsNil(o.TransactionIds) {
+		toSerialize["transaction_ids"] = o.TransactionIds
+	}
 	toSerialize["status"] = o.Status
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp

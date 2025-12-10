@@ -4,6 +4,7 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ArchiveTokenization**](TokenizationAPI.md#ArchiveTokenization) | **Post** /tokenization/tokens/{token_id}/archive | Archive token
 [**BurnTokenization**](TokenizationAPI.md#BurnTokenization) | **Post** /tokenization/tokens/{token_id}/burn | Burn tokens
 [**EstimateTokenizationFee**](TokenizationAPI.md#EstimateTokenizationFee) | **Post** /tokenization/estimate_fee | Estimate tokenization operation fee
 [**GetTokenizationActivity**](TokenizationAPI.md#GetTokenizationActivity) | **Get** /tokenization/activities/{activity_id} | Get tokenization activity details
@@ -20,12 +21,95 @@ Method | HTTP request | Description
 [**MintTokenization**](TokenizationAPI.md#MintTokenization) | **Post** /tokenization/tokens/{token_id}/mint | Mint tokens
 [**PauseTokenization**](TokenizationAPI.md#PauseTokenization) | **Post** /tokenization/tokens/{token_id}/pause | Pause token contract
 [**TokenizationContractCall**](TokenizationAPI.md#TokenizationContractCall) | **Post** /tokenization/tokens/{token_id}/contract_call | Call token contract
+[**UnarchiveTokenization**](TokenizationAPI.md#UnarchiveTokenization) | **Post** /tokenization/tokens/{token_id}/unarchive | Unarchive token
 [**UnpauseTokenization**](TokenizationAPI.md#UnpauseTokenization) | **Post** /tokenization/tokens/{token_id}/unpause | Unpause token contract
 [**UpdateTokenizationAllowlistActivation**](TokenizationAPI.md#UpdateTokenizationAllowlistActivation) | **Post** /tokenization/tokens/{token_id}/allowlist/activation | Activate or deactivate the allowlist
 [**UpdateTokenizationAllowlistAddresses**](TokenizationAPI.md#UpdateTokenizationAllowlistAddresses) | **Post** /tokenization/tokens/{token_id}/allowlist/addresses | Update allowlist addresses
 [**UpdateTokenizationBlocklistAddresses**](TokenizationAPI.md#UpdateTokenizationBlocklistAddresses) | **Post** /tokenization/tokens/{token_id}/blocklist/addresses | Update tokenization blocklist addresses
 [**UpdateTokenizationPermissions**](TokenizationAPI.md#UpdateTokenizationPermissions) | **Post** /tokenization/tokens/{token_id}/permissions | Update permissions of the token
 
+
+
+## ArchiveTokenization
+
+> TokenizationTokenDetailInfo ArchiveTokenization(ctx, tokenId).TokenizationArchiveTokenRequest(tokenizationArchiveTokenRequest).Execute()
+
+Archive token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	tokenId := "ETH_USDT"
+	tokenizationArchiveTokenRequest := *coboWaas2.NewTokenizationArchiveTokenRequest()
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.TokenizationAPI.ArchiveTokenization(ctx, tokenId).TokenizationArchiveTokenRequest(tokenizationArchiveTokenRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TokenizationAPI.ArchiveTokenization``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ArchiveTokenization`: TokenizationTokenDetailInfo
+	fmt.Fprintf(os.Stdout, "Response from `TokenizationAPI.ArchiveTokenization`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**tokenId** | **string** | The token ID, which is the unique identifier of a token. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiArchiveTokenizationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **tokenizationArchiveTokenRequest** | [**TokenizationArchiveTokenRequest**](TokenizationArchiveTokenRequest.md) | The request body for archiving tokens. | 
+
+### Return type
+
+[**TokenizationTokenDetailInfo**](TokenizationTokenDetailInfo.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## BurnTokenization
@@ -1032,7 +1116,7 @@ Name | Type | Description  | Notes
 
 ## ListTokenizationSupportedChains
 
-> TokenizationListEnabledChainsResponse ListTokenizationSupportedChains(ctx).Limit(limit).After(after).Before(before).Execute()
+> TokenizationListEnabledChainsResponse ListTokenizationSupportedChains(ctx).TokenStandard(tokenStandard).Limit(limit).After(after).Before(before).Execute()
 
 List supported chains for tokenization
 
@@ -1052,6 +1136,7 @@ import (
 )
 
 func main() {
+	tokenStandard := coboWaas2.TokenizationTokenStandard("ERC20")
 	limit := int32(10)
 	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
 	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
@@ -1067,7 +1152,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.TokenizationAPI.ListTokenizationSupportedChains(ctx).Limit(limit).After(after).Before(before).Execute()
+	resp, r, err := apiClient.TokenizationAPI.ListTokenizationSupportedChains(ctx).TokenStandard(tokenStandard).Limit(limit).After(after).Before(before).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TokenizationAPI.ListTokenizationSupportedChains``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1088,6 +1173,7 @@ Other parameters are passed through a pointer to a apiListTokenizationSupportedC
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **tokenStandard** | [**TokenizationTokenStandard**](TokenizationTokenStandard.md) | Filter by token standard. | 
  **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
  **after** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data after the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C. If you set &#x60;after&#x60; to the ID of Object A (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object C.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned.  | 
  **before** | **string** | This parameter specifies an object ID as a starting point for pagination, retrieving data before the specified object relative to the current dataset.    Suppose the current data is ordered as Object A, Object B, and Object C.  If you set &#x60;before&#x60; to the ID of Object C (&#x60;RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk&#x60;), the response will include Object B and Object A.    **Notes**:   - If you set both &#x60;after&#x60; and &#x60;before&#x60;, an error will occur. - If you leave both &#x60;before&#x60; and &#x60;after&#x60; empty, the first page of data is returned. - If you set it to &#x60;infinity&#x60;, the last page of data is returned.  | 
@@ -1341,6 +1427,88 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**TokenizationOperationResponse**](TokenizationOperationResponse.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UnarchiveTokenization
+
+> TokenizationTokenDetailInfo UnarchiveTokenization(ctx, tokenId).TokenizationUnarchiveTokenRequest(tokenizationUnarchiveTokenRequest).Execute()
+
+Unarchive token
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	tokenId := "ETH_USDT"
+	tokenizationUnarchiveTokenRequest := *coboWaas2.NewTokenizationUnarchiveTokenRequest()
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.TokenizationAPI.UnarchiveTokenization(ctx, tokenId).TokenizationUnarchiveTokenRequest(tokenizationUnarchiveTokenRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TokenizationAPI.UnarchiveTokenization``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UnarchiveTokenization`: TokenizationTokenDetailInfo
+	fmt.Fprintf(os.Stdout, "Response from `TokenizationAPI.UnarchiveTokenization`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**tokenId** | **string** | The token ID, which is the unique identifier of a token. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUnarchiveTokenizationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **tokenizationUnarchiveTokenRequest** | [**TokenizationUnarchiveTokenRequest**](TokenizationUnarchiveTokenRequest.md) | The request body for unarchiving tokens. | 
+
+### Return type
+
+[**TokenizationTokenDetailInfo**](TokenizationTokenDetailInfo.md)
 
 ### Authorization
 
@@ -1707,7 +1875,7 @@ import (
 
 func main() {
 	tokenId := "ETH_USDT"
-	tokenizationUpdatePermissionsRequest := *coboWaas2.NewTokenizationUpdatePermissionsRequest(coboWaas2.TokenizationTokenOperationSource{TokenizationMpcOperationSource: coboWaas2.NewTokenizationMpcOperationSource(coboWaas2.TokenizationOperationSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.TokenizationPermissionAction("add"), "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", []coboWaas2.TokenizationTokenPermissionType{coboWaas2.TokenizationTokenPermissionType("ManagePermissions")}, coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")})
+	tokenizationUpdatePermissionsRequest := *coboWaas2.NewTokenizationUpdatePermissionsRequest(coboWaas2.TokenizationTokenOperationSource{TokenizationMpcOperationSource: coboWaas2.NewTokenizationMpcOperationSource(coboWaas2.TokenizationOperationSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, []coboWaas2.TokenizationUpdateAddressPermissions{*coboWaas2.NewTokenizationUpdateAddressPermissions("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", coboWaas2.TokenizationPermissionAction("add"), []coboWaas2.TokenizationTokenPermissionType{coboWaas2.TokenizationTokenPermissionType("ManagePermissions")})}, coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

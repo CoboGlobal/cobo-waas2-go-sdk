@@ -21,6 +21,8 @@ var _ MappedNullable = &EstimatedUtxoFeeSlow{}
 type EstimatedUtxoFeeSlow struct {
 	// The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain.
 	FeeRate string `json:"fee_rate"`
+	// Indicates whether the estimated fee is generated from Cobo’s fallback mechanism. When the estimated transaction belongs to a UTXO-based chain and the specified address does not have sufficient balance to cover the on-chain fee, this field will be set to `true`. In this case, the returned fee value is estimated by Cobo’s internal fallback strategy, which is typically higher than the actual on-chain fee. When `fallback` is `true`, please use the estimated fee value with caution.
+	Fallback *bool `json:"fallback,omitempty"`
 	// The transaction fee that you need to pay for the transaction.
 	FeeAmount string `json:"fee_amount"`
 }
@@ -70,6 +72,38 @@ func (o *EstimatedUtxoFeeSlow) SetFeeRate(v string) {
 	o.FeeRate = v
 }
 
+// GetFallback returns the Fallback field value if set, zero value otherwise.
+func (o *EstimatedUtxoFeeSlow) GetFallback() bool {
+	if o == nil || IsNil(o.Fallback) {
+		var ret bool
+		return ret
+	}
+	return *o.Fallback
+}
+
+// GetFallbackOk returns a tuple with the Fallback field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EstimatedUtxoFeeSlow) GetFallbackOk() (*bool, bool) {
+	if o == nil || IsNil(o.Fallback) {
+		return nil, false
+	}
+	return o.Fallback, true
+}
+
+// HasFallback returns a boolean if a field has been set.
+func (o *EstimatedUtxoFeeSlow) HasFallback() bool {
+	if o != nil && !IsNil(o.Fallback) {
+		return true
+	}
+
+	return false
+}
+
+// SetFallback gets a reference to the given bool and assigns it to the Fallback field.
+func (o *EstimatedUtxoFeeSlow) SetFallback(v bool) {
+	o.Fallback = &v
+}
+
 // GetFeeAmount returns the FeeAmount field value
 func (o *EstimatedUtxoFeeSlow) GetFeeAmount() string {
 	if o == nil {
@@ -105,6 +139,9 @@ func (o EstimatedUtxoFeeSlow) MarshalJSON() ([]byte, error) {
 func (o EstimatedUtxoFeeSlow) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["fee_rate"] = o.FeeRate
+	if !IsNil(o.Fallback) {
+		toSerialize["fallback"] = o.Fallback
+	}
 	toSerialize["fee_amount"] = o.FeeAmount
 	return toSerialize, nil
 }

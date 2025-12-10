@@ -5,19 +5,20 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TokenId** | **string** | The token used to pay the gas fee for this specific transaction. You can retrieve the IDs of all supported tokens by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
+**Balance** | **string** | The current token balance available in the fee station. | 
 **GasStationType** | [**FeeStationGasStationType**](FeeStationGasStationType.md) |  | 
 **IsFeeStationApplicable** | **bool** | Indicates whether the fee station is applied for this transfer request. | 
 **IsBalanceSufficient** | **bool** | If the fee station is used, indicates whether its balance is sufficient to cover the required gas fee. | 
-**Balance** | **string** | The current token balance available in the fee station. | 
 **TotalFeeAmount** | **string** | The total gas amount required for this transfer request. | 
 **IsSponsorApplicable** | **bool** | Indicates whether USDT (U) sponsorship is applied when the fee station balance is insufficient. | 
 **SponsoredFeeAmount** | **string** | The amount of gas fee sponsored by USDT (U) when applicable. | 
+**SponsoredTokenId** | Pointer to **string** | The token ID used to sponsor the gas fee. | [optional] 
 
 ## Methods
 
 ### NewFeeStationCheckFeeStationUsageResponse
 
-`func NewFeeStationCheckFeeStationUsageResponse(tokenId string, gasStationType FeeStationGasStationType, isFeeStationApplicable bool, isBalanceSufficient bool, balance string, totalFeeAmount string, isSponsorApplicable bool, sponsoredFeeAmount string, ) *FeeStationCheckFeeStationUsageResponse`
+`func NewFeeStationCheckFeeStationUsageResponse(tokenId string, balance string, gasStationType FeeStationGasStationType, isFeeStationApplicable bool, isBalanceSufficient bool, totalFeeAmount string, isSponsorApplicable bool, sponsoredFeeAmount string, ) *FeeStationCheckFeeStationUsageResponse`
 
 NewFeeStationCheckFeeStationUsageResponse instantiates a new FeeStationCheckFeeStationUsageResponse object
 This constructor will assign default values to properties that have it defined,
@@ -50,6 +51,26 @@ and a boolean to check if the value has been set.
 `func (o *FeeStationCheckFeeStationUsageResponse) SetTokenId(v string)`
 
 SetTokenId sets TokenId field to given value.
+
+
+### GetBalance
+
+`func (o *FeeStationCheckFeeStationUsageResponse) GetBalance() string`
+
+GetBalance returns the Balance field if non-nil, zero value otherwise.
+
+### GetBalanceOk
+
+`func (o *FeeStationCheckFeeStationUsageResponse) GetBalanceOk() (*string, bool)`
+
+GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalance
+
+`func (o *FeeStationCheckFeeStationUsageResponse) SetBalance(v string)`
+
+SetBalance sets Balance field to given value.
 
 
 ### GetGasStationType
@@ -112,26 +133,6 @@ and a boolean to check if the value has been set.
 SetIsBalanceSufficient sets IsBalanceSufficient field to given value.
 
 
-### GetBalance
-
-`func (o *FeeStationCheckFeeStationUsageResponse) GetBalance() string`
-
-GetBalance returns the Balance field if non-nil, zero value otherwise.
-
-### GetBalanceOk
-
-`func (o *FeeStationCheckFeeStationUsageResponse) GetBalanceOk() (*string, bool)`
-
-GetBalanceOk returns a tuple with the Balance field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBalance
-
-`func (o *FeeStationCheckFeeStationUsageResponse) SetBalance(v string)`
-
-SetBalance sets Balance field to given value.
-
-
 ### GetTotalFeeAmount
 
 `func (o *FeeStationCheckFeeStationUsageResponse) GetTotalFeeAmount() string`
@@ -191,6 +192,31 @@ and a boolean to check if the value has been set.
 
 SetSponsoredFeeAmount sets SponsoredFeeAmount field to given value.
 
+
+### GetSponsoredTokenId
+
+`func (o *FeeStationCheckFeeStationUsageResponse) GetSponsoredTokenId() string`
+
+GetSponsoredTokenId returns the SponsoredTokenId field if non-nil, zero value otherwise.
+
+### GetSponsoredTokenIdOk
+
+`func (o *FeeStationCheckFeeStationUsageResponse) GetSponsoredTokenIdOk() (*string, bool)`
+
+GetSponsoredTokenIdOk returns a tuple with the SponsoredTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSponsoredTokenId
+
+`func (o *FeeStationCheckFeeStationUsageResponse) SetSponsoredTokenId(v string)`
+
+SetSponsoredTokenId sets SponsoredTokenId field to given value.
+
+### HasSponsoredTokenId
+
+`func (o *FeeStationCheckFeeStationUsageResponse) HasSponsoredTokenId() bool`
+
+HasSponsoredTokenId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

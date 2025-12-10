@@ -6,17 +6,18 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DestinationType** | [**ContractCallDestinationType**](ContractCallDestinationType.md) |  | 
 **Address** | **string** | The destination address. | 
-**Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 ETH, then the value is &#x60;1.5&#x60;.  | [optional] 
+**Value** | Pointer to **string** | The transfer amount. For example, if you trade 1.5 TRON, then the value is &#x60;1.5&#x60;.  | [optional] 
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
 **AddressLookupTableAccounts** | Pointer to [**[]SolContractCallAddressLookupTableAccount**](SolContractCallAddressLookupTableAccount.md) |  | [optional] 
+**CosmosMessages** | [**[]CosmosContractCallMessage**](CosmosContractCallMessage.md) |  | 
 **ContractParam** | [**StellarContractCallContractParam**](StellarContractCallContractParam.md) |  | 
 
 ## Methods
 
 ### NewContractCallDestination
 
-`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, contractParam StellarContractCallContractParam, ) *ContractCallDestination`
+`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, cosmosMessages []CosmosContractCallMessage, contractParam StellarContractCallContractParam, ) *ContractCallDestination`
 
 NewContractCallDestination instantiates a new ContractCallDestination object
 This constructor will assign default values to properties that have it defined,
@@ -160,6 +161,26 @@ SetAddressLookupTableAccounts sets AddressLookupTableAccounts field to given val
 `func (o *ContractCallDestination) HasAddressLookupTableAccounts() bool`
 
 HasAddressLookupTableAccounts returns a boolean if a field has been set.
+
+### GetCosmosMessages
+
+`func (o *ContractCallDestination) GetCosmosMessages() []CosmosContractCallMessage`
+
+GetCosmosMessages returns the CosmosMessages field if non-nil, zero value otherwise.
+
+### GetCosmosMessagesOk
+
+`func (o *ContractCallDestination) GetCosmosMessagesOk() (*[]CosmosContractCallMessage, bool)`
+
+GetCosmosMessagesOk returns a tuple with the CosmosMessages field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCosmosMessages
+
+`func (o *ContractCallDestination) SetCosmosMessages(v []CosmosContractCallMessage)`
+
+SetCosmosMessages sets CosmosMessages field to given value.
+
 
 ### GetContractParam
 

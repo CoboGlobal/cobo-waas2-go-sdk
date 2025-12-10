@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**UsedNonce** | Pointer to **int32** | The transaction nonce. | [optional] 
+**UsedNonce** | Pointer to **int64** | The transaction nonce. | [optional] 
 **SelectedUtxos** | Pointer to [**[]TransactionSelectedUtxo**](TransactionSelectedUtxo.md) | The selected UTXOs to be consumed in the transaction. | [optional] 
 **RawTx** | Pointer to **string** | The raw transaction data. | [optional] 
 **UnsignedRawTx** | Pointer to **string** | The unsigned raw transaction data. | [optional] 
@@ -31,20 +31,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetUsedNonce
 
-`func (o *TransactionRawTxInfo) GetUsedNonce() int32`
+`func (o *TransactionRawTxInfo) GetUsedNonce() int64`
 
 GetUsedNonce returns the UsedNonce field if non-nil, zero value otherwise.
 
 ### GetUsedNonceOk
 
-`func (o *TransactionRawTxInfo) GetUsedNonceOk() (*int32, bool)`
+`func (o *TransactionRawTxInfo) GetUsedNonceOk() (*int64, bool)`
 
 GetUsedNonceOk returns a tuple with the UsedNonce field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUsedNonce
 
-`func (o *TransactionRawTxInfo) SetUsedNonce(v int32)`
+`func (o *TransactionRawTxInfo) SetUsedNonce(v int64)`
 
 SetUsedNonce sets UsedNonce field to given value.
 

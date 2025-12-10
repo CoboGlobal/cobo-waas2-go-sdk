@@ -5,15 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Source** | [**TokenizationTokenOperationSource**](TokenizationTokenOperationSource.md) |  | 
-**Action** | [**TokenizationPermissionAction**](TokenizationPermissionAction.md) |  | 
-**Address** | **string** | The address to manage permissions for. | 
-**Permissions** | [**[]TokenizationTokenPermissionType**](TokenizationTokenPermissionType.md) | The list of permissions to operate on. | 
+**Addresses** | [**[]TokenizationUpdateAddressPermissions**](TokenizationUpdateAddressPermissions.md) |  | 
 
 ## Methods
 
 ### NewTokenizationUpdatePermissionsParams
 
-`func NewTokenizationUpdatePermissionsParams(source TokenizationTokenOperationSource, action TokenizationPermissionAction, address string, permissions []TokenizationTokenPermissionType, ) *TokenizationUpdatePermissionsParams`
+`func NewTokenizationUpdatePermissionsParams(source TokenizationTokenOperationSource, addresses []TokenizationUpdateAddressPermissions, ) *TokenizationUpdatePermissionsParams`
 
 NewTokenizationUpdatePermissionsParams instantiates a new TokenizationUpdatePermissionsParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,64 +46,24 @@ and a boolean to check if the value has been set.
 SetSource sets Source field to given value.
 
 
-### GetAction
+### GetAddresses
 
-`func (o *TokenizationUpdatePermissionsParams) GetAction() TokenizationPermissionAction`
+`func (o *TokenizationUpdatePermissionsParams) GetAddresses() []TokenizationUpdateAddressPermissions`
 
-GetAction returns the Action field if non-nil, zero value otherwise.
+GetAddresses returns the Addresses field if non-nil, zero value otherwise.
 
-### GetActionOk
+### GetAddressesOk
 
-`func (o *TokenizationUpdatePermissionsParams) GetActionOk() (*TokenizationPermissionAction, bool)`
+`func (o *TokenizationUpdatePermissionsParams) GetAddressesOk() (*[]TokenizationUpdateAddressPermissions, bool)`
 
-GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
+GetAddressesOk returns a tuple with the Addresses field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAction
+### SetAddresses
 
-`func (o *TokenizationUpdatePermissionsParams) SetAction(v TokenizationPermissionAction)`
+`func (o *TokenizationUpdatePermissionsParams) SetAddresses(v []TokenizationUpdateAddressPermissions)`
 
-SetAction sets Action field to given value.
-
-
-### GetAddress
-
-`func (o *TokenizationUpdatePermissionsParams) GetAddress() string`
-
-GetAddress returns the Address field if non-nil, zero value otherwise.
-
-### GetAddressOk
-
-`func (o *TokenizationUpdatePermissionsParams) GetAddressOk() (*string, bool)`
-
-GetAddressOk returns a tuple with the Address field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAddress
-
-`func (o *TokenizationUpdatePermissionsParams) SetAddress(v string)`
-
-SetAddress sets Address field to given value.
-
-
-### GetPermissions
-
-`func (o *TokenizationUpdatePermissionsParams) GetPermissions() []TokenizationTokenPermissionType`
-
-GetPermissions returns the Permissions field if non-nil, zero value otherwise.
-
-### GetPermissionsOk
-
-`func (o *TokenizationUpdatePermissionsParams) GetPermissionsOk() (*[]TokenizationTokenPermissionType, bool)`
-
-GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPermissions
-
-`func (o *TokenizationUpdatePermissionsParams) SetPermissions(v []TokenizationTokenPermissionType)`
-
-SetPermissions sets Permissions field to given value.
+SetAddresses sets Addresses field to given value.
 
 
 

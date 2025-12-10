@@ -19,8 +19,6 @@ var _ MappedNullable = &PaymentSubscriptionPlanDetail{}
 
 // PaymentSubscriptionPlanDetail struct for PaymentSubscriptionPlanDetail
 type PaymentSubscriptionPlanDetail struct {
-	// The subscription plan id in blockchain.
-	BlockchainPlanId *string `json:"blockchain_plan_id,omitempty"`
 	// The plan id in cobo.
 	PlanId string `json:"plan_id"`
 	// The developer plan id.
@@ -28,12 +26,18 @@ type PaymentSubscriptionPlanDetail struct {
 	PeriodType PaymentSubscriptionPeriodType `json:"period_type"`
 	Periods int32 `json:"periods"`
 	Interval int32 `json:"interval"`
+	// probation period
+	TrialPeriod *int32 `json:"trial_period,omitempty"`
 	// The subscription plan amount.  - If `currency` is set, this represents the subscription amount in the specified fiat currency. - If `currency` isn't set, this represents the settlement amount in the specified cryptocurrency. 
 	Amount string `json:"amount"`
 	// The ID of the cryptocurrency you want to subscription. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC` - USDT: `ETH_USDT`, `ARBITRUM_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId *string `json:"token_id,omitempty"`
 	// The fiat currency for settling the cryptocurrency. Currently, only `USD` is supported. Specify this field when `payout_channel` is set to `OffRamp`.
 	Currency *string `json:"currency,omitempty"`
+	// The subscription plan crypto amount with input token_id. 
+	ChargeAmount *string `json:"charge_amount,omitempty"`
+	// The subscription contract address in cobo.
+	ContractAddress *string `json:"contract_address,omitempty"`
 }
 
 type _PaymentSubscriptionPlanDetail PaymentSubscriptionPlanDetail
@@ -59,38 +63,6 @@ func NewPaymentSubscriptionPlanDetail(planId string, developerPlanId string, per
 func NewPaymentSubscriptionPlanDetailWithDefaults() *PaymentSubscriptionPlanDetail {
 	this := PaymentSubscriptionPlanDetail{}
 	return &this
-}
-
-// GetBlockchainPlanId returns the BlockchainPlanId field value if set, zero value otherwise.
-func (o *PaymentSubscriptionPlanDetail) GetBlockchainPlanId() string {
-	if o == nil || IsNil(o.BlockchainPlanId) {
-		var ret string
-		return ret
-	}
-	return *o.BlockchainPlanId
-}
-
-// GetBlockchainPlanIdOk returns a tuple with the BlockchainPlanId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentSubscriptionPlanDetail) GetBlockchainPlanIdOk() (*string, bool) {
-	if o == nil || IsNil(o.BlockchainPlanId) {
-		return nil, false
-	}
-	return o.BlockchainPlanId, true
-}
-
-// HasBlockchainPlanId returns a boolean if a field has been set.
-func (o *PaymentSubscriptionPlanDetail) HasBlockchainPlanId() bool {
-	if o != nil && !IsNil(o.BlockchainPlanId) {
-		return true
-	}
-
-	return false
-}
-
-// SetBlockchainPlanId gets a reference to the given string and assigns it to the BlockchainPlanId field.
-func (o *PaymentSubscriptionPlanDetail) SetBlockchainPlanId(v string) {
-	o.BlockchainPlanId = &v
 }
 
 // GetPlanId returns the PlanId field value
@@ -213,6 +185,38 @@ func (o *PaymentSubscriptionPlanDetail) SetInterval(v int32) {
 	o.Interval = v
 }
 
+// GetTrialPeriod returns the TrialPeriod field value if set, zero value otherwise.
+func (o *PaymentSubscriptionPlanDetail) GetTrialPeriod() int32 {
+	if o == nil || IsNil(o.TrialPeriod) {
+		var ret int32
+		return ret
+	}
+	return *o.TrialPeriod
+}
+
+// GetTrialPeriodOk returns a tuple with the TrialPeriod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSubscriptionPlanDetail) GetTrialPeriodOk() (*int32, bool) {
+	if o == nil || IsNil(o.TrialPeriod) {
+		return nil, false
+	}
+	return o.TrialPeriod, true
+}
+
+// HasTrialPeriod returns a boolean if a field has been set.
+func (o *PaymentSubscriptionPlanDetail) HasTrialPeriod() bool {
+	if o != nil && !IsNil(o.TrialPeriod) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrialPeriod gets a reference to the given int32 and assigns it to the TrialPeriod field.
+func (o *PaymentSubscriptionPlanDetail) SetTrialPeriod(v int32) {
+	o.TrialPeriod = &v
+}
+
 // GetAmount returns the Amount field value
 func (o *PaymentSubscriptionPlanDetail) GetAmount() string {
 	if o == nil {
@@ -301,6 +305,70 @@ func (o *PaymentSubscriptionPlanDetail) SetCurrency(v string) {
 	o.Currency = &v
 }
 
+// GetChargeAmount returns the ChargeAmount field value if set, zero value otherwise.
+func (o *PaymentSubscriptionPlanDetail) GetChargeAmount() string {
+	if o == nil || IsNil(o.ChargeAmount) {
+		var ret string
+		return ret
+	}
+	return *o.ChargeAmount
+}
+
+// GetChargeAmountOk returns a tuple with the ChargeAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSubscriptionPlanDetail) GetChargeAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.ChargeAmount) {
+		return nil, false
+	}
+	return o.ChargeAmount, true
+}
+
+// HasChargeAmount returns a boolean if a field has been set.
+func (o *PaymentSubscriptionPlanDetail) HasChargeAmount() bool {
+	if o != nil && !IsNil(o.ChargeAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetChargeAmount gets a reference to the given string and assigns it to the ChargeAmount field.
+func (o *PaymentSubscriptionPlanDetail) SetChargeAmount(v string) {
+	o.ChargeAmount = &v
+}
+
+// GetContractAddress returns the ContractAddress field value if set, zero value otherwise.
+func (o *PaymentSubscriptionPlanDetail) GetContractAddress() string {
+	if o == nil || IsNil(o.ContractAddress) {
+		var ret string
+		return ret
+	}
+	return *o.ContractAddress
+}
+
+// GetContractAddressOk returns a tuple with the ContractAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentSubscriptionPlanDetail) GetContractAddressOk() (*string, bool) {
+	if o == nil || IsNil(o.ContractAddress) {
+		return nil, false
+	}
+	return o.ContractAddress, true
+}
+
+// HasContractAddress returns a boolean if a field has been set.
+func (o *PaymentSubscriptionPlanDetail) HasContractAddress() bool {
+	if o != nil && !IsNil(o.ContractAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetContractAddress gets a reference to the given string and assigns it to the ContractAddress field.
+func (o *PaymentSubscriptionPlanDetail) SetContractAddress(v string) {
+	o.ContractAddress = &v
+}
+
 func (o PaymentSubscriptionPlanDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -311,20 +379,26 @@ func (o PaymentSubscriptionPlanDetail) MarshalJSON() ([]byte, error) {
 
 func (o PaymentSubscriptionPlanDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.BlockchainPlanId) {
-		toSerialize["blockchain_plan_id"] = o.BlockchainPlanId
-	}
 	toSerialize["plan_id"] = o.PlanId
 	toSerialize["developer_plan_id"] = o.DeveloperPlanId
 	toSerialize["period_type"] = o.PeriodType
 	toSerialize["periods"] = o.Periods
 	toSerialize["interval"] = o.Interval
+	if !IsNil(o.TrialPeriod) {
+		toSerialize["trial_period"] = o.TrialPeriod
+	}
 	toSerialize["amount"] = o.Amount
 	if !IsNil(o.TokenId) {
 		toSerialize["token_id"] = o.TokenId
 	}
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.ChargeAmount) {
+		toSerialize["charge_amount"] = o.ChargeAmount
+	}
+	if !IsNil(o.ContractAddress) {
+		toSerialize["contract_address"] = o.ContractAddress
 	}
 	return toSerialize, nil
 }

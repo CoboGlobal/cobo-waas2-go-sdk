@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **MaxPriorityFeePerGas** | **string** | The maximum priority fee per gas unit used, in wei. The maximum priority fee represents the highest amount of miner tips that you are willing to pay for your transaction. | 
 **GasPrice** | **string** | The gas price, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions per gas unit used. | 
 **FeeRate** | Pointer to **string** | The fee rate in sat/vByte. The fee rate represents the satoshis you are willing to pay for each byte of data that your transaction will consume on the blockchain. | [optional] 
+**Fallback** | Pointer to **bool** | Indicates whether the estimated fee is generated from Cobo’s fallback mechanism. When the estimated transaction belongs to a UTXO-based chain and the specified address does not have sufficient balance to cover the on-chain fee, this field will be set to &#x60;true&#x60;. In this case, the returned fee value is estimated by Cobo’s internal fallback strategy, which is typically higher than the actual on-chain fee. When &#x60;fallback&#x60; is &#x60;true&#x60;, please use the estimated fee value with caution. | [optional] 
 **ComputeUnitPrice** | **string** | The cost per compute unit. Transactions consume computational resources measured in compute units, and this price helps determine the cost of executing transactions, especially complex ones involving smart contracts. | 
 **ComputeUnitLimit** | **string** | The maximum number of compute units allowed for a transaction. This limits the resources any single transaction can consume, preventing excessive resource usage that could impact network performance negatively. | 
 **GasPremium** | **string** | An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee. | 
@@ -210,6 +211,31 @@ SetFeeRate sets FeeRate field to given value.
 `func (o *TransactionRequestFee) HasFeeRate() bool`
 
 HasFeeRate returns a boolean if a field has been set.
+
+### GetFallback
+
+`func (o *TransactionRequestFee) GetFallback() bool`
+
+GetFallback returns the Fallback field if non-nil, zero value otherwise.
+
+### GetFallbackOk
+
+`func (o *TransactionRequestFee) GetFallbackOk() (*bool, bool)`
+
+GetFallbackOk returns a tuple with the Fallback field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFallback
+
+`func (o *TransactionRequestFee) SetFallback(v bool)`
+
+SetFallback sets Fallback field to given value.
+
+### HasFallback
+
+`func (o *TransactionRequestFee) HasFallback() bool`
+
+HasFallback returns a boolean if a field has been set.
 
 ### GetComputeUnitPrice
 

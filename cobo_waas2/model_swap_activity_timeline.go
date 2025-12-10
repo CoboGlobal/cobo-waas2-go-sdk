@@ -24,7 +24,7 @@ type SwapActivityTimeline struct {
 	// The status of the action. Possible values include:   - `Success`: The action is successfully completed.   - `Processing`: The action is being processed.   - `Failed`: The action has failed. 
 	Status string `json:"status"`
 	// The time when the action took place, in Unix timestamp format, measured in milliseconds.  
-	Timestamp *int32 `json:"timestamp,omitempty"`
+	Timestamp *int64 `json:"timestamp,omitempty"`
 }
 
 type _SwapActivityTimeline SwapActivityTimeline
@@ -97,9 +97,9 @@ func (o *SwapActivityTimeline) SetStatus(v string) {
 }
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
-func (o *SwapActivityTimeline) GetTimestamp() int32 {
+func (o *SwapActivityTimeline) GetTimestamp() int64 {
 	if o == nil || IsNil(o.Timestamp) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.Timestamp
@@ -107,7 +107,7 @@ func (o *SwapActivityTimeline) GetTimestamp() int32 {
 
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SwapActivityTimeline) GetTimestampOk() (*int32, bool) {
+func (o *SwapActivityTimeline) GetTimestampOk() (*int64, bool) {
 	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
@@ -123,8 +123,8 @@ func (o *SwapActivityTimeline) HasTimestamp() bool {
 	return false
 }
 
-// SetTimestamp gets a reference to the given int32 and assigns it to the Timestamp field.
-func (o *SwapActivityTimeline) SetTimestamp(v int32) {
+// SetTimestamp gets a reference to the given int64 and assigns it to the Timestamp field.
+func (o *SwapActivityTimeline) SetTimestamp(v int64) {
 	o.Timestamp = &v
 }
 

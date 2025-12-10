@@ -6,10 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MerchantId** | Pointer to **string** | Only used in Merchant settlement type. The merchant ID.  | [optional] 
 **TokenId** | **string** | Only used in Crypto payout channel. The ID of the cryptocurrency you want to settle. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60; - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
-**Currency** | Pointer to **string** | Only used in OffRamp payout channel. The fiat currency for settling the cryptocurrency. Currently, only &#x60;USD&#x60; is supported.  | [optional] 
 **Amount** | Pointer to **string** | The settlement amount. - In Crypto payout channel, this represents the settlement amount in the specified cryptocurrency. - In OffRamp payout channel, this represents the settlement amount in the specified fiat currency.  | [optional] 
-**BankAccountId** | Pointer to **string** | ｜ Only used in OffRamp payout channel. The ID of the bank account where the settled funds will be deposited. | [optional] 
 **CryptoAddressId** | Pointer to **string** | Only used in Crypto payout channel. The ID of the pre-approved crypto address used for Crypto settlements. - The value must refer to a valid address that has been pre-configured and approved for the given token.  | [optional] 
+**CryptoAddress** | Pointer to **string** | Only used in Crypto payout channel. The actual blockchain address to which funds will be transferred. If enable destination whitelist, this address must be associated with a destination.  | [optional] 
 **OrderIds** | Pointer to **[]string** | A list of unique order IDs to be included in this settlement.  - This field is only applicable when &#x60;settlement_type&#x60; is set to &#x60;Merchant&#x60;. - If provided, the settlement will only apply to the specified orders. - The settlement &#x60;amount&#x60; must exactly match the total eligible amount from these orders. - This ensures consistency between the declared amount and the actual order-level data being settled.  | [optional] 
 
 ## Methods
@@ -76,31 +75,6 @@ and a boolean to check if the value has been set.
 SetTokenId sets TokenId field to given value.
 
 
-### GetCurrency
-
-`func (o *CreateSettlement) GetCurrency() string`
-
-GetCurrency returns the Currency field if non-nil, zero value otherwise.
-
-### GetCurrencyOk
-
-`func (o *CreateSettlement) GetCurrencyOk() (*string, bool)`
-
-GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCurrency
-
-`func (o *CreateSettlement) SetCurrency(v string)`
-
-SetCurrency sets Currency field to given value.
-
-### HasCurrency
-
-`func (o *CreateSettlement) HasCurrency() bool`
-
-HasCurrency returns a boolean if a field has been set.
-
 ### GetAmount
 
 `func (o *CreateSettlement) GetAmount() string`
@@ -126,31 +100,6 @@ SetAmount sets Amount field to given value.
 
 HasAmount returns a boolean if a field has been set.
 
-### GetBankAccountId
-
-`func (o *CreateSettlement) GetBankAccountId() string`
-
-GetBankAccountId returns the BankAccountId field if non-nil, zero value otherwise.
-
-### GetBankAccountIdOk
-
-`func (o *CreateSettlement) GetBankAccountIdOk() (*string, bool)`
-
-GetBankAccountIdOk returns a tuple with the BankAccountId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBankAccountId
-
-`func (o *CreateSettlement) SetBankAccountId(v string)`
-
-SetBankAccountId sets BankAccountId field to given value.
-
-### HasBankAccountId
-
-`func (o *CreateSettlement) HasBankAccountId() bool`
-
-HasBankAccountId returns a boolean if a field has been set.
-
 ### GetCryptoAddressId
 
 `func (o *CreateSettlement) GetCryptoAddressId() string`
@@ -175,6 +124,31 @@ SetCryptoAddressId sets CryptoAddressId field to given value.
 `func (o *CreateSettlement) HasCryptoAddressId() bool`
 
 HasCryptoAddressId returns a boolean if a field has been set.
+
+### GetCryptoAddress
+
+`func (o *CreateSettlement) GetCryptoAddress() string`
+
+GetCryptoAddress returns the CryptoAddress field if non-nil, zero value otherwise.
+
+### GetCryptoAddressOk
+
+`func (o *CreateSettlement) GetCryptoAddressOk() (*string, bool)`
+
+GetCryptoAddressOk returns a tuple with the CryptoAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCryptoAddress
+
+`func (o *CreateSettlement) SetCryptoAddress(v string)`
+
+SetCryptoAddress sets CryptoAddress field to given value.
+
+### HasCryptoAddress
+
+`func (o *CreateSettlement) HasCryptoAddress() bool`
+
+HasCryptoAddress returns a boolean if a field has been set.
 
 ### GetOrderIds
 

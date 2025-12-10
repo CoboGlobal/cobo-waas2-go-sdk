@@ -15,12 +15,13 @@ Name | Type | Description | Notes
 **Status** | [**TokenizationStatus**](TokenizationStatus.md) |  | 
 **TotalSupply** | Pointer to **string** | The total supply of the token. | [optional] 
 **Holdings** | Pointer to **string** | The amount of tokens held by the organization. | [optional] 
+**Archived** | **bool** | Whether the token is archived. If archived, no operations can be initiated on this token. | 
 
 ## Methods
 
 ### NewTokenizationTokenInfo
 
-`func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, ) *TokenizationTokenInfo`
+`func NewTokenizationTokenInfo(tokenId string, chainId string, tokenSymbol string, tokenStandard TokenizationTokenStandard, decimals int32, status TokenizationStatus, archived bool, ) *TokenizationTokenInfo`
 
 NewTokenizationTokenInfo instantiates a new TokenizationTokenInfo object
 This constructor will assign default values to properties that have it defined,
@@ -279,6 +280,26 @@ SetHoldings sets Holdings field to given value.
 `func (o *TokenizationTokenInfo) HasHoldings() bool`
 
 HasHoldings returns a boolean if a field has been set.
+
+### GetArchived
+
+`func (o *TokenizationTokenInfo) GetArchived() bool`
+
+GetArchived returns the Archived field if non-nil, zero value otherwise.
+
+### GetArchivedOk
+
+`func (o *TokenizationTokenInfo) GetArchivedOk() (*bool, bool)`
+
+GetArchivedOk returns a tuple with the Archived field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetArchived
+
+`func (o *TokenizationTokenInfo) SetArchived(v bool)`
+
+SetArchived sets Archived field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
