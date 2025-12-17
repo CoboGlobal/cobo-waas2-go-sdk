@@ -9,9 +9,11 @@ Name | Type | Description | Notes
 **AcquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
 **TotalReceivedAmount** | Pointer to **string** | The total amount of the token that has been received by the merchant. | [optional] 
 **SettledAmount** | Pointer to **string** | The total amount of the token that has been paid out from the merchant&#39;s balance. | [optional] 
+**PayoutAmount** | Pointer to **string** | The merchant payout amount. | [optional] 
 **RefundedAmount** | Pointer to **string** | The total amount of the token that has been refunded from the merchant&#39;s balance. | [optional] 
-**TotalBalance** | Pointer to **string** |  The total balance of the token available for payout or refund for the merchant.  &#x60;total_balance&#x60; &#x3D; &#x60;total_received_amount&#x60; - &#x60;settled_amount&#x60; - &#x60;refunded_amount&#x60;  For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances)  | [optional] 
-**AvailableBalance** | Pointer to **string** | This field has been deprecated. | [optional] 
+**TotalBalance** | Pointer to **string** |  The current balance of this token available to the merchant for payouts or refunds.  &#x60;total_balance&#x60; &#x3D; &#x60;total_received_amount&#x60; - &#x60;settled_amount&#x60; - &#x60;refunded_amount&#x60;  For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances)  | [optional] 
+**AvailableBalance** | Pointer to **string** | The merchant available balance. | [optional] 
+**LockedBalance** | Pointer to **string** | The merchant locked balance. | [optional] 
 
 ## Methods
 
@@ -142,6 +144,31 @@ SetSettledAmount sets SettledAmount field to given value.
 
 HasSettledAmount returns a boolean if a field has been set.
 
+### GetPayoutAmount
+
+`func (o *MerchantBalance) GetPayoutAmount() string`
+
+GetPayoutAmount returns the PayoutAmount field if non-nil, zero value otherwise.
+
+### GetPayoutAmountOk
+
+`func (o *MerchantBalance) GetPayoutAmountOk() (*string, bool)`
+
+GetPayoutAmountOk returns a tuple with the PayoutAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayoutAmount
+
+`func (o *MerchantBalance) SetPayoutAmount(v string)`
+
+SetPayoutAmount sets PayoutAmount field to given value.
+
+### HasPayoutAmount
+
+`func (o *MerchantBalance) HasPayoutAmount() bool`
+
+HasPayoutAmount returns a boolean if a field has been set.
+
 ### GetRefundedAmount
 
 `func (o *MerchantBalance) GetRefundedAmount() string`
@@ -216,6 +243,31 @@ SetAvailableBalance sets AvailableBalance field to given value.
 `func (o *MerchantBalance) HasAvailableBalance() bool`
 
 HasAvailableBalance returns a boolean if a field has been set.
+
+### GetLockedBalance
+
+`func (o *MerchantBalance) GetLockedBalance() string`
+
+GetLockedBalance returns the LockedBalance field if non-nil, zero value otherwise.
+
+### GetLockedBalanceOk
+
+`func (o *MerchantBalance) GetLockedBalanceOk() (*string, bool)`
+
+GetLockedBalanceOk returns a tuple with the LockedBalance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLockedBalance
+
+`func (o *MerchantBalance) SetLockedBalance(v string)`
+
+SetLockedBalance sets LockedBalance field to given value.
+
+### HasLockedBalance
+
+`func (o *MerchantBalance) HasLockedBalance() bool`
+
+HasLockedBalance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

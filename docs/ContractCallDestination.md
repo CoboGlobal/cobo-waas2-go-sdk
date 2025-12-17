@@ -11,12 +11,13 @@ Name | Type | Description | Notes
 **Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
 **AddressLookupTableAccounts** | Pointer to [**[]SolContractCallAddressLookupTableAccount**](SolContractCallAddressLookupTableAccount.md) |  | [optional] 
 **ContractParam** | [**StellarContractCallContractParam**](StellarContractCallContractParam.md) |  | 
+**CosmosMessages** | [**[]CosmosContractCallMessage**](CosmosContractCallMessage.md) |  | 
 
 ## Methods
 
 ### NewContractCallDestination
 
-`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, contractParam StellarContractCallContractParam, ) *ContractCallDestination`
+`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, contractParam StellarContractCallContractParam, cosmosMessages []CosmosContractCallMessage, ) *ContractCallDestination`
 
 NewContractCallDestination instantiates a new ContractCallDestination object
 This constructor will assign default values to properties that have it defined,
@@ -179,6 +180,26 @@ and a boolean to check if the value has been set.
 `func (o *ContractCallDestination) SetContractParam(v StellarContractCallContractParam)`
 
 SetContractParam sets ContractParam field to given value.
+
+
+### GetCosmosMessages
+
+`func (o *ContractCallDestination) GetCosmosMessages() []CosmosContractCallMessage`
+
+GetCosmosMessages returns the CosmosMessages field if non-nil, zero value otherwise.
+
+### GetCosmosMessagesOk
+
+`func (o *ContractCallDestination) GetCosmosMessagesOk() (*[]CosmosContractCallMessage, bool)`
+
+GetCosmosMessagesOk returns a tuple with the CosmosMessages field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCosmosMessages
+
+`func (o *ContractCallDestination) SetCosmosMessages(v []CosmosContractCallMessage)`
+
+SetCosmosMessages sets CosmosMessages field to given value.
 
 
 

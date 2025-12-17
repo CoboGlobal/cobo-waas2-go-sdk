@@ -23,7 +23,7 @@ type CreateExchangeWalletParams struct {
 	Name string `json:"name"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`
-	// Enable the auto-sweep feature for the wallet. This parameter only applies to MPC Wallets and Web3 Wallets.
+	// Enable the auto-sweep feature for the wallet. This parameter only applies to MPC Wallets and Custodial Wallets (Web3 Wallets).
 	EnableAutoSweep *bool `json:"enable_auto_sweep,omitempty"`
 	ExchangeId ExchangeId `json:"exchange_id"`
 	// The API key of your exchange account.

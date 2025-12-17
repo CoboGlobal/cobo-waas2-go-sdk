@@ -19,28 +19,36 @@ var _ MappedNullable = &CreatePaymentOrderRequest{}
 
 // CreatePaymentOrderRequest struct for CreatePaymentOrderRequest
 type CreatePaymentOrderRequest struct {
-	// The merchant ID. This ID is assigned by Cobo when you create the merchant.
+	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
-	// The ID of the cryptocurrency used for payment. Supported values:    - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
-	TokenId string `json:"token_id"`
-	// The fiat currency for the base order amount and the developer fee. If left empty, both `order_amount` and `fee_amount` will be denominated in the cryptocurrency specified by `token_id`  Currently, only `USD` is supported. 
-	Currency *string `json:"currency,omitempty"`
-	//  The base amount of the order, excluding the developer fee (specified in `fee_amount`). The denomination of the amount depends on if `currency` is specified: - If `currency` is specified, the amount is in the currency specified by `currency`, e.g. \"USD\". - If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`, e.g. \"ETH_USDT\".   Values must be greater than `0` and contain two decimal places. 
-	OrderAmount string `json:"order_amount"`
-	//  The developer fee for the order.  - **When to set:**     If you are a merchant serving payers directly, set this field to `0`.     Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.   For details, see [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).  - **Denomination:**     The denomination of `fee_amount` depends on the presence of `currency`:       - If `currency` is set, the amount is denominated in that currency (e.g., \"USD\").       - If `currency` is not set, the amount is denominated in the cryptocurrency specified by `token_id` (e.g., \"ETH_USDT\").  - **Calculation:**     The developer fee is added to the base order amount (`order_amount`) to determine the final amount charged to the customer.     For example:       - Base amount (`order_amount`): \"100.00\"       - Developer fee (`fee_amount`): \"2.00\"       - **Total charged:** \"102.00\"  - **Formatting:**     The value can contain up to two decimal places. 
-	FeeAmount string `json:"fee_amount"`
-	// A unique reference code assigned by the merchant to identify this order in their system. The code should have a maximum length of 128 characters.
+	// A unique reference code assigned by the merchant to identify this order in their system.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
-	// A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters. 
+	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
-	// The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
+	// The ID of the cryptocurrency used for payment. Supported values:   - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	PricingCurrency *string `json:"pricing_currency,omitempty"`
+	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places.
+	PricingAmount *string `json:"pricing_amount,omitempty"`
+	// The developer fee for the order in fiat currency. It is added to the base amount (`order_amount`) to determine the final charge. For example, if order_amount is \"100.00\" and fee_amount is \"2.00\", the customer will be charged \"102.00\" in total, with \"100.00\" being settled to the merchant and \"2.00\" settled to the developer. Values must be greater than 0 and contain two decimal places.
+	FeeAmount string `json:"fee_amount"`
+	// The ID of the cryptocurrency used for payment. Supported values:   - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	PayableCurrency *string `json:"payable_currency,omitempty"`
+	// The actual payable amount of the order in the cryptocurrency.
+	PayableAmount *string `json:"payable_amount,omitempty"`
+	// The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
-	// This field has been deprecated. 
-	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
-	//  A custom exchange rate that defines how much fiat currency equals 1 unit of cryptocurrency. If not provided, the system's default exchange rate will be used.  For example, if the fiat currency is USD and the cryptocurrency is USDT, setting `custom_exchange_rate` to `\"0.99\"` means that 1 USDT will be valued at 0.99 USD. 
-	CustomExchangeRate *string `json:"custom_exchange_rate,omitempty"`
-	// The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`. 
+	// Allowed amount deviation, precision to 1 decimal place.
 	AmountTolerance *string `json:"amount_tolerance,omitempty"`
+	// The fiat currency of the order.
+	Currency *string `json:"currency,omitempty"`
+	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places.
+	OrderAmount *string `json:"order_amount,omitempty"`
+	// The ID of the cryptocurrency used for payment. Supported values:   - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	TokenId *string `json:"token_id,omitempty"`
+	// Indicates whether to allocate a dedicated address for this order.  If false, a shared address from the address pool will be used. 
+	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
+	// A custom exchange rate specified by the merchant.   - Only effective when `currency` is `\"USD\"`.   - Expressed as the amount of USD per 1 unit of the specified cryptocurrency.   - If not provided, the system will use the default internal rate.   Example: If the cryptocurrency is USDT and `custom_exchange_rate` = `\"0.99\"`, it means 1 USDT = 0.99 USD. 
+	CustomExchangeRate *string `json:"custom_exchange_rate,omitempty"`
 }
 
 type _CreatePaymentOrderRequest CreatePaymentOrderRequest
@@ -49,17 +57,13 @@ type _CreatePaymentOrderRequest CreatePaymentOrderRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreatePaymentOrderRequest(merchantId string, tokenId string, orderAmount string, feeAmount string, pspOrderCode string) *CreatePaymentOrderRequest {
+func NewCreatePaymentOrderRequest(merchantId string, pspOrderCode string, feeAmount string) *CreatePaymentOrderRequest {
 	this := CreatePaymentOrderRequest{}
 	this.MerchantId = merchantId
-	this.TokenId = tokenId
+	this.PspOrderCode = pspOrderCode
+	this.FeeAmount = feeAmount
 	var currency string = ""
 	this.Currency = &currency
-	this.OrderAmount = orderAmount
-	this.FeeAmount = feeAmount
-	this.PspOrderCode = pspOrderCode
-	var expiredIn int32 = 1800
-	this.ExpiredIn = &expiredIn
 	return &this
 }
 
@@ -70,8 +74,6 @@ func NewCreatePaymentOrderRequestWithDefaults() *CreatePaymentOrderRequest {
 	this := CreatePaymentOrderRequest{}
 	var currency string = ""
 	this.Currency = &currency
-	var expiredIn int32 = 1800
-	this.ExpiredIn = &expiredIn
 	return &this
 }
 
@@ -97,110 +99,6 @@ func (o *CreatePaymentOrderRequest) GetMerchantIdOk() (*string, bool) {
 // SetMerchantId sets field value
 func (o *CreatePaymentOrderRequest) SetMerchantId(v string) {
 	o.MerchantId = v
-}
-
-// GetTokenId returns the TokenId field value
-func (o *CreatePaymentOrderRequest) GetTokenId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.TokenId
-}
-
-// GetTokenIdOk returns a tuple with the TokenId field value
-// and a boolean to check if the value has been set.
-func (o *CreatePaymentOrderRequest) GetTokenIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.TokenId, true
-}
-
-// SetTokenId sets field value
-func (o *CreatePaymentOrderRequest) SetTokenId(v string) {
-	o.TokenId = v
-}
-
-// GetCurrency returns the Currency field value if set, zero value otherwise.
-func (o *CreatePaymentOrderRequest) GetCurrency() string {
-	if o == nil || IsNil(o.Currency) {
-		var ret string
-		return ret
-	}
-	return *o.Currency
-}
-
-// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreatePaymentOrderRequest) GetCurrencyOk() (*string, bool) {
-	if o == nil || IsNil(o.Currency) {
-		return nil, false
-	}
-	return o.Currency, true
-}
-
-// HasCurrency returns a boolean if a field has been set.
-func (o *CreatePaymentOrderRequest) HasCurrency() bool {
-	if o != nil && !IsNil(o.Currency) {
-		return true
-	}
-
-	return false
-}
-
-// SetCurrency gets a reference to the given string and assigns it to the Currency field.
-func (o *CreatePaymentOrderRequest) SetCurrency(v string) {
-	o.Currency = &v
-}
-
-// GetOrderAmount returns the OrderAmount field value
-func (o *CreatePaymentOrderRequest) GetOrderAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.OrderAmount
-}
-
-// GetOrderAmountOk returns a tuple with the OrderAmount field value
-// and a boolean to check if the value has been set.
-func (o *CreatePaymentOrderRequest) GetOrderAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.OrderAmount, true
-}
-
-// SetOrderAmount sets field value
-func (o *CreatePaymentOrderRequest) SetOrderAmount(v string) {
-	o.OrderAmount = v
-}
-
-// GetFeeAmount returns the FeeAmount field value
-func (o *CreatePaymentOrderRequest) GetFeeAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value
-// and a boolean to check if the value has been set.
-func (o *CreatePaymentOrderRequest) GetFeeAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.FeeAmount, true
-}
-
-// SetFeeAmount sets field value
-func (o *CreatePaymentOrderRequest) SetFeeAmount(v string) {
-	o.FeeAmount = v
 }
 
 // GetMerchantOrderCode returns the MerchantOrderCode field value if set, zero value otherwise.
@@ -259,6 +157,158 @@ func (o *CreatePaymentOrderRequest) SetPspOrderCode(v string) {
 	o.PspOrderCode = v
 }
 
+// GetPricingCurrency returns the PricingCurrency field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetPricingCurrency() string {
+	if o == nil || IsNil(o.PricingCurrency) {
+		var ret string
+		return ret
+	}
+	return *o.PricingCurrency
+}
+
+// GetPricingCurrencyOk returns a tuple with the PricingCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetPricingCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.PricingCurrency) {
+		return nil, false
+	}
+	return o.PricingCurrency, true
+}
+
+// HasPricingCurrency returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasPricingCurrency() bool {
+	if o != nil && !IsNil(o.PricingCurrency) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricingCurrency gets a reference to the given string and assigns it to the PricingCurrency field.
+func (o *CreatePaymentOrderRequest) SetPricingCurrency(v string) {
+	o.PricingCurrency = &v
+}
+
+// GetPricingAmount returns the PricingAmount field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetPricingAmount() string {
+	if o == nil || IsNil(o.PricingAmount) {
+		var ret string
+		return ret
+	}
+	return *o.PricingAmount
+}
+
+// GetPricingAmountOk returns a tuple with the PricingAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetPricingAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.PricingAmount) {
+		return nil, false
+	}
+	return o.PricingAmount, true
+}
+
+// HasPricingAmount returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasPricingAmount() bool {
+	if o != nil && !IsNil(o.PricingAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricingAmount gets a reference to the given string and assigns it to the PricingAmount field.
+func (o *CreatePaymentOrderRequest) SetPricingAmount(v string) {
+	o.PricingAmount = &v
+}
+
+// GetFeeAmount returns the FeeAmount field value
+func (o *CreatePaymentOrderRequest) GetFeeAmount() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.FeeAmount
+}
+
+// GetFeeAmountOk returns a tuple with the FeeAmount field value
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetFeeAmountOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FeeAmount, true
+}
+
+// SetFeeAmount sets field value
+func (o *CreatePaymentOrderRequest) SetFeeAmount(v string) {
+	o.FeeAmount = v
+}
+
+// GetPayableCurrency returns the PayableCurrency field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetPayableCurrency() string {
+	if o == nil || IsNil(o.PayableCurrency) {
+		var ret string
+		return ret
+	}
+	return *o.PayableCurrency
+}
+
+// GetPayableCurrencyOk returns a tuple with the PayableCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetPayableCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.PayableCurrency) {
+		return nil, false
+	}
+	return o.PayableCurrency, true
+}
+
+// HasPayableCurrency returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasPayableCurrency() bool {
+	if o != nil && !IsNil(o.PayableCurrency) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayableCurrency gets a reference to the given string and assigns it to the PayableCurrency field.
+func (o *CreatePaymentOrderRequest) SetPayableCurrency(v string) {
+	o.PayableCurrency = &v
+}
+
+// GetPayableAmount returns the PayableAmount field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetPayableAmount() string {
+	if o == nil || IsNil(o.PayableAmount) {
+		var ret string
+		return ret
+	}
+	return *o.PayableAmount
+}
+
+// GetPayableAmountOk returns a tuple with the PayableAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetPayableAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.PayableAmount) {
+		return nil, false
+	}
+	return o.PayableAmount, true
+}
+
+// HasPayableAmount returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasPayableAmount() bool {
+	if o != nil && !IsNil(o.PayableAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayableAmount gets a reference to the given string and assigns it to the PayableAmount field.
+func (o *CreatePaymentOrderRequest) SetPayableAmount(v string) {
+	o.PayableAmount = &v
+}
+
 // GetExpiredIn returns the ExpiredIn field value if set, zero value otherwise.
 func (o *CreatePaymentOrderRequest) GetExpiredIn() int32 {
 	if o == nil || IsNil(o.ExpiredIn) {
@@ -289,6 +339,134 @@ func (o *CreatePaymentOrderRequest) HasExpiredIn() bool {
 // SetExpiredIn gets a reference to the given int32 and assigns it to the ExpiredIn field.
 func (o *CreatePaymentOrderRequest) SetExpiredIn(v int32) {
 	o.ExpiredIn = &v
+}
+
+// GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetAmountTolerance() string {
+	if o == nil || IsNil(o.AmountTolerance) {
+		var ret string
+		return ret
+	}
+	return *o.AmountTolerance
+}
+
+// GetAmountToleranceOk returns a tuple with the AmountTolerance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetAmountToleranceOk() (*string, bool) {
+	if o == nil || IsNil(o.AmountTolerance) {
+		return nil, false
+	}
+	return o.AmountTolerance, true
+}
+
+// HasAmountTolerance returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasAmountTolerance() bool {
+	if o != nil && !IsNil(o.AmountTolerance) {
+		return true
+	}
+
+	return false
+}
+
+// SetAmountTolerance gets a reference to the given string and assigns it to the AmountTolerance field.
+func (o *CreatePaymentOrderRequest) SetAmountTolerance(v string) {
+	o.AmountTolerance = &v
+}
+
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetCurrency() string {
+	if o == nil || IsNil(o.Currency) {
+		var ret string
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *CreatePaymentOrderRequest) SetCurrency(v string) {
+	o.Currency = &v
+}
+
+// GetOrderAmount returns the OrderAmount field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetOrderAmount() string {
+	if o == nil || IsNil(o.OrderAmount) {
+		var ret string
+		return ret
+	}
+	return *o.OrderAmount
+}
+
+// GetOrderAmountOk returns a tuple with the OrderAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetOrderAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.OrderAmount) {
+		return nil, false
+	}
+	return o.OrderAmount, true
+}
+
+// HasOrderAmount returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasOrderAmount() bool {
+	if o != nil && !IsNil(o.OrderAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderAmount gets a reference to the given string and assigns it to the OrderAmount field.
+func (o *CreatePaymentOrderRequest) SetOrderAmount(v string) {
+	o.OrderAmount = &v
+}
+
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *CreatePaymentOrderRequest) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreatePaymentOrderRequest) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *CreatePaymentOrderRequest) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *CreatePaymentOrderRequest) SetTokenId(v string) {
+	o.TokenId = &v
 }
 
 // GetUseDedicatedAddress returns the UseDedicatedAddress field value if set, zero value otherwise.
@@ -355,38 +533,6 @@ func (o *CreatePaymentOrderRequest) SetCustomExchangeRate(v string) {
 	o.CustomExchangeRate = &v
 }
 
-// GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
-func (o *CreatePaymentOrderRequest) GetAmountTolerance() string {
-	if o == nil || IsNil(o.AmountTolerance) {
-		var ret string
-		return ret
-	}
-	return *o.AmountTolerance
-}
-
-// GetAmountToleranceOk returns a tuple with the AmountTolerance field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreatePaymentOrderRequest) GetAmountToleranceOk() (*string, bool) {
-	if o == nil || IsNil(o.AmountTolerance) {
-		return nil, false
-	}
-	return o.AmountTolerance, true
-}
-
-// HasAmountTolerance returns a boolean if a field has been set.
-func (o *CreatePaymentOrderRequest) HasAmountTolerance() bool {
-	if o != nil && !IsNil(o.AmountTolerance) {
-		return true
-	}
-
-	return false
-}
-
-// SetAmountTolerance gets a reference to the given string and assigns it to the AmountTolerance field.
-func (o *CreatePaymentOrderRequest) SetAmountTolerance(v string) {
-	o.AmountTolerance = &v
-}
-
 func (o CreatePaymentOrderRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -398,27 +544,43 @@ func (o CreatePaymentOrderRequest) MarshalJSON() ([]byte, error) {
 func (o CreatePaymentOrderRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["merchant_id"] = o.MerchantId
-	toSerialize["token_id"] = o.TokenId
-	if !IsNil(o.Currency) {
-		toSerialize["currency"] = o.Currency
-	}
-	toSerialize["order_amount"] = o.OrderAmount
-	toSerialize["fee_amount"] = o.FeeAmount
 	if !IsNil(o.MerchantOrderCode) {
 		toSerialize["merchant_order_code"] = o.MerchantOrderCode
 	}
 	toSerialize["psp_order_code"] = o.PspOrderCode
+	if !IsNil(o.PricingCurrency) {
+		toSerialize["pricing_currency"] = o.PricingCurrency
+	}
+	if !IsNil(o.PricingAmount) {
+		toSerialize["pricing_amount"] = o.PricingAmount
+	}
+	toSerialize["fee_amount"] = o.FeeAmount
+	if !IsNil(o.PayableCurrency) {
+		toSerialize["payable_currency"] = o.PayableCurrency
+	}
+	if !IsNil(o.PayableAmount) {
+		toSerialize["payable_amount"] = o.PayableAmount
+	}
 	if !IsNil(o.ExpiredIn) {
 		toSerialize["expired_in"] = o.ExpiredIn
+	}
+	if !IsNil(o.AmountTolerance) {
+		toSerialize["amount_tolerance"] = o.AmountTolerance
+	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.OrderAmount) {
+		toSerialize["order_amount"] = o.OrderAmount
+	}
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
 	}
 	if !IsNil(o.UseDedicatedAddress) {
 		toSerialize["use_dedicated_address"] = o.UseDedicatedAddress
 	}
 	if !IsNil(o.CustomExchangeRate) {
 		toSerialize["custom_exchange_rate"] = o.CustomExchangeRate
-	}
-	if !IsNil(o.AmountTolerance) {
-		toSerialize["amount_tolerance"] = o.AmountTolerance
 	}
 	return toSerialize, nil
 }
@@ -429,10 +591,8 @@ func (o *CreatePaymentOrderRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"merchant_id",
-		"token_id",
-		"order_amount",
-		"fee_amount",
 		"psp_order_code",
+		"fee_amount",
 	}
 
 	allProperties := make(map[string]interface{})

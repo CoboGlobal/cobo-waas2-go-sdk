@@ -40,6 +40,18 @@ func Test_cobo_waas2_StakingsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test StakingsAPIService CreateBabylonStakingExpansion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.StakingsAPI.CreateBabylonStakingExpansion(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test StakingsAPIService CreateBabylonStakingRegistration", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

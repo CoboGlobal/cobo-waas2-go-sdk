@@ -1102,9 +1102,11 @@ paths:
   /wallets/{wallet_id}/utxos:
     get:
       description: |
-        The operation retrieves a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
+        The operation retrieves a list of **unspent** transaction outputs (UTXOs) for a specified wallet and token.
 
-        <Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
+        <Note>This operation returns only UTXOs that are not used by any transaction. It does not return all UTXOs.</Note>
+
+        <Info>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Info>
       operationId: list_utxos
       parameters:
       - description: The wallet ID.
@@ -1128,8 +1130,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: The wallet address.
-        example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+      - example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
         explode: true
         in: query
         name: address
@@ -1209,8 +1210,11 @@ paths:
   /wallets/{wallet_id}/utxos/batch_check:
     post:
       description: |
-        This operation verifies the existence and details of specified unspent transaction outputs (UTXOs) for a given wallet and token. A maximum of 100 UTXOs can be verified per request.
-        <Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
+        This operation verifies the existence and details of specified **unspent** transaction outputs (UTXOs) for a given wallet and token. A maximum of 100 UTXOs can be verified per request.
+
+        <Note>This operation returns only UTXOs that are not used by any transaction. It does not return all UTXOs.</Note>
+
+        <Info>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Info>
       operationId: batch_check_utxo
       parameters:
       - description: The wallet ID.
@@ -1257,7 +1261,7 @@ paths:
       description: |
         This operation locks the UTXOs with specified transaction hashes. Locked UTXOs cannot be transferred until unlocked.
 
-        <Note>This operation is applicable to MPC Wallets only.</Note>
+        <Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
       operationId: lock_utxos
       parameters:
       - description: The wallet ID.
@@ -1301,10 +1305,9 @@ paths:
       - Wallets
   /wallets/{wallet_id}/utxos/unlock:
     post:
-      description: |
-        This operation unlocks the UTXOs with specified transaction hashes. Locked UTXOs cannot be transferred until unlocked.
-
-        <Note>This operation is applicable to MPC Wallets only.</Note>
+      description: "This operation unlocks the UTXOs with specified transaction hashes.\
+        \ Locked UTXOs cannot be transferred until unlocked.   \n<Note>This operation\
+        \ is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>\n"
       operationId: unlock_utxos
       parameters:
       - description: The wallet ID.
@@ -1637,8 +1640,8 @@ paths:
   /wallets/{wallet_id}/addresses/{address}/tokens:
     get:
       description: "The operation retrieves a list of token balances for a specified\
-        \ address within a wallet. \n\n<Note>This operation is applicable to MPC Wallets\
-        \ and Smart Contract Wallets only.</Note>\n"
+        \ address within a wallet. \n\n<Note>This operation is applicable to MPC Wallets,\
+        \ Custodial Wallets (Web3 Wallets), and Smart Contract Wallets only.</Note>\n"
       operationId: list_token_balances_for_address
       parameters:
       - description: The wallet ID.
@@ -1826,7 +1829,7 @@ paths:
       description: |
         This operation retrieves a list of address balances for a specified token within a wallet.
 
-        <Note>This operation is applicable to MPC Wallets only.</Note>
+        <Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
       operationId: list_address_balances_by_token
       parameters:
       - description: The wallet ID.
@@ -3710,6 +3713,16 @@ paths:
 
         You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
+        For smart contract call examples, you can refer to [Batch transfers using smart contracts](/v2/guides/transactions/batch-transfer) and [Swap tokens on Solana using Jupiter](/v2/guides/transactions/sol-jupiter-swap).
+
+        <Info>
+        Supported actions vary by blockchain:
+        - EVM chains — Support deploying contracts and calling contract functions.
+        - Solana — Supports calling contract functions only.
+        - TRON — Supports calling contract functions only.
+        - Stellar — Supports XLM trustline creation only.
+        </Info>
+
         <Note>Currently, this operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets. Refer to the `destination` property for supported contract types.</Note>
 
         <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
@@ -3754,7 +3767,8 @@ paths:
         \ transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information).\
         \ \n\n<Note>\nThis operation only supports message signing transactions from\
         \ the following wallets and chains:\n- MPC Wallets: BTC, EVM-compatible chains,\
-        \ and Cosmos.  \n- Web3 Wallets: EVM-compatible chains.\n</Note>\n"
+        \ and Cosmos.  \n- Custodial Wallets (Web3 Wallets): EVM-compatible chains.\n\
+        </Note>\n"
       operationId: create_message_sign_transaction
       requestBody:
         $ref: '#/components/requestBodies/createMessageSignBody'
@@ -4264,7 +4278,7 @@ paths:
       description: |
         This operation drops a specified transaction. Dropping a transaction leverages RBF to replace the original transaction with a version that effectively cancels it. For more details about dropping a transaction, refer to [Drop a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#drop-a-transaction).
 
-        A transaction can be sped up only if its status is `Broadcasting`.
+        A transaction can be dropped only if its status is `Broadcasting`.
 
         <Note>This operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
@@ -4731,7 +4745,9 @@ paths:
       - OAuth
   /oauth/permission_token/exchange:
     post:
-      description: |
+      description: |2
+
+        <Warning>This operation has been deprecated.</Warning>
         This operation acquires an Access Token and a Refresh Token for the [Checkout SDK](https://www.cobo.com/developers/v2_cn/payments/checkout-sdk).
 
         For security purposes, an Access Token expires after a certain period. Once it expires, you need to call the [Refresh Access Token](https://www.cobo.com/developers/v2/api-references/oauth/refresh-access-token) operation to get a new Access Token and a new Refresh Token.
@@ -4762,7 +4778,9 @@ paths:
       - OAuth
   /oauth/permission_token/refresh:
     post:
-      description: |
+      description: |2
+
+        <Warning>This operation has been deprecated.</Warning>
         This operation refreshes the Access Token and Refresh Token for the [Checkout SDK](https://www.cobo.com/developers/v2_cn/payments/checkout-sdk).
 
         For security purposes, an Access Token expires after a certain period. Once it expires, you need to call this operation to get a new Access Token and Refresh Token.
@@ -6168,7 +6186,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/create_babylon_staking_registration_201_response'
-          description: Register Babylon BTC staking for phase 2 successfully
+          description: Register Babylon BTC staking for Phase-2 successfully
         "4XX":
           content:
             application/json:
@@ -6586,6 +6604,42 @@ paths:
       summary: List wallets eligible for Babylon airdrop
       tags:
       - Stakings
+  /stakings/protocols/babylon/stakings/expansions:
+    post:
+      description: "This operation initiates a Babylon BTC staking expansion request.\
+        \ \n\nBefore calling this operation, please ensure the following:\n- The BTC\
+        \ staking position is active.\n- The finality provider public keys are valid.\
+        \ Each BSN chain has a unique finality provider public key at most.\n\nThe\
+        \ system first checks whether the provided BTC staking position is active.\
+        \ If active, it creates a new BTC staking position for the Phase-3 expansion.\n\
+        \nThe expansion is processed asynchronously and may take some time to complete.\n\
+        \nFor more information, refer to [Babylon's official doc](https://github.com/babylonlabs-io/babylon/tree/main/docs).\n"
+      operationId: create_babylon_staking_expansion
+      requestBody:
+        $ref: '#/components/requestBodies/createBabylonStakingExpansionBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stakings'
+          description: Successfully expanded Babylon BTC staking to Phase-3.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Expand Babylon BTC staking
+      tags:
+      - Stakings
   /developers/api_key_info:
     get:
       description: This operation retrieves the details of the API key that you are
@@ -6797,8 +6851,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: The wallet address.
-        example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+      - example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
         explode: true
         in: query
         name: address
@@ -8376,7 +8429,7 @@ paths:
   /swaps/estimate_fee:
     post:
       description: |
-        This operation estimates the network fee of a swap activity. You can use this operation to estimate the network fee before initiating swap activities from MPC Wallets or Web3 Wallets.
+        This operation estimates the network fee of a swap activity. You can use this operation to estimate the network fee before initiating swap activities from MPC Wallets or Custodial Wallets (Web3 Wallets).
 
         It requires a valid `wallet_id` and `quote_id`, so you need to [get a swap quote](https://www.cobo.com/developers/v2/api-references/swaps/get-swap-quote) first.
       operationId: estimate_swap_fee
@@ -8748,7 +8801,7 @@ paths:
       - Payment
     post:
       description: |
-        This operation creates a merchant. Upon successful creation, a merchant ID is generated and returned along with the merchant's information. For more information on merchant creation, please refer to [Preparation](https://www.cobo.com/developers/v2/payments/preparation#create-merchant).
+        This operation creates a merchant. Upon successful creation, a merchant ID is generated and returned along with the merchant's information. For more information on merchant creation, please refer to [Preparation](https://www.cobo.com/payments/en/guides/preparation#create-merchant).
       operationId: create_merchant
       requestBody:
         $ref: '#/components/requestBodies/createMerchantBody'
@@ -8881,9 +8934,9 @@ paths:
         style: form
       - description: |
           A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
-           - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
-           - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
-           - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
+           - [Get pay-in order information](https://www.cobo.com/payments/en/api-references/payment/get-pay-in-order-information)
+           - [Get refund order information](https://www.cobo.com/payments/en/api-references/payment/get-refund-order-information)
+           - [List all settlement details](https://www.cobo.com/payments/en/api-references/payment/list-all-settlement-details)
         example: "Pending,Processing"
         explode: true
         in: query
@@ -9222,9 +9275,9 @@ paths:
         style: form
       - description: |
           A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
-           - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
-           - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
-           - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
+           - [Get pay-in order information](https://www.cobo.com/payments/en/api-references/payment/get-pay-in-order-information)
+           - [Get refund order information](https://www.cobo.com/payments/en/api-references/payment/get-refund-order-information)
+           - [List all settlement details](https://www.cobo.com/payments/en/api-references/payment/list-all-settlement-details)
         example: "Pending,Processing"
         explode: true
         in: query
@@ -9434,11 +9487,13 @@ paths:
   /payments/exchange_rates:
     get:
       description: |
-        This operation retrieves the current exchange rates between a specified currency and a list of token IDs.
+        This operation retrieves the current exchange rates between multiple fiat currencies and cryptocurrencies.
       operationId: batch_get_exchange_rates
       parameters:
-      - description: |
-          A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+      - description: "\nA list of token IDs, separated by comma. Supported values\
+          \ include: \n     \n  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`,\
+          \ `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`,\
+          \ `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
         explode: true
         in: query
         name: token_ids
@@ -9448,7 +9503,7 @@ paths:
           type: string
         style: form
       - description: |
-          List of the fiat currencies, separated by comma. Currently, only `USD` is supported.
+          A list of fiat currencies, separated by comma. Currently, only `USD` is supported.
         explode: true
         in: query
         name: currencies
@@ -10339,11 +10394,11 @@ paths:
       - Payment
   /payments/balance/merchants:
     get:
-      description: |2
-
-        This operation retrieves the balance information for specified merchants. The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
-
-        For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).
+      description: "\nThis operation retrieves the balance information for specified\
+        \ merchants. \n\nThe balance information is grouped by token and acquiring\
+        \ type. If you do not specify the `merchant_ids` parameter, the balance information\
+        \ for all merchants will be returned.\n\nFor more information, please refer\
+        \ to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances).\n"
       operationId: list_merchant_balances
       parameters:
       - description: A list of merchant IDs to query.
@@ -10367,14 +10422,10 @@ paths:
         schema:
           type: string
         style: form
-      - description: |
-          The payment acquisition type.
-          - `Order`: Payers pay by fixed-amount orders. Ideal for specific purchases and one-time transactions.
-          - `TopUp`: Account recharge flow where payers deposit funds to their dedicated top-up addresses. Ideal for flexible or usage-based payment models.
-        explode: true
+      - explode: true
         in: query
         name: acquiring_type
-        required: true
+        required: false
         schema:
           $ref: '#/components/schemas/AcquiringType'
         style: form
@@ -10410,7 +10461,7 @@ paths:
       description: |
         This operation retrieves the balance information for you as the developer. The balance information is grouped by token.
 
-        For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).
+        For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances).
       operationId: get_psp_balance
       parameters:
       - description: |
@@ -10501,9 +10552,9 @@ paths:
         style: form
       - description: |
           A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
-           - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
-           - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
-           - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
+           - [Get pay-in order information](https://www.cobo.com/payments/en/api-references/payment/get-pay-in-order-information)
+           - [Get refund order information](https://www.cobo.com/payments/en/api-references/payment/get-refund-order-information)
+           - [List all settlement details](https://www.cobo.com/payments/en/api-references/payment/list-all-settlement-details)
         example: "Pending,Processing"
         explode: true
         in: query
@@ -10544,7 +10595,7 @@ paths:
       description: |
         This operation generates a payment link for a pay-in order. The link directs users to a hosted payment page where they can complete their payment for the order. You can share the link directly with users or embed the payment page in your website or application using an iframe.
 
-        For more details, see [Payment Link](https://www.cobo.com/developers/v2/payments/payment-link).
+        For more details, see [Payment Link](https://www.cobo.com/payments/en/guides/payment-link).
       operationId: create_order_link
       requestBody:
         $ref: '#/components/requestBodies/createPaymentOrderLinkRequest'
@@ -10578,7 +10629,7 @@ paths:
 
         Once the address is submitted, Cobo will automatically create a refund order and initiate the refund process according to your configuration.
 
-        For details, see [Create refund link](https://www.cobo.com/developers/v2/payments/create-refund-link).
+        For details, see [Create refund link](https://www.cobo.com/payments/en/guides/create-refund-link).
       operationId: create_refund_link
       requestBody:
         $ref: '#/components/requestBodies/createPaymentRefundLinkRequest'
@@ -10920,10 +10971,8 @@ paths:
           description: The counterparty ID.
           type: string
         style: form
-      - description: "The chain ID, which is the unique identifier of a blockchain.\
-          \ You can retrieve the IDs of all the chains you can use by calling [List\
-          \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
-        example: "BTC,ETH"
+      - description: "The chain ID, which is the unique identifier of a blockchain."
+        example: ETH
         explode: true
         in: query
         name: chain_ids
@@ -11645,10 +11694,8 @@ paths:
           description: The destination ID.
           type: string
         style: form
-      - description: "The chain ID, which is the unique identifier of a blockchain.\
-          \ You can retrieve the IDs of all the chains you can use by calling [List\
-          \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
-        example: "BTC,ETH"
+      - description: "The chain ID, which is the unique identifier of a blockchain."
+        example: ETH
         explode: true
         in: query
         name: chain_ids
@@ -11840,11 +11887,557 @@ paths:
       summary: Enable or disable destination whitelist
       tags:
       - Payment
+  /payments/allocation_amount:
+    get:
+      description: |
+        This operation retrieves the information of available allocation amount.
+      operationId: get_available_allocation_amount
+      parameters:
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: source_account
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: destination_account
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentAllocationAmount'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: Get available allocation amount
+      tags:
+      - Payment
+  /payments/batch_allocations:
+    get:
+      description: |
+        This operation retrieves the information of all batch allocations.
+      operationId: list_batch_allocations
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The request ID.
+        example: random_request_id
+        explode: true
+        in: query
+        name: request_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_batch_allocations_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: List all batch allocations
+      tags:
+      - Payment
+    post:
+      description: "This operation creates a batch allocation to withdraw available\
+        \ balances. \n\nYou can include multiple merchants and cryptocurrencies in\
+        \ a single batch allocation.\n"
+      operationId: create_batch_allocation
+      requestBody:
+        $ref: '#/components/requestBodies/createBatchAllocationBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAllocation'
+          description: The allocation request was successfully created.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.create
+      summary: Create batch allocation
+      tags:
+      - Payment
+  /payments/batch_allocations/{batch_allocation_id}:
+    get:
+      description: |
+        This operation retrieves the information of a batch allocation.
+      operationId: get_batch_allocation_by_id
+      parameters:
+      - description: The batch allocation ID.
+        example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
+        explode: false
+        in: path
+        name: batch_allocation_id
+        required: true
+        schema:
+          description: The batch allocation ID.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAllocationDetail'
+          description: The details of a batch allocation detail.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: Get batch allocation by id
+      tags:
+      - Payment
+  /payments/allocation_records:
+    get:
+      description: |
+        This operation retrieves the information of all allocations.
+      operationId: list_allocations
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: source_account
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: destination_account
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The batch allocation ID.
+        example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
+        explode: true
+        in: query
+        name: batch_allocation_id
+        required: false
+        schema:
+          description: The batch allocation ID.
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_allocations_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: List all allocations
+      tags:
+      - Payment
+  /payments/payouts:
+    get:
+      description: |
+        This operation retrieves the information of all payouts.
+      operationId: list_payouts
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The request ID.
+        example: random_request_id
+        explode: true
+        in: query
+        name: request_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_payouts_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: List all payouts
+      tags:
+      - Payment
+    post:
+      description: "This operation creates a payout to withdraw available balances.\
+        \ \n\nYou can include multiple merchants and cryptocurrencies in a single\
+        \ payout record.\n"
+      operationId: create_payout
+      requestBody:
+        $ref: '#/components/requestBodies/createPaymentPayoutBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentPayout'
+          description: The create payout was successfully created.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.create
+      summary: Create payout
+      tags:
+      - Payment
+  /payments/payouts/{payout_id}:
+    get:
+      description: |
+        This operation retrieves the information of a specific payout.
+      operationId: get_payout_by_id
+      parameters:
+      - description: The payout ID.
+        example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+        explode: false
+        in: path
+        name: payout_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentPayoutDetail'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: Get payout information
+      tags:
+      - Payment
+  /payments/payout_items:
+    get:
+      description: |
+        This operation retrieves the information of all payout items. You can filter the result by merchant ID or status.
+      operationId: list_payout_items
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: source_account
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
+           - [Get pay-in order information](https://www.cobo.com/payments/en/api-references/payment/get-pay-in-order-information)
+           - [Get refund order information](https://www.cobo.com/payments/en/api-references/payment/get-refund-order-information)
+           - [List all settlement details](https://www.cobo.com/payments/en/api-references/payment/list-all-settlement-details)
+        example: "Pending,Processing"
+        explode: true
+        in: query
+        name: statuses
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_payout_items_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: List all payout items
+      tags:
+      - Payment
   /auto_sweep/sweep_to_addresses:
     get:
       description: |
         This operation retrieves a list of sweep-to addresses within your wallet.
-        <Note>Sweep-to addresses are only applicable to MPC Wallets and Web3 Wallets with the auto-sweep feature enabled.</Note>
+        <Note>Sweep-to addresses are only applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) with the auto-sweep feature enabled.</Note>
       operationId: list_wallet_sweep_to_addresses
       parameters:
       - description: The wallet ID.
@@ -11890,7 +12483,7 @@ paths:
 
         Use this operation to change the sweep-to address when your setup changes, you switch networks, or the current address is compromised or tainted by suspicious funds. You can withdraw any remaining balances from the old sweep-to addresses to the new address or another designated destination.
 
-        <Note>Sweep-to addresses are only applicable to MPC Wallets and Web3 Wallets with the auto-sweep feature enabled.</Note>
+        <Note>Sweep-to addresses are only applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) with the auto-sweep feature enabled.</Note>
       operationId: create_wallet_sweep_to_addresses
       requestBody:
         $ref: '#/components/requestBodies/createSweepAddressBody'
@@ -14089,7 +14682,6 @@ components:
         type: string
       style: form
     optionalAddressParam:
-      description: The wallet address.
       example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
       explode: true
       in: query
@@ -15546,9 +16138,9 @@ components:
     PaymentStatusesParam:
       description: |
         A list of order, refund or settlement statuses. You can refer to the following operations for the possible status values:
-         - [Get pay-in order information](https://www.cobo.com/developers/v2/api-references/payment/get-pay-in-order-information)
-         - [Get refund order information](https://www.cobo.com/developers/v2/api-references/payment/get-refund-order-information)
-         - [List all settlement details](https://www.cobo.com/developers/v2/api-references/payment/list-all-settlement-details)
+         - [Get pay-in order information](https://www.cobo.com/payments/en/api-references/payment/get-pay-in-order-information)
+         - [Get refund order information](https://www.cobo.com/payments/en/api-references/payment/get-refund-order-information)
+         - [List all settlement details](https://www.cobo.com/payments/en/api-references/payment/list-all-settlement-details)
       example: "Pending,Processing"
       explode: true
       in: query
@@ -15649,10 +16241,8 @@ components:
         $ref: '#/components/schemas/BankAccountStatus'
       style: form
     ChainIdsOptionalParam:
-      description: "The chain ID, which is the unique identifier of a blockchain.\
-        \ You can retrieve the IDs of all the chains you can use by calling [List\
-        \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
-      example: "BTC,ETH"
+      description: "The chain ID, which is the unique identifier of a blockchain."
+      example: ETH
       explode: true
       in: query
       name: chain_ids
@@ -15689,6 +16279,90 @@ components:
       in: query
       name: wallet_address
       required: false
+      schema:
+        type: string
+      style: form
+    BatchAllocationIdOptionalParam:
+      description: The batch allocation ID.
+      example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
+      explode: true
+      in: query
+      name: batch_allocation_id
+      required: false
+      schema:
+        description: The batch allocation ID.
+        type: string
+      style: form
+    BatchAllocationIdPathParam:
+      description: The batch allocation ID.
+      example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
+      explode: false
+      in: path
+      name: batch_allocation_id
+      required: true
+      schema:
+        description: The batch allocation ID.
+        type: string
+      style: simple
+    PaymentPayoutsIdPathParam:
+      description: The payout ID.
+      example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+      explode: false
+      in: path
+      name: payout_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    PaymentFromMerchantIdOptionalParam:
+      description: The merchant ID.
+      example: M1001
+      explode: true
+      in: query
+      name: from_merchant_id
+      required: false
+      schema:
+        type: string
+      style: form
+    PaymentToMerchantIdOptionalParam:
+      description: The merchant ID.
+      example: M1001
+      explode: true
+      in: query
+      name: to_merchant_id
+      required: false
+      schema:
+        type: string
+      style: form
+    PaymentSourceAccountOptionalParam:
+      explode: true
+      in: query
+      name: source_account
+      required: false
+      schema:
+        type: string
+      style: form
+    PaymentDestinationAccountOptionalParam:
+      explode: true
+      in: query
+      name: destination_account
+      required: false
+      schema:
+        type: string
+      style: form
+    PaymentSourceAccountRequiredParam:
+      explode: true
+      in: query
+      name: source_account
+      required: true
+      schema:
+        type: string
+      style: form
+    PaymentDestinationAccountRequiredParam:
+      explode: true
+      in: query
+      name: destination_account
+      required: true
       schema:
         type: string
       style: form
@@ -15950,13 +16624,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/create_babylon_staking_registration_request'
-      description: The request body to transit Babylon BTC staking to phase 2
+      description: The request body to transit Babylon BTC staking to Phase-2
     createBabylonAirdropRegistrationBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/create_babylon_airdrop_registration_request'
       description: The request body to register for the Babylon airdrop.
+    createBabylonStakingExpansionBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BabylonCreateStakingExpansion'
+      description: The request body to expand Babylon BTC staking to Phase-3
     createWebhookEndpointBody:
       content:
         application/json:
@@ -16185,6 +16865,18 @@ components:
           schema:
             $ref: '#/components/schemas/enable_destination_whitelist_request'
       description: The request body to enable or disable the destination whitelist.
+    createBatchAllocationBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_batch_allocation_request'
+      description: The request body to create a settlement request.
+    createPaymentPayoutBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_payout_request'
+      description: The request body to create a payout.
     estimateFeeStationFeeBody:
       content:
         application/json:
@@ -16901,7 +17593,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/create_babylon_staking_registration_201_response'
-      description: Register Babylon BTC staking for phase 2 successfully
+      description: Register Babylon BTC staking for Phase-2 successfully
+    createBabylonStakingExpansionResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Stakings'
+      description: Successfully expanded Babylon BTC staking to Phase-3.
     getTokenResponse:
       content:
         application/json:
@@ -17385,6 +18083,60 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/list_destination_bank_accounts_200_response'
+      description: The request was successful.
+    createBatchAllocationResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchAllocation'
+      description: The allocation request was successfully created.
+    listBatchAllocationsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_batch_allocations_200_response'
+      description: The request was successful.
+    listAllocationRecordsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_allocations_200_response'
+      description: The request was successful.
+    getBatchAllocationDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BatchAllocationDetail'
+      description: The details of a batch allocation detail.
+    createPaymentPayoutResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentPayout'
+      description: The create payout was successfully created.
+    listPaymentPayoutResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_payouts_200_response'
+      description: The request was successful.
+    paymentPayoutsDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentPayoutDetail'
+      description: The request was successful.
+    listPaymentPayoutItemResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_payout_items_200_response'
+      description: The request was successful.
+    getAllocationAmountResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentAllocationAmount'
       description: The request was successful.
     createDispositionResponse:
       content:
@@ -18467,7 +19219,7 @@ components:
           $ref: '#/components/schemas/WalletSubtype'
         enable_auto_sweep:
           description: Enable the auto-sweep feature for the wallet. This parameter
-            only applies to MPC Wallets and Web3 Wallets.
+            only applies to MPC Wallets and Custodial Wallets (Web3 Wallets).
           type: boolean
       required:
       - name
@@ -21058,15 +21810,10 @@ components:
           items:
             $ref: '#/components/schemas/TransactionCosmosMessage'
           type: array
-        value:
-          description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
-          example: "1.5"
-          type: string
       required:
       - cosmos_messages
       - destination_type
-      title: Cosmos_Contract
+      title: COSMOS_Contract
       type: object
     TransactionStellarContractType:
       description: |
@@ -21439,6 +22186,7 @@ components:
         used_nonce:
           description: The transaction nonce.
           example: 9
+          format: int64
           type: integer
         selected_utxos:
           description: The selected UTXOs to be consumed in the transaction.
@@ -23423,6 +24171,7 @@ components:
       - SOL_Contract
       - STELLAR_Contract
       - TRON_Contract
+      - COSMOS_Contract
       example: EVM_Contract
       type: string
     EvmContractCallDestination:
@@ -23519,11 +24268,6 @@ components:
           items:
             $ref: '#/components/schemas/CosmosContractCallMessage'
           type: array
-        value:
-          description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
-          example: "1.5"
-          type: string
       required:
       - cosmos_messages
       - destination_type
@@ -23680,12 +24424,14 @@ components:
           SOL_Contract: '#/components/schemas/SolContractCallDestination'
           STELLAR_Contract: '#/components/schemas/StellarContractCallDestination'
           TRON_Contract: '#/components/schemas/TronContractCallDestination'
+          COSMOS_Contract: '#/components/schemas/CosmosContractCallDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/EvmContractCallDestination'
       - $ref: '#/components/schemas/SolContractCallDestination'
       - $ref: '#/components/schemas/StellarContractCallDestination'
       - $ref: '#/components/schemas/TronContractCallDestination'
+      - $ref: '#/components/schemas/CosmosContractCallDestination'
     ContractCallParams:
       description: The information about a transaction that interacts with a smart
         contract
@@ -24175,10 +24921,11 @@ components:
             \ order event data.\n- `PaymentRefund`: The payment refund event data.\n\
             - `PaymentSettlement`: The payment settlement event data.\n- `PaymentTransaction`:\
             \ The payment transaction event data.\n- `PaymentAddressUpdate`: The top-up\
-            \ address update event data.\n- `BalanceUpdateInfo`: The balance update\
-            \ event data.\n- `SuspendedToken`: The token suspension event data.\n\
-            - `ComplianceDisposition`: The compliance disposition event data.\n- `ComplianceKytScreenings`:\
-            \ The compliance KYT screenings event data."
+            \ address update event data.\n- `PaymentPayout`: The payment payout event\
+            \ data.\n- `BalanceUpdateInfo`: The balance update event data.\n- `SuspendedToken`:\
+            \ The token suspension event data.\n- `ComplianceDisposition`: The compliance\
+            \ disposition event data.\n- `ComplianceKytScreenings`: The compliance\
+            \ KYT screenings event data."
           enum:
           - Transaction
           - TSSRequest
@@ -24193,6 +24940,7 @@ components:
           - PaymentSettlement
           - PaymentTransaction
           - PaymentAddressUpdate
+          - PaymentPayout
           - BalanceUpdateInfo
           - SuspendedToken
           - ComplianceDisposition
@@ -24220,6 +24968,7 @@ components:
           PaymentSettlement: '#/components/schemas/PaymentSettlementEvent'
           PaymentTransaction: '#/components/schemas/PaymentTransactionEventData'
           PaymentAddressUpdate: '#/components/schemas/PaymentAddressUpdateEventData'
+          PaymentPayout: '#/components/schemas/PaymentPayoutEvent'
           ComplianceDisposition: '#/components/schemas/ComplianceDispositionUpdateEventData'
           ComplianceKytScreenings: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
         propertyName: data_type
@@ -24239,6 +24988,7 @@ components:
       - $ref: '#/components/schemas/PaymentSettlementEvent'
       - $ref: '#/components/schemas/PaymentTransactionEventData'
       - $ref: '#/components/schemas/PaymentAddressUpdateEventData'
+      - $ref: '#/components/schemas/PaymentPayoutEvent'
       - $ref: '#/components/schemas/ComplianceDispositionUpdateEventData'
       - $ref: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
     TransactionWebhookEventData:
@@ -24602,6 +25352,11 @@ components:
         - updated_address
         type: object
       title: Top-Up Address Update
+    PaymentPayoutEvent:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - $ref: '#/components/schemas/PaymentPayoutDetail'
+      title: Payment payout Event Data
     ComplianceDispositionUpdateEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -24613,8 +25368,9 @@ components:
       - $ref: '#/components/schemas/KytScreeningsEventData'
       title: KYT Screening Event Data
     WebhookEventType:
-      description: |
-        The event type. To learn the trigger condition of each event type, refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type).
+      description: "The event type. To learn the trigger condition of each event type,\
+        \ refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type).\
+        \ \n"
       enum:
       - wallets.transaction.created
       - wallets.transaction.updated
@@ -24649,7 +25405,9 @@ components:
       - payment.status.updated
       - payment.refund.status.updated
       - payment.settlement.status.updated
+      - payment.payout.status.updated
       - payment.address.updated
+      - payment.subscription.status.updated
       - compliance.disposition.status.updated
       - compliance.kyt.screenings.status.updated
       example: wallets.transaction.created
@@ -24955,6 +25713,14 @@ components:
             example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
             pattern: "^[0-9a-fA-F]{64}$"
             type: string
+          finality_provider_public_keys:
+            description: "The public keys of the finality providers, with each key\
+              \ corresponding to a BSN chain."
+            items:
+              example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+              pattern: "^[0-9a-fA-F]{64}$"
+              type: string
+            type: array
           stake_block_time:
             description: The number of blocks that need to be processed before the
               locked tokens are unlocked and become accessible.
@@ -24971,6 +25737,11 @@ components:
             type: boolean
           babylon_address:
             $ref: '#/components/schemas/StakingSource'
+          original_staking_id:
+            description: The original staking ID to expand. Only set this when you
+              want to expand existing staking.
+            example: 0011039d-27fb-49ba-b172-6e0aa80e37ec
+            type: string
         required:
         - finality_provider_public_key
         - stake_block_time
@@ -25888,6 +26659,27 @@ components:
           commission_rate: 0.1
           priority: 0
           pool_type: Babylon
+        validators:
+        - icon_url: https://example.com/icon.png
+          public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+          supported_pos_chains:
+          - Babylon
+          - Cosmos
+          - Ethereum
+          name: Cobo
+          commission_rate: 0.1
+          priority: 0
+          pool_type: Babylon
+        - icon_url: https://example.com/icon.png
+          public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+          supported_pos_chains:
+          - Babylon
+          - Cosmos
+          - Ethereum
+          name: Cobo
+          commission_rate: 0.1
+          priority: 0
+          pool_type: Babylon
         extra:
           unlock_block_height: 871234
           stake_address: tb1pgmpawe2rkrzuuflu8yw564lerfalhw8td36dha49yz4l99xvm3psteh393
@@ -25939,6 +26731,10 @@ components:
           type: integer
         validator_info:
           $ref: '#/components/schemas/BabylonValidator'
+        validators:
+          items:
+            $ref: '#/components/schemas/BabylonValidator'
+          type: array
         extra:
           $ref: '#/components/schemas/Stakings_extra'
       required:
@@ -25949,7 +26745,6 @@ components:
       - pool_id
       - token_id
       - updated_timestamp
-      - validator_info
       - wallet_id
       type: object
     StakingPoolType:
@@ -26136,7 +26931,7 @@ components:
           type: integer
       type: object
     BabylonStakingRegistration:
-      description: The details of aBabylon Phase-2 registration.
+      description: The details of a Babylon Phase-2 registration.
       example:
         babylon_address:
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
@@ -26231,6 +27026,44 @@ components:
       - btc_address
       - btc_public_key
       - btc_sign_baby
+      type: object
+    BabylonCreateStakingExpansion:
+      description: The staking expansion information specific to the Babylon protocol.
+      example:
+        fee:
+          max_fee_amount: "0.1"
+          token_id: TRON
+          fee_type: EVM_EIP_1559
+        finality_provider_public_keys:
+        - eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+        - eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+        staking_id: 3f2840ce-44eb-450b-aa81-d3f84b772efb
+        request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      properties:
+        staking_id:
+          description: The ID of the Phase-2 BTC staking position.
+          example: 3f2840ce-44eb-450b-aa81-d3f84b772efb
+          type: string
+        finality_provider_public_keys:
+          description: "The public keys of the finality providers, with each key corresponding\
+            \ to a BSN chain."
+          items:
+            example: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            pattern: "^[0-9a-fA-F]{64}$"
+            type: string
+          type: array
+        request_id:
+          description: The request ID that is used to track a request. The request
+            ID is provided by you and must be unique within your organization.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          type: string
+        fee:
+          $ref: '#/components/schemas/TransactionRequestFee'
+      required:
+      - fee
+      - finality_provider_public_keys
+      - staking_id
+      title: Babylon staking expansion request body
       type: object
     AddressBook:
       description: The information of an Address Book entry.
@@ -27155,8 +27988,8 @@ components:
         network_fee:
           $ref: '#/components/schemas/TransactionRequestFee'
         destination_address:
-          description: The address of an MPC Wallet or Web3 Wallet that receives the
-            swapped or bridged assets.
+          description: The address of an MPC Wallet or Custodial Wallet (Web3 Wallet)
+            that receives the swapped or bridged assets.
           example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
           type: string
       type: object
@@ -27377,8 +28210,8 @@ components:
           example: Success
           type: string
         timestamp:
-          description: |
-            The time when the action occurred, in Unix timestamp format, measured in milliseconds.
+          description: "The time when the action occurred, in Unix timestamp format,\
+            \ measured in milliseconds. \n"
           example: 1640995200000
           format: int64
           type: integer
@@ -28302,7 +29135,7 @@ components:
           description: |
             The ID of the crypto address used for crypto payouts. Specify this field when `payout_channel` is set to `Crypto`.
 
-            Call [List crypto addresses](https://www.cobo.com/developers/v2/api-references/payment/list-crypto-addresses) to retrieve registered crypto addresses.
+            Call [List crypto addresses](https://www.cobo.com/payments/en/api-references/payment/list-crypto-addresses) to retrieve registered crypto addresses.
           example: addr_ethusdt_20250506T123456_ab12cd
           type: string
         crypto_address:
@@ -28365,9 +29198,11 @@ components:
       type: object
     Order:
       example:
+        pricing_currency: USD
         settlement_status: Pending
         chain_id: ETH
         exchange_rate: "0.99"
+        pricing_amount: "100.00"
         created_timestamp: 1744689600
         merchant_id: "1001"
         expired_at: 1711324800
@@ -28437,6 +29272,7 @@ components:
         merchant_order_code: M20240201001
         psp_order_code: P20240201001
         currency: USD
+        payable_currency: ETH_USDT
         payable_amount: "103.03"
         order_id: "5001"
         receive_address: 0x1234567890abcdef1234567890abcdef12345678
@@ -28450,54 +29286,6 @@ components:
           description: The merchant ID.
           example: "1001"
           type: string
-        token_id:
-          description: "\nThe ID of the cryptocurrency used for payment. Supported\
-            \ tokens: \n- USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`,\
-            \ `MATIC_USDC2`, `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
-            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
-          example: ETH_USDT
-          type: string
-        chain_id:
-          description: "\nThe ID of the blockchain network where the payment transaction\
-            \ should be made. Supported chains: \n- USDC: `ETH`, `ARBITRUM`, `SOL`,\
-            \ `BASE`, `MATIC`, `BSC`\n- USDT: `TRON`, `ETH`, `ARBITRUM`, `SOL`, `BASE`,\
-            \ `MATIC`, `BSC`\n"
-          example: ETH
-          type: string
-        payable_amount:
-          description: The cryptocurrency amount to be paid for this order.
-          example: "103.03"
-          type: string
-        receive_address:
-          description: The recipient wallet address to be used for the payment transaction.
-          example: 0x1234567890abcdef1234567890abcdef12345678
-          type: string
-        currency:
-          description: The fiat currency of the order.
-          example: USD
-          type: string
-        order_amount:
-          description: "The base amount of the order in fiat currency, excluding the\
-            \ developer fee (specified in `fee_amount`)."
-          example: "100.00"
-          type: string
-        fee_amount:
-          description: The developer fee for the order in fiat currency. It is added
-            to the base amount (`order_amount`) to determine the final charge.
-          example: "2.00"
-          type: string
-        exchange_rate:
-          description: "The exchange rate between a currency pair. Expressed as the\
-            \ amount of fiat currency per one unit of cryptocurrency. For example,\
-            \ if the cryptocurrency is USDT and the fiat currency is USD, a rate of\
-            \ \"0.99\" means 1 USDT = 0.99 USD."
-          example: "0.99"
-          type: string
-        expired_at:
-          description: "The expiration time of the pay-in order, represented as a\
-            \ UNIX timestamp in seconds."
-          example: 1711324800
-          type: integer
         merchant_order_code:
           description: A unique reference code assigned by the merchant to identify
             this order in their system.
@@ -28508,6 +29296,48 @@ components:
             this order in their system.
           example: P20240201001
           type: string
+        pricing_currency:
+          description: The fiat currency of the order.
+          example: USD
+          type: string
+        pricing_amount:
+          description: "The base amount of the order in fiat currency, excluding the\
+            \ developer fee (specified in `fee_amount`)."
+          example: "100.00"
+          type: string
+        fee_amount:
+          description: The developer fee for the order in fiat currency. It is added
+            to the base amount (`order_amount`) to determine the final charge.
+          example: "2.00"
+          type: string
+        payable_currency:
+          description: The ID of the cryptocurrency used for payment.
+          example: ETH_USDT
+          type: string
+        chain_id:
+          description: The ID of the blockchain network where the payment transaction
+            should be made.
+          example: ETH
+          type: string
+        payable_amount:
+          description: The cryptocurrency amount to be paid for this order.
+          example: "103.03"
+          type: string
+        exchange_rate:
+          description: "The exchange rate between a currency pair. Expressed as the\
+            \ amount of fiat currency per one unit of cryptocurrency. For example,\
+            \ if the cryptocurrency is USDT and the fiat currency is USD, a rate of\
+            \ \"0.99\" means 1 USDT = 0.99 USD."
+          example: "0.99"
+          type: string
+        amount_tolerance:
+          description: Allowed amount deviation.
+          example: "0.5"
+          type: string
+        receive_address:
+          description: The recipient wallet address to be used for the payment transaction.
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
         status:
           $ref: '#/components/schemas/OrderStatus'
         received_token_amount:
@@ -28516,57 +29346,60 @@ components:
             \ 6 decimals for USDT)."
           example: "103.0305"
           type: string
+        expired_at:
+          description: "The expiration time of the pay-in order, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1711324800
+          type: integer
         created_timestamp:
-          description: "The creation time of the order, represented as a UNIX timestamp\
+          description: "The created time of the order, represented as a UNIX timestamp\
             \ in seconds."
           example: 1744689600
           type: integer
         updated_timestamp:
-          description: "The last update time of the order, represented as a UNIX timestamp\
+          description: "The updated time of the order, represented as a UNIX timestamp\
             \ in seconds."
           example: 1744689600
           type: integer
         transactions:
           description: An array of transactions associated with this pay-in order.
             Each transaction represents a separate blockchain operation related to
-            the pay-in process.
+            the settlement process.
           items:
             $ref: '#/components/schemas/PaymentTransaction'
           type: array
+        currency:
+          description: The fiat currency of the order.
+          example: USD
+          type: string
+        order_amount:
+          description: "The base amount of the order in fiat currency, excluding the\
+            \ developer fee (specified in `fee_amount`)."
+          example: "100.00"
+          type: string
+        token_id:
+          description: The ID of the cryptocurrency used for payment.
+          example: ETH_USDT
+          type: string
         settlement_status:
           $ref: '#/components/schemas/SettleStatus'
-        amount_tolerance:
-          description: |
-            The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.
-
-            When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`.
-          example: "0.5"
-          type: string
       required:
       - chain_id
-      - currency
       - exchange_rate
       - fee_amount
-      - order_amount
       - order_id
       - payable_amount
       - psp_order_code
       - receive_address
       - received_token_amount
       - status
-      - token_id
       type: object
     OrderId:
-      description: |2
-
-        The order ID to be included in this settlement.
-
-        - If provided: Settles merchant funds received from this specific order
-        - If empty: Settles merchant funds received from all unsettled orders of the specified merchant
-
-        **Usage conditions**
-        - Only applicable when `settlement_type` is set to `Merchant`
-        - Cannot be used together with `amount` parameter
+      description: "\nThe order ID to be included in this settlement.\n\n- If provided:\
+        \ Settles merchant funds received from this specific order\n- If empty: Settles\
+        \ merchant funds received from all unsettled orders of the specified merchant\n\
+        \n**Usage conditions**\n- Only applicable when `settlement_type` is set to\
+        \ `Merchant`\n- Cannot be used together with `amount` parameter\n\n    \n"
       example: O20250304-M1001-1001
       type: string
     OrderStatus:
@@ -28575,7 +29408,7 @@ components:
         - `Pending`: The order has been created and is awaiting payment. No incoming transaction has been detected.
         - `Processing`: An incoming transaction has been detected at the recipient address.
         - `Completed`: The payment has been fully received and is now complete.
-        - `Expired`: The order has reached its expiration time without receiving any payment, or the order has been cancelled by the [Update pay-in order](https://www.cobo.com/developers/v2/api-references/payment/update-pay-in-order) operation.
+        - `Expired`: The order has reached its expiration time without receiving any payment, or the order has been cancelled by the [Update pay-in order](https://www.cobo.com/payments/en/api-references/payment/update-pay-in-order) operation.
         - `Underpaid`: The order has reached its expiration time. A payment was received but the amount is less than the order's required amount.
       enum:
       - Pending
@@ -28769,7 +29602,7 @@ components:
         \ have been completed successfully, while others have failed.\n- `Failed`:\
         \ All refund transactions have failed.\n- `PendingConfirmation`: The refund\
         \ order has been created but the address to send (`to_address`) has not been\
-        \ specified. Once you use the [Update refund order](https://www.cobo.com/developers/v2/api-references/payment/update-refund-order)\
+        \ specified. Once you use the [Update refund order](https://www.cobo.com/payments/en/api-references/payment/update-refund-order)\
         \ operation to specify the address, the status will be updated to `Pending`.\n"
       enum:
       - AddressPending
@@ -29804,11 +30637,13 @@ components:
       example:
         settled_amount: "1.23"
         total_balance: "1.23"
+        locked_balance: "1.23"
         token_id: ETH_USDT
         total_received_amount: "1.23"
         merchant_id: "1"
         acquiring_type: Order
         available_balance: "1.23"
+        payout_amount: "1.23"
         refunded_amount: "1.23"
       properties:
         merchant_id:
@@ -29832,6 +30667,10 @@ components:
             merchant's balance.
           example: "1.23"
           type: string
+        payout_amount:
+          description: The merchant payout amount.
+          example: "1.23"
+          type: string
         refunded_amount:
           description: The total amount of the token that has been refunded from the
             merchant's balance.
@@ -29840,15 +30679,19 @@ components:
         total_balance:
           description: |2
 
-            The total balance of the token available for payout or refund for the merchant.
+            The current balance of this token available to the merchant for payouts or refunds.
 
             `total_balance` = `total_received_amount` - `settled_amount` - `refunded_amount`
 
-            For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances)
+            For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances)
           example: "1.23"
           type: string
         available_balance:
-          description: This field has been deprecated.
+          description: The merchant available balance.
+          example: "1.23"
+          type: string
+        locked_balance:
+          description: The merchant locked balance.
           example: "1.23"
           type: string
       required:
@@ -29860,9 +30703,11 @@ components:
       example:
         settled_amount: "1.23"
         total_balance: "1.23"
+        locked_balance: "1.23"
         developer_fee_amount: "1.23"
         token_id: ETH_USDT
         available_balance: "1.23"
+        payout_amount: "1.23"
         refunded_amount: refunded_amount
       properties:
         token_id:
@@ -29880,6 +30725,10 @@ components:
             developer's balance.
           example: "1.23"
           type: string
+        payout_amount:
+          description: The psp payout amount.
+          example: "1.23"
+          type: string
         refunded_amount:
           description: The total amount of the token that has been refunded from the
             developer's balance.
@@ -29891,11 +30740,15 @@ components:
 
             `total_balance` = `developer_fee_amount` - `settled_amount` - `refunded_amount`
 
-            For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances)
+            For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances)
           example: "1.23"
           type: string
         available_balance:
-          description: This field has been deprecated.
+          description: The psp available balance.
+          example: "1.23"
+          type: string
+        locked_balance:
+          description: The psp locked balance.
           example: "1.23"
           type: string
       required:
@@ -30057,74 +30910,17 @@ components:
           example: https://example.com/logo.png
           format: uri
           type: string
+        return_url:
+          description: The URL to redirect to after the operation completes.
+          example: https://example.com/return
+          format: uri
+          type: string
       type: object
     OrderLinkBusinessInfo:
       properties:
-        token_ids:
-          description: |
-            An array of token IDs representing the cryptocurrencies and chains available for payment. These options will be shown to users on the payment page for them to choose from. Supported token IDs include:
-              - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
-          example:
-          - ETH_USDT
-          - SOL_USDC
-          - TRON_USDT
-          items:
-            example: ETH_USDT
-            type: string
-          type: array
-        custom_exchange_rates:
-          description: |
-            A list of custom exchange rates defining how much one unit of a specific cryptocurrency (`token_id`) is valued in the selected fiat or crypto currency (`currency`). If this field is omitted, the system’s default exchange rates will apply.
-
-            Each item specifies a `token_id` and its corresponding `exchange_rate`. For example, to treat 1 USDT (on Ethereum) as equivalent to 0.99 USD, provide:
-
-            ```json
-            {
-              "custom_exchange_rates": [
-                {
-                  "token_id": "ETH_USDT",
-                  "exchange_rate": "0.99"
-                }
-              ],
-              "currency": "USD"
-            }
-            ```
-          example:
-          - token_id: ETH_USDT
-            exchange_rate: "0.99"
-          - token_id: SOL_USDC
-            exchange_rate: "1.02"
-          items:
-            $ref: '#/components/schemas/OrderLinkBusinessInfo_custom_exchange_rates_inner'
-          type: array
-        currency:
-          description: |
-            The currency in which both the order amount (`order_amount`) and the developer fee (`fee_amount`) are denominated. Only the following values are supported: `USD`, `USDT`, or `USDC`.
-          example: USD
-          type: string
-        fee_amount:
-          description: "The developer fee for the order, denominated in the currency\
-            \ specified by `currency`.\n\n\nIf you are a merchant directly serving\
-            \ payers, set this field to `0`. Developer fees are only relevant for\
-            \ platforms like payment service providers (PSPs) that charge fees to\
-            \ their downstream merchants.\n\nThe developer fee is added to the base\
-            \ amount (`order_amount`) to determine the final charge. For example:\n\
-            - Base amount (`order_amount`): \"100.00\"\n- Developer fee (`fee_amount`):\
-            \ \"2.00\" \n- Total charged to customer: \"102.00\"\n\nValues can contain\
-            \ up to two decimal places.\n"
-          example: "2.00"
-          type: string
         merchant_id:
           description: The merchant ID.
           example: "1001"
-          type: string
-        order_amount:
-          description: "The base amount of the order, excluding the developer fee\
-            \ (specified in `fee_amount`), denominated in the currency specified by\
-            \ `currency`.\n\nValues must be greater than `0` and contain two decimal\
-            \ places. \n"
-          example: "100.00"
           type: string
         merchant_order_code:
           description: A unique reference code assigned by the merchant to identify
@@ -30137,6 +30933,54 @@ components:
             A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters.
           example: P20240201001
           type: string
+        pricing_currency:
+          description: |
+            The currency for the base order amount and the developer fee. Currently, only `USD`/`USDT`/`USDC` are supported.
+          example: USD
+          type: string
+        pricing_amount:
+          description: |
+            The base amount of the order, excluding the developer fee (specified in `fee_amount`), in the currency specified by `currency`. If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`.
+
+            Values must be greater than `0` and contain two decimal places.
+          example: "100.00"
+          type: string
+        fee_amount:
+          description: |
+            The developer fee for the order, in the currency specified by `currency`. If `currency` is not specified, the fee is in the cryptocurrency specified by `token_id`.
+
+            If you are a merchant directly serving payers, set this field to `0`. Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.
+
+            The developer fee is added to the base amount (`order_amount`) to determine the final charge. For example:
+            - Base amount (`order_amount`): "100.00"
+            - Developer fee (`fee_amount`): "2.00"
+            - Total charged to customer: "102.00"
+
+            Values can contain up to two decimal places.
+          example: "2.00"
+          type: string
+        payable_currencies:
+          description: |
+            List of supported cryptocurrency token IDs for this payment. Each token ID must be from the supported values.
+          example:
+          - ETH_USDT
+          - SOL_USDC
+          - TRON_USDT
+          items:
+            example: ETH_USDT
+            type: string
+          type: array
+        payable_amounts:
+          description: |
+            Optional list of payable amounts for different tokens. If provided, these amounts will be used instead of calculating the amounts based on the exchange rate.
+          example:
+          - token_id: ETH_USDT
+            amount: "103.03"
+          - token_id: SOL_USDC
+            amount: "105.05"
+          items:
+            $ref: '#/components/schemas/OrderLinkBusinessInfo_payable_amounts_inner'
+          type: array
         expired_in:
           default: 1800
           description: |
@@ -30148,25 +30992,54 @@ components:
             - A late payment will trigger a `transactionLate` webhook event.
           example: 1800
           type: integer
-        use_dedicated_address:
-          description: |
-            This field has been deprecated.
-          example: false
-          type: boolean
         amount_tolerance:
-          description: |
-            The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.
-
-            When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`.
+          description: "Allowed amount deviation, precision to 1 decimal place."
           example: "0.5"
           type: string
+        currency:
+          description: |
+            The currency for the base order amount and the developer fee. Currently, only `USD`/`USDT`/`USDC` are supported.
+          example: USD
+          type: string
+        order_amount:
+          description: |
+            The base amount of the order, excluding the developer fee (specified in `fee_amount`), in the currency specified by `currency`. If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`.
+
+            Values must be greater than `0` and contain two decimal places.
+          example: "100.00"
+          type: string
+        token_ids:
+          description: |
+            List of supported cryptocurrency token IDs for this payment. Each token ID must be from the supported values.
+          example:
+          - ETH_USDT
+          - SOL_USDC
+          - TRON_USDT
+          items:
+            example: ETH_USDT
+            type: string
+          type: array
+        custom_exchange_rates:
+          description: |
+            Optional list of final exchange rates for different tokens. If provided, these rates will be used instead of real-time market rates.
+          example:
+          - token_id: ETH_USDT
+            exchange_rate: "0.99"
+          - token_id: SOL_USDC
+            exchange_rate: "1.02"
+          items:
+            $ref: '#/components/schemas/OrderLinkBusinessInfo_custom_exchange_rates_inner'
+          type: array
+        use_dedicated_address:
+          description: "Whether to allocate a dedicated address for this order. \n\
+            - `true`: A dedicated address will be allocated for this order.\n- `false`:\
+            \ A shared address from the address pool will be used.\n"
+          example: false
+          type: boolean
       required:
-      - currency
       - fee_amount
       - merchant_id
-      - order_amount
       - psp_order_code
-      - token_ids
       type: object
     RefundLinkBusinessInfo:
       properties:
@@ -30190,7 +31063,7 @@ components:
           type: string
         fee_amount:
           description: |
-            The developer fee amount to charge the merchant, denominated in the cryptocurrency of the original payment transaction. This field is only valid when `refund_source` is `Merchant`. For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).
+            The developer fee amount to charge the merchant, denominated in the cryptocurrency of the original payment transaction. This field is only valid when `refund_source` is `Merchant`. For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances).
             Must be:
               - A positive integer with up to two decimal places.
               - Less than the refund amount
@@ -31052,6 +31925,1003 @@ components:
       required:
       - currency
       - rate
+      - token_id
+      type: object
+    AllocationRecord:
+      example:
+        batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+        amount: "500.00"
+        token_id: ETH_USDT
+        description: description
+        source_account: source_account
+        allocation_record_id: 123e457-e89b-12d3-a456-426614174004
+        destination_account: destination_account
+      properties:
+        allocation_record_id:
+          description: The allocation record ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        batch_allocation_id:
+          description: The batch allocation ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        token_id:
+          description: "The ID of the cryptocurrency you want to allocation. Supported\
+            \ values: \n- USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`,\
+            \ `MATIC_USDC`, `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+          example: ETH_USDT
+          type: string
+        amount:
+          description: |
+            The allocation amount.
+          example: "500.00"
+          type: string
+        source_account:
+          type: string
+        destination_account:
+          type: string
+        description:
+          type: string
+      required:
+      - allocation_record_id
+      - amount
+      - batch_allocation_id
+      - description
+      - token_id
+      type: object
+    AllocationRequest:
+      example:
+        amount: "500.00"
+        token_id: ETH_USDT
+        description: description
+        source_account: source_account
+        destination_account: destination_account
+      properties:
+        token_id:
+          description: "The ID of the cryptocurrency you want to allocation. Supported\
+            \ values: \n- USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`,\
+            \ `MATIC_USDC`, `BSC_USDC`\n- USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
+            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
+          example: ETH_USDT
+          type: string
+        amount:
+          description: |
+            The allocation amount.
+          example: "500.00"
+          type: string
+        source_account:
+          type: string
+        destination_account:
+          type: string
+        description:
+          type: string
+      required:
+      - amount
+      - description
+      - destination_account
+      - source_account
+      - token_id
+      type: object
+    BatchAllocation:
+      example:
+        batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+        updated_timestamp: 1744689600
+        initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        created_timestamp: 1744689600
+        allocation_requests:
+        - amount: "500.00"
+          token_id: ETH_USDT
+          description: description
+          source_account: source_account
+          destination_account: destination_account
+        - amount: "500.00"
+          token_id: ETH_USDT
+          description: description
+          source_account: source_account
+          destination_account: destination_account
+        request_id: 123e457-e89b-12d3-a456-426614174004
+      properties:
+        batch_allocation_id:
+          description: The batch allocation ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        request_id:
+          description: The request ID provided by you when creating the batch allocation.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        allocation_requests:
+          items:
+            $ref: '#/components/schemas/AllocationRequest'
+          type: array
+        initiator:
+          description: "The initiator of this batch allocation, usually the user's\
+            \ API key."
+          example: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          type: string
+        created_timestamp:
+          description: "The created time of the batch allocation, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the batch allocation, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+      required:
+      - allocation_items
+      - batch_allocation_id
+      - created_timestamp
+      - request_id
+      - updated_timestamp
+      type: object
+    BatchAllocationDetail:
+      example:
+        batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+        updated_timestamp: 1744689600
+        initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        allocation_records:
+        - batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+          amount: "500.00"
+          token_id: ETH_USDT
+          description: description
+          source_account: source_account
+          allocation_record_id: 123e457-e89b-12d3-a456-426614174004
+          destination_account: destination_account
+        - batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+          amount: "500.00"
+          token_id: ETH_USDT
+          description: description
+          source_account: source_account
+          allocation_record_id: 123e457-e89b-12d3-a456-426614174004
+          destination_account: destination_account
+        created_timestamp: 1744689600
+        request_id: 123e457-e89b-12d3-a456-426614174004
+      properties:
+        batch_allocation_id:
+          description: The batch allocation ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        request_id:
+          description: The request ID provided by you when creating the batch allocation.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        allocation_records:
+          items:
+            $ref: '#/components/schemas/AllocationRecord'
+          type: array
+        initiator:
+          description: "The initiator of this batch allocation, usually the user's\
+            \ API key."
+          example: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          type: string
+        created_timestamp:
+          description: "The created time of the batch allocation, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the batch allocation, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+      required:
+      - allocation_records
+      - batch_allocation_id
+      - request_id
+      type: object
+    PaymentSourceType:
+      description: |
+        Specifies the source of funds for the payout/allocation
+        - `Merchant`: The amount will be deducted from the merchant balance.
+        - `Psp`: The amount will be deducted from the developer balance.
+      enum:
+      - Merchant
+      - Psp
+      example: Merchant
+      type: string
+    PaymentPayout:
+      example:
+        payout_id: 123e457-e89b-12d3-a456-426614174004
+        actual_payout_amount: "500.00"
+        updated_timestamp: 1744689600
+        payout_channel: Crypto
+        initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        created_timestamp: 1744689600
+        currency: USD
+        request_id: 123e457-e89b-12d3-a456-426614174004
+        payout_items:
+        - amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          source_account: source_account
+          created_timestamp: 1744689600
+          crypto_address: 0xabc123456789def0000000000000000000000000
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_item_id: 123e457-e89b-12d3-a456-426614174004
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+        - amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          source_account: source_account
+          created_timestamp: 1744689600
+          crypto_address: 0xabc123456789def0000000000000000000000000
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_item_id: 123e457-e89b-12d3-a456-426614174004
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+        status: Pending
+        bank_account:
+          bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
+          info:
+            beneficiary_name: John Doe
+            beneficiary_address: "123 Main St, Anytown, USA"
+            account_number: "4111111111111111"
+            bank_name: ABC Bank
+            bank_country: USA
+            bank_address: "456 Bank Ave, Cityville, USA"
+            swift_or_bic: ABCDEFGH
+      properties:
+        payout_id:
+          description: The payout ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        request_id:
+          description: The request ID provided by you when creating the payout.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        payout_channel:
+          $ref: '#/components/schemas/PayoutChannel'
+        payout_items:
+          items:
+            $ref: '#/components/schemas/PaymentPayoutItem'
+          type: array
+        status:
+          $ref: '#/components/schemas/PaymentPayoutStatus'
+        created_timestamp:
+          description: "The created time of the payout, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the payout, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        initiator:
+          description: "The initiator of this payout, usually the user's API key."
+          example: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          type: string
+        currency:
+          description: The fiat currency for the payout.
+          example: USD
+          type: string
+        actual_payout_amount:
+          description: |
+            The actual amount of this payout.
+          example: "500.00"
+          type: string
+        bank_account:
+          $ref: '#/components/schemas/BankAccount'
+      required:
+      - payout_channel
+      - payout_id
+      - request_id
+      - status
+      type: object
+    PaymentPayoutDetail:
+      example:
+        payout_id: 123e457-e89b-12d3-a456-426614174004
+        actual_payout_amount: "500.00"
+        updated_timestamp: 1744689600
+        payout_channel: Crypto
+        initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        created_timestamp: 1744689600
+        currency: USD
+        payout_item_details:
+        - amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          source_account: source_account
+          created_timestamp: 1744689600
+          crypto_address: 0xabc123456789def0000000000000000000000000
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_item_id: 123e457-e89b-12d3-a456-426614174004
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+        - amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          source_account: source_account
+          created_timestamp: 1744689600
+          crypto_address: 0xabc123456789def0000000000000000000000000
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_item_id: 123e457-e89b-12d3-a456-426614174004
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+        request_id: 123e457-e89b-12d3-a456-426614174004
+        status: Pending
+        bank_account:
+          bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+          updated_timestamp: 1744689600
+          created_timestamp: 1744689600
+          info:
+            beneficiary_name: John Doe
+            beneficiary_address: "123 Main St, Anytown, USA"
+            account_number: "4111111111111111"
+            bank_name: ABC Bank
+            bank_country: USA
+            bank_address: "456 Bank Ave, Cityville, USA"
+            swift_or_bic: ABCDEFGH
+      properties:
+        payout_id:
+          description: The payout ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        request_id:
+          description: The request ID provided by you when creating the payout.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentPayoutStatus'
+        payout_item_details:
+          items:
+            $ref: '#/components/schemas/PaymentPayoutItemDetail'
+          type: array
+        created_timestamp:
+          description: "The created time of the payout, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the payout, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        initiator:
+          description: "The initiator of this payout, usually the user's API key."
+          example: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          type: string
+        payout_channel:
+          $ref: '#/components/schemas/PayoutChannel'
+        currency:
+          description: The fiat currency for the payout.
+          example: USD
+          type: string
+        actual_payout_amount:
+          description: |
+            The actual amount of this payout.
+          example: "500.00"
+          type: string
+        bank_account:
+          $ref: '#/components/schemas/BankAccount'
+      required:
+      - payout_id
+      - request_id
+      - status
+      type: object
+    PaymentPayoutItem:
+      example:
+        amount: "500.00"
+        chain_id: ETH
+        bridging_fee:
+          fee_amount: fee_amount
+          received_amount: received_amount
+          received_token_id: received_token_id
+        source_account: source_account
+        created_timestamp: 1744689600
+        crypto_address: 0xabc123456789def0000000000000000000000000
+        transactions:
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          destination:
+            country: USA
+            destination_type: Individual
+            updated_timestamp: 1744689600
+            destination_id: 123e4567-e89b-12d3-a456-426614174003
+            destination_name: Destination A
+            created_timestamp: 1744689600
+            merchant_id: M1001
+            contact_address: "123 Main St, Anytown, USA"
+            email: destination@example.com
+          counterparty:
+            country: USA
+            counterparty_name: Counterparty A
+            counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            counterparty_type: Individual
+            created_timestamp: 1744689600
+            contact_address: "123 Main St, Anytown, USA"
+            email: counterparty@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          destination:
+            country: USA
+            destination_type: Individual
+            updated_timestamp: 1744689600
+            destination_id: 123e4567-e89b-12d3-a456-426614174003
+            destination_name: Destination A
+            created_timestamp: 1744689600
+            merchant_id: M1001
+            contact_address: "123 Main St, Anytown, USA"
+            email: destination@example.com
+          counterparty:
+            country: USA
+            counterparty_name: Counterparty A
+            counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            counterparty_type: Individual
+            created_timestamp: 1744689600
+            contact_address: "123 Main St, Anytown, USA"
+            email: counterparty@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
+        payout_id: 123e457-e89b-12d3-a456-426614174004
+        crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+        token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        payout_item_id: 123e457-e89b-12d3-a456-426614174004
+        commission_fee:
+          fee_amount: fee_amount
+        status: Pending
+      properties:
+        payout_item_id:
+          description: The payout item ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        payout_id:
+          description: The payout ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        token_id:
+          description: The token id of the payout item.
+          example: ETH_USDT
+          type: string
+        chain_id:
+          description: The ID of the blockchain network on which the payout item occurred.
+          example: ETH
+          type: string
+        amount:
+          description: |
+            The payout item token_id amount.
+          example: "500.00"
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentPayoutItemStatus'
+        source_account:
+          type: string
+        transactions:
+          description: An array of transactions associated with this payout item request.
+            Each transaction represents a separate blockchain operation related to
+            the payout item process.
+          items:
+            $ref: '#/components/schemas/PaymentTransaction'
+          type: array
+        created_timestamp:
+          description: "The created time of the payout item, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the payout item, represented as a UNIX\
+            \ timestamp in seconds."
+          example: 1744689600
+          type: integer
+        crypto_address_id:
+          description: "Unique identifier for the pre-approved crypto address, used\
+            \ to reference the address securely in requests."
+          example: addr_ethusdt_20250429T134512_a8c31f
+          type: string
+        crypto_address:
+          description: The actual blockchain address to which funds were transferred.
+          example: 0xabc123456789def0000000000000000000000000
+          type: string
+        commission_fee:
+          $ref: '#/components/schemas/CommissionFee'
+        bridging_fee:
+          $ref: '#/components/schemas/BridgingFee'
+      required:
+      - amount
+      - payout_id
+      - payout_item_id
+      - source_account
+      - status
+      type: object
+    PaymentPayoutItemDetail:
+      example:
+        amount: "500.00"
+        chain_id: ETH
+        bridging_fee:
+          fee_amount: fee_amount
+          received_amount: received_amount
+          received_token_id: received_token_id
+        source_account: source_account
+        created_timestamp: 1744689600
+        crypto_address: 0xabc123456789def0000000000000000000000000
+        transactions:
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          destination:
+            country: USA
+            destination_type: Individual
+            updated_timestamp: 1744689600
+            destination_id: 123e4567-e89b-12d3-a456-426614174003
+            destination_name: Destination A
+            created_timestamp: 1744689600
+            merchant_id: M1001
+            contact_address: "123 Main St, Anytown, USA"
+            email: destination@example.com
+          counterparty:
+            country: USA
+            counterparty_name: Counterparty A
+            counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            counterparty_type: Individual
+            created_timestamp: 1744689600
+            contact_address: "123 Main St, Anytown, USA"
+            email: counterparty@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          destination:
+            country: USA
+            destination_type: Individual
+            updated_timestamp: 1744689600
+            destination_id: 123e4567-e89b-12d3-a456-426614174003
+            destination_name: Destination A
+            created_timestamp: 1744689600
+            merchant_id: M1001
+            contact_address: "123 Main St, Anytown, USA"
+            email: destination@example.com
+          counterparty:
+            country: USA
+            counterparty_name: Counterparty A
+            counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            counterparty_type: Individual
+            created_timestamp: 1744689600
+            contact_address: "123 Main St, Anytown, USA"
+            email: counterparty@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
+        payout_id: 123e457-e89b-12d3-a456-426614174004
+        crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+        token_id: ETH_USDT
+        updated_timestamp: 1744689600
+        payout_item_id: 123e457-e89b-12d3-a456-426614174004
+        commission_fee:
+          fee_amount: fee_amount
+        status: Pending
+      properties:
+        payout_item_id:
+          description: The payout item ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        payout_id:
+          description: The payout ID generated by Cobo.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        token_id:
+          description: The token id of the payout.
+          example: ETH_USDT
+          type: string
+        chain_id:
+          description: The ID of the blockchain network on which the payout occurred.
+          example: ETH
+          type: string
+        source_account:
+          type: string
+        amount:
+          description: |
+            The payout token_id amount.
+          example: "500.00"
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentPayoutStatus'
+        transactions:
+          description: An array of transactions associated with this payout request.
+            Each transaction represents a separate blockchain operation related to
+            the payout process.
+          items:
+            $ref: '#/components/schemas/PaymentTransaction'
+          type: array
+        created_timestamp:
+          description: "The created time of the payout, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        updated_timestamp:
+          description: "The updated time of the payout, represented as a UNIX timestamp\
+            \ in seconds."
+          example: 1744689600
+          type: integer
+        crypto_address_id:
+          description: "Unique identifier for the pre-approved crypto address, used\
+            \ to reference the address securely in requests."
+          example: addr_ethusdt_20250429T134512_a8c31f
+          type: string
+        crypto_address:
+          description: The actual blockchain address to which funds were transferred.
+          example: 0xabc123456789def0000000000000000000000000
+          type: string
+        commission_fee:
+          $ref: '#/components/schemas/CommissionFee'
+        bridging_fee:
+          $ref: '#/components/schemas/BridgingFee'
+      required:
+      - amount
+      - payout_id
+      - payout_item_id
+      - source_account
+      - status
+      type: object
+    PaymentPayoutItemStatus:
+      description: |
+        The current status of the payout item:
+        - `Pending`: The payout item has been created and is awaiting processing.
+        - `Processing`: The payout item is being processed.
+        - `Completed`: The funds have been successfully deposited into the bank account.
+        - `PartiallyCompleted`: Some payout item transactions have been completed successfully, while others have failed.
+        - `Failed`: The payout item could not be completed due to an error.
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      - PartiallyCompleted
+      - Failed
+      example: Pending
+      type: string
+    PaymentPayoutParam:
+      properties:
+        source_account:
+          type: string
+        token_id:
+          description: "Only used in Crypto payout channel.\nThe ID of the cryptocurrency\
+            \ you want to settle. Supported values: \n- USDC: `ETH_USDC`, `ARBITRUM_USDC`,\
+            \ `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`\n- USDT: `TRON_USDT`,\
+            \ `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`,\
+            \ `BSC_USDT`\n"
+          example: ETH_USDT
+          type: string
+        amount:
+          description: |
+            The payout cryptocurrency amount.
+          example: "500.00"
+          type: string
+        crypto_address_id:
+          description: |
+            Only used in Crypto payout channel.
+            The ID of the pre-approved crypto address used for Crypto settlements.
+            - The value must refer to a valid address that has been pre-configured and approved for the given token.
+          example: addr_ethusdt_20250506T123456_ab12cd
+          type: string
+        crypto_address:
+          description: |
+            Only used in Crypto payout channel.
+            The actual blockchain address to which funds will be transferred.
+            If enable destination whitelist, this address must be associated with a destination.
+          example: 0xabc123456789def0000000000000000000000000
+          type: string
+      required:
+      - amount
+      - source_account
+      - token_id
+      type: object
+    PaymentPayoutStatus:
+      description: |
+        The current status of the payout:
+        - `Pending`: The payout has been created and is awaiting processing.
+        - `Processing`: The payout is currently being processed, with at least one payout in progress.
+        - `Completed`: All requested payouts have been completed.
+        - `PartiallyCompleted`: Some requested payouts have been completed successfully, while others have failed.
+        - `Failed`: All requested payouts have failed.
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      - PartiallyCompleted
+      - Failed
+      - Canceled
+      example: Pending
+      type: string
+    PaymentAllocationAmount:
+      example:
+        allocation_amount: "1.23"
+        token_id: ETH_USDT
+      properties:
+        token_id:
+          description: The ID of the cryptocurrency.
+          example: ETH_USDT
+          type: string
+        allocation_amount:
+          description: The allocation amount.
+          example: "1.23"
+          type: string
+      required:
+      - allocation_amount
       - token_id
       type: object
     DispositionStatus:
@@ -36463,6 +38333,27 @@ components:
             commission_rate: 0.1
             priority: 0
             pool_type: Babylon
+          validators:
+          - icon_url: https://example.com/icon.png
+            public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            supported_pos_chains:
+            - Babylon
+            - Cosmos
+            - Ethereum
+            name: Cobo
+            commission_rate: 0.1
+            priority: 0
+            pool_type: Babylon
+          - icon_url: https://example.com/icon.png
+            public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            supported_pos_chains:
+            - Babylon
+            - Cosmos
+            - Ethereum
+            name: Cobo
+            commission_rate: 0.1
+            priority: 0
+            pool_type: Babylon
           extra:
             unlock_block_height: 871234
             stake_address: tb1pgmpawe2rkrzuuflu8yw564lerfalhw8td36dha49yz4l99xvm3psteh393
@@ -36485,6 +38376,27 @@ components:
           updated_timestamp: 1640995200000
           validator_info:
             icon_url: https://example.com/icon.png
+            public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            supported_pos_chains:
+            - Babylon
+            - Cosmos
+            - Ethereum
+            name: Cobo
+            commission_rate: 0.1
+            priority: 0
+            pool_type: Babylon
+          validators:
+          - icon_url: https://example.com/icon.png
+            public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
+            supported_pos_chains:
+            - Babylon
+            - Cosmos
+            - Ethereum
+            name: Cobo
+            commission_rate: 0.1
+            priority: 0
+            pool_type: Babylon
+          - icon_url: https://example.com/icon.png
             public_key: eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0
             supported_pos_chains:
             - Babylon
@@ -37770,7 +39682,7 @@ components:
           description: "The developer fee rate applied to this merchant. Must be a\
             \ valid float between 0 and 1 (inclusive), with up to 4 decimal places.\
             \ For more information on developer fee rate, please refer to [Funds allocation\
-            \ and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances)."
+            \ and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances)."
           example: "0.1"
           type: string
         wallet_setup:
@@ -37788,7 +39700,7 @@ components:
           description: "The developer fee rate applied to this merchant. Must be a\
             \ valid float between 0 and 1 (inclusive), with up to 4 decimal places.\
             \ For more information on developer fee rate, please refer to [Funds allocation\
-            \ and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances)."
+            \ and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances)."
           example: "0.1"
           type: string
       type: object
@@ -37994,7 +39906,7 @@ components:
         charge_merchant_fee:
           description: "Whether to charge developer fee to the merchant. This field\
             \ is only valid when `refund_type` is `Merchant`. For more information,\
-            \ please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).\n\
+            \ please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances).\n\
             \ \n  - `true`: The fee amount (specified in `merchant_fee_amount`) will\
             \ be deducted from the merchant's balance and added to the developer's\
             \ balance\n\n  - `false`: The merchant is not charged any developer fee\n\
@@ -38004,7 +39916,7 @@ components:
           type: boolean
         merchant_fee_amount:
           description: |
-            The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by `merchant_fee_token_id`. This field is only valid when `refund_type` is `Merchant`. For more information, please refer to [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).
+            The developer fee amount to charge the merchant, denominated in the cryptocurrency specified by `merchant_fee_token_id`. This field is only valid when `refund_type` is `Merchant`. For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances).
 
             This field is required when `charge_merchant_fee` is `true`. Must be:
               - A positive integer with up to two decimal places.
@@ -38013,9 +39925,7 @@ components:
           type: string
         merchant_fee_token_id:
           description: |
-            The ID of the cryptocurrency used for the developer fee. It must be the same as `token_id`. Supported values:
-              - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
-              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+            The ID of the cryptocurrency used for the transaction fee. This is only applicable if `charge_merchant_fee` is set to true.
           example: ETH_USDT
           type: string
       required:
@@ -38064,9 +39974,11 @@ components:
           total_count: 10000
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
-        - settlement_status: Pending
+        - pricing_currency: USD
+          settlement_status: Pending
           chain_id: ETH
           exchange_rate: "0.99"
+          pricing_amount: "100.00"
           created_timestamp: 1744689600
           merchant_id: "1001"
           expired_at: 1711324800
@@ -38136,13 +40048,16 @@ components:
           merchant_order_code: M20240201001
           psp_order_code: P20240201001
           currency: USD
+          payable_currency: ETH_USDT
           payable_amount: "103.03"
           order_id: "5001"
           receive_address: 0x1234567890abcdef1234567890abcdef12345678
           status: Pending
-        - settlement_status: Pending
+        - pricing_currency: USD
+          settlement_status: Pending
           chain_id: ETH
           exchange_rate: "0.99"
+          pricing_amount: "100.00"
           created_timestamp: 1744689600
           merchant_id: "1001"
           expired_at: 1711324800
@@ -38212,6 +40127,7 @@ components:
           merchant_order_code: M20240201001
           psp_order_code: P20240201001
           currency: USD
+          payable_currency: ETH_USDT
           payable_amount: "103.03"
           order_id: "5001"
           receive_address: 0x1234567890abcdef1234567890abcdef12345678
@@ -38227,101 +40143,101 @@ components:
     create_payment_order_request:
       properties:
         merchant_id:
-          description: The merchant ID. This ID is assigned by Cobo when you create
-            the merchant.
+          description: The merchant ID.
           example: "1001"
-          type: string
-        token_id:
-          description: "The ID of the cryptocurrency used for payment. Supported values:\
-            \ \n  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`,\
-            \ `MATIC_USDC2`, `BSC_USDC`\n  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`,\
-            \ `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`\n"
-          example: ETH_USDT
-          type: string
-        currency:
-          default: ""
-          description: |
-            The fiat currency for the base order amount and the developer fee. If left empty, both `order_amount` and `fee_amount` will be denominated in the cryptocurrency specified by `token_id`
-
-            Currently, only `USD` is supported.
-          example: USD
-          type: string
-        order_amount:
-          description: "\nThe base amount of the order, excluding the developer fee\
-            \ (specified in `fee_amount`). The denomination of the amount depends\
-            \ on if `currency` is specified:\n- If `currency` is specified, the amount\
-            \ is in the currency specified by `currency`, e.g. \"USD\".\n- If `currency`\
-            \ is not specified, the amount is in the cryptocurrency specified by `token_id`,\
-            \ e.g. \"ETH_USDT\". \n\nValues must be greater than `0` and contain two\
-            \ decimal places.\n"
-          example: "100.00"
-          type: string
-        fee_amount:
-          description: "\nThe developer fee for the order.\n\n- **When to set:** \
-            \ \n  If you are a merchant serving payers directly, set this field to\
-            \ `0`.  \n  Developer fees are only relevant for platforms like payment\
-            \ service providers (PSPs) that charge fees to their downstream merchants.\n\
-            \  For details, see [Funds allocation and balances](https://www.cobo.com/developers/v2/payments/amounts-and-balances).\n\
-            \n- **Denomination:**  \n  The denomination of `fee_amount` depends on\
-            \ the presence of `currency`:  \n    - If `currency` is set, the amount\
-            \ is denominated in that currency (e.g., \"USD\").  \n    - If `currency`\
-            \ is not set, the amount is denominated in the cryptocurrency specified\
-            \ by `token_id` (e.g., \"ETH_USDT\").\n\n- **Calculation:**  \n  The developer\
-            \ fee is added to the base order amount (`order_amount`) to determine\
-            \ the final amount charged to the customer.  \n  For example:  \n    -\
-            \ Base amount (`order_amount`): \"100.00\"  \n    - Developer fee (`fee_amount`):\
-            \ \"2.00\"  \n    - **Total charged:** \"102.00\"\n\n- **Formatting:**\
-            \  \n  The value can contain up to two decimal places.\n"
-          example: "2.00"
           type: string
         merchant_order_code:
           description: A unique reference code assigned by the merchant to identify
-            this order in their system. The code should have a maximum length of 128
-            characters.
+            this order in their system.
           example: M20240201001
           type: string
         psp_order_code:
-          description: |
-            A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters.
+          description: A unique reference code assigned by the developer to identify
+            this order in their system.
           example: P20240201001
           type: string
-        expired_in:
-          default: 1800
+        pricing_currency:
           description: |
-            The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:
-
+            The ID of the cryptocurrency used for payment. Supported values:
+              - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+          example: ETH_USDT
+          type: string
+        pricing_amount:
+          description: "The base amount of the order in fiat currency, excluding the\
+            \ developer fee (specified in `fee_amount`). Values must be greater than\
+            \ `0` and contain two decimal places."
+          example: "100.00"
+          type: string
+        fee_amount:
+          description: "The developer fee for the order in fiat currency. It is added\
+            \ to the base amount (`order_amount`) to determine the final charge. For\
+            \ example, if order_amount is \"100.00\" and fee_amount is \"2.00\", the\
+            \ customer will be charged \"102.00\" in total, with \"100.00\" being\
+            \ settled to the merchant and \"2.00\" settled to the developer. Values\
+            \ must be greater than 0 and contain two decimal places."
+          example: "2.00"
+          type: string
+        payable_currency:
+          description: |
+            The ID of the cryptocurrency used for payment. Supported values:
+              - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+          example: ETH_USDT
+          type: string
+        payable_amount:
+          description: The actual payable amount of the order in the cryptocurrency.
+          example: "103.03"
+          type: string
+        expired_in:
+          description: |
+            The pay-in order will expire after approximately a certain number of seconds:
             - The order status becomes final and cannot be changed
             - The `received_token_amount` field will no longer be updated
             - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance.
             - A late payment will trigger a `transactionLate` webhook event.
           example: 1800
           type: integer
-        use_dedicated_address:
+        amount_tolerance:
+          description: "Allowed amount deviation, precision to 1 decimal place."
+          example: "0.5"
+          type: string
+        currency:
+          default: ""
+          description: The fiat currency of the order.
+          example: USD
+          type: string
+        order_amount:
+          description: "The base amount of the order in fiat currency, excluding the\
+            \ developer fee (specified in `fee_amount`). Values must be greater than\
+            \ `0` and contain two decimal places."
+          example: "100.00"
+          type: string
+        token_id:
           description: |
-            This field has been deprecated.
+            The ID of the cryptocurrency used for payment. Supported values:
+              - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`
+              - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+          example: ETH_USDT
+          type: string
+        use_dedicated_address:
+          description: "Indicates whether to allocate a dedicated address for this\
+            \ order. \nIf false, a shared address from the address pool will be used.\n"
           example: false
           type: boolean
         custom_exchange_rate:
-          description: |2
-
-            A custom exchange rate that defines how much fiat currency equals 1 unit of cryptocurrency. If not provided, the system's default exchange rate will be used.
-
-            For example, if the fiat currency is USD and the cryptocurrency is USDT, setting `custom_exchange_rate` to `"0.99"` means that 1 USDT will be valued at 0.99 USD.
+          description: "A custom exchange rate specified by the merchant.  \n- Only\
+            \ effective when `currency` is `\"USD\"`.  \n- Expressed as the amount\
+            \ of USD per 1 unit of the specified cryptocurrency.  \n- If not provided,\
+            \ the system will use the default internal rate.  \nExample: If the cryptocurrency\
+            \ is USDT and `custom_exchange_rate` = `\"0.99\"`, it means 1 USDT = 0.99\
+            \ USD.\n"
           example: "1.00"
-          type: string
-        amount_tolerance:
-          description: |
-            The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.
-
-            When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`.
-          example: "0.5"
           type: string
       required:
       - fee_amount
       - merchant_id
-      - order_amount
       - psp_order_code
-      - token_id
       type: object
     update_payment_order_request:
       properties:
@@ -38340,8 +40256,7 @@ components:
         currency: USD
       properties:
         token_id:
-          description: "The token ID, which is a unique identifier that specifies\
-            \ both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`."
+          description: "The token ID, which identifies the cryptocurrency."
           example: ETH_USDT
           type: string
         currency:
@@ -38873,7 +40788,7 @@ components:
         bank_account_id:
           description: |2
 
-            The ID of the bank account where the funds will be deposited. You can call [List all bank accounts](https://www.cobo.com/developers/v2/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts.
+            The ID of the bank account where the funds will be deposited. You can call [List all bank accounts](https://www.cobo.com/payments/en/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts.
 
             This field is only applicable for off-ramp.
           example: 0123e457-e89b-12d3-a456-426614174004
@@ -39319,19 +41234,23 @@ components:
         data:
         - settled_amount: "1.23"
           total_balance: "1.23"
+          locked_balance: "1.23"
           token_id: ETH_USDT
           total_received_amount: "1.23"
           merchant_id: "1"
           acquiring_type: Order
           available_balance: "1.23"
+          payout_amount: "1.23"
           refunded_amount: "1.23"
         - settled_amount: "1.23"
           total_balance: "1.23"
+          locked_balance: "1.23"
           token_id: ETH_USDT
           total_received_amount: "1.23"
           merchant_id: "1"
           acquiring_type: Order
           available_balance: "1.23"
+          payout_amount: "1.23"
           refunded_amount: "1.23"
       properties:
         data:
@@ -40040,6 +41959,648 @@ components:
       required:
       - enable_destination_whitelist
       type: object
+    list_batch_allocations_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+          updated_timestamp: 1744689600
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          created_timestamp: 1744689600
+          allocation_requests:
+          - amount: "500.00"
+            token_id: ETH_USDT
+            description: description
+            source_account: source_account
+            destination_account: destination_account
+          - amount: "500.00"
+            token_id: ETH_USDT
+            description: description
+            source_account: source_account
+            destination_account: destination_account
+          request_id: 123e457-e89b-12d3-a456-426614174004
+        - batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+          updated_timestamp: 1744689600
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          created_timestamp: 1744689600
+          allocation_requests:
+          - amount: "500.00"
+            token_id: ETH_USDT
+            description: description
+            source_account: source_account
+            destination_account: destination_account
+          - amount: "500.00"
+            token_id: ETH_USDT
+            description: description
+            source_account: source_account
+            destination_account: destination_account
+          request_id: 123e457-e89b-12d3-a456-426614174004
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/BatchAllocation'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    create_batch_allocation_request:
+      properties:
+        request_id:
+          description: The request ID that is used to track a allocation request.
+            The request ID is provided by you and must be unique.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        allocation_requests:
+          items:
+            $ref: '#/components/schemas/AllocationRequest'
+          type: array
+      required:
+      - allocation_requests
+      - request_id
+      - source_type
+      type: object
+    list_allocations_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+          amount: "500.00"
+          token_id: ETH_USDT
+          description: description
+          source_account: source_account
+          allocation_record_id: 123e457-e89b-12d3-a456-426614174004
+          destination_account: destination_account
+        - batch_allocation_id: 123e457-e89b-12d3-a456-426614174004
+          amount: "500.00"
+          token_id: ETH_USDT
+          description: description
+          source_account: source_account
+          allocation_record_id: 123e457-e89b-12d3-a456-426614174004
+          destination_account: destination_account
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AllocationRecord'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    list_payouts_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - payout_id: 123e457-e89b-12d3-a456-426614174004
+          actual_payout_amount: "500.00"
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          created_timestamp: 1744689600
+          currency: USD
+          request_id: 123e457-e89b-12d3-a456-426614174004
+          payout_items:
+          - amount: "500.00"
+            chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
+            source_account: source_account
+            created_timestamp: 1744689600
+            crypto_address: 0xabc123456789def0000000000000000000000000
+            transactions:
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            payout_id: 123e457-e89b-12d3-a456-426614174004
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_item_id: 123e457-e89b-12d3-a456-426614174004
+            commission_fee:
+              fee_amount: fee_amount
+            status: Pending
+          - amount: "500.00"
+            chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
+            source_account: source_account
+            created_timestamp: 1744689600
+            crypto_address: 0xabc123456789def0000000000000000000000000
+            transactions:
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            payout_id: 123e457-e89b-12d3-a456-426614174004
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_item_id: 123e457-e89b-12d3-a456-426614174004
+            commission_fee:
+              fee_amount: fee_amount
+            status: Pending
+          status: Pending
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
+        - payout_id: 123e457-e89b-12d3-a456-426614174004
+          actual_payout_amount: "500.00"
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
+          initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          created_timestamp: 1744689600
+          currency: USD
+          request_id: 123e457-e89b-12d3-a456-426614174004
+          payout_items:
+          - amount: "500.00"
+            chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
+            source_account: source_account
+            created_timestamp: 1744689600
+            crypto_address: 0xabc123456789def0000000000000000000000000
+            transactions:
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            payout_id: 123e457-e89b-12d3-a456-426614174004
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_item_id: 123e457-e89b-12d3-a456-426614174004
+            commission_fee:
+              fee_amount: fee_amount
+            status: Pending
+          - amount: "500.00"
+            chain_id: ETH
+            bridging_fee:
+              fee_amount: fee_amount
+              received_amount: received_amount
+              received_token_id: received_token_id
+            source_account: source_account
+            created_timestamp: 1744689600
+            crypto_address: 0xabc123456789def0000000000000000000000000
+            transactions:
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            - amount: "0.15"
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
+              destination:
+                country: USA
+                destination_type: Individual
+                updated_timestamp: 1744689600
+                destination_id: 123e4567-e89b-12d3-a456-426614174003
+                destination_name: Destination A
+                created_timestamp: 1744689600
+                merchant_id: M1001
+                contact_address: "123 Main St, Anytown, USA"
+                email: destination@example.com
+              counterparty:
+                country: USA
+                counterparty_name: Counterparty A
+                counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+                updated_timestamp: 1744689600
+                counterparty_type: Individual
+                created_timestamp: 1744689600
+                contact_address: "123 Main St, Anytown, USA"
+                email: counterparty@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              status: Submitted
+            payout_id: 123e457-e89b-12d3-a456-426614174004
+            crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+            token_id: ETH_USDT
+            updated_timestamp: 1744689600
+            payout_item_id: 123e457-e89b-12d3-a456-426614174004
+            commission_fee:
+              fee_amount: fee_amount
+            status: Pending
+          status: Pending
+          bank_account:
+            bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            created_timestamp: 1744689600
+            info:
+              beneficiary_name: John Doe
+              beneficiary_address: "123 Main St, Anytown, USA"
+              account_number: "4111111111111111"
+              bank_name: ABC Bank
+              bank_country: USA
+              bank_address: "456 Bank Ave, Cityville, USA"
+              swift_or_bic: ABCDEFGH
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PaymentPayout'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    create_payout_request:
+      properties:
+        request_id:
+          description: The request ID that is used to track a settlement request.
+            The request ID is provided by you and must be unique.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        payout_channel:
+          $ref: '#/components/schemas/PayoutChannel'
+        payout_params:
+          items:
+            $ref: '#/components/schemas/PaymentPayoutParam'
+          type: array
+        bank_account_id:
+          description: ｜ Only used in OffRamp payout channel. The ID of the bank account
+            where the settled funds will be deposited.
+          example: 0123e457-e89b-12d3-a456-426614174004
+          format: uuid
+          type: string
+        currency:
+          description: The fiat currency for the create payouts.
+          example: USD
+          type: string
+        remark:
+          description: The remark for the create payouts.
+          example: Create payouts for customer 123
+          type: string
+      required:
+      - payout_channel
+      - payout_params
+      - request_id
+      type: object
+    list_payout_items_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          source_account: source_account
+          created_timestamp: 1744689600
+          crypto_address: 0xabc123456789def0000000000000000000000000
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_item_id: 123e457-e89b-12d3-a456-426614174004
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+        - amount: "500.00"
+          chain_id: ETH
+          bridging_fee:
+            fee_amount: fee_amount
+            received_amount: received_amount
+            received_token_id: received_token_id
+          source_account: source_account
+          created_timestamp: 1744689600
+          crypto_address: 0xabc123456789def0000000000000000000000000
+          transactions:
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          - amount: "0.15"
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
+            destination:
+              country: USA
+              destination_type: Individual
+              updated_timestamp: 1744689600
+              destination_id: 123e4567-e89b-12d3-a456-426614174003
+              destination_name: Destination A
+              created_timestamp: 1744689600
+              merchant_id: M1001
+              contact_address: "123 Main St, Anytown, USA"
+              email: destination@example.com
+            counterparty:
+              country: USA
+              counterparty_name: Counterparty A
+              counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+              updated_timestamp: 1744689600
+              counterparty_type: Individual
+              created_timestamp: 1744689600
+              contact_address: "123 Main St, Anytown, USA"
+              email: counterparty@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            status: Submitted
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
+          token_id: ETH_USDT
+          updated_timestamp: 1744689600
+          payout_item_id: 123e457-e89b-12d3-a456-426614174004
+          commission_fee:
+            fee_amount: fee_amount
+          status: Pending
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PaymentPayoutItem'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
     list_wallet_sweep_to_addresses_200_response:
       example:
         data:
@@ -40579,14 +43140,28 @@ components:
       required:
       - type
       type: object
+    OrderLinkBusinessInfo_payable_amounts_inner:
+      properties:
+        token_id:
+          description: The cryptocurrency token ID
+          example: ETH_USDT
+          type: string
+        amount:
+          description: The actual payable amount of the order in the cryptocurrency.
+          example: "103.03"
+          type: string
+      required:
+      - amount
+      - token_id
+      type: object
     OrderLinkBusinessInfo_custom_exchange_rates_inner:
       properties:
         token_id:
-          description: The token ID.
+          description: The cryptocurrency token ID
           example: ETH_USDT
           type: string
         exchange_rate:
-          description: The exchange rate to use for this token.
+          description: The fixed exchange rate to use for this token
           example: "0.99"
           type: string
       required:
@@ -40806,5 +43381,3 @@ components:
             compliance_kyt_status.read: Read KYT screening status
           tokenUrl: https://auth.cobo.com/oauth/token
       type: oauth2
-x-mcp:
-  enabled: true

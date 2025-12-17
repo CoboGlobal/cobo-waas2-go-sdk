@@ -21,6 +21,8 @@ type LinkDisplayInfo struct {
 	DeveloperName *string `json:"developer_name,omitempty"`
 	// The URL of the logo image to display to end users on the page. 
 	Logo *string `json:"logo,omitempty"`
+	// The URL to redirect to after the operation completes.
+	ReturnUrl *string `json:"return_url,omitempty"`
 }
 
 // NewLinkDisplayInfo instantiates a new LinkDisplayInfo object
@@ -104,6 +106,38 @@ func (o *LinkDisplayInfo) SetLogo(v string) {
 	o.Logo = &v
 }
 
+// GetReturnUrl returns the ReturnUrl field value if set, zero value otherwise.
+func (o *LinkDisplayInfo) GetReturnUrl() string {
+	if o == nil || IsNil(o.ReturnUrl) {
+		var ret string
+		return ret
+	}
+	return *o.ReturnUrl
+}
+
+// GetReturnUrlOk returns a tuple with the ReturnUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LinkDisplayInfo) GetReturnUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.ReturnUrl) {
+		return nil, false
+	}
+	return o.ReturnUrl, true
+}
+
+// HasReturnUrl returns a boolean if a field has been set.
+func (o *LinkDisplayInfo) HasReturnUrl() bool {
+	if o != nil && !IsNil(o.ReturnUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetReturnUrl gets a reference to the given string and assigns it to the ReturnUrl field.
+func (o *LinkDisplayInfo) SetReturnUrl(v string) {
+	o.ReturnUrl = &v
+}
+
 func (o LinkDisplayInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -119,6 +153,9 @@ func (o LinkDisplayInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Logo) {
 		toSerialize["logo"] = o.Logo
+	}
+	if !IsNil(o.ReturnUrl) {
+		toSerialize["return_url"] = o.ReturnUrl
 	}
 	return toSerialize, nil
 }

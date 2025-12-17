@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;PaymentPayout&#x60;: The payment payout event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
-**RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
+**RequestId** | **string** | The request ID provided by you when creating the payout. | 
 **WalletId** | **string** | For deposit transactions, this property represents the wallet ID of the transaction destination. For transactions of other types, this property represents the wallet ID of the transaction source. | 
 **Type** | Pointer to [**TransactionType**](TransactionType.md) |  | [optional] 
-**Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
+**Status** | [**PaymentPayoutStatus**](PaymentPayoutStatus.md) |  | 
 **SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
 **FailedReason** | Pointer to **string** | (This property is applicable to approval failures and signature failures only) The reason why the transaction failed. | [optional] 
 **ChainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **Destination** | [**TransactionDestination**](TransactionDestination.md) |  | 
 **Result** | Pointer to [**TransactionResult**](TransactionResult.md) |  | [optional] 
 **Fee** | Pointer to [**TransactionFee**](TransactionFee.md) |  | [optional] 
-**Initiator** | Pointer to **string** | The transaction initiator. | [optional] 
+**Initiator** | Pointer to **string** | The initiator of this payout, usually the user&#39;s API key. | [optional] 
 **InitiatorType** | [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | 
 **ConfirmedNum** | Pointer to **int32** | The number of confirmations this transaction has received. | [optional] 
 **ConfirmingThreshold** | Pointer to **int32** | The minimum number of confirmations required to deem a transaction secure. The common threshold is 6 for a Bitcoin transaction. | [optional] 
@@ -34,7 +34,7 @@ Name | Type | Description | Notes
 **CoboCategory** | Pointer to **[]string** | The transaction category defined by Cobo. For more details, refer to [Cobo-defined categories](/v2/guides/transactions/manage-transactions#cobo-defined-categories).  | [optional] 
 **Extra** | Pointer to **[]string** | A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the &#x60;extra_type&#x60; field in the JSON object (for example, \&quot;BabylonBusinessInfo\&quot;, \&quot;BtcAddressInfo\&quot;).  | [optional] 
 **FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
-**CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
+**CreatedTimestamp** | **int32** | The created time of the payout, represented as a UNIX timestamp in seconds. | 
 **UpdatedTimestamp** | **int64** | The time when the KYT screening information was updated, in Unix timestamp format, measured in milliseconds. | 
 **TssRequestId** | Pointer to **string** | The TSS request ID. | [optional] 
 **SourceKeyShareHolderGroup** | Pointer to [**SourceGroup**](SourceGroup.md) |  | [optional] 
@@ -60,19 +60,22 @@ Name | Type | Description | Notes
 **OperationType** | [**SuspendedTokenOperationType**](SuspendedTokenOperationType.md) |  | 
 **OrderId** | **string** | The pay-in order ID. | 
 **MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
-**PayableAmount** | **string** | The cryptocurrency amount to be paid for this order. | 
-**ReceiveAddress** | **string** | The recipient wallet address to be used for the payment transaction. | 
-**Currency** | **string** | The fiat currency for the off-ramp. | 
-**OrderAmount** | **string** | The base amount of the order in fiat currency, excluding the developer fee (specified in &#x60;fee_amount&#x60;). | 
-**FeeAmount** | **string** | The developer fee for the order in fiat currency. It is added to the base amount (&#x60;order_amount&#x60;) to determine the final charge. | 
-**ExchangeRate** | **string** | The exchange rate between a currency pair. Expressed as the amount of fiat currency per one unit of cryptocurrency. For example, if the cryptocurrency is USDT and the fiat currency is USD, a rate of \&quot;0.99\&quot; means 1 USDT &#x3D; 0.99 USD. | 
-**ExpiredAt** | Pointer to **int32** | The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. | [optional] 
 **MerchantOrderCode** | Pointer to **string** | A unique reference code assigned by the merchant to identify this order in their system. | [optional] 
 **PspOrderCode** | **string** | A unique reference code assigned by the developer to identify this order in their system. | 
+**PricingCurrency** | Pointer to **string** | The fiat currency of the order. | [optional] 
+**PricingAmount** | Pointer to **string** | The base amount of the order in fiat currency, excluding the developer fee (specified in &#x60;fee_amount&#x60;). | [optional] 
+**FeeAmount** | **string** | The developer fee for the order in fiat currency. It is added to the base amount (&#x60;order_amount&#x60;) to determine the final charge. | 
+**PayableCurrency** | Pointer to **string** | The ID of the cryptocurrency used for payment. | [optional] 
+**PayableAmount** | **string** | The cryptocurrency amount to be paid for this order. | 
+**ExchangeRate** | **string** | The exchange rate between a currency pair. Expressed as the amount of fiat currency per one unit of cryptocurrency. For example, if the cryptocurrency is USDT and the fiat currency is USD, a rate of \&quot;0.99\&quot; means 1 USDT &#x3D; 0.99 USD. | 
+**AmountTolerance** | Pointer to **string** | Allowed amount deviation. | [optional] 
+**ReceiveAddress** | **string** | The recipient wallet address to be used for the payment transaction. | 
 **ReceivedTokenAmount** | **string** | The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT). | 
+**ExpiredAt** | Pointer to **int32** | The expiration time of the pay-in order, represented as a UNIX timestamp in seconds. | [optional] 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this refund order. Each transaction represents a separate blockchain operation related to the refund process. | [optional] 
+**Currency** | Pointer to **string** | The fiat currency for the payout. | [optional] 
+**OrderAmount** | Pointer to **string** | The base amount of the order in fiat currency, excluding the developer fee (specified in &#x60;fee_amount&#x60;). | [optional] 
 **SettlementStatus** | Pointer to [**SettleStatus**](SettleStatus.md) |  | [optional] 
-**AmountTolerance** | Pointer to **string** | The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to &#x60;Completed&#x60; rather than &#x60;Underpaid&#x60;.  | [optional] 
 **RefundId** | **string** | The refund order ID. | 
 **Amount** | **string** | The amount in cryptocurrency to be returned for this refund order. | 
 **ToAddress** | **string** | The recipient&#39;s wallet address where the refund will be sent. | 
@@ -93,6 +96,9 @@ Name | Type | Description | Notes
 **Chain** | **string** | The chain ID. | 
 **PreviousAddress** | **string** | The previous top-up address that was assigned to the payer. | 
 **UpdatedAddress** | **string** | The new top-up address that has been assigned to the payer. | 
+**PayoutId** | **string** | The payout ID generated by Cobo. | 
+**PayoutItemDetails** | Pointer to [**[]PaymentPayoutItemDetail**](PaymentPayoutItemDetail.md) |  | [optional] 
+**ActualPayoutAmount** | Pointer to **string** | The actual amount of this payout.  | [optional] 
 **DispositionType** | [**DispositionType**](DispositionType.md) |  | 
 **DispositionStatus** | [**DispositionStatus**](DispositionStatus.md) |  | 
 **DestinationAddress** | Pointer to **string** | The blockchain address to receive the refunded/isolated funds. | [optional] 
@@ -105,7 +111,7 @@ Name | Type | Description | Notes
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status TransactionStatus, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, dispositionType DispositionType, dispositionStatus DispositionStatus, transactionType KytScreeningsTransactionType, reviewStatus ReviewStatusType, fundsStatus FundsStatusType, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status PaymentPayoutStatus, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int32, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, pspOrderCode string, feeAmount string, payableAmount string, exchangeRate string, receiveAddress string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, payoutId string, dispositionType DispositionType, dispositionStatus DispositionStatus, transactionType KytScreeningsTransactionType, reviewStatus ReviewStatusType, fundsStatus FundsStatusType, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -252,20 +258,20 @@ HasType returns a boolean if a field has been set.
 
 ### GetStatus
 
-`func (o *WebhookEventData) GetStatus() TransactionStatus`
+`func (o *WebhookEventData) GetStatus() PaymentPayoutStatus`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *WebhookEventData) GetStatusOk() (*TransactionStatus, bool)`
+`func (o *WebhookEventData) GetStatusOk() (*PaymentPayoutStatus, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *WebhookEventData) SetStatus(v TransactionStatus)`
+`func (o *WebhookEventData) SetStatus(v PaymentPayoutStatus)`
 
 SetStatus sets Status field to given value.
 
@@ -822,20 +828,20 @@ HasFuelingInfo returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 
-`func (o *WebhookEventData) GetCreatedTimestamp() int64`
+`func (o *WebhookEventData) GetCreatedTimestamp() int32`
 
 GetCreatedTimestamp returns the CreatedTimestamp field if non-nil, zero value otherwise.
 
 ### GetCreatedTimestampOk
 
-`func (o *WebhookEventData) GetCreatedTimestampOk() (*int64, bool)`
+`func (o *WebhookEventData) GetCreatedTimestampOk() (*int32, bool)`
 
 GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedTimestamp
 
-`func (o *WebhookEventData) SetCreatedTimestamp(v int64)`
+`func (o *WebhookEventData) SetCreatedTimestamp(v int32)`
 
 SetCreatedTimestamp sets CreatedTimestamp field to given value.
 
@@ -1405,151 +1411,6 @@ SetMerchantId sets MerchantId field to given value.
 
 HasMerchantId returns a boolean if a field has been set.
 
-### GetPayableAmount
-
-`func (o *WebhookEventData) GetPayableAmount() string`
-
-GetPayableAmount returns the PayableAmount field if non-nil, zero value otherwise.
-
-### GetPayableAmountOk
-
-`func (o *WebhookEventData) GetPayableAmountOk() (*string, bool)`
-
-GetPayableAmountOk returns a tuple with the PayableAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPayableAmount
-
-`func (o *WebhookEventData) SetPayableAmount(v string)`
-
-SetPayableAmount sets PayableAmount field to given value.
-
-
-### GetReceiveAddress
-
-`func (o *WebhookEventData) GetReceiveAddress() string`
-
-GetReceiveAddress returns the ReceiveAddress field if non-nil, zero value otherwise.
-
-### GetReceiveAddressOk
-
-`func (o *WebhookEventData) GetReceiveAddressOk() (*string, bool)`
-
-GetReceiveAddressOk returns a tuple with the ReceiveAddress field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetReceiveAddress
-
-`func (o *WebhookEventData) SetReceiveAddress(v string)`
-
-SetReceiveAddress sets ReceiveAddress field to given value.
-
-
-### GetCurrency
-
-`func (o *WebhookEventData) GetCurrency() string`
-
-GetCurrency returns the Currency field if non-nil, zero value otherwise.
-
-### GetCurrencyOk
-
-`func (o *WebhookEventData) GetCurrencyOk() (*string, bool)`
-
-GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCurrency
-
-`func (o *WebhookEventData) SetCurrency(v string)`
-
-SetCurrency sets Currency field to given value.
-
-
-### GetOrderAmount
-
-`func (o *WebhookEventData) GetOrderAmount() string`
-
-GetOrderAmount returns the OrderAmount field if non-nil, zero value otherwise.
-
-### GetOrderAmountOk
-
-`func (o *WebhookEventData) GetOrderAmountOk() (*string, bool)`
-
-GetOrderAmountOk returns a tuple with the OrderAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrderAmount
-
-`func (o *WebhookEventData) SetOrderAmount(v string)`
-
-SetOrderAmount sets OrderAmount field to given value.
-
-
-### GetFeeAmount
-
-`func (o *WebhookEventData) GetFeeAmount() string`
-
-GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
-
-### GetFeeAmountOk
-
-`func (o *WebhookEventData) GetFeeAmountOk() (*string, bool)`
-
-GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeeAmount
-
-`func (o *WebhookEventData) SetFeeAmount(v string)`
-
-SetFeeAmount sets FeeAmount field to given value.
-
-
-### GetExchangeRate
-
-`func (o *WebhookEventData) GetExchangeRate() string`
-
-GetExchangeRate returns the ExchangeRate field if non-nil, zero value otherwise.
-
-### GetExchangeRateOk
-
-`func (o *WebhookEventData) GetExchangeRateOk() (*string, bool)`
-
-GetExchangeRateOk returns a tuple with the ExchangeRate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetExchangeRate
-
-`func (o *WebhookEventData) SetExchangeRate(v string)`
-
-SetExchangeRate sets ExchangeRate field to given value.
-
-
-### GetExpiredAt
-
-`func (o *WebhookEventData) GetExpiredAt() int32`
-
-GetExpiredAt returns the ExpiredAt field if non-nil, zero value otherwise.
-
-### GetExpiredAtOk
-
-`func (o *WebhookEventData) GetExpiredAtOk() (*int32, bool)`
-
-GetExpiredAtOk returns a tuple with the ExpiredAt field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetExpiredAt
-
-`func (o *WebhookEventData) SetExpiredAt(v int32)`
-
-SetExpiredAt sets ExpiredAt field to given value.
-
-### HasExpiredAt
-
-`func (o *WebhookEventData) HasExpiredAt() bool`
-
-HasExpiredAt returns a boolean if a field has been set.
-
 ### GetMerchantOrderCode
 
 `func (o *WebhookEventData) GetMerchantOrderCode() string`
@@ -1595,6 +1456,186 @@ and a boolean to check if the value has been set.
 SetPspOrderCode sets PspOrderCode field to given value.
 
 
+### GetPricingCurrency
+
+`func (o *WebhookEventData) GetPricingCurrency() string`
+
+GetPricingCurrency returns the PricingCurrency field if non-nil, zero value otherwise.
+
+### GetPricingCurrencyOk
+
+`func (o *WebhookEventData) GetPricingCurrencyOk() (*string, bool)`
+
+GetPricingCurrencyOk returns a tuple with the PricingCurrency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPricingCurrency
+
+`func (o *WebhookEventData) SetPricingCurrency(v string)`
+
+SetPricingCurrency sets PricingCurrency field to given value.
+
+### HasPricingCurrency
+
+`func (o *WebhookEventData) HasPricingCurrency() bool`
+
+HasPricingCurrency returns a boolean if a field has been set.
+
+### GetPricingAmount
+
+`func (o *WebhookEventData) GetPricingAmount() string`
+
+GetPricingAmount returns the PricingAmount field if non-nil, zero value otherwise.
+
+### GetPricingAmountOk
+
+`func (o *WebhookEventData) GetPricingAmountOk() (*string, bool)`
+
+GetPricingAmountOk returns a tuple with the PricingAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPricingAmount
+
+`func (o *WebhookEventData) SetPricingAmount(v string)`
+
+SetPricingAmount sets PricingAmount field to given value.
+
+### HasPricingAmount
+
+`func (o *WebhookEventData) HasPricingAmount() bool`
+
+HasPricingAmount returns a boolean if a field has been set.
+
+### GetFeeAmount
+
+`func (o *WebhookEventData) GetFeeAmount() string`
+
+GetFeeAmount returns the FeeAmount field if non-nil, zero value otherwise.
+
+### GetFeeAmountOk
+
+`func (o *WebhookEventData) GetFeeAmountOk() (*string, bool)`
+
+GetFeeAmountOk returns a tuple with the FeeAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeeAmount
+
+`func (o *WebhookEventData) SetFeeAmount(v string)`
+
+SetFeeAmount sets FeeAmount field to given value.
+
+
+### GetPayableCurrency
+
+`func (o *WebhookEventData) GetPayableCurrency() string`
+
+GetPayableCurrency returns the PayableCurrency field if non-nil, zero value otherwise.
+
+### GetPayableCurrencyOk
+
+`func (o *WebhookEventData) GetPayableCurrencyOk() (*string, bool)`
+
+GetPayableCurrencyOk returns a tuple with the PayableCurrency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayableCurrency
+
+`func (o *WebhookEventData) SetPayableCurrency(v string)`
+
+SetPayableCurrency sets PayableCurrency field to given value.
+
+### HasPayableCurrency
+
+`func (o *WebhookEventData) HasPayableCurrency() bool`
+
+HasPayableCurrency returns a boolean if a field has been set.
+
+### GetPayableAmount
+
+`func (o *WebhookEventData) GetPayableAmount() string`
+
+GetPayableAmount returns the PayableAmount field if non-nil, zero value otherwise.
+
+### GetPayableAmountOk
+
+`func (o *WebhookEventData) GetPayableAmountOk() (*string, bool)`
+
+GetPayableAmountOk returns a tuple with the PayableAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayableAmount
+
+`func (o *WebhookEventData) SetPayableAmount(v string)`
+
+SetPayableAmount sets PayableAmount field to given value.
+
+
+### GetExchangeRate
+
+`func (o *WebhookEventData) GetExchangeRate() string`
+
+GetExchangeRate returns the ExchangeRate field if non-nil, zero value otherwise.
+
+### GetExchangeRateOk
+
+`func (o *WebhookEventData) GetExchangeRateOk() (*string, bool)`
+
+GetExchangeRateOk returns a tuple with the ExchangeRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExchangeRate
+
+`func (o *WebhookEventData) SetExchangeRate(v string)`
+
+SetExchangeRate sets ExchangeRate field to given value.
+
+
+### GetAmountTolerance
+
+`func (o *WebhookEventData) GetAmountTolerance() string`
+
+GetAmountTolerance returns the AmountTolerance field if non-nil, zero value otherwise.
+
+### GetAmountToleranceOk
+
+`func (o *WebhookEventData) GetAmountToleranceOk() (*string, bool)`
+
+GetAmountToleranceOk returns a tuple with the AmountTolerance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAmountTolerance
+
+`func (o *WebhookEventData) SetAmountTolerance(v string)`
+
+SetAmountTolerance sets AmountTolerance field to given value.
+
+### HasAmountTolerance
+
+`func (o *WebhookEventData) HasAmountTolerance() bool`
+
+HasAmountTolerance returns a boolean if a field has been set.
+
+### GetReceiveAddress
+
+`func (o *WebhookEventData) GetReceiveAddress() string`
+
+GetReceiveAddress returns the ReceiveAddress field if non-nil, zero value otherwise.
+
+### GetReceiveAddressOk
+
+`func (o *WebhookEventData) GetReceiveAddressOk() (*string, bool)`
+
+GetReceiveAddressOk returns a tuple with the ReceiveAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReceiveAddress
+
+`func (o *WebhookEventData) SetReceiveAddress(v string)`
+
+SetReceiveAddress sets ReceiveAddress field to given value.
+
+
 ### GetReceivedTokenAmount
 
 `func (o *WebhookEventData) GetReceivedTokenAmount() string`
@@ -1614,6 +1655,31 @@ and a boolean to check if the value has been set.
 
 SetReceivedTokenAmount sets ReceivedTokenAmount field to given value.
 
+
+### GetExpiredAt
+
+`func (o *WebhookEventData) GetExpiredAt() int32`
+
+GetExpiredAt returns the ExpiredAt field if non-nil, zero value otherwise.
+
+### GetExpiredAtOk
+
+`func (o *WebhookEventData) GetExpiredAtOk() (*int32, bool)`
+
+GetExpiredAtOk returns a tuple with the ExpiredAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExpiredAt
+
+`func (o *WebhookEventData) SetExpiredAt(v int32)`
+
+SetExpiredAt sets ExpiredAt field to given value.
+
+### HasExpiredAt
+
+`func (o *WebhookEventData) HasExpiredAt() bool`
+
+HasExpiredAt returns a boolean if a field has been set.
 
 ### GetTransactions
 
@@ -1640,6 +1706,56 @@ SetTransactions sets Transactions field to given value.
 
 HasTransactions returns a boolean if a field has been set.
 
+### GetCurrency
+
+`func (o *WebhookEventData) GetCurrency() string`
+
+GetCurrency returns the Currency field if non-nil, zero value otherwise.
+
+### GetCurrencyOk
+
+`func (o *WebhookEventData) GetCurrencyOk() (*string, bool)`
+
+GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCurrency
+
+`func (o *WebhookEventData) SetCurrency(v string)`
+
+SetCurrency sets Currency field to given value.
+
+### HasCurrency
+
+`func (o *WebhookEventData) HasCurrency() bool`
+
+HasCurrency returns a boolean if a field has been set.
+
+### GetOrderAmount
+
+`func (o *WebhookEventData) GetOrderAmount() string`
+
+GetOrderAmount returns the OrderAmount field if non-nil, zero value otherwise.
+
+### GetOrderAmountOk
+
+`func (o *WebhookEventData) GetOrderAmountOk() (*string, bool)`
+
+GetOrderAmountOk returns a tuple with the OrderAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrderAmount
+
+`func (o *WebhookEventData) SetOrderAmount(v string)`
+
+SetOrderAmount sets OrderAmount field to given value.
+
+### HasOrderAmount
+
+`func (o *WebhookEventData) HasOrderAmount() bool`
+
+HasOrderAmount returns a boolean if a field has been set.
+
 ### GetSettlementStatus
 
 `func (o *WebhookEventData) GetSettlementStatus() SettleStatus`
@@ -1664,31 +1780,6 @@ SetSettlementStatus sets SettlementStatus field to given value.
 `func (o *WebhookEventData) HasSettlementStatus() bool`
 
 HasSettlementStatus returns a boolean if a field has been set.
-
-### GetAmountTolerance
-
-`func (o *WebhookEventData) GetAmountTolerance() string`
-
-GetAmountTolerance returns the AmountTolerance field if non-nil, zero value otherwise.
-
-### GetAmountToleranceOk
-
-`func (o *WebhookEventData) GetAmountToleranceOk() (*string, bool)`
-
-GetAmountToleranceOk returns a tuple with the AmountTolerance field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAmountTolerance
-
-`func (o *WebhookEventData) SetAmountTolerance(v string)`
-
-SetAmountTolerance sets AmountTolerance field to given value.
-
-### HasAmountTolerance
-
-`func (o *WebhookEventData) HasAmountTolerance() bool`
-
-HasAmountTolerance returns a boolean if a field has been set.
 
 ### GetRefundId
 
@@ -2134,6 +2225,76 @@ and a boolean to check if the value has been set.
 
 SetUpdatedAddress sets UpdatedAddress field to given value.
 
+
+### GetPayoutId
+
+`func (o *WebhookEventData) GetPayoutId() string`
+
+GetPayoutId returns the PayoutId field if non-nil, zero value otherwise.
+
+### GetPayoutIdOk
+
+`func (o *WebhookEventData) GetPayoutIdOk() (*string, bool)`
+
+GetPayoutIdOk returns a tuple with the PayoutId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayoutId
+
+`func (o *WebhookEventData) SetPayoutId(v string)`
+
+SetPayoutId sets PayoutId field to given value.
+
+
+### GetPayoutItemDetails
+
+`func (o *WebhookEventData) GetPayoutItemDetails() []PaymentPayoutItemDetail`
+
+GetPayoutItemDetails returns the PayoutItemDetails field if non-nil, zero value otherwise.
+
+### GetPayoutItemDetailsOk
+
+`func (o *WebhookEventData) GetPayoutItemDetailsOk() (*[]PaymentPayoutItemDetail, bool)`
+
+GetPayoutItemDetailsOk returns a tuple with the PayoutItemDetails field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPayoutItemDetails
+
+`func (o *WebhookEventData) SetPayoutItemDetails(v []PaymentPayoutItemDetail)`
+
+SetPayoutItemDetails sets PayoutItemDetails field to given value.
+
+### HasPayoutItemDetails
+
+`func (o *WebhookEventData) HasPayoutItemDetails() bool`
+
+HasPayoutItemDetails returns a boolean if a field has been set.
+
+### GetActualPayoutAmount
+
+`func (o *WebhookEventData) GetActualPayoutAmount() string`
+
+GetActualPayoutAmount returns the ActualPayoutAmount field if non-nil, zero value otherwise.
+
+### GetActualPayoutAmountOk
+
+`func (o *WebhookEventData) GetActualPayoutAmountOk() (*string, bool)`
+
+GetActualPayoutAmountOk returns a tuple with the ActualPayoutAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetActualPayoutAmount
+
+`func (o *WebhookEventData) SetActualPayoutAmount(v string)`
+
+SetActualPayoutAmount sets ActualPayoutAmount field to given value.
+
+### HasActualPayoutAmount
+
+`func (o *WebhookEventData) HasActualPayoutAmount() bool`
+
+HasActualPayoutAmount returns a boolean if a field has been set.
 
 ### GetDispositionType
 

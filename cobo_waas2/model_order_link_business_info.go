@@ -19,28 +19,36 @@ var _ MappedNullable = &OrderLinkBusinessInfo{}
 
 // OrderLinkBusinessInfo struct for OrderLinkBusinessInfo
 type OrderLinkBusinessInfo struct {
-	// An array of token IDs representing the cryptocurrencies and chains available for payment. These options will be shown to users on the payment page for them to choose from. Supported token IDs include:   - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
-	TokenIds []string `json:"token_ids"`
-	// A list of custom exchange rates defining how much one unit of a specific cryptocurrency (`token_id`) is valued in the selected fiat or crypto currency (`currency`). If this field is omitted, the system’s default exchange rates will apply.  Each item specifies a `token_id` and its corresponding `exchange_rate`. For example, to treat 1 USDT (on Ethereum) as equivalent to 0.99 USD, provide:  ```json {   \"custom_exchange_rates\": [     {       \"token_id\": \"ETH_USDT\",       \"exchange_rate\": \"0.99\"     }   ],   \"currency\": \"USD\" } ``` 
-	CustomExchangeRates []OrderLinkBusinessInfoCustomExchangeRatesInner `json:"custom_exchange_rates,omitempty"`
-	// The currency in which both the order amount (`order_amount`) and the developer fee (`fee_amount`) are denominated. Only the following values are supported: `USD`, `USDT`, or `USDC`. 
-	Currency string `json:"currency"`
-	// The developer fee for the order, denominated in the currency specified by `currency`.   If you are a merchant directly serving payers, set this field to `0`. Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.  The developer fee is added to the base amount (`order_amount`) to determine the final charge. For example: - Base amount (`order_amount`): \"100.00\" - Developer fee (`fee_amount`): \"2.00\"  - Total charged to customer: \"102.00\"  Values can contain up to two decimal places. 
-	FeeAmount string `json:"fee_amount"`
 	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
-	// The base amount of the order, excluding the developer fee (specified in `fee_amount`), denominated in the currency specified by `currency`.  Values must be greater than `0` and contain two decimal places.  
-	OrderAmount string `json:"order_amount"`
 	// A unique reference code assigned by the merchant to identify this order in their system. The code should have a maximum length of 128 characters.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters. 
 	PspOrderCode string `json:"psp_order_code"`
+	// The currency for the base order amount and the developer fee. Currently, only `USD`/`USDT`/`USDC` are supported. 
+	PricingCurrency *string `json:"pricing_currency,omitempty"`
+	// The base amount of the order, excluding the developer fee (specified in `fee_amount`), in the currency specified by `currency`. If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`.  Values must be greater than `0` and contain two decimal places. 
+	PricingAmount *string `json:"pricing_amount,omitempty"`
+	// The developer fee for the order, in the currency specified by `currency`. If `currency` is not specified, the fee is in the cryptocurrency specified by `token_id`.  If you are a merchant directly serving payers, set this field to `0`. Developer fees are only relevant for platforms like payment service providers (PSPs) that charge fees to their downstream merchants.  The developer fee is added to the base amount (`order_amount`) to determine the final charge. For example: - Base amount (`order_amount`): \"100.00\" - Developer fee (`fee_amount`): \"2.00\" - Total charged to customer: \"102.00\"  Values can contain up to two decimal places. 
+	FeeAmount string `json:"fee_amount"`
+	// List of supported cryptocurrency token IDs for this payment. Each token ID must be from the supported values. 
+	PayableCurrencies []string `json:"payable_currencies,omitempty"`
+	// Optional list of payable amounts for different tokens. If provided, these amounts will be used instead of calculating the amounts based on the exchange rate. 
+	PayableAmounts []OrderLinkBusinessInfoPayableAmountsInner `json:"payable_amounts,omitempty"`
 	// The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
-	// This field has been deprecated. 
-	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
-	// The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`. 
+	// Allowed amount deviation, precision to 1 decimal place.
 	AmountTolerance *string `json:"amount_tolerance,omitempty"`
+	// The currency for the base order amount and the developer fee. Currently, only `USD`/`USDT`/`USDC` are supported. 
+	Currency *string `json:"currency,omitempty"`
+	// The base amount of the order, excluding the developer fee (specified in `fee_amount`), in the currency specified by `currency`. If `currency` is not specified, the amount is in the cryptocurrency specified by `token_id`.  Values must be greater than `0` and contain two decimal places. 
+	OrderAmount *string `json:"order_amount,omitempty"`
+	// List of supported cryptocurrency token IDs for this payment. Each token ID must be from the supported values. 
+	TokenIds []string `json:"token_ids,omitempty"`
+	// Optional list of final exchange rates for different tokens. If provided, these rates will be used instead of real-time market rates. 
+	CustomExchangeRates []OrderLinkBusinessInfoCustomExchangeRatesInner `json:"custom_exchange_rates,omitempty"`
+	// Whether to allocate a dedicated address for this order.  - `true`: A dedicated address will be allocated for this order. - `false`: A shared address from the address pool will be used. 
+	UseDedicatedAddress *bool `json:"use_dedicated_address,omitempty"`
 }
 
 type _OrderLinkBusinessInfo OrderLinkBusinessInfo
@@ -49,14 +57,11 @@ type _OrderLinkBusinessInfo OrderLinkBusinessInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrderLinkBusinessInfo(tokenIds []string, currency string, feeAmount string, merchantId string, orderAmount string, pspOrderCode string) *OrderLinkBusinessInfo {
+func NewOrderLinkBusinessInfo(merchantId string, pspOrderCode string, feeAmount string) *OrderLinkBusinessInfo {
 	this := OrderLinkBusinessInfo{}
-	this.TokenIds = tokenIds
-	this.Currency = currency
-	this.FeeAmount = feeAmount
 	this.MerchantId = merchantId
-	this.OrderAmount = orderAmount
 	this.PspOrderCode = pspOrderCode
+	this.FeeAmount = feeAmount
 	var expiredIn int32 = 1800
 	this.ExpiredIn = &expiredIn
 	return &this
@@ -70,110 +75,6 @@ func NewOrderLinkBusinessInfoWithDefaults() *OrderLinkBusinessInfo {
 	var expiredIn int32 = 1800
 	this.ExpiredIn = &expiredIn
 	return &this
-}
-
-// GetTokenIds returns the TokenIds field value
-func (o *OrderLinkBusinessInfo) GetTokenIds() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-
-	return o.TokenIds
-}
-
-// GetTokenIdsOk returns a tuple with the TokenIds field value
-// and a boolean to check if the value has been set.
-func (o *OrderLinkBusinessInfo) GetTokenIdsOk() ([]string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TokenIds, true
-}
-
-// SetTokenIds sets field value
-func (o *OrderLinkBusinessInfo) SetTokenIds(v []string) {
-	o.TokenIds = v
-}
-
-// GetCustomExchangeRates returns the CustomExchangeRates field value if set, zero value otherwise.
-func (o *OrderLinkBusinessInfo) GetCustomExchangeRates() []OrderLinkBusinessInfoCustomExchangeRatesInner {
-	if o == nil || IsNil(o.CustomExchangeRates) {
-		var ret []OrderLinkBusinessInfoCustomExchangeRatesInner
-		return ret
-	}
-	return o.CustomExchangeRates
-}
-
-// GetCustomExchangeRatesOk returns a tuple with the CustomExchangeRates field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *OrderLinkBusinessInfo) GetCustomExchangeRatesOk() ([]OrderLinkBusinessInfoCustomExchangeRatesInner, bool) {
-	if o == nil || IsNil(o.CustomExchangeRates) {
-		return nil, false
-	}
-	return o.CustomExchangeRates, true
-}
-
-// HasCustomExchangeRates returns a boolean if a field has been set.
-func (o *OrderLinkBusinessInfo) HasCustomExchangeRates() bool {
-	if o != nil && !IsNil(o.CustomExchangeRates) {
-		return true
-	}
-
-	return false
-}
-
-// SetCustomExchangeRates gets a reference to the given []OrderLinkBusinessInfoCustomExchangeRatesInner and assigns it to the CustomExchangeRates field.
-func (o *OrderLinkBusinessInfo) SetCustomExchangeRates(v []OrderLinkBusinessInfoCustomExchangeRatesInner) {
-	o.CustomExchangeRates = v
-}
-
-// GetCurrency returns the Currency field value
-func (o *OrderLinkBusinessInfo) GetCurrency() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Currency
-}
-
-// GetCurrencyOk returns a tuple with the Currency field value
-// and a boolean to check if the value has been set.
-func (o *OrderLinkBusinessInfo) GetCurrencyOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Currency, true
-}
-
-// SetCurrency sets field value
-func (o *OrderLinkBusinessInfo) SetCurrency(v string) {
-	o.Currency = v
-}
-
-// GetFeeAmount returns the FeeAmount field value
-func (o *OrderLinkBusinessInfo) GetFeeAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value
-// and a boolean to check if the value has been set.
-func (o *OrderLinkBusinessInfo) GetFeeAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.FeeAmount, true
-}
-
-// SetFeeAmount sets field value
-func (o *OrderLinkBusinessInfo) SetFeeAmount(v string) {
-	o.FeeAmount = v
 }
 
 // GetMerchantId returns the MerchantId field value
@@ -198,30 +99,6 @@ func (o *OrderLinkBusinessInfo) GetMerchantIdOk() (*string, bool) {
 // SetMerchantId sets field value
 func (o *OrderLinkBusinessInfo) SetMerchantId(v string) {
 	o.MerchantId = v
-}
-
-// GetOrderAmount returns the OrderAmount field value
-func (o *OrderLinkBusinessInfo) GetOrderAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.OrderAmount
-}
-
-// GetOrderAmountOk returns a tuple with the OrderAmount field value
-// and a boolean to check if the value has been set.
-func (o *OrderLinkBusinessInfo) GetOrderAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.OrderAmount, true
-}
-
-// SetOrderAmount sets field value
-func (o *OrderLinkBusinessInfo) SetOrderAmount(v string) {
-	o.OrderAmount = v
 }
 
 // GetMerchantOrderCode returns the MerchantOrderCode field value if set, zero value otherwise.
@@ -280,6 +157,158 @@ func (o *OrderLinkBusinessInfo) SetPspOrderCode(v string) {
 	o.PspOrderCode = v
 }
 
+// GetPricingCurrency returns the PricingCurrency field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetPricingCurrency() string {
+	if o == nil || IsNil(o.PricingCurrency) {
+		var ret string
+		return ret
+	}
+	return *o.PricingCurrency
+}
+
+// GetPricingCurrencyOk returns a tuple with the PricingCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetPricingCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.PricingCurrency) {
+		return nil, false
+	}
+	return o.PricingCurrency, true
+}
+
+// HasPricingCurrency returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasPricingCurrency() bool {
+	if o != nil && !IsNil(o.PricingCurrency) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricingCurrency gets a reference to the given string and assigns it to the PricingCurrency field.
+func (o *OrderLinkBusinessInfo) SetPricingCurrency(v string) {
+	o.PricingCurrency = &v
+}
+
+// GetPricingAmount returns the PricingAmount field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetPricingAmount() string {
+	if o == nil || IsNil(o.PricingAmount) {
+		var ret string
+		return ret
+	}
+	return *o.PricingAmount
+}
+
+// GetPricingAmountOk returns a tuple with the PricingAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetPricingAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.PricingAmount) {
+		return nil, false
+	}
+	return o.PricingAmount, true
+}
+
+// HasPricingAmount returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasPricingAmount() bool {
+	if o != nil && !IsNil(o.PricingAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricingAmount gets a reference to the given string and assigns it to the PricingAmount field.
+func (o *OrderLinkBusinessInfo) SetPricingAmount(v string) {
+	o.PricingAmount = &v
+}
+
+// GetFeeAmount returns the FeeAmount field value
+func (o *OrderLinkBusinessInfo) GetFeeAmount() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.FeeAmount
+}
+
+// GetFeeAmountOk returns a tuple with the FeeAmount field value
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetFeeAmountOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FeeAmount, true
+}
+
+// SetFeeAmount sets field value
+func (o *OrderLinkBusinessInfo) SetFeeAmount(v string) {
+	o.FeeAmount = v
+}
+
+// GetPayableCurrencies returns the PayableCurrencies field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetPayableCurrencies() []string {
+	if o == nil || IsNil(o.PayableCurrencies) {
+		var ret []string
+		return ret
+	}
+	return o.PayableCurrencies
+}
+
+// GetPayableCurrenciesOk returns a tuple with the PayableCurrencies field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetPayableCurrenciesOk() ([]string, bool) {
+	if o == nil || IsNil(o.PayableCurrencies) {
+		return nil, false
+	}
+	return o.PayableCurrencies, true
+}
+
+// HasPayableCurrencies returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasPayableCurrencies() bool {
+	if o != nil && !IsNil(o.PayableCurrencies) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayableCurrencies gets a reference to the given []string and assigns it to the PayableCurrencies field.
+func (o *OrderLinkBusinessInfo) SetPayableCurrencies(v []string) {
+	o.PayableCurrencies = v
+}
+
+// GetPayableAmounts returns the PayableAmounts field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetPayableAmounts() []OrderLinkBusinessInfoPayableAmountsInner {
+	if o == nil || IsNil(o.PayableAmounts) {
+		var ret []OrderLinkBusinessInfoPayableAmountsInner
+		return ret
+	}
+	return o.PayableAmounts
+}
+
+// GetPayableAmountsOk returns a tuple with the PayableAmounts field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetPayableAmountsOk() ([]OrderLinkBusinessInfoPayableAmountsInner, bool) {
+	if o == nil || IsNil(o.PayableAmounts) {
+		return nil, false
+	}
+	return o.PayableAmounts, true
+}
+
+// HasPayableAmounts returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasPayableAmounts() bool {
+	if o != nil && !IsNil(o.PayableAmounts) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayableAmounts gets a reference to the given []OrderLinkBusinessInfoPayableAmountsInner and assigns it to the PayableAmounts field.
+func (o *OrderLinkBusinessInfo) SetPayableAmounts(v []OrderLinkBusinessInfoPayableAmountsInner) {
+	o.PayableAmounts = v
+}
+
 // GetExpiredIn returns the ExpiredIn field value if set, zero value otherwise.
 func (o *OrderLinkBusinessInfo) GetExpiredIn() int32 {
 	if o == nil || IsNil(o.ExpiredIn) {
@@ -310,38 +339,6 @@ func (o *OrderLinkBusinessInfo) HasExpiredIn() bool {
 // SetExpiredIn gets a reference to the given int32 and assigns it to the ExpiredIn field.
 func (o *OrderLinkBusinessInfo) SetExpiredIn(v int32) {
 	o.ExpiredIn = &v
-}
-
-// GetUseDedicatedAddress returns the UseDedicatedAddress field value if set, zero value otherwise.
-func (o *OrderLinkBusinessInfo) GetUseDedicatedAddress() bool {
-	if o == nil || IsNil(o.UseDedicatedAddress) {
-		var ret bool
-		return ret
-	}
-	return *o.UseDedicatedAddress
-}
-
-// GetUseDedicatedAddressOk returns a tuple with the UseDedicatedAddress field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *OrderLinkBusinessInfo) GetUseDedicatedAddressOk() (*bool, bool) {
-	if o == nil || IsNil(o.UseDedicatedAddress) {
-		return nil, false
-	}
-	return o.UseDedicatedAddress, true
-}
-
-// HasUseDedicatedAddress returns a boolean if a field has been set.
-func (o *OrderLinkBusinessInfo) HasUseDedicatedAddress() bool {
-	if o != nil && !IsNil(o.UseDedicatedAddress) {
-		return true
-	}
-
-	return false
-}
-
-// SetUseDedicatedAddress gets a reference to the given bool and assigns it to the UseDedicatedAddress field.
-func (o *OrderLinkBusinessInfo) SetUseDedicatedAddress(v bool) {
-	o.UseDedicatedAddress = &v
 }
 
 // GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
@@ -376,6 +373,166 @@ func (o *OrderLinkBusinessInfo) SetAmountTolerance(v string) {
 	o.AmountTolerance = &v
 }
 
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetCurrency() string {
+	if o == nil || IsNil(o.Currency) {
+		var ret string
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *OrderLinkBusinessInfo) SetCurrency(v string) {
+	o.Currency = &v
+}
+
+// GetOrderAmount returns the OrderAmount field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetOrderAmount() string {
+	if o == nil || IsNil(o.OrderAmount) {
+		var ret string
+		return ret
+	}
+	return *o.OrderAmount
+}
+
+// GetOrderAmountOk returns a tuple with the OrderAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetOrderAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.OrderAmount) {
+		return nil, false
+	}
+	return o.OrderAmount, true
+}
+
+// HasOrderAmount returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasOrderAmount() bool {
+	if o != nil && !IsNil(o.OrderAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderAmount gets a reference to the given string and assigns it to the OrderAmount field.
+func (o *OrderLinkBusinessInfo) SetOrderAmount(v string) {
+	o.OrderAmount = &v
+}
+
+// GetTokenIds returns the TokenIds field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetTokenIds() []string {
+	if o == nil || IsNil(o.TokenIds) {
+		var ret []string
+		return ret
+	}
+	return o.TokenIds
+}
+
+// GetTokenIdsOk returns a tuple with the TokenIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetTokenIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TokenIds) {
+		return nil, false
+	}
+	return o.TokenIds, true
+}
+
+// HasTokenIds returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasTokenIds() bool {
+	if o != nil && !IsNil(o.TokenIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenIds gets a reference to the given []string and assigns it to the TokenIds field.
+func (o *OrderLinkBusinessInfo) SetTokenIds(v []string) {
+	o.TokenIds = v
+}
+
+// GetCustomExchangeRates returns the CustomExchangeRates field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetCustomExchangeRates() []OrderLinkBusinessInfoCustomExchangeRatesInner {
+	if o == nil || IsNil(o.CustomExchangeRates) {
+		var ret []OrderLinkBusinessInfoCustomExchangeRatesInner
+		return ret
+	}
+	return o.CustomExchangeRates
+}
+
+// GetCustomExchangeRatesOk returns a tuple with the CustomExchangeRates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetCustomExchangeRatesOk() ([]OrderLinkBusinessInfoCustomExchangeRatesInner, bool) {
+	if o == nil || IsNil(o.CustomExchangeRates) {
+		return nil, false
+	}
+	return o.CustomExchangeRates, true
+}
+
+// HasCustomExchangeRates returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasCustomExchangeRates() bool {
+	if o != nil && !IsNil(o.CustomExchangeRates) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomExchangeRates gets a reference to the given []OrderLinkBusinessInfoCustomExchangeRatesInner and assigns it to the CustomExchangeRates field.
+func (o *OrderLinkBusinessInfo) SetCustomExchangeRates(v []OrderLinkBusinessInfoCustomExchangeRatesInner) {
+	o.CustomExchangeRates = v
+}
+
+// GetUseDedicatedAddress returns the UseDedicatedAddress field value if set, zero value otherwise.
+func (o *OrderLinkBusinessInfo) GetUseDedicatedAddress() bool {
+	if o == nil || IsNil(o.UseDedicatedAddress) {
+		var ret bool
+		return ret
+	}
+	return *o.UseDedicatedAddress
+}
+
+// GetUseDedicatedAddressOk returns a tuple with the UseDedicatedAddress field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *OrderLinkBusinessInfo) GetUseDedicatedAddressOk() (*bool, bool) {
+	if o == nil || IsNil(o.UseDedicatedAddress) {
+		return nil, false
+	}
+	return o.UseDedicatedAddress, true
+}
+
+// HasUseDedicatedAddress returns a boolean if a field has been set.
+func (o *OrderLinkBusinessInfo) HasUseDedicatedAddress() bool {
+	if o != nil && !IsNil(o.UseDedicatedAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetUseDedicatedAddress gets a reference to the given bool and assigns it to the UseDedicatedAddress field.
+func (o *OrderLinkBusinessInfo) SetUseDedicatedAddress(v bool) {
+	o.UseDedicatedAddress = &v
+}
+
 func (o OrderLinkBusinessInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -386,26 +543,44 @@ func (o OrderLinkBusinessInfo) MarshalJSON() ([]byte, error) {
 
 func (o OrderLinkBusinessInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["token_ids"] = o.TokenIds
-	if !IsNil(o.CustomExchangeRates) {
-		toSerialize["custom_exchange_rates"] = o.CustomExchangeRates
-	}
-	toSerialize["currency"] = o.Currency
-	toSerialize["fee_amount"] = o.FeeAmount
 	toSerialize["merchant_id"] = o.MerchantId
-	toSerialize["order_amount"] = o.OrderAmount
 	if !IsNil(o.MerchantOrderCode) {
 		toSerialize["merchant_order_code"] = o.MerchantOrderCode
 	}
 	toSerialize["psp_order_code"] = o.PspOrderCode
+	if !IsNil(o.PricingCurrency) {
+		toSerialize["pricing_currency"] = o.PricingCurrency
+	}
+	if !IsNil(o.PricingAmount) {
+		toSerialize["pricing_amount"] = o.PricingAmount
+	}
+	toSerialize["fee_amount"] = o.FeeAmount
+	if !IsNil(o.PayableCurrencies) {
+		toSerialize["payable_currencies"] = o.PayableCurrencies
+	}
+	if !IsNil(o.PayableAmounts) {
+		toSerialize["payable_amounts"] = o.PayableAmounts
+	}
 	if !IsNil(o.ExpiredIn) {
 		toSerialize["expired_in"] = o.ExpiredIn
 	}
-	if !IsNil(o.UseDedicatedAddress) {
-		toSerialize["use_dedicated_address"] = o.UseDedicatedAddress
-	}
 	if !IsNil(o.AmountTolerance) {
 		toSerialize["amount_tolerance"] = o.AmountTolerance
+	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.OrderAmount) {
+		toSerialize["order_amount"] = o.OrderAmount
+	}
+	if !IsNil(o.TokenIds) {
+		toSerialize["token_ids"] = o.TokenIds
+	}
+	if !IsNil(o.CustomExchangeRates) {
+		toSerialize["custom_exchange_rates"] = o.CustomExchangeRates
+	}
+	if !IsNil(o.UseDedicatedAddress) {
+		toSerialize["use_dedicated_address"] = o.UseDedicatedAddress
 	}
 	return toSerialize, nil
 }
@@ -415,12 +590,9 @@ func (o *OrderLinkBusinessInfo) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"token_ids",
-		"currency",
-		"fee_amount",
 		"merchant_id",
-		"order_amount",
 		"psp_order_code",
+		"fee_amount",
 	}
 
 	allProperties := make(map[string]interface{})

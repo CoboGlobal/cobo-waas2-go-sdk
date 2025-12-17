@@ -41,8 +41,11 @@ func (r ApiBatchCheckUtxoRequest) Execute() (*BatchCheckUtxo201Response, *http.R
 /*
 BatchCheckUtxo Batch check UTXOs
 
-This operation verifies the existence and details of specified unspent transaction outputs (UTXOs) for a given wallet and token. A maximum of 100 UTXOs can be verified per request.
-<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
+This operation verifies the existence and details of specified **unspent** transaction outputs (UTXOs) for a given wallet and token. A maximum of 100 UTXOs can be verified per request.
+
+<Note>This operation returns only UTXOs that are not used by any transaction. It does not return all UTXOs.</Note>
+
+<Info>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1972,7 +1975,7 @@ ListAddressBalancesByToken List address balances by token
 
 This operation retrieves a list of address balances for a specified token within a wallet.
 
-<Note>This operation is applicable to MPC Wallets only.</Note>
+<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3090,7 +3093,7 @@ ListTokenBalancesForAddress List token balances by address
 
 The operation retrieves a list of token balances for a specified address within a wallet. 
 
-<Note>This operation is applicable to MPC Wallets and Smart Contract Wallets only.</Note>
+<Note>This operation is applicable to MPC Wallets, Custodial Wallets (Web3 Wallets), and Smart Contract Wallets only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3572,7 +3575,6 @@ func (r ApiListUtxosRequest) TokenId(tokenId string) ApiListUtxosRequest {
 	return r
 }
 
-// The wallet address.
 func (r ApiListUtxosRequest) Address(address string) ApiListUtxosRequest {
 	r.address = &address
 	return r
@@ -3608,9 +3610,11 @@ func (r ApiListUtxosRequest) Execute() (*ListUtxos200Response, *http.Response, e
 /*
 ListUtxos List UTXOs
 
-The operation retrieves a list of unspent transaction outputs (UTXOs) for a specified wallet and token.
+The operation retrieves a list of **unspent** transaction outputs (UTXOs) for a specified wallet and token.
 
-<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
+<Note>This operation returns only UTXOs that are not used by any transaction. It does not return all UTXOs.</Note>
+
+<Info>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -3960,7 +3964,7 @@ LockUtxos Lock UTXOs
 
 This operation locks the UTXOs with specified transaction hashes. Locked UTXOs cannot be transferred until unlocked.
 
-<Note>This operation is applicable to MPC Wallets only.</Note>
+<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -4236,9 +4240,8 @@ func (r ApiUnlockUtxosRequest) Execute() (*LockUtxos201Response, *http.Response,
 /*
 UnlockUtxos Unlock UTXOs
 
-This operation unlocks the UTXOs with specified transaction hashes. Locked UTXOs cannot be transferred until unlocked.
-
-<Note>This operation is applicable to MPC Wallets only.</Note>
+This operation unlocks the UTXOs with specified transaction hashes. Locked UTXOs cannot be transferred until unlocked.   
+<Note>This operation is applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) only.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

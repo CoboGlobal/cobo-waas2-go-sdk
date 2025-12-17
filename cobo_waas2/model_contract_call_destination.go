@@ -15,10 +15,18 @@ import (
 
 // ContractCallDestination - struct for ContractCallDestination
 type ContractCallDestination struct {
+	CosmosContractCallDestination *CosmosContractCallDestination
 	EvmContractCallDestination *EvmContractCallDestination
 	SolContractCallDestination *SolContractCallDestination
 	StellarContractCallDestination *StellarContractCallDestination
 	TronContractCallDestination *TronContractCallDestination
+}
+
+// CosmosContractCallDestinationAsContractCallDestination is a convenience function that returns CosmosContractCallDestination wrapped in ContractCallDestination
+func CosmosContractCallDestinationAsContractCallDestination(v *CosmosContractCallDestination) ContractCallDestination {
+	return ContractCallDestination{
+		CosmosContractCallDestination: v,
+	}
 }
 
 // EvmContractCallDestinationAsContractCallDestination is a convenience function that returns EvmContractCallDestination wrapped in ContractCallDestination
@@ -58,6 +66,18 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 	err = newStrictDecoder(data).Decode(&jsonDict)
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal JSON into map for the discriminator lookup")
+	}
+
+	// check if the discriminator value is 'COSMOS_Contract'
+	if jsonDict["destination_type"] == "COSMOS_Contract" {
+		// try to unmarshal JSON data into CosmosContractCallDestination
+		err = json.Unmarshal(data, &dst.CosmosContractCallDestination)
+		if err == nil {
+			return nil // data stored in dst.CosmosContractCallDestination, return on the first match
+		} else {
+			dst.CosmosContractCallDestination = nil
+			return fmt.Errorf("failed to unmarshal ContractCallDestination as CosmosContractCallDestination: %s", err.Error())
+		}
 	}
 
 	// check if the discriminator value is 'EVM_Contract'
@@ -105,6 +125,18 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TronContractCallDestination = nil
 			return fmt.Errorf("failed to unmarshal ContractCallDestination as TronContractCallDestination: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'CosmosContractCallDestination'
+	if jsonDict["destination_type"] == "CosmosContractCallDestination" {
+		// try to unmarshal JSON data into CosmosContractCallDestination
+		err = json.Unmarshal(data, &dst.CosmosContractCallDestination)
+		if err == nil {
+			return nil // data stored in dst.CosmosContractCallDestination, return on the first match
+		} else {
+			dst.CosmosContractCallDestination = nil
+			return fmt.Errorf("failed to unmarshal ContractCallDestination as CosmosContractCallDestination: %s", err.Error())
 		}
 	}
 
@@ -161,6 +193,10 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src ContractCallDestination) MarshalJSON() ([]byte, error) {
+	if src.CosmosContractCallDestination != nil {
+		return json.Marshal(&src.CosmosContractCallDestination)
+	}
+
 	if src.EvmContractCallDestination != nil {
 		return json.Marshal(&src.EvmContractCallDestination)
 	}
@@ -185,6 +221,10 @@ func (obj *ContractCallDestination) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
+	if obj.CosmosContractCallDestination != nil {
+		return obj.CosmosContractCallDestination
+	}
+
 	if obj.EvmContractCallDestination != nil {
 		return obj.EvmContractCallDestination
 	}

@@ -25,7 +25,7 @@ type CreateSettlement struct {
 	TokenId string `json:"token_id"`
 	// The amount of cryptocurrency to be settled. When settling merchant balance from orders (`acquiring_type` is `Order` and `settlement_type` is `Merchant`), do not specify this field as the amount will be automatically calculated based on the order amounts. 
 	Amount *string `json:"amount,omitempty"`
-	// The ID of the crypto address used for crypto payouts. Specify this field when `payout_channel` is set to `Crypto`.  Call [List crypto addresses](https://www.cobo.com/developers/v2/api-references/payment/list-crypto-addresses) to retrieve registered crypto addresses. 
+	// The ID of the crypto address used for crypto payouts. Specify this field when `payout_channel` is set to `Crypto`.  Call [List crypto addresses](https://www.cobo.com/payments/en/api-references/payment/list-crypto-addresses) to retrieve registered crypto addresses. 
 	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
 	// Only used in Crypto payout channel. The actual blockchain address to which funds will be transferred. If enable destination whitelist, this address must be associated with a destination. 
 	CryptoAddress *string `json:"crypto_address,omitempty"`
