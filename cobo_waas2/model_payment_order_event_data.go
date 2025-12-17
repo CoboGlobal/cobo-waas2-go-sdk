@@ -19,46 +19,52 @@ var _ MappedNullable = &PaymentOrderEventData{}
 
 // PaymentOrderEventData struct for PaymentOrderEventData
 type PaymentOrderEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
 	DataType string `json:"data_type"`
 	// The order ID.
 	OrderId string `json:"order_id"`
 	// The merchant ID.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	//  The ID of the cryptocurrency used for payment. Supported tokens:  - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
-	TokenId string `json:"token_id"`
-	//  The ID of the blockchain network where the payment transaction should be made. Supported chains:  - USDC: `ETH`, `ARBITRUM`, `SOL`, `BASE`, `MATIC`, `BSC` - USDT: `TRON`, `ETH`, `ARBITRUM`, `SOL`, `BASE`, `MATIC`, `BSC` 
-	ChainId string `json:"chain_id"`
-	// The cryptocurrency amount to be paid for this order.
-	PayableAmount string `json:"payable_amount"`
-	// The recipient wallet address to be used for the payment transaction.
-	ReceiveAddress string `json:"receive_address"`
-	// The fiat currency of the order.
-	Currency string `json:"currency"`
-	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`).
-	OrderAmount string `json:"order_amount"`
-	// The developer fee for the order in fiat currency. It is added to the base amount (`order_amount`) to determine the final charge.
-	FeeAmount string `json:"fee_amount"`
-	// The exchange rate between a currency pair. Expressed as the amount of fiat currency per one unit of cryptocurrency. For example, if the cryptocurrency is USDT and the fiat currency is USD, a rate of \"0.99\" means 1 USDT = 0.99 USD.
-	ExchangeRate string `json:"exchange_rate"`
-	// The expiration time of the pay-in order, represented as a UNIX timestamp in seconds.
-	ExpiredAt *int32 `json:"expired_at,omitempty"`
 	// A unique reference code assigned by the merchant to identify this order in their system.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
+	// The fiat currency of the order.
+	PricingCurrency *string `json:"pricing_currency,omitempty"`
+	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`).
+	PricingAmount *string `json:"pricing_amount,omitempty"`
+	// The developer fee for the order in fiat currency. It is added to the base amount (`order_amount`) to determine the final charge.
+	FeeAmount string `json:"fee_amount"`
+	// The ID of the cryptocurrency used for payment.
+	PayableCurrency *string `json:"payable_currency,omitempty"`
+	// The ID of the blockchain network where the payment transaction should be made.
+	ChainId string `json:"chain_id"`
+	// The cryptocurrency amount to be paid for this order.
+	PayableAmount string `json:"payable_amount"`
+	// The exchange rate between a currency pair. Expressed as the amount of fiat currency per one unit of cryptocurrency. For example, if the cryptocurrency is USDT and the fiat currency is USD, a rate of \"0.99\" means 1 USDT = 0.99 USD.
+	ExchangeRate string `json:"exchange_rate"`
+	// Allowed amount deviation.
+	AmountTolerance *string `json:"amount_tolerance,omitempty"`
+	// The recipient wallet address to be used for the payment transaction.
+	ReceiveAddress string `json:"receive_address"`
 	Status OrderStatus `json:"status"`
 	// The total cryptocurrency amount received for this order. Updates until the expiration time. Precision matches the token standard (e.g., 6 decimals for USDT).
 	ReceivedTokenAmount string `json:"received_token_amount"`
-	// The creation time of the order, represented as a UNIX timestamp in seconds.
+	// The expiration time of the pay-in order, represented as a UNIX timestamp in seconds.
+	ExpiredAt *int32 `json:"expired_at,omitempty"`
+	// The created time of the order, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The last update time of the order, represented as a UNIX timestamp in seconds.
+	// The updated time of the order, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the pay-in process.
+	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
+	// The fiat currency of the order.
+	Currency *string `json:"currency,omitempty"`
+	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`).
+	OrderAmount *string `json:"order_amount,omitempty"`
+	// The ID of the cryptocurrency used for payment.
+	TokenId *string `json:"token_id,omitempty"`
 	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
-	// The maximum allowed deviation from the payable amount in the case of underpayment, specified as a positive value with up to one decimal place. If you provide more than one decimal place, an error will occur.  When the actual received amount is within this deviation (inclusive) of the payable amount, the order status will be set to `Completed` rather than `Underpaid`. 
-	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 }
 
 type _PaymentOrderEventData PaymentOrderEventData
@@ -67,19 +73,16 @@ type _PaymentOrderEventData PaymentOrderEventData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentOrderEventData(dataType string, orderId string, tokenId string, chainId string, payableAmount string, receiveAddress string, currency string, orderAmount string, feeAmount string, exchangeRate string, pspOrderCode string, status OrderStatus, receivedTokenAmount string) *PaymentOrderEventData {
+func NewPaymentOrderEventData(dataType string, orderId string, pspOrderCode string, feeAmount string, chainId string, payableAmount string, exchangeRate string, receiveAddress string, status OrderStatus, receivedTokenAmount string) *PaymentOrderEventData {
 	this := PaymentOrderEventData{}
 	this.DataType = dataType
 	this.OrderId = orderId
-	this.TokenId = tokenId
+	this.PspOrderCode = pspOrderCode
+	this.FeeAmount = feeAmount
 	this.ChainId = chainId
 	this.PayableAmount = payableAmount
-	this.ReceiveAddress = receiveAddress
-	this.Currency = currency
-	this.OrderAmount = orderAmount
-	this.FeeAmount = feeAmount
 	this.ExchangeRate = exchangeRate
-	this.PspOrderCode = pspOrderCode
+	this.ReceiveAddress = receiveAddress
 	this.Status = status
 	this.ReceivedTokenAmount = receivedTokenAmount
 	return &this
@@ -173,230 +176,6 @@ func (o *PaymentOrderEventData) SetMerchantId(v string) {
 	o.MerchantId = &v
 }
 
-// GetTokenId returns the TokenId field value
-func (o *PaymentOrderEventData) GetTokenId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.TokenId
-}
-
-// GetTokenIdOk returns a tuple with the TokenId field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetTokenIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.TokenId, true
-}
-
-// SetTokenId sets field value
-func (o *PaymentOrderEventData) SetTokenId(v string) {
-	o.TokenId = v
-}
-
-// GetChainId returns the ChainId field value
-func (o *PaymentOrderEventData) GetChainId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ChainId
-}
-
-// GetChainIdOk returns a tuple with the ChainId field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetChainIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ChainId, true
-}
-
-// SetChainId sets field value
-func (o *PaymentOrderEventData) SetChainId(v string) {
-	o.ChainId = v
-}
-
-// GetPayableAmount returns the PayableAmount field value
-func (o *PaymentOrderEventData) GetPayableAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.PayableAmount
-}
-
-// GetPayableAmountOk returns a tuple with the PayableAmount field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetPayableAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.PayableAmount, true
-}
-
-// SetPayableAmount sets field value
-func (o *PaymentOrderEventData) SetPayableAmount(v string) {
-	o.PayableAmount = v
-}
-
-// GetReceiveAddress returns the ReceiveAddress field value
-func (o *PaymentOrderEventData) GetReceiveAddress() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ReceiveAddress
-}
-
-// GetReceiveAddressOk returns a tuple with the ReceiveAddress field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetReceiveAddressOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ReceiveAddress, true
-}
-
-// SetReceiveAddress sets field value
-func (o *PaymentOrderEventData) SetReceiveAddress(v string) {
-	o.ReceiveAddress = v
-}
-
-// GetCurrency returns the Currency field value
-func (o *PaymentOrderEventData) GetCurrency() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Currency
-}
-
-// GetCurrencyOk returns a tuple with the Currency field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetCurrencyOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Currency, true
-}
-
-// SetCurrency sets field value
-func (o *PaymentOrderEventData) SetCurrency(v string) {
-	o.Currency = v
-}
-
-// GetOrderAmount returns the OrderAmount field value
-func (o *PaymentOrderEventData) GetOrderAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.OrderAmount
-}
-
-// GetOrderAmountOk returns a tuple with the OrderAmount field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetOrderAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.OrderAmount, true
-}
-
-// SetOrderAmount sets field value
-func (o *PaymentOrderEventData) SetOrderAmount(v string) {
-	o.OrderAmount = v
-}
-
-// GetFeeAmount returns the FeeAmount field value
-func (o *PaymentOrderEventData) GetFeeAmount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.FeeAmount
-}
-
-// GetFeeAmountOk returns a tuple with the FeeAmount field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetFeeAmountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.FeeAmount, true
-}
-
-// SetFeeAmount sets field value
-func (o *PaymentOrderEventData) SetFeeAmount(v string) {
-	o.FeeAmount = v
-}
-
-// GetExchangeRate returns the ExchangeRate field value
-func (o *PaymentOrderEventData) GetExchangeRate() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ExchangeRate
-}
-
-// GetExchangeRateOk returns a tuple with the ExchangeRate field value
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetExchangeRateOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ExchangeRate, true
-}
-
-// SetExchangeRate sets field value
-func (o *PaymentOrderEventData) SetExchangeRate(v string) {
-	o.ExchangeRate = v
-}
-
-// GetExpiredAt returns the ExpiredAt field value if set, zero value otherwise.
-func (o *PaymentOrderEventData) GetExpiredAt() int32 {
-	if o == nil || IsNil(o.ExpiredAt) {
-		var ret int32
-		return ret
-	}
-	return *o.ExpiredAt
-}
-
-// GetExpiredAtOk returns a tuple with the ExpiredAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetExpiredAtOk() (*int32, bool) {
-	if o == nil || IsNil(o.ExpiredAt) {
-		return nil, false
-	}
-	return o.ExpiredAt, true
-}
-
-// HasExpiredAt returns a boolean if a field has been set.
-func (o *PaymentOrderEventData) HasExpiredAt() bool {
-	if o != nil && !IsNil(o.ExpiredAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetExpiredAt gets a reference to the given int32 and assigns it to the ExpiredAt field.
-func (o *PaymentOrderEventData) SetExpiredAt(v int32) {
-	o.ExpiredAt = &v
-}
-
 // GetMerchantOrderCode returns the MerchantOrderCode field value if set, zero value otherwise.
 func (o *PaymentOrderEventData) GetMerchantOrderCode() string {
 	if o == nil || IsNil(o.MerchantOrderCode) {
@@ -453,6 +232,254 @@ func (o *PaymentOrderEventData) SetPspOrderCode(v string) {
 	o.PspOrderCode = v
 }
 
+// GetPricingCurrency returns the PricingCurrency field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetPricingCurrency() string {
+	if o == nil || IsNil(o.PricingCurrency) {
+		var ret string
+		return ret
+	}
+	return *o.PricingCurrency
+}
+
+// GetPricingCurrencyOk returns a tuple with the PricingCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetPricingCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.PricingCurrency) {
+		return nil, false
+	}
+	return o.PricingCurrency, true
+}
+
+// HasPricingCurrency returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasPricingCurrency() bool {
+	if o != nil && !IsNil(o.PricingCurrency) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricingCurrency gets a reference to the given string and assigns it to the PricingCurrency field.
+func (o *PaymentOrderEventData) SetPricingCurrency(v string) {
+	o.PricingCurrency = &v
+}
+
+// GetPricingAmount returns the PricingAmount field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetPricingAmount() string {
+	if o == nil || IsNil(o.PricingAmount) {
+		var ret string
+		return ret
+	}
+	return *o.PricingAmount
+}
+
+// GetPricingAmountOk returns a tuple with the PricingAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetPricingAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.PricingAmount) {
+		return nil, false
+	}
+	return o.PricingAmount, true
+}
+
+// HasPricingAmount returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasPricingAmount() bool {
+	if o != nil && !IsNil(o.PricingAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricingAmount gets a reference to the given string and assigns it to the PricingAmount field.
+func (o *PaymentOrderEventData) SetPricingAmount(v string) {
+	o.PricingAmount = &v
+}
+
+// GetFeeAmount returns the FeeAmount field value
+func (o *PaymentOrderEventData) GetFeeAmount() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.FeeAmount
+}
+
+// GetFeeAmountOk returns a tuple with the FeeAmount field value
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetFeeAmountOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FeeAmount, true
+}
+
+// SetFeeAmount sets field value
+func (o *PaymentOrderEventData) SetFeeAmount(v string) {
+	o.FeeAmount = v
+}
+
+// GetPayableCurrency returns the PayableCurrency field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetPayableCurrency() string {
+	if o == nil || IsNil(o.PayableCurrency) {
+		var ret string
+		return ret
+	}
+	return *o.PayableCurrency
+}
+
+// GetPayableCurrencyOk returns a tuple with the PayableCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetPayableCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.PayableCurrency) {
+		return nil, false
+	}
+	return o.PayableCurrency, true
+}
+
+// HasPayableCurrency returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasPayableCurrency() bool {
+	if o != nil && !IsNil(o.PayableCurrency) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayableCurrency gets a reference to the given string and assigns it to the PayableCurrency field.
+func (o *PaymentOrderEventData) SetPayableCurrency(v string) {
+	o.PayableCurrency = &v
+}
+
+// GetChainId returns the ChainId field value
+func (o *PaymentOrderEventData) GetChainId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ChainId
+}
+
+// GetChainIdOk returns a tuple with the ChainId field value
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetChainIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ChainId, true
+}
+
+// SetChainId sets field value
+func (o *PaymentOrderEventData) SetChainId(v string) {
+	o.ChainId = v
+}
+
+// GetPayableAmount returns the PayableAmount field value
+func (o *PaymentOrderEventData) GetPayableAmount() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.PayableAmount
+}
+
+// GetPayableAmountOk returns a tuple with the PayableAmount field value
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetPayableAmountOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PayableAmount, true
+}
+
+// SetPayableAmount sets field value
+func (o *PaymentOrderEventData) SetPayableAmount(v string) {
+	o.PayableAmount = v
+}
+
+// GetExchangeRate returns the ExchangeRate field value
+func (o *PaymentOrderEventData) GetExchangeRate() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ExchangeRate
+}
+
+// GetExchangeRateOk returns a tuple with the ExchangeRate field value
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetExchangeRateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ExchangeRate, true
+}
+
+// SetExchangeRate sets field value
+func (o *PaymentOrderEventData) SetExchangeRate(v string) {
+	o.ExchangeRate = v
+}
+
+// GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetAmountTolerance() string {
+	if o == nil || IsNil(o.AmountTolerance) {
+		var ret string
+		return ret
+	}
+	return *o.AmountTolerance
+}
+
+// GetAmountToleranceOk returns a tuple with the AmountTolerance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetAmountToleranceOk() (*string, bool) {
+	if o == nil || IsNil(o.AmountTolerance) {
+		return nil, false
+	}
+	return o.AmountTolerance, true
+}
+
+// HasAmountTolerance returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasAmountTolerance() bool {
+	if o != nil && !IsNil(o.AmountTolerance) {
+		return true
+	}
+
+	return false
+}
+
+// SetAmountTolerance gets a reference to the given string and assigns it to the AmountTolerance field.
+func (o *PaymentOrderEventData) SetAmountTolerance(v string) {
+	o.AmountTolerance = &v
+}
+
+// GetReceiveAddress returns the ReceiveAddress field value
+func (o *PaymentOrderEventData) GetReceiveAddress() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ReceiveAddress
+}
+
+// GetReceiveAddressOk returns a tuple with the ReceiveAddress field value
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetReceiveAddressOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ReceiveAddress, true
+}
+
+// SetReceiveAddress sets field value
+func (o *PaymentOrderEventData) SetReceiveAddress(v string) {
+	o.ReceiveAddress = v
+}
+
 // GetStatus returns the Status field value
 func (o *PaymentOrderEventData) GetStatus() OrderStatus {
 	if o == nil {
@@ -499,6 +526,38 @@ func (o *PaymentOrderEventData) GetReceivedTokenAmountOk() (*string, bool) {
 // SetReceivedTokenAmount sets field value
 func (o *PaymentOrderEventData) SetReceivedTokenAmount(v string) {
 	o.ReceivedTokenAmount = v
+}
+
+// GetExpiredAt returns the ExpiredAt field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetExpiredAt() int32 {
+	if o == nil || IsNil(o.ExpiredAt) {
+		var ret int32
+		return ret
+	}
+	return *o.ExpiredAt
+}
+
+// GetExpiredAtOk returns a tuple with the ExpiredAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetExpiredAtOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExpiredAt) {
+		return nil, false
+	}
+	return o.ExpiredAt, true
+}
+
+// HasExpiredAt returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasExpiredAt() bool {
+	if o != nil && !IsNil(o.ExpiredAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiredAt gets a reference to the given int32 and assigns it to the ExpiredAt field.
+func (o *PaymentOrderEventData) SetExpiredAt(v int32) {
+	o.ExpiredAt = &v
 }
 
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
@@ -597,6 +656,102 @@ func (o *PaymentOrderEventData) SetTransactions(v []PaymentTransaction) {
 	o.Transactions = v
 }
 
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetCurrency() string {
+	if o == nil || IsNil(o.Currency) {
+		var ret string
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetCurrencyOk() (*string, bool) {
+	if o == nil || IsNil(o.Currency) {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasCurrency() bool {
+	if o != nil && !IsNil(o.Currency) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *PaymentOrderEventData) SetCurrency(v string) {
+	o.Currency = &v
+}
+
+// GetOrderAmount returns the OrderAmount field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetOrderAmount() string {
+	if o == nil || IsNil(o.OrderAmount) {
+		var ret string
+		return ret
+	}
+	return *o.OrderAmount
+}
+
+// GetOrderAmountOk returns a tuple with the OrderAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetOrderAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.OrderAmount) {
+		return nil, false
+	}
+	return o.OrderAmount, true
+}
+
+// HasOrderAmount returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasOrderAmount() bool {
+	if o != nil && !IsNil(o.OrderAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderAmount gets a reference to the given string and assigns it to the OrderAmount field.
+func (o *PaymentOrderEventData) SetOrderAmount(v string) {
+	o.OrderAmount = &v
+}
+
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *PaymentOrderEventData) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentOrderEventData) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *PaymentOrderEventData) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *PaymentOrderEventData) SetTokenId(v string) {
+	o.TokenId = &v
+}
+
 // GetSettlementStatus returns the SettlementStatus field value if set, zero value otherwise.
 func (o *PaymentOrderEventData) GetSettlementStatus() SettleStatus {
 	if o == nil || IsNil(o.SettlementStatus) {
@@ -629,38 +784,6 @@ func (o *PaymentOrderEventData) SetSettlementStatus(v SettleStatus) {
 	o.SettlementStatus = &v
 }
 
-// GetAmountTolerance returns the AmountTolerance field value if set, zero value otherwise.
-func (o *PaymentOrderEventData) GetAmountTolerance() string {
-	if o == nil || IsNil(o.AmountTolerance) {
-		var ret string
-		return ret
-	}
-	return *o.AmountTolerance
-}
-
-// GetAmountToleranceOk returns a tuple with the AmountTolerance field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentOrderEventData) GetAmountToleranceOk() (*string, bool) {
-	if o == nil || IsNil(o.AmountTolerance) {
-		return nil, false
-	}
-	return o.AmountTolerance, true
-}
-
-// HasAmountTolerance returns a boolean if a field has been set.
-func (o *PaymentOrderEventData) HasAmountTolerance() bool {
-	if o != nil && !IsNil(o.AmountTolerance) {
-		return true
-	}
-
-	return false
-}
-
-// SetAmountTolerance gets a reference to the given string and assigns it to the AmountTolerance field.
-func (o *PaymentOrderEventData) SetAmountTolerance(v string) {
-	o.AmountTolerance = &v
-}
-
 func (o PaymentOrderEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -676,23 +799,32 @@ func (o PaymentOrderEventData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.MerchantId) {
 		toSerialize["merchant_id"] = o.MerchantId
 	}
-	toSerialize["token_id"] = o.TokenId
-	toSerialize["chain_id"] = o.ChainId
-	toSerialize["payable_amount"] = o.PayableAmount
-	toSerialize["receive_address"] = o.ReceiveAddress
-	toSerialize["currency"] = o.Currency
-	toSerialize["order_amount"] = o.OrderAmount
-	toSerialize["fee_amount"] = o.FeeAmount
-	toSerialize["exchange_rate"] = o.ExchangeRate
-	if !IsNil(o.ExpiredAt) {
-		toSerialize["expired_at"] = o.ExpiredAt
-	}
 	if !IsNil(o.MerchantOrderCode) {
 		toSerialize["merchant_order_code"] = o.MerchantOrderCode
 	}
 	toSerialize["psp_order_code"] = o.PspOrderCode
+	if !IsNil(o.PricingCurrency) {
+		toSerialize["pricing_currency"] = o.PricingCurrency
+	}
+	if !IsNil(o.PricingAmount) {
+		toSerialize["pricing_amount"] = o.PricingAmount
+	}
+	toSerialize["fee_amount"] = o.FeeAmount
+	if !IsNil(o.PayableCurrency) {
+		toSerialize["payable_currency"] = o.PayableCurrency
+	}
+	toSerialize["chain_id"] = o.ChainId
+	toSerialize["payable_amount"] = o.PayableAmount
+	toSerialize["exchange_rate"] = o.ExchangeRate
+	if !IsNil(o.AmountTolerance) {
+		toSerialize["amount_tolerance"] = o.AmountTolerance
+	}
+	toSerialize["receive_address"] = o.ReceiveAddress
 	toSerialize["status"] = o.Status
 	toSerialize["received_token_amount"] = o.ReceivedTokenAmount
+	if !IsNil(o.ExpiredAt) {
+		toSerialize["expired_at"] = o.ExpiredAt
+	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp
 	}
@@ -702,11 +834,17 @@ func (o PaymentOrderEventData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Transactions) {
 		toSerialize["transactions"] = o.Transactions
 	}
+	if !IsNil(o.Currency) {
+		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.OrderAmount) {
+		toSerialize["order_amount"] = o.OrderAmount
+	}
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
 	if !IsNil(o.SettlementStatus) {
 		toSerialize["settlement_status"] = o.SettlementStatus
-	}
-	if !IsNil(o.AmountTolerance) {
-		toSerialize["amount_tolerance"] = o.AmountTolerance
 	}
 	return toSerialize, nil
 }
@@ -718,15 +856,12 @@ func (o *PaymentOrderEventData) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"data_type",
 		"order_id",
-		"token_id",
+		"psp_order_code",
+		"fee_amount",
 		"chain_id",
 		"payable_amount",
-		"receive_address",
-		"currency",
-		"order_amount",
-		"fee_amount",
 		"exchange_rate",
-		"psp_order_code",
+		"receive_address",
 		"status",
 		"received_token_amount",
 	}

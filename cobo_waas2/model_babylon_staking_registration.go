@@ -15,7 +15,7 @@ import (
 // checks if the BabylonStakingRegistration type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BabylonStakingRegistration{}
 
-// BabylonStakingRegistration The details of aBabylon Phase-2 registration.
+// BabylonStakingRegistration The details of a Babylon Phase-2 registration.
 type BabylonStakingRegistration struct {
 	// The registration ID, a unique identifier for tracking the staking registration.
 	Id *string `json:"id,omitempty"`

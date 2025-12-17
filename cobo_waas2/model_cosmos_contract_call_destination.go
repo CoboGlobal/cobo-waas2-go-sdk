@@ -21,8 +21,6 @@ var _ MappedNullable = &CosmosContractCallDestination{}
 type CosmosContractCallDestination struct {
 	DestinationType ContractCallDestinationType `json:"destination_type"`
 	CosmosMessages []CosmosContractCallMessage `json:"cosmos_messages"`
-	// The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`. 
-	Value *string `json:"value,omitempty"`
 }
 
 type _CosmosContractCallDestination CosmosContractCallDestination
@@ -94,38 +92,6 @@ func (o *CosmosContractCallDestination) SetCosmosMessages(v []CosmosContractCall
 	o.CosmosMessages = v
 }
 
-// GetValue returns the Value field value if set, zero value otherwise.
-func (o *CosmosContractCallDestination) GetValue() string {
-	if o == nil || IsNil(o.Value) {
-		var ret string
-		return ret
-	}
-	return *o.Value
-}
-
-// GetValueOk returns a tuple with the Value field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CosmosContractCallDestination) GetValueOk() (*string, bool) {
-	if o == nil || IsNil(o.Value) {
-		return nil, false
-	}
-	return o.Value, true
-}
-
-// HasValue returns a boolean if a field has been set.
-func (o *CosmosContractCallDestination) HasValue() bool {
-	if o != nil && !IsNil(o.Value) {
-		return true
-	}
-
-	return false
-}
-
-// SetValue gets a reference to the given string and assigns it to the Value field.
-func (o *CosmosContractCallDestination) SetValue(v string) {
-	o.Value = &v
-}
-
 func (o CosmosContractCallDestination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -138,9 +104,6 @@ func (o CosmosContractCallDestination) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["destination_type"] = o.DestinationType
 	toSerialize["cosmos_messages"] = o.CosmosMessages
-	if !IsNil(o.Value) {
-		toSerialize["value"] = o.Value
-	}
 	return toSerialize, nil
 }
 

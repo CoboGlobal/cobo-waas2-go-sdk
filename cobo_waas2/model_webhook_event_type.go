@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// WebhookEventType The event type. To learn the trigger condition of each event type, refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type). 
+// WebhookEventType The event type. To learn the trigger condition of each event type, refer to [Webhook event types and event data](https://www.cobo.com/developers/v2/guides/webhooks-callbacks/webhook-event-type).  
 type WebhookEventType string
 
 // List of WebhookEventType
@@ -51,7 +51,9 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_STATUS_UPDATED WebhookEventType = "payment.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_REFUND_STATUS_UPDATED WebhookEventType = "payment.refund.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_SETTLEMENT_STATUS_UPDATED WebhookEventType = "payment.settlement.status.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_PAYOUT_STATUS_UPDATED WebhookEventType = "payment.payout.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_ADDRESS_UPDATED WebhookEventType = "payment.address.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_SUBSCRIPTION_STATUS_UPDATED WebhookEventType = "payment.subscription.status.updated"
 	WEBHOOKEVENTTYPE_COMPLIANCE_DISPOSITION_STATUS_UPDATED WebhookEventType = "compliance.disposition.status.updated"
 	WEBHOOKEVENTTYPE_COMPLIANCE_KYT_SCREENINGS_STATUS_UPDATED WebhookEventType = "compliance.kyt.screenings.status.updated"
 )
@@ -91,7 +93,9 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.status.updated",
 	"payment.refund.status.updated",
 	"payment.settlement.status.updated",
+	"payment.payout.status.updated",
 	"payment.address.updated",
+	"payment.subscription.status.updated",
 	"compliance.disposition.status.updated",
 	"compliance.kyt.screenings.status.updated",
 }

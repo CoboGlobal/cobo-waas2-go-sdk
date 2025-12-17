@@ -23,7 +23,7 @@ type SwapActivityTimeline struct {
 	Action string `json:"action"`
 	// The status of the action. Possible values include:   - `Success`: The action completed successfully.   - `Processing`: The action is being processed.   - `Failed`: The action failed. 
 	Status string `json:"status"`
-	// The time when the action occurred, in Unix timestamp format, measured in milliseconds. 
+	// The time when the action occurred, in Unix timestamp format, measured in milliseconds.  
 	Timestamp *int64 `json:"timestamp,omitempty"`
 }
 

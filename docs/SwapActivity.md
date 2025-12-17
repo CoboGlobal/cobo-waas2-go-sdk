@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **CreatedTimestamp** | Pointer to **int64** | The time when the swap activity was created, in Unix timestamp format, measured in milliseconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds. | [optional] 
 **NetworkFee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
-**DestinationAddress** | Pointer to **string** | The address of an MPC Wallet or Web3 Wallet that receives the swapped or bridged assets. | [optional] 
+**DestinationAddress** | Pointer to **string** | The address of an MPC Wallet or Custodial Wallet (Web3 Wallet) that receives the swapped or bridged assets. | [optional] 
 
 ## Methods
 

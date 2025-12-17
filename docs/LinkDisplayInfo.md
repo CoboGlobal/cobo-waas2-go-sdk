@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DeveloperName** | Pointer to **string** | The brand name to display to end users on the page. This helps users identify who is providing the payment service.  | [optional] 
 **Logo** | Pointer to **string** | The URL of the logo image to display to end users on the page.  | [optional] 
+**ReturnUrl** | Pointer to **string** | The URL to redirect to after the operation completes. | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetLogo sets Logo field to given value.
 `func (o *LinkDisplayInfo) HasLogo() bool`
 
 HasLogo returns a boolean if a field has been set.
+
+### GetReturnUrl
+
+`func (o *LinkDisplayInfo) GetReturnUrl() string`
+
+GetReturnUrl returns the ReturnUrl field if non-nil, zero value otherwise.
+
+### GetReturnUrlOk
+
+`func (o *LinkDisplayInfo) GetReturnUrlOk() (*string, bool)`
+
+GetReturnUrlOk returns a tuple with the ReturnUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReturnUrl
+
+`func (o *LinkDisplayInfo) SetReturnUrl(v string)`
+
+SetReturnUrl sets ReturnUrl field to given value.
+
+### HasReturnUrl
+
+`func (o *LinkDisplayInfo) HasReturnUrl() bool`
+
+HasReturnUrl returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

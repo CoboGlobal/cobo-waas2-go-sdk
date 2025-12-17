@@ -13,14 +13,15 @@ Name | Type | Description | Notes
 **RewardsInfo** | Pointer to **map[string]interface{}** | The information about the staking rewards. | [optional] 
 **CreatedTimestamp** | **int64** | The time when the staking position was created. | 
 **UpdatedTimestamp** | **int64** | The time when the staking position was last updated. | 
-**ValidatorInfo** | [**BabylonValidator**](BabylonValidator.md) |  | 
+**ValidatorInfo** | Pointer to [**BabylonValidator**](BabylonValidator.md) |  | [optional] 
+**Validators** | Pointer to [**[]BabylonValidator**](BabylonValidator.md) |  | [optional] 
 **Extra** | Pointer to [**StakingsExtra**](StakingsExtra.md) |  | [optional] 
 
 ## Methods
 
 ### NewStakings
 
-`func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId StakingPoolId, tokenId string, createdTimestamp int64, updatedTimestamp int64, validatorInfo BabylonValidator, ) *Stakings`
+`func NewStakings(id string, walletId string, address string, amounts []AmountDetailsInner, poolId StakingPoolId, tokenId string, createdTimestamp int64, updatedTimestamp int64, ) *Stakings`
 
 NewStakings instantiates a new Stakings object
 This constructor will assign default values to properties that have it defined,
@@ -239,6 +240,36 @@ and a boolean to check if the value has been set.
 
 SetValidatorInfo sets ValidatorInfo field to given value.
 
+### HasValidatorInfo
+
+`func (o *Stakings) HasValidatorInfo() bool`
+
+HasValidatorInfo returns a boolean if a field has been set.
+
+### GetValidators
+
+`func (o *Stakings) GetValidators() []BabylonValidator`
+
+GetValidators returns the Validators field if non-nil, zero value otherwise.
+
+### GetValidatorsOk
+
+`func (o *Stakings) GetValidatorsOk() (*[]BabylonValidator, bool)`
+
+GetValidatorsOk returns a tuple with the Validators field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetValidators
+
+`func (o *Stakings) SetValidators(v []BabylonValidator)`
+
+SetValidators sets Validators field to given value.
+
+### HasValidators
+
+`func (o *Stakings) HasValidators() bool`
+
+HasValidators returns a boolean if a field has been set.
 
 ### GetExtra
 

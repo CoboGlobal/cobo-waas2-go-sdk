@@ -39,6 +39,8 @@ func (r ApiExchangePermissionTokenRequest) Execute() (*ExchangePermissionToken20
 /*
 ExchangePermissionToken Get Access Token
 
+
+<Warning>This operation has been deprecated.</Warning>
 This operation acquires an Access Token and a Refresh Token for the [Checkout SDK](https://www.cobo.com/developers/v2_cn/payments/checkout-sdk).
 
 For security purposes, an Access Token expires after a certain period. Once it expires, you need to call the [Refresh Access Token](https://www.cobo.com/developers/v2/api-references/oauth/refresh-access-token) operation to get a new Access Token and a new Refresh Token.
@@ -333,6 +335,8 @@ func (r ApiRefreshPermissionTokenRequest) Execute() (*ExchangePermissionToken201
 /*
 RefreshPermissionToken Refresh Access Token
 
+
+<Warning>This operation has been deprecated.</Warning>
 This operation refreshes the Access Token and Refresh Token for the [Checkout SDK](https://www.cobo.com/developers/v2_cn/payments/checkout-sdk).
 
 For security purposes, an Access Token expires after a certain period. Once it expires, you need to call this operation to get a new Access Token and Refresh Token.

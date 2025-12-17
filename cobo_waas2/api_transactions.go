@@ -468,6 +468,16 @@ This operation creates a transaction to interact with a smart contract on the bl
 
 You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
 
+For smart contract call examples, you can refer to [Batch transfers using smart contracts](/v2/guides/transactions/batch-transfer) and [Swap tokens on Solana using Jupiter](/v2/guides/transactions/sol-jupiter-swap).
+
+<Info>
+Supported actions vary by blockchain:
+- EVM chains — Support deploying contracts and calling contract functions.
+- Solana — Supports calling contract functions only.
+- TRON — Supports calling contract functions only.
+- Stellar — Supports XLM trustline creation only.
+</Info>
+
 <Note>Currently, this operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets. Refer to the `destination` property for supported contract types.</Note>
 
 <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
@@ -609,7 +619,7 @@ You can get the signature result by calling [Get transaction information](https:
 <Note>
 This operation only supports message signing transactions from the following wallets and chains:
 - MPC Wallets: BTC, EVM-compatible chains, and Cosmos.  
-- Web3 Wallets: EVM-compatible chains.
+- Custodial Wallets (Web3 Wallets): EVM-compatible chains.
 </Note>
 
 
@@ -881,7 +891,7 @@ DropTransactionById Drop transaction
 
 This operation drops a specified transaction. Dropping a transaction leverages RBF to replace the original transaction with a version that effectively cancels it. For more details about dropping a transaction, refer to [Drop a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#drop-a-transaction).
 
-A transaction can be sped up only if its status is `Broadcasting`.
+A transaction can be dropped only if its status is `Broadcasting`.
 
 <Note>This operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 

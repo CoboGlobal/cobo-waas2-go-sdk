@@ -5,6 +5,7 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateBabylonAirdropRegistration**](StakingsAPI.md#CreateBabylonAirdropRegistration) | **Post** /stakings/protocols/babylon/airdrops/registrations | Register for Babylon airdrop
+[**CreateBabylonStakingExpansion**](StakingsAPI.md#CreateBabylonStakingExpansion) | **Post** /stakings/protocols/babylon/stakings/expansions | Expand Babylon BTC staking
 [**CreateBabylonStakingRegistration**](StakingsAPI.md#CreateBabylonStakingRegistration) | **Post** /stakings/protocols/babylon/stakings/registrations | Register for Babylon Phase-2
 [**CreateClaimActivity**](StakingsAPI.md#CreateClaimActivity) | **Post** /stakings/activities/claim | Create claim activity
 [**CreateStakeActivity**](StakingsAPI.md#CreateStakeActivity) | **Post** /stakings/activities/stake | Create stake activity
@@ -103,6 +104,82 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateBabylonStakingExpansion
+
+> Stakings CreateBabylonStakingExpansion(ctx).BabylonCreateStakingExpansion(babylonCreateStakingExpansion).Execute()
+
+Expand Babylon BTC staking
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	babylonCreateStakingExpansion := *coboWaas2.NewBabylonCreateStakingExpansion("3f2840ce-44eb-450b-aa81-d3f84b772efb", []string{"eca1b104dce16c30705f4147a9c4a373ac88646c5d1bcda6a89c018940cb96a0"}, coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.StakingsAPI.CreateBabylonStakingExpansion(ctx).BabylonCreateStakingExpansion(babylonCreateStakingExpansion).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `StakingsAPI.CreateBabylonStakingExpansion``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateBabylonStakingExpansion`: Stakings
+	fmt.Fprintf(os.Stdout, "Response from `StakingsAPI.CreateBabylonStakingExpansion`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateBabylonStakingExpansionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **babylonCreateStakingExpansion** | [**BabylonCreateStakingExpansion**](BabylonCreateStakingExpansion.md) | The request body to expand Babylon BTC staking to Phase-3 | 
+
+### Return type
+
+[**Stakings**](Stakings.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## CreateBabylonStakingRegistration
 
 > CreateBabylonStakingRegistration201Response CreateBabylonStakingRegistration(ctx).CreateBabylonStakingRegistrationRequest(createBabylonStakingRegistrationRequest).Execute()
@@ -159,7 +236,7 @@ Other parameters are passed through a pointer to a apiCreateBabylonStakingRegist
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createBabylonStakingRegistrationRequest** | [**CreateBabylonStakingRegistrationRequest**](CreateBabylonStakingRegistrationRequest.md) | The request body to transit Babylon BTC staking to phase 2 | 
+ **createBabylonStakingRegistrationRequest** | [**CreateBabylonStakingRegistrationRequest**](CreateBabylonStakingRegistrationRequest.md) | The request body to transit Babylon BTC staking to Phase-2 | 
 
 ### Return type
 

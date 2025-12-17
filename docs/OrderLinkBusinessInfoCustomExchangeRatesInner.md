@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | The token ID. | 
-**ExchangeRate** | **string** | The exchange rate to use for this token. | 
+**TokenId** | **string** | The cryptocurrency token ID | 
+**ExchangeRate** | **string** | The fixed exchange rate to use for this token | 
 
 ## Methods
 

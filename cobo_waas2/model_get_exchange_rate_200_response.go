@@ -19,7 +19,7 @@ var _ MappedNullable = &GetExchangeRate200Response{}
 
 // GetExchangeRate200Response struct for GetExchangeRate200Response
 type GetExchangeRate200Response struct {
-	// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`.
+	// The token ID, which identifies the cryptocurrency.
 	TokenId string `json:"token_id"`
 	// The fiat currency.
 	Currency string `json:"currency"`

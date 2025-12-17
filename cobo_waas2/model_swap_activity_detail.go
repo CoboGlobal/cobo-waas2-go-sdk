@@ -47,7 +47,7 @@ type SwapActivityDetail struct {
 	// The time when the swap activity was last updated, in Unix timestamp format, measured in milliseconds.
 	UpdatedTimestamp *int64 `json:"updated_timestamp,omitempty"`
 	NetworkFee *TransactionRequestFee `json:"network_fee,omitempty"`
-	// The address of an MPC Wallet or Web3 Wallet that receives the swapped or bridged assets.
+	// The address of an MPC Wallet or Custodial Wallet (Web3 Wallet) that receives the swapped or bridged assets.
 	DestinationAddress *string `json:"destination_address,omitempty"`
 	Timeline []SwapActivityTimeline `json:"timeline,omitempty"`
 	Approvers []SwapActivityApprovers `json:"approvers,omitempty"`

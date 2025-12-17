@@ -420,7 +420,6 @@ func (r ApiListAddressBooksRequest) ChainId(chainId string) ApiListAddressBooksR
 	return r
 }
 
-// The wallet address.
 func (r ApiListAddressBooksRequest) Address(address string) ApiListAddressBooksRequest {
 	r.address = &address
 	return r

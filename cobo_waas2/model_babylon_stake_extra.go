@@ -22,11 +22,15 @@ type BabylonStakeExtra struct {
 	PoolType StakingPoolType `json:"pool_type"`
 	// The public key of the finality provider.
 	FinalityProviderPublicKey string `json:"finality_provider_public_key"`
+	// The public keys of the finality providers, with each key corresponding to a BSN chain.
+	FinalityProviderPublicKeys []string `json:"finality_provider_public_keys,omitempty"`
 	// The number of blocks that need to be processed before the locked tokens are unlocked and become accessible.
 	StakeBlockTime int64 `json:"stake_block_time"`
 	// Whether to automatically broadcast the transaction. The default value is `true`.  - `true`: Automatically broadcast the transaction. - `false`: The transaction will not be submitted to the blockchain automatically. You can call [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) to broadcast the transaction to the blockchain, or retrieve the signed raw transaction data `raw_tx` by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information) and broadcast it yourself. 
 	AutoBroadcast *bool `json:"auto_broadcast,omitempty"`
 	BabylonAddress *StakingSource `json:"babylon_address,omitempty"`
+	// The original staking ID to expand. Only set this when you want to expand existing staking.
+	OriginalStakingId *string `json:"original_staking_id,omitempty"`
 }
 
 type _BabylonStakeExtra BabylonStakeExtra
@@ -97,6 +101,38 @@ func (o *BabylonStakeExtra) GetFinalityProviderPublicKeyOk() (*string, bool) {
 // SetFinalityProviderPublicKey sets field value
 func (o *BabylonStakeExtra) SetFinalityProviderPublicKey(v string) {
 	o.FinalityProviderPublicKey = v
+}
+
+// GetFinalityProviderPublicKeys returns the FinalityProviderPublicKeys field value if set, zero value otherwise.
+func (o *BabylonStakeExtra) GetFinalityProviderPublicKeys() []string {
+	if o == nil || IsNil(o.FinalityProviderPublicKeys) {
+		var ret []string
+		return ret
+	}
+	return o.FinalityProviderPublicKeys
+}
+
+// GetFinalityProviderPublicKeysOk returns a tuple with the FinalityProviderPublicKeys field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BabylonStakeExtra) GetFinalityProviderPublicKeysOk() ([]string, bool) {
+	if o == nil || IsNil(o.FinalityProviderPublicKeys) {
+		return nil, false
+	}
+	return o.FinalityProviderPublicKeys, true
+}
+
+// HasFinalityProviderPublicKeys returns a boolean if a field has been set.
+func (o *BabylonStakeExtra) HasFinalityProviderPublicKeys() bool {
+	if o != nil && !IsNil(o.FinalityProviderPublicKeys) {
+		return true
+	}
+
+	return false
+}
+
+// SetFinalityProviderPublicKeys gets a reference to the given []string and assigns it to the FinalityProviderPublicKeys field.
+func (o *BabylonStakeExtra) SetFinalityProviderPublicKeys(v []string) {
+	o.FinalityProviderPublicKeys = v
 }
 
 // GetStakeBlockTime returns the StakeBlockTime field value
@@ -187,6 +223,38 @@ func (o *BabylonStakeExtra) SetBabylonAddress(v StakingSource) {
 	o.BabylonAddress = &v
 }
 
+// GetOriginalStakingId returns the OriginalStakingId field value if set, zero value otherwise.
+func (o *BabylonStakeExtra) GetOriginalStakingId() string {
+	if o == nil || IsNil(o.OriginalStakingId) {
+		var ret string
+		return ret
+	}
+	return *o.OriginalStakingId
+}
+
+// GetOriginalStakingIdOk returns a tuple with the OriginalStakingId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BabylonStakeExtra) GetOriginalStakingIdOk() (*string, bool) {
+	if o == nil || IsNil(o.OriginalStakingId) {
+		return nil, false
+	}
+	return o.OriginalStakingId, true
+}
+
+// HasOriginalStakingId returns a boolean if a field has been set.
+func (o *BabylonStakeExtra) HasOriginalStakingId() bool {
+	if o != nil && !IsNil(o.OriginalStakingId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginalStakingId gets a reference to the given string and assigns it to the OriginalStakingId field.
+func (o *BabylonStakeExtra) SetOriginalStakingId(v string) {
+	o.OriginalStakingId = &v
+}
+
 func (o BabylonStakeExtra) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -199,12 +267,18 @@ func (o BabylonStakeExtra) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["pool_type"] = o.PoolType
 	toSerialize["finality_provider_public_key"] = o.FinalityProviderPublicKey
+	if !IsNil(o.FinalityProviderPublicKeys) {
+		toSerialize["finality_provider_public_keys"] = o.FinalityProviderPublicKeys
+	}
 	toSerialize["stake_block_time"] = o.StakeBlockTime
 	if !IsNil(o.AutoBroadcast) {
 		toSerialize["auto_broadcast"] = o.AutoBroadcast
 	}
 	if !IsNil(o.BabylonAddress) {
 		toSerialize["babylon_address"] = o.BabylonAddress
+	}
+	if !IsNil(o.OriginalStakingId) {
+		toSerialize["original_staking_id"] = o.OriginalStakingId
 	}
 	return toSerialize, nil
 }
