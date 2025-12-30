@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **CounterpartyType** | [**CounterpartyType**](CounterpartyType.md) |  | 
 **WalletAddressId** | **string** | The wallet address ID. | 
 **Address** | **string** | The wallet address. | 
-**ChainId** | **string** | The chain ID of the cryptocurrency. | 
+**ChainId** | **string** | The chain ID of the address. | 
 **UpdatedTimestamp** | **int32** | The updated time of the wallet address, represented as a UNIX timestamp in seconds. | 
 
 ## Methods

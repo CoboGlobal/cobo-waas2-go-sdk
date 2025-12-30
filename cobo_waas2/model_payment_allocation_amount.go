@@ -21,7 +21,7 @@ var _ MappedNullable = &PaymentAllocationAmount{}
 type PaymentAllocationAmount struct {
 	// The ID of the cryptocurrency.
 	TokenId string `json:"token_id"`
-	// The allocation amount.
+	// The available amount that can be allocated from the source account to the destination account for the given cryptocurrency.
 	AllocationAmount string `json:"allocation_amount"`
 }
 

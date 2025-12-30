@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeAmount** | **string** | The amount of the commission fee charged by Cobo for pay-ins and payouts, in USD. | 
+**FeeAmount** | **string** | The amount of the commission fee charged by Cobo for operations such as pay-ins and payouts, in USD. | 
 
 ## Methods
 

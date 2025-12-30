@@ -28,11 +28,37 @@ func Test_cobo_waas2_ComplianceAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test ComplianceAPIService CreateKyaScreenings", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ComplianceAPI.CreateKyaScreenings(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ComplianceAPIService GetDispositionStatus", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ComplianceAPI.GetDispositionStatus(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ComplianceAPIService GetKyaScreening", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var screeningId string
+
+		resp, httpRes, err := apiClient.ComplianceAPI.GetKyaScreening(ctx, screeningId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -57,6 +83,18 @@ func Test_cobo_waas2_ComplianceAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ComplianceAPI.IsolateFunds(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ComplianceAPIService ListKyaScreenings", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ComplianceAPI.ListKyaScreenings(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

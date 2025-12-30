@@ -21,7 +21,7 @@ var _ MappedNullable = &CreateWalletAddress{}
 type CreateWalletAddress struct {
 	// The wallet address.
 	Address string `json:"address"`
-	// The chain ID of the cryptocurrency.
+	// The chain ID of the address.
 	ChainId string `json:"chain_id"`
 }
 

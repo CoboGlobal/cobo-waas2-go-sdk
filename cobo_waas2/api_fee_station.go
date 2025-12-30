@@ -27,7 +27,7 @@ type ApiCheckFeeStationUsageRequest struct {
 	feeStationCheckFeeStationUsage *FeeStationCheckFeeStationUsage
 }
 
-// The information for evaluating Fee Station usage.
+// The request body for evaluating Fee Station usage.
 func (r ApiCheckFeeStationUsageRequest) FeeStationCheckFeeStationUsage(feeStationCheckFeeStationUsage FeeStationCheckFeeStationUsage) ApiCheckFeeStationUsageRequest {
 	r.feeStationCheckFeeStationUsage = &feeStationCheckFeeStationUsage
 	return r

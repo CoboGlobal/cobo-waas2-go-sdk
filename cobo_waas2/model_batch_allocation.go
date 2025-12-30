@@ -24,7 +24,7 @@ type BatchAllocation struct {
 	// The request ID provided by you when creating the batch allocation.
 	RequestId string `json:"request_id"`
 	AllocationRequests []AllocationRequest `json:"allocation_requests,omitempty"`
-	// The initiator of this batch allocation, usually the user's API key.
+	// The initiator of this batch allocation, usually the API key you used to create the batch allocation.
 	Initiator *string `json:"initiator,omitempty"`
 	// The created time of the batch allocation, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`

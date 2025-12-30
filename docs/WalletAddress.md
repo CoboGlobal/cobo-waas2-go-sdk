@@ -6,7 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **WalletAddressId** | **string** | The wallet address ID. | 
 **Address** | **string** | The wallet address. | 
-**ChainId** | **string** | The chain ID of the cryptocurrency. | 
+**ChainId** | **string** | The chain ID of the address. | 
+**RiskLevel** | Pointer to [**AddressRiskLevel**](AddressRiskLevel.md) |  | [optional] 
+**ScreeningTimestamp** | Pointer to **int32** | UNIX timestamp (in seconds) when the address was last screened for compliance. | [optional] 
 **UpdatedTimestamp** | **int32** | The updated time of the wallet address, represented as a UNIX timestamp in seconds. | 
 
 ## Methods
@@ -87,6 +89,56 @@ and a boolean to check if the value has been set.
 
 SetChainId sets ChainId field to given value.
 
+
+### GetRiskLevel
+
+`func (o *WalletAddress) GetRiskLevel() AddressRiskLevel`
+
+GetRiskLevel returns the RiskLevel field if non-nil, zero value otherwise.
+
+### GetRiskLevelOk
+
+`func (o *WalletAddress) GetRiskLevelOk() (*AddressRiskLevel, bool)`
+
+GetRiskLevelOk returns a tuple with the RiskLevel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRiskLevel
+
+`func (o *WalletAddress) SetRiskLevel(v AddressRiskLevel)`
+
+SetRiskLevel sets RiskLevel field to given value.
+
+### HasRiskLevel
+
+`func (o *WalletAddress) HasRiskLevel() bool`
+
+HasRiskLevel returns a boolean if a field has been set.
+
+### GetScreeningTimestamp
+
+`func (o *WalletAddress) GetScreeningTimestamp() int32`
+
+GetScreeningTimestamp returns the ScreeningTimestamp field if non-nil, zero value otherwise.
+
+### GetScreeningTimestampOk
+
+`func (o *WalletAddress) GetScreeningTimestampOk() (*int32, bool)`
+
+GetScreeningTimestampOk returns a tuple with the ScreeningTimestamp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScreeningTimestamp
+
+`func (o *WalletAddress) SetScreeningTimestamp(v int32)`
+
+SetScreeningTimestamp sets ScreeningTimestamp field to given value.
+
+### HasScreeningTimestamp
+
+`func (o *WalletAddress) HasScreeningTimestamp() bool`
+
+HasScreeningTimestamp returns a boolean if a field has been set.
 
 ### GetUpdatedTimestamp
 

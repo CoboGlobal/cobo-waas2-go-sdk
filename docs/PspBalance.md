@@ -7,11 +7,11 @@ Name | Type | Description | Notes
 **TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. | 
 **DeveloperFeeAmount** | Pointer to **string** | The total amount of the token that has been received as developer fee. | [optional] 
 **SettledAmount** | Pointer to **string** | The total amount of the token that has been paid out from the developer&#39;s balance. | [optional] 
-**PayoutAmount** | Pointer to **string** | The psp payout amount. | [optional] 
+**PayoutAmount** | Pointer to **string** | This field is reserved for future use. | [optional] 
 **RefundedAmount** | Pointer to **string** | The total amount of the token that has been refunded from the developer&#39;s balance. | [optional] 
-**TotalBalance** | Pointer to **string** |  The total balance of the token available for payout or refund for the developer.  &#x60;total_balance&#x60; &#x3D; &#x60;developer_fee_amount&#x60; - &#x60;settled_amount&#x60; - &#x60;refunded_amount&#x60;  For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances)  | [optional] 
-**AvailableBalance** | Pointer to **string** | The psp available balance. | [optional] 
-**LockedBalance** | Pointer to **string** | The psp locked balance. | [optional] 
+**TotalBalance** | Pointer to **string** |  The total balance of the token available for payout or refund for the developer.  For more information, please refer to [Accounts and fund allocation](https://www.cobo.com/payments/en/guides/amounts-and-balances)  | [optional] 
+**AvailableBalance** | Pointer to **string** | This field has been deprecated.  | [optional] 
+**LockedBalance** | Pointer to **string** | This field is reserved for future use. | [optional] 
 
 ## Methods
 

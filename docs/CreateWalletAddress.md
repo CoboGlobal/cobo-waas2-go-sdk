@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Address** | **string** | The wallet address. | 
-**ChainId** | **string** | The chain ID of the cryptocurrency. | 
+**ChainId** | **string** | The chain ID of the address. | 
 
 ## Methods
 

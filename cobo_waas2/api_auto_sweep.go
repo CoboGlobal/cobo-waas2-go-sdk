@@ -648,7 +648,10 @@ func (r ApiListWalletSweepToAddressesRequest) Execute() (*ListWalletSweepToAddre
 ListWalletSweepToAddresses List sweep-to addresses
 
 This operation retrieves a list of sweep-to addresses within your wallet.
+
 <Note>Sweep-to addresses are only applicable to MPC Wallets and Custodial Wallets (Web3 Wallets) with the auto-sweep feature enabled.</Note>
+
+<Info>For EVM-compatible chains (such as Ethereum and BNB Smart Chain), the same address is used across chains. As a result, when listing sweep-to addresses, only one address entry (shown under Ethereum) is returned for all EVM-compatible chains. Separate entries are not returned for each individual EVM chain.</Info>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

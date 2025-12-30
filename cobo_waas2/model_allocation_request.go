@@ -19,12 +19,15 @@ var _ MappedNullable = &AllocationRequest{}
 
 // AllocationRequest struct for AllocationRequest
 type AllocationRequest struct {
-	// The ID of the cryptocurrency you want to allocation. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+	// The ID of the cryptocurrency you want to allocate. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// The allocation amount. 
+	// The amount of the cryptocurrency you want to allocate. 
 	Amount string `json:"amount"`
+	// The source account.  - If the source account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the source account is the developer account, use the string `\"developer\"`. 
 	SourceAccount string `json:"source_account"`
+	// The destination account.  - If the destination account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the destination account is the developer account, use the string `\"developer\"`. 
 	DestinationAccount string `json:"destination_account"`
+	// The description of the allocation request.
 	Description string `json:"description"`
 }
 

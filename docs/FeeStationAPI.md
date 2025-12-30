@@ -69,7 +69,7 @@ Other parameters are passed through a pointer to a apiCheckFeeStationUsageReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **feeStationCheckFeeStationUsage** | [**FeeStationCheckFeeStationUsage**](FeeStationCheckFeeStationUsage.md) | The information for evaluating Fee Station usage. | 
+ **feeStationCheckFeeStationUsage** | [**FeeStationCheckFeeStationUsage**](FeeStationCheckFeeStationUsage.md) | The request body for evaluating Fee Station usage. | 
 
 ### Return type
 

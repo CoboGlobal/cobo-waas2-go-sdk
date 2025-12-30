@@ -19,15 +19,15 @@ var _ MappedNullable = &CreatePayoutRequest{}
 
 // CreatePayoutRequest struct for CreatePayoutRequest
 type CreatePayoutRequest struct {
-	// The request ID that is used to track a settlement request. The request ID is provided by you and must be unique.
+	// The request ID that is used to track a payout request. The request ID is provided by you and must be unique.
 	RequestId string `json:"request_id"`
 	PayoutChannel PayoutChannel `json:"payout_channel"`
 	PayoutParams []PaymentPayoutParam `json:"payout_params"`
-	// ｜ Only used in OffRamp payout channel. The ID of the bank account where the settled funds will be deposited.
+	// The ID of the bank account where the funds will be deposited. Specify this field when `payout_channel` is set to `OffRamp`.  You can call [List all bank accounts](https://www.cobo.com/payments/en/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts. To add a new bank account, refer to [Destinations](https://www.cobo.com/payments/en/guides/destinations). 
 	BankAccountId *string `json:"bank_account_id,omitempty"`
-	// The fiat currency for the create payouts.
+	// The fiat currency you will receive from the payout. - Required when `payout_channel` is set to `OffRamp`. - Currently, only `USD` is supported. 
 	Currency *string `json:"currency,omitempty"`
-	// The remark for the create payouts.
+	// The remark for the payout.
 	Remark *string `json:"remark,omitempty"`
 }
 

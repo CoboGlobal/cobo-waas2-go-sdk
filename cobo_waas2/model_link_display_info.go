@@ -21,7 +21,7 @@ type LinkDisplayInfo struct {
 	DeveloperName *string `json:"developer_name,omitempty"`
 	// The URL of the logo image to display to end users on the page. 
 	Logo *string `json:"logo,omitempty"`
-	// The URL to redirect to after the operation completes.
+	// The product page URL where end users will be redirected after the payment process ends.  This URL is embedded in a \"Return to Merchant\" button displayed on the following result pages: - Payment success - Payment timeout - Payment rejected - Payment error 
 	ReturnUrl *string `json:"return_url,omitempty"`
 }
 

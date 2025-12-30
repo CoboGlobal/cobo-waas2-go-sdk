@@ -19,7 +19,7 @@ var _ MappedNullable = &ContractCallParams{}
 
 // ContractCallParams The information about a transaction that interacts with a smart contract
 type ContractCallParams struct {
-	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
+	// A client-defined unique request identifier (idempotency key) used to prevent duplicate contract call requests. It must be unique within the same organization. Requests with the same request ID will be rejected with an error.
 	RequestId string `json:"request_id"`
 	// The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 	ChainId string `json:"chain_id"`

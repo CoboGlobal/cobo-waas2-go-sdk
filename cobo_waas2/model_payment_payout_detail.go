@@ -29,12 +29,12 @@ type PaymentPayoutDetail struct {
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The updated time of the payout, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// The initiator of this payout, usually the user's API key.
+	// The initiator of this payout, usually the API key used to create the payout.
 	Initiator *string `json:"initiator,omitempty"`
 	PayoutChannel *PayoutChannel `json:"payout_channel,omitempty"`
-	// The fiat currency for the payout.
+	// The fiat currency you will receive from the payout.
 	Currency *string `json:"currency,omitempty"`
-	// The actual amount of this payout. 
+	// The total amount of cryptocurrency actually paid out for this payout. 
 	ActualPayoutAmount *string `json:"actual_payout_amount,omitempty"`
 	BankAccount *BankAccount `json:"bank_account,omitempty"`
 }
