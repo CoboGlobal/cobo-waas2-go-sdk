@@ -19,7 +19,7 @@ var _ MappedNullable = &CreateBatchAllocationRequest{}
 
 // CreateBatchAllocationRequest struct for CreateBatchAllocationRequest
 type CreateBatchAllocationRequest struct {
-	// The request ID that is used to track a allocation request. The request ID is provided by you and must be unique.
+	// The request ID that is used to track a batch allocation request. The request ID is provided by you and must be unique.
 	RequestId string `json:"request_id"`
 	AllocationRequests []AllocationRequest `json:"allocation_requests"`
 }

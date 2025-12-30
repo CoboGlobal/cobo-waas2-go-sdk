@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// CounterpartyType CounterpartyType defines the type of the counterparty: - `Individual`: The counterparty is an individual. - `Organization`: The counterparty is an organization. 
+// CounterpartyType The type of the counterparty: - `Individual`: The counterparty is an individual. - `Organization`: The counterparty is an organization. 
 type CounterpartyType string
 
 // List of CounterpartyType

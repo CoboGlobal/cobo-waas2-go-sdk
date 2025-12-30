@@ -185,7 +185,7 @@ This operation initiates a Babylon BTC staking expansion request.
 
 Before calling this operation, please ensure the following:
 - The BTC staking position is active.
-- The finality provider public keys are valid. Each BSN chain has a unique finality provider public key at most.
+- The finality provider public keys are valid. Each BSN chain can have at most one finality provider public key.
 
 The system first checks whether the provided BTC staking position is active. If active, it creates a new BTC staking position for the Phase-3 expansion.
 

@@ -25,15 +25,15 @@ type PspBalance struct {
 	DeveloperFeeAmount *string `json:"developer_fee_amount,omitempty"`
 	// The total amount of the token that has been paid out from the developer's balance.
 	SettledAmount *string `json:"settled_amount,omitempty"`
-	// The psp payout amount.
+	// This field is reserved for future use.
 	PayoutAmount *string `json:"payout_amount,omitempty"`
 	// The total amount of the token that has been refunded from the developer's balance.
 	RefundedAmount *string `json:"refunded_amount,omitempty"`
-	//  The total balance of the token available for payout or refund for the developer.  `total_balance` = `developer_fee_amount` - `settled_amount` - `refunded_amount`  For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances) 
+	//  The total balance of the token available for payout or refund for the developer.  For more information, please refer to [Accounts and fund allocation](https://www.cobo.com/payments/en/guides/amounts-and-balances) 
 	TotalBalance *string `json:"total_balance,omitempty"`
-	// The psp available balance.
+	// This field has been deprecated. 
 	AvailableBalance *string `json:"available_balance,omitempty"`
-	// The psp locked balance.
+	// This field is reserved for future use.
 	LockedBalance *string `json:"locked_balance,omitempty"`
 }
 

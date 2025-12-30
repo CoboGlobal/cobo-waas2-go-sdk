@@ -43,7 +43,7 @@ BroadcastSignedTransactions Broadcast signed transactions
 <Note>This operation is only applicable to the staking scenarios.</Note>
 This operation broadcasts a list of signed transactions. 
 
-If you set `auto_broadcast` to `false` when [creating a staking activity](https://www.cobo.com/developers/v2/api-references/staking/create-stake-activity), the transaction will not be submitted to the blockchain automatically after being signed. In such cases, you can call this operation to broadcast the transaction to the blockchain.
+If you set `auto_broadcast` to `false` when [creating a staking activity](https://www.cobo.com/developers/v2/api-references/stakings/create-stake-activity), the transaction will not be submitted to the blockchain automatically after being signed. In such cases, you can call this operation to broadcast the transaction to the blockchain.
 
 A transaction can only be broadcast if its status is `Broadcasting`.
 
@@ -470,12 +470,15 @@ You need to provide details such as the source address, destination address, and
 
 For smart contract call examples, you can refer to [Batch transfers using smart contracts](/v2/guides/transactions/batch-transfer) and [Swap tokens on Solana using Jupiter](/v2/guides/transactions/sol-jupiter-swap).
 
+<Note>This operation uses `request_id` to prevent duplicate contract call requests. The `request_id` must be unique within the same organization. Duplicate requests with the same `request_id` will be rejected with an error and will not be executed again.</Note>
+
 <Info>
 Supported actions vary by blockchain:
 - EVM chains — Support deploying contracts and calling contract functions.
 - Solana — Supports calling contract functions only.
 - TRON — Supports calling contract functions only.
 - Stellar — Supports XLM trustline creation only.
+- Cosmos — Supports initiating Cosmos native message-based transactions, such as transfers and staking operations.
 </Info>
 
 <Note>Currently, this operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets. Refer to the `destination` property for supported contract types.</Note>
@@ -753,6 +756,8 @@ CreateTransferTransaction Transfer token
 The operation transfers your assets from a wallet created on Cobo Portal to another address.
 
 You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
+
+<Note>This operation uses `request_id` to prevent duplicate transfer requests. The `request_id` must be unique within the same organization. Duplicate requests with the same `request_id` will be rejected with an error and will not be executed again.</Note>
 
 <Note>If you make transfers from Custodial Wallets (Asset Wallets) and Exchange Wallets, do not set the fee-related properties, as they will not take effects.</Note>
 

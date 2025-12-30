@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DeveloperName** | Pointer to **string** | The brand name to display to end users on the page. This helps users identify who is providing the payment service.  | [optional] 
 **Logo** | Pointer to **string** | The URL of the logo image to display to end users on the page.  | [optional] 
-**ReturnUrl** | Pointer to **string** | The URL to redirect to after the operation completes. | [optional] 
+**ReturnUrl** | Pointer to **string** | The product page URL where end users will be redirected after the payment process ends.  This URL is embedded in a \&quot;Return to Merchant\&quot; button displayed on the following result pages: - Payment success - Payment timeout - Payment rejected - Payment error  | [optional] 
 
 ## Methods
 

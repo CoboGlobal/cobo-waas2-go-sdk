@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RequestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
+**RequestId** | **string** | A client-defined unique request identifier (idempotency key) used to prevent duplicate transfer requests. It must be unique within the same organization. Requests with the same request ID will be rejected with an error.  | 
 **Source** | [**TransferSource**](TransferSource.md) |  | 
 **TokenId** | **string** | The token ID of the transferred token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). For transfers from Exchange Wallets, this property value represents the asset ID. | 
 **Destination** | [**TransferDestination**](TransferDestination.md) |  | 

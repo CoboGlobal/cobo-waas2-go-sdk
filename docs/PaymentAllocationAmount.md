@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TokenId** | **string** | The ID of the cryptocurrency. | 
-**AllocationAmount** | **string** | The allocation amount. | 
+**AllocationAmount** | **string** | The available amount that can be allocated from the source account to the destination account for the given cryptocurrency. | 
 
 ## Methods
 

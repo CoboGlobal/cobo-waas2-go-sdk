@@ -19,9 +19,7 @@ var _ MappedNullable = &OrderLinkBusinessInfoCustomExchangeRatesInner{}
 
 // OrderLinkBusinessInfoCustomExchangeRatesInner struct for OrderLinkBusinessInfoCustomExchangeRatesInner
 type OrderLinkBusinessInfoCustomExchangeRatesInner struct {
-	// The cryptocurrency token ID
 	TokenId string `json:"token_id"`
-	// The fixed exchange rate to use for this token
 	ExchangeRate string `json:"exchange_rate"`
 }
 

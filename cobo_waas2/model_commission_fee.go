@@ -19,7 +19,7 @@ var _ MappedNullable = &CommissionFee{}
 
 // CommissionFee struct for CommissionFee
 type CommissionFee struct {
-	// The amount of the commission fee charged by Cobo for pay-ins and payouts, in USD.
+	// The amount of the commission fee charged by Cobo for operations such as pay-ins and payouts, in USD.
 	FeeAmount string `json:"fee_amount"`
 }
 

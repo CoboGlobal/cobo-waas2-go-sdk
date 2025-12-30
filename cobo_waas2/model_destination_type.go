@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// DestinationType DestinationType defines the type of the destination: - `Individual`: The destination is an individual. - `Organization`: The destination is an organization. 
+// DestinationType The type of the destination. - `Individual`: The destination is an individual. - `Organization`: The destination is an organization. 
 type DestinationType string
 
 // List of DestinationType

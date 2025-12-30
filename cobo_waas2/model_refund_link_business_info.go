@@ -26,7 +26,7 @@ type RefundLinkBusinessInfo struct {
 	RefundSource RefundType `json:"refund_source"`
 	// The merchant ID, required if `refund_source` is `Merchant`. The fund will be deducted from the specified merchant's balance.
 	MerchantId *string `json:"merchant_id,omitempty"`
-	// The developer fee amount to charge the merchant, denominated in the cryptocurrency of the original payment transaction. This field is only valid when `refund_source` is `Merchant`. For more information, please refer to [Funds allocation and balances](https://www.cobo.com/payments/en/guides/amounts-and-balances). Must be:   - A positive integer with up to two decimal places.   - Less than the refund amount 
+	// The developer fee amount to charge the merchant, denominated in the cryptocurrency of the original payment transaction. This field is only valid when `refund_source` is `Merchant`. For more information, please refer to [Accounts and fund allocation](https://www.cobo.com/payments/en/guides/amounts-and-balances). Must be:   - A positive integer with up to two decimal places.   - Less than the refund amount 
 	FeeAmount *string `json:"fee_amount,omitempty"`
 }
 

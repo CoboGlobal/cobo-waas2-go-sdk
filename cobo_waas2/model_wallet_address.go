@@ -23,8 +23,11 @@ type WalletAddress struct {
 	WalletAddressId string `json:"wallet_address_id"`
 	// The wallet address.
 	Address string `json:"address"`
-	// The chain ID of the cryptocurrency.
+	// The chain ID of the address.
 	ChainId string `json:"chain_id"`
+	RiskLevel *AddressRiskLevel `json:"risk_level,omitempty"`
+	// UNIX timestamp (in seconds) when the address was last screened for compliance.
+	ScreeningTimestamp *int32 `json:"screening_timestamp,omitempty"`
 	// The updated time of the wallet address, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp int32 `json:"updated_timestamp"`
 }
@@ -124,6 +127,70 @@ func (o *WalletAddress) SetChainId(v string) {
 	o.ChainId = v
 }
 
+// GetRiskLevel returns the RiskLevel field value if set, zero value otherwise.
+func (o *WalletAddress) GetRiskLevel() AddressRiskLevel {
+	if o == nil || IsNil(o.RiskLevel) {
+		var ret AddressRiskLevel
+		return ret
+	}
+	return *o.RiskLevel
+}
+
+// GetRiskLevelOk returns a tuple with the RiskLevel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WalletAddress) GetRiskLevelOk() (*AddressRiskLevel, bool) {
+	if o == nil || IsNil(o.RiskLevel) {
+		return nil, false
+	}
+	return o.RiskLevel, true
+}
+
+// HasRiskLevel returns a boolean if a field has been set.
+func (o *WalletAddress) HasRiskLevel() bool {
+	if o != nil && !IsNil(o.RiskLevel) {
+		return true
+	}
+
+	return false
+}
+
+// SetRiskLevel gets a reference to the given AddressRiskLevel and assigns it to the RiskLevel field.
+func (o *WalletAddress) SetRiskLevel(v AddressRiskLevel) {
+	o.RiskLevel = &v
+}
+
+// GetScreeningTimestamp returns the ScreeningTimestamp field value if set, zero value otherwise.
+func (o *WalletAddress) GetScreeningTimestamp() int32 {
+	if o == nil || IsNil(o.ScreeningTimestamp) {
+		var ret int32
+		return ret
+	}
+	return *o.ScreeningTimestamp
+}
+
+// GetScreeningTimestampOk returns a tuple with the ScreeningTimestamp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WalletAddress) GetScreeningTimestampOk() (*int32, bool) {
+	if o == nil || IsNil(o.ScreeningTimestamp) {
+		return nil, false
+	}
+	return o.ScreeningTimestamp, true
+}
+
+// HasScreeningTimestamp returns a boolean if a field has been set.
+func (o *WalletAddress) HasScreeningTimestamp() bool {
+	if o != nil && !IsNil(o.ScreeningTimestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetScreeningTimestamp gets a reference to the given int32 and assigns it to the ScreeningTimestamp field.
+func (o *WalletAddress) SetScreeningTimestamp(v int32) {
+	o.ScreeningTimestamp = &v
+}
+
 // GetUpdatedTimestamp returns the UpdatedTimestamp field value
 func (o *WalletAddress) GetUpdatedTimestamp() int32 {
 	if o == nil {
@@ -161,6 +228,12 @@ func (o WalletAddress) ToMap() (map[string]interface{}, error) {
 	toSerialize["wallet_address_id"] = o.WalletAddressId
 	toSerialize["address"] = o.Address
 	toSerialize["chain_id"] = o.ChainId
+	if !IsNil(o.RiskLevel) {
+		toSerialize["risk_level"] = o.RiskLevel
+	}
+	if !IsNil(o.ScreeningTimestamp) {
+		toSerialize["screening_timestamp"] = o.ScreeningTimestamp
+	}
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	return toSerialize, nil
 }

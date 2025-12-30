@@ -19,9 +19,9 @@ var _ MappedNullable = &OrderLinkBusinessInfoPayableAmountsInner{}
 
 // OrderLinkBusinessInfoPayableAmountsInner struct for OrderLinkBusinessInfoPayableAmountsInner
 type OrderLinkBusinessInfoPayableAmountsInner struct {
-	// The cryptocurrency token ID
+	// The ID of the cryptocurrency used for payment. Supported values: - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// The actual payable amount of the order in the cryptocurrency.
+	// The payable amount in the specified currency.
 	Amount string `json:"amount"`
 }
 

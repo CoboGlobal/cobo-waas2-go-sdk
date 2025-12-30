@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentOrderEventData{}
 
 // PaymentOrderEventData struct for PaymentOrderEventData
 type PaymentOrderEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data.
 	DataType string `json:"data_type"`
 	// The order ID.
 	OrderId string `json:"order_id"`
@@ -29,11 +29,11 @@ type PaymentOrderEventData struct {
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
-	// The fiat currency of the order.
+	// The pricing currency of the order.
 	PricingCurrency *string `json:"pricing_currency,omitempty"`
-	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`).
+	// The base amount of the order, excluding the developer fee (specified in `fee_amount`).
 	PricingAmount *string `json:"pricing_amount,omitempty"`
-	// The developer fee for the order in fiat currency. It is added to the base amount (`order_amount`) to determine the final charge.
+	// The developer fee for the order. It is added to the base amount to determine the final charge.
 	FeeAmount string `json:"fee_amount"`
 	// The ID of the cryptocurrency used for payment.
 	PayableCurrency *string `json:"payable_currency,omitempty"`
@@ -41,9 +41,9 @@ type PaymentOrderEventData struct {
 	ChainId string `json:"chain_id"`
 	// The cryptocurrency amount to be paid for this order.
 	PayableAmount string `json:"payable_amount"`
-	// The exchange rate between a currency pair. Expressed as the amount of fiat currency per one unit of cryptocurrency. For example, if the cryptocurrency is USDT and the fiat currency is USD, a rate of \"0.99\" means 1 USDT = 0.99 USD.
+	// The exchange rate between `payable_currency` and `pricing_currency`, calculated as (`pricing_amount` + `fee_amount`) / `payable_amount`.    <Note>This field is only returned when `payable_amount` was not provided in the order creation request. </Note> 
 	ExchangeRate string `json:"exchange_rate"`
-	// Allowed amount deviation.
+	// The allowed amount deviation, with precision up to 1 decimal place.  For example, if `payable_amount` is `100.00` and `amount_tolerance` is `0.50`: - Payer pays 99.55 → Success (difference of 0.45 ≤ 0.5) - Payer pays 99.40 → Underpaid (difference of 0.60 > 0.5) 
 	AmountTolerance *string `json:"amount_tolerance,omitempty"`
 	// The recipient wallet address to be used for the payment transaction.
 	ReceiveAddress string `json:"receive_address"`
@@ -58,11 +58,11 @@ type PaymentOrderEventData struct {
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
 	// An array of transactions associated with this pay-in order. Each transaction represents a separate blockchain operation related to the settlement process.
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
-	// The fiat currency of the order.
+	// This field has been deprecated. Please use `pricing_currency` instead.
 	Currency *string `json:"currency,omitempty"`
-	// The base amount of the order in fiat currency, excluding the developer fee (specified in `fee_amount`).
+	// This field has been deprecated. Please use `pricing_amount` instead.
 	OrderAmount *string `json:"order_amount,omitempty"`
-	// The ID of the cryptocurrency used for payment.
+	// This field has been deprecated. Please use `payable_currency` instead.
 	TokenId *string `json:"token_id,omitempty"`
 	SettlementStatus *SettleStatus `json:"settlement_status,omitempty"`
 }

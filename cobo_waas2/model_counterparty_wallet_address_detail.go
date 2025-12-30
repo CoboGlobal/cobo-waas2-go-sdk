@@ -28,7 +28,7 @@ type CounterpartyWalletAddressDetail struct {
 	WalletAddressId string `json:"wallet_address_id"`
 	// The wallet address.
 	Address string `json:"address"`
-	// The chain ID of the cryptocurrency.
+	// The chain ID of the address.
 	ChainId string `json:"chain_id"`
 	// The updated time of the wallet address, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp int32 `json:"updated_timestamp"`
