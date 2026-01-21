@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Screenings** | [**[]KyaScreeningRequest**](KyaScreeningRequest.md) | List of address screening requests. Maximum 50 addresses per request. | 
+**Screenings** | [**[]KyaScreeningRequest**](KyaScreeningRequest.md) | List of address screening requests. Maximum 50 addresses per call. | 
 
 ## Methods
 

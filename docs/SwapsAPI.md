@@ -331,7 +331,7 @@ Name | Type | Description  | Notes
 
 ## ListSwapActivities
 
-> ListSwapActivities200Response ListSwapActivities(ctx).Type_(type_).Status(status).MinUpdatedTimestamp(minUpdatedTimestamp).MaxUpdatedTimestamp(maxUpdatedTimestamp).Initiator(initiator).Limit(limit).Before(before).After(after).SortBy(sortBy).Direction(direction).Execute()
+> ListSwapActivities200Response ListSwapActivities(ctx).RequestId(requestId).Type_(type_).Status(status).MinUpdatedTimestamp(minUpdatedTimestamp).MaxUpdatedTimestamp(maxUpdatedTimestamp).Initiator(initiator).Limit(limit).Before(before).After(after).SortBy(sortBy).Direction(direction).Execute()
 
 List swap activities
 
@@ -351,6 +351,7 @@ import (
 )
 
 func main() {
+	requestId := "web_send_by_user_327_1610444045047"
 	type_ := coboWaas2.SwapType("Bridge")
 	status := coboWaas2.SwapActivityStatus("Success")
 	minUpdatedTimestamp := int64(1635744000000)
@@ -373,7 +374,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.SwapsAPI.ListSwapActivities(ctx).Type_(type_).Status(status).MinUpdatedTimestamp(minUpdatedTimestamp).MaxUpdatedTimestamp(maxUpdatedTimestamp).Initiator(initiator).Limit(limit).Before(before).After(after).SortBy(sortBy).Direction(direction).Execute()
+	resp, r, err := apiClient.SwapsAPI.ListSwapActivities(ctx).RequestId(requestId).Type_(type_).Status(status).MinUpdatedTimestamp(minUpdatedTimestamp).MaxUpdatedTimestamp(maxUpdatedTimestamp).Initiator(initiator).Limit(limit).Before(before).After(after).SortBy(sortBy).Direction(direction).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SwapsAPI.ListSwapActivities``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -394,6 +395,7 @@ Other parameters are passed through a pointer to a apiListSwapActivitiesRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **requestId** | **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | 
  **type_** | [**SwapType**](SwapType.md) |  | 
  **status** | [**SwapActivityStatus**](SwapActivityStatus.md) |  | 
  **minUpdatedTimestamp** | **int64** | The start time of the query. All swap activities updated after the specified time will be retrieved. The time is in Unix timestamp format, measured in milliseconds. | 

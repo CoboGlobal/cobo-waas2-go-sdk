@@ -19,16 +19,10 @@ var _ MappedNullable = &PaymentPayoutParam{}
 
 // PaymentPayoutParam struct for PaymentPayoutParam
 type PaymentPayoutParam struct {
-	// The source account from which the payout will be made. - If the source account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the source account is the developer account, use the string `\"developer\"`. 
-	SourceAccount string `json:"source_account"`
 	// The ID of the cryptocurrency you want to pay out. Specify this field when `payout_channel` is set to `Crypto`. Supported values: - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// The amount of the cryptocurrency to pay out. 
+	// The payout cryptocurrency amount. 
 	Amount string `json:"amount"`
-	// The ID of the crypto address used for crypto payouts. Specify this field when `payout_channel` is set to `Crypto`.  Call [List crypto addresses](https://www.cobo.com/payments/en/api-references/payment/list-crypto-addresses) to retrieve registered crypto addresses. 
-	CryptoAddressId *string `json:"crypto_address_id,omitempty"`
-	// The actual blockchain address to which funds will be transferred. Specify this field when `payout_channel` is set to `Crypto`. <Note>   If you have enabled the *Use Destinations as Payout Whitelist* toggle in *Destinations*, you can only transfer to registered destinations. For more details, see [Destinations](https://www.cobo.com/payments/en/guides/destinations). </Note> 
-	CryptoAddress *string `json:"crypto_address,omitempty"`
 }
 
 type _PaymentPayoutParam PaymentPayoutParam
@@ -37,9 +31,8 @@ type _PaymentPayoutParam PaymentPayoutParam
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentPayoutParam(sourceAccount string, tokenId string, amount string) *PaymentPayoutParam {
+func NewPaymentPayoutParam(tokenId string, amount string) *PaymentPayoutParam {
 	this := PaymentPayoutParam{}
-	this.SourceAccount = sourceAccount
 	this.TokenId = tokenId
 	this.Amount = amount
 	return &this
@@ -51,30 +44,6 @@ func NewPaymentPayoutParam(sourceAccount string, tokenId string, amount string) 
 func NewPaymentPayoutParamWithDefaults() *PaymentPayoutParam {
 	this := PaymentPayoutParam{}
 	return &this
-}
-
-// GetSourceAccount returns the SourceAccount field value
-func (o *PaymentPayoutParam) GetSourceAccount() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.SourceAccount
-}
-
-// GetSourceAccountOk returns a tuple with the SourceAccount field value
-// and a boolean to check if the value has been set.
-func (o *PaymentPayoutParam) GetSourceAccountOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.SourceAccount, true
-}
-
-// SetSourceAccount sets field value
-func (o *PaymentPayoutParam) SetSourceAccount(v string) {
-	o.SourceAccount = v
 }
 
 // GetTokenId returns the TokenId field value
@@ -125,70 +94,6 @@ func (o *PaymentPayoutParam) SetAmount(v string) {
 	o.Amount = v
 }
 
-// GetCryptoAddressId returns the CryptoAddressId field value if set, zero value otherwise.
-func (o *PaymentPayoutParam) GetCryptoAddressId() string {
-	if o == nil || IsNil(o.CryptoAddressId) {
-		var ret string
-		return ret
-	}
-	return *o.CryptoAddressId
-}
-
-// GetCryptoAddressIdOk returns a tuple with the CryptoAddressId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentPayoutParam) GetCryptoAddressIdOk() (*string, bool) {
-	if o == nil || IsNil(o.CryptoAddressId) {
-		return nil, false
-	}
-	return o.CryptoAddressId, true
-}
-
-// HasCryptoAddressId returns a boolean if a field has been set.
-func (o *PaymentPayoutParam) HasCryptoAddressId() bool {
-	if o != nil && !IsNil(o.CryptoAddressId) {
-		return true
-	}
-
-	return false
-}
-
-// SetCryptoAddressId gets a reference to the given string and assigns it to the CryptoAddressId field.
-func (o *PaymentPayoutParam) SetCryptoAddressId(v string) {
-	o.CryptoAddressId = &v
-}
-
-// GetCryptoAddress returns the CryptoAddress field value if set, zero value otherwise.
-func (o *PaymentPayoutParam) GetCryptoAddress() string {
-	if o == nil || IsNil(o.CryptoAddress) {
-		var ret string
-		return ret
-	}
-	return *o.CryptoAddress
-}
-
-// GetCryptoAddressOk returns a tuple with the CryptoAddress field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentPayoutParam) GetCryptoAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.CryptoAddress) {
-		return nil, false
-	}
-	return o.CryptoAddress, true
-}
-
-// HasCryptoAddress returns a boolean if a field has been set.
-func (o *PaymentPayoutParam) HasCryptoAddress() bool {
-	if o != nil && !IsNil(o.CryptoAddress) {
-		return true
-	}
-
-	return false
-}
-
-// SetCryptoAddress gets a reference to the given string and assigns it to the CryptoAddress field.
-func (o *PaymentPayoutParam) SetCryptoAddress(v string) {
-	o.CryptoAddress = &v
-}
-
 func (o PaymentPayoutParam) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -199,15 +104,8 @@ func (o PaymentPayoutParam) MarshalJSON() ([]byte, error) {
 
 func (o PaymentPayoutParam) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["source_account"] = o.SourceAccount
 	toSerialize["token_id"] = o.TokenId
 	toSerialize["amount"] = o.Amount
-	if !IsNil(o.CryptoAddressId) {
-		toSerialize["crypto_address_id"] = o.CryptoAddressId
-	}
-	if !IsNil(o.CryptoAddress) {
-		toSerialize["crypto_address"] = o.CryptoAddress
-	}
 	return toSerialize, nil
 }
 
@@ -216,7 +114,6 @@ func (o *PaymentPayoutParam) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"source_account",
 		"token_id",
 		"amount",
 	}

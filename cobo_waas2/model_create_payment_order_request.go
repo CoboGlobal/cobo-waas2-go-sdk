@@ -25,14 +25,14 @@ type CreatePaymentOrderRequest struct {
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
-	// The pricing currency that denominates `pricing_amount` and `fee_amount`. If left empty, both values will be denominated in `payable_currency`. Currently, only `USD` is supported.
+	// The pricing currency that denominates `pricing_amount` and `fee_amount`. If left empty, both values will be denominated in `payable_currency`.  Currently, For a complete list of supported currencies, see [Supported chains and tokens](https://www.cobo.com/developers/v2/guides/overview/supported-chains-and-tokens). 
 	PricingCurrency *string `json:"pricing_currency,omitempty"`
 	// The base amount of the order, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places.
 	PricingAmount *string `json:"pricing_amount,omitempty"`
 	// The developer fee for the order. It is added to the base amount (`pricing_amount`) to determine the final charge. For example, if `pricing_amount` is \"100.00\" and `fee_amount` is \"2.00\", the payer will be charged \"102.00\" in total, with \"100.00\" being settled to the merchant account and \"2.00\" settled to the developer account. Values must be greater than 0 and contain two decimal places.
 	FeeAmount string `json:"fee_amount"`
 	// The ID of the cryptocurrency used for payment. Supported values:   - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
-	PayableCurrency *string `json:"payable_currency,omitempty"`
+	PayableCurrency string `json:"payable_currency"`
 	// The total amount the payer needs to pay, denominated in the specified `payable_currency`. If this field is left blank, the system will automatically calculate the amount at order creation using the following formula: (`pricing_amount` + `fee_amount`) / current exchange rate.  Values must be greater than 0 and contain two decimal places. 
 	PayableAmount *string `json:"payable_amount,omitempty"`
 	// The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
@@ -57,11 +57,12 @@ type _CreatePaymentOrderRequest CreatePaymentOrderRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreatePaymentOrderRequest(merchantId string, pspOrderCode string, feeAmount string) *CreatePaymentOrderRequest {
+func NewCreatePaymentOrderRequest(merchantId string, pspOrderCode string, feeAmount string, payableCurrency string) *CreatePaymentOrderRequest {
 	this := CreatePaymentOrderRequest{}
 	this.MerchantId = merchantId
 	this.PspOrderCode = pspOrderCode
 	this.FeeAmount = feeAmount
+	this.PayableCurrency = payableCurrency
 	var currency string = ""
 	this.Currency = &currency
 	return &this
@@ -245,36 +246,28 @@ func (o *CreatePaymentOrderRequest) SetFeeAmount(v string) {
 	o.FeeAmount = v
 }
 
-// GetPayableCurrency returns the PayableCurrency field value if set, zero value otherwise.
+// GetPayableCurrency returns the PayableCurrency field value
 func (o *CreatePaymentOrderRequest) GetPayableCurrency() string {
-	if o == nil || IsNil(o.PayableCurrency) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.PayableCurrency
+
+	return o.PayableCurrency
 }
 
-// GetPayableCurrencyOk returns a tuple with the PayableCurrency field value if set, nil otherwise
+// GetPayableCurrencyOk returns a tuple with the PayableCurrency field value
 // and a boolean to check if the value has been set.
 func (o *CreatePaymentOrderRequest) GetPayableCurrencyOk() (*string, bool) {
-	if o == nil || IsNil(o.PayableCurrency) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PayableCurrency, true
+	return &o.PayableCurrency, true
 }
 
-// HasPayableCurrency returns a boolean if a field has been set.
-func (o *CreatePaymentOrderRequest) HasPayableCurrency() bool {
-	if o != nil && !IsNil(o.PayableCurrency) {
-		return true
-	}
-
-	return false
-}
-
-// SetPayableCurrency gets a reference to the given string and assigns it to the PayableCurrency field.
+// SetPayableCurrency sets field value
 func (o *CreatePaymentOrderRequest) SetPayableCurrency(v string) {
-	o.PayableCurrency = &v
+	o.PayableCurrency = v
 }
 
 // GetPayableAmount returns the PayableAmount field value if set, zero value otherwise.
@@ -555,9 +548,7 @@ func (o CreatePaymentOrderRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["pricing_amount"] = o.PricingAmount
 	}
 	toSerialize["fee_amount"] = o.FeeAmount
-	if !IsNil(o.PayableCurrency) {
-		toSerialize["payable_currency"] = o.PayableCurrency
-	}
+	toSerialize["payable_currency"] = o.PayableCurrency
 	if !IsNil(o.PayableAmount) {
 		toSerialize["payable_amount"] = o.PayableAmount
 	}
@@ -593,6 +584,7 @@ func (o *CreatePaymentOrderRequest) UnmarshalJSON(data []byte) (err error) {
 		"merchant_id",
 		"psp_order_code",
 		"fee_amount",
+		"payable_currency",
 	}
 
 	allProperties := make(map[string]interface{})

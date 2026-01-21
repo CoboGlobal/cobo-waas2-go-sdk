@@ -9,6 +9,8 @@
 
 * `CORE_STAKE_INFO` (value: `"CoreStakeInfo"`)
 
+* `WALLET_CONNECT_INFO` (value: `"WalletConnectInfo"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

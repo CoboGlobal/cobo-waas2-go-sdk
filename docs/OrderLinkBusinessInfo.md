@@ -7,10 +7,10 @@ Name | Type | Description | Notes
 **MerchantId** | **string** | The merchant ID. | 
 **MerchantOrderCode** | Pointer to **string** | A unique reference code assigned by the merchant to identify this order in their system. The code should have a maximum length of 128 characters. | [optional] 
 **PspOrderCode** | **string** | A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters.  | 
-**PricingCurrency** | Pointer to **string** | The pricing currency that denominates &#x60;pricing_amount&#x60; and &#x60;fee_amount&#x60;. Currently, only &#x60;USD&#x60;/&#x60;USDT&#x60;/&#x60;USDC&#x60; are supported. This field is required.  | [optional] 
-**PricingAmount** | Pointer to **string** | The base amount of the order, excluding the developer fee (specified in &#x60;fee_amount&#x60;). Values must be greater than &#x60;0&#x60; and contain two decimal places.  | [optional] 
+**PricingCurrency** | **string** | The pricing currency that denominates &#x60;pricing_amount&#x60; and &#x60;fee_amount&#x60;. Currently, only &#x60;USD&#x60;/&#x60;USDT&#x60;/&#x60;USDC&#x60; are supported. This field is required.  | 
+**PricingAmount** | **string** | The base amount of the order, excluding the developer fee (specified in &#x60;fee_amount&#x60;). Values must be greater than &#x60;0&#x60; and contain two decimal places.  | 
 **FeeAmount** | **string** | The developer fee for the order. It is added to the base amount (&#x60;pricing_amount&#x60;) to determine the final charge. For example, if &#x60;pricing_amount&#x60; is \&quot;100.00\&quot; and &#x60;fee_amount&#x60; is \&quot;2.00\&quot;, the payer will be charged \&quot;102.00\&quot; in total, with \&quot;100.00\&quot; being settled to the merchant account and \&quot;2.00\&quot; settled to the developer account. Values must be greater than 0 and contain two decimal places.  | 
-**PayableCurrencies** | Pointer to **[]string** | The IDs of the cryptocurrencies used for payment. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;  - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | [optional] 
+**PayableCurrencies** | **[]string** | The IDs of the cryptocurrencies used for payment. Supported values:  - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDC&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC&#x60;, &#x60;BSC_USDC&#x60;  - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
 **PayableAmounts** | Pointer to [**[]OrderLinkBusinessInfoPayableAmountsInner**](OrderLinkBusinessInfoPayableAmountsInner.md) | The total amounts the payer needs to pay for each currency in &#x60;payable_currencies&#x60;. If this field is left blank, the system will automatically calculate the amounts at order creation using the following formula: (&#x60;pricing_amount&#x60; + &#x60;fee_amount&#x60;) / current exchange rate.  Values must be greater than 0 and contain two decimal places.  | [optional] 
 **ExpiredIn** | Pointer to **int32** | The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to &#x60;1800&#x60;, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The &#x60;received_token_amount&#x60; field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a &#x60;transactionLate&#x60; webhook event.  | [optional] [default to 1800]
 **AmountTolerance** | Pointer to **string** | The allowed amount deviation, with precision up to 1 decimal place.  For example, if &#x60;payable_amount&#x60; is &#x60;100.00&#x60; and &#x60;amount_tolerance&#x60; is &#x60;0.50&#x60;: - Payer pays 99.55 → Success (difference of 0.45 ≤ 0.5) - Payer pays 99.40 → Underpaid (difference of 0.60 &gt; 0.5)  | [optional] 
@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewOrderLinkBusinessInfo
 
-`func NewOrderLinkBusinessInfo(merchantId string, pspOrderCode string, feeAmount string, ) *OrderLinkBusinessInfo`
+`func NewOrderLinkBusinessInfo(merchantId string, pspOrderCode string, pricingCurrency string, pricingAmount string, feeAmount string, payableCurrencies []string, ) *OrderLinkBusinessInfo`
 
 NewOrderLinkBusinessInfo instantiates a new OrderLinkBusinessInfo object
 This constructor will assign default values to properties that have it defined,
@@ -123,11 +123,6 @@ and a boolean to check if the value has been set.
 
 SetPricingCurrency sets PricingCurrency field to given value.
 
-### HasPricingCurrency
-
-`func (o *OrderLinkBusinessInfo) HasPricingCurrency() bool`
-
-HasPricingCurrency returns a boolean if a field has been set.
 
 ### GetPricingAmount
 
@@ -148,11 +143,6 @@ and a boolean to check if the value has been set.
 
 SetPricingAmount sets PricingAmount field to given value.
 
-### HasPricingAmount
-
-`func (o *OrderLinkBusinessInfo) HasPricingAmount() bool`
-
-HasPricingAmount returns a boolean if a field has been set.
 
 ### GetFeeAmount
 
@@ -193,11 +183,6 @@ and a boolean to check if the value has been set.
 
 SetPayableCurrencies sets PayableCurrencies field to given value.
 
-### HasPayableCurrencies
-
-`func (o *OrderLinkBusinessInfo) HasPayableCurrencies() bool`
-
-HasPayableCurrencies returns a boolean if a field has been set.
 
 ### GetPayableAmounts
 

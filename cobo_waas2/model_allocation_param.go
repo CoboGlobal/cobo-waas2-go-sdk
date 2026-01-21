@@ -14,31 +14,31 @@ import (
 	"fmt"
 )
 
-// checks if the AllocationRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &AllocationRequest{}
+// checks if the AllocationParam type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AllocationParam{}
 
-// AllocationRequest struct for AllocationRequest
-type AllocationRequest struct {
-	// The ID of the cryptocurrency you want to allocate. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
+// AllocationParam struct for AllocationParam
+type AllocationParam struct {
+	// The ID of the cryptocurrency you want to allocation. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC` - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	TokenId string `json:"token_id"`
-	// The amount of the cryptocurrency you want to allocate. 
+	// The allocation amount. 
 	Amount string `json:"amount"`
-	// The source account.  - If the source account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the source account is the developer account, use the string `\"developer\"`. 
+	// The source account from which the allocation will be deducted. - If the source account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the source account is the developer account, use the string `\"developer\"`. 
 	SourceAccount string `json:"source_account"`
-	// The destination account.  - If the destination account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the destination account is the developer account, use the string `\"developer\"`. 
+	// The destination account to which the allocation will be credited. - If the destination account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the destination account is the developer account, use the string `\"developer\"`. 
 	DestinationAccount string `json:"destination_account"`
-	// The description of the allocation request.
+	// The description of the allocation.
 	Description string `json:"description"`
 }
 
-type _AllocationRequest AllocationRequest
+type _AllocationParam AllocationParam
 
-// NewAllocationRequest instantiates a new AllocationRequest object
+// NewAllocationParam instantiates a new AllocationParam object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAllocationRequest(tokenId string, amount string, sourceAccount string, destinationAccount string, description string) *AllocationRequest {
-	this := AllocationRequest{}
+func NewAllocationParam(tokenId string, amount string, sourceAccount string, destinationAccount string, description string) *AllocationParam {
+	this := AllocationParam{}
 	this.TokenId = tokenId
 	this.Amount = amount
 	this.SourceAccount = sourceAccount
@@ -47,16 +47,16 @@ func NewAllocationRequest(tokenId string, amount string, sourceAccount string, d
 	return &this
 }
 
-// NewAllocationRequestWithDefaults instantiates a new AllocationRequest object
+// NewAllocationParamWithDefaults instantiates a new AllocationParam object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAllocationRequestWithDefaults() *AllocationRequest {
-	this := AllocationRequest{}
+func NewAllocationParamWithDefaults() *AllocationParam {
+	this := AllocationParam{}
 	return &this
 }
 
 // GetTokenId returns the TokenId field value
-func (o *AllocationRequest) GetTokenId() string {
+func (o *AllocationParam) GetTokenId() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -67,7 +67,7 @@ func (o *AllocationRequest) GetTokenId() string {
 
 // GetTokenIdOk returns a tuple with the TokenId field value
 // and a boolean to check if the value has been set.
-func (o *AllocationRequest) GetTokenIdOk() (*string, bool) {
+func (o *AllocationParam) GetTokenIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -75,12 +75,12 @@ func (o *AllocationRequest) GetTokenIdOk() (*string, bool) {
 }
 
 // SetTokenId sets field value
-func (o *AllocationRequest) SetTokenId(v string) {
+func (o *AllocationParam) SetTokenId(v string) {
 	o.TokenId = v
 }
 
 // GetAmount returns the Amount field value
-func (o *AllocationRequest) GetAmount() string {
+func (o *AllocationParam) GetAmount() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -91,7 +91,7 @@ func (o *AllocationRequest) GetAmount() string {
 
 // GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
-func (o *AllocationRequest) GetAmountOk() (*string, bool) {
+func (o *AllocationParam) GetAmountOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -99,12 +99,12 @@ func (o *AllocationRequest) GetAmountOk() (*string, bool) {
 }
 
 // SetAmount sets field value
-func (o *AllocationRequest) SetAmount(v string) {
+func (o *AllocationParam) SetAmount(v string) {
 	o.Amount = v
 }
 
 // GetSourceAccount returns the SourceAccount field value
-func (o *AllocationRequest) GetSourceAccount() string {
+func (o *AllocationParam) GetSourceAccount() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -115,7 +115,7 @@ func (o *AllocationRequest) GetSourceAccount() string {
 
 // GetSourceAccountOk returns a tuple with the SourceAccount field value
 // and a boolean to check if the value has been set.
-func (o *AllocationRequest) GetSourceAccountOk() (*string, bool) {
+func (o *AllocationParam) GetSourceAccountOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -123,12 +123,12 @@ func (o *AllocationRequest) GetSourceAccountOk() (*string, bool) {
 }
 
 // SetSourceAccount sets field value
-func (o *AllocationRequest) SetSourceAccount(v string) {
+func (o *AllocationParam) SetSourceAccount(v string) {
 	o.SourceAccount = v
 }
 
 // GetDestinationAccount returns the DestinationAccount field value
-func (o *AllocationRequest) GetDestinationAccount() string {
+func (o *AllocationParam) GetDestinationAccount() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -139,7 +139,7 @@ func (o *AllocationRequest) GetDestinationAccount() string {
 
 // GetDestinationAccountOk returns a tuple with the DestinationAccount field value
 // and a boolean to check if the value has been set.
-func (o *AllocationRequest) GetDestinationAccountOk() (*string, bool) {
+func (o *AllocationParam) GetDestinationAccountOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -147,12 +147,12 @@ func (o *AllocationRequest) GetDestinationAccountOk() (*string, bool) {
 }
 
 // SetDestinationAccount sets field value
-func (o *AllocationRequest) SetDestinationAccount(v string) {
+func (o *AllocationParam) SetDestinationAccount(v string) {
 	o.DestinationAccount = v
 }
 
 // GetDescription returns the Description field value
-func (o *AllocationRequest) GetDescription() string {
+func (o *AllocationParam) GetDescription() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -163,7 +163,7 @@ func (o *AllocationRequest) GetDescription() string {
 
 // GetDescriptionOk returns a tuple with the Description field value
 // and a boolean to check if the value has been set.
-func (o *AllocationRequest) GetDescriptionOk() (*string, bool) {
+func (o *AllocationParam) GetDescriptionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -171,11 +171,11 @@ func (o *AllocationRequest) GetDescriptionOk() (*string, bool) {
 }
 
 // SetDescription sets field value
-func (o *AllocationRequest) SetDescription(v string) {
+func (o *AllocationParam) SetDescription(v string) {
 	o.Description = v
 }
 
-func (o AllocationRequest) MarshalJSON() ([]byte, error) {
+func (o AllocationParam) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -183,7 +183,7 @@ func (o AllocationRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o AllocationRequest) ToMap() (map[string]interface{}, error) {
+func (o AllocationParam) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["token_id"] = o.TokenId
 	toSerialize["amount"] = o.Amount
@@ -193,7 +193,7 @@ func (o AllocationRequest) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *AllocationRequest) UnmarshalJSON(data []byte) (err error) {
+func (o *AllocationParam) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -219,53 +219,53 @@ func (o *AllocationRequest) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varAllocationRequest := _AllocationRequest{}
+	varAllocationParam := _AllocationParam{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	//decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAllocationRequest)
+	err = decoder.Decode(&varAllocationParam)
 
 	if err != nil {
 		return err
 	}
 
-	*o = AllocationRequest(varAllocationRequest)
+	*o = AllocationParam(varAllocationParam)
 
 	return err
 }
 
-type NullableAllocationRequest struct {
-	value *AllocationRequest
+type NullableAllocationParam struct {
+	value *AllocationParam
 	isSet bool
 }
 
-func (v NullableAllocationRequest) Get() *AllocationRequest {
+func (v NullableAllocationParam) Get() *AllocationParam {
 	return v.value
 }
 
-func (v *NullableAllocationRequest) Set(val *AllocationRequest) {
+func (v *NullableAllocationParam) Set(val *AllocationParam) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAllocationRequest) IsSet() bool {
+func (v NullableAllocationParam) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAllocationRequest) Unset() {
+func (v *NullableAllocationParam) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAllocationRequest(val *AllocationRequest) *NullableAllocationRequest {
-	return &NullableAllocationRequest{value: val, isSet: true}
+func NewNullableAllocationParam(val *AllocationParam) *NullableAllocationParam {
+	return &NullableAllocationParam{value: val, isSet: true}
 }
 
-func (v NullableAllocationRequest) MarshalJSON() ([]byte, error) {
+func (v NullableAllocationParam) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAllocationRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableAllocationParam) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

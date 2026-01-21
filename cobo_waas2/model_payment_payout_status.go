@@ -13,27 +13,29 @@ import (
 	"fmt"
 )
 
-// PaymentPayoutStatus The current status of the payout: - `Pending`: The payout has been created and is awaiting processing. - `Processing`: The payout is currently being processed, with at least one payout item in progress. - `Completed`: All requested payout items have been completed. - `PartiallyCompleted`: Some requested payout items have been completed successfully, while others have failed. - `Failed`: All requested payout items have failed. 
+// PaymentPayoutStatus The current status of the payout. Possible values include: - `Pending`: The payout has been created and is awaiting processing. - `Preparing`: The payout is being prepared for transfer. - `Transferring`: The payout is currently being transferred to the recipient's destination. - `Completed`: The payout has been successfully completed and all transactions have been processed. - `PartiallyCompleted`: The payout has been partially completed, with some transactions succeeding and others failing. - `Failed`: The payout has failed and no transactions were completed successfully. - `RejectedByBank`: The payout was rejected by the recipient's bank (applicable to OffRamp payouts only). 
 type PaymentPayoutStatus string
 
 // List of PaymentPayoutStatus
 const (
 	PAYMENTPAYOUTSTATUS_PENDING PaymentPayoutStatus = "Pending"
-	PAYMENTPAYOUTSTATUS_PROCESSING PaymentPayoutStatus = "Processing"
+	PAYMENTPAYOUTSTATUS_PREPARING PaymentPayoutStatus = "Preparing"
+	PAYMENTPAYOUTSTATUS_TRANSFERRING PaymentPayoutStatus = "Transferring"
 	PAYMENTPAYOUTSTATUS_COMPLETED PaymentPayoutStatus = "Completed"
 	PAYMENTPAYOUTSTATUS_PARTIALLY_COMPLETED PaymentPayoutStatus = "PartiallyCompleted"
 	PAYMENTPAYOUTSTATUS_FAILED PaymentPayoutStatus = "Failed"
-	PAYMENTPAYOUTSTATUS_CANCELED PaymentPayoutStatus = "Canceled"
+	PAYMENTPAYOUTSTATUS_REJECTED_BY_BANK PaymentPayoutStatus = "RejectedByBank"
 )
 
 // All allowed values of PaymentPayoutStatus enum
 var AllowedPaymentPayoutStatusEnumValues = []PaymentPayoutStatus{
 	"Pending",
-	"Processing",
+	"Preparing",
+	"Transferring",
 	"Completed",
 	"PartiallyCompleted",
 	"Failed",
-	"Canceled",
+	"RejectedByBank",
 }
 
 func (v *PaymentPayoutStatus) UnmarshalJSON(src []byte) error {

@@ -12,36 +12,36 @@ import (
 	"encoding/json"
 )
 
-// checks if the ListAllocations200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &ListAllocations200Response{}
+// checks if the ListBulkSendItems200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListBulkSendItems200Response{}
 
-// ListAllocations200Response struct for ListAllocations200Response
-type ListAllocations200Response struct {
-	Data []AllocationRecord `json:"data,omitempty"`
+// ListBulkSendItems200Response struct for ListBulkSendItems200Response
+type ListBulkSendItems200Response struct {
+	Data []PaymentBulkSendItem `json:"data,omitempty"`
 	Pagination *Pagination `json:"pagination,omitempty"`
 }
 
-// NewListAllocations200Response instantiates a new ListAllocations200Response object
+// NewListBulkSendItems200Response instantiates a new ListBulkSendItems200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewListAllocations200Response() *ListAllocations200Response {
-	this := ListAllocations200Response{}
+func NewListBulkSendItems200Response() *ListBulkSendItems200Response {
+	this := ListBulkSendItems200Response{}
 	return &this
 }
 
-// NewListAllocations200ResponseWithDefaults instantiates a new ListAllocations200Response object
+// NewListBulkSendItems200ResponseWithDefaults instantiates a new ListBulkSendItems200Response object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewListAllocations200ResponseWithDefaults() *ListAllocations200Response {
-	this := ListAllocations200Response{}
+func NewListBulkSendItems200ResponseWithDefaults() *ListBulkSendItems200Response {
+	this := ListBulkSendItems200Response{}
 	return &this
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *ListAllocations200Response) GetData() []AllocationRecord {
+func (o *ListBulkSendItems200Response) GetData() []PaymentBulkSendItem {
 	if o == nil || IsNil(o.Data) {
-		var ret []AllocationRecord
+		var ret []PaymentBulkSendItem
 		return ret
 	}
 	return o.Data
@@ -49,7 +49,7 @@ func (o *ListAllocations200Response) GetData() []AllocationRecord {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListAllocations200Response) GetDataOk() ([]AllocationRecord, bool) {
+func (o *ListBulkSendItems200Response) GetDataOk() ([]PaymentBulkSendItem, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -57,7 +57,7 @@ func (o *ListAllocations200Response) GetDataOk() ([]AllocationRecord, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *ListAllocations200Response) HasData() bool {
+func (o *ListBulkSendItems200Response) HasData() bool {
 	if o != nil && !IsNil(o.Data) {
 		return true
 	}
@@ -65,13 +65,13 @@ func (o *ListAllocations200Response) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []AllocationRecord and assigns it to the Data field.
-func (o *ListAllocations200Response) SetData(v []AllocationRecord) {
+// SetData gets a reference to the given []PaymentBulkSendItem and assigns it to the Data field.
+func (o *ListBulkSendItems200Response) SetData(v []PaymentBulkSendItem) {
 	o.Data = v
 }
 
 // GetPagination returns the Pagination field value if set, zero value otherwise.
-func (o *ListAllocations200Response) GetPagination() Pagination {
+func (o *ListBulkSendItems200Response) GetPagination() Pagination {
 	if o == nil || IsNil(o.Pagination) {
 		var ret Pagination
 		return ret
@@ -81,7 +81,7 @@ func (o *ListAllocations200Response) GetPagination() Pagination {
 
 // GetPaginationOk returns a tuple with the Pagination field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListAllocations200Response) GetPaginationOk() (*Pagination, bool) {
+func (o *ListBulkSendItems200Response) GetPaginationOk() (*Pagination, bool) {
 	if o == nil || IsNil(o.Pagination) {
 		return nil, false
 	}
@@ -89,7 +89,7 @@ func (o *ListAllocations200Response) GetPaginationOk() (*Pagination, bool) {
 }
 
 // HasPagination returns a boolean if a field has been set.
-func (o *ListAllocations200Response) HasPagination() bool {
+func (o *ListBulkSendItems200Response) HasPagination() bool {
 	if o != nil && !IsNil(o.Pagination) {
 		return true
 	}
@@ -98,11 +98,11 @@ func (o *ListAllocations200Response) HasPagination() bool {
 }
 
 // SetPagination gets a reference to the given Pagination and assigns it to the Pagination field.
-func (o *ListAllocations200Response) SetPagination(v Pagination) {
+func (o *ListBulkSendItems200Response) SetPagination(v Pagination) {
 	o.Pagination = &v
 }
 
-func (o ListAllocations200Response) MarshalJSON() ([]byte, error) {
+func (o ListBulkSendItems200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -110,7 +110,7 @@ func (o ListAllocations200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o ListAllocations200Response) ToMap() (map[string]interface{}, error) {
+func (o ListBulkSendItems200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
@@ -121,38 +121,38 @@ func (o ListAllocations200Response) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableListAllocations200Response struct {
-	value *ListAllocations200Response
+type NullableListBulkSendItems200Response struct {
+	value *ListBulkSendItems200Response
 	isSet bool
 }
 
-func (v NullableListAllocations200Response) Get() *ListAllocations200Response {
+func (v NullableListBulkSendItems200Response) Get() *ListBulkSendItems200Response {
 	return v.value
 }
 
-func (v *NullableListAllocations200Response) Set(val *ListAllocations200Response) {
+func (v *NullableListBulkSendItems200Response) Set(val *ListBulkSendItems200Response) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableListAllocations200Response) IsSet() bool {
+func (v NullableListBulkSendItems200Response) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableListAllocations200Response) Unset() {
+func (v *NullableListBulkSendItems200Response) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableListAllocations200Response(val *ListAllocations200Response) *NullableListAllocations200Response {
-	return &NullableListAllocations200Response{value: val, isSet: true}
+func NewNullableListBulkSendItems200Response(val *ListBulkSendItems200Response) *NullableListBulkSendItems200Response {
+	return &NullableListBulkSendItems200Response{value: val, isSet: true}
 }
 
-func (v NullableListAllocations200Response) MarshalJSON() ([]byte, error) {
+func (v NullableListBulkSendItems200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableListAllocations200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableListBulkSendItems200Response) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

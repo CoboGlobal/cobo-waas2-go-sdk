@@ -1,78 +1,78 @@
-# ListAllocations200Response
+# ListBulkSendItems200Response
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**[]AllocationRecord**](AllocationRecord.md) |  | [optional] 
+**Data** | Pointer to [**[]PaymentBulkSendItem**](PaymentBulkSendItem.md) |  | [optional] 
 **Pagination** | Pointer to [**Pagination**](Pagination.md) |  | [optional] 
 
 ## Methods
 
-### NewListAllocations200Response
+### NewListBulkSendItems200Response
 
-`func NewListAllocations200Response() *ListAllocations200Response`
+`func NewListBulkSendItems200Response() *ListBulkSendItems200Response`
 
-NewListAllocations200Response instantiates a new ListAllocations200Response object
+NewListBulkSendItems200Response instantiates a new ListBulkSendItems200Response object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewListAllocations200ResponseWithDefaults
+### NewListBulkSendItems200ResponseWithDefaults
 
-`func NewListAllocations200ResponseWithDefaults() *ListAllocations200Response`
+`func NewListBulkSendItems200ResponseWithDefaults() *ListBulkSendItems200Response`
 
-NewListAllocations200ResponseWithDefaults instantiates a new ListAllocations200Response object
+NewListBulkSendItems200ResponseWithDefaults instantiates a new ListBulkSendItems200Response object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *ListAllocations200Response) GetData() []AllocationRecord`
+`func (o *ListBulkSendItems200Response) GetData() []PaymentBulkSendItem`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *ListAllocations200Response) GetDataOk() (*[]AllocationRecord, bool)`
+`func (o *ListBulkSendItems200Response) GetDataOk() (*[]PaymentBulkSendItem, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *ListAllocations200Response) SetData(v []AllocationRecord)`
+`func (o *ListBulkSendItems200Response) SetData(v []PaymentBulkSendItem)`
 
 SetData sets Data field to given value.
 
 ### HasData
 
-`func (o *ListAllocations200Response) HasData() bool`
+`func (o *ListBulkSendItems200Response) HasData() bool`
 
 HasData returns a boolean if a field has been set.
 
 ### GetPagination
 
-`func (o *ListAllocations200Response) GetPagination() Pagination`
+`func (o *ListBulkSendItems200Response) GetPagination() Pagination`
 
 GetPagination returns the Pagination field if non-nil, zero value otherwise.
 
 ### GetPaginationOk
 
-`func (o *ListAllocations200Response) GetPaginationOk() (*Pagination, bool)`
+`func (o *ListBulkSendItems200Response) GetPaginationOk() (*Pagination, bool)`
 
 GetPaginationOk returns a tuple with the Pagination field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPagination
 
-`func (o *ListAllocations200Response) SetPagination(v Pagination)`
+`func (o *ListBulkSendItems200Response) SetPagination(v Pagination)`
 
 SetPagination sets Pagination field to given value.
 
 ### HasPagination
 
-`func (o *ListAllocations200Response) HasPagination() bool`
+`func (o *ListBulkSendItems200Response) HasPagination() bool`
 
 HasPagination returns a boolean if a field has been set.
 

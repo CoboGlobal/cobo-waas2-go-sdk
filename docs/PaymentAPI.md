@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**BatchGetExchangeRates**](PaymentAPI.md#BatchGetExchangeRates) | **Get** /payments/exchange_rates | Batch get exchange rates
 [**CancelRefundById**](PaymentAPI.md#CancelRefundById) | **Put** /payments/refunds/{refund_id}/cancel | Cancel refund order
 [**CreateBatchAllocation**](PaymentAPI.md#CreateBatchAllocation) | **Post** /payments/batch_allocations | Create batch allocation
+[**CreateBulkSend**](PaymentAPI.md#CreateBulkSend) | **Post** /payments/bulk_sends | Create bulk send
 [**CreateCounterparty**](PaymentAPI.md#CreateCounterparty) | **Post** /payments/counterparty | Create counterparty
 [**CreateCounterpartyEntry**](PaymentAPI.md#CreateCounterpartyEntry) | **Post** /payments/counterparty_entry | Create counterparty entry
 [**CreateCounterpartyWalletAddress**](PaymentAPI.md#CreateCounterpartyWalletAddress) | **Post** /payments/counterparty/wallet_address | Create counterparty wallet address
@@ -24,6 +25,7 @@ Method | HTTP request | Description
 [**CreateRefundLink**](PaymentAPI.md#CreateRefundLink) | **Post** /payments/links/refunds | Create refund link
 [**CreateReport**](PaymentAPI.md#CreateReport) | **Post** /payments/reports | Generate reports
 [**CreateSettlementRequest**](PaymentAPI.md#CreateSettlementRequest) | **Post** /payments/settlement_requests | Create settlement request
+[**CreateTopUpAddresses**](PaymentAPI.md#CreateTopUpAddresses) | **Post** /payments/topup/address | Batch create top-up addresses
 [**DeleteCounterparty**](PaymentAPI.md#DeleteCounterparty) | **Put** /payments/counterparty/{counterparty_id}/delete | Delete counterparty (Deprecated)
 [**DeleteCounterpartyById**](PaymentAPI.md#DeleteCounterpartyById) | **Delete** /payments/counterparty/{counterparty_id} | Delete counterparty
 [**DeleteCounterpartyEntry**](PaymentAPI.md#DeleteCounterpartyEntry) | **Delete** /payments/counterparty_entry/{counterparty_entry_id} | Delete counterparty entry
@@ -37,6 +39,7 @@ Method | HTTP request | Description
 [**EnableDestinationWhitelist**](PaymentAPI.md#EnableDestinationWhitelist) | **Post** /payments/destination/enable_whitelist | Enable or disable destination whitelist
 [**GetAvailableAllocationAmount**](PaymentAPI.md#GetAvailableAllocationAmount) | **Get** /payments/allocation_amount | Get available allocation amount
 [**GetBatchAllocationById**](PaymentAPI.md#GetBatchAllocationById) | **Get** /payments/batch_allocations/{batch_allocation_id} | Get batch allocation information
+[**GetBulkSendById**](PaymentAPI.md#GetBulkSendById) | **Get** /payments/bulk_sends/{bulk_send_id} | Get bulk send information
 [**GetCounterparty**](PaymentAPI.md#GetCounterparty) | **Get** /payments/counterparty/{counterparty_id} | Get counterparty information
 [**GetCounterpartyDetailById**](PaymentAPI.md#GetCounterpartyDetailById) | **Get** /payments/counterparty/{counterparty_id}/detail | Get counterparty information (Deprecated)
 [**GetCounterpartyEntry**](PaymentAPI.md#GetCounterpartyEntry) | **Get** /payments/counterparty_entry/{counterparty_entry_id} | Get counterparty entry information
@@ -54,9 +57,10 @@ Method | HTTP request | Description
 [**GetSettlementById**](PaymentAPI.md#GetSettlementById) | **Get** /payments/settlement_requests/{settlement_request_id} | Get settlement request information
 [**GetSettlementInfoByIds**](PaymentAPI.md#GetSettlementInfoByIds) | **Get** /payments/settlement_info | Get withdrawable balances
 [**GetTopUpAddress**](PaymentAPI.md#GetTopUpAddress) | **Get** /payments/topup/address | Create/Get top-up address
-[**ListAllocations**](PaymentAPI.md#ListAllocations) | **Get** /payments/allocation_records | List all allocation records
+[**ListAllocationItems**](PaymentAPI.md#ListAllocationItems) | **Get** /payments/allocation_items | List all allocation items
 [**ListBankAccounts**](PaymentAPI.md#ListBankAccounts) | **Get** /payments/bank_accounts | List all bank accounts
 [**ListBatchAllocations**](PaymentAPI.md#ListBatchAllocations) | **Get** /payments/batch_allocations | List all batch allocations
+[**ListBulkSendItems**](PaymentAPI.md#ListBulkSendItems) | **Get** /payments/bulk_sends/{bulk_send_id}/items | List bulk send items
 [**ListCounterparties**](PaymentAPI.md#ListCounterparties) | **Get** /payments/counterparty | List all counterparties
 [**ListCounterpartyEntries**](PaymentAPI.md#ListCounterpartyEntries) | **Get** /payments/counterparty_entry | List counterparty entries
 [**ListCounterpartyWalletAddress**](PaymentAPI.md#ListCounterpartyWalletAddress) | **Get** /payments/counterparty/wallet_address | List counterparty wallet addresses
@@ -71,7 +75,6 @@ Method | HTTP request | Description
 [**ListPaymentOrders**](PaymentAPI.md#ListPaymentOrders) | **Get** /payments/orders | List all pay-in orders
 [**ListPaymentSupportedTokens**](PaymentAPI.md#ListPaymentSupportedTokens) | **Get** /payments/supported_tokens | List all supported tokens
 [**ListPaymentWalletBalances**](PaymentAPI.md#ListPaymentWalletBalances) | **Get** /payments/balance/payment_wallets | List payment wallet balances
-[**ListPayoutItems**](PaymentAPI.md#ListPayoutItems) | **Get** /payments/payout_items | List all payout items
 [**ListPayouts**](PaymentAPI.md#ListPayouts) | **Get** /payments/payouts | List all payouts
 [**ListSettlementDetails**](PaymentAPI.md#ListSettlementDetails) | **Get** /payments/settlement_details | List all settlement details
 [**ListSettlementRequests**](PaymentAPI.md#ListSettlementRequests) | **Get** /payments/settlement_requests | List all settlement requests
@@ -273,7 +276,7 @@ import (
 )
 
 func main() {
-	createBatchAllocationRequest := *coboWaas2.NewCreateBatchAllocationRequest("123e457-e89b-12d3-a456-426614174004", []coboWaas2.AllocationRequest{*coboWaas2.NewAllocationRequest("ETH_USDT", "500.00", "M1001", "M1001", "Allocation for merchant M1001")})
+	createBatchAllocationRequest := *coboWaas2.NewCreateBatchAllocationRequest("123e457-e89b-12d3-a456-426614174004", []coboWaas2.AllocationParam{*coboWaas2.NewAllocationParam("ETH_USDT", "500.00", "SourceAccount_example", "DestinationAccount_example", "Description_example")})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -312,6 +315,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BatchAllocation**](BatchAllocation.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateBulkSend
+
+> PaymentBulkSend CreateBulkSend(ctx).CreateBulkSendRequest(createBulkSendRequest).Execute()
+
+Create bulk send
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createBulkSendRequest := *coboWaas2.NewCreateBulkSendRequest("M1001", coboWaas2.PaymentBulkSendExecutionMode("Strict"), []coboWaas2.CreateBulkSendRequestPayoutParamsInner{*coboWaas2.NewCreateBulkSendRequestPayoutParamsInner("ETH_USDT", "0xabc123456789def0000000000000000000000000", "500.00")})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateBulkSend(ctx).CreateBulkSendRequest(createBulkSendRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateBulkSend``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateBulkSend`: PaymentBulkSend
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateBulkSend`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateBulkSendRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createBulkSendRequest** | [**CreateBulkSendRequest**](CreateBulkSendRequest.md) | The request body to create a bulk send. | 
+
+### Return type
+
+[**PaymentBulkSend**](PaymentBulkSend.md)
 
 ### Authorization
 
@@ -1109,7 +1188,7 @@ import (
 )
 
 func main() {
-	createOrderLinkRequest := *coboWaas2.NewCreateOrderLinkRequest(*coboWaas2.NewOrderLinkBusinessInfo("1001", "P20240201001", "2.00"))
+	createOrderLinkRequest := *coboWaas2.NewCreateOrderLinkRequest(*coboWaas2.NewOrderLinkBusinessInfo("1001", "P20240201001", "USD", "100.00", "2.00", []string{"PayableCurrencies_example"}))
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -1185,7 +1264,7 @@ import (
 )
 
 func main() {
-	createPaymentOrderRequest := *coboWaas2.NewCreatePaymentOrderRequest("1001", "P20240201001", "2.00")
+	createPaymentOrderRequest := *coboWaas2.NewCreatePaymentOrderRequest("1001", "P20240201001", "2.00", "ETH_USDT")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -1261,7 +1340,7 @@ import (
 )
 
 func main() {
-	createPayoutRequest := *coboWaas2.NewCreatePayoutRequest("123e457-e89b-12d3-a456-426614174004", coboWaas2.PayoutChannel("Crypto"), []coboWaas2.PaymentPayoutParam{*coboWaas2.NewPaymentPayoutParam("M1001", "ETH_USDT", "500.00")})
+	createPayoutRequest := *coboWaas2.NewCreatePayoutRequest("123e457-e89b-12d3-a456-426614174004", "SourceAccount_example", coboWaas2.PayoutChannel("Crypto"), []coboWaas2.PaymentPayoutParam{*coboWaas2.NewPaymentPayoutParam("ETH_USDT", "500.00")}, *coboWaas2.NewPaymentPayoutRecipientInfo())
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -1604,6 +1683,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Settlement**](Settlement.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateTopUpAddresses
+
+> CreateTopUpAddresses201Response CreateTopUpAddresses(ctx).CreateTopUpAddresses(createTopUpAddresses).Execute()
+
+Batch create top-up addresses
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createTopUpAddresses := *coboWaas2.NewCreateTopUpAddresses("ETH_USDT", []string{"O20250304-P1001-1001"})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateTopUpAddresses(ctx).CreateTopUpAddresses(createTopUpAddresses).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateTopUpAddresses``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateTopUpAddresses`: CreateTopUpAddresses201Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateTopUpAddresses`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateTopUpAddressesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createTopUpAddresses** | [**CreateTopUpAddresses**](CreateTopUpAddresses.md) | The request body of the create top-up addresses operation. | 
+
+### Return type
+
+[**CreateTopUpAddresses201Response**](CreateTopUpAddresses201Response.md)
 
 ### Authorization
 
@@ -2648,6 +2803,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BatchAllocationDetail**](BatchAllocationDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetBulkSendById
+
+> PaymentBulkSend GetBulkSendById(ctx, bulkSendId).Execute()
+
+Get bulk send information
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	bulkSendId := "123e4567-e89b-12d3-a456-426614174003"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetBulkSendById(ctx, bulkSendId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetBulkSendById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetBulkSendById`: PaymentBulkSend
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetBulkSendById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**bulkSendId** | **string** | The bulk send ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetBulkSendByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**PaymentBulkSend**](PaymentBulkSend.md)
 
 ### Authorization
 
@@ -3936,7 +4171,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **merchantIds** | **string** | A list of merchant IDs to query. | 
  **currency** | **string** | The currency for the operation. Currently, only &#x60;USD&#x60; is supported. | [default to &quot;USD&quot;]
- **acquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
+ **acquiringType** | [**AcquiringType**](AcquiringType.md) | This parameter has been deprecated | 
 
 ### Return type
 
@@ -4036,11 +4271,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListAllocations
+## ListAllocationItems
 
-> ListAllocations200Response ListAllocations(ctx).Limit(limit).Before(before).After(after).SourceAccount(sourceAccount).DestinationAccount(destinationAccount).TokenId(tokenId).BatchAllocationId(batchAllocationId).Execute()
+> ListAllocationItems200Response ListAllocationItems(ctx).Limit(limit).Before(before).After(after).SourceAccount(sourceAccount).DestinationAccount(destinationAccount).TokenId(tokenId).BatchAllocationId(batchAllocationId).Execute()
 
-List all allocation records
+List all allocation items
 
 
 
@@ -4077,13 +4312,13 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.PaymentAPI.ListAllocations(ctx).Limit(limit).Before(before).After(after).SourceAccount(sourceAccount).DestinationAccount(destinationAccount).TokenId(tokenId).BatchAllocationId(batchAllocationId).Execute()
+	resp, r, err := apiClient.PaymentAPI.ListAllocationItems(ctx).Limit(limit).Before(before).After(after).SourceAccount(sourceAccount).DestinationAccount(destinationAccount).TokenId(tokenId).BatchAllocationId(batchAllocationId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListAllocations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListAllocationItems``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListAllocations`: ListAllocations200Response
-	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListAllocations`: %v\n", resp)
+	// response from `ListAllocationItems`: ListAllocationItems200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListAllocationItems`: %v\n", resp)
 }
 ```
 
@@ -4093,7 +4328,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListAllocationsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiListAllocationItemsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -4108,7 +4343,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListAllocations200Response**](ListAllocations200Response.md)
+[**ListAllocationItems200Response**](ListAllocationItems200Response.md)
 
 ### Authorization
 
@@ -4262,6 +4497,92 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListBatchAllocations200Response**](ListBatchAllocations200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListBulkSendItems
+
+> ListBulkSendItems200Response ListBulkSendItems(ctx, bulkSendId).Limit(limit).Before(before).After(after).Execute()
+
+List bulk send items
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	bulkSendId := "123e4567-e89b-12d3-a456-426614174003"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListBulkSendItems(ctx, bulkSendId).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListBulkSendItems``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBulkSendItems`: ListBulkSendItems200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListBulkSendItems`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**bulkSendId** | **string** | The bulk send ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBulkSendItemsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
+ **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
+
+### Return type
+
+[**ListBulkSendItems200Response**](ListBulkSendItems200Response.md)
 
 ### Authorization
 
@@ -5107,7 +5428,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
  **merchantIds** | **string** | A list of merchant IDs to query. | 
- **acquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
+ **acquiringType** | [**AcquiringType**](AcquiringType.md) | This parameter has been deprecated | 
 
 ### Return type
 
@@ -5433,90 +5754,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListPaymentWalletBalances200Response**](ListPaymentWalletBalances200Response.md)
-
-### Authorization
-
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ListPayoutItems
-
-> ListPayoutItems200Response ListPayoutItems(ctx).Limit(limit).Before(before).After(after).SourceAccount(sourceAccount).Statuses(statuses).Execute()
-
-List all payout items
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
-    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
-)
-
-func main() {
-	limit := int32(10)
-	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
-	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
-	sourceAccount := "sourceAccount_example"
-	statuses := "Pending,Processing"
-
-	configuration := coboWaas2.NewConfiguration()
-	// Initialize the API client
-	apiClient := coboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-
-    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
-	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
-    // Replace `<YOUR_PRIVATE_KEY>` with your private key
-	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_PRIVATE_KEY>",
-	})
-	resp, r, err := apiClient.PaymentAPI.ListPayoutItems(ctx).Limit(limit).Before(before).After(after).SourceAccount(sourceAccount).Statuses(statuses).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListPayoutItems``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ListPayoutItems`: ListPayoutItems200Response
-	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListPayoutItems`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiListPayoutItemsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
- **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
- **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
- **sourceAccount** | **string** | The source account.  - If the source account is a merchant account, provide the merchant&#39;s ID (e.g., \&quot;M1001\&quot;). - If the source account is the developer account, use the string &#x60;\&quot;developer\&quot;&#x60;.  | 
- **statuses** | **string** | A list of order, refund or payout item statuses. You can refer to the following operations for the possible status values:  - [Get pay-in order information](https://www.cobo.com/payments/en/api-references/payment/get-pay-in-order-information)  - [Get refund order information](https://www.cobo.com/payments/en/api-references/payment/get-refund-order-information)  - [List all payout items](https://www.cobo.com/payments/en/api-references/payment/list-all-payout-items)  | 
-
-### Return type
-
-[**ListPayoutItems200Response**](ListPayoutItems200Response.md)
 
 ### Authorization
 

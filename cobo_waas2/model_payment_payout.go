@@ -24,19 +24,22 @@ type PaymentPayout struct {
 	// The request ID provided by you when creating the payout.
 	RequestId string `json:"request_id"`
 	PayoutChannel PayoutChannel `json:"payout_channel"`
+	// The source account from which the payout will be made. - If the source account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the source account is the developer account, use the string `\"developer\"`. 
+	SourceAccount *string `json:"source_account,omitempty"`
+	// required
 	PayoutItems []PaymentPayoutItem `json:"payout_items,omitempty"`
-	Status PaymentPayoutStatus `json:"status"`
-	// The created time of the payout, represented as a UNIX timestamp in seconds.
-	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
-	// The updated time of the payout, represented as a UNIX timestamp in seconds.
-	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// The initiator of this payout, usually the API key used to create the payout.
+	RecipientInfo *PaymentPayoutRecipientInfo `json:"recipient_info,omitempty"`
+	// The initiator of this payout, usually the user's API key.
 	Initiator *string `json:"initiator,omitempty"`
-	// The fiat currency you will receive from the payout.
-	Currency *string `json:"currency,omitempty"`
-	// The total amount of cryptocurrency actually paid out for this payout. 
+	// - For `Crypto` payouts: The amount of cryptocurrency sent to the recipient's address, denominated in the token specified in `recipient_info.token_id`. - For `OffRamp` payouts: The amount of fiat currency sent to the recipient's bank account, denominated in the currency specified in `recipient_info.currency`. (Note: The actual amount received may be lower due to additional bank transfer fees.) 
 	ActualPayoutAmount *string `json:"actual_payout_amount,omitempty"`
-	BankAccount *BankAccount `json:"bank_account,omitempty"`
+	Status PaymentPayoutStatus `json:"status"`
+	// A note or comment about the payout.
+	Remark *string `json:"remark,omitempty"`
+	// The created time of the payout, represented as a UNIX timestamp in seconds.
+	CreatedTimestamp int32 `json:"created_timestamp"`
+	// The updated time of the payout, represented as a UNIX timestamp in seconds.
+	UpdatedTimestamp int32 `json:"updated_timestamp"`
 }
 
 type _PaymentPayout PaymentPayout
@@ -45,12 +48,14 @@ type _PaymentPayout PaymentPayout
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentPayout(payoutId string, requestId string, payoutChannel PayoutChannel, status PaymentPayoutStatus) *PaymentPayout {
+func NewPaymentPayout(payoutId string, requestId string, payoutChannel PayoutChannel, status PaymentPayoutStatus, createdTimestamp int32, updatedTimestamp int32) *PaymentPayout {
 	this := PaymentPayout{}
 	this.PayoutId = payoutId
 	this.RequestId = requestId
 	this.PayoutChannel = payoutChannel
 	this.Status = status
+	this.CreatedTimestamp = createdTimestamp
+	this.UpdatedTimestamp = updatedTimestamp
 	return &this
 }
 
@@ -134,6 +139,38 @@ func (o *PaymentPayout) SetPayoutChannel(v PayoutChannel) {
 	o.PayoutChannel = v
 }
 
+// GetSourceAccount returns the SourceAccount field value if set, zero value otherwise.
+func (o *PaymentPayout) GetSourceAccount() string {
+	if o == nil || IsNil(o.SourceAccount) {
+		var ret string
+		return ret
+	}
+	return *o.SourceAccount
+}
+
+// GetSourceAccountOk returns a tuple with the SourceAccount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentPayout) GetSourceAccountOk() (*string, bool) {
+	if o == nil || IsNil(o.SourceAccount) {
+		return nil, false
+	}
+	return o.SourceAccount, true
+}
+
+// HasSourceAccount returns a boolean if a field has been set.
+func (o *PaymentPayout) HasSourceAccount() bool {
+	if o != nil && !IsNil(o.SourceAccount) {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceAccount gets a reference to the given string and assigns it to the SourceAccount field.
+func (o *PaymentPayout) SetSourceAccount(v string) {
+	o.SourceAccount = &v
+}
+
 // GetPayoutItems returns the PayoutItems field value if set, zero value otherwise.
 func (o *PaymentPayout) GetPayoutItems() []PaymentPayoutItem {
 	if o == nil || IsNil(o.PayoutItems) {
@@ -166,92 +203,36 @@ func (o *PaymentPayout) SetPayoutItems(v []PaymentPayoutItem) {
 	o.PayoutItems = v
 }
 
-// GetStatus returns the Status field value
-func (o *PaymentPayout) GetStatus() PaymentPayoutStatus {
-	if o == nil {
-		var ret PaymentPayoutStatus
+// GetRecipientInfo returns the RecipientInfo field value if set, zero value otherwise.
+func (o *PaymentPayout) GetRecipientInfo() PaymentPayoutRecipientInfo {
+	if o == nil || IsNil(o.RecipientInfo) {
+		var ret PaymentPayoutRecipientInfo
 		return ret
 	}
-
-	return o.Status
+	return *o.RecipientInfo
 }
 
-// GetStatusOk returns a tuple with the Status field value
+// GetRecipientInfoOk returns a tuple with the RecipientInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PaymentPayout) GetStatusOk() (*PaymentPayoutStatus, bool) {
-	if o == nil {
+func (o *PaymentPayout) GetRecipientInfoOk() (*PaymentPayoutRecipientInfo, bool) {
+	if o == nil || IsNil(o.RecipientInfo) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.RecipientInfo, true
 }
 
-// SetStatus sets field value
-func (o *PaymentPayout) SetStatus(v PaymentPayoutStatus) {
-	o.Status = v
-}
-
-// GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
-func (o *PaymentPayout) GetCreatedTimestamp() int32 {
-	if o == nil || IsNil(o.CreatedTimestamp) {
-		var ret int32
-		return ret
-	}
-	return *o.CreatedTimestamp
-}
-
-// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentPayout) GetCreatedTimestampOk() (*int32, bool) {
-	if o == nil || IsNil(o.CreatedTimestamp) {
-		return nil, false
-	}
-	return o.CreatedTimestamp, true
-}
-
-// HasCreatedTimestamp returns a boolean if a field has been set.
-func (o *PaymentPayout) HasCreatedTimestamp() bool {
-	if o != nil && !IsNil(o.CreatedTimestamp) {
+// HasRecipientInfo returns a boolean if a field has been set.
+func (o *PaymentPayout) HasRecipientInfo() bool {
+	if o != nil && !IsNil(o.RecipientInfo) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedTimestamp gets a reference to the given int32 and assigns it to the CreatedTimestamp field.
-func (o *PaymentPayout) SetCreatedTimestamp(v int32) {
-	o.CreatedTimestamp = &v
-}
-
-// GetUpdatedTimestamp returns the UpdatedTimestamp field value if set, zero value otherwise.
-func (o *PaymentPayout) GetUpdatedTimestamp() int32 {
-	if o == nil || IsNil(o.UpdatedTimestamp) {
-		var ret int32
-		return ret
-	}
-	return *o.UpdatedTimestamp
-}
-
-// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentPayout) GetUpdatedTimestampOk() (*int32, bool) {
-	if o == nil || IsNil(o.UpdatedTimestamp) {
-		return nil, false
-	}
-	return o.UpdatedTimestamp, true
-}
-
-// HasUpdatedTimestamp returns a boolean if a field has been set.
-func (o *PaymentPayout) HasUpdatedTimestamp() bool {
-	if o != nil && !IsNil(o.UpdatedTimestamp) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedTimestamp gets a reference to the given int32 and assigns it to the UpdatedTimestamp field.
-func (o *PaymentPayout) SetUpdatedTimestamp(v int32) {
-	o.UpdatedTimestamp = &v
+// SetRecipientInfo gets a reference to the given PaymentPayoutRecipientInfo and assigns it to the RecipientInfo field.
+func (o *PaymentPayout) SetRecipientInfo(v PaymentPayoutRecipientInfo) {
+	o.RecipientInfo = &v
 }
 
 // GetInitiator returns the Initiator field value if set, zero value otherwise.
@@ -286,38 +267,6 @@ func (o *PaymentPayout) SetInitiator(v string) {
 	o.Initiator = &v
 }
 
-// GetCurrency returns the Currency field value if set, zero value otherwise.
-func (o *PaymentPayout) GetCurrency() string {
-	if o == nil || IsNil(o.Currency) {
-		var ret string
-		return ret
-	}
-	return *o.Currency
-}
-
-// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PaymentPayout) GetCurrencyOk() (*string, bool) {
-	if o == nil || IsNil(o.Currency) {
-		return nil, false
-	}
-	return o.Currency, true
-}
-
-// HasCurrency returns a boolean if a field has been set.
-func (o *PaymentPayout) HasCurrency() bool {
-	if o != nil && !IsNil(o.Currency) {
-		return true
-	}
-
-	return false
-}
-
-// SetCurrency gets a reference to the given string and assigns it to the Currency field.
-func (o *PaymentPayout) SetCurrency(v string) {
-	o.Currency = &v
-}
-
 // GetActualPayoutAmount returns the ActualPayoutAmount field value if set, zero value otherwise.
 func (o *PaymentPayout) GetActualPayoutAmount() string {
 	if o == nil || IsNil(o.ActualPayoutAmount) {
@@ -350,36 +299,108 @@ func (o *PaymentPayout) SetActualPayoutAmount(v string) {
 	o.ActualPayoutAmount = &v
 }
 
-// GetBankAccount returns the BankAccount field value if set, zero value otherwise.
-func (o *PaymentPayout) GetBankAccount() BankAccount {
-	if o == nil || IsNil(o.BankAccount) {
-		var ret BankAccount
+// GetStatus returns the Status field value
+func (o *PaymentPayout) GetStatus() PaymentPayoutStatus {
+	if o == nil {
+		var ret PaymentPayoutStatus
 		return ret
 	}
-	return *o.BankAccount
+
+	return o.Status
 }
 
-// GetBankAccountOk returns a tuple with the BankAccount field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
-func (o *PaymentPayout) GetBankAccountOk() (*BankAccount, bool) {
-	if o == nil || IsNil(o.BankAccount) {
+func (o *PaymentPayout) GetStatusOk() (*PaymentPayoutStatus, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.BankAccount, true
+	return &o.Status, true
 }
 
-// HasBankAccount returns a boolean if a field has been set.
-func (o *PaymentPayout) HasBankAccount() bool {
-	if o != nil && !IsNil(o.BankAccount) {
+// SetStatus sets field value
+func (o *PaymentPayout) SetStatus(v PaymentPayoutStatus) {
+	o.Status = v
+}
+
+// GetRemark returns the Remark field value if set, zero value otherwise.
+func (o *PaymentPayout) GetRemark() string {
+	if o == nil || IsNil(o.Remark) {
+		var ret string
+		return ret
+	}
+	return *o.Remark
+}
+
+// GetRemarkOk returns a tuple with the Remark field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentPayout) GetRemarkOk() (*string, bool) {
+	if o == nil || IsNil(o.Remark) {
+		return nil, false
+	}
+	return o.Remark, true
+}
+
+// HasRemark returns a boolean if a field has been set.
+func (o *PaymentPayout) HasRemark() bool {
+	if o != nil && !IsNil(o.Remark) {
 		return true
 	}
 
 	return false
 }
 
-// SetBankAccount gets a reference to the given BankAccount and assigns it to the BankAccount field.
-func (o *PaymentPayout) SetBankAccount(v BankAccount) {
-	o.BankAccount = &v
+// SetRemark gets a reference to the given string and assigns it to the Remark field.
+func (o *PaymentPayout) SetRemark(v string) {
+	o.Remark = &v
+}
+
+// GetCreatedTimestamp returns the CreatedTimestamp field value
+func (o *PaymentPayout) GetCreatedTimestamp() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.CreatedTimestamp
+}
+
+// GetCreatedTimestampOk returns a tuple with the CreatedTimestamp field value
+// and a boolean to check if the value has been set.
+func (o *PaymentPayout) GetCreatedTimestampOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CreatedTimestamp, true
+}
+
+// SetCreatedTimestamp sets field value
+func (o *PaymentPayout) SetCreatedTimestamp(v int32) {
+	o.CreatedTimestamp = v
+}
+
+// GetUpdatedTimestamp returns the UpdatedTimestamp field value
+func (o *PaymentPayout) GetUpdatedTimestamp() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.UpdatedTimestamp
+}
+
+// GetUpdatedTimestampOk returns a tuple with the UpdatedTimestamp field value
+// and a boolean to check if the value has been set.
+func (o *PaymentPayout) GetUpdatedTimestampOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UpdatedTimestamp, true
+}
+
+// SetUpdatedTimestamp sets field value
+func (o *PaymentPayout) SetUpdatedTimestamp(v int32) {
+	o.UpdatedTimestamp = v
 }
 
 func (o PaymentPayout) MarshalJSON() ([]byte, error) {
@@ -395,28 +416,27 @@ func (o PaymentPayout) ToMap() (map[string]interface{}, error) {
 	toSerialize["payout_id"] = o.PayoutId
 	toSerialize["request_id"] = o.RequestId
 	toSerialize["payout_channel"] = o.PayoutChannel
+	if !IsNil(o.SourceAccount) {
+		toSerialize["source_account"] = o.SourceAccount
+	}
 	if !IsNil(o.PayoutItems) {
 		toSerialize["payout_items"] = o.PayoutItems
 	}
-	toSerialize["status"] = o.Status
-	if !IsNil(o.CreatedTimestamp) {
-		toSerialize["created_timestamp"] = o.CreatedTimestamp
-	}
-	if !IsNil(o.UpdatedTimestamp) {
-		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	if !IsNil(o.RecipientInfo) {
+		toSerialize["recipient_info"] = o.RecipientInfo
 	}
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
 	}
-	if !IsNil(o.Currency) {
-		toSerialize["currency"] = o.Currency
-	}
 	if !IsNil(o.ActualPayoutAmount) {
 		toSerialize["actual_payout_amount"] = o.ActualPayoutAmount
 	}
-	if !IsNil(o.BankAccount) {
-		toSerialize["bank_account"] = o.BankAccount
+	toSerialize["status"] = o.Status
+	if !IsNil(o.Remark) {
+		toSerialize["remark"] = o.Remark
 	}
+	toSerialize["created_timestamp"] = o.CreatedTimestamp
+	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	return toSerialize, nil
 }
 
@@ -429,6 +449,8 @@ func (o *PaymentPayout) UnmarshalJSON(data []byte) (err error) {
 		"request_id",
 		"payout_channel",
 		"status",
+		"created_timestamp",
+		"updated_timestamp",
 	}
 
 	allProperties := make(map[string]interface{})

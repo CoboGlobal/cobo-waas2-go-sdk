@@ -11,6 +11,7 @@ api_compliance.go
 api_developers.go
 api_developers_webhooks.go
 api_fee_station.go
+api_graph_ql.go
 api_o_auth.go
 api_organizations.go
 api_payment.go
@@ -51,8 +52,8 @@ docs/AddressTransferDestinationAccountOutput.md
 docs/AddressTransferDestinationUtxoOutputsInner.md
 docs/AddressesEventData.md
 docs/AddressesEventDataAllOfAddresses.md
-docs/AllocationRecord.md
-docs/AllocationRequest.md
+docs/AllocationItem.md
+docs/AllocationParam.md
 docs/AmountDetailsInner.md
 docs/AmountStatus.md
 docs/ApiLogDetails.md
@@ -150,6 +151,8 @@ docs/CreateBabylonAirdropRegistrationRequest.md
 docs/CreateBabylonStakingRegistration201Response.md
 docs/CreateBabylonStakingRegistrationRequest.md
 docs/CreateBatchAllocationRequest.md
+docs/CreateBulkSendRequest.md
+docs/CreateBulkSendRequestPayoutParamsInner.md
 docs/CreateClaimActivity.md
 docs/CreateClaimActivityRequest.md
 docs/CreateCounterpartyEntry201Response.md
@@ -192,6 +195,8 @@ docs/CreateSwapActivityRequest.md
 docs/CreateSweepToAddress.md
 docs/CreateTokenListingRequest201Response.md
 docs/CreateTokenListingRequestRequest.md
+docs/CreateTopUpAddresses.md
+docs/CreateTopUpAddresses201Response.md
 docs/CreateTransferTransaction201Response.md
 docs/CreateTssRequestRequest.md
 docs/CreateUnstakeActivity.md
@@ -320,6 +325,7 @@ docs/GetToken2XXResponse.md
 docs/GetToken4XXResponse.md
 docs/GetTokenizationAllowlistActivation200Response.md
 docs/GetTransactionLimitation200Response.md
+docs/GraphQLAPI.md
 docs/GraphQLError.md
 docs/GraphQLErrorLocationsInner.md
 docs/GraphQLRequest.md
@@ -351,7 +357,7 @@ docs/LinkDisplayInfo.md
 docs/ListAddressBalancesByToken200Response.md
 docs/ListAddressBooks200Response.md
 docs/ListAddresses200Response.md
-docs/ListAllocations200Response.md
+docs/ListAllocationItems200Response.md
 docs/ListApprovalRequests200Response.md
 docs/ListAssetBalancesForExchangeWallet200Response.md
 docs/ListAutoSweepTask200Response.md
@@ -361,6 +367,7 @@ docs/ListBabylonEligibleStakings200Response.md
 docs/ListBabylonEligibleStakings200ResponseDataInner.md
 docs/ListBabylonStakingRegistrations200Response.md
 docs/ListBatchAllocations200Response.md
+docs/ListBulkSendItems200Response.md
 docs/ListCallbackMessages200Response.md
 docs/ListCounterparties200Response.md
 docs/ListCounterpartyEntries200Response.md
@@ -380,7 +387,6 @@ docs/ListMpcProjects200Response.md
 docs/ListMpcVaults200Response.md
 docs/ListPaymentOrders200Response.md
 docs/ListPaymentWalletBalances200Response.md
-docs/ListPayoutItems200Response.md
 docs/ListPayouts200Response.md
 docs/ListSettlementDetails200Response.md
 docs/ListSettlementRequests200Response.md
@@ -448,6 +454,13 @@ docs/PayerAccount.md
 docs/PaymentAPI.md
 docs/PaymentAddressUpdateEventData.md
 docs/PaymentAllocationAmount.md
+docs/PaymentBulkSend.md
+docs/PaymentBulkSendEvent.md
+docs/PaymentBulkSendExecutionMode.md
+docs/PaymentBulkSendItem.md
+docs/PaymentBulkSendItemStatus.md
+docs/PaymentBulkSendItemValidationStatus.md
+docs/PaymentBulkSendStatus.md
 docs/PaymentEstimateFee.md
 docs/PaymentEstimateFee201Response.md
 docs/PaymentEstimateFeeRequest.md
@@ -458,9 +471,8 @@ docs/PaymentPayout.md
 docs/PaymentPayoutDetail.md
 docs/PaymentPayoutEvent.md
 docs/PaymentPayoutItem.md
-docs/PaymentPayoutItemDetail.md
-docs/PaymentPayoutItemStatus.md
 docs/PaymentPayoutParam.md
+docs/PaymentPayoutRecipientInfo.md
 docs/PaymentPayoutStatus.md
 docs/PaymentRefundEventData.md
 docs/PaymentSettlementEvent.md
@@ -793,6 +805,7 @@ docs/TransactionUserApprovalDetail.md
 docs/TransactionUtxo.md
 docs/TransactionUtxoChange.md
 docs/TransactionUtxoFee.md
+docs/TransactionWalletConnectInfo.md
 docs/TransactionWebhookEventData.md
 docs/TransactionsAPI.md
 docs/TransferDestination.md
@@ -883,8 +896,8 @@ model_address_transfer_destination_account_output.go
 model_address_transfer_destination_utxo_outputs_inner.go
 model_addresses_event_data.go
 model_addresses_event_data_all_of_addresses.go
-model_allocation_record.go
-model_allocation_request.go
+model_allocation_item.go
+model_allocation_param.go
 model_amount_details_inner.go
 model_amount_status.go
 model_api_log_details.go
@@ -979,6 +992,8 @@ model_create_babylon_airdrop_registration_request.go
 model_create_babylon_staking_registration_201_response.go
 model_create_babylon_staking_registration_request.go
 model_create_batch_allocation_request.go
+model_create_bulk_send_request.go
+model_create_bulk_send_request_payout_params_inner.go
 model_create_claim_activity.go
 model_create_claim_activity_request.go
 model_create_counterparty_entry_201_response.go
@@ -1021,6 +1036,8 @@ model_create_swap_activity_request.go
 model_create_sweep_to_address.go
 model_create_token_listing_request_201_response.go
 model_create_token_listing_request_request.go
+model_create_top_up_addresses.go
+model_create_top_up_addresses_201_response.go
 model_create_transfer_transaction_201_response.go
 model_create_tss_request_request.go
 model_create_unstake_activity.go
@@ -1177,7 +1194,7 @@ model_link_display_info.go
 model_list_address_balances_by_token_200_response.go
 model_list_address_books_200_response.go
 model_list_addresses_200_response.go
-model_list_allocations_200_response.go
+model_list_allocation_items_200_response.go
 model_list_approval_requests_200_response.go
 model_list_asset_balances_for_exchange_wallet_200_response.go
 model_list_auto_sweep_task_200_response.go
@@ -1187,6 +1204,7 @@ model_list_babylon_eligible_stakings_200_response.go
 model_list_babylon_eligible_stakings_200_response_data_inner.go
 model_list_babylon_staking_registrations_200_response.go
 model_list_batch_allocations_200_response.go
+model_list_bulk_send_items_200_response.go
 model_list_callback_messages_200_response.go
 model_list_counterparties_200_response.go
 model_list_counterparty_entries_200_response.go
@@ -1206,7 +1224,6 @@ model_list_mpc_projects_200_response.go
 model_list_mpc_vaults_200_response.go
 model_list_payment_orders_200_response.go
 model_list_payment_wallet_balances_200_response.go
-model_list_payout_items_200_response.go
 model_list_payouts_200_response.go
 model_list_settlement_details_200_response.go
 model_list_settlement_requests_200_response.go
@@ -1271,6 +1288,13 @@ model_pagination.go
 model_payer_account.go
 model_payment_address_update_event_data.go
 model_payment_allocation_amount.go
+model_payment_bulk_send.go
+model_payment_bulk_send_event.go
+model_payment_bulk_send_execution_mode.go
+model_payment_bulk_send_item.go
+model_payment_bulk_send_item_status.go
+model_payment_bulk_send_item_validation_status.go
+model_payment_bulk_send_status.go
 model_payment_estimate_fee.go
 model_payment_estimate_fee_201_response.go
 model_payment_estimate_fee_request.go
@@ -1281,9 +1305,8 @@ model_payment_payout.go
 model_payment_payout_detail.go
 model_payment_payout_event.go
 model_payment_payout_item.go
-model_payment_payout_item_detail.go
-model_payment_payout_item_status.go
 model_payment_payout_param.go
+model_payment_payout_recipient_info.go
 model_payment_payout_status.go
 model_payment_refund_event_data.go
 model_payment_settlement_event.go
@@ -1572,6 +1595,7 @@ model_transaction_user_approval_detail.go
 model_transaction_utxo.go
 model_transaction_utxo_change.go
 model_transaction_utxo_fee.go
+model_transaction_wallet_connect_info.go
 model_transaction_webhook_event_data.go
 model_transfer_destination.go
 model_transfer_destination_type.go
@@ -1682,6 +1706,7 @@ test/api_compliance_test.go
 test/api_developers_test.go
 test/api_developers_webhooks_test.go
 test/api_fee_station_test.go
+test/api_graph_ql_test.go
 test/api_o_auth_test.go
 test/api_organizations_test.go
 test/api_payment_test.go

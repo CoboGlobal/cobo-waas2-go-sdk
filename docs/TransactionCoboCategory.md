@@ -81,6 +81,8 @@
 
 * `GAS_FEE_SPONSOR_REFUND` (value: `"GasFeeSponsorRefund"`)
 
+* `WALLET_CONNECT` (value: `"WalletConnect"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

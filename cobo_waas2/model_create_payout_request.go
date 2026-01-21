@@ -21,13 +21,12 @@ var _ MappedNullable = &CreatePayoutRequest{}
 type CreatePayoutRequest struct {
 	// The request ID that is used to track a payout request. The request ID is provided by you and must be unique.
 	RequestId string `json:"request_id"`
+	// The source account from which the payout will be made. - If the source account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the source account is the developer account, use the string `\"developer\"`. 
+	SourceAccount string `json:"source_account"`
 	PayoutChannel PayoutChannel `json:"payout_channel"`
 	PayoutParams []PaymentPayoutParam `json:"payout_params"`
-	// The ID of the bank account where the funds will be deposited. Specify this field when `payout_channel` is set to `OffRamp`.  You can call [List all bank accounts](https://www.cobo.com/payments/en/api-references/payment/list-all-bank-accounts) to retrieve the IDs of registered bank accounts. To add a new bank account, refer to [Destinations](https://www.cobo.com/payments/en/guides/destinations). 
-	BankAccountId *string `json:"bank_account_id,omitempty"`
-	// The fiat currency you will receive from the payout. - Required when `payout_channel` is set to `OffRamp`. - Currently, only `USD` is supported. 
-	Currency *string `json:"currency,omitempty"`
-	// The remark for the payout.
+	RecipientInfo PaymentPayoutRecipientInfo `json:"recipient_info"`
+	// An optional note or comment about the payout for your internal reference.
 	Remark *string `json:"remark,omitempty"`
 }
 
@@ -37,11 +36,13 @@ type _CreatePayoutRequest CreatePayoutRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreatePayoutRequest(requestId string, payoutChannel PayoutChannel, payoutParams []PaymentPayoutParam) *CreatePayoutRequest {
+func NewCreatePayoutRequest(requestId string, sourceAccount string, payoutChannel PayoutChannel, payoutParams []PaymentPayoutParam, recipientInfo PaymentPayoutRecipientInfo) *CreatePayoutRequest {
 	this := CreatePayoutRequest{}
 	this.RequestId = requestId
+	this.SourceAccount = sourceAccount
 	this.PayoutChannel = payoutChannel
 	this.PayoutParams = payoutParams
+	this.RecipientInfo = recipientInfo
 	return &this
 }
 
@@ -75,6 +76,30 @@ func (o *CreatePayoutRequest) GetRequestIdOk() (*string, bool) {
 // SetRequestId sets field value
 func (o *CreatePayoutRequest) SetRequestId(v string) {
 	o.RequestId = v
+}
+
+// GetSourceAccount returns the SourceAccount field value
+func (o *CreatePayoutRequest) GetSourceAccount() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.SourceAccount
+}
+
+// GetSourceAccountOk returns a tuple with the SourceAccount field value
+// and a boolean to check if the value has been set.
+func (o *CreatePayoutRequest) GetSourceAccountOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.SourceAccount, true
+}
+
+// SetSourceAccount sets field value
+func (o *CreatePayoutRequest) SetSourceAccount(v string) {
+	o.SourceAccount = v
 }
 
 // GetPayoutChannel returns the PayoutChannel field value
@@ -125,68 +150,28 @@ func (o *CreatePayoutRequest) SetPayoutParams(v []PaymentPayoutParam) {
 	o.PayoutParams = v
 }
 
-// GetBankAccountId returns the BankAccountId field value if set, zero value otherwise.
-func (o *CreatePayoutRequest) GetBankAccountId() string {
-	if o == nil || IsNil(o.BankAccountId) {
-		var ret string
+// GetRecipientInfo returns the RecipientInfo field value
+func (o *CreatePayoutRequest) GetRecipientInfo() PaymentPayoutRecipientInfo {
+	if o == nil {
+		var ret PaymentPayoutRecipientInfo
 		return ret
 	}
-	return *o.BankAccountId
+
+	return o.RecipientInfo
 }
 
-// GetBankAccountIdOk returns a tuple with the BankAccountId field value if set, nil otherwise
+// GetRecipientInfoOk returns a tuple with the RecipientInfo field value
 // and a boolean to check if the value has been set.
-func (o *CreatePayoutRequest) GetBankAccountIdOk() (*string, bool) {
-	if o == nil || IsNil(o.BankAccountId) {
+func (o *CreatePayoutRequest) GetRecipientInfoOk() (*PaymentPayoutRecipientInfo, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.BankAccountId, true
+	return &o.RecipientInfo, true
 }
 
-// HasBankAccountId returns a boolean if a field has been set.
-func (o *CreatePayoutRequest) HasBankAccountId() bool {
-	if o != nil && !IsNil(o.BankAccountId) {
-		return true
-	}
-
-	return false
-}
-
-// SetBankAccountId gets a reference to the given string and assigns it to the BankAccountId field.
-func (o *CreatePayoutRequest) SetBankAccountId(v string) {
-	o.BankAccountId = &v
-}
-
-// GetCurrency returns the Currency field value if set, zero value otherwise.
-func (o *CreatePayoutRequest) GetCurrency() string {
-	if o == nil || IsNil(o.Currency) {
-		var ret string
-		return ret
-	}
-	return *o.Currency
-}
-
-// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreatePayoutRequest) GetCurrencyOk() (*string, bool) {
-	if o == nil || IsNil(o.Currency) {
-		return nil, false
-	}
-	return o.Currency, true
-}
-
-// HasCurrency returns a boolean if a field has been set.
-func (o *CreatePayoutRequest) HasCurrency() bool {
-	if o != nil && !IsNil(o.Currency) {
-		return true
-	}
-
-	return false
-}
-
-// SetCurrency gets a reference to the given string and assigns it to the Currency field.
-func (o *CreatePayoutRequest) SetCurrency(v string) {
-	o.Currency = &v
+// SetRecipientInfo sets field value
+func (o *CreatePayoutRequest) SetRecipientInfo(v PaymentPayoutRecipientInfo) {
+	o.RecipientInfo = v
 }
 
 // GetRemark returns the Remark field value if set, zero value otherwise.
@@ -232,14 +217,10 @@ func (o CreatePayoutRequest) MarshalJSON() ([]byte, error) {
 func (o CreatePayoutRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
+	toSerialize["source_account"] = o.SourceAccount
 	toSerialize["payout_channel"] = o.PayoutChannel
 	toSerialize["payout_params"] = o.PayoutParams
-	if !IsNil(o.BankAccountId) {
-		toSerialize["bank_account_id"] = o.BankAccountId
-	}
-	if !IsNil(o.Currency) {
-		toSerialize["currency"] = o.Currency
-	}
+	toSerialize["recipient_info"] = o.RecipientInfo
 	if !IsNil(o.Remark) {
 		toSerialize["remark"] = o.Remark
 	}
@@ -252,8 +233,10 @@ func (o *CreatePayoutRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"request_id",
+		"source_account",
 		"payout_channel",
 		"payout_params",
+		"recipient_info",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -591,6 +591,7 @@ func (a *SwapsAPIService) GetSwapQuoteExecute(r ApiGetSwapQuoteRequest) (*SwapQu
 type ApiListSwapActivitiesRequest struct {
 	ctx context.Context
 	ApiService *SwapsAPIService
+	requestId *string
 	type_ *SwapType
 	status *SwapActivityStatus
 	minUpdatedTimestamp *int64
@@ -601,6 +602,12 @@ type ApiListSwapActivitiesRequest struct {
 	after *string
 	sortBy *string
 	direction *string
+}
+
+// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
+func (r ApiListSwapActivitiesRequest) RequestId(requestId string) ApiListSwapActivitiesRequest {
+	r.requestId = &requestId
+	return r
 }
 
 func (r ApiListSwapActivitiesRequest) Type_(type_ SwapType) ApiListSwapActivitiesRequest {
@@ -702,6 +709,9 @@ func (a *SwapsAPIService) ListSwapActivitiesExecute(r ApiListSwapActivitiesReque
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.requestId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "request_id", r.requestId, "")
+	}
 	if r.type_ != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "")
 	}

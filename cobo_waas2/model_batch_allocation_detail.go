@@ -23,7 +23,7 @@ type BatchAllocationDetail struct {
 	BatchAllocationId string `json:"batch_allocation_id"`
 	// The request ID provided by you when creating the batch allocation.
 	RequestId string `json:"request_id"`
-	AllocationRecords []AllocationRecord `json:"allocation_records"`
+	AllocationItems []AllocationItem `json:"allocation_items,omitempty"`
 	// The initiator of this batch allocation, usually the user's API key.
 	Initiator *string `json:"initiator,omitempty"`
 	// The created time of the batch allocation, represented as a UNIX timestamp in seconds.
@@ -38,11 +38,10 @@ type _BatchAllocationDetail BatchAllocationDetail
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBatchAllocationDetail(batchAllocationId string, requestId string, allocationRecords []AllocationRecord) *BatchAllocationDetail {
+func NewBatchAllocationDetail(batchAllocationId string, requestId string) *BatchAllocationDetail {
 	this := BatchAllocationDetail{}
 	this.BatchAllocationId = batchAllocationId
 	this.RequestId = requestId
-	this.AllocationRecords = allocationRecords
 	return &this
 }
 
@@ -102,28 +101,36 @@ func (o *BatchAllocationDetail) SetRequestId(v string) {
 	o.RequestId = v
 }
 
-// GetAllocationRecords returns the AllocationRecords field value
-func (o *BatchAllocationDetail) GetAllocationRecords() []AllocationRecord {
-	if o == nil {
-		var ret []AllocationRecord
+// GetAllocationItems returns the AllocationItems field value if set, zero value otherwise.
+func (o *BatchAllocationDetail) GetAllocationItems() []AllocationItem {
+	if o == nil || IsNil(o.AllocationItems) {
+		var ret []AllocationItem
 		return ret
 	}
-
-	return o.AllocationRecords
+	return o.AllocationItems
 }
 
-// GetAllocationRecordsOk returns a tuple with the AllocationRecords field value
+// GetAllocationItemsOk returns a tuple with the AllocationItems field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BatchAllocationDetail) GetAllocationRecordsOk() ([]AllocationRecord, bool) {
-	if o == nil {
+func (o *BatchAllocationDetail) GetAllocationItemsOk() ([]AllocationItem, bool) {
+	if o == nil || IsNil(o.AllocationItems) {
 		return nil, false
 	}
-	return o.AllocationRecords, true
+	return o.AllocationItems, true
 }
 
-// SetAllocationRecords sets field value
-func (o *BatchAllocationDetail) SetAllocationRecords(v []AllocationRecord) {
-	o.AllocationRecords = v
+// HasAllocationItems returns a boolean if a field has been set.
+func (o *BatchAllocationDetail) HasAllocationItems() bool {
+	if o != nil && !IsNil(o.AllocationItems) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllocationItems gets a reference to the given []AllocationItem and assigns it to the AllocationItems field.
+func (o *BatchAllocationDetail) SetAllocationItems(v []AllocationItem) {
+	o.AllocationItems = v
 }
 
 // GetInitiator returns the Initiator field value if set, zero value otherwise.
@@ -234,7 +241,9 @@ func (o BatchAllocationDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["batch_allocation_id"] = o.BatchAllocationId
 	toSerialize["request_id"] = o.RequestId
-	toSerialize["allocation_records"] = o.AllocationRecords
+	if !IsNil(o.AllocationItems) {
+		toSerialize["allocation_items"] = o.AllocationItems
+	}
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
 	}
@@ -254,7 +263,6 @@ func (o *BatchAllocationDetail) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"batch_allocation_id",
 		"request_id",
-		"allocation_records",
 	}
 
 	allProperties := make(map[string]interface{})

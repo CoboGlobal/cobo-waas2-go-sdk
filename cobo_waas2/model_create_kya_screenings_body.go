@@ -17,9 +17,9 @@ import (
 // checks if the CreateKyaScreeningsBody type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CreateKyaScreeningsBody{}
 
-// CreateKyaScreeningsBody Request body for batch creating address screening requests.
+// CreateKyaScreeningsBody Information about address screening requests.
 type CreateKyaScreeningsBody struct {
-	// List of address screening requests. Maximum 50 addresses per request.
+	// List of address screening requests. Maximum 50 addresses per call.
 	Screenings []KyaScreeningRequest `json:"screenings"`
 }
 

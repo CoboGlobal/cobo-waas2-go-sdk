@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// PayoutChannel The channel through which payouts will be processed. Available options: - `Crypto`: Direct withdrawal to a crypto address. - `OffRamp`: Settle to a registered bank account. 
+// PayoutChannel The channel through which the payout will be processed. Possible values include: - `Crypto`: The payout will be processed as a cryptocurrency transfer to a crypto address. - `OffRamp`: The payout will be processed as a fiat currency transfer to a registered bank account. 
 type PayoutChannel string
 
 // List of PayoutChannel

@@ -1,11 +1,13 @@
-# PaymentPayoutItemStatus
+# PaymentBulkSendStatus
 
 ## Enum
 
 
 * `PENDING` (value: `"Pending"`)
 
-* `PROCESSING` (value: `"Processing"`)
+* `VALIDATING` (value: `"Validating"`)
+
+* `TRANSFERRING` (value: `"Transferring"`)
 
 * `COMPLETED` (value: `"Completed"`)
 

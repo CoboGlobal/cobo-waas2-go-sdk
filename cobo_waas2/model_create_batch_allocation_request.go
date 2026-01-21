@@ -21,7 +21,7 @@ var _ MappedNullable = &CreateBatchAllocationRequest{}
 type CreateBatchAllocationRequest struct {
 	// The request ID that is used to track a batch allocation request. The request ID is provided by you and must be unique.
 	RequestId string `json:"request_id"`
-	AllocationRequests []AllocationRequest `json:"allocation_requests"`
+	AllocationParams []AllocationParam `json:"allocation_params"`
 }
 
 type _CreateBatchAllocationRequest CreateBatchAllocationRequest
@@ -30,10 +30,10 @@ type _CreateBatchAllocationRequest CreateBatchAllocationRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateBatchAllocationRequest(requestId string, allocationRequests []AllocationRequest) *CreateBatchAllocationRequest {
+func NewCreateBatchAllocationRequest(requestId string, allocationParams []AllocationParam) *CreateBatchAllocationRequest {
 	this := CreateBatchAllocationRequest{}
 	this.RequestId = requestId
-	this.AllocationRequests = allocationRequests
+	this.AllocationParams = allocationParams
 	return &this
 }
 
@@ -69,28 +69,28 @@ func (o *CreateBatchAllocationRequest) SetRequestId(v string) {
 	o.RequestId = v
 }
 
-// GetAllocationRequests returns the AllocationRequests field value
-func (o *CreateBatchAllocationRequest) GetAllocationRequests() []AllocationRequest {
+// GetAllocationParams returns the AllocationParams field value
+func (o *CreateBatchAllocationRequest) GetAllocationParams() []AllocationParam {
 	if o == nil {
-		var ret []AllocationRequest
+		var ret []AllocationParam
 		return ret
 	}
 
-	return o.AllocationRequests
+	return o.AllocationParams
 }
 
-// GetAllocationRequestsOk returns a tuple with the AllocationRequests field value
+// GetAllocationParamsOk returns a tuple with the AllocationParams field value
 // and a boolean to check if the value has been set.
-func (o *CreateBatchAllocationRequest) GetAllocationRequestsOk() ([]AllocationRequest, bool) {
+func (o *CreateBatchAllocationRequest) GetAllocationParamsOk() ([]AllocationParam, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.AllocationRequests, true
+	return o.AllocationParams, true
 }
 
-// SetAllocationRequests sets field value
-func (o *CreateBatchAllocationRequest) SetAllocationRequests(v []AllocationRequest) {
-	o.AllocationRequests = v
+// SetAllocationParams sets field value
+func (o *CreateBatchAllocationRequest) SetAllocationParams(v []AllocationParam) {
+	o.AllocationParams = v
 }
 
 func (o CreateBatchAllocationRequest) MarshalJSON() ([]byte, error) {
@@ -104,7 +104,7 @@ func (o CreateBatchAllocationRequest) MarshalJSON() ([]byte, error) {
 func (o CreateBatchAllocationRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["request_id"] = o.RequestId
-	toSerialize["allocation_requests"] = o.AllocationRequests
+	toSerialize["allocation_params"] = o.AllocationParams
 	return toSerialize, nil
 }
 
@@ -114,7 +114,7 @@ func (o *CreateBatchAllocationRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"request_id",
-		"allocation_requests",
+		"allocation_params",
 	}
 
 	allProperties := make(map[string]interface{})

@@ -22,6 +22,8 @@ type PaymentEstimateFeeRequest struct {
 	FeeType *PaymentFeeType `json:"fee_type,omitempty"`
 	// A list of token IDs and amounts for which fees will be calculated.
 	EstimateFees []PaymentEstimateFee `json:"estimate_fees"`
+	// The token ID that the recipient will receive. Required only when `fee_type` is `CryptoPayoutBridge`.
+	RecipientTokenId *string `json:"recipient_token_id,omitempty"`
 }
 
 type _PaymentEstimateFeeRequest PaymentEstimateFeeRequest
@@ -100,6 +102,38 @@ func (o *PaymentEstimateFeeRequest) SetEstimateFees(v []PaymentEstimateFee) {
 	o.EstimateFees = v
 }
 
+// GetRecipientTokenId returns the RecipientTokenId field value if set, zero value otherwise.
+func (o *PaymentEstimateFeeRequest) GetRecipientTokenId() string {
+	if o == nil || IsNil(o.RecipientTokenId) {
+		var ret string
+		return ret
+	}
+	return *o.RecipientTokenId
+}
+
+// GetRecipientTokenIdOk returns a tuple with the RecipientTokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentEstimateFeeRequest) GetRecipientTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RecipientTokenId) {
+		return nil, false
+	}
+	return o.RecipientTokenId, true
+}
+
+// HasRecipientTokenId returns a boolean if a field has been set.
+func (o *PaymentEstimateFeeRequest) HasRecipientTokenId() bool {
+	if o != nil && !IsNil(o.RecipientTokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecipientTokenId gets a reference to the given string and assigns it to the RecipientTokenId field.
+func (o *PaymentEstimateFeeRequest) SetRecipientTokenId(v string) {
+	o.RecipientTokenId = &v
+}
+
 func (o PaymentEstimateFeeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -114,6 +148,9 @@ func (o PaymentEstimateFeeRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["fee_type"] = o.FeeType
 	}
 	toSerialize["estimate_fees"] = o.EstimateFees
+	if !IsNil(o.RecipientTokenId) {
+		toSerialize["recipient_token_id"] = o.RecipientTokenId
+	}
 	return toSerialize, nil
 }
 

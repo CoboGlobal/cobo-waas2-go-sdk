@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | **string** | The request ID that is used to track a batch allocation request. The request ID is provided by you and must be unique. | 
-**AllocationRequests** | [**[]AllocationRequest**](AllocationRequest.md) |  | 
+**AllocationParams** | [**[]AllocationParam**](AllocationParam.md) |  | 
 
 ## Methods
 
 ### NewCreateBatchAllocationRequest
 
-`func NewCreateBatchAllocationRequest(requestId string, allocationRequests []AllocationRequest, ) *CreateBatchAllocationRequest`
+`func NewCreateBatchAllocationRequest(requestId string, allocationParams []AllocationParam, ) *CreateBatchAllocationRequest`
 
 NewCreateBatchAllocationRequest instantiates a new CreateBatchAllocationRequest object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +46,24 @@ and a boolean to check if the value has been set.
 SetRequestId sets RequestId field to given value.
 
 
-### GetAllocationRequests
+### GetAllocationParams
 
-`func (o *CreateBatchAllocationRequest) GetAllocationRequests() []AllocationRequest`
+`func (o *CreateBatchAllocationRequest) GetAllocationParams() []AllocationParam`
 
-GetAllocationRequests returns the AllocationRequests field if non-nil, zero value otherwise.
+GetAllocationParams returns the AllocationParams field if non-nil, zero value otherwise.
 
-### GetAllocationRequestsOk
+### GetAllocationParamsOk
 
-`func (o *CreateBatchAllocationRequest) GetAllocationRequestsOk() (*[]AllocationRequest, bool)`
+`func (o *CreateBatchAllocationRequest) GetAllocationParamsOk() (*[]AllocationParam, bool)`
 
-GetAllocationRequestsOk returns a tuple with the AllocationRequests field if it's non-nil, zero value otherwise
+GetAllocationParamsOk returns a tuple with the AllocationParams field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAllocationRequests
+### SetAllocationParams
 
-`func (o *CreateBatchAllocationRequest) SetAllocationRequests(v []AllocationRequest)`
+`func (o *CreateBatchAllocationRequest) SetAllocationParams(v []AllocationParam)`
 
-SetAllocationRequests sets AllocationRequests field to given value.
+SetAllocationParams sets AllocationParams field to given value.
 
 
 

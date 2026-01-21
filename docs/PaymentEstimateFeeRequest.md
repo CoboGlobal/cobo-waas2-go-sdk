@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | Pointer to [**PaymentFeeType**](PaymentFeeType.md) |  | [optional] 
 **EstimateFees** | [**[]PaymentEstimateFee**](PaymentEstimateFee.md) | A list of token IDs and amounts for which fees will be calculated. | 
+**RecipientTokenId** | Pointer to **string** | The token ID that the recipient will receive. Required only when &#x60;fee_type&#x60; is &#x60;CryptoPayoutBridge&#x60;. | [optional] 
 
 ## Methods
 
@@ -70,6 +71,31 @@ and a boolean to check if the value has been set.
 
 SetEstimateFees sets EstimateFees field to given value.
 
+
+### GetRecipientTokenId
+
+`func (o *PaymentEstimateFeeRequest) GetRecipientTokenId() string`
+
+GetRecipientTokenId returns the RecipientTokenId field if non-nil, zero value otherwise.
+
+### GetRecipientTokenIdOk
+
+`func (o *PaymentEstimateFeeRequest) GetRecipientTokenIdOk() (*string, bool)`
+
+GetRecipientTokenIdOk returns a tuple with the RecipientTokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRecipientTokenId
+
+`func (o *PaymentEstimateFeeRequest) SetRecipientTokenId(v string)`
+
+SetRecipientTokenId sets RecipientTokenId field to given value.
+
+### HasRecipientTokenId
+
+`func (o *PaymentEstimateFeeRequest) HasRecipientTokenId() bool`
+
+HasRecipientTokenId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

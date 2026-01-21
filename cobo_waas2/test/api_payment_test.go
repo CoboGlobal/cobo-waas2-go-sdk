@@ -66,6 +66,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService CreateBulkSend", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.CreateBulkSend(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService CreateCounterparty", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -270,6 +282,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService CreateTopUpAddresses", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.CreateTopUpAddresses(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService DeleteCounterparty", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -441,6 +465,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var batchAllocationId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.GetBatchAllocationById(ctx, batchAllocationId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService GetBulkSendById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var bulkSendId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetBulkSendById(ctx, bulkSendId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -677,11 +715,11 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService ListAllocations", func(t *testing.T) {
+	t.Run("Test PaymentAPIService ListAllocationItems", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.PaymentAPI.ListAllocations(ctx).Execute()
+		resp, httpRes, err := apiClient.PaymentAPI.ListAllocationItems(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -706,6 +744,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.ListBatchAllocations(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService ListBulkSendItems", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var bulkSendId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListBulkSendItems(ctx, bulkSendId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -874,18 +926,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.ListPaymentWalletBalances(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService ListPayoutItems", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.ListPayoutItems(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

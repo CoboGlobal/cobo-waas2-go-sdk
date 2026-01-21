@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// PaymentFeeType The type of fee to estimate: - `Order`: Fee for accepting a payment. - `Refund`: Fee for processing a refund. - `CryptoSettlement`: Fee for crypto payouts. - `OffRampSettlement`: Fee for fiat off-ramp. 
+// PaymentFeeType The fee type. Possible values include: - `Order`: Fees for order processing. - `Refund`: Fees for refund processing. - `CryptoSettlement`: This fee type is deprecated. Please use `CryptoPayout` instead. - `OffRampSettlement`: This fee type is deprecated. Please use `OffRampPayout` instead. - `CryptoPayout`: Fees for crypto payouts. - `CryptoPayoutBridge`: Fees for crypto payouts with cross-chain bridging. - `OffRampPayout`: Fees for fiat off-ramp payouts. 
 type PaymentFeeType string
 
 // List of PaymentFeeType
@@ -22,6 +22,9 @@ const (
 	PAYMENTFEETYPE_REFUND PaymentFeeType = "Refund"
 	PAYMENTFEETYPE_CRYPTO_SETTLEMENT PaymentFeeType = "CryptoSettlement"
 	PAYMENTFEETYPE_OFF_RAMP_SETTLEMENT PaymentFeeType = "OffRampSettlement"
+	PAYMENTFEETYPE_CRYPTO_PAYOUT PaymentFeeType = "CryptoPayout"
+	PAYMENTFEETYPE_CRYPTO_PAYOUT_BRIDGE PaymentFeeType = "CryptoPayoutBridge"
+	PAYMENTFEETYPE_OFF_RAMP_PAYOUT PaymentFeeType = "OffRampPayout"
 )
 
 // All allowed values of PaymentFeeType enum
@@ -30,6 +33,9 @@ var AllowedPaymentFeeTypeEnumValues = []PaymentFeeType{
 	"Refund",
 	"CryptoSettlement",
 	"OffRampSettlement",
+	"CryptoPayout",
+	"CryptoPayoutBridge",
+	"OffRampPayout",
 }
 
 func (v *PaymentFeeType) UnmarshalJSON(src []byte) error {

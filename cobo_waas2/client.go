@@ -64,6 +64,8 @@ type APIClient struct {
 
 	FeeStationAPI *FeeStationAPIService
 
+	GraphQLAPI *GraphQLAPIService
+
 	OAuthAPI *OAuthAPIService
 
 	OrganizationsAPI *OrganizationsAPIService
@@ -114,6 +116,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DevelopersAPI = (*DevelopersAPIService)(&c.common)
 	c.DevelopersWebhooksAPI = (*DevelopersWebhooksAPIService)(&c.common)
 	c.FeeStationAPI = (*FeeStationAPIService)(&c.common)
+	c.GraphQLAPI = (*GraphQLAPIService)(&c.common)
 	c.OAuthAPI = (*OAuthAPIService)(&c.common)
 	c.OrganizationsAPI = (*OrganizationsAPIService)(&c.common)
 	c.PaymentAPI = (*PaymentAPIService)(&c.common)

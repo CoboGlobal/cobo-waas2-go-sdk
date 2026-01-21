@@ -2313,7 +2313,7 @@ func (r ApiListEnabledChainsRequest) WalletSubtype(walletSubtype WalletSubtype) 
 	return r
 }
 
-// The maximum number of objects to return. For most operations, the value range is [1, 50].
+// The maximum number of objects to return. The value range is [1, 500].
 func (r ApiListEnabledChainsRequest) Limit(limit int32) ApiListEnabledChainsRequest {
 	r.limit = &limit
 	return r
@@ -2491,19 +2491,19 @@ func (r ApiListEnabledTokensRequest) WalletSubtype(walletSubtype WalletSubtype) 
 	return r
 }
 
-// A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
+// A list of chain IDs(Supports up to 500), separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 func (r ApiListEnabledTokensRequest) ChainIds(chainIds string) ApiListEnabledTokensRequest {
 	r.chainIds = &chainIds
 	return r
 }
 
-// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+// A list of token IDs(Supports up to 500), separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 func (r ApiListEnabledTokensRequest) TokenIds(tokenIds string) ApiListEnabledTokensRequest {
 	r.tokenIds = &tokenIds
 	return r
 }
 
-// The maximum number of objects to return. For most operations, the value range is [1, 50].
+// The maximum number of objects to return. The value range is [1, 500].
 func (r ApiListEnabledTokensRequest) Limit(limit int32) ApiListEnabledTokensRequest {
 	r.limit = &limit
 	return r
@@ -2686,13 +2686,13 @@ func (r ApiListSupportedChainsRequest) WalletSubtype(walletSubtype WalletSubtype
 	return r
 }
 
-// A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
+// A list of chain IDs(Supports up to 500), separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 func (r ApiListSupportedChainsRequest) ChainIds(chainIds string) ApiListSupportedChainsRequest {
 	r.chainIds = &chainIds
 	return r
 }
 
-// The maximum number of objects to return. For most operations, the value range is [1, 50].
+// The maximum number of objects to return. The value range is [1, 500].
 func (r ApiListSupportedChainsRequest) Limit(limit int32) ApiListSupportedChainsRequest {
 	r.limit = &limit
 	return r
@@ -2875,19 +2875,19 @@ func (r ApiListSupportedTokensRequest) WalletSubtype(walletSubtype WalletSubtype
 	return r
 }
 
-// A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
+// A list of chain IDs(Supports up to 500), separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
 func (r ApiListSupportedTokensRequest) ChainIds(chainIds string) ApiListSupportedTokensRequest {
 	r.chainIds = &chainIds
 	return r
 }
 
-// A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+// A list of token IDs(Supports up to 500), separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 func (r ApiListSupportedTokensRequest) TokenIds(tokenIds string) ApiListSupportedTokensRequest {
 	r.tokenIds = &tokenIds
 	return r
 }
 
-// The maximum number of objects to return. For most operations, the value range is [1, 50].
+// The maximum number of objects to return. The value range is [1, 500].
 func (r ApiListSupportedTokensRequest) Limit(limit int32) ApiListSupportedTokensRequest {
 	r.limit = &limit
 	return r

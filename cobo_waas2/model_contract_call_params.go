@@ -25,7 +25,7 @@ type ContractCallParams struct {
 	ChainId string `json:"chain_id"`
 	Source ContractCallSource `json:"source"`
 	Destination ContractCallDestination `json:"destination"`
-	// The description of the contract call transaction.
+	// The description of the contract call transaction. Maximum length is 2048 characters for MPC Wallets and Custodial Wallets (Web3 Wallets), and 1000 characters for Custodial Wallets (Asset Wallets).
 	Description *string `json:"description,omitempty"`
 	// The custom category for you to identify your transactions.
 	CategoryNames []string `json:"category_names,omitempty"`

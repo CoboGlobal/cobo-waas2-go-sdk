@@ -26,13 +26,13 @@ type OrderLinkBusinessInfo struct {
 	// A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters. 
 	PspOrderCode string `json:"psp_order_code"`
 	// The pricing currency that denominates `pricing_amount` and `fee_amount`. Currently, only `USD`/`USDT`/`USDC` are supported. This field is required. 
-	PricingCurrency *string `json:"pricing_currency,omitempty"`
+	PricingCurrency string `json:"pricing_currency"`
 	// The base amount of the order, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places. 
-	PricingAmount *string `json:"pricing_amount,omitempty"`
+	PricingAmount string `json:"pricing_amount"`
 	// The developer fee for the order. It is added to the base amount (`pricing_amount`) to determine the final charge. For example, if `pricing_amount` is \"100.00\" and `fee_amount` is \"2.00\", the payer will be charged \"102.00\" in total, with \"100.00\" being settled to the merchant account and \"2.00\" settled to the developer account. Values must be greater than 0 and contain two decimal places. 
 	FeeAmount string `json:"fee_amount"`
 	// The IDs of the cryptocurrencies used for payment. Supported values:  - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`  - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
-	PayableCurrencies []string `json:"payable_currencies,omitempty"`
+	PayableCurrencies []string `json:"payable_currencies"`
 	// The total amounts the payer needs to pay for each currency in `payable_currencies`. If this field is left blank, the system will automatically calculate the amounts at order creation using the following formula: (`pricing_amount` + `fee_amount`) / current exchange rate.  Values must be greater than 0 and contain two decimal places. 
 	PayableAmounts []OrderLinkBusinessInfoPayableAmountsInner `json:"payable_amounts,omitempty"`
 	// The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
@@ -57,11 +57,14 @@ type _OrderLinkBusinessInfo OrderLinkBusinessInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrderLinkBusinessInfo(merchantId string, pspOrderCode string, feeAmount string) *OrderLinkBusinessInfo {
+func NewOrderLinkBusinessInfo(merchantId string, pspOrderCode string, pricingCurrency string, pricingAmount string, feeAmount string, payableCurrencies []string) *OrderLinkBusinessInfo {
 	this := OrderLinkBusinessInfo{}
 	this.MerchantId = merchantId
 	this.PspOrderCode = pspOrderCode
+	this.PricingCurrency = pricingCurrency
+	this.PricingAmount = pricingAmount
 	this.FeeAmount = feeAmount
+	this.PayableCurrencies = payableCurrencies
 	var expiredIn int32 = 1800
 	this.ExpiredIn = &expiredIn
 	return &this
@@ -157,68 +160,52 @@ func (o *OrderLinkBusinessInfo) SetPspOrderCode(v string) {
 	o.PspOrderCode = v
 }
 
-// GetPricingCurrency returns the PricingCurrency field value if set, zero value otherwise.
+// GetPricingCurrency returns the PricingCurrency field value
 func (o *OrderLinkBusinessInfo) GetPricingCurrency() string {
-	if o == nil || IsNil(o.PricingCurrency) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.PricingCurrency
+
+	return o.PricingCurrency
 }
 
-// GetPricingCurrencyOk returns a tuple with the PricingCurrency field value if set, nil otherwise
+// GetPricingCurrencyOk returns a tuple with the PricingCurrency field value
 // and a boolean to check if the value has been set.
 func (o *OrderLinkBusinessInfo) GetPricingCurrencyOk() (*string, bool) {
-	if o == nil || IsNil(o.PricingCurrency) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PricingCurrency, true
+	return &o.PricingCurrency, true
 }
 
-// HasPricingCurrency returns a boolean if a field has been set.
-func (o *OrderLinkBusinessInfo) HasPricingCurrency() bool {
-	if o != nil && !IsNil(o.PricingCurrency) {
-		return true
-	}
-
-	return false
-}
-
-// SetPricingCurrency gets a reference to the given string and assigns it to the PricingCurrency field.
+// SetPricingCurrency sets field value
 func (o *OrderLinkBusinessInfo) SetPricingCurrency(v string) {
-	o.PricingCurrency = &v
+	o.PricingCurrency = v
 }
 
-// GetPricingAmount returns the PricingAmount field value if set, zero value otherwise.
+// GetPricingAmount returns the PricingAmount field value
 func (o *OrderLinkBusinessInfo) GetPricingAmount() string {
-	if o == nil || IsNil(o.PricingAmount) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.PricingAmount
+
+	return o.PricingAmount
 }
 
-// GetPricingAmountOk returns a tuple with the PricingAmount field value if set, nil otherwise
+// GetPricingAmountOk returns a tuple with the PricingAmount field value
 // and a boolean to check if the value has been set.
 func (o *OrderLinkBusinessInfo) GetPricingAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.PricingAmount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PricingAmount, true
+	return &o.PricingAmount, true
 }
 
-// HasPricingAmount returns a boolean if a field has been set.
-func (o *OrderLinkBusinessInfo) HasPricingAmount() bool {
-	if o != nil && !IsNil(o.PricingAmount) {
-		return true
-	}
-
-	return false
-}
-
-// SetPricingAmount gets a reference to the given string and assigns it to the PricingAmount field.
+// SetPricingAmount sets field value
 func (o *OrderLinkBusinessInfo) SetPricingAmount(v string) {
-	o.PricingAmount = &v
+	o.PricingAmount = v
 }
 
 // GetFeeAmount returns the FeeAmount field value
@@ -245,34 +232,26 @@ func (o *OrderLinkBusinessInfo) SetFeeAmount(v string) {
 	o.FeeAmount = v
 }
 
-// GetPayableCurrencies returns the PayableCurrencies field value if set, zero value otherwise.
+// GetPayableCurrencies returns the PayableCurrencies field value
 func (o *OrderLinkBusinessInfo) GetPayableCurrencies() []string {
-	if o == nil || IsNil(o.PayableCurrencies) {
+	if o == nil {
 		var ret []string
 		return ret
 	}
+
 	return o.PayableCurrencies
 }
 
-// GetPayableCurrenciesOk returns a tuple with the PayableCurrencies field value if set, nil otherwise
+// GetPayableCurrenciesOk returns a tuple with the PayableCurrencies field value
 // and a boolean to check if the value has been set.
 func (o *OrderLinkBusinessInfo) GetPayableCurrenciesOk() ([]string, bool) {
-	if o == nil || IsNil(o.PayableCurrencies) {
+	if o == nil {
 		return nil, false
 	}
 	return o.PayableCurrencies, true
 }
 
-// HasPayableCurrencies returns a boolean if a field has been set.
-func (o *OrderLinkBusinessInfo) HasPayableCurrencies() bool {
-	if o != nil && !IsNil(o.PayableCurrencies) {
-		return true
-	}
-
-	return false
-}
-
-// SetPayableCurrencies gets a reference to the given []string and assigns it to the PayableCurrencies field.
+// SetPayableCurrencies sets field value
 func (o *OrderLinkBusinessInfo) SetPayableCurrencies(v []string) {
 	o.PayableCurrencies = v
 }
@@ -548,16 +527,10 @@ func (o OrderLinkBusinessInfo) ToMap() (map[string]interface{}, error) {
 		toSerialize["merchant_order_code"] = o.MerchantOrderCode
 	}
 	toSerialize["psp_order_code"] = o.PspOrderCode
-	if !IsNil(o.PricingCurrency) {
-		toSerialize["pricing_currency"] = o.PricingCurrency
-	}
-	if !IsNil(o.PricingAmount) {
-		toSerialize["pricing_amount"] = o.PricingAmount
-	}
+	toSerialize["pricing_currency"] = o.PricingCurrency
+	toSerialize["pricing_amount"] = o.PricingAmount
 	toSerialize["fee_amount"] = o.FeeAmount
-	if !IsNil(o.PayableCurrencies) {
-		toSerialize["payable_currencies"] = o.PayableCurrencies
-	}
+	toSerialize["payable_currencies"] = o.PayableCurrencies
 	if !IsNil(o.PayableAmounts) {
 		toSerialize["payable_amounts"] = o.PayableAmounts
 	}
@@ -592,7 +565,10 @@ func (o *OrderLinkBusinessInfo) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"merchant_id",
 		"psp_order_code",
+		"pricing_currency",
+		"pricing_amount",
 		"fee_amount",
+		"payable_currencies",
 	}
 
 	allProperties := make(map[string]interface{})

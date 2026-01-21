@@ -23,7 +23,7 @@ type BatchAllocation struct {
 	BatchAllocationId string `json:"batch_allocation_id"`
 	// The request ID provided by you when creating the batch allocation.
 	RequestId string `json:"request_id"`
-	AllocationRequests []AllocationRequest `json:"allocation_requests,omitempty"`
+	AllocationParams []AllocationParam `json:"allocation_params,omitempty"`
 	// The initiator of this batch allocation, usually the API key you used to create the batch allocation.
 	Initiator *string `json:"initiator,omitempty"`
 	// The created time of the batch allocation, represented as a UNIX timestamp in seconds.
@@ -103,36 +103,36 @@ func (o *BatchAllocation) SetRequestId(v string) {
 	o.RequestId = v
 }
 
-// GetAllocationRequests returns the AllocationRequests field value if set, zero value otherwise.
-func (o *BatchAllocation) GetAllocationRequests() []AllocationRequest {
-	if o == nil || IsNil(o.AllocationRequests) {
-		var ret []AllocationRequest
+// GetAllocationParams returns the AllocationParams field value if set, zero value otherwise.
+func (o *BatchAllocation) GetAllocationParams() []AllocationParam {
+	if o == nil || IsNil(o.AllocationParams) {
+		var ret []AllocationParam
 		return ret
 	}
-	return o.AllocationRequests
+	return o.AllocationParams
 }
 
-// GetAllocationRequestsOk returns a tuple with the AllocationRequests field value if set, nil otherwise
+// GetAllocationParamsOk returns a tuple with the AllocationParams field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BatchAllocation) GetAllocationRequestsOk() ([]AllocationRequest, bool) {
-	if o == nil || IsNil(o.AllocationRequests) {
+func (o *BatchAllocation) GetAllocationParamsOk() ([]AllocationParam, bool) {
+	if o == nil || IsNil(o.AllocationParams) {
 		return nil, false
 	}
-	return o.AllocationRequests, true
+	return o.AllocationParams, true
 }
 
-// HasAllocationRequests returns a boolean if a field has been set.
-func (o *BatchAllocation) HasAllocationRequests() bool {
-	if o != nil && !IsNil(o.AllocationRequests) {
+// HasAllocationParams returns a boolean if a field has been set.
+func (o *BatchAllocation) HasAllocationParams() bool {
+	if o != nil && !IsNil(o.AllocationParams) {
 		return true
 	}
 
 	return false
 }
 
-// SetAllocationRequests gets a reference to the given []AllocationRequest and assigns it to the AllocationRequests field.
-func (o *BatchAllocation) SetAllocationRequests(v []AllocationRequest) {
-	o.AllocationRequests = v
+// SetAllocationParams gets a reference to the given []AllocationParam and assigns it to the AllocationParams field.
+func (o *BatchAllocation) SetAllocationParams(v []AllocationParam) {
+	o.AllocationParams = v
 }
 
 // GetInitiator returns the Initiator field value if set, zero value otherwise.
@@ -227,8 +227,8 @@ func (o BatchAllocation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["batch_allocation_id"] = o.BatchAllocationId
 	toSerialize["request_id"] = o.RequestId
-	if !IsNil(o.AllocationRequests) {
-		toSerialize["allocation_requests"] = o.AllocationRequests
+	if !IsNil(o.AllocationParams) {
+		toSerialize["allocation_params"] = o.AllocationParams
 	}
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
