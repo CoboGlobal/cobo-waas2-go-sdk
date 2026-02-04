@@ -27,6 +27,8 @@ type Balance struct {
 	Pending *string `json:"pending,omitempty"`
 	// For UTXO chains, this is the combined value of the selected UTXOs for the transaction. For other chains, it is equal to the Pending amount. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details.
 	Locked *string `json:"locked,omitempty"`
+	// Amount frozen due to compliance inspection. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details.
+	Frozen *string `json:"frozen,omitempty"`
 }
 
 type _Balance Balance
@@ -43,6 +45,8 @@ func NewBalance(total string, available string) *Balance {
 	this.Pending = &pending
 	var locked string = "0"
 	this.Locked = &locked
+	var frozen string = "0"
+	this.Frozen = &frozen
 	return &this
 }
 
@@ -55,6 +59,8 @@ func NewBalanceWithDefaults() *Balance {
 	this.Pending = &pending
 	var locked string = "0"
 	this.Locked = &locked
+	var frozen string = "0"
+	this.Frozen = &frozen
 	return &this
 }
 
@@ -170,6 +176,38 @@ func (o *Balance) SetLocked(v string) {
 	o.Locked = &v
 }
 
+// GetFrozen returns the Frozen field value if set, zero value otherwise.
+func (o *Balance) GetFrozen() string {
+	if o == nil || IsNil(o.Frozen) {
+		var ret string
+		return ret
+	}
+	return *o.Frozen
+}
+
+// GetFrozenOk returns a tuple with the Frozen field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Balance) GetFrozenOk() (*string, bool) {
+	if o == nil || IsNil(o.Frozen) {
+		return nil, false
+	}
+	return o.Frozen, true
+}
+
+// HasFrozen returns a boolean if a field has been set.
+func (o *Balance) HasFrozen() bool {
+	if o != nil && !IsNil(o.Frozen) {
+		return true
+	}
+
+	return false
+}
+
+// SetFrozen gets a reference to the given string and assigns it to the Frozen field.
+func (o *Balance) SetFrozen(v string) {
+	o.Frozen = &v
+}
+
 func (o Balance) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -187,6 +225,9 @@ func (o Balance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Locked) {
 		toSerialize["locked"] = o.Locked
+	}
+	if !IsNil(o.Frozen) {
+		toSerialize["frozen"] = o.Frozen
 	}
 	return toSerialize, nil
 }

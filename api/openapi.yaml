@@ -9228,6 +9228,7 @@ paths:
   /payments/bank_accounts/{bank_account_id}:
     put:
       description: |
+        <Note>This operation has been deprecated.</Note>
         This operation updates the information of an existing bank account.
       operationId: update_bank_account_by_id
       parameters:
@@ -9849,9 +9850,10 @@ paths:
       - Payment
   /payments/crypto_addresses:
     get:
-      description: "This operation retrieves a list of crypto addresses registered\
-        \ for crypto payouts. \n\nContact our support team at [help@cobo.com](mailto:help@cobo.com)\
-        \ to register a new crypto address.\n"
+      description: "<Note>This operation has been deprecated.</Note>\nThis operation\
+        \ retrieves a list of crypto addresses registered for crypto payouts. \n\n\
+        Contact our support team at [help@cobo.com](mailto:help@cobo.com) to register\
+        \ a new crypto address.\n"
       operationId: list_crypto_addresses
       parameters:
       - description: |
@@ -9897,6 +9899,7 @@ paths:
       - Payment
     post:
       description: |
+        <Note>This operation has been deprecated.</Note>
         This operation registers a crypto address for crypto payouts.
 
         The registered address can later be referenced by its ID when creating settlement requests.
@@ -9933,6 +9936,7 @@ paths:
   /payments/crypto_addresses/{crypto_address_id}/delete:
     post:
       description: |
+        <Note>This operation has been deprecated.</Note>
         This operation unregisters a crypto address from being used for crypto payouts.
       operationId: delete_crypto_address
       parameters:
@@ -9982,8 +9986,11 @@ paths:
       - Payment
   /payments/supported_tokens:
     get:
-      description: |
-        This operation retrieves the information of all supported tokens.
+      description: "This operation retrieves all tokens supported by Cobo Payments.\n\
+        \nUse this operation to get token details such as token ID, symbol, decimal\
+        \ precision, \ncontract address, and chain information before creating payment\
+        \ orders.\n\nFor more information about Cobo Payments, see [Cobo Payments\
+        \ Overview](https://www.cobo.com/payments/en/guides/overview).\n"
       operationId: list_payment_supported_tokens
       responses:
         "200":
@@ -10011,7 +10018,7 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - payment_merchant.read
-      summary: List all supported tokens
+      summary: List supported tokens
       tags:
       - Payment
   /payments/topup/address:
@@ -11292,320 +11299,6 @@ paths:
       summary: Get counterparty entry information
       tags:
       - Payment
-  /payments/counterparty/{counterparty_id}/update:
-    put:
-      description: |
-        This operation updates the information of a specified counterparty.
-      operationId: update_counterparty_by_id
-      parameters:
-      - description: The counterparty ID.
-        example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
-        explode: false
-        in: path
-        name: counterparty_id
-        required: true
-        schema:
-          description: The counterparty ID.
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/updateCounterpartyBody'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Counterparty'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_counterparty.update
-      summary: Update counterparty (Deprecated)
-      tags:
-      - Payment
-  /payments/counterparty/{counterparty_id}/detail:
-    get:
-      description: |
-        This operation retrieves the detailed information about a specified counterparty.
-      operationId: get_counterparty_detail_by_id
-      parameters:
-      - description: The counterparty ID.
-        example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
-        explode: false
-        in: path
-        name: counterparty_id
-        required: true
-        schema:
-          description: The counterparty ID.
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CounterpartyDetail'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_counterparty.read
-      summary: Get counterparty information (Deprecated)
-      tags:
-      - Payment
-  /payments/counterparty/{counterparty_id}/delete:
-    put:
-      description: |
-        This operation deletes a counterparty.
-      operationId: delete_counterparty
-      parameters:
-      - description: The counterparty ID.
-        example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
-        explode: false
-        in: path
-        name: counterparty_id
-        required: true
-        schema:
-          description: The counterparty ID.
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/delete_counterparty_200_response'
-          description: The request was successful.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized. Please provide valid credentials.
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden. You do not have the permission to access the requested
-            resource.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_counterparty.delete
-      summary: Delete counterparty (Deprecated)
-      tags:
-      - Payment
-  /payments/counterparty/wallet_address:
-    get:
-      description: |
-        This operation retrieves the information of counterparty wallet addresses.
-      operationId: list_counterparty_wallet_address
-      parameters:
-      - description: "The maximum number of objects to return. For most operations,\
-          \ the value range is [1, 50]."
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: |
-          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: |
-          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The counterparty ID.
-        example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
-        explode: true
-        in: query
-        name: counterparty_id
-        required: false
-        schema:
-          description: The counterparty ID.
-          type: string
-        style: form
-      - description: "The chain ID, which is the unique identifier of a blockchain."
-        example: ETH
-        explode: true
-        in: query
-        name: chain_ids
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The wallet address.
-        example: 0x1234567890abcdef...
-        explode: true
-        in: query
-        name: wallet_address
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_counterparty_wallet_address_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_counterparty.read
-      summary: List counterparty wallet addresses
-      tags:
-      - Payment
-    post:
-      description: |
-        This operation creates a counterparty wallet address.
-      operationId: create_counterparty_wallet_address
-      requestBody:
-        $ref: '#/components/requestBodies/createCounterpartyWalletAddressBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletAddress'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_counterparty.create
-      summary: Create counterparty wallet address
-      tags:
-      - Payment
-  /payments/counterparty/wallet_address/{wallet_address_id}/delete:
-    put:
-      description: |
-        This operation deletes a counterparty wallet address.
-      operationId: delete_counterparty_wallet_address
-      parameters:
-      - description: The wallet address ID.
-        example: 445bac57-7428-4d25-bce1-b3cd017f47a1
-        explode: false
-        in: path
-        name: wallet_address_id
-        required: true
-        schema:
-          description: The wallet address ID.
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/delete_counterparty_wallet_address_200_response'
-          description: The request was successful.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized. Please provide valid credentials.
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden. You do not have the permission to access the requested
-            resource.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_counterparty.delete
-      summary: Delete counterparty wallet address
-      tags:
-      - Payment
   /payments/destination:
     get:
       description: "This operation retrieves the information of all destinations.\
@@ -12219,656 +11912,6 @@ paths:
       - OAuth2:
         - payment_destination.update
       summary: Update destination entry
-      tags:
-      - Payment
-  /payments/destination/{destination_id}/update:
-    put:
-      description: |
-        This operation updates the information of a specified destination.
-      operationId: update_destination_by_id
-      parameters:
-      - description: The destination ID.
-        example: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
-        explode: false
-        in: path
-        name: destination_id
-        required: true
-        schema:
-          description: The destination ID.
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/updateDestinationBody'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Destination'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.update
-      summary: Update destination (Deprecated)
-      tags:
-      - Payment
-  /payments/destination/{destination_id}/detail:
-    get:
-      description: |
-        This operation retrieves the detailed information about a specified destination.
-      operationId: get_destination_detail_by_id
-      parameters:
-      - description: The destination ID.
-        example: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
-        explode: false
-        in: path
-        name: destination_id
-        required: true
-        schema:
-          description: The destination ID.
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DestinationDetail'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.read
-      summary: Get destination information (Deprecated)
-      tags:
-      - Payment
-  /payments/destination/{destination_id}/delete:
-    put:
-      description: |
-        This operation deletes a destination.
-      operationId: delete_destination
-      parameters:
-      - description: The destination ID.
-        example: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
-        explode: false
-        in: path
-        name: destination_id
-        required: true
-        schema:
-          description: The destination ID.
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/delete_destination_200_response'
-          description: The request was successful.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized. Please provide valid credentials.
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden. You do not have the permission to access the requested
-            resource.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.delete
-      summary: Delete destination (Deprecated)
-      tags:
-      - Payment
-  /payments/destination/bank_account:
-    get:
-      description: |
-        This operation retrieves the information of destination bank accounts.
-      operationId: list_destination_bank_accounts
-      parameters:
-      - description: "The maximum number of objects to return. For most operations,\
-          \ the value range is [1, 50]."
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: |
-          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: |
-          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: A search term for performing fuzzy matches in the search query.
-        example: keyword
-        explode: true
-        in: query
-        name: keyword
-        required: false
-        schema:
-          description: The keyword.
-          type: string
-        style: form
-      - description: The destination ID.
-        example: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
-        explode: true
-        in: query
-        name: destination_id
-        required: false
-        schema:
-          description: The destination ID.
-          type: string
-        style: form
-      - description: |
-          BankAccountStatus defines the status of the bank account:
-          - `Pending`: The bank account is pending verification by Cobo.
-          - `Approved`: The bank account has been approved by Cobo.
-          - `Rejected`: The bank account has been rejected by Cobo.
-        explode: true
-        in: query
-        name: bank_account_status
-        required: false
-        schema:
-          $ref: '#/components/schemas/BankAccountStatus'
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_destination_bank_accounts_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.read
-      summary: List destination bank accounts
-      tags:
-      - Payment
-    post:
-      description: |
-        This operation creates a destination bank account.
-      operationId: create_destination_bank_account
-      requestBody:
-        $ref: '#/components/requestBodies/createDestinationBankAccountBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DestinationBankAccount'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.create
-      summary: Create destination bank account
-      tags:
-      - Payment
-  /payments/destination/bank_account/{bank_account_id}/update:
-    put:
-      description: |
-        This operation updates the information of a specified destination bank account.
-      operationId: update_destination_bank_account_by_id
-      parameters:
-      - description: The bank account ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: bank_account_id
-        required: true
-        schema:
-          description: The bank account ID.
-          format: uuid
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/updateDestinationBankAccountBody'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DestinationBankAccount'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.update
-      summary: Update destination bank account
-      tags:
-      - Payment
-  /payments/destination/bank_account/{bank_account_id}/detail:
-    get:
-      description: |
-        This operation retrieves the detailed information about a specified destination bank account.
-      operationId: get_destination_bank_account_detail_by_id
-      parameters:
-      - description: The bank account ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: bank_account_id
-        required: true
-        schema:
-          description: The bank account ID.
-          format: uuid
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DestinationBankAccountDetail'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.read
-      summary: Get destination bank account information
-      tags:
-      - Payment
-  /payments/destination/bank_account/{bank_account_id}/delete:
-    put:
-      description: |
-        This operation deletes a destination bank account.
-      operationId: delete_destination_bank_account
-      parameters:
-      - description: The bank account ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: bank_account_id
-        required: true
-        schema:
-          description: The bank account ID.
-          format: uuid
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/delete_destination_bank_account_200_response'
-          description: The request was successful.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized. Please provide valid credentials.
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden. You do not have the permission to access the requested
-            resource.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.delete
-      summary: Delete destination bank account
-      tags:
-      - Payment
-  /payments/destination/wallet_address:
-    get:
-      description: |
-        This operation retrieves the information of destination wallet addresses.
-      operationId: list_destination_wallet_addresses
-      parameters:
-      - description: "The maximum number of objects to return. For most operations,\
-          \ the value range is [1, 50]."
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: |
-          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: |
-          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The destination ID.
-        example: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
-        explode: true
-        in: query
-        name: destination_id
-        required: false
-        schema:
-          description: The destination ID.
-          type: string
-        style: form
-      - description: "The chain ID, which is the unique identifier of a blockchain."
-        example: ETH
-        explode: true
-        in: query
-        name: chain_ids
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The wallet address.
-        example: 0x1234567890abcdef...
-        explode: true
-        in: query
-        name: wallet_address
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_destination_wallet_addresses_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.read
-      summary: List destination wallet addresses
-      tags:
-      - Payment
-    post:
-      description: |
-        This operation creates a destination wallet address.
-      operationId: create_destination_wallet_address
-      requestBody:
-        $ref: '#/components/requestBodies/createDestinationWalletAddressBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletAddress'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.create
-      summary: Create destination wallet address
-      tags:
-      - Payment
-  /payments/destination/wallet_address/{wallet_address_id}/delete:
-    put:
-      description: |
-        This operation deletes a destination wallet address.
-      operationId: delete_destination_wallet_address
-      parameters:
-      - description: The wallet address ID.
-        example: 445bac57-7428-4d25-bce1-b3cd017f47a1
-        explode: false
-        in: path
-        name: wallet_address_id
-        required: true
-        schema:
-          description: The wallet address ID.
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/delete_destination_wallet_address_200_response'
-          description: The request was successful.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "401":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Unauthorized. Please provide valid credentials.
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Forbidden. You do not have the permission to access the requested
-            resource.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.delete
-      summary: Delete destination wallet address
-      tags:
-      - Payment
-  /payments/destination/enable_whitelist:
-    get:
-      description: |
-        This operation retrieves the information of whether the destination whitelist is enabled.
-      operationId: query_destination_whitelist_enabled
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/query_destination_whitelist_enabled_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.read
-      summary: Query destination whitelist enabled status
-      tags:
-      - Payment
-    post:
-      description: |
-        This operation enables or disables the whitelist for a destination.
-      operationId: enable_destination_whitelist
-      requestBody:
-        $ref: '#/components/requestBodies/enableDestinationWhitelistBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/query_destination_whitelist_enabled_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_destination.update
-      summary: Enable or disable destination whitelist
       tags:
       - Payment
   /payments/allocation_amount:
@@ -18495,7 +17538,30 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/update_counterparty_by_id_request'
+            properties:
+              counterparty_name:
+                description: The counterparty name.
+                example: Counterparty A
+                type: string
+              counterparty_type:
+                $ref: '#/components/schemas/CounterpartyType'
+              country:
+                description: "The country of the counterparty, in ISO 3166-1 alpha-3\
+                  \ format."
+                example: USA
+                type: string
+              email:
+                description: The email of the counterparty.
+                example: counterparty@example.com
+                type: string
+              contact_address:
+                description: The contact address of the counterparty.
+                example: "123 Main St, Anytown, USA"
+                type: string
+            required:
+            - counterparty_name
+            - counterparty_type
+            type: object
       description: The request body to update a counterparty.
     createDestinationBody:
       content:
@@ -18507,25 +17573,146 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/update_destination_by_id_request'
+            properties:
+              destination_name:
+                description: The destination name.
+                example: Destination A
+                type: string
+              destination_type:
+                $ref: '#/components/schemas/DestinationType'
+              merchant_id:
+                description: The ID of the merchant linked to the destination.
+                example: M1001
+                type: string
+              country:
+                description: "The country of the destination, in ISO 3166-1 alpha-3\
+                  \ format."
+                example: USA
+                type: string
+              email:
+                description: The email of the destination.
+                example: destination@example.com
+                type: string
+              contact_address:
+                description: The contact address of the destination.
+                example: "123 Main St, Anytown, USA"
+                type: string
+            required:
+            - destination_name
+            - destination_type
+            type: object
       description: The request body to update a destination.
     createCounterpartyWalletAddressBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_counterparty_wallet_address_request'
+            properties:
+              counterparty_id:
+                description: The counterparty ID.
+                example: 123e4567-e89b-12d3-a456-426614174003
+                format: uuid
+                type: string
+              address:
+                description: The wallet address.
+                example: 0x1234567890abcdef...
+                type: string
+              chain_id:
+                description: The chain ID of the cryptocurrency.
+                example: TRON
+                type: string
+            required:
+            - address
+            - chain_id
+            - counterparty_id
+            type: object
       description: The request body to create a counterparty wallet address.
     createDestinationWalletAddressBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_destination_wallet_address_request'
+            properties:
+              destination_id:
+                description: The destination ID.
+                example: 123e4567-e89b-12d3-a456-426614174003
+                format: uuid
+                type: string
+              address:
+                description: The wallet address.
+                example: 0x1234567890abcdef...
+                type: string
+              chain_id:
+                description: The chain ID of the cryptocurrency.
+                example: TRON
+                type: string
+            required:
+            - address
+            - chain_id
+            - destination_id
+            type: object
       description: The request body to create a destination wallet address.
     createDestinationBankAccountBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/create_destination_bank_account_request'
+            properties:
+              destination_id:
+                description: The destination ID.
+                example: 123e4567-e89b-12d3-a456-426614174003
+                format: uuid
+                type: string
+              account_alias:
+                description: The alias of the bank account.
+                example: Main Payout Account
+                type: string
+              account_number:
+                description: The bank account number.
+                example: "4111111111111111"
+                type: string
+              swift_code:
+                description: The SWIFT or BIC code of the bank.
+                example: BOFAUS33
+                type: string
+              currency:
+                description: The currency of the bank account.
+                example: USD
+                type: string
+              beneficiary_name:
+                description: The name of the account holder.
+                example: John Doe
+                type: string
+              beneficiary_address:
+                description: The address of the account holder.
+                example: "123 Main St, Anytown, USA"
+                type: string
+              bank_name:
+                description: The name of the bank.
+                example: ABC Bank
+                type: string
+              bank_address:
+                description: The address of the bank.
+                example: "456 Bank Ave, Cityville, USA"
+                type: string
+              iban_code:
+                description: The IBAN code of the bank account.
+                example: "12345678901234567890"
+                type: string
+              further_credit:
+                description: The further credit of the bank account.
+                example: further credit sample
+                type: string
+              intermediary_bank_info:
+                $ref: '#/components/schemas/IntermediaryBankInfo'
+            required:
+            - account_alias
+            - account_number
+            - bank_address
+            - bank_name
+            - beneficiary_address
+            - beneficiary_name
+            - currency
+            - destination_id
+            - swift_code
+            type: object
       description: The request body to create a destination bank account.
     updateDestinationBankAccountBody:
       content:
@@ -18537,7 +17724,14 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/enable_destination_whitelist_request'
+            properties:
+              enable_destination_whitelist:
+                description: Indicates whether to enable the destination whitelist.
+                example: false
+                type: boolean
+            required:
+            - enable_destination_whitelist
+            type: object
       description: The request body to enable or disable the destination whitelist.
     createBatchAllocationBody:
       content:
@@ -19720,7 +18914,14 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/delete_counterparty_200_response'
+            properties:
+              counterparty_id:
+                description: The counterparty ID.
+                example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
+                type: string
+            required:
+            - counterparty_id
+            type: object
       description: The request was successful.
     destinationDetailResponse:
       content:
@@ -19738,25 +18939,53 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/delete_destination_200_response'
+            properties:
+              destination_id:
+                description: The destination ID.
+                example: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
+                type: string
+            required:
+            - destination_id
+            type: object
       description: The request was successful.
     deleteDestinationBankAccountResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/delete_destination_bank_account_200_response'
+            properties:
+              bank_account_id:
+                description: The destination bank account ID.
+                example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                type: string
+            required:
+            - bank_account_id
+            type: object
       description: The request was successful.
     deleteCounterpartyWalletAddressResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/delete_counterparty_wallet_address_200_response'
+            properties:
+              wallet_address_id:
+                description: The wallet address ID under the counterparty.
+                example: 445bac57-7428-4d25-bce1-b3cd017f47a1
+                type: string
+            required:
+            - wallet_address_id
+            type: object
       description: The request was successful.
     deleteDestinationWalletAddressResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/delete_destination_wallet_address_200_response'
+            properties:
+              wallet_address_id:
+                description: The wallet address ID under the destination.
+                example: 445bac57-7428-4d25-bce1-b3cd017f47a1
+                type: string
+            required:
+            - wallet_address_id
+            type: object
       description: The request was successful.
     destinationBankAccountResponse:
       content:
@@ -19774,7 +19003,14 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/query_destination_whitelist_enabled_200_response'
+            properties:
+              enable_destination_whitelist:
+                description: Indicates whether the destination whitelist is enabled.
+                example: false
+                type: boolean
+            required:
+            - enable_destination_whitelist
+            type: object
       description: The request was successful.
     walletAddressDetailResponse:
       content:
@@ -19798,19 +19034,40 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/list_counterparty_wallet_address_200_response'
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/CounterpartyWalletAddressDetail'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
       description: The request was successful.
     listDestinationWalletAddressResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/list_destination_wallet_addresses_200_response'
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/DestinationWalletAddressDetail'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
       description: The request was successful.
     listDestinationBankAccountResponse:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/list_destination_bank_accounts_200_response'
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/DestinationBankAccountDetail'
+                type: array
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            type: object
       description: The request was successful.
     createBatchAllocationResponse:
       content:
@@ -20597,6 +19854,7 @@ components:
         total: "100.0"
         pending: "10.5"
         available: "80.5"
+        frozen: "3.0"
         locked: "3.0"
       properties:
         total:
@@ -20629,6 +19887,13 @@ components:
             \ for more details."
           example: "3.0"
           type: string
+        frozen:
+          default: "0"
+          description: "Amount frozen due to compliance inspection. To learn more,\
+            \ see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts)\
+            \ for more details."
+          example: "3.0"
+          type: string
       required:
       - available
       - total
@@ -20641,6 +19906,7 @@ components:
           total: "100.0"
           pending: "10.5"
           available: "80.5"
+          frozen: "3.0"
           locked: "3.0"
       properties:
         token_id:
@@ -20663,6 +19929,7 @@ components:
           total: "100.0"
           pending: "10.5"
           available: "80.5"
+          frozen: "3.0"
           locked: "3.0"
       properties:
         address:
@@ -20698,6 +19965,7 @@ components:
           total: "100.0"
           pending: "10.5"
           available: "80.5"
+          frozen: "3.0"
           locked: "3.0"
         asset_id: USDT
       properties:
@@ -24469,6 +23737,27 @@ components:
       - DisableAutoFuel
       example: PassiveAutoFuel
       type: string
+    SkipCheckType:
+      description: |
+        The skip check type. Possible values include:
+          - `OnchainFeeBalance`: The system does not verify whether the balance is sufficient to pay the on-chain transaction fees; currently, this only applies to the TRON chain for MPC and Custodial Web3 wallets.
+      enum:
+      - OnchainFeeBalance
+      example: OnchainFeeBalance
+      type: string
+    PreCheck:
+      description: Some validation settings for creating a transaction.
+      example:
+        skip_checks:
+        - OnchainFeeBalance
+        - OnchainFeeBalance
+      properties:
+        skip_checks:
+          description: Selection to skip verification.
+          items:
+            $ref: '#/components/schemas/SkipCheckType'
+          type: array
+      type: object
     TransactionApprovalDetail:
       description: The approval detail data for transaction.
       example:
@@ -25799,6 +25088,10 @@ components:
     TransferParams:
       description: The information about a token transfer.
       example:
+        pre_check:
+          skip_checks:
+          - OnchainFeeBalance
+          - OnchainFeeBalance
         transaction_process_type: AutoProcess
         token_id: ETH_USDT
         fee:
@@ -25862,6 +25155,8 @@ components:
           $ref: '#/components/schemas/TransactionProcessType'
         auto_fuel:
           $ref: '#/components/schemas/AutoFuelType'
+        pre_check:
+          $ref: '#/components/schemas/PreCheck'
       required:
       - destination
       - request_id
@@ -26330,6 +25625,10 @@ components:
       description: The information about a transaction that interacts with a smart
         contract
       example:
+        pre_check:
+          skip_checks:
+          - OnchainFeeBalance
+          - OnchainFeeBalance
         transaction_process_type: AutoProcess
         chain_id: ETH
         fee:
@@ -26392,6 +25691,8 @@ components:
           $ref: '#/components/schemas/TransactionProcessType'
         auto_fuel:
           $ref: '#/components/schemas/AutoFuelType'
+        pre_check:
+          $ref: '#/components/schemas/PreCheck'
       required:
       - chain_id
       - destination
@@ -27319,6 +26620,7 @@ components:
       - payment.transaction.held
       - payment.transaction.failed
       - payment.status.updated
+      - payment.order.status.updated
       - payment.refund.status.updated
       - payment.settlement.status.updated
       - payment.payout.status.updated
@@ -27326,6 +26628,8 @@ components:
       - payment.subscription.status.updated
       - payment.charge.status.updated
       - payment.bulk_send.status.updated
+      - payment.transaction.external.created
+      - payment.transaction.external.completed
       - compliance.disposition.status.updated
       - compliance.kyt.screenings.status.updated
       - compliance.kya.screenings.status.updated
@@ -30260,32 +29564,12 @@ components:
       example:
         variables:
           key: ""
-        query: |
-          query {
-            wallets {
-              edges {
-                node {
-                  id
-                  name
-                }
-              }
-            }
-          }
+        query: "query { wallets { edges { node { id name } } } }"
         operationName: getWallets
       properties:
         query:
           description: The GraphQL query or mutation as a string.
-          example: |
-            query {
-              wallets {
-                edges {
-                  node {
-                    id
-                    name
-                  }
-                }
-              }
-            }
+          example: "query { wallets { edges { node { id name } } } }"
           type: string
         variables:
           additionalProperties: true
@@ -31737,6 +31021,7 @@ components:
           chain_id: ETH
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
           created_timestamp: 1744689600
@@ -31829,6 +31114,7 @@ components:
           chain_id: ETH
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
           created_timestamp: 1744689600
@@ -32002,6 +31288,7 @@ components:
         chain_id: ETH
         bridging_fee:
           fee_amount: fee_amount
+          bridge_status: Completed
           received_amount: received_amount
           received_token_id: received_token_id
         created_timestamp: 1744689600
@@ -32403,55 +31690,61 @@ components:
         token_id: ETH_USDT
         chain_id: ETH
         name: Tether USD
-        token_icon_url: https://example.com/icons/usdt.png
+        token_icon_url: https://d.cobo.com/public/logos/USDT.png
         token_address: 0xdac17f958d2ee523a2206206994597c13d831ec7
         can_off_ramp: true
         decimal: 6
         chain_symbol: ETH
-        chain_icon_url: https://example.com/icons/eth.png
+        chain_icon_url: https://d.cobo.com/public/logos/ETH.png
       properties:
         token_id:
-          description: Unique identifier of the token
+          description: "The unique identifier of the token, in the format of `{chain_id}_{token_symbol}`."
           example: ETH_USDT
           type: string
         name:
-          description: Full name of the token
+          description: The full name of the token.
           example: Tether USD
           type: string
         symbol:
-          description: Symbol representation of the token
+          description: The symbol of the token.
           example: USDT
           type: string
         decimal:
-          description: Number of decimal places for the token
+          description: "The number of decimal places for the token. This value is\
+            \ used to convert \nbetween the token's smallest unit and its display\
+            \ value.\n"
           example: 6
           type: integer
         token_address:
-          description: Contract address of the token (may be null for native coins)
+          description: |
+            The contract address of the token. This is `null` for native coins (e.g., ETH on Ethereum).
           example: 0xdac17f958d2ee523a2206206994597c13d831ec7
           nullable: true
           type: string
         chain_id:
-          description: Identifier of the blockchain where the token exists
+          description: The ID of the chain on which the token exists.
           example: ETH
           type: string
         chain_symbol:
-          description: Symbol of the underlying blockchain
+          description: The symbol of the chain on which the token exists.
           example: ETH
           nullable: true
           type: string
         chain_icon_url:
-          description: URL to the blockchain's icon image
-          example: https://example.com/icons/eth.png
+          description: The URL of the chain icon image.
+          example: https://d.cobo.com/public/logos/ETH.png
           nullable: true
           type: string
         token_icon_url:
-          description: URL to the token's icon image
-          example: https://example.com/icons/usdt.png
+          description: The URL of the token icon image.
+          example: https://d.cobo.com/public/logos/USDT.png
           nullable: true
           type: string
         can_off_ramp:
-          description: Whether the token is supported by the off-ramp service.
+          description: |
+            Whether the token supports fiat off-ramp.
+            - `true`: The token can be used for fiat off-ramp.
+            - `false`: The token cannot be used for fiat off-ramp.
           type: boolean
       required:
       - chain_id
@@ -32824,6 +32117,7 @@ components:
     BridgingFee:
       example:
         fee_amount: fee_amount
+        bridge_status: Completed
         received_amount: received_amount
         received_token_id: received_token_id
       properties:
@@ -32837,6 +32131,8 @@ components:
         received_amount:
           description: The final amount of the token received after bridging.
           type: string
+        bridge_status:
+          $ref: '#/components/schemas/PaymentBridgeStatus'
       required:
       - fee_amount
       type: object
@@ -32879,6 +32175,7 @@ components:
         token_id: token_id
         bridging_fee:
           fee_amount: fee_amount
+          bridge_status: Completed
           received_amount: received_amount
           received_token_id: received_token_id
         commission_fee:
@@ -33452,7 +32749,13 @@ components:
           example: 0x1234567890abcdef...
           type: string
         chain_id:
-          description: The chain ID of the address.
+          description: |
+            The chain ID of the cryptocurrency.  Supported values in the development environment:
+              - Counterparty: `ARBITRUM_ETH`, `BASE_ETH`, `BSC_BNB`, `ETH`, `TRON`, `MATIC`, `SOL`, `TTRON`, `SOLDEV_SOL`, `SETH`
+              - Destination: `All EVM Networks`, `SOL`, `TRON`, `TTRON`, `SOLDEV_SOL`
+            Supported values in the production environment:
+              - Counterparty: `ARBITRUM_ETH`, `BASE_ETH`, `BSC_BNB`, `ETH`, `TRON`, `MATIC`, `SOL`
+              - Destination: `All EVM Networks`, `SOL`, `TRON`
           example: TRON
           type: string
       required:
@@ -33483,21 +32786,6 @@ components:
       - bank_swift_code
       type: object
     UpdateDestinationBankAccount:
-      example:
-        account_number: "4111111111111111"
-        beneficiary_name: John Doe
-        intermediary_bank_info:
-          bank_name: Intermediary Bank
-          bank_address: "456 Bank Ave, Cityville, USA"
-          bank_swift_code: BOFAUS33
-        beneficiary_address: "123 Main St, Anytown, USA"
-        swift_code: BOFAUS33
-        bank_name: ABC Bank
-        bank_address: "456 Bank Ave, Cityville, USA"
-        iban_code: "12345678901234567890"
-        currency: USD
-        further_credit: further credit sample
-        account_alias: Main Payout Account
       properties:
         account_alias:
           description: The alias of the bank account.
@@ -34216,26 +33504,31 @@ components:
       type: string
     PaymentPayout:
       example:
-        payout_id: 123e457-e89b-12d3-a456-426614174004
         actual_payout_amount: "500.00"
-        updated_timestamp: 1744689600
-        payout_channel: Crypto
         initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        commission_fees:
+        - fee_amount: fee_amount
+        - fee_amount: fee_amount
         source_account: source_account
         remark: Payout for customer 123
         created_timestamp: 1744689600
+        payout_id: 123e457-e89b-12d3-a456-426614174004
+        updated_timestamp: 1744689600
+        payout_channel: Crypto
         request_id: 123e457-e89b-12d3-a456-426614174004
         payout_items:
         - amount: "500.00"
           token_id: ETH_USDT
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
         - amount: "500.00"
           token_id: ETH_USDT
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
         recipient_info:
@@ -34278,12 +33571,17 @@ components:
             - For `OffRamp` payouts: The amount of fiat currency sent to the recipient's bank account, denominated in the currency specified in `recipient_info.currency`. (Note: The actual amount received may be lower due to additional bank transfer fees.)
           example: "500.00"
           type: string
-        status:
-          $ref: '#/components/schemas/PaymentPayoutStatus'
+        commission_fees:
+          description: The commission fees of the payout.
+          items:
+            $ref: '#/components/schemas/CommissionFee'
+          type: array
         remark:
           description: A note or comment about the payout.
           example: Payout for customer 123
           type: string
+        status:
+          $ref: '#/components/schemas/PaymentPayoutStatus'
         created_timestamp:
           description: "The created time of the payout, represented as a UNIX timestamp\
             \ in seconds."
@@ -34315,6 +33613,9 @@ components:
       example:
         actual_payout_amount: "500.00"
         initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+        commission_fees:
+        - fee_amount: fee_amount
+        - fee_amount: fee_amount
         source_account: source_account
         remark: Payout for customer 123
         created_timestamp: 1744689600
@@ -34384,12 +33685,14 @@ components:
           token_id: ETH_USDT
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
         - amount: "500.00"
           token_id: ETH_USDT
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
         recipient_info:
@@ -34404,6 +33707,7 @@ components:
         token_id: ETH_USDT
         bridging_fee:
           fee_amount: fee_amount
+          bridge_status: Completed
           received_amount: received_amount
           received_token_id: received_token_id
       properties:
@@ -34590,23 +33894,23 @@ components:
         status: Pending
       properties:
         bulk_send_item_id:
-          description: The payout item ID.
+          description: The bulk send item ID.
           example: 123e4567-e89b-12d3-a456-426614174003
           type: string
         token_id:
-          description: The token ID of the payout item.
+          description: The token ID of the cryptocurrency to be sent to the recipient.
           example: ETH_USDT
           type: string
         receiving_address:
-          description: The receiving address of the payout item.
+          description: The receiving address.
           example: 0xabc123456789def0000000000000000000000000
           type: string
         amount:
-          description: The amount of the payout item.
+          description: The amount of the cryptocurrency to be sent to the recipient.
           example: "500.00"
           type: string
         description:
-          description: The note of the payout item.
+          description: A note or comment about the bulk send item.
           example: "Invoice #INV-2024-001"
           type: string
         status:
@@ -34676,6 +33980,16 @@ components:
       - Validated
       - ValidationFailed
       example: Pending
+      type: string
+    PaymentBridgeStatus:
+      description: |
+        The current status of the payout bridge. Possible values include:
+        - `Completed`: The payout bridge has been completed successfully.
+        - `Failed`: The payout bridge has failed.
+      enum:
+      - Completed
+      - Failed
+      example: Completed
       type: string
     DispositionStatus:
       description: The status of a disposition operation.
@@ -37939,7 +37253,6 @@ components:
         custom_payer_ids:
           description: |
             A list of unique custom payer IDs required to create top-up addresses.
-            The maximum number of items is 50.
           items:
             description: "Unique customer identifier on the merchant side, used to\
               \ allocate a dedicated top-up address."
@@ -38544,12 +37857,14 @@ components:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
         - token_id: BTC
           balance:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
       properties:
         data:
@@ -38571,12 +37886,14 @@ components:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
         - address: 0x0000000000000000000000000000000000000000
           balance:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
       properties:
         data:
@@ -39065,6 +38382,7 @@ components:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
           asset_id: USDT
         - trading_account_type: Spot
@@ -39072,6 +38390,7 @@ components:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
           asset_id: USDT
       properties:
@@ -41421,6 +40740,7 @@ components:
           total: "100.0"
           pending: "10.5"
           available: "80.5"
+          frozen: "3.0"
           locked: "3.0"
       properties:
         token_id:
@@ -41454,6 +40774,7 @@ components:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
         - token_id: ETH
           chain_id: ETH
@@ -41461,6 +40782,7 @@ components:
             total: "100.0"
             pending: "10.5"
             available: "80.5"
+            frozen: "3.0"
             locked: "3.0"
       properties:
         data:
@@ -42185,7 +41507,7 @@ components:
           description: "The pricing currency that denominates `pricing_amount` and\
             \ `fee_amount`. If left empty, both values will be denominated in `payable_currency`.\
             \ \nCurrently, For a complete list of supported currencies, see [Supported\
-            \ chains and tokens](https://www.cobo.com/developers/v2/guides/overview/supported-chains-and-tokens).\n"
+            \ chains and tokens](https://www.cobo.com//payments/en/guides/supported-chains-and-tokens#pricing-currency).\n"
           example: USD
           type: string
         pricing_amount:
@@ -42218,8 +41540,10 @@ components:
           example: "103.03"
           type: string
         expired_in:
+          default: 1800
           description: |
-            The pay-in order will expire after approximately a certain number of seconds:
+            The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:
+
             - The order status becomes final and cannot be changed
             - The `received_token_amount` field will no longer be updated
             - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance.
@@ -42377,6 +41701,7 @@ components:
             chain_id: ETH
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
             created_timestamp: 1744689600
@@ -42469,6 +41794,7 @@ components:
             chain_id: ETH
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
             created_timestamp: 1744689600
@@ -42585,6 +41911,7 @@ components:
             chain_id: ETH
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
             created_timestamp: 1744689600
@@ -42677,6 +42004,7 @@ components:
             chain_id: ETH
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
             created_timestamp: 1744689600
@@ -42860,6 +42188,7 @@ components:
           token_id: token_id
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
           commission_fee:
@@ -42871,6 +42200,7 @@ components:
           token_id: token_id
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
           commission_fee:
@@ -43329,6 +42659,7 @@ components:
           chain_id: ETH
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
           created_timestamp: 1744689600
@@ -43421,6 +42752,7 @@ components:
           chain_id: ETH
           bridging_fee:
             fee_amount: fee_amount
+            bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
           created_timestamp: 1744689600
@@ -43728,101 +43060,6 @@ components:
           type: string
       required:
       - deleted_counterparty_entry_id
-      type: object
-    update_counterparty_by_id_request:
-      properties:
-        counterparty_name:
-          description: The counterparty name.
-          example: Counterparty A
-          type: string
-        counterparty_type:
-          $ref: '#/components/schemas/CounterpartyType'
-        country:
-          description: "The country of the counterparty, in ISO 3166-1 alpha-3 format."
-          example: USA
-          type: string
-        email:
-          description: The email of the counterparty.
-          example: counterparty@example.com
-          type: string
-        contact_address:
-          description: The contact address of the counterparty.
-          example: "123 Main St, Anytown, USA"
-          type: string
-      required:
-      - counterparty_name
-      - counterparty_type
-      type: object
-    delete_counterparty_200_response:
-      example:
-        counterparty_id: 5b0ed293-f728-40b4-b1f6-86b88cd51384
-      properties:
-        counterparty_id:
-          description: The counterparty ID.
-          example: 5b0ed293-f728-40b4-b1f6-86b88cd51384
-          type: string
-      required:
-      - counterparty_id
-      type: object
-    list_counterparty_wallet_address_200_response:
-      example:
-        pagination:
-          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-          total_count: 10000
-          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        data:
-        - counterparty_name: Counterparty A
-          counterparty_id: 123e4567-e89b-12d3-a456-426614174003
-          address: 0x1234567890abcdef...
-          chain_id: TRON
-          updated_timestamp: 1744689600
-          wallet_address_id: 123e4567-e89b-12d3-a456-426614174003
-          counterparty_type: Individual
-        - counterparty_name: Counterparty A
-          counterparty_id: 123e4567-e89b-12d3-a456-426614174003
-          address: 0x1234567890abcdef...
-          chain_id: TRON
-          updated_timestamp: 1744689600
-          wallet_address_id: 123e4567-e89b-12d3-a456-426614174003
-          counterparty_type: Individual
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/CounterpartyWalletAddressDetail'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    create_counterparty_wallet_address_request:
-      properties:
-        counterparty_id:
-          description: The counterparty ID.
-          example: 123e4567-e89b-12d3-a456-426614174003
-          format: uuid
-          type: string
-        address:
-          description: The wallet address.
-          example: 0x1234567890abcdef...
-          type: string
-        chain_id:
-          description: The chain ID of the cryptocurrency.
-          example: TRON
-          type: string
-      required:
-      - address
-      - chain_id
-      - counterparty_id
-      type: object
-    delete_counterparty_wallet_address_200_response:
-      example:
-        wallet_address_id: 445bac57-7428-4d25-bce1-b3cd017f47a1
-      properties:
-        wallet_address_id:
-          description: The wallet address ID under the counterparty.
-          example: 445bac57-7428-4d25-bce1-b3cd017f47a1
-          type: string
-      required:
-      - wallet_address_id
       type: object
     list_destinations_200_response:
       example:
@@ -44203,263 +43440,6 @@ components:
       required:
       - deleted_destination_entry_id
       type: object
-    update_destination_by_id_request:
-      properties:
-        destination_name:
-          description: The destination name.
-          example: Destination A
-          type: string
-        destination_type:
-          $ref: '#/components/schemas/DestinationType'
-        merchant_id:
-          description: The ID of the merchant linked to the destination.
-          example: M1001
-          type: string
-        country:
-          description: "The country of the destination, in ISO 3166-1 alpha-3 format."
-          example: USA
-          type: string
-        email:
-          description: The email of the destination.
-          example: destination@example.com
-          type: string
-        contact_address:
-          description: The contact address of the destination.
-          example: "123 Main St, Anytown, USA"
-          type: string
-      required:
-      - destination_name
-      - destination_type
-      type: object
-    delete_destination_200_response:
-      example:
-        destination_id: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
-      properties:
-        destination_id:
-          description: The destination ID.
-          example: 46beeab4-6a8e-476e-bc69-99b89aacbc6f
-          type: string
-      required:
-      - destination_id
-      type: object
-    list_destination_bank_accounts_200_response:
-      example:
-        pagination:
-          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-          total_count: 10000
-          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        data:
-        - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
-          account_number: "4111111111111111"
-          destination_country: USA
-          beneficiary_address: "123 Main St, Anytown, USA"
-          swift_code: BOFAUS33
-          destination_id: 123e4567-e89b-12d3-a456-426614174003
-          bank_address: "456 Bank Ave, Cityville, USA"
-          destination_name: Destination A
-          created_timestamp: 1744689600
-          destination_merchant_id: M1001
-          beneficiary_name: John Doe
-          destination_type: Individual
-          destination_email: destination@example.com
-          intermediary_bank_info:
-            bank_name: Intermediary Bank
-            bank_address: "456 Bank Ave, Cityville, USA"
-            bank_swift_code: BOFAUS33
-          updated_timestamp: 1744689600
-          destination_contact_address: "123 Main St, Anytown, USA"
-          bank_account_status: Pending
-          bank_name: ABC Bank
-          iban_code: "12345678901234567890"
-          currency: USD
-          further_credit: further credit sample
-          account_alias: Main Payout Account
-        - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
-          account_number: "4111111111111111"
-          destination_country: USA
-          beneficiary_address: "123 Main St, Anytown, USA"
-          swift_code: BOFAUS33
-          destination_id: 123e4567-e89b-12d3-a456-426614174003
-          bank_address: "456 Bank Ave, Cityville, USA"
-          destination_name: Destination A
-          created_timestamp: 1744689600
-          destination_merchant_id: M1001
-          beneficiary_name: John Doe
-          destination_type: Individual
-          destination_email: destination@example.com
-          intermediary_bank_info:
-            bank_name: Intermediary Bank
-            bank_address: "456 Bank Ave, Cityville, USA"
-            bank_swift_code: BOFAUS33
-          updated_timestamp: 1744689600
-          destination_contact_address: "123 Main St, Anytown, USA"
-          bank_account_status: Pending
-          bank_name: ABC Bank
-          iban_code: "12345678901234567890"
-          currency: USD
-          further_credit: further credit sample
-          account_alias: Main Payout Account
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/DestinationBankAccountDetail'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    create_destination_bank_account_request:
-      properties:
-        destination_id:
-          description: The destination ID.
-          example: 123e4567-e89b-12d3-a456-426614174003
-          format: uuid
-          type: string
-        account_alias:
-          description: The alias of the bank account.
-          example: Main Payout Account
-          type: string
-        account_number:
-          description: The bank account number.
-          example: "4111111111111111"
-          type: string
-        swift_code:
-          description: The SWIFT or BIC code of the bank.
-          example: BOFAUS33
-          type: string
-        currency:
-          description: The currency of the bank account.
-          example: USD
-          type: string
-        beneficiary_name:
-          description: The name of the account holder.
-          example: John Doe
-          type: string
-        beneficiary_address:
-          description: The address of the account holder.
-          example: "123 Main St, Anytown, USA"
-          type: string
-        bank_name:
-          description: The name of the bank.
-          example: ABC Bank
-          type: string
-        bank_address:
-          description: The address of the bank.
-          example: "456 Bank Ave, Cityville, USA"
-          type: string
-        iban_code:
-          description: The IBAN code of the bank account.
-          example: "12345678901234567890"
-          type: string
-        further_credit:
-          description: The further credit of the bank account.
-          example: further credit sample
-          type: string
-        intermediary_bank_info:
-          $ref: '#/components/schemas/IntermediaryBankInfo'
-      required:
-      - account_alias
-      - account_number
-      - bank_address
-      - bank_name
-      - beneficiary_address
-      - beneficiary_name
-      - currency
-      - destination_id
-      - swift_code
-      type: object
-    delete_destination_bank_account_200_response:
-      example:
-        bank_account_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-      properties:
-        bank_account_id:
-          description: The destination bank account ID.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          type: string
-      required:
-      - bank_account_id
-      type: object
-    list_destination_wallet_addresses_200_response:
-      example:
-        pagination:
-          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-          total_count: 10000
-          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        data:
-        - destination_type: Individual
-          address: 0x1234567890abcdef...
-          chain_id: TRON
-          updated_timestamp: 1744689600
-          wallet_address_id: 123e4567-e89b-12d3-a456-426614174003
-          destination_id: 123e4567-e89b-12d3-a456-426614174003
-          destination_name: Destination A
-          merchant_id: M1001
-        - destination_type: Individual
-          address: 0x1234567890abcdef...
-          chain_id: TRON
-          updated_timestamp: 1744689600
-          wallet_address_id: 123e4567-e89b-12d3-a456-426614174003
-          destination_id: 123e4567-e89b-12d3-a456-426614174003
-          destination_name: Destination A
-          merchant_id: M1001
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/DestinationWalletAddressDetail'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    create_destination_wallet_address_request:
-      properties:
-        destination_id:
-          description: The destination ID.
-          example: 123e4567-e89b-12d3-a456-426614174003
-          format: uuid
-          type: string
-        address:
-          description: The wallet address.
-          example: 0x1234567890abcdef...
-          type: string
-        chain_id:
-          description: The chain ID of the cryptocurrency.
-          example: TRON
-          type: string
-      required:
-      - address
-      - chain_id
-      - destination_id
-      type: object
-    delete_destination_wallet_address_200_response:
-      example:
-        wallet_address_id: 445bac57-7428-4d25-bce1-b3cd017f47a1
-      properties:
-        wallet_address_id:
-          description: The wallet address ID under the destination.
-          example: 445bac57-7428-4d25-bce1-b3cd017f47a1
-          type: string
-      required:
-      - wallet_address_id
-      type: object
-    query_destination_whitelist_enabled_200_response:
-      example:
-        enable_destination_whitelist: false
-      properties:
-        enable_destination_whitelist:
-          description: Indicates whether the destination whitelist is enabled.
-          example: false
-          type: boolean
-      required:
-      - enable_destination_whitelist
-      type: object
-    enable_destination_whitelist_request:
-      properties:
-        enable_destination_whitelist:
-          description: Indicates whether to enable the destination whitelist.
-          example: false
-          type: boolean
-      required:
-      - enable_destination_whitelist
-      type: object
     list_batch_allocations_200_response:
       example:
         pagination:
@@ -44626,26 +43606,31 @@ components:
           total_count: 10000
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
-        - payout_id: 123e457-e89b-12d3-a456-426614174004
-          actual_payout_amount: "500.00"
-          updated_timestamp: 1744689600
-          payout_channel: Crypto
+        - actual_payout_amount: "500.00"
           initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          commission_fees:
+          - fee_amount: fee_amount
+          - fee_amount: fee_amount
           source_account: source_account
           remark: Payout for customer 123
           created_timestamp: 1744689600
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
           request_id: 123e457-e89b-12d3-a456-426614174004
           payout_items:
           - amount: "500.00"
             token_id: ETH_USDT
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
           - amount: "500.00"
             token_id: ETH_USDT
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
           recipient_info:
@@ -44654,26 +43639,31 @@ components:
             token_id: TRON_USDT
             currency: USD
           status: Pending
-        - payout_id: 123e457-e89b-12d3-a456-426614174004
-          actual_payout_amount: "500.00"
-          updated_timestamp: 1744689600
-          payout_channel: Crypto
+        - actual_payout_amount: "500.00"
           initiator: b2ae1b5aaade686c968ef2bbd31cc75ba94e5a85fd9cb0b35b81dcc15f520e9d
+          commission_fees:
+          - fee_amount: fee_amount
+          - fee_amount: fee_amount
           source_account: source_account
           remark: Payout for customer 123
           created_timestamp: 1744689600
+          payout_id: 123e457-e89b-12d3-a456-426614174004
+          updated_timestamp: 1744689600
+          payout_channel: Crypto
           request_id: 123e457-e89b-12d3-a456-426614174004
           payout_items:
           - amount: "500.00"
             token_id: ETH_USDT
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
           - amount: "500.00"
             token_id: ETH_USDT
             bridging_fee:
               fee_amount: fee_amount
+              bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
           recipient_info:

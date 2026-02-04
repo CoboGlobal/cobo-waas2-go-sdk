@@ -25,7 +25,7 @@ type CreatePaymentOrderRequest struct {
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by the developer to identify this order in their system.
 	PspOrderCode string `json:"psp_order_code"`
-	// The pricing currency that denominates `pricing_amount` and `fee_amount`. If left empty, both values will be denominated in `payable_currency`.  Currently, For a complete list of supported currencies, see [Supported chains and tokens](https://www.cobo.com/developers/v2/guides/overview/supported-chains-and-tokens). 
+	// The pricing currency that denominates `pricing_amount` and `fee_amount`. If left empty, both values will be denominated in `payable_currency`.  Currently, For a complete list of supported currencies, see [Supported chains and tokens](https://www.cobo.com//payments/en/guides/supported-chains-and-tokens#pricing-currency). 
 	PricingCurrency *string `json:"pricing_currency,omitempty"`
 	// The base amount of the order, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places.
 	PricingAmount *string `json:"pricing_amount,omitempty"`
@@ -35,7 +35,7 @@ type CreatePaymentOrderRequest struct {
 	PayableCurrency string `json:"payable_currency"`
 	// The total amount the payer needs to pay, denominated in the specified `payable_currency`. If this field is left blank, the system will automatically calculate the amount at order creation using the following formula: (`pricing_amount` + `fee_amount`) / current exchange rate.  Values must be greater than 0 and contain two decimal places. 
 	PayableAmount *string `json:"payable_amount,omitempty"`
-	// The pay-in order will expire after approximately a certain number of seconds: - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
+	// The number of seconds until the pay-in order expires, counted from when the request is sent. For example, if set to `1800`, the order will expire in 30 minutes. Must be greater than zero and cannot exceed 3 hours (10800 seconds). After expiration:  - The order status becomes final and cannot be changed - The `received_token_amount` field will no longer be updated - Funds received after expiration will be categorized as late payments and can only be settled from the developer balance. - A late payment will trigger a `transactionLate` webhook event. 
 	ExpiredIn *int32 `json:"expired_in,omitempty"`
 	// The allowed amount deviation, with precision up to 1 decimal place.  For example, if `payable_amount` is `100.00` and `amount_tolerance` is `0.50`: - Payer pays 99.55 → Success (difference of 0.45 ≤ 0.5) - Payer pays 99.40 → Underpaid (difference of 0.60 > 0.5) 
 	AmountTolerance *string `json:"amount_tolerance,omitempty"`
@@ -63,6 +63,8 @@ func NewCreatePaymentOrderRequest(merchantId string, pspOrderCode string, feeAmo
 	this.PspOrderCode = pspOrderCode
 	this.FeeAmount = feeAmount
 	this.PayableCurrency = payableCurrency
+	var expiredIn int32 = 1800
+	this.ExpiredIn = &expiredIn
 	var currency string = ""
 	this.Currency = &currency
 	return &this
@@ -73,6 +75,8 @@ func NewCreatePaymentOrderRequest(merchantId string, pspOrderCode string, feeAmo
 // but it doesn't guarantee that properties required by API are set
 func NewCreatePaymentOrderRequestWithDefaults() *CreatePaymentOrderRequest {
 	this := CreatePaymentOrderRequest{}
+	var expiredIn int32 = 1800
+	this.ExpiredIn = &expiredIn
 	var currency string = ""
 	this.Currency = &currency
 	return &this

@@ -25,6 +25,7 @@ type BridgingFee struct {
 	ReceivedTokenId *string `json:"received_token_id,omitempty"`
 	// The final amount of the token received after bridging.
 	ReceivedAmount *string `json:"received_amount,omitempty"`
+	BridgeStatus *PaymentBridgeStatus `json:"bridge_status,omitempty"`
 }
 
 type _BridgingFee BridgingFee
@@ -135,6 +136,38 @@ func (o *BridgingFee) SetReceivedAmount(v string) {
 	o.ReceivedAmount = &v
 }
 
+// GetBridgeStatus returns the BridgeStatus field value if set, zero value otherwise.
+func (o *BridgingFee) GetBridgeStatus() PaymentBridgeStatus {
+	if o == nil || IsNil(o.BridgeStatus) {
+		var ret PaymentBridgeStatus
+		return ret
+	}
+	return *o.BridgeStatus
+}
+
+// GetBridgeStatusOk returns a tuple with the BridgeStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BridgingFee) GetBridgeStatusOk() (*PaymentBridgeStatus, bool) {
+	if o == nil || IsNil(o.BridgeStatus) {
+		return nil, false
+	}
+	return o.BridgeStatus, true
+}
+
+// HasBridgeStatus returns a boolean if a field has been set.
+func (o *BridgingFee) HasBridgeStatus() bool {
+	if o != nil && !IsNil(o.BridgeStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetBridgeStatus gets a reference to the given PaymentBridgeStatus and assigns it to the BridgeStatus field.
+func (o *BridgingFee) SetBridgeStatus(v PaymentBridgeStatus) {
+	o.BridgeStatus = &v
+}
+
 func (o BridgingFee) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -151,6 +184,9 @@ func (o BridgingFee) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ReceivedAmount) {
 		toSerialize["received_amount"] = o.ReceivedAmount
+	}
+	if !IsNil(o.BridgeStatus) {
+		toSerialize["bridge_status"] = o.BridgeStatus
 	}
 	return toSerialize, nil
 }

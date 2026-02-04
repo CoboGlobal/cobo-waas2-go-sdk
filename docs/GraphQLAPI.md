@@ -30,17 +30,7 @@ import (
 )
 
 func main() {
-	graphQLRequest := *coboWaas2.NewGraphQLRequest("query {
-  wallets {
-    edges {
-      node {
-        id
-        name
-      }
-    }
-  }
-}
-")
+	graphQLRequest := *coboWaas2.NewGraphQLRequest("query { wallets { edges { node { id name } } } }")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

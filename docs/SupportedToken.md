@@ -4,16 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TokenId** | **string** | Unique identifier of the token | 
-**Name** | **string** | Full name of the token | 
-**Symbol** | **string** | Symbol representation of the token | 
-**Decimal** | **int32** | Number of decimal places for the token | 
-**TokenAddress** | **NullableString** | Contract address of the token (may be null for native coins) | 
-**ChainId** | **string** | Identifier of the blockchain where the token exists | 
-**ChainSymbol** | **NullableString** | Symbol of the underlying blockchain | 
-**ChainIconUrl** | Pointer to **NullableString** | URL to the blockchain&#39;s icon image | [optional] 
-**TokenIconUrl** | Pointer to **NullableString** | URL to the token&#39;s icon image | [optional] 
-**CanOffRamp** | Pointer to **bool** | Whether the token is supported by the off-ramp service. | [optional] 
+**TokenId** | **string** | The unique identifier of the token, in the format of &#x60;{chain_id}_{token_symbol}&#x60;. | 
+**Name** | **string** | The full name of the token. | 
+**Symbol** | **string** | The symbol of the token. | 
+**Decimal** | **int32** | The number of decimal places for the token. This value is used to convert  between the token&#39;s smallest unit and its display value.  | 
+**TokenAddress** | **NullableString** | The contract address of the token. This is &#x60;null&#x60; for native coins (e.g., ETH on Ethereum).  | 
+**ChainId** | **string** | The ID of the chain on which the token exists. | 
+**ChainSymbol** | **NullableString** | The symbol of the chain on which the token exists. | 
+**ChainIconUrl** | Pointer to **NullableString** | The URL of the chain icon image. | [optional] 
+**TokenIconUrl** | Pointer to **NullableString** | The URL of the token icon image. | [optional] 
+**CanOffRamp** | Pointer to **bool** | Whether the token supports fiat off-ramp. - &#x60;true&#x60;: The token can be used for fiat off-ramp. - &#x60;false&#x60;: The token cannot be used for fiat off-ramp.  | [optional] 
 
 ## Methods
 

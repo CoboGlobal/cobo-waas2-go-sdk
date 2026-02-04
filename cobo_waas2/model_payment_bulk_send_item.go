@@ -19,15 +19,15 @@ var _ MappedNullable = &PaymentBulkSendItem{}
 
 // PaymentBulkSendItem struct for PaymentBulkSendItem
 type PaymentBulkSendItem struct {
-	// The payout item ID.
+	// The bulk send item ID.
 	BulkSendItemId string `json:"bulk_send_item_id"`
-	// The token ID of the payout item.
+	// The token ID of the cryptocurrency to be sent to the recipient.
 	TokenId string `json:"token_id"`
-	// The receiving address of the payout item.
+	// The receiving address.
 	ReceivingAddress string `json:"receiving_address"`
-	// The amount of the payout item.
+	// The amount of the cryptocurrency to be sent to the recipient.
 	Amount string `json:"amount"`
-	// The note of the payout item.
+	// A note or comment about the bulk send item.
 	Description *string `json:"description,omitempty"`
 	Status PaymentBulkSendItemStatus `json:"status"`
 	ValidationStatus PaymentBulkSendItemValidationStatus `json:"validation_status"`

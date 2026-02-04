@@ -101,6 +101,7 @@ Name | Type | Description | Notes
 **PayoutItems** | Pointer to [**[]PaymentPayoutItem**](PaymentPayoutItem.md) | required | [optional] 
 **RecipientInfo** | Pointer to [**PaymentPayoutRecipientInfo**](PaymentPayoutRecipientInfo.md) |  | [optional] 
 **ActualPayoutAmount** | Pointer to **string** | - For &#x60;Crypto&#x60; payouts: The amount of cryptocurrency sent to the recipient&#39;s address, denominated in the token specified in &#x60;recipient_info.token_id&#x60;. - For &#x60;OffRamp&#x60; payouts: The amount of fiat currency sent to the recipient&#39;s bank account, denominated in the currency specified in &#x60;recipient_info.currency&#x60;. (Note: The actual amount received may be lower due to additional bank transfer fees.)  | [optional] 
+**CommissionFees** | Pointer to [**[]CommissionFee**](CommissionFee.md) | The commission fees of the payout. | [optional] 
 **Remark** | Pointer to **string** | A note or comment about the payout. | [optional] 
 **BulkSendId** | **string** | The bulk send ID. | 
 **ExecutionMode** | [**PaymentBulkSendExecutionMode**](PaymentBulkSendExecutionMode.md) |  | 
@@ -2341,6 +2342,31 @@ SetActualPayoutAmount sets ActualPayoutAmount field to given value.
 `func (o *WebhookEventData) HasActualPayoutAmount() bool`
 
 HasActualPayoutAmount returns a boolean if a field has been set.
+
+### GetCommissionFees
+
+`func (o *WebhookEventData) GetCommissionFees() []CommissionFee`
+
+GetCommissionFees returns the CommissionFees field if non-nil, zero value otherwise.
+
+### GetCommissionFeesOk
+
+`func (o *WebhookEventData) GetCommissionFeesOk() (*[]CommissionFee, bool)`
+
+GetCommissionFeesOk returns a tuple with the CommissionFees field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCommissionFees
+
+`func (o *WebhookEventData) SetCommissionFees(v []CommissionFee)`
+
+SetCommissionFees sets CommissionFees field to given value.
+
+### HasCommissionFees
+
+`func (o *WebhookEventData) HasCommissionFees() bool`
+
+HasCommissionFees returns a boolean if a field has been set.
 
 ### GetRemark
 

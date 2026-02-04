@@ -102,18 +102,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService CreateCounterpartyWalletAddress", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.CreateCounterpartyWalletAddress(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService CreateCryptoAddress", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -138,35 +126,11 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService CreateDestinationBankAccount", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.CreateDestinationBankAccount(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService CreateDestinationEntry", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.CreateDestinationEntry(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService CreateDestinationWalletAddress", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.CreateDestinationWalletAddress(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -294,20 +258,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService DeleteCounterparty", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var counterpartyId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.DeleteCounterparty(ctx, counterpartyId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService DeleteCounterpartyById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -336,20 +286,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService DeleteCounterpartyWalletAddress", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var walletAddressId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.DeleteCounterpartyWalletAddress(ctx, walletAddressId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService DeleteCryptoAddress", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -357,34 +293,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var cryptoAddressId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.DeleteCryptoAddress(ctx, cryptoAddressId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService DeleteDestination", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var destinationId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.DeleteDestination(ctx, destinationId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService DeleteDestinationBankAccount", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var bankAccountId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.DeleteDestinationBankAccount(ctx, bankAccountId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -413,32 +321,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var destinationEntryId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.DeleteDestinationEntry(ctx, destinationEntryId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService DeleteDestinationWalletAddress", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var walletAddressId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.DeleteDestinationWalletAddress(ctx, walletAddressId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService EnableDestinationWhitelist", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.EnableDestinationWhitelist(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -500,20 +382,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService GetCounterpartyDetailById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var counterpartyId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.GetCounterpartyDetailById(ctx, counterpartyId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService GetCounterpartyEntry", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -535,34 +403,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var destinationId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.GetDestination(ctx, destinationId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService GetDestinationBankAccountDetailById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var bankAccountId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.GetDestinationBankAccountDetailById(ctx, bankAccountId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService GetDestinationDetailById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var destinationId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.GetDestinationDetailById(ctx, destinationId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -789,18 +629,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService ListCounterpartyWalletAddress", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.ListCounterpartyWalletAddress(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService ListCryptoAddresses", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -813,35 +641,11 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService ListDestinationBankAccounts", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.ListDestinationBankAccounts(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService ListDestinationEntries", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.ListDestinationEntries(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService ListDestinationWalletAddresses", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.ListDestinationWalletAddresses(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1005,18 +809,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService QueryDestinationWhitelistEnabled", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.QueryDestinationWhitelistEnabled(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService UpdateBankAccountById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1045,20 +837,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService UpdateCounterpartyById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var counterpartyId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.UpdateCounterpartyById(ctx, counterpartyId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService UpdateDestination", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1066,34 +844,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var destinationId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.UpdateDestination(ctx, destinationId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService UpdateDestinationBankAccountById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var bankAccountId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.UpdateDestinationBankAccountById(ctx, bankAccountId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService UpdateDestinationById", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var destinationId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.UpdateDestinationById(ctx, destinationId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

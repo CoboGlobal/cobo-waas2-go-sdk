@@ -65,6 +65,8 @@
 
 * `PAYMENT_STATUS_UPDATED` (value: `"payment.status.updated"`)
 
+* `PAYMENT_ORDER_STATUS_UPDATED` (value: `"payment.order.status.updated"`)
+
 * `PAYMENT_REFUND_STATUS_UPDATED` (value: `"payment.refund.status.updated"`)
 
 * `PAYMENT_SETTLEMENT_STATUS_UPDATED` (value: `"payment.settlement.status.updated"`)
@@ -78,6 +80,10 @@
 * `PAYMENT_CHARGE_STATUS_UPDATED` (value: `"payment.charge.status.updated"`)
 
 * `PAYMENT_BULK_SEND_STATUS_UPDATED` (value: `"payment.bulk_send.status.updated"`)
+
+* `PAYMENT_TRANSACTION_EXTERNAL_CREATED` (value: `"payment.transaction.external.created"`)
+
+* `PAYMENT_TRANSACTION_EXTERNAL_COMPLETED` (value: `"payment.transaction.external.completed"`)
 
 * `COMPLIANCE_DISPOSITION_STATUS_UPDATED` (value: `"compliance.disposition.status.updated"`)
 

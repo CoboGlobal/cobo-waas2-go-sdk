@@ -19,25 +19,25 @@ var _ MappedNullable = &SupportedToken{}
 
 // SupportedToken struct for SupportedToken
 type SupportedToken struct {
-	// Unique identifier of the token
+	// The unique identifier of the token, in the format of `{chain_id}_{token_symbol}`.
 	TokenId string `json:"token_id"`
-	// Full name of the token
+	// The full name of the token.
 	Name string `json:"name"`
-	// Symbol representation of the token
+	// The symbol of the token.
 	Symbol string `json:"symbol"`
-	// Number of decimal places for the token
+	// The number of decimal places for the token. This value is used to convert  between the token's smallest unit and its display value. 
 	Decimal int32 `json:"decimal"`
-	// Contract address of the token (may be null for native coins)
+	// The contract address of the token. This is `null` for native coins (e.g., ETH on Ethereum). 
 	TokenAddress NullableString `json:"token_address"`
-	// Identifier of the blockchain where the token exists
+	// The ID of the chain on which the token exists.
 	ChainId string `json:"chain_id"`
-	// Symbol of the underlying blockchain
+	// The symbol of the chain on which the token exists.
 	ChainSymbol NullableString `json:"chain_symbol"`
-	// URL to the blockchain's icon image
+	// The URL of the chain icon image.
 	ChainIconUrl NullableString `json:"chain_icon_url,omitempty"`
-	// URL to the token's icon image
+	// The URL of the token icon image.
 	TokenIconUrl NullableString `json:"token_icon_url,omitempty"`
-	// Whether the token is supported by the off-ramp service.
+	// Whether the token supports fiat off-ramp. - `true`: The token can be used for fiat off-ramp. - `false`: The token cannot be used for fiat off-ramp. 
 	CanOffRamp *bool `json:"can_off_ramp,omitempty"`
 }
 

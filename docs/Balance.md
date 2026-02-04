@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Available** | **string** | The amount of tokens ready to be spent. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details. | 
 **Pending** | Pointer to **string** | The total amount being sent in a transaction, which is calculated as the withdrawal amount plus the transaction fee. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details. | [optional] [default to "0"]
 **Locked** | Pointer to **string** | For UTXO chains, this is the combined value of the selected UTXOs for the transaction. For other chains, it is equal to the Pending amount. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details. | [optional] [default to "0"]
+**Frozen** | Pointer to **string** | Amount frozen due to compliance inspection. To learn more, see [Balances and transaction amounts for MPC Wallets](https://www.cobo.com/developers/v2/guides/mpc-wallets/balance-amounts) for more details. | [optional] [default to "0"]
 
 ## Methods
 
@@ -117,6 +118,31 @@ SetLocked sets Locked field to given value.
 `func (o *Balance) HasLocked() bool`
 
 HasLocked returns a boolean if a field has been set.
+
+### GetFrozen
+
+`func (o *Balance) GetFrozen() string`
+
+GetFrozen returns the Frozen field if non-nil, zero value otherwise.
+
+### GetFrozenOk
+
+`func (o *Balance) GetFrozenOk() (*string, bool)`
+
+GetFrozenOk returns a tuple with the Frozen field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFrozen
+
+`func (o *Balance) SetFrozen(v string)`
+
+SetFrozen sets Frozen field to given value.
+
+### HasFrozen
+
+`func (o *Balance) HasFrozen() bool`
+
+HasFrozen returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

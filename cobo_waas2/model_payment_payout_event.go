@@ -35,9 +35,11 @@ type PaymentPayoutEvent struct {
 	Initiator *string `json:"initiator,omitempty"`
 	// - For `Crypto` payouts: The amount of cryptocurrency sent to the recipient's address, denominated in the token specified in `recipient_info.token_id`. - For `OffRamp` payouts: The amount of fiat currency sent to the recipient's bank account, denominated in the currency specified in `recipient_info.currency`. (Note: The actual amount received may be lower due to additional bank transfer fees.) 
 	ActualPayoutAmount *string `json:"actual_payout_amount,omitempty"`
-	Status PaymentPayoutStatus `json:"status"`
+	// The commission fees of the payout.
+	CommissionFees []CommissionFee `json:"commission_fees,omitempty"`
 	// A note or comment about the payout.
 	Remark *string `json:"remark,omitempty"`
+	Status PaymentPayoutStatus `json:"status"`
 	// The created time of the payout, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The updated time of the payout, represented as a UNIX timestamp in seconds.
@@ -328,28 +330,36 @@ func (o *PaymentPayoutEvent) SetActualPayoutAmount(v string) {
 	o.ActualPayoutAmount = &v
 }
 
-// GetStatus returns the Status field value
-func (o *PaymentPayoutEvent) GetStatus() PaymentPayoutStatus {
-	if o == nil {
-		var ret PaymentPayoutStatus
+// GetCommissionFees returns the CommissionFees field value if set, zero value otherwise.
+func (o *PaymentPayoutEvent) GetCommissionFees() []CommissionFee {
+	if o == nil || IsNil(o.CommissionFees) {
+		var ret []CommissionFee
 		return ret
 	}
-
-	return o.Status
+	return o.CommissionFees
 }
 
-// GetStatusOk returns a tuple with the Status field value
+// GetCommissionFeesOk returns a tuple with the CommissionFees field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PaymentPayoutEvent) GetStatusOk() (*PaymentPayoutStatus, bool) {
-	if o == nil {
+func (o *PaymentPayoutEvent) GetCommissionFeesOk() ([]CommissionFee, bool) {
+	if o == nil || IsNil(o.CommissionFees) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.CommissionFees, true
 }
 
-// SetStatus sets field value
-func (o *PaymentPayoutEvent) SetStatus(v PaymentPayoutStatus) {
-	o.Status = v
+// HasCommissionFees returns a boolean if a field has been set.
+func (o *PaymentPayoutEvent) HasCommissionFees() bool {
+	if o != nil && !IsNil(o.CommissionFees) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommissionFees gets a reference to the given []CommissionFee and assigns it to the CommissionFees field.
+func (o *PaymentPayoutEvent) SetCommissionFees(v []CommissionFee) {
+	o.CommissionFees = v
 }
 
 // GetRemark returns the Remark field value if set, zero value otherwise.
@@ -382,6 +392,30 @@ func (o *PaymentPayoutEvent) HasRemark() bool {
 // SetRemark gets a reference to the given string and assigns it to the Remark field.
 func (o *PaymentPayoutEvent) SetRemark(v string) {
 	o.Remark = &v
+}
+
+// GetStatus returns the Status field value
+func (o *PaymentPayoutEvent) GetStatus() PaymentPayoutStatus {
+	if o == nil {
+		var ret PaymentPayoutStatus
+		return ret
+	}
+
+	return o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value
+// and a boolean to check if the value has been set.
+func (o *PaymentPayoutEvent) GetStatusOk() (*PaymentPayoutStatus, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Status, true
+}
+
+// SetStatus sets field value
+func (o *PaymentPayoutEvent) SetStatus(v PaymentPayoutStatus) {
+	o.Status = v
 }
 
 // GetCreatedTimestamp returns the CreatedTimestamp field value
@@ -493,10 +527,13 @@ func (o PaymentPayoutEvent) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ActualPayoutAmount) {
 		toSerialize["actual_payout_amount"] = o.ActualPayoutAmount
 	}
-	toSerialize["status"] = o.Status
+	if !IsNil(o.CommissionFees) {
+		toSerialize["commission_fees"] = o.CommissionFees
+	}
 	if !IsNil(o.Remark) {
 		toSerialize["remark"] = o.Remark
 	}
+	toSerialize["status"] = o.Status
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	if !IsNil(o.Transactions) {

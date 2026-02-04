@@ -23,7 +23,7 @@ type CreateTopUpAddresses struct {
 	MerchantId *string `json:"merchant_id,omitempty"`
 	// The token ID, which identifies the cryptocurrency. 
 	TokenId string `json:"token_id"`
-	// A list of unique custom payer IDs required to create top-up addresses. The maximum number of items is 50. 
+	// A list of unique custom payer IDs required to create top-up addresses. 
 	CustomPayerIds []string `json:"custom_payer_ids"`
 }
 

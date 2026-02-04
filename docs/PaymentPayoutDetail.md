@@ -12,8 +12,9 @@ Name | Type | Description | Notes
 **RecipientInfo** | Pointer to [**PaymentPayoutRecipientInfo**](PaymentPayoutRecipientInfo.md) |  | [optional] 
 **Initiator** | Pointer to **string** | The initiator of this payout, usually the user&#39;s API key. | [optional] 
 **ActualPayoutAmount** | Pointer to **string** | - For &#x60;Crypto&#x60; payouts: The amount of cryptocurrency sent to the recipient&#39;s address, denominated in the token specified in &#x60;recipient_info.token_id&#x60;. - For &#x60;OffRamp&#x60; payouts: The amount of fiat currency sent to the recipient&#39;s bank account, denominated in the currency specified in &#x60;recipient_info.currency&#x60;. (Note: The actual amount received may be lower due to additional bank transfer fees.)  | [optional] 
-**Status** | [**PaymentPayoutStatus**](PaymentPayoutStatus.md) |  | 
+**CommissionFees** | Pointer to [**[]CommissionFee**](CommissionFee.md) | The commission fees of the payout. | [optional] 
 **Remark** | Pointer to **string** | A note or comment about the payout. | [optional] 
+**Status** | [**PaymentPayoutStatus**](PaymentPayoutStatus.md) |  | 
 **CreatedTimestamp** | **int32** | The created time of the payout, represented as a UNIX timestamp in seconds. | 
 **UpdatedTimestamp** | **int32** | The updated time of the payout, represented as a UNIX timestamp in seconds. | 
 **Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of payout transactions. | [optional] 
@@ -222,25 +223,30 @@ SetActualPayoutAmount sets ActualPayoutAmount field to given value.
 
 HasActualPayoutAmount returns a boolean if a field has been set.
 
-### GetStatus
+### GetCommissionFees
 
-`func (o *PaymentPayoutDetail) GetStatus() PaymentPayoutStatus`
+`func (o *PaymentPayoutDetail) GetCommissionFees() []CommissionFee`
 
-GetStatus returns the Status field if non-nil, zero value otherwise.
+GetCommissionFees returns the CommissionFees field if non-nil, zero value otherwise.
 
-### GetStatusOk
+### GetCommissionFeesOk
 
-`func (o *PaymentPayoutDetail) GetStatusOk() (*PaymentPayoutStatus, bool)`
+`func (o *PaymentPayoutDetail) GetCommissionFeesOk() (*[]CommissionFee, bool)`
 
-GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
+GetCommissionFeesOk returns a tuple with the CommissionFees field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStatus
+### SetCommissionFees
 
-`func (o *PaymentPayoutDetail) SetStatus(v PaymentPayoutStatus)`
+`func (o *PaymentPayoutDetail) SetCommissionFees(v []CommissionFee)`
 
-SetStatus sets Status field to given value.
+SetCommissionFees sets CommissionFees field to given value.
 
+### HasCommissionFees
+
+`func (o *PaymentPayoutDetail) HasCommissionFees() bool`
+
+HasCommissionFees returns a boolean if a field has been set.
 
 ### GetRemark
 
@@ -266,6 +272,26 @@ SetRemark sets Remark field to given value.
 `func (o *PaymentPayoutDetail) HasRemark() bool`
 
 HasRemark returns a boolean if a field has been set.
+
+### GetStatus
+
+`func (o *PaymentPayoutDetail) GetStatus() PaymentPayoutStatus`
+
+GetStatus returns the Status field if non-nil, zero value otherwise.
+
+### GetStatusOk
+
+`func (o *PaymentPayoutDetail) GetStatusOk() (*PaymentPayoutStatus, bool)`
+
+GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatus
+
+`func (o *PaymentPayoutDetail) SetStatus(v PaymentPayoutStatus)`
+
+SetStatus sets Status field to given value.
+
 
 ### GetCreatedTimestamp
 

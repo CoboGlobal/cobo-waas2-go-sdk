@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
 **TransactionProcessType** | Pointer to [**TransactionProcessType**](TransactionProcessType.md) |  | [optional] 
 **AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 
+**PreCheck** | Pointer to [**PreCheck**](PreCheck.md) |  | [optional] 
 
 ## Methods
 
@@ -237,6 +238,31 @@ SetAutoFuel sets AutoFuel field to given value.
 `func (o *ContractCallParams) HasAutoFuel() bool`
 
 HasAutoFuel returns a boolean if a field has been set.
+
+### GetPreCheck
+
+`func (o *ContractCallParams) GetPreCheck() PreCheck`
+
+GetPreCheck returns the PreCheck field if non-nil, zero value otherwise.
+
+### GetPreCheckOk
+
+`func (o *ContractCallParams) GetPreCheckOk() (*PreCheck, bool)`
+
+GetPreCheckOk returns a tuple with the PreCheck field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreCheck
+
+`func (o *ContractCallParams) SetPreCheck(v PreCheck)`
+
+SetPreCheck sets PreCheck field to given value.
+
+### HasPreCheck
+
+`func (o *ContractCallParams) HasPreCheck() bool`
+
+HasPreCheck returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -49,6 +49,7 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_HELD WebhookEventType = "payment.transaction.held"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_FAILED WebhookEventType = "payment.transaction.failed"
 	WEBHOOKEVENTTYPE_PAYMENT_STATUS_UPDATED WebhookEventType = "payment.status.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_ORDER_STATUS_UPDATED WebhookEventType = "payment.order.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_REFUND_STATUS_UPDATED WebhookEventType = "payment.refund.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_SETTLEMENT_STATUS_UPDATED WebhookEventType = "payment.settlement.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_PAYOUT_STATUS_UPDATED WebhookEventType = "payment.payout.status.updated"
@@ -56,6 +57,8 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_SUBSCRIPTION_STATUS_UPDATED WebhookEventType = "payment.subscription.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_CHARGE_STATUS_UPDATED WebhookEventType = "payment.charge.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_BULK_SEND_STATUS_UPDATED WebhookEventType = "payment.bulk_send.status.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_EXTERNAL_CREATED WebhookEventType = "payment.transaction.external.created"
+	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_EXTERNAL_COMPLETED WebhookEventType = "payment.transaction.external.completed"
 	WEBHOOKEVENTTYPE_COMPLIANCE_DISPOSITION_STATUS_UPDATED WebhookEventType = "compliance.disposition.status.updated"
 	WEBHOOKEVENTTYPE_COMPLIANCE_KYT_SCREENINGS_STATUS_UPDATED WebhookEventType = "compliance.kyt.screenings.status.updated"
 	WEBHOOKEVENTTYPE_COMPLIANCE_KYA_SCREENINGS_STATUS_UPDATED WebhookEventType = "compliance.kya.screenings.status.updated"
@@ -94,6 +97,7 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.transaction.held",
 	"payment.transaction.failed",
 	"payment.status.updated",
+	"payment.order.status.updated",
 	"payment.refund.status.updated",
 	"payment.settlement.status.updated",
 	"payment.payout.status.updated",
@@ -101,6 +105,8 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.subscription.status.updated",
 	"payment.charge.status.updated",
 	"payment.bulk_send.status.updated",
+	"payment.transaction.external.created",
+	"payment.transaction.external.completed",
 	"compliance.disposition.status.updated",
 	"compliance.kyt.screenings.status.updated",
 	"compliance.kya.screenings.status.updated",

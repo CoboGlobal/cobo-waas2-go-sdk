@@ -21,7 +21,7 @@ var _ MappedNullable = &CreateWalletAddress{}
 type CreateWalletAddress struct {
 	// The wallet address.
 	Address string `json:"address"`
-	// The chain ID of the address.
+	// The chain ID of the cryptocurrency.  Supported values in the development environment:   - Counterparty: `ARBITRUM_ETH`, `BASE_ETH`, `BSC_BNB`, `ETH`, `TRON`, `MATIC`, `SOL`, `TTRON`, `SOLDEV_SOL`, `SETH`   - Destination: `All EVM Networks`, `SOL`, `TRON`, `TTRON`, `SOLDEV_SOL` Supported values in the production environment:   - Counterparty: `ARBITRUM_ETH`, `BASE_ETH`, `BSC_BNB`, `ETH`, `TRON`, `MATIC`, `SOL`   - Destination: `All EVM Networks`, `SOL`, `TRON` 
 	ChainId string `json:"chain_id"`
 }
 

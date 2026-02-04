@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **FeeAmount** | **string** | The fee charged for bridging tokens to another chain.  | 
 **ReceivedTokenId** | Pointer to **string** | The ID of the destination token received after bridging. | [optional] 
 **ReceivedAmount** | Pointer to **string** | The final amount of the token received after bridging. | [optional] 
+**BridgeStatus** | Pointer to [**PaymentBridgeStatus**](PaymentBridgeStatus.md) |  | [optional] 
 
 ## Methods
 
@@ -96,6 +97,31 @@ SetReceivedAmount sets ReceivedAmount field to given value.
 `func (o *BridgingFee) HasReceivedAmount() bool`
 
 HasReceivedAmount returns a boolean if a field has been set.
+
+### GetBridgeStatus
+
+`func (o *BridgingFee) GetBridgeStatus() PaymentBridgeStatus`
+
+GetBridgeStatus returns the BridgeStatus field if non-nil, zero value otherwise.
+
+### GetBridgeStatusOk
+
+`func (o *BridgingFee) GetBridgeStatusOk() (*PaymentBridgeStatus, bool)`
+
+GetBridgeStatusOk returns a tuple with the BridgeStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBridgeStatus
+
+`func (o *BridgingFee) SetBridgeStatus(v PaymentBridgeStatus)`
+
+SetBridgeStatus sets BridgeStatus field to given value.
+
+### HasBridgeStatus
+
+`func (o *BridgingFee) HasBridgeStatus() bool`
+
+HasBridgeStatus returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

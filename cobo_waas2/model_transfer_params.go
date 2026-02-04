@@ -32,6 +32,7 @@ type TransferParams struct {
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
 	TransactionProcessType *TransactionProcessType `json:"transaction_process_type,omitempty"`
 	AutoFuel *AutoFuelType `json:"auto_fuel,omitempty"`
+	PreCheck *PreCheck `json:"pre_check,omitempty"`
 }
 
 type _TransferParams TransferParams
@@ -313,6 +314,38 @@ func (o *TransferParams) SetAutoFuel(v AutoFuelType) {
 	o.AutoFuel = &v
 }
 
+// GetPreCheck returns the PreCheck field value if set, zero value otherwise.
+func (o *TransferParams) GetPreCheck() PreCheck {
+	if o == nil || IsNil(o.PreCheck) {
+		var ret PreCheck
+		return ret
+	}
+	return *o.PreCheck
+}
+
+// GetPreCheckOk returns a tuple with the PreCheck field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransferParams) GetPreCheckOk() (*PreCheck, bool) {
+	if o == nil || IsNil(o.PreCheck) {
+		return nil, false
+	}
+	return o.PreCheck, true
+}
+
+// HasPreCheck returns a boolean if a field has been set.
+func (o *TransferParams) HasPreCheck() bool {
+	if o != nil && !IsNil(o.PreCheck) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreCheck gets a reference to the given PreCheck and assigns it to the PreCheck field.
+func (o *TransferParams) SetPreCheck(v PreCheck) {
+	o.PreCheck = &v
+}
+
 func (o TransferParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -341,6 +374,9 @@ func (o TransferParams) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AutoFuel) {
 		toSerialize["auto_fuel"] = o.AutoFuel
+	}
+	if !IsNil(o.PreCheck) {
+		toSerialize["pre_check"] = o.PreCheck
 	}
 	return toSerialize, nil
 }
