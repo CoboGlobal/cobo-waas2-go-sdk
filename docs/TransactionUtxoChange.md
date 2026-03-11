@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Address** | Pointer to **string** | The receiving address of the UTXO change output. | [optional] 
 **Value** | Pointer to **string** | The amount of the UTXO change output. | [optional] 
+**TokenId** | Pointer to **string** | The token ID of the UTXO change output. | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetValue sets Value field to given value.
 `func (o *TransactionUtxoChange) HasValue() bool`
 
 HasValue returns a boolean if a field has been set.
+
+### GetTokenId
+
+`func (o *TransactionUtxoChange) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *TransactionUtxoChange) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *TransactionUtxoChange) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+### HasTokenId
+
+`func (o *TransactionUtxoChange) HasTokenId() bool`
+
+HasTokenId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

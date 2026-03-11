@@ -6,10 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TxHash** | Pointer to **string** | The transaction hash of the UTXO. | [optional] 
 **VoutN** | Pointer to **int32** | The output index of the UTXO. | [optional] 
+**TokenId** | Pointer to **string** | The token ID of the UTXO. | [optional] 
 **Address** | Pointer to **string** | The address of the UTXO. | [optional] 
 **Value** | Pointer to **string** | The value of the UTXO. | [optional] 
 **RedeemScript** | Pointer to **string** | The redeem script used in P2SH and P2WSH transactions. | [optional] 
 **RevealedScript** | Pointer to **string** | The revealed script used for Taproot script-path spend transaction. | [optional] 
+**ObjectId** | Pointer to **string** | The ID of the blockchain object to spend (e.g., SUI Coin object). | [optional] 
+**Version** | Pointer to **string** | Object version number. | [optional] 
 
 ## Methods
 
@@ -79,6 +82,31 @@ SetVoutN sets VoutN field to given value.
 `func (o *TransactionSelectedUtxo) HasVoutN() bool`
 
 HasVoutN returns a boolean if a field has been set.
+
+### GetTokenId
+
+`func (o *TransactionSelectedUtxo) GetTokenId() string`
+
+GetTokenId returns the TokenId field if non-nil, zero value otherwise.
+
+### GetTokenIdOk
+
+`func (o *TransactionSelectedUtxo) GetTokenIdOk() (*string, bool)`
+
+GetTokenIdOk returns a tuple with the TokenId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTokenId
+
+`func (o *TransactionSelectedUtxo) SetTokenId(v string)`
+
+SetTokenId sets TokenId field to given value.
+
+### HasTokenId
+
+`func (o *TransactionSelectedUtxo) HasTokenId() bool`
+
+HasTokenId returns a boolean if a field has been set.
 
 ### GetAddress
 
@@ -179,6 +207,56 @@ SetRevealedScript sets RevealedScript field to given value.
 `func (o *TransactionSelectedUtxo) HasRevealedScript() bool`
 
 HasRevealedScript returns a boolean if a field has been set.
+
+### GetObjectId
+
+`func (o *TransactionSelectedUtxo) GetObjectId() string`
+
+GetObjectId returns the ObjectId field if non-nil, zero value otherwise.
+
+### GetObjectIdOk
+
+`func (o *TransactionSelectedUtxo) GetObjectIdOk() (*string, bool)`
+
+GetObjectIdOk returns a tuple with the ObjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectId
+
+`func (o *TransactionSelectedUtxo) SetObjectId(v string)`
+
+SetObjectId sets ObjectId field to given value.
+
+### HasObjectId
+
+`func (o *TransactionSelectedUtxo) HasObjectId() bool`
+
+HasObjectId returns a boolean if a field has been set.
+
+### GetVersion
+
+`func (o *TransactionSelectedUtxo) GetVersion() string`
+
+GetVersion returns the Version field if non-nil, zero value otherwise.
+
+### GetVersionOk
+
+`func (o *TransactionSelectedUtxo) GetVersionOk() (*string, bool)`
+
+GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersion
+
+`func (o *TransactionSelectedUtxo) SetVersion(v string)`
+
+SetVersion sets Version field to given value.
+
+### HasVersion
+
+`func (o *TransactionSelectedUtxo) HasVersion() bool`
+
+HasVersion returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -21,6 +21,8 @@ type TransactionUtxoChange struct {
 	Address *string `json:"address,omitempty"`
 	// The amount of the UTXO change output.
 	Value *string `json:"value,omitempty"`
+	// The token ID of the UTXO change output.
+	TokenId *string `json:"token_id,omitempty"`
 }
 
 // NewTransactionUtxoChange instantiates a new TransactionUtxoChange object
@@ -104,6 +106,38 @@ func (o *TransactionUtxoChange) SetValue(v string) {
 	o.Value = &v
 }
 
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *TransactionUtxoChange) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionUtxoChange) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *TransactionUtxoChange) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *TransactionUtxoChange) SetTokenId(v string) {
+	o.TokenId = &v
+}
+
 func (o TransactionUtxoChange) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -119,6 +153,9 @@ func (o TransactionUtxoChange) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
+	}
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
 	}
 	return toSerialize, nil
 }

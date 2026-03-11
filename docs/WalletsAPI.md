@@ -27,6 +27,7 @@ Method | HTTP request | Description
 [**ListTokenBalancesForAddress**](WalletsAPI.md#ListTokenBalancesForAddress) | **Get** /wallets/{wallet_id}/addresses/{address}/tokens | List token balances by address
 [**ListTokenBalancesForWallet**](WalletsAPI.md#ListTokenBalancesForWallet) | **Get** /wallets/{wallet_id}/tokens | List token balances by wallet
 [**ListTokenListingRequests**](WalletsAPI.md#ListTokenListingRequests) | **Get** /wallets/tokens/listing_requests | List token listing requests
+[**ListTransactionUtxos**](WalletsAPI.md#ListTransactionUtxos) | **Get** /wallets/{wallet_id}/transaction_utxos | List transaction UTXOs
 [**ListUtxos**](WalletsAPI.md#ListUtxos) | **Get** /wallets/{wallet_id}/utxos | List UTXOs
 [**ListWallets**](WalletsAPI.md#ListWallets) | **Get** /wallets | List all wallets
 [**LockUtxos**](WalletsAPI.md#LockUtxos) | **Post** /wallets/{wallet_id}/utxos/lock | Lock UTXOs
@@ -1929,6 +1930,104 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListTokenListingRequests200Response**](ListTokenListingRequests200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListTransactionUtxos
+
+> ListUtxos200Response ListTransactionUtxos(ctx, walletId).ChainId(chainId).TxHash(txHash).IsChange(isChange).VoutN(voutN).TokenId(tokenId).Address(address).Limit(limit).Before(before).After(after).Execute()
+
+List transaction UTXOs
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	walletId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	chainId := "ETH"
+	txHash := "dd7e1cecf6bbde1844ee1815b780711a1e306a718bcd23cd64401b48ef88eb83"
+	isChange := false
+	voutN := int32(0)
+	tokenId := "ETH_USDT"
+	address := "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.WalletsAPI.ListTransactionUtxos(ctx, walletId).ChainId(chainId).TxHash(txHash).IsChange(isChange).VoutN(voutN).TokenId(tokenId).Address(address).Limit(limit).Before(before).After(after).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `WalletsAPI.ListTransactionUtxos``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListTransactionUtxos`: ListUtxos200Response
+	fmt.Fprintf(os.Stdout, "Response from `WalletsAPI.ListTransactionUtxos`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**walletId** | **string** | The wallet ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListTransactionUtxosRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **chainId** | **string** | The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
+ **txHash** | **string** | The transaction hash to filter UTXOs by. | 
+ **isChange** | **bool** | Filter UTXOs by whether they are change outputs. | 
+ **voutN** | **int32** | The output index of the UTXO to filter by. | 
+ **tokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
+ **address** | **string** |  | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
+ **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
+
+### Return type
+
+[**ListUtxos200Response**](ListUtxos200Response.md)
 
 ### Authorization
 

@@ -19,6 +19,10 @@ var _ MappedNullable = &TransactionDepositToAddressDestinationTxInfo{}
 type TransactionDepositToAddressDestinationTxInfo struct {
 	// The output index of the UTXO.
 	VoutN *int32 `json:"vout_n,omitempty"`
+	// The ID of the blockchain object to spend (e.g., SUI Coin object).
+	ObjectId *string `json:"object_id,omitempty"`
+	// Object version number.
+	Version *string `json:"version,omitempty"`
 }
 
 // NewTransactionDepositToAddressDestinationTxInfo instantiates a new TransactionDepositToAddressDestinationTxInfo object
@@ -70,6 +74,70 @@ func (o *TransactionDepositToAddressDestinationTxInfo) SetVoutN(v int32) {
 	o.VoutN = &v
 }
 
+// GetObjectId returns the ObjectId field value if set, zero value otherwise.
+func (o *TransactionDepositToAddressDestinationTxInfo) GetObjectId() string {
+	if o == nil || IsNil(o.ObjectId) {
+		var ret string
+		return ret
+	}
+	return *o.ObjectId
+}
+
+// GetObjectIdOk returns a tuple with the ObjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionDepositToAddressDestinationTxInfo) GetObjectIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ObjectId) {
+		return nil, false
+	}
+	return o.ObjectId, true
+}
+
+// HasObjectId returns a boolean if a field has been set.
+func (o *TransactionDepositToAddressDestinationTxInfo) HasObjectId() bool {
+	if o != nil && !IsNil(o.ObjectId) {
+		return true
+	}
+
+	return false
+}
+
+// SetObjectId gets a reference to the given string and assigns it to the ObjectId field.
+func (o *TransactionDepositToAddressDestinationTxInfo) SetObjectId(v string) {
+	o.ObjectId = &v
+}
+
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *TransactionDepositToAddressDestinationTxInfo) GetVersion() string {
+	if o == nil || IsNil(o.Version) {
+		var ret string
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionDepositToAddressDestinationTxInfo) GetVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *TransactionDepositToAddressDestinationTxInfo) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given string and assigns it to the Version field.
+func (o *TransactionDepositToAddressDestinationTxInfo) SetVersion(v string) {
+	o.Version = &v
+}
+
 func (o TransactionDepositToAddressDestinationTxInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -82,6 +150,12 @@ func (o TransactionDepositToAddressDestinationTxInfo) ToMap() (map[string]interf
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.VoutN) {
 		toSerialize["vout_n"] = o.VoutN
+	}
+	if !IsNil(o.ObjectId) {
+		toSerialize["object_id"] = o.ObjectId
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }

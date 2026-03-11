@@ -662,13 +662,13 @@ func (r ApiListFeeStationTransactionsRequest) AssetIds(assetIds string) ApiListF
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If not provided, the default value is 90 days before the current time. This default value is subject to change. 
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If you specify &#x60;min_created_timestamp&#x60; without specifying &#x60;max_created_timestamp&#x60;, &#x60;max_created_timestamp&#x60; is automatically set to &#x60;min_created_timestamp&#x60; + 90 days. If you specify both, the time range cannot exceed 90 days.  If not provided, the default value is 90 days before the current time. This default value is subject to change. 
 func (r ApiListFeeStationTransactionsRequest) MinCreatedTimestamp(minCreatedTimestamp int64) ApiListFeeStationTransactionsRequest {
 	r.minCreatedTimestamp = &minCreatedTimestamp
 	return r
 }
 
-// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If not provided, the default value is the current time. This default value is subject to change. 
+// The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If you specify &#x60;max_created_timestamp&#x60; without specifying &#x60;min_created_timestamp&#x60;, &#x60;min_created_timestamp&#x60; is automatically set to &#x60;max_created_timestamp&#x60; - 90 days. If you specify both, the time range cannot exceed 90 days.  If not provided, the default value is the current time. This default value is subject to change. 
 func (r ApiListFeeStationTransactionsRequest) MaxCreatedTimestamp(maxCreatedTimestamp int64) ApiListFeeStationTransactionsRequest {
 	r.maxCreatedTimestamp = &maxCreatedTimestamp
 	return r

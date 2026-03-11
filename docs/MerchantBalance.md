@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MerchantId** | **string** | The merchant ID. | 
 **TokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. | 
-**AcquiringType** | [**AcquiringType**](AcquiringType.md) |  | 
+**AcquiringType** | Pointer to [**AcquiringType**](AcquiringType.md) |  | [optional] 
 **TotalReceivedAmount** | Pointer to **string** | The total amount of the token that has been received by the merchant. | [optional] 
 **SettledAmount** | Pointer to **string** | The total amount of the token that has been paid out from the merchant&#39;s balance. | [optional] 
 **PayoutAmount** | Pointer to **string** | This field is reserved for future use. | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewMerchantBalance
 
-`func NewMerchantBalance(merchantId string, tokenId string, acquiringType AcquiringType, ) *MerchantBalance`
+`func NewMerchantBalance(merchantId string, tokenId string, ) *MerchantBalance`
 
 NewMerchantBalance instantiates a new MerchantBalance object
 This constructor will assign default values to properties that have it defined,
@@ -93,6 +93,11 @@ and a boolean to check if the value has been set.
 
 SetAcquiringType sets AcquiringType field to given value.
 
+### HasAcquiringType
+
+`func (o *MerchantBalance) HasAcquiringType() bool`
+
+HasAcquiringType returns a boolean if a field has been set.
 
 ### GetTotalReceivedAmount
 
