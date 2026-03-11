@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ReportType The type of the report. - `Order`: Summary of all pay-in orders. - `OrderTransaction`: Summary of all pay-in order transactions. - `TopUpTransaction`: Summary of all top-up transactions. - `PayinWeeklyStatement`: Weekly report of all pay-ins (including order mode and top-up mode). - `PayinDailyStatement`: Daily report of all pay-ins (including order mode and top-up mode). - `CryptoPayout`: Summary of all crypto payout transactions. - `OffRamp`: Summary of all fiat off-ramp transactions. - `Refund`: Summary of all refund transactions. - `PayoutWeeklyStatement`: Weekly report of all payouts (including crypto payouts, fiat off-ramps, and refunds). - `PayoutDailyStatement`: Daily report of all payouts (including crypto payouts, fiat off-ramps, and refunds). - `PayinCommissionFee`: Summary of all commission fees for pay-ins. - `PayoutCommissionFee`: Summary of all commission fees for payouts. - `BalanceChange`: Summary of balance changes for all accounts. - `Summary`: Summary of all pay-ins, payouts, and commission fees. 
+// ReportType The type of the report. - `Order`: Summary of all pay-in orders. - `OrderTransaction`: Summary of all pay-in order transactions. - `TopUpTransaction`: Summary of all top-up transactions. - `PayinWeeklyStatement`: Weekly report of all pay-ins (including order mode and top-up mode). - `PayinDailyStatement`: Daily report of all pay-ins (including order mode and top-up mode). - `CryptoPayout`: Summary of all crypto payout transactions. - `OffRamp`: Summary of all fiat off-ramp transactions. - `Refund`: Summary of all refund transactions. - `PayoutWeeklyStatement`: Weekly report of all payouts (including crypto payouts, fiat off-ramps, and refunds). - `PayoutDailyStatement`: Daily report of all payouts (including crypto payouts, fiat off-ramps, and refunds). - `PayinCommissionFee`: Summary of all commission fees for pay-ins. - `PayoutCommissionFee`: Summary of all commission fees for payouts. - `BalanceChange`: Summary of balance changes for all accounts. - `Summary`: Summary of all pay-ins, payouts, and commission fees. - `BulkSend`: Transaction summary of bulk send. 
 type ReportType string
 
 // List of ReportType
@@ -32,6 +32,7 @@ const (
 	REPORTTYPE_PAYOUT_COMMISSION_FEE ReportType = "PayoutCommissionFee"
 	REPORTTYPE_BALANCE_CHANGE ReportType = "BalanceChange"
 	REPORTTYPE_SUMMARY ReportType = "Summary"
+	REPORTTYPE_BULK_SEND ReportType = "BulkSend"
 )
 
 // All allowed values of ReportType enum
@@ -50,6 +51,7 @@ var AllowedReportTypeEnumValues = []ReportType{
 	"PayoutCommissionFee",
 	"BalanceChange",
 	"Summary",
+	"BulkSend",
 }
 
 func (v *ReportType) UnmarshalJSON(src []byte) error {

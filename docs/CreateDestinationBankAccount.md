@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **IbanCode** | Pointer to **string** | The IBAN code of the bank account. | [optional] 
 **FurtherCredit** | Pointer to **string** | The further credit of the bank account. | [optional] 
 **IntermediaryBankInfo** | Pointer to [**IntermediaryBankInfo**](IntermediaryBankInfo.md) |  | [optional] 
+**Country** | Pointer to **string** | Beneficiary&#39;s country, in ISO 3166-1 alpha-3 format. | [optional] 
+**City** | Pointer to **string** | Beneficiary&#39;s city. | [optional] 
 
 ## Methods
 
@@ -269,6 +271,56 @@ SetIntermediaryBankInfo sets IntermediaryBankInfo field to given value.
 `func (o *CreateDestinationBankAccount) HasIntermediaryBankInfo() bool`
 
 HasIntermediaryBankInfo returns a boolean if a field has been set.
+
+### GetCountry
+
+`func (o *CreateDestinationBankAccount) GetCountry() string`
+
+GetCountry returns the Country field if non-nil, zero value otherwise.
+
+### GetCountryOk
+
+`func (o *CreateDestinationBankAccount) GetCountryOk() (*string, bool)`
+
+GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountry
+
+`func (o *CreateDestinationBankAccount) SetCountry(v string)`
+
+SetCountry sets Country field to given value.
+
+### HasCountry
+
+`func (o *CreateDestinationBankAccount) HasCountry() bool`
+
+HasCountry returns a boolean if a field has been set.
+
+### GetCity
+
+`func (o *CreateDestinationBankAccount) GetCity() string`
+
+GetCity returns the City field if non-nil, zero value otherwise.
+
+### GetCityOk
+
+`func (o *CreateDestinationBankAccount) GetCityOk() (*string, bool)`
+
+GetCityOk returns a tuple with the City field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCity
+
+`func (o *CreateDestinationBankAccount) SetCity(v string)`
+
+SetCity sets City field to given value.
+
+### HasCity
+
+`func (o *CreateDestinationBankAccount) HasCity() bool`
+
+HasCity returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

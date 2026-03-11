@@ -25,7 +25,11 @@ type TransactionRawTxInfo struct {
 	RawTx *string `json:"raw_tx,omitempty"`
 	// The unsigned raw transaction data.
 	UnsignedRawTx *string `json:"unsigned_raw_tx,omitempty"`
+	// Deprecated. Use `utxo_changes` instead.
+	// Deprecated
 	UtxoChange *TransactionUtxoChange `json:"utxo_change,omitempty"`
+	// The UTXO change outputs in the transaction.
+	UtxoChanges []TransactionUtxoChange `json:"utxo_changes,omitempty"`
 }
 
 // NewTransactionRawTxInfo instantiates a new TransactionRawTxInfo object
@@ -174,6 +178,7 @@ func (o *TransactionRawTxInfo) SetUnsignedRawTx(v string) {
 }
 
 // GetUtxoChange returns the UtxoChange field value if set, zero value otherwise.
+// Deprecated
 func (o *TransactionRawTxInfo) GetUtxoChange() TransactionUtxoChange {
 	if o == nil || IsNil(o.UtxoChange) {
 		var ret TransactionUtxoChange
@@ -184,6 +189,7 @@ func (o *TransactionRawTxInfo) GetUtxoChange() TransactionUtxoChange {
 
 // GetUtxoChangeOk returns a tuple with the UtxoChange field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *TransactionRawTxInfo) GetUtxoChangeOk() (*TransactionUtxoChange, bool) {
 	if o == nil || IsNil(o.UtxoChange) {
 		return nil, false
@@ -201,8 +207,41 @@ func (o *TransactionRawTxInfo) HasUtxoChange() bool {
 }
 
 // SetUtxoChange gets a reference to the given TransactionUtxoChange and assigns it to the UtxoChange field.
+// Deprecated
 func (o *TransactionRawTxInfo) SetUtxoChange(v TransactionUtxoChange) {
 	o.UtxoChange = &v
+}
+
+// GetUtxoChanges returns the UtxoChanges field value if set, zero value otherwise.
+func (o *TransactionRawTxInfo) GetUtxoChanges() []TransactionUtxoChange {
+	if o == nil || IsNil(o.UtxoChanges) {
+		var ret []TransactionUtxoChange
+		return ret
+	}
+	return o.UtxoChanges
+}
+
+// GetUtxoChangesOk returns a tuple with the UtxoChanges field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionRawTxInfo) GetUtxoChangesOk() ([]TransactionUtxoChange, bool) {
+	if o == nil || IsNil(o.UtxoChanges) {
+		return nil, false
+	}
+	return o.UtxoChanges, true
+}
+
+// HasUtxoChanges returns a boolean if a field has been set.
+func (o *TransactionRawTxInfo) HasUtxoChanges() bool {
+	if o != nil && !IsNil(o.UtxoChanges) {
+		return true
+	}
+
+	return false
+}
+
+// SetUtxoChanges gets a reference to the given []TransactionUtxoChange and assigns it to the UtxoChanges field.
+func (o *TransactionRawTxInfo) SetUtxoChanges(v []TransactionUtxoChange) {
+	o.UtxoChanges = v
 }
 
 func (o TransactionRawTxInfo) MarshalJSON() ([]byte, error) {
@@ -229,6 +268,9 @@ func (o TransactionRawTxInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UtxoChange) {
 		toSerialize["utxo_change"] = o.UtxoChange
+	}
+	if !IsNil(o.UtxoChanges) {
+		toSerialize["utxo_changes"] = o.UtxoChanges
 	}
 	return toSerialize, nil
 }

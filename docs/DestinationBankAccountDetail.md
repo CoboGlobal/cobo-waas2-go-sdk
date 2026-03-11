@@ -24,6 +24,8 @@ Name | Type | Description | Notes
 **FurtherCredit** | Pointer to **string** | The further credit of the bank account. | [optional] 
 **IntermediaryBankInfo** | Pointer to [**IntermediaryBankInfo**](IntermediaryBankInfo.md) |  | [optional] 
 **BankAccountStatus** | [**BankAccountStatus**](BankAccountStatus.md) |  | 
+**Country** | Pointer to **string** | Beneficiary&#39;s country, in ISO 3166-1 alpha-3 format. | [optional] 
+**City** | Pointer to **string** | Beneficiary&#39;s city. | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
 
@@ -480,6 +482,56 @@ and a boolean to check if the value has been set.
 
 SetBankAccountStatus sets BankAccountStatus field to given value.
 
+
+### GetCountry
+
+`func (o *DestinationBankAccountDetail) GetCountry() string`
+
+GetCountry returns the Country field if non-nil, zero value otherwise.
+
+### GetCountryOk
+
+`func (o *DestinationBankAccountDetail) GetCountryOk() (*string, bool)`
+
+GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountry
+
+`func (o *DestinationBankAccountDetail) SetCountry(v string)`
+
+SetCountry sets Country field to given value.
+
+### HasCountry
+
+`func (o *DestinationBankAccountDetail) HasCountry() bool`
+
+HasCountry returns a boolean if a field has been set.
+
+### GetCity
+
+`func (o *DestinationBankAccountDetail) GetCity() string`
+
+GetCity returns the City field if non-nil, zero value otherwise.
+
+### GetCityOk
+
+`func (o *DestinationBankAccountDetail) GetCityOk() (*string, bool)`
+
+GetCityOk returns a tuple with the City field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCity
+
+`func (o *DestinationBankAccountDetail) SetCity(v string)`
+
+SetCity sets City field to given value.
+
+### HasCity
+
+`func (o *DestinationBankAccountDetail) HasCity() bool`
+
+HasCity returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

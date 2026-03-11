@@ -13,6 +13,10 @@ Name | Type | Description | Notes
 **IsLocked** | Pointer to **bool** | Whether the UTXO is locked. | [optional] 
 **ConfirmedNumber** | Pointer to **int32** | The number of confirmations for the UTXO. | [optional] 
 **IsFrozen** | Pointer to **bool** | Whether the UTXO is frozen. | [optional] 
+**IsChange** | Pointer to **bool** | Whether the UTXO is a change output of a transaction. | [optional] 
+**ChainId** | Pointer to **string** | The chain ID, which is the unique identifier of a blockchain. | [optional] 
+**ObjectId** | Pointer to **string** | The ID of the blockchain object to spend (e.g., SUI Coin object). | [optional] 
+**Version** | Pointer to **string** | Object version number. | [optional] 
 
 ## Methods
 
@@ -257,6 +261,106 @@ SetIsFrozen sets IsFrozen field to given value.
 `func (o *UTXO) HasIsFrozen() bool`
 
 HasIsFrozen returns a boolean if a field has been set.
+
+### GetIsChange
+
+`func (o *UTXO) GetIsChange() bool`
+
+GetIsChange returns the IsChange field if non-nil, zero value otherwise.
+
+### GetIsChangeOk
+
+`func (o *UTXO) GetIsChangeOk() (*bool, bool)`
+
+GetIsChangeOk returns a tuple with the IsChange field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsChange
+
+`func (o *UTXO) SetIsChange(v bool)`
+
+SetIsChange sets IsChange field to given value.
+
+### HasIsChange
+
+`func (o *UTXO) HasIsChange() bool`
+
+HasIsChange returns a boolean if a field has been set.
+
+### GetChainId
+
+`func (o *UTXO) GetChainId() string`
+
+GetChainId returns the ChainId field if non-nil, zero value otherwise.
+
+### GetChainIdOk
+
+`func (o *UTXO) GetChainIdOk() (*string, bool)`
+
+GetChainIdOk returns a tuple with the ChainId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChainId
+
+`func (o *UTXO) SetChainId(v string)`
+
+SetChainId sets ChainId field to given value.
+
+### HasChainId
+
+`func (o *UTXO) HasChainId() bool`
+
+HasChainId returns a boolean if a field has been set.
+
+### GetObjectId
+
+`func (o *UTXO) GetObjectId() string`
+
+GetObjectId returns the ObjectId field if non-nil, zero value otherwise.
+
+### GetObjectIdOk
+
+`func (o *UTXO) GetObjectIdOk() (*string, bool)`
+
+GetObjectIdOk returns a tuple with the ObjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectId
+
+`func (o *UTXO) SetObjectId(v string)`
+
+SetObjectId sets ObjectId field to given value.
+
+### HasObjectId
+
+`func (o *UTXO) HasObjectId() bool`
+
+HasObjectId returns a boolean if a field has been set.
+
+### GetVersion
+
+`func (o *UTXO) GetVersion() string`
+
+GetVersion returns the Version field if non-nil, zero value otherwise.
+
+### GetVersionOk
+
+`func (o *UTXO) GetVersionOk() (*string, bool)`
+
+GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersion
+
+`func (o *UTXO) SetVersion(v string)`
+
+SetVersion sets Version field to given value.
+
+### HasVersion
+
+`func (o *UTXO) HasVersion() bool`
+
+HasVersion returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

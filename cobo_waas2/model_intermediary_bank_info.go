@@ -22,7 +22,7 @@ type IntermediaryBankInfo struct {
 	// The name of the intermediary bank.
 	BankName string `json:"bank_name"`
 	// The address of the intermediary bank.
-	BankAddress string `json:"bank_address"`
+	BankAddress *string `json:"bank_address,omitempty"`
 	// The SWIFT or BIC code of the intermediary bank.
 	BankSwiftCode string `json:"bank_swift_code"`
 }
@@ -33,10 +33,9 @@ type _IntermediaryBankInfo IntermediaryBankInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewIntermediaryBankInfo(bankName string, bankAddress string, bankSwiftCode string) *IntermediaryBankInfo {
+func NewIntermediaryBankInfo(bankName string, bankSwiftCode string) *IntermediaryBankInfo {
 	this := IntermediaryBankInfo{}
 	this.BankName = bankName
-	this.BankAddress = bankAddress
 	this.BankSwiftCode = bankSwiftCode
 	return &this
 }
@@ -73,28 +72,36 @@ func (o *IntermediaryBankInfo) SetBankName(v string) {
 	o.BankName = v
 }
 
-// GetBankAddress returns the BankAddress field value
+// GetBankAddress returns the BankAddress field value if set, zero value otherwise.
 func (o *IntermediaryBankInfo) GetBankAddress() string {
-	if o == nil {
+	if o == nil || IsNil(o.BankAddress) {
 		var ret string
 		return ret
 	}
-
-	return o.BankAddress
+	return *o.BankAddress
 }
 
-// GetBankAddressOk returns a tuple with the BankAddress field value
+// GetBankAddressOk returns a tuple with the BankAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *IntermediaryBankInfo) GetBankAddressOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.BankAddress) {
 		return nil, false
 	}
-	return &o.BankAddress, true
+	return o.BankAddress, true
 }
 
-// SetBankAddress sets field value
+// HasBankAddress returns a boolean if a field has been set.
+func (o *IntermediaryBankInfo) HasBankAddress() bool {
+	if o != nil && !IsNil(o.BankAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAddress gets a reference to the given string and assigns it to the BankAddress field.
 func (o *IntermediaryBankInfo) SetBankAddress(v string) {
-	o.BankAddress = v
+	o.BankAddress = &v
 }
 
 // GetBankSwiftCode returns the BankSwiftCode field value
@@ -132,7 +139,9 @@ func (o IntermediaryBankInfo) MarshalJSON() ([]byte, error) {
 func (o IntermediaryBankInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["bank_name"] = o.BankName
-	toSerialize["bank_address"] = o.BankAddress
+	if !IsNil(o.BankAddress) {
+		toSerialize["bank_address"] = o.BankAddress
+	}
 	toSerialize["bank_swift_code"] = o.BankSwiftCode
 	return toSerialize, nil
 }
@@ -143,7 +152,6 @@ func (o *IntermediaryBankInfo) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"bank_name",
-		"bank_address",
 		"bank_swift_code",
 	}
 

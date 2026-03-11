@@ -40,6 +40,10 @@ type CreateDestinationBankAccount struct {
 	// The further credit of the bank account.
 	FurtherCredit *string `json:"further_credit,omitempty"`
 	IntermediaryBankInfo *IntermediaryBankInfo `json:"intermediary_bank_info,omitempty"`
+	// Beneficiary's country, in ISO 3166-1 alpha-3 format.
+	Country *string `json:"country,omitempty"`
+	// Beneficiary's city.
+	City *string `json:"city,omitempty"`
 }
 
 type _CreateDestinationBankAccount CreateDestinationBankAccount
@@ -357,6 +361,70 @@ func (o *CreateDestinationBankAccount) SetIntermediaryBankInfo(v IntermediaryBan
 	o.IntermediaryBankInfo = &v
 }
 
+// GetCountry returns the Country field value if set, zero value otherwise.
+func (o *CreateDestinationBankAccount) GetCountry() string {
+	if o == nil || IsNil(o.Country) {
+		var ret string
+		return ret
+	}
+	return *o.Country
+}
+
+// GetCountryOk returns a tuple with the Country field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateDestinationBankAccount) GetCountryOk() (*string, bool) {
+	if o == nil || IsNil(o.Country) {
+		return nil, false
+	}
+	return o.Country, true
+}
+
+// HasCountry returns a boolean if a field has been set.
+func (o *CreateDestinationBankAccount) HasCountry() bool {
+	if o != nil && !IsNil(o.Country) {
+		return true
+	}
+
+	return false
+}
+
+// SetCountry gets a reference to the given string and assigns it to the Country field.
+func (o *CreateDestinationBankAccount) SetCountry(v string) {
+	o.Country = &v
+}
+
+// GetCity returns the City field value if set, zero value otherwise.
+func (o *CreateDestinationBankAccount) GetCity() string {
+	if o == nil || IsNil(o.City) {
+		var ret string
+		return ret
+	}
+	return *o.City
+}
+
+// GetCityOk returns a tuple with the City field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateDestinationBankAccount) GetCityOk() (*string, bool) {
+	if o == nil || IsNil(o.City) {
+		return nil, false
+	}
+	return o.City, true
+}
+
+// HasCity returns a boolean if a field has been set.
+func (o *CreateDestinationBankAccount) HasCity() bool {
+	if o != nil && !IsNil(o.City) {
+		return true
+	}
+
+	return false
+}
+
+// SetCity gets a reference to the given string and assigns it to the City field.
+func (o *CreateDestinationBankAccount) SetCity(v string) {
+	o.City = &v
+}
+
 func (o CreateDestinationBankAccount) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -383,6 +451,12 @@ func (o CreateDestinationBankAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IntermediaryBankInfo) {
 		toSerialize["intermediary_bank_info"] = o.IntermediaryBankInfo
+	}
+	if !IsNil(o.Country) {
+		toSerialize["country"] = o.Country
+	}
+	if !IsNil(o.City) {
+		toSerialize["city"] = o.City
 	}
 	return toSerialize, nil
 }

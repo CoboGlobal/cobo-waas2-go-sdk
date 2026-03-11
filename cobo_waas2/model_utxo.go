@@ -35,6 +35,14 @@ type UTXO struct {
 	ConfirmedNumber *int32 `json:"confirmed_number,omitempty"`
 	// Whether the UTXO is frozen.
 	IsFrozen *bool `json:"is_frozen,omitempty"`
+	// Whether the UTXO is a change output of a transaction.
+	IsChange *bool `json:"is_change,omitempty"`
+	// The chain ID, which is the unique identifier of a blockchain.
+	ChainId *string `json:"chain_id,omitempty"`
+	// The ID of the blockchain object to spend (e.g., SUI Coin object).
+	ObjectId *string `json:"object_id,omitempty"`
+	// Object version number.
+	Version *string `json:"version,omitempty"`
 }
 
 // NewUTXO instantiates a new UTXO object
@@ -342,6 +350,134 @@ func (o *UTXO) SetIsFrozen(v bool) {
 	o.IsFrozen = &v
 }
 
+// GetIsChange returns the IsChange field value if set, zero value otherwise.
+func (o *UTXO) GetIsChange() bool {
+	if o == nil || IsNil(o.IsChange) {
+		var ret bool
+		return ret
+	}
+	return *o.IsChange
+}
+
+// GetIsChangeOk returns a tuple with the IsChange field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UTXO) GetIsChangeOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsChange) {
+		return nil, false
+	}
+	return o.IsChange, true
+}
+
+// HasIsChange returns a boolean if a field has been set.
+func (o *UTXO) HasIsChange() bool {
+	if o != nil && !IsNil(o.IsChange) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsChange gets a reference to the given bool and assigns it to the IsChange field.
+func (o *UTXO) SetIsChange(v bool) {
+	o.IsChange = &v
+}
+
+// GetChainId returns the ChainId field value if set, zero value otherwise.
+func (o *UTXO) GetChainId() string {
+	if o == nil || IsNil(o.ChainId) {
+		var ret string
+		return ret
+	}
+	return *o.ChainId
+}
+
+// GetChainIdOk returns a tuple with the ChainId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UTXO) GetChainIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ChainId) {
+		return nil, false
+	}
+	return o.ChainId, true
+}
+
+// HasChainId returns a boolean if a field has been set.
+func (o *UTXO) HasChainId() bool {
+	if o != nil && !IsNil(o.ChainId) {
+		return true
+	}
+
+	return false
+}
+
+// SetChainId gets a reference to the given string and assigns it to the ChainId field.
+func (o *UTXO) SetChainId(v string) {
+	o.ChainId = &v
+}
+
+// GetObjectId returns the ObjectId field value if set, zero value otherwise.
+func (o *UTXO) GetObjectId() string {
+	if o == nil || IsNil(o.ObjectId) {
+		var ret string
+		return ret
+	}
+	return *o.ObjectId
+}
+
+// GetObjectIdOk returns a tuple with the ObjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UTXO) GetObjectIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ObjectId) {
+		return nil, false
+	}
+	return o.ObjectId, true
+}
+
+// HasObjectId returns a boolean if a field has been set.
+func (o *UTXO) HasObjectId() bool {
+	if o != nil && !IsNil(o.ObjectId) {
+		return true
+	}
+
+	return false
+}
+
+// SetObjectId gets a reference to the given string and assigns it to the ObjectId field.
+func (o *UTXO) SetObjectId(v string) {
+	o.ObjectId = &v
+}
+
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *UTXO) GetVersion() string {
+	if o == nil || IsNil(o.Version) {
+		var ret string
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UTXO) GetVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *UTXO) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given string and assigns it to the Version field.
+func (o *UTXO) SetVersion(v string) {
+	o.Version = &v
+}
+
 func (o UTXO) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -378,6 +514,18 @@ func (o UTXO) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsFrozen) {
 		toSerialize["is_frozen"] = o.IsFrozen
+	}
+	if !IsNil(o.IsChange) {
+		toSerialize["is_change"] = o.IsChange
+	}
+	if !IsNil(o.ChainId) {
+		toSerialize["chain_id"] = o.ChainId
+	}
+	if !IsNil(o.ObjectId) {
+		toSerialize["object_id"] = o.ObjectId
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }

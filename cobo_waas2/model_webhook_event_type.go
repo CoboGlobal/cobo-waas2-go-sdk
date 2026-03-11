@@ -59,6 +59,8 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_BULK_SEND_STATUS_UPDATED WebhookEventType = "payment.bulk_send.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_EXTERNAL_CREATED WebhookEventType = "payment.transaction.external.created"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_EXTERNAL_COMPLETED WebhookEventType = "payment.transaction.external.completed"
+	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_SETTLEMENT_NETWORK_CREATED WebhookEventType = "payment.transaction.settlement_network.created"
+	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_SETTLEMENT_NETWORK_COMPLETED WebhookEventType = "payment.transaction.settlement_network.completed"
 	WEBHOOKEVENTTYPE_COMPLIANCE_DISPOSITION_STATUS_UPDATED WebhookEventType = "compliance.disposition.status.updated"
 	WEBHOOKEVENTTYPE_COMPLIANCE_KYT_SCREENINGS_STATUS_UPDATED WebhookEventType = "compliance.kyt.screenings.status.updated"
 	WEBHOOKEVENTTYPE_COMPLIANCE_KYA_SCREENINGS_STATUS_UPDATED WebhookEventType = "compliance.kya.screenings.status.updated"
@@ -107,6 +109,8 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.bulk_send.status.updated",
 	"payment.transaction.external.created",
 	"payment.transaction.external.completed",
+	"payment.transaction.settlement_network.created",
+	"payment.transaction.settlement_network.completed",
 	"compliance.disposition.status.updated",
 	"compliance.kyt.screenings.status.updated",
 	"compliance.kya.screenings.status.updated",

@@ -66,6 +66,7 @@ Method | HTTP request | Description
 [**ListTopUpPayerAccounts**](PaymentAPI.md#ListTopUpPayerAccounts) | **Get** /payments/topup/payer_accounts | List top-up payer accounts
 [**ListTopUpPayers**](PaymentAPI.md#ListTopUpPayers) | **Get** /payments/topup/payers | List payers
 [**PaymentEstimateFee**](PaymentAPI.md#PaymentEstimateFee) | **Post** /payments/estimate_fee | Estimate fees
+[**TriggerTestPaymentsWebhookEvent**](PaymentAPI.md#TriggerTestPaymentsWebhookEvent) | **Post** /payments/webhooks/trigger | Trigger test webhook event
 [**UpdateBankAccountById**](PaymentAPI.md#UpdateBankAccountById) | **Put** /payments/bank_accounts/{bank_account_id} | Update bank account
 [**UpdateCounterparty**](PaymentAPI.md#UpdateCounterparty) | **Put** /payments/counterparty/{counterparty_id} | Update counterparty
 [**UpdateDestination**](PaymentAPI.md#UpdateDestination) | **Put** /payments/destination/{destination_id} | Update destination
@@ -4149,7 +4150,7 @@ Name | Type | Description  | Notes
 
 ## ListMerchantBalances
 
-> ListMerchantBalances200Response ListMerchantBalances(ctx).TokenId(tokenId).MerchantIds(merchantIds).AcquiringType(acquiringType).Execute()
+> ListMerchantBalances200Response ListMerchantBalances(ctx).MerchantIds(merchantIds).TokenId(tokenId).AcquiringType(acquiringType).Execute()
 
 List merchant balances
 
@@ -4169,8 +4170,8 @@ import (
 )
 
 func main() {
-	tokenId := "ETH_USDT"
 	merchantIds := "M1001,M1002,M1003"
+	tokenId := "ETH_USDT"
 	acquiringType := coboWaas2.AcquiringType("Order")
 
 	configuration := coboWaas2.NewConfiguration()
@@ -4184,7 +4185,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.PaymentAPI.ListMerchantBalances(ctx).TokenId(tokenId).MerchantIds(merchantIds).AcquiringType(acquiringType).Execute()
+	resp, r, err := apiClient.PaymentAPI.ListMerchantBalances(ctx).MerchantIds(merchantIds).TokenId(tokenId).AcquiringType(acquiringType).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListMerchantBalances``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -4205,8 +4206,8 @@ Other parameters are passed through a pointer to a apiListMerchantBalancesReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tokenId** | **string** | The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60;  | 
- **merchantIds** | **string** | A list of merchant IDs to query. | 
+ **merchantIds** | **string** | The comma-separated list of merchant IDs to filter by.  At least one of &#x60;merchant_ids&#x60; or &#x60;token_id&#x60; must be provided.  For more information about merchants, refer to [Cobo Payments Guide](https://www.cobo.com/payments/en/guides/overview).  | 
+ **tokenId** | **string** | The token ID that identifies the cryptocurrency.  At least one of &#x60;merchant_ids&#x60; or &#x60;token_id&#x60; must be provided.  For a complete list of supported tokens, refer to [Cobo Payments Guide](https://www.cobo.com/payments/en/guides/overview).  | 
  **acquiringType** | [**AcquiringType**](AcquiringType.md) | This parameter has been deprecated | 
 
 ### Return type
@@ -5029,6 +5030,82 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TriggerTestPaymentsWebhookEvent
+
+> TriggerTestPaymentWebhookEventResponse TriggerTestPaymentsWebhookEvent(ctx).TriggerTestPaymentsWebhookEventRequest(triggerTestPaymentsWebhookEventRequest).Execute()
+
+Trigger test webhook event
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	triggerTestPaymentsWebhookEventRequest := *coboWaas2.NewTriggerTestPaymentsWebhookEventRequest(coboWaas2.WebhookEventType("wallets.transaction.created"))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.TriggerTestPaymentsWebhookEvent(ctx).TriggerTestPaymentsWebhookEventRequest(triggerTestPaymentsWebhookEventRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.TriggerTestPaymentsWebhookEvent``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TriggerTestPaymentsWebhookEvent`: TriggerTestPaymentWebhookEventResponse
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.TriggerTestPaymentsWebhookEvent`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTriggerTestPaymentsWebhookEventRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **triggerTestPaymentsWebhookEventRequest** | [**TriggerTestPaymentsWebhookEventRequest**](TriggerTestPaymentsWebhookEventRequest.md) | The request body used to trigger a test Payments webhook event.  You need to specify the event type. You can optionally include the &#x60;override_data&#x60; property to customize the payload. The provided fields must match the webhook event data structure for the specified event type.  | 
+
+### Return type
+
+[**TriggerTestPaymentWebhookEventResponse**](TriggerTestPaymentWebhookEventResponse.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
 
 ### HTTP request headers
 

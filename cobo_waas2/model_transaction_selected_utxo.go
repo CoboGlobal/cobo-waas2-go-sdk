@@ -21,6 +21,8 @@ type TransactionSelectedUtxo struct {
 	TxHash *string `json:"tx_hash,omitempty"`
 	// The output index of the UTXO.
 	VoutN *int32 `json:"vout_n,omitempty"`
+	// The token ID of the UTXO.
+	TokenId *string `json:"token_id,omitempty"`
 	// The address of the UTXO.
 	Address *string `json:"address,omitempty"`
 	// The value of the UTXO.
@@ -29,6 +31,10 @@ type TransactionSelectedUtxo struct {
 	RedeemScript *string `json:"redeem_script,omitempty"`
 	// The revealed script used for Taproot script-path spend transaction.
 	RevealedScript *string `json:"revealed_script,omitempty"`
+	// The ID of the blockchain object to spend (e.g., SUI Coin object).
+	ObjectId *string `json:"object_id,omitempty"`
+	// Object version number.
+	Version *string `json:"version,omitempty"`
 }
 
 // NewTransactionSelectedUtxo instantiates a new TransactionSelectedUtxo object
@@ -110,6 +116,38 @@ func (o *TransactionSelectedUtxo) HasVoutN() bool {
 // SetVoutN gets a reference to the given int32 and assigns it to the VoutN field.
 func (o *TransactionSelectedUtxo) SetVoutN(v int32) {
 	o.VoutN = &v
+}
+
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
+func (o *TransactionSelectedUtxo) GetTokenId() string {
+	if o == nil || IsNil(o.TokenId) {
+		var ret string
+		return ret
+	}
+	return *o.TokenId
+}
+
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionSelectedUtxo) GetTokenIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TokenId) {
+		return nil, false
+	}
+	return o.TokenId, true
+}
+
+// HasTokenId returns a boolean if a field has been set.
+func (o *TransactionSelectedUtxo) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
+func (o *TransactionSelectedUtxo) SetTokenId(v string) {
+	o.TokenId = &v
 }
 
 // GetAddress returns the Address field value if set, zero value otherwise.
@@ -240,6 +278,70 @@ func (o *TransactionSelectedUtxo) SetRevealedScript(v string) {
 	o.RevealedScript = &v
 }
 
+// GetObjectId returns the ObjectId field value if set, zero value otherwise.
+func (o *TransactionSelectedUtxo) GetObjectId() string {
+	if o == nil || IsNil(o.ObjectId) {
+		var ret string
+		return ret
+	}
+	return *o.ObjectId
+}
+
+// GetObjectIdOk returns a tuple with the ObjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionSelectedUtxo) GetObjectIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ObjectId) {
+		return nil, false
+	}
+	return o.ObjectId, true
+}
+
+// HasObjectId returns a boolean if a field has been set.
+func (o *TransactionSelectedUtxo) HasObjectId() bool {
+	if o != nil && !IsNil(o.ObjectId) {
+		return true
+	}
+
+	return false
+}
+
+// SetObjectId gets a reference to the given string and assigns it to the ObjectId field.
+func (o *TransactionSelectedUtxo) SetObjectId(v string) {
+	o.ObjectId = &v
+}
+
+// GetVersion returns the Version field value if set, zero value otherwise.
+func (o *TransactionSelectedUtxo) GetVersion() string {
+	if o == nil || IsNil(o.Version) {
+		var ret string
+		return ret
+	}
+	return *o.Version
+}
+
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionSelectedUtxo) GetVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.Version) {
+		return nil, false
+	}
+	return o.Version, true
+}
+
+// HasVersion returns a boolean if a field has been set.
+func (o *TransactionSelectedUtxo) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given string and assigns it to the Version field.
+func (o *TransactionSelectedUtxo) SetVersion(v string) {
+	o.Version = &v
+}
+
 func (o TransactionSelectedUtxo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -256,6 +358,9 @@ func (o TransactionSelectedUtxo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.VoutN) {
 		toSerialize["vout_n"] = o.VoutN
 	}
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
 	if !IsNil(o.Address) {
 		toSerialize["address"] = o.Address
 	}
@@ -267,6 +372,12 @@ func (o TransactionSelectedUtxo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RevealedScript) {
 		toSerialize["revealed_script"] = o.RevealedScript
+	}
+	if !IsNil(o.ObjectId) {
+		toSerialize["object_id"] = o.ObjectId
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
 	}
 	return toSerialize, nil
 }

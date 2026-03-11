@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **BankName** | **string** | The name of the intermediary bank. | 
-**BankAddress** | **string** | The address of the intermediary bank. | 
+**BankAddress** | Pointer to **string** | The address of the intermediary bank. | [optional] 
 **BankSwiftCode** | **string** | The SWIFT or BIC code of the intermediary bank. | 
 
 ## Methods
 
 ### NewIntermediaryBankInfo
 
-`func NewIntermediaryBankInfo(bankName string, bankAddress string, bankSwiftCode string, ) *IntermediaryBankInfo`
+`func NewIntermediaryBankInfo(bankName string, bankSwiftCode string, ) *IntermediaryBankInfo`
 
 NewIntermediaryBankInfo instantiates a new IntermediaryBankInfo object
 This constructor will assign default values to properties that have it defined,
@@ -66,6 +66,11 @@ and a boolean to check if the value has been set.
 
 SetBankAddress sets BankAddress field to given value.
 
+### HasBankAddress
+
+`func (o *IntermediaryBankInfo) HasBankAddress() bool`
+
+HasBankAddress returns a boolean if a field has been set.
 
 ### GetBankSwiftCode
 

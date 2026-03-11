@@ -47,6 +47,10 @@ type DestinationBankAccount struct {
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The updated time of the bank account, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
+	// Beneficiary's country, in ISO 3166-1 alpha-3 format.
+	Country *string `json:"country,omitempty"`
+	// Beneficiary's city.
+	City *string `json:"city,omitempty"`
 }
 
 type _DestinationBankAccount DestinationBankAccount
@@ -478,6 +482,70 @@ func (o *DestinationBankAccount) SetUpdatedTimestamp(v int32) {
 	o.UpdatedTimestamp = &v
 }
 
+// GetCountry returns the Country field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetCountry() string {
+	if o == nil || IsNil(o.Country) {
+		var ret string
+		return ret
+	}
+	return *o.Country
+}
+
+// GetCountryOk returns a tuple with the Country field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetCountryOk() (*string, bool) {
+	if o == nil || IsNil(o.Country) {
+		return nil, false
+	}
+	return o.Country, true
+}
+
+// HasCountry returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasCountry() bool {
+	if o != nil && !IsNil(o.Country) {
+		return true
+	}
+
+	return false
+}
+
+// SetCountry gets a reference to the given string and assigns it to the Country field.
+func (o *DestinationBankAccount) SetCountry(v string) {
+	o.Country = &v
+}
+
+// GetCity returns the City field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetCity() string {
+	if o == nil || IsNil(o.City) {
+		var ret string
+		return ret
+	}
+	return *o.City
+}
+
+// GetCityOk returns a tuple with the City field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetCityOk() (*string, bool) {
+	if o == nil || IsNil(o.City) {
+		return nil, false
+	}
+	return o.City, true
+}
+
+// HasCity returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasCity() bool {
+	if o != nil && !IsNil(o.City) {
+		return true
+	}
+
+	return false
+}
+
+// SetCity gets a reference to the given string and assigns it to the City field.
+func (o *DestinationBankAccount) SetCity(v string) {
+	o.City = &v
+}
+
 func (o DestinationBankAccount) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -512,6 +580,12 @@ func (o DestinationBankAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UpdatedTimestamp) {
 		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	}
+	if !IsNil(o.Country) {
+		toSerialize["country"] = o.Country
+	}
+	if !IsNil(o.City) {
+		toSerialize["city"] = o.City
 	}
 	return toSerialize, nil
 }

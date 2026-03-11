@@ -23,7 +23,7 @@ type MerchantBalance struct {
 	MerchantId string `json:"merchant_id"`
 	// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`.
 	TokenId string `json:"token_id"`
-	AcquiringType AcquiringType `json:"acquiring_type"`
+	AcquiringType *AcquiringType `json:"acquiring_type,omitempty"`
 	// The total amount of the token that has been received by the merchant.
 	TotalReceivedAmount *string `json:"total_received_amount,omitempty"`
 	// The total amount of the token that has been paid out from the merchant's balance.
@@ -46,11 +46,10 @@ type _MerchantBalance MerchantBalance
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMerchantBalance(merchantId string, tokenId string, acquiringType AcquiringType) *MerchantBalance {
+func NewMerchantBalance(merchantId string, tokenId string) *MerchantBalance {
 	this := MerchantBalance{}
 	this.MerchantId = merchantId
 	this.TokenId = tokenId
-	this.AcquiringType = acquiringType
 	return &this
 }
 
@@ -110,28 +109,36 @@ func (o *MerchantBalance) SetTokenId(v string) {
 	o.TokenId = v
 }
 
-// GetAcquiringType returns the AcquiringType field value
+// GetAcquiringType returns the AcquiringType field value if set, zero value otherwise.
 func (o *MerchantBalance) GetAcquiringType() AcquiringType {
-	if o == nil {
+	if o == nil || IsNil(o.AcquiringType) {
 		var ret AcquiringType
 		return ret
 	}
-
-	return o.AcquiringType
+	return *o.AcquiringType
 }
 
-// GetAcquiringTypeOk returns a tuple with the AcquiringType field value
+// GetAcquiringTypeOk returns a tuple with the AcquiringType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MerchantBalance) GetAcquiringTypeOk() (*AcquiringType, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AcquiringType) {
 		return nil, false
 	}
-	return &o.AcquiringType, true
+	return o.AcquiringType, true
 }
 
-// SetAcquiringType sets field value
+// HasAcquiringType returns a boolean if a field has been set.
+func (o *MerchantBalance) HasAcquiringType() bool {
+	if o != nil && !IsNil(o.AcquiringType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcquiringType gets a reference to the given AcquiringType and assigns it to the AcquiringType field.
 func (o *MerchantBalance) SetAcquiringType(v AcquiringType) {
-	o.AcquiringType = v
+	o.AcquiringType = &v
 }
 
 // GetTotalReceivedAmount returns the TotalReceivedAmount field value if set, zero value otherwise.
@@ -370,7 +377,9 @@ func (o MerchantBalance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["merchant_id"] = o.MerchantId
 	toSerialize["token_id"] = o.TokenId
-	toSerialize["acquiring_type"] = o.AcquiringType
+	if !IsNil(o.AcquiringType) {
+		toSerialize["acquiring_type"] = o.AcquiringType
+	}
 	if !IsNil(o.TotalReceivedAmount) {
 		toSerialize["total_received_amount"] = o.TotalReceivedAmount
 	}
@@ -402,7 +411,6 @@ func (o *MerchantBalance) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"merchant_id",
 		"token_id",
-		"acquiring_type",
 	}
 
 	allProperties := make(map[string]interface{})

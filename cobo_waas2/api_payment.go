@@ -7362,20 +7362,20 @@ func (a *PaymentAPIService) ListForcedSweepRequestsExecute(r ApiListForcedSweepR
 type ApiListMerchantBalancesRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
-	tokenId *string
 	merchantIds *string
+	tokenId *string
 	acquiringType *AcquiringType
 }
 
-// The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format &#x60;{CHAIN}_{TOKEN}&#x60;. Supported values include:   - USDC: &#x60;ETH_USDC&#x60;, &#x60;ARBITRUM_USDCOIN&#x60;, &#x60;SOL_USDC&#x60;, &#x60;BASE_USDC&#x60;, &#x60;MATIC_USDC2&#x60;, &#x60;BSC_USDC&#x60;   - USDT: &#x60;TRON_USDT&#x60;, &#x60;ETH_USDT&#x60;, &#x60;ARBITRUM_USDT&#x60;, &#x60;SOL_USDT&#x60;, &#x60;BASE_USDT&#x60;, &#x60;MATIC_USDT&#x60;, &#x60;BSC_USDT&#x60; 
-func (r ApiListMerchantBalancesRequest) TokenId(tokenId string) ApiListMerchantBalancesRequest {
-	r.tokenId = &tokenId
+// The comma-separated list of merchant IDs to filter by.  At least one of &#x60;merchant_ids&#x60; or &#x60;token_id&#x60; must be provided.  For more information about merchants, refer to [Cobo Payments Guide](https://www.cobo.com/payments/en/guides/overview). 
+func (r ApiListMerchantBalancesRequest) MerchantIds(merchantIds string) ApiListMerchantBalancesRequest {
+	r.merchantIds = &merchantIds
 	return r
 }
 
-// A list of merchant IDs to query.
-func (r ApiListMerchantBalancesRequest) MerchantIds(merchantIds string) ApiListMerchantBalancesRequest {
-	r.merchantIds = &merchantIds
+// The token ID that identifies the cryptocurrency.  At least one of &#x60;merchant_ids&#x60; or &#x60;token_id&#x60; must be provided.  For a complete list of supported tokens, refer to [Cobo Payments Guide](https://www.cobo.com/payments/en/guides/overview). 
+func (r ApiListMerchantBalancesRequest) TokenId(tokenId string) ApiListMerchantBalancesRequest {
+	r.tokenId = &tokenId
 	return r
 }
 
@@ -7392,12 +7392,13 @@ func (r ApiListMerchantBalancesRequest) Execute() (*ListMerchantBalances200Respo
 /*
 ListMerchantBalances List merchant balances
 
+This operation retrieves merchant balance information.
 
-This operation retrieves the balance information for specified merchants. 
+You need to specify at least one of `merchant_ids` or `token_id` to filter the results.
 
-The balance information is grouped by token and acquiring type. If you do not specify the `merchant_ids` parameter, the balance information for all merchants will be returned.
+<Note>Do not pass `acquiring_type` for this operation.</Note>
 
-For more information, please refer to [Accounts and fund allocation](https://www.cobo.com/payments/en/guides/amounts-and-balances).
+For more information, refer to [Cobo Payments Guide](https://www.cobo.com/payments/en/guides/overview).
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -7430,14 +7431,13 @@ func (a *PaymentAPIService) ListMerchantBalancesExecute(r ApiListMerchantBalance
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.tokenId == nil {
-		return localVarReturnValue, nil, reportError("tokenId is required and must be specified")
-	}
 
 	if r.merchantIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "merchant_ids", r.merchantIds, "")
 	}
-	parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	if r.tokenId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_id", r.tokenId, "")
+	}
 	if r.acquiringType != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "acquiring_type", r.acquiringType, "")
 	}
@@ -9089,6 +9089,140 @@ func (a *PaymentAPIService) PaymentEstimateFeeExecute(r ApiPaymentEstimateFeeReq
 	}
 	// body params
 	localVarPostBody = r.paymentEstimateFeeRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTriggerTestPaymentsWebhookEventRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	triggerTestPaymentsWebhookEventRequest *TriggerTestPaymentsWebhookEventRequest
+}
+
+// The request body used to trigger a test Payments webhook event.  You need to specify the event type. You can optionally include the &#x60;override_data&#x60; property to customize the payload. The provided fields must match the webhook event data structure for the specified event type. 
+func (r ApiTriggerTestPaymentsWebhookEventRequest) TriggerTestPaymentsWebhookEventRequest(triggerTestPaymentsWebhookEventRequest TriggerTestPaymentsWebhookEventRequest) ApiTriggerTestPaymentsWebhookEventRequest {
+	r.triggerTestPaymentsWebhookEventRequest = &triggerTestPaymentsWebhookEventRequest
+	return r
+}
+
+func (r ApiTriggerTestPaymentsWebhookEventRequest) Execute() (*TriggerTestPaymentWebhookEventResponse, *http.Response, error) {
+	return r.ApiService.TriggerTestPaymentsWebhookEventExecute(r)
+}
+
+/*
+TriggerTestPaymentsWebhookEvent Trigger test webhook event
+
+This operation tests the functionality of your Payments webhook endpoint by triggering a test webhook event. The test event is sent to all endpoints you have registered on Cobo Portal.
+
+You need to specify the event type. By default, the payload contains dummy data with no impact on your real business transactions or activities. You can optionally provide the `override_data` property to customize the payload.
+
+For more information about Payments webhooks, see [Cobo Payments Guide](https://www.cobo.com/payments/en/guides/overview). For webhook event types and payload structure, refer to [List all webhook events](https://www.cobo.com/developers/v2/api-references/developers--webhooks/list-all-webhook-events).
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiTriggerTestPaymentsWebhookEventRequest
+*/
+func (a *PaymentAPIService) TriggerTestPaymentsWebhookEvent(ctx context.Context) ApiTriggerTestPaymentsWebhookEventRequest {
+	return ApiTriggerTestPaymentsWebhookEventRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return TriggerTestPaymentWebhookEventResponse
+func (a *PaymentAPIService) TriggerTestPaymentsWebhookEventExecute(r ApiTriggerTestPaymentsWebhookEventRequest) (*TriggerTestPaymentWebhookEventResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TriggerTestPaymentWebhookEventResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.TriggerTestPaymentsWebhookEvent")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/webhooks/trigger"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.triggerTestPaymentsWebhookEventRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

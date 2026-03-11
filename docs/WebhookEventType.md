@@ -85,6 +85,10 @@
 
 * `PAYMENT_TRANSACTION_EXTERNAL_COMPLETED` (value: `"payment.transaction.external.completed"`)
 
+* `PAYMENT_TRANSACTION_SETTLEMENT_NETWORK_CREATED` (value: `"payment.transaction.settlement_network.created"`)
+
+* `PAYMENT_TRANSACTION_SETTLEMENT_NETWORK_COMPLETED` (value: `"payment.transaction.settlement_network.completed"`)
+
 * `COMPLIANCE_DISPOSITION_STATUS_UPDATED` (value: `"compliance.disposition.status.updated"`)
 
 * `COMPLIANCE_KYT_SCREENINGS_STATUS_UPDATED` (value: `"compliance.kyt.screenings.status.updated"`)
