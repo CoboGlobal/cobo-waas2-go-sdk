@@ -21,6 +21,7 @@ Method | HTTP request | Description
 [**CreateRefund**](PaymentAPI.md#CreateRefund) | **Post** /payments/refunds | Create refund order
 [**CreateRefundLink**](PaymentAPI.md#CreateRefundLink) | **Post** /payments/links/refunds | Create refund link
 [**CreateReport**](PaymentAPI.md#CreateReport) | **Post** /payments/reports | Generate reports
+[**CreateSdkLink**](PaymentAPI.md#CreateSdkLink) | **Post** /payments/links/sdk | Create SDK link
 [**CreateSettlementRequest**](PaymentAPI.md#CreateSettlementRequest) | **Post** /payments/settlement_requests | Create settlement request
 [**CreateTopUpAddresses**](PaymentAPI.md#CreateTopUpAddresses) | **Post** /payments/topup/address | Batch create top-up addresses
 [**DeleteCounterpartyById**](PaymentAPI.md#DeleteCounterpartyById) | **Delete** /payments/counterparty/{counterparty_id} | Delete counterparty
@@ -1369,6 +1370,77 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateSdkLink
+
+> Link CreateSdkLink(ctx).Execute()
+
+Create SDK link
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateSdkLink(ctx).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateSdkLink``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateSdkLink`: Link
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateSdkLink`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateSdkLinkRequest struct via the builder pattern
+
+
+### Return type
+
+[**Link**](Link.md)
+
+### Authorization
+
+[CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

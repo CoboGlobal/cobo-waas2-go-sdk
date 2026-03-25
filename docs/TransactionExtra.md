@@ -17,6 +17,9 @@ Name | Type | Description | Notes
 **ChangeAddress** | Pointer to **string** | The change address on the Bitcoin chain. If not provided, the source wallet&#39;s address will be used as the change address. | [optional] 
 **ValidatorAddress** | Pointer to **string** | The validator&#39;s EVM address. | [optional] 
 **RewardAddress** | Pointer to **string** | The EVM address used to receive staking rewards. | [optional] 
+**DappName** | Pointer to **string** | The dapp name that initiated this transaction. | [optional] 
+**DappDomain** | Pointer to **string** | The dapp domain that initiated this transaction | [optional] 
+**SessionId** | Pointer to **string** | The session id that initiated this transaction | [optional] 
 
 ## Methods
 
@@ -356,6 +359,81 @@ SetRewardAddress sets RewardAddress field to given value.
 `func (o *TransactionExtra) HasRewardAddress() bool`
 
 HasRewardAddress returns a boolean if a field has been set.
+
+### GetDappName
+
+`func (o *TransactionExtra) GetDappName() string`
+
+GetDappName returns the DappName field if non-nil, zero value otherwise.
+
+### GetDappNameOk
+
+`func (o *TransactionExtra) GetDappNameOk() (*string, bool)`
+
+GetDappNameOk returns a tuple with the DappName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDappName
+
+`func (o *TransactionExtra) SetDappName(v string)`
+
+SetDappName sets DappName field to given value.
+
+### HasDappName
+
+`func (o *TransactionExtra) HasDappName() bool`
+
+HasDappName returns a boolean if a field has been set.
+
+### GetDappDomain
+
+`func (o *TransactionExtra) GetDappDomain() string`
+
+GetDappDomain returns the DappDomain field if non-nil, zero value otherwise.
+
+### GetDappDomainOk
+
+`func (o *TransactionExtra) GetDappDomainOk() (*string, bool)`
+
+GetDappDomainOk returns a tuple with the DappDomain field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDappDomain
+
+`func (o *TransactionExtra) SetDappDomain(v string)`
+
+SetDappDomain sets DappDomain field to given value.
+
+### HasDappDomain
+
+`func (o *TransactionExtra) HasDappDomain() bool`
+
+HasDappDomain returns a boolean if a field has been set.
+
+### GetSessionId
+
+`func (o *TransactionExtra) GetSessionId() string`
+
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
+
+### GetSessionIdOk
+
+`func (o *TransactionExtra) GetSessionIdOk() (*string, bool)`
+
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionId
+
+`func (o *TransactionExtra) SetSessionId(v string)`
+
+SetSessionId sets SessionId field to given value.
+
+### HasSessionId
+
+`func (o *TransactionExtra) HasSessionId() bool`
+
+HasSessionId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
