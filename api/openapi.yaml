@@ -10917,6 +10917,39 @@ paths:
       summary: Create refund link
       tags:
       - Payment
+  /payments/links/sdk:
+    post:
+      description: |
+        This operation creates a payment link for use with the front-end SDK integration.
+
+        The returned URL and token can be used to initialize the Cobo payment SDK
+        in your front-end application.
+
+        For more information, see [Cobo Payment Guide](https://www.cobo.com/payments/en/guides/overview).
+      operationId: create_sdk_link
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+          description: Link created successfully.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      summary: Create SDK link
+      tags:
+      - Payment
   /payments/counterparty:
     get:
       description: "This operation retrieves the information of all counterparties.\
@@ -24614,11 +24647,13 @@ components:
           BabylonBusinessInfo: '#/components/schemas/TransactionBabylonBusinessInfo'
           BabylonTxParameters: '#/components/schemas/TransactionBabylonTxParameters'
           CoreStakeInfo: '#/components/schemas/TransactionCoreStakeInfo'
+          WalletConnectInfo: '#/components/schemas/TransactionWalletConnectInfo'
         propertyName: extra_type
       oneOf:
       - $ref: '#/components/schemas/TransactionBabylonBusinessInfo'
       - $ref: '#/components/schemas/TransactionBabylonTxParameters'
       - $ref: '#/components/schemas/TransactionCoreStakeInfo'
+      - $ref: '#/components/schemas/TransactionWalletConnectInfo'
     TransactionExtraType:
       description: |
         The transaction extra information type. Possible values include:
