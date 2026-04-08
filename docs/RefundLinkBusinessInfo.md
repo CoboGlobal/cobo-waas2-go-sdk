@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TransactionId** | **string** | The transaction ID of the original order payment or top-up.  On the refund page, the from address of this transaction will be pre-filled as the default refund address.  The refund will be processed in the same token and on the same blockchain as this transaction.  | 
+**OrderId** | Pointer to **string** | The id of the order to refund. Specify either &#x60;order_id&#x60; or &#x60;transaction_id&#x60;, but not both.  | [optional] 
+**TransactionId** | Pointer to **string** | The transaction ID of the original order payment or top-up. Specify either &#x60;order_id&#x60; or &#x60;transaction_id&#x60;, but not both. On the refund page, the from address of this transaction will be pre-filled as the default refund address. The refund will be processed in the same token and on the same blockchain as this transaction.  | [optional] 
 **Amount** | **string** | The amount to refund, denominated in the cryptocurrency of the original payment transaction. The amount must be a positive number and can have up to two decimal places. | 
 **RefundSource** | [**RefundType**](RefundType.md) |  | 
 **MerchantId** | Pointer to **string** | The merchant ID, required if &#x60;refund_source&#x60; is &#x60;Merchant&#x60;. The fund will be deducted from the specified merchant&#39;s balance. | [optional] 
@@ -14,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewRefundLinkBusinessInfo
 
-`func NewRefundLinkBusinessInfo(transactionId string, amount string, refundSource RefundType, ) *RefundLinkBusinessInfo`
+`func NewRefundLinkBusinessInfo(amount string, refundSource RefundType, ) *RefundLinkBusinessInfo`
 
 NewRefundLinkBusinessInfo instantiates a new RefundLinkBusinessInfo object
 This constructor will assign default values to properties that have it defined,
@@ -28,6 +29,31 @@ will change when the set of required properties is changed
 NewRefundLinkBusinessInfoWithDefaults instantiates a new RefundLinkBusinessInfo object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetOrderId
+
+`func (o *RefundLinkBusinessInfo) GetOrderId() string`
+
+GetOrderId returns the OrderId field if non-nil, zero value otherwise.
+
+### GetOrderIdOk
+
+`func (o *RefundLinkBusinessInfo) GetOrderIdOk() (*string, bool)`
+
+GetOrderIdOk returns a tuple with the OrderId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrderId
+
+`func (o *RefundLinkBusinessInfo) SetOrderId(v string)`
+
+SetOrderId sets OrderId field to given value.
+
+### HasOrderId
+
+`func (o *RefundLinkBusinessInfo) HasOrderId() bool`
+
+HasOrderId returns a boolean if a field has been set.
 
 ### GetTransactionId
 
@@ -48,6 +74,11 @@ and a boolean to check if the value has been set.
 
 SetTransactionId sets TransactionId field to given value.
 
+### HasTransactionId
+
+`func (o *RefundLinkBusinessInfo) HasTransactionId() bool`
+
+HasTransactionId returns a boolean if a field has been set.
 
 ### GetAmount
 

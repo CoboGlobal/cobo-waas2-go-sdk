@@ -28,6 +28,20 @@ func Test_cobo_waas2_AutoSweepAPIService(t *testing.T) {
 		Secret: "<YOUR_API_PRIV_KEY_IN_HEX>",
 	})
 
+	t.Run("Test AutoSweepAPIService CancelAutoSweepTaskById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		resp, httpRes, err := apiClient.AutoSweepAPI.CancelAutoSweepTaskById(ctx, taskId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AutoSweepAPIService CreateAutoSweepTask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
