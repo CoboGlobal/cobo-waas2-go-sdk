@@ -1247,7 +1247,7 @@ import (
 )
 
 func main() {
-	createRefundLinkRequest := *coboWaas2.NewCreateRefundLinkRequest(*coboWaas2.NewRefundLinkBusinessInfo("aff0e1cb-15b2-4e1f-9b9d-a9133715986f", "0.0025", coboWaas2.RefundType("Merchant")))
+	createRefundLinkRequest := *coboWaas2.NewCreateRefundLinkRequest(*coboWaas2.NewRefundLinkBusinessInfo("0.0025", coboWaas2.RefundType("Merchant")))
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

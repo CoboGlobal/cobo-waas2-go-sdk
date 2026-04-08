@@ -292,6 +292,8 @@ docs/FeeStationAPI.md
 docs/FeeStationCheckFeeStationUsage.md
 docs/FeeStationCheckFeeStationUsageResponse.md
 docs/FeeStationDestination.md
+docs/FeeStationFiatTransaction.md
+docs/FeeStationFiatTransactionType.md
 docs/FeeStationGasStationType.md
 docs/FeeStationSponsorTransactionDescription.md
 docs/FeeStationTransactionType.md
@@ -365,6 +367,7 @@ docs/ListCounterpartyEntries200Response.md
 docs/ListDestinationEntries200Response.md
 docs/ListDestinations200Response.md
 docs/ListExchanges200ResponseInner.md
+docs/ListFeeStationFiatTransactions200Response.md
 docs/ListForcedSweepRequests200Response.md
 docs/ListKeyShareHolderGroups200Response.md
 docs/ListKeyShareHolders200Response.md
@@ -1118,6 +1121,8 @@ model_fee_reserved.go
 model_fee_station_check_fee_station_usage.go
 model_fee_station_check_fee_station_usage_response.go
 model_fee_station_destination.go
+model_fee_station_fiat_transaction.go
+model_fee_station_fiat_transaction_type.go
 model_fee_station_gas_station_type.go
 model_fee_station_sponsor_transaction_description.go
 model_fee_station_transaction_type.go
@@ -1192,6 +1197,7 @@ model_list_counterparty_entries_200_response.go
 model_list_destination_entries_200_response.go
 model_list_destinations_200_response.go
 model_list_exchanges_200_response_inner.go
+model_list_fee_station_fiat_transactions_200_response.go
 model_list_forced_sweep_requests_200_response.go
 model_list_key_share_holder_groups_200_response.go
 model_list_key_share_holders_200_response.go

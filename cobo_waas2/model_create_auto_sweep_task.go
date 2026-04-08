@@ -23,6 +23,8 @@ type CreateAutoSweepTask struct {
 	WalletId string `json:"wallet_id"`
 	// ID of the token to be swept. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
+	// The minimum token balance threshold for auto sweep. If the token balance of an address is less than this threshold, the address will not be swept. 
+	MinBalanceThreshold *string `json:"min_balance_threshold,omitempty"`
 }
 
 type _CreateAutoSweepTask CreateAutoSweepTask
@@ -94,6 +96,38 @@ func (o *CreateAutoSweepTask) SetTokenId(v string) {
 	o.TokenId = v
 }
 
+// GetMinBalanceThreshold returns the MinBalanceThreshold field value if set, zero value otherwise.
+func (o *CreateAutoSweepTask) GetMinBalanceThreshold() string {
+	if o == nil || IsNil(o.MinBalanceThreshold) {
+		var ret string
+		return ret
+	}
+	return *o.MinBalanceThreshold
+}
+
+// GetMinBalanceThresholdOk returns a tuple with the MinBalanceThreshold field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateAutoSweepTask) GetMinBalanceThresholdOk() (*string, bool) {
+	if o == nil || IsNil(o.MinBalanceThreshold) {
+		return nil, false
+	}
+	return o.MinBalanceThreshold, true
+}
+
+// HasMinBalanceThreshold returns a boolean if a field has been set.
+func (o *CreateAutoSweepTask) HasMinBalanceThreshold() bool {
+	if o != nil && !IsNil(o.MinBalanceThreshold) {
+		return true
+	}
+
+	return false
+}
+
+// SetMinBalanceThreshold gets a reference to the given string and assigns it to the MinBalanceThreshold field.
+func (o *CreateAutoSweepTask) SetMinBalanceThreshold(v string) {
+	o.MinBalanceThreshold = &v
+}
+
 func (o CreateAutoSweepTask) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -106,6 +140,9 @@ func (o CreateAutoSweepTask) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["wallet_id"] = o.WalletId
 	toSerialize["token_id"] = o.TokenId
+	if !IsNil(o.MinBalanceThreshold) {
+		toSerialize["min_balance_threshold"] = o.MinBalanceThreshold
+	}
 	return toSerialize, nil
 }
 

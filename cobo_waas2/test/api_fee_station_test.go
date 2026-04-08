@@ -78,6 +78,18 @@ func Test_cobo_waas2_FeeStationAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test FeeStationAPIService ListFeeStationFiatTransactions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.FeeStationAPI.ListFeeStationFiatTransactions(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test FeeStationAPIService ListFeeStationTransactions", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

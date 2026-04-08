@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**EstimateFeeStationFee**](FeeStationAPI.md#EstimateFeeStationFee) | **Post** /fee_station/transactions/estimate_fee | Estimate transaction fee
 [**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get Fee Station transaction information
 [**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List Fee Station addresses
+[**ListFeeStationFiatTransactions**](FeeStationAPI.md#ListFeeStationFiatTransactions) | **Get** /fee_station/fiat_transactions | List Fee Station fiat transactions
 [**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all Fee Station transactions
 [**ListTokenBalancesForFeeStation**](FeeStationAPI.md#ListTokenBalancesForFeeStation) | **Get** /fee_station/tokens | List Fee Station token balances
 
@@ -314,6 +315,94 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListAddresses200Response**](ListAddresses200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListFeeStationFiatTransactions
+
+> ListFeeStationFiatTransactions200Response ListFeeStationFiatTransactions(ctx).TransactionIds(transactionIds).TransactionType(transactionType).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).Before(before).After(after).Limit(limit).Execute()
+
+List Fee Station fiat transactions
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	transactionIds := "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+	transactionType := coboWaas2.FeeStationFiatTransactionType("deposit")
+	minCreatedTimestamp := int64(1635744000000)
+	maxCreatedTimestamp := int64(1635744000000)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	limit := int32(10)
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.FeeStationAPI.ListFeeStationFiatTransactions(ctx).TransactionIds(transactionIds).TransactionType(transactionType).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).Before(before).After(after).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `FeeStationAPI.ListFeeStationFiatTransactions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListFeeStationFiatTransactions`: ListFeeStationFiatTransactions200Response
+	fmt.Fprintf(os.Stdout, "Response from `FeeStationAPI.ListFeeStationFiatTransactions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListFeeStationFiatTransactionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **transactionIds** | **string** | A list of transaction IDs, separated by comma. | 
+ **transactionType** | [**FeeStationFiatTransactionType**](FeeStationFiatTransactionType.md) | The type of the fiat transaction. Possible values include:   - &#x60;deposit&#x60;: A deposit transaction.   - &#x60;transfer&#x60;: A transfer transaction.  | 
+ **minCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or after the specified time.  If you specify &#x60;min_created_timestamp&#x60; without specifying &#x60;max_created_timestamp&#x60;, &#x60;max_created_timestamp&#x60; is automatically set to &#x60;min_created_timestamp&#x60; + 90 days. If you specify both, the time range cannot exceed 90 days.  If not provided, the default value is 90 days before the current time. This default value is subject to change.  | 
+ **maxCreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. You can use this parameter to filter transactions created on or before the specified time.  If you specify &#x60;max_created_timestamp&#x60; without specifying &#x60;min_created_timestamp&#x60;, &#x60;min_created_timestamp&#x60; is automatically set to &#x60;max_created_timestamp&#x60; - 90 days. If you specify both, the time range cannot exceed 90 days.  If not provided, the default value is the current time. This default value is subject to change.  | 
+ **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
+ **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+
+### Return type
+
+[**ListFeeStationFiatTransactions200Response**](ListFeeStationFiatTransactions200Response.md)
 
 ### Authorization
 

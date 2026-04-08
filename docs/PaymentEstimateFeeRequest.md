@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **FeeType** | Pointer to [**PaymentFeeType**](PaymentFeeType.md) |  | [optional] 
 **EstimateFees** | [**[]PaymentEstimateFee**](PaymentEstimateFee.md) | A list of token IDs and amounts for which fees will be calculated. | 
 **RecipientTokenId** | Pointer to **string** | The token ID that the recipient will receive. Required only when &#x60;fee_type&#x60; is &#x60;CryptoPayoutBridge&#x60;. | [optional] 
+**TransferViaVa** | Pointer to **bool** | For OffRamp payout, whether the payout is transferred to a registered bank account via a virtual account (VA) or directly. - &#x60;true&#x60;: The payout is transferred to a registered bank account via a VA (virtual account). - &#x60;false&#x60;: The payout is transferred directly to a registered bank account.  | [optional] 
 
 ## Methods
 
@@ -96,6 +97,31 @@ SetRecipientTokenId sets RecipientTokenId field to given value.
 `func (o *PaymentEstimateFeeRequest) HasRecipientTokenId() bool`
 
 HasRecipientTokenId returns a boolean if a field has been set.
+
+### GetTransferViaVa
+
+`func (o *PaymentEstimateFeeRequest) GetTransferViaVa() bool`
+
+GetTransferViaVa returns the TransferViaVa field if non-nil, zero value otherwise.
+
+### GetTransferViaVaOk
+
+`func (o *PaymentEstimateFeeRequest) GetTransferViaVaOk() (*bool, bool)`
+
+GetTransferViaVaOk returns a tuple with the TransferViaVa field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransferViaVa
+
+`func (o *PaymentEstimateFeeRequest) SetTransferViaVa(v bool)`
+
+SetTransferViaVa sets TransferViaVa field to given value.
+
+### HasTransferViaVa
+
+`func (o *PaymentEstimateFeeRequest) HasTransferViaVa() bool`
+
+HasTransferViaVa returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

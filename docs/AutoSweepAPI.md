@@ -4,12 +4,93 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CancelAutoSweepTaskById**](AutoSweepAPI.md#CancelAutoSweepTaskById) | **Post** /auto_sweep/tasks/{task_id}/cancel | Cancel auto sweep task
 [**CreateAutoSweepTask**](AutoSweepAPI.md#CreateAutoSweepTask) | **Post** /auto_sweep/tasks | Create auto-sweep task
 [**CreateWalletSweepToAddresses**](AutoSweepAPI.md#CreateWalletSweepToAddresses) | **Post** /auto_sweep/sweep_to_addresses | Create sweep-to address
 [**GetAutoSweepTaskById**](AutoSweepAPI.md#GetAutoSweepTaskById) | **Get** /auto_sweep/tasks/{task_id} | Get auto-sweep task details
 [**ListAutoSweepTask**](AutoSweepAPI.md#ListAutoSweepTask) | **Get** /auto_sweep/tasks | List auto-sweep tasks
 [**ListWalletSweepToAddresses**](AutoSweepAPI.md#ListWalletSweepToAddresses) | **Get** /auto_sweep/sweep_to_addresses | List sweep-to addresses
 
+
+
+## CancelAutoSweepTaskById
+
+> AutoSweepTask CancelAutoSweepTaskById(ctx, taskId).Execute()
+
+Cancel auto sweep task
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	taskId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.AutoSweepAPI.CancelAutoSweepTaskById(ctx, taskId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AutoSweepAPI.CancelAutoSweepTaskById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CancelAutoSweepTaskById`: AutoSweepTask
+	fmt.Fprintf(os.Stdout, "Response from `AutoSweepAPI.CancelAutoSweepTaskById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**taskId** | **string** | The auto sweep task ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCancelAutoSweepTaskByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**AutoSweepTask**](AutoSweepTask.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateAutoSweepTask

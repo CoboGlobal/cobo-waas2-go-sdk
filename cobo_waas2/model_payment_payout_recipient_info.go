@@ -25,6 +25,8 @@ type PaymentPayoutRecipientInfo struct {
 	Currency *string `json:"currency,omitempty"`
 	// The ID of the bank account to which the payout will be sent. You can retrieve the bank account ID by calling [List destination entries](https://www.cobo.com/payments/en/api-references/payment/list-destination-entries).
 	BankAccountId *string `json:"bank_account_id,omitempty"`
+	// For OffRamp payout, whether the payout is transferred to a registered bank account via a virtual account (VA) or directly. - `true`: The payout is transferred to a registered bank account via a VA (virtual account). - `false`: The payout is transferred directly to a registered bank account. 
+	TransferViaVa *bool `json:"transfer_via_va,omitempty"`
 }
 
 // NewPaymentPayoutRecipientInfo instantiates a new PaymentPayoutRecipientInfo object
@@ -172,6 +174,38 @@ func (o *PaymentPayoutRecipientInfo) SetBankAccountId(v string) {
 	o.BankAccountId = &v
 }
 
+// GetTransferViaVa returns the TransferViaVa field value if set, zero value otherwise.
+func (o *PaymentPayoutRecipientInfo) GetTransferViaVa() bool {
+	if o == nil || IsNil(o.TransferViaVa) {
+		var ret bool
+		return ret
+	}
+	return *o.TransferViaVa
+}
+
+// GetTransferViaVaOk returns a tuple with the TransferViaVa field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentPayoutRecipientInfo) GetTransferViaVaOk() (*bool, bool) {
+	if o == nil || IsNil(o.TransferViaVa) {
+		return nil, false
+	}
+	return o.TransferViaVa, true
+}
+
+// HasTransferViaVa returns a boolean if a field has been set.
+func (o *PaymentPayoutRecipientInfo) HasTransferViaVa() bool {
+	if o != nil && !IsNil(o.TransferViaVa) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransferViaVa gets a reference to the given bool and assigns it to the TransferViaVa field.
+func (o *PaymentPayoutRecipientInfo) SetTransferViaVa(v bool) {
+	o.TransferViaVa = &v
+}
+
 func (o PaymentPayoutRecipientInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -193,6 +227,9 @@ func (o PaymentPayoutRecipientInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BankAccountId) {
 		toSerialize["bank_account_id"] = o.BankAccountId
+	}
+	if !IsNil(o.TransferViaVa) {
+		toSerialize["transfer_via_va"] = o.TransferViaVa
 	}
 	return toSerialize, nil
 }

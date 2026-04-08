@@ -19,8 +19,10 @@ var _ MappedNullable = &RefundLinkBusinessInfo{}
 
 // RefundLinkBusinessInfo struct for RefundLinkBusinessInfo
 type RefundLinkBusinessInfo struct {
-	// The transaction ID of the original order payment or top-up.  On the refund page, the from address of this transaction will be pre-filled as the default refund address.  The refund will be processed in the same token and on the same blockchain as this transaction. 
-	TransactionId string `json:"transaction_id"`
+	// The id of the order to refund. Specify either `order_id` or `transaction_id`, but not both. 
+	OrderId *string `json:"order_id,omitempty"`
+	// The transaction ID of the original order payment or top-up. Specify either `order_id` or `transaction_id`, but not both. On the refund page, the from address of this transaction will be pre-filled as the default refund address. The refund will be processed in the same token and on the same blockchain as this transaction. 
+	TransactionId *string `json:"transaction_id,omitempty"`
 	// The amount to refund, denominated in the cryptocurrency of the original payment transaction. The amount must be a positive number and can have up to two decimal places.
 	Amount string `json:"amount"`
 	RefundSource RefundType `json:"refund_source"`
@@ -36,9 +38,8 @@ type _RefundLinkBusinessInfo RefundLinkBusinessInfo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRefundLinkBusinessInfo(transactionId string, amount string, refundSource RefundType) *RefundLinkBusinessInfo {
+func NewRefundLinkBusinessInfo(amount string, refundSource RefundType) *RefundLinkBusinessInfo {
 	this := RefundLinkBusinessInfo{}
-	this.TransactionId = transactionId
 	this.Amount = amount
 	this.RefundSource = refundSource
 	return &this
@@ -52,28 +53,68 @@ func NewRefundLinkBusinessInfoWithDefaults() *RefundLinkBusinessInfo {
 	return &this
 }
 
-// GetTransactionId returns the TransactionId field value
-func (o *RefundLinkBusinessInfo) GetTransactionId() string {
-	if o == nil {
+// GetOrderId returns the OrderId field value if set, zero value otherwise.
+func (o *RefundLinkBusinessInfo) GetOrderId() string {
+	if o == nil || IsNil(o.OrderId) {
 		var ret string
 		return ret
 	}
-
-	return o.TransactionId
+	return *o.OrderId
 }
 
-// GetTransactionIdOk returns a tuple with the TransactionId field value
+// GetOrderIdOk returns a tuple with the OrderId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RefundLinkBusinessInfo) GetTransactionIdOk() (*string, bool) {
-	if o == nil {
+func (o *RefundLinkBusinessInfo) GetOrderIdOk() (*string, bool) {
+	if o == nil || IsNil(o.OrderId) {
 		return nil, false
 	}
-	return &o.TransactionId, true
+	return o.OrderId, true
 }
 
-// SetTransactionId sets field value
+// HasOrderId returns a boolean if a field has been set.
+func (o *RefundLinkBusinessInfo) HasOrderId() bool {
+	if o != nil && !IsNil(o.OrderId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderId gets a reference to the given string and assigns it to the OrderId field.
+func (o *RefundLinkBusinessInfo) SetOrderId(v string) {
+	o.OrderId = &v
+}
+
+// GetTransactionId returns the TransactionId field value if set, zero value otherwise.
+func (o *RefundLinkBusinessInfo) GetTransactionId() string {
+	if o == nil || IsNil(o.TransactionId) {
+		var ret string
+		return ret
+	}
+	return *o.TransactionId
+}
+
+// GetTransactionIdOk returns a tuple with the TransactionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RefundLinkBusinessInfo) GetTransactionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TransactionId) {
+		return nil, false
+	}
+	return o.TransactionId, true
+}
+
+// HasTransactionId returns a boolean if a field has been set.
+func (o *RefundLinkBusinessInfo) HasTransactionId() bool {
+	if o != nil && !IsNil(o.TransactionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactionId gets a reference to the given string and assigns it to the TransactionId field.
 func (o *RefundLinkBusinessInfo) SetTransactionId(v string) {
-	o.TransactionId = v
+	o.TransactionId = &v
 }
 
 // GetAmount returns the Amount field value
@@ -198,7 +239,12 @@ func (o RefundLinkBusinessInfo) MarshalJSON() ([]byte, error) {
 
 func (o RefundLinkBusinessInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["transaction_id"] = o.TransactionId
+	if !IsNil(o.OrderId) {
+		toSerialize["order_id"] = o.OrderId
+	}
+	if !IsNil(o.TransactionId) {
+		toSerialize["transaction_id"] = o.TransactionId
+	}
 	toSerialize["amount"] = o.Amount
 	toSerialize["refund_source"] = o.RefundSource
 	if !IsNil(o.MerchantId) {
@@ -215,7 +261,6 @@ func (o *RefundLinkBusinessInfo) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"transaction_id",
 		"amount",
 		"refund_source",
 	}
