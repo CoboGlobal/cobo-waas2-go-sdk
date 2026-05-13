@@ -376,6 +376,7 @@ docs/ListMerchantBalances200Response.md
 docs/ListMerchants200Response.md
 docs/ListMpcProjects200Response.md
 docs/ListMpcVaults200Response.md
+docs/ListPayerTransactions200Response.md
 docs/ListPaymentOrders200Response.md
 docs/ListPaymentWalletBalances200Response.md
 docs/ListPayouts200Response.md
@@ -439,6 +440,7 @@ docs/OrderLinkBusinessInfoPayableAmountsInner.md
 docs/OrderStatus.md
 docs/OrgInfo.md
 docs/OrganizationsAPI.md
+docs/OriginalMainGroupHandling.md
 docs/OtcFee.md
 docs/Pagination.md
 docs/PayerAccount.md
@@ -826,7 +828,6 @@ docs/TronContractCallDestination.md
 docs/UTXO.md
 docs/UnfreezeDisposition.md
 docs/UpdateAddressBookParam.md
-docs/UpdateBankAccountByIdRequest.md
 docs/UpdateCounterpartyRequest.md
 docs/UpdateCustodialWalletParams.md
 docs/UpdateDestinationBankAccount.md
@@ -1206,6 +1207,7 @@ model_list_merchant_balances_200_response.go
 model_list_merchants_200_response.go
 model_list_mpc_projects_200_response.go
 model_list_mpc_vaults_200_response.go
+model_list_payer_transactions_200_response.go
 model_list_payment_orders_200_response.go
 model_list_payment_wallet_balances_200_response.go
 model_list_payouts_200_response.go
@@ -1267,6 +1269,7 @@ model_order_link_business_info_custom_exchange_rates_inner.go
 model_order_link_business_info_payable_amounts_inner.go
 model_order_status.go
 model_org_info.go
+model_original_main_group_handling.go
 model_otc_fee.go
 model_pagination.go
 model_payer_account.go
@@ -1646,7 +1649,6 @@ model_tss_signatures.go
 model_tss_status.go
 model_unfreeze_disposition.go
 model_update_address_book_param.go
-model_update_bank_account_by_id_request.go
 model_update_counterparty_request.go
 model_update_custodial_wallet_params.go
 model_update_destination_bank_account.go

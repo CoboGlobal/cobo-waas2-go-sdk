@@ -105,6 +105,12 @@ func (a *DevelopersAPIService) GetApiKeyInfoExecute(r ApiGetApiKeyInfoRequest) (
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -311,6 +317,12 @@ func (a *DevelopersAPIService) ListCallbackMessagesExecute(r ApiListCallbackMess
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -437,6 +449,12 @@ func (a *DevelopersAPIService) RetryCallbackMessageExecute(r ApiRetryCallbackMes
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse

@@ -123,6 +123,12 @@ func (a *WalletsAPIService) BatchCheckUtxoExecute(r ApiBatchCheckUtxoRequest) (*
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -268,6 +274,12 @@ func (a *WalletsAPIService) CheckAddressChainsValidityExecute(r ApiCheckAddressC
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -410,6 +422,12 @@ func (a *WalletsAPIService) CheckAddressValidityExecute(r ApiCheckAddressValidit
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -554,6 +572,12 @@ func (a *WalletsAPIService) CheckAddressesValidityExecute(r ApiCheckAddressesVal
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -690,6 +714,12 @@ func (a *WalletsAPIService) CreateAddressExecute(r ApiCreateAddressRequest) ([]A
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -825,6 +855,12 @@ func (a *WalletsAPIService) CreateTokenListingRequestExecute(r ApiCreateTokenLis
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -957,6 +993,12 @@ func (a *WalletsAPIService) CreateWalletExecute(r ApiCreateWalletRequest) (*Crea
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1084,6 +1126,12 @@ func (a *WalletsAPIService) DeleteWalletByIdExecute(r ApiDeleteWalletByIdRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1208,6 +1256,12 @@ func (a *WalletsAPIService) GetChainByIdExecute(r ApiGetChainByIdRequest) (*Chai
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -1382,6 +1436,12 @@ func (a *WalletsAPIService) GetMaxTransferableValueExecute(r ApiGetMaxTransferab
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1520,6 +1580,12 @@ func (a *WalletsAPIService) GetMaxTransferableValueWithFeeModelExecute(r ApiGetM
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1644,6 +1710,12 @@ func (a *WalletsAPIService) GetTokenByIdExecute(r ApiGetTokenByIdRequest) (*Exte
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -1770,6 +1842,12 @@ func (a *WalletsAPIService) GetTokenListingRequestByRequestIdExecute(r ApiGetTok
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1894,6 +1972,12 @@ func (a *WalletsAPIService) GetWalletByIdExecute(r ApiGetWalletByIdRequest) (*Wa
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -2068,6 +2152,12 @@ func (a *WalletsAPIService) ListAddressBalancesByTokenExecute(r ApiListAddressBa
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -2255,6 +2345,12 @@ func (a *WalletsAPIService) ListAddressesExecute(r ApiListAddressesRequest) (*Li
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -2430,6 +2526,12 @@ func (a *WalletsAPIService) ListEnabledChainsExecute(r ApiListEnabledChainsReque
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -2627,6 +2729,12 @@ func (a *WalletsAPIService) ListEnabledTokensExecute(r ApiListEnabledTokensReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -2814,6 +2922,12 @@ func (a *WalletsAPIService) ListSupportedChainsExecute(r ApiListSupportedChainsR
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -3013,6 +3127,12 @@ func (a *WalletsAPIService) ListSupportedTokensExecute(r ApiListSupportedTokensR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -3187,6 +3307,12 @@ func (a *WalletsAPIService) ListTokenBalancesForAddressExecute(r ApiListTokenBal
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -3357,6 +3483,12 @@ func (a *WalletsAPIService) ListTokenBalancesForWalletExecute(r ApiListTokenBala
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -3520,6 +3652,12 @@ func (a *WalletsAPIService) ListTokenListingRequestsExecute(r ApiListTokenListin
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -3742,6 +3880,12 @@ func (a *WalletsAPIService) ListTransactionUtxosExecute(r ApiListTransactionUtxo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -3932,6 +4076,12 @@ func (a *WalletsAPIService) ListUtxosExecute(r ApiListUtxosRequest) (*ListUtxos2
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -4127,6 +4277,12 @@ func (a *WalletsAPIService) ListWalletsExecute(r ApiListWalletsRequest) (*ListWa
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -4262,6 +4418,12 @@ func (a *WalletsAPIService) LockUtxosExecute(r ApiLockUtxosRequest) (*LockUtxos2
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -4405,6 +4567,12 @@ func (a *WalletsAPIService) RefreshAddressBalancesByTokenExecute(r ApiRefreshAdd
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -4540,6 +4708,12 @@ func (a *WalletsAPIService) UnlockUtxosExecute(r ApiUnlockUtxosRequest) (*LockUt
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -4673,6 +4847,12 @@ func (a *WalletsAPIService) UpdateWalletByIdExecute(r ApiUpdateWalletByIdRequest
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse

@@ -83,6 +83,14 @@
 
 * `WALLET_CONNECT` (value: `"WalletConnect"`)
 
+* `JUST_LEND_RECEIVER_PRECHARGE` (value: `"JustLendReceiverPrecharge"`)
+
+* `JUST_LEND_ENERGY_RENTAL` (value: `"JustLendEnergyRental"`)
+
+* `JUST_LEND_ENERGY_RETURN` (value: `"JustLendEnergyReturn"`)
+
+* `TRX_RECHARGE` (value: `"TrxRecharge"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

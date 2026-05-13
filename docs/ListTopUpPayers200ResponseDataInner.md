@@ -6,10 +6,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MerchantId** | **string** | The merchant ID. | 
 **PayerId** | **string** | A unique identifier assigned by Cobo to track and identify individual payers. | 
+**CustomPayerId** | Pointer to **string** | Unique user identifier on the merchant side, used to assign a dedicated deposit address.  | [optional] 
 **DeveloperFeeRate** | **string** | The developer fee rate applied to top-up transactions made by this payer. Expressed as a decimal string where \&quot;0.1\&quot; represents 10%. | 
 **CreatedTimestamp** | Pointer to **int32** | The creation time of the payer, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The last update time of the payer, represented as a UNIX timestamp in seconds. | [optional] 
-**Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of top-up transactions associated with this payer. | [optional] 
+**Transactions** | Pointer to [**[]PaymentTransaction**](PaymentTransaction.md) | An array of transactions associated with this payer.  &lt;Note&gt;This field returns up to the latest 200 transactions only and will be removed in a future version. Use the dedicated payer transactions API to paginate through transactions.&lt;/Note&gt;  | [optional] 
 
 ## Methods
 
@@ -69,6 +70,31 @@ and a boolean to check if the value has been set.
 
 SetPayerId sets PayerId field to given value.
 
+
+### GetCustomPayerId
+
+`func (o *ListTopUpPayers200ResponseDataInner) GetCustomPayerId() string`
+
+GetCustomPayerId returns the CustomPayerId field if non-nil, zero value otherwise.
+
+### GetCustomPayerIdOk
+
+`func (o *ListTopUpPayers200ResponseDataInner) GetCustomPayerIdOk() (*string, bool)`
+
+GetCustomPayerIdOk returns a tuple with the CustomPayerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomPayerId
+
+`func (o *ListTopUpPayers200ResponseDataInner) SetCustomPayerId(v string)`
+
+SetCustomPayerId sets CustomPayerId field to given value.
+
+### HasCustomPayerId
+
+`func (o *ListTopUpPayers200ResponseDataInner) HasCustomPayerId() bool`
+
+HasCustomPayerId returns a boolean if a field has been set.
 
 ### GetDeveloperFeeRate
 

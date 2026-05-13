@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **RequireMemo** | Pointer to **bool** | Whether the chain requires a memo. | [optional] 
 **ConfirmingThreshold** | Pointer to **int32** | The number of confirmations required for an on-chain transaction, such as 64 for Ethereum. | [optional] 
 **CoinbaseMaturity** | Pointer to **int32** | The number of confirmations required before a coinbase transaction is considered mature and can be spent, for example, 100 confirmations for BTC. | [optional] 
+**Caip2ChainId** | Pointer to **string** | A standardized, unique identifier for blockchain networks (like eip155:1 for Ethereum) that combines a namespace and a reference to ensure cross-chain compatibility. | [optional] 
 
 ## Methods
 
@@ -252,6 +253,31 @@ SetCoinbaseMaturity sets CoinbaseMaturity field to given value.
 `func (o *ChainInfo) HasCoinbaseMaturity() bool`
 
 HasCoinbaseMaturity returns a boolean if a field has been set.
+
+### GetCaip2ChainId
+
+`func (o *ChainInfo) GetCaip2ChainId() string`
+
+GetCaip2ChainId returns the Caip2ChainId field if non-nil, zero value otherwise.
+
+### GetCaip2ChainIdOk
+
+`func (o *ChainInfo) GetCaip2ChainIdOk() (*string, bool)`
+
+GetCaip2ChainIdOk returns a tuple with the Caip2ChainId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCaip2ChainId
+
+`func (o *ChainInfo) SetCaip2ChainId(v string)`
+
+SetCaip2ChainId sets Caip2ChainId field to given value.
+
+### HasCaip2ChainId
+
+`func (o *ChainInfo) HasCaip2ChainId() bool`
+
+HasCaip2ChainId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

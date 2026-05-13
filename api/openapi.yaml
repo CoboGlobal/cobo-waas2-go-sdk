@@ -9452,88 +9452,6 @@ paths:
       summary: Cancel refund order
       tags:
       - Payment
-  /payments/bank_accounts:
-    get:
-      description: |
-        <Note>This operation has been deprecated. Please use [List counterparty entries](https://www.cobo.com/payments/en/api-references/payment/list-counterparty-entries) instead.</Note>
-        This operation retrieves the information of all bank accounts registered.
-      operationId: list_bank_accounts
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/BankAccount'
-                type: array
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_merchant.read
-      summary: List all bank accounts
-      tags:
-      - Payment
-  /payments/bank_accounts/{bank_account_id}:
-    put:
-      description: |
-        <Note>This operation has been deprecated.</Note>
-        This operation updates the information of an existing bank account.
-      operationId: update_bank_account_by_id
-      parameters:
-      - description: The bank account ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: bank_account_id
-        required: true
-        schema:
-          description: The bank account ID.
-          format: uuid
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/updateBankAccountBody'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BankAccount'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_merchant.update
-      summary: Update bank account
-      tags:
-      - Payment
   /payments/orders:
     get:
       description: |
@@ -10308,8 +10226,8 @@ paths:
         schema:
           type: string
         style: form
-      - description: A unique identifier to track and identify individual payers in
-          your system.
+      - description: |
+          Unique customer identifier on the merchant side, used to allocate a dedicated top-up address
         example: payer_0001
         explode: true
         in: query
@@ -10428,8 +10346,10 @@ paths:
       - Payment
   /payments/topup/payers:
     get:
-      description: "This operation retrieves the information of all payers under a\
-        \ merchant. \n\nYou can filter the result by the payer ID.\n"
+      description: |
+        This operation retrieves the information of all payers. You can filter the result by merchant ID and payer_id.
+
+        <Note>The `transactions` field in the response returns up to the latest 200 transactions only. This field will be removed in a future version. To paginate through payer transactions, use [List payer transactions](https://www.cobo.com/payments/en/guides/overview).</Note>
       operationId: list_top_up_payers
       parameters:
       - description: "The maximum number of objects to return. For most operations,\
@@ -10592,6 +10512,126 @@ paths:
       - OAuth2:
         - payment_orders_payin.read
       summary: List top-up payer accounts
+      tags:
+      - Payment
+  /payments/topup/payers/transactions:
+    get:
+      description: |
+        This operation retrieves on-chain transactions related to a specific top-up payer.
+
+        You need to specify `custom_payer_id`, which is the merchant-defined customer identifier used when creating top-up addresses.
+
+        <Note>This operation is applicable to the top-up scenario only.</Note>
+
+        For more information, see [Cobo Payments Guide](https://www.cobo.com/payments/en/guides/overview).
+      operationId: list_payer_transactions
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The merchant ID.
+        example: M1001
+        explode: true
+        in: query
+        name: merchant_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          Unique customer identifier on the merchant side, used to allocate a dedicated top-up address
+        example: payer_0001
+        explode: true
+        in: query
+        name: custom_payer_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: |
+          The token ID, which is a unique identifier that specifies both the blockchain network and cryptocurrency token in the format `{CHAIN}_{TOKEN}`. Supported values include:
+            - USDC: `ETH_USDC`, `ARBITRUM_USDCOIN`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC2`, `BSC_USDC`
+            - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT`
+        example: ETH_USDT
+        explode: true
+        in: query
+        name: token_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of transaction hashes, separated by comma."
+        example: 239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        explode: true
+        in: query
+        name: transaction_hashes
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A list of transaction IDs, separated by comma."
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+        explode: true
+        in: query
+        name: transaction_ids
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_payer_transactions_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_transaction.read
+      summary: List payer transactions
       tags:
       - Payment
   /payments/force_sweep_requests:
@@ -16913,18 +16953,6 @@ components:
       schema:
         type: string
       style: form
-    BankIdPathParam:
-      description: The bank account ID.
-      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-      explode: false
-      in: path
-      name: bank_account_id
-      required: true
-      schema:
-        description: The bank account ID.
-        format: uuid
-        type: string
-      style: simple
     CurrencyRequiredParam:
       description: "The fiat currency. Currently, only `USD` is supported."
       example: USD
@@ -17173,8 +17201,8 @@ components:
         type: string
       style: form
     CustomPayerIdRequiredParam:
-      description: A unique identifier to track and identify individual payers in
-        your system.
+      description: |
+        Unique customer identifier on the merchant side, used to allocate a dedicated top-up address
       example: payer_0001
       explode: true
       in: query
@@ -17907,43 +17935,6 @@ components:
           schema:
             $ref: '#/components/schemas/update_merchant_by_id_request'
       description: The request body to update a merchant.
-    createBankAccountBody:
-      content:
-        application/json:
-          schema:
-            properties:
-              otc_bank_account_id:
-                type: string
-              info:
-                additionalProperties: true
-                description: |
-                  JSON-formatted bank account details. The object should include the following fields:
-                  - beneficiary_name: Name of the account holder
-                  - beneficiary_address: Address of the account holder
-                  - account_number: Bank account number
-                  - bank_name: Name of the bank
-                  - bank_address: Address of the bank
-                  - iban: (Optional) International Bank Account Number
-                  - swift_or_bic: SWIFT or BIC code of the bank
-                example:
-                  beneficiary_name: John Doe
-                  beneficiary_address: "123 Main St, Anytown, USA"
-                  account_number: "4111111111111111"
-                  bank_name: ABC Bank
-                  bank_address: "456 Bank Ave, Cityville, USA"
-                  swift_or_bic: ABCDEFGH
-                type: object
-            required:
-            - info
-            - otc_bank_account_id
-            type: object
-      description: The request body to register a bank account.
-    updateBankAccountBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/update_bank_account_by_id_request'
-      description: The request body for updating an existing bank account.
     createPaymentOrderBody:
       content:
         application/json:
@@ -19193,20 +19184,6 @@ components:
           schema:
             $ref: '#/components/schemas/list_merchants_200_response'
       description: The request was successful.
-    createBankAccountResponse:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BankAccount'
-      description: The request was successful.
-    listBankAccountsResponse:
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/BankAccount'
-            type: array
-      description: The request was successful.
     createPaymentOrderResponse:
       $ref: '#/components/responses/getPaymentOrderResponse'
     listPaymentOrdersResponse:
@@ -19334,6 +19311,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/list_top_up_payer_accounts_200_response'
+      description: The request was successful.
+    listPayerTransactionsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_payer_transactions_200_response'
       description: The request was successful.
     createForcedSweepResponse:
       content:
@@ -20229,6 +20212,7 @@ components:
         require_memo: false
         chain_identifier: ETH
         confirming_threshold: 15
+        caip2_chain_id: eip155:1
         explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
         coinbase_maturity: 15
         explorer_address_url: "https://etherscan.io/address/{address}"
@@ -20279,6 +20263,12 @@ components:
           example: 15
           format: int32
           type: integer
+        caip2_chain_id:
+          description: "A standardized, unique identifier for blockchain networks\
+            \ (like eip155:1 for Ethereum) that combines a namespace and a reference\
+            \ to ensure cross-chain compatibility."
+          example: eip155:1
+          type: string
       required:
       - chain_id
       type: object
@@ -21666,6 +21656,19 @@ components:
       enum:
       - UpgradeToMainGroup
       example: UpgradeToMainGroup
+      type: string
+    OriginalMainGroupHandling:
+      default: Invalidate
+      description: |
+        The action to take on the original [Main Group](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/create-key-share-groups) when upgrading a Signing Group to the Main Group. Defaults to `Invalidate` if not provided. Possible values include:
+
+        - `Invalidate`: The original Main Group will be permanently invalidated.
+
+        - `ConvertToSigningGroup`: The original Main Group will be converted to a Signing Group.
+      enum:
+      - Invalidate
+      - ConvertToSigningGroup
+      example: Invalidate
       type: string
     SourceGroup:
       description: |
@@ -24635,7 +24638,14 @@ components:
         \ account.\n  - `GasFeeSponsor`: A transaction where Fee Station pays the\
         \ on-chain gas fee in USD stablecoin.\n  - `GasFeeSponsorRefund`: A transaction\
         \ that refunds gas fees previously sponsored and paid by Fee Station.\n  -\
-        \ `WalletConnect`: A transaction initiated by walletconnect.\n"
+        \ `WalletConnect`: A transaction initiated by walletconnect.\n  - `JustLendReceiverPrecharge`:\
+        \ A TRX transfer to the receiver address to activate it and compensate for\
+        \ bandwidth fees before the main transaction executes.\n  - `JustLendEnergyRental`:\
+        \ A contract call to JustLend's rentResource() to rent TRON energy for the\
+        \ main transaction execution.\n  - `JustLendEnergyReturn`: A contract call\
+        \ to JustLend's returnResource() to return rented energy and recover the unused\
+        \ deposit after the main transaction completes.\n  - `TrxRecharge`: TRX balance\
+        \ top-up to cover energy and bandwidth fees for the main transaction.\n"
       enum:
       - AutoFueling
       - AutoFuelingRefund
@@ -24677,6 +24687,10 @@ components:
       - GasFeeSponsor
       - GasFeeSponsorRefund
       - WalletConnect
+      - JustLendReceiverPrecharge
+      - JustLendEnergyRental
+      - JustLendEnergyReturn
+      - TrxRecharge
       example: AutoSweep
       type: string
     SafeTxExtraData:
@@ -27238,6 +27252,7 @@ components:
       - fee_station.transaction.updated
       - fee_station.transaction.failed
       - fee_station.transaction.succeeded
+      - fee_station.fiat_transaction.created
       - wallet.token.enabled
       - wallet.chain.enabled
       - wallet.mpc.balance.updated
@@ -33047,8 +33062,10 @@ components:
           example: P20240201001
           type: string
         pricing_currency:
-          description: |
-            The pricing currency that denominates `pricing_amount` and `fee_amount`. Currently, only `USD`/`USDT`/`USDC` are supported. This field is required.
+          description: "The pricing currency that denominates `pricing_amount` and\
+            \ `fee_amount`. If left empty, both values will be denominated in `payable_currency`.\
+            \ \nCurrently, For a complete list of supported currencies, see [Supported\
+            \ chains and tokens](https://www.cobo.com//payments/en/guides/supported-chains-and-tokens#pricing-currency).\n"
           example: USD
           type: string
         pricing_amount:
@@ -38237,6 +38254,7 @@ components:
           require_memo: false
           chain_identifier: ETH
           confirming_threshold: 15
+          caip2_chain_id: eip155:1
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
           coinbase_maturity: 15
           explorer_address_url: "https://etherscan.io/address/{address}"
@@ -38246,6 +38264,7 @@ components:
           require_memo: false
           chain_identifier: ETH
           confirming_threshold: 15
+          caip2_chain_id: eip155:1
           explorer_tx_url: "https://etherscan.io/tx/{txn_id}"
           coinbase_maturity: 15
           explorer_address_url: "https://etherscan.io/address/{address}"
@@ -39047,6 +39066,8 @@ components:
       properties:
         update_key_share_holder_group_action:
           $ref: '#/components/schemas/UpdateGroupAction'
+        original_main_group_handling:
+          $ref: '#/components/schemas/OriginalMainGroupHandling'
       required:
       - update_key_share_holder_group_action
       type: object
@@ -42242,30 +42263,6 @@ components:
       required:
       - to_address
       type: object
-    update_bank_account_by_id_request:
-      properties:
-        info:
-          additionalProperties: true
-          description: |
-            JSON-formatted bank account details. The object should include the following fields:
-            - beneficiary_name: Name of the account holder
-            - beneficiary_address: Address of the account holder
-            - account_number: Bank account number
-            - bank_name: Name of the bank
-            - bank_address: Address of the bank
-            - iban: (Optional) International Bank Account Number
-            - swift_or_bic: SWIFT or BIC code of the bank
-          example:
-            beneficiary_name: John Doe
-            beneficiary_address: "123 Main St, Anytown, USA"
-            account_number: "4111111111111111"
-            bank_name: ABC Bank
-            bank_address: "456 Bank Ave, Cityville, USA"
-            swift_or_bic: ABCDEFGH
-          type: object
-      required:
-      - info
-      type: object
     list_payment_orders_200_response:
       example:
         pagination:
@@ -43239,6 +43236,7 @@ components:
     list_top_up_payers_200_response_data_inner:
       example:
         updated_timestamp: 1744693200
+        custom_payer_id: user_abc_10001
         payer_id: P20250619T0310056d7aa
         created_timestamp: 1744689600
         merchant_id: M1001
@@ -43310,6 +43308,11 @@ components:
             individual payers.
           example: P20250619T0310056d7aa
           type: string
+        custom_payer_id:
+          description: |
+            Unique user identifier on the merchant side, used to assign a dedicated deposit address.
+          example: user_abc_10001
+          type: string
         developer_fee_rate:
           description: The developer fee rate applied to top-up transactions made
             by this payer. Expressed as a decimal string where "0.1" represents 10%.
@@ -43326,7 +43329,10 @@ components:
           example: 1744693200
           type: integer
         transactions:
-          description: An array of top-up transactions associated with this payer.
+          description: |
+            An array of transactions associated with this payer.
+
+            <Note>This field returns up to the latest 200 transactions only and will be removed in a future version. Use the dedicated payer transactions API to paginate through transactions.</Note>
           items:
             $ref: '#/components/schemas/PaymentTransaction'
           type: array
@@ -43343,6 +43349,7 @@ components:
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
         - updated_timestamp: 1744693200
+          custom_payer_id: user_abc_10001
           payer_id: P20250619T0310056d7aa
           created_timestamp: 1744689600
           merchant_id: M1001
@@ -43405,6 +43412,7 @@ components:
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
             status: Submitted
         - updated_timestamp: 1744693200
+          custom_payer_id: user_abc_10001
           payer_id: P20250619T0310056d7aa
           created_timestamp: 1744689600
           merchant_id: M1001
@@ -43521,6 +43529,77 @@ components:
         data:
           items:
             $ref: '#/components/schemas/PayerAccount'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    list_payer_transactions_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          destination:
+            country: USA
+            destination_type: Individual
+            updated_timestamp: 1744689600
+            destination_id: 123e4567-e89b-12d3-a456-426614174003
+            destination_name: Destination A
+            created_timestamp: 1744689600
+            merchant_id: M1001
+            contact_address: "123 Main St, Anytown, USA"
+            email: destination@example.com
+          counterparty:
+            country: USA
+            counterparty_name: Counterparty A
+            counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            counterparty_type: Individual
+            created_timestamp: 1744689600
+            contact_address: "123 Main St, Anytown, USA"
+            email: counterparty@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
+        - amount: "0.15"
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
+          destination:
+            country: USA
+            destination_type: Individual
+            updated_timestamp: 1744689600
+            destination_id: 123e4567-e89b-12d3-a456-426614174003
+            destination_name: Destination A
+            created_timestamp: 1744689600
+            merchant_id: M1001
+            contact_address: "123 Main St, Anytown, USA"
+            email: destination@example.com
+          counterparty:
+            country: USA
+            counterparty_name: Counterparty A
+            counterparty_id: 123e4567-e89b-12d3-a456-426614174003
+            updated_timestamp: 1744689600
+            counterparty_type: Individual
+            created_timestamp: 1744689600
+            contact_address: "123 Main St, Anytown, USA"
+            email: counterparty@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          status: Submitted
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PaymentTransaction'
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'

@@ -37,6 +37,8 @@ type ChainInfo struct {
 	ConfirmingThreshold *int32 `json:"confirming_threshold,omitempty"`
 	// The number of confirmations required before a coinbase transaction is considered mature and can be spent, for example, 100 confirmations for BTC.
 	CoinbaseMaturity *int32 `json:"coinbase_maturity,omitempty"`
+	// A standardized, unique identifier for blockchain networks (like eip155:1 for Ethereum) that combines a namespace and a reference to ensure cross-chain compatibility.
+	Caip2ChainId *string `json:"caip2_chain_id,omitempty"`
 }
 
 type _ChainInfo ChainInfo
@@ -339,6 +341,38 @@ func (o *ChainInfo) SetCoinbaseMaturity(v int32) {
 	o.CoinbaseMaturity = &v
 }
 
+// GetCaip2ChainId returns the Caip2ChainId field value if set, zero value otherwise.
+func (o *ChainInfo) GetCaip2ChainId() string {
+	if o == nil || IsNil(o.Caip2ChainId) {
+		var ret string
+		return ret
+	}
+	return *o.Caip2ChainId
+}
+
+// GetCaip2ChainIdOk returns a tuple with the Caip2ChainId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ChainInfo) GetCaip2ChainIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Caip2ChainId) {
+		return nil, false
+	}
+	return o.Caip2ChainId, true
+}
+
+// HasCaip2ChainId returns a boolean if a field has been set.
+func (o *ChainInfo) HasCaip2ChainId() bool {
+	if o != nil && !IsNil(o.Caip2ChainId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCaip2ChainId gets a reference to the given string and assigns it to the Caip2ChainId field.
+func (o *ChainInfo) SetCaip2ChainId(v string) {
+	o.Caip2ChainId = &v
+}
+
 func (o ChainInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -373,6 +407,9 @@ func (o ChainInfo) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CoinbaseMaturity) {
 		toSerialize["coinbase_maturity"] = o.CoinbaseMaturity
+	}
+	if !IsNil(o.Caip2ChainId) {
+		toSerialize["caip2_chain_id"] = o.Caip2ChainId
 	}
 	return toSerialize, nil
 }

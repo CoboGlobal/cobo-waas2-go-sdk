@@ -110,6 +110,12 @@ func (a *PrimeBrokerAPIService) ChangeGuardPubkeyExecute(r ApiChangeGuardPubkeyR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -245,6 +251,12 @@ func (a *PrimeBrokerAPIService) CreateGuardPubkeyExecute(r ApiCreateGuardPubkeyR
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse
@@ -391,6 +403,12 @@ func (a *PrimeBrokerAPIService) CreatePrimeBrokerAddressExecute(r ApiCreatePrime
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -526,6 +544,12 @@ func (a *PrimeBrokerAPIService) DeleteGuardPubkeyExecute(r ApiDeleteGuardPubkeyR
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse
@@ -663,6 +687,12 @@ func (a *PrimeBrokerAPIService) QueryApprovalStatementExecute(r ApiQueryApproval
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -798,6 +828,12 @@ func (a *PrimeBrokerAPIService) QueryGuardPubkeyExecute(r ApiQueryGuardPubkeyReq
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v ErrorResponse

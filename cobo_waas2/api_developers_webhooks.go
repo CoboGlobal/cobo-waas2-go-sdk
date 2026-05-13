@@ -114,6 +114,12 @@ func (a *DevelopersWebhooksAPIService) CreateWebhookEndpointExecute(r ApiCreateW
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -237,6 +243,12 @@ func (a *DevelopersWebhooksAPIService) GetWebhookEndpointByIdExecute(r ApiGetWeb
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -366,6 +378,12 @@ func (a *DevelopersWebhooksAPIService) GetWebhookEventByIdExecute(r ApiGetWebhoo
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -538,6 +556,12 @@ func (a *DevelopersWebhooksAPIService) ListWebhookEndpointsExecute(r ApiListWebh
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -657,6 +681,12 @@ func (a *DevelopersWebhooksAPIService) ListWebhookEventDefinitionsExecute(r ApiL
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -819,6 +849,12 @@ func (a *DevelopersWebhooksAPIService) ListWebhookEventLogsExecute(r ApiListWebh
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -998,6 +1034,12 @@ func (a *DevelopersWebhooksAPIService) ListWebhookEventsExecute(r ApiListWebhook
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1126,6 +1168,12 @@ func (a *DevelopersWebhooksAPIService) RetryWebhookEventByIdExecute(r ApiRetryWe
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
@@ -1261,6 +1309,12 @@ func (a *DevelopersWebhooksAPIService) TriggerTestWebhookEventExecute(r ApiTrigg
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1393,6 +1447,12 @@ func (a *DevelopersWebhooksAPIService) UpdateWebhookEndpointByIdExecute(r ApiUpd
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v ErrorResponse

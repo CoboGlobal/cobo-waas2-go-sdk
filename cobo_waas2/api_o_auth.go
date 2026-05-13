@@ -121,6 +121,12 @@ func (a *OAuthAPIService) ExchangePermissionTokenExecute(r ApiExchangePermission
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v GetToken4XXResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -280,6 +286,12 @@ func (a *OAuthAPIService) GetTokenExecute(r ApiGetTokenRequest) (*GetToken2XXRes
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v GetToken4XXResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -417,6 +429,12 @@ func (a *OAuthAPIService) RefreshPermissionTokenExecute(r ApiRefreshPermissionTo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v GetToken4XXResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -552,6 +570,12 @@ func (a *OAuthAPIService) RefreshTokenExecute(r ApiRefreshTokenRequest) (*Refres
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
 			var v GetToken4XXResponse

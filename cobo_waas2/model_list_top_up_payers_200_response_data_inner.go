@@ -23,13 +23,15 @@ type ListTopUpPayers200ResponseDataInner struct {
 	MerchantId string `json:"merchant_id"`
 	// A unique identifier assigned by Cobo to track and identify individual payers.
 	PayerId string `json:"payer_id"`
+	// Unique user identifier on the merchant side, used to assign a dedicated deposit address. 
+	CustomPayerId *string `json:"custom_payer_id,omitempty"`
 	// The developer fee rate applied to top-up transactions made by this payer. Expressed as a decimal string where \"0.1\" represents 10%.
 	DeveloperFeeRate string `json:"developer_fee_rate"`
 	// The creation time of the payer, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The last update time of the payer, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp *int32 `json:"updated_timestamp,omitempty"`
-	// An array of top-up transactions associated with this payer.
+	// An array of transactions associated with this payer.  <Note>This field returns up to the latest 200 transactions only and will be removed in a future version. Use the dedicated payer transactions API to paginate through transactions.</Note> 
 	Transactions []PaymentTransaction `json:"transactions,omitempty"`
 }
 
@@ -101,6 +103,38 @@ func (o *ListTopUpPayers200ResponseDataInner) GetPayerIdOk() (*string, bool) {
 // SetPayerId sets field value
 func (o *ListTopUpPayers200ResponseDataInner) SetPayerId(v string) {
 	o.PayerId = v
+}
+
+// GetCustomPayerId returns the CustomPayerId field value if set, zero value otherwise.
+func (o *ListTopUpPayers200ResponseDataInner) GetCustomPayerId() string {
+	if o == nil || IsNil(o.CustomPayerId) {
+		var ret string
+		return ret
+	}
+	return *o.CustomPayerId
+}
+
+// GetCustomPayerIdOk returns a tuple with the CustomPayerId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListTopUpPayers200ResponseDataInner) GetCustomPayerIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomPayerId) {
+		return nil, false
+	}
+	return o.CustomPayerId, true
+}
+
+// HasCustomPayerId returns a boolean if a field has been set.
+func (o *ListTopUpPayers200ResponseDataInner) HasCustomPayerId() bool {
+	if o != nil && !IsNil(o.CustomPayerId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomPayerId gets a reference to the given string and assigns it to the CustomPayerId field.
+func (o *ListTopUpPayers200ResponseDataInner) SetCustomPayerId(v string) {
+	o.CustomPayerId = &v
 }
 
 // GetDeveloperFeeRate returns the DeveloperFeeRate field value
@@ -235,6 +269,9 @@ func (o ListTopUpPayers200ResponseDataInner) ToMap() (map[string]interface{}, er
 	toSerialize := map[string]interface{}{}
 	toSerialize["merchant_id"] = o.MerchantId
 	toSerialize["payer_id"] = o.PayerId
+	if !IsNil(o.CustomPayerId) {
+		toSerialize["custom_payer_id"] = o.CustomPayerId
+	}
 	toSerialize["developer_fee_rate"] = o.DeveloperFeeRate
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp
