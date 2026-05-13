@@ -20,6 +20,7 @@ var _ MappedNullable = &UpdateKeyShareHolderGroupByIdRequest{}
 // UpdateKeyShareHolderGroupByIdRequest struct for UpdateKeyShareHolderGroupByIdRequest
 type UpdateKeyShareHolderGroupByIdRequest struct {
 	UpdateKeyShareHolderGroupAction UpdateGroupAction `json:"update_key_share_holder_group_action"`
+	OriginalMainGroupHandling *OriginalMainGroupHandling `json:"original_main_group_handling,omitempty"`
 }
 
 type _UpdateKeyShareHolderGroupByIdRequest UpdateKeyShareHolderGroupByIdRequest
@@ -31,6 +32,8 @@ type _UpdateKeyShareHolderGroupByIdRequest UpdateKeyShareHolderGroupByIdRequest
 func NewUpdateKeyShareHolderGroupByIdRequest(updateKeyShareHolderGroupAction UpdateGroupAction) *UpdateKeyShareHolderGroupByIdRequest {
 	this := UpdateKeyShareHolderGroupByIdRequest{}
 	this.UpdateKeyShareHolderGroupAction = updateKeyShareHolderGroupAction
+	var originalMainGroupHandling OriginalMainGroupHandling = ORIGINALMAINGROUPHANDLING_INVALIDATE
+	this.OriginalMainGroupHandling = &originalMainGroupHandling
 	return &this
 }
 
@@ -39,6 +42,8 @@ func NewUpdateKeyShareHolderGroupByIdRequest(updateKeyShareHolderGroupAction Upd
 // but it doesn't guarantee that properties required by API are set
 func NewUpdateKeyShareHolderGroupByIdRequestWithDefaults() *UpdateKeyShareHolderGroupByIdRequest {
 	this := UpdateKeyShareHolderGroupByIdRequest{}
+	var originalMainGroupHandling OriginalMainGroupHandling = ORIGINALMAINGROUPHANDLING_INVALIDATE
+	this.OriginalMainGroupHandling = &originalMainGroupHandling
 	return &this
 }
 
@@ -66,6 +71,38 @@ func (o *UpdateKeyShareHolderGroupByIdRequest) SetUpdateKeyShareHolderGroupActio
 	o.UpdateKeyShareHolderGroupAction = v
 }
 
+// GetOriginalMainGroupHandling returns the OriginalMainGroupHandling field value if set, zero value otherwise.
+func (o *UpdateKeyShareHolderGroupByIdRequest) GetOriginalMainGroupHandling() OriginalMainGroupHandling {
+	if o == nil || IsNil(o.OriginalMainGroupHandling) {
+		var ret OriginalMainGroupHandling
+		return ret
+	}
+	return *o.OriginalMainGroupHandling
+}
+
+// GetOriginalMainGroupHandlingOk returns a tuple with the OriginalMainGroupHandling field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateKeyShareHolderGroupByIdRequest) GetOriginalMainGroupHandlingOk() (*OriginalMainGroupHandling, bool) {
+	if o == nil || IsNil(o.OriginalMainGroupHandling) {
+		return nil, false
+	}
+	return o.OriginalMainGroupHandling, true
+}
+
+// HasOriginalMainGroupHandling returns a boolean if a field has been set.
+func (o *UpdateKeyShareHolderGroupByIdRequest) HasOriginalMainGroupHandling() bool {
+	if o != nil && !IsNil(o.OriginalMainGroupHandling) {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginalMainGroupHandling gets a reference to the given OriginalMainGroupHandling and assigns it to the OriginalMainGroupHandling field.
+func (o *UpdateKeyShareHolderGroupByIdRequest) SetOriginalMainGroupHandling(v OriginalMainGroupHandling) {
+	o.OriginalMainGroupHandling = &v
+}
+
 func (o UpdateKeyShareHolderGroupByIdRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -77,6 +114,9 @@ func (o UpdateKeyShareHolderGroupByIdRequest) MarshalJSON() ([]byte, error) {
 func (o UpdateKeyShareHolderGroupByIdRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["update_key_share_holder_group_action"] = o.UpdateKeyShareHolderGroupAction
+	if !IsNil(o.OriginalMainGroupHandling) {
+		toSerialize["original_main_group_handling"] = o.OriginalMainGroupHandling
+	}
 	return toSerialize, nil
 }
 

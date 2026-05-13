@@ -35,6 +35,7 @@ const (
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_UPDATED WebhookEventType = "fee_station.transaction.updated"
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_FAILED WebhookEventType = "fee_station.transaction.failed"
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_SUCCEEDED WebhookEventType = "fee_station.transaction.succeeded"
+	WEBHOOKEVENTTYPE_FEE_STATION_FIAT_TRANSACTION_CREATED WebhookEventType = "fee_station.fiat_transaction.created"
 	WEBHOOKEVENTTYPE_WALLET_TOKEN_ENABLED WebhookEventType = "wallet.token.enabled"
 	WEBHOOKEVENTTYPE_WALLET_CHAIN_ENABLED WebhookEventType = "wallet.chain.enabled"
 	WEBHOOKEVENTTYPE_WALLET_MPC_BALANCE_UPDATED WebhookEventType = "wallet.mpc.balance.updated"
@@ -85,6 +86,7 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"fee_station.transaction.updated",
 	"fee_station.transaction.failed",
 	"fee_station.transaction.succeeded",
+	"fee_station.fiat_transaction.created",
 	"wallet.token.enabled",
 	"wallet.chain.enabled",
 	"wallet.mpc.balance.updated",

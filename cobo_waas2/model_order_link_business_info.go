@@ -25,7 +25,7 @@ type OrderLinkBusinessInfo struct {
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
 	// A unique reference code assigned by you as a developer to identify this order in your system. This code must be unique across all orders in your system. The code should have a maximum length of 128 characters. 
 	PspOrderCode string `json:"psp_order_code"`
-	// The pricing currency that denominates `pricing_amount` and `fee_amount`. Currently, only `USD`/`USDT`/`USDC` are supported. This field is required. 
+	// The pricing currency that denominates `pricing_amount` and `fee_amount`. If left empty, both values will be denominated in `payable_currency`.  Currently, For a complete list of supported currencies, see [Supported chains and tokens](https://www.cobo.com//payments/en/guides/supported-chains-and-tokens#pricing-currency). 
 	PricingCurrency string `json:"pricing_currency"`
 	// The base amount of the order, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places. 
 	PricingAmount string `json:"pricing_amount"`
