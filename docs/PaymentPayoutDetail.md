@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **RecipientInfo** | Pointer to [**PaymentPayoutRecipientInfo**](PaymentPayoutRecipientInfo.md) |  | [optional] 
 **Initiator** | Pointer to **string** | The initiator of this payout, usually the user&#39;s API key. | [optional] 
 **ActualPayoutAmount** | Pointer to **string** | - For &#x60;Crypto&#x60; payouts: The amount of cryptocurrency sent to the recipient&#39;s address, denominated in the token specified in &#x60;recipient_info.token_id&#x60;. - For &#x60;OffRamp&#x60; payouts: The amount of fiat currency sent to the recipient&#39;s bank account, denominated in the currency specified in &#x60;recipient_info.currency&#x60;. (Note: The actual amount received may be lower due to additional bank transfer fees.)  | [optional] 
-**CommissionFees** | Pointer to [**[]CommissionFee**](CommissionFee.md) | The commission fees of the payout. | [optional] 
+**CommissionFees** | Pointer to [**[]CommissionFee**](CommissionFee.md) | The commission fees. Not returned when no fee has been incurred, the actual charged amounts once incurred, or &#x60;0&#x60; if refunded. | [optional] 
 **Remark** | Pointer to **string** | A note or comment about the payout. | [optional] 
 **Status** | [**PaymentPayoutStatus**](PaymentPayoutStatus.md) |  | 
 **CreatedTimestamp** | **int32** | The created time of the payout, represented as a UNIX timestamp in seconds. | 

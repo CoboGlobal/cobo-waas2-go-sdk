@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **Status** | [**PaymentBulkSendStatus**](PaymentBulkSendStatus.md) |  | 
 **CreatedTimestamp** | **int32** | The created time of the bulk send, represented as a UNIX timestamp in seconds. | 
 **UpdatedTimestamp** | **int32** | The updated time of the bulk send, represented as a UNIX timestamp in seconds. | 
+**CommissionFee** | Pointer to [**CommissionFee**](CommissionFee.md) | The commission fee. Not returned when no fee has been incurred, the actual charged amount once incurred, or &#x60;0&#x60; if refunded. | [optional] 
 
 ## Methods
 
@@ -201,6 +202,31 @@ and a boolean to check if the value has been set.
 
 SetUpdatedTimestamp sets UpdatedTimestamp field to given value.
 
+
+### GetCommissionFee
+
+`func (o *PaymentBulkSend) GetCommissionFee() CommissionFee`
+
+GetCommissionFee returns the CommissionFee field if non-nil, zero value otherwise.
+
+### GetCommissionFeeOk
+
+`func (o *PaymentBulkSend) GetCommissionFeeOk() (*CommissionFee, bool)`
+
+GetCommissionFeeOk returns a tuple with the CommissionFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCommissionFee
+
+`func (o *PaymentBulkSend) SetCommissionFee(v CommissionFee)`
+
+SetCommissionFee sets CommissionFee field to given value.
+
+### HasCommissionFee
+
+`func (o *PaymentBulkSend) HasCommissionFee() bool`
+
+HasCommissionFee returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -21,7 +21,9 @@ type WebhookEventData struct {
 	ComplianceDispositionUpdateEventData *ComplianceDispositionUpdateEventData
 	ComplianceKyaScreeningsUpdateEventData *ComplianceKyaScreeningsUpdateEventData
 	ComplianceKytScreeningsUpdateEventData *ComplianceKytScreeningsUpdateEventData
+	FiatTransactionEventData *FiatTransactionEventData
 	MPCVaultEventData *MPCVaultEventData
+	OrganizationEventData *OrganizationEventData
 	PaymentAddressUpdateEventData *PaymentAddressUpdateEventData
 	PaymentBulkSendEvent *PaymentBulkSendEvent
 	PaymentOrderEventData *PaymentOrderEventData
@@ -79,10 +81,24 @@ func ComplianceKytScreeningsUpdateEventDataAsWebhookEventData(v *ComplianceKytSc
 	}
 }
 
+// FiatTransactionEventDataAsWebhookEventData is a convenience function that returns FiatTransactionEventData wrapped in WebhookEventData
+func FiatTransactionEventDataAsWebhookEventData(v *FiatTransactionEventData) WebhookEventData {
+	return WebhookEventData{
+		FiatTransactionEventData: v,
+	}
+}
+
 // MPCVaultEventDataAsWebhookEventData is a convenience function that returns MPCVaultEventData wrapped in WebhookEventData
 func MPCVaultEventDataAsWebhookEventData(v *MPCVaultEventData) WebhookEventData {
 	return WebhookEventData{
 		MPCVaultEventData: v,
+	}
+}
+
+// OrganizationEventDataAsWebhookEventData is a convenience function that returns OrganizationEventData wrapped in WebhookEventData
+func OrganizationEventDataAsWebhookEventData(v *OrganizationEventData) WebhookEventData {
+	return WebhookEventData{
+		OrganizationEventData: v,
 	}
 }
 
@@ -260,6 +276,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'FiatTransaction'
+	if jsonDict["data_type"] == "FiatTransaction" {
+		// try to unmarshal JSON data into FiatTransactionEventData
+		err = json.Unmarshal(data, &dst.FiatTransactionEventData)
+		if err == nil {
+			return nil // data stored in dst.FiatTransactionEventData, return on the first match
+		} else {
+			dst.FiatTransactionEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as FiatTransactionEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MPCVault'
 	if jsonDict["data_type"] == "MPCVault" {
 		// try to unmarshal JSON data into MPCVaultEventData
@@ -269,6 +297,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.MPCVaultEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as MPCVaultEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'Organization'
+	if jsonDict["data_type"] == "Organization" {
+		// try to unmarshal JSON data into OrganizationEventData
+		err = json.Unmarshal(data, &dst.OrganizationEventData)
+		if err == nil {
+			return nil // data stored in dst.OrganizationEventData, return on the first match
+		} else {
+			dst.OrganizationEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as OrganizationEventData: %s", err.Error())
 		}
 	}
 
@@ -500,6 +540,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'FiatTransactionEventData'
+	if jsonDict["data_type"] == "FiatTransactionEventData" {
+		// try to unmarshal JSON data into FiatTransactionEventData
+		err = json.Unmarshal(data, &dst.FiatTransactionEventData)
+		if err == nil {
+			return nil // data stored in dst.FiatTransactionEventData, return on the first match
+		} else {
+			dst.FiatTransactionEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as FiatTransactionEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'MPCVaultEventData'
 	if jsonDict["data_type"] == "MPCVaultEventData" {
 		// try to unmarshal JSON data into MPCVaultEventData
@@ -509,6 +561,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.MPCVaultEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as MPCVaultEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'OrganizationEventData'
+	if jsonDict["data_type"] == "OrganizationEventData" {
+		// try to unmarshal JSON data into OrganizationEventData
+		err = json.Unmarshal(data, &dst.OrganizationEventData)
+		if err == nil {
+			return nil // data stored in dst.OrganizationEventData, return on the first match
+		} else {
+			dst.OrganizationEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as OrganizationEventData: %s", err.Error())
 		}
 	}
 
@@ -697,8 +761,16 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.ComplianceKytScreeningsUpdateEventData)
 	}
 
+	if src.FiatTransactionEventData != nil {
+		return json.Marshal(&src.FiatTransactionEventData)
+	}
+
 	if src.MPCVaultEventData != nil {
 		return json.Marshal(&src.MPCVaultEventData)
+	}
+
+	if src.OrganizationEventData != nil {
+		return json.Marshal(&src.OrganizationEventData)
 	}
 
 	if src.PaymentAddressUpdateEventData != nil {
@@ -785,8 +857,16 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 		return obj.ComplianceKytScreeningsUpdateEventData
 	}
 
+	if obj.FiatTransactionEventData != nil {
+		return obj.FiatTransactionEventData
+	}
+
 	if obj.MPCVaultEventData != nil {
 		return obj.MPCVaultEventData
+	}
+
+	if obj.OrganizationEventData != nil {
+		return obj.OrganizationEventData
 	}
 
 	if obj.PaymentAddressUpdateEventData != nil {

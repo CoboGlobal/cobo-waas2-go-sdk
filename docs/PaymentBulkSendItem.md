@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **ReceivingAddress** | **string** | The receiving address. | 
 **Amount** | **string** | The amount of the cryptocurrency to be sent to the recipient. | 
 **Description** | Pointer to **string** | A note or comment about the bulk send item. | [optional] 
+**TxHash** | Pointer to **string** | The transaction hash of the bulk send item. | [optional] 
 **Status** | [**PaymentBulkSendItemStatus**](PaymentBulkSendItemStatus.md) |  | 
 **ValidationStatus** | [**PaymentBulkSendItemValidationStatus**](PaymentBulkSendItemValidationStatus.md) |  | 
 
@@ -135,6 +136,31 @@ SetDescription sets Description field to given value.
 `func (o *PaymentBulkSendItem) HasDescription() bool`
 
 HasDescription returns a boolean if a field has been set.
+
+### GetTxHash
+
+`func (o *PaymentBulkSendItem) GetTxHash() string`
+
+GetTxHash returns the TxHash field if non-nil, zero value otherwise.
+
+### GetTxHashOk
+
+`func (o *PaymentBulkSendItem) GetTxHashOk() (*string, bool)`
+
+GetTxHashOk returns a tuple with the TxHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTxHash
+
+`func (o *PaymentBulkSendItem) SetTxHash(v string)`
+
+SetTxHash sets TxHash field to given value.
+
+### HasTxHash
+
+`func (o *PaymentBulkSendItem) HasTxHash() bool`
+
+HasTxHash returns a boolean if a field has been set.
 
 ### GetStatus
 

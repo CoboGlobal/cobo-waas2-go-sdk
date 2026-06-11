@@ -33,7 +33,7 @@ type PaymentPayoutDetail struct {
 	Initiator *string `json:"initiator,omitempty"`
 	// - For `Crypto` payouts: The amount of cryptocurrency sent to the recipient's address, denominated in the token specified in `recipient_info.token_id`. - For `OffRamp` payouts: The amount of fiat currency sent to the recipient's bank account, denominated in the currency specified in `recipient_info.currency`. (Note: The actual amount received may be lower due to additional bank transfer fees.) 
 	ActualPayoutAmount *string `json:"actual_payout_amount,omitempty"`
-	// The commission fees of the payout.
+	// The commission fees. Not returned when no fee has been incurred, the actual charged amounts once incurred, or `0` if refunded.
 	CommissionFees []CommissionFee `json:"commission_fees,omitempty"`
 	// A note or comment about the payout.
 	Remark *string `json:"remark,omitempty"`

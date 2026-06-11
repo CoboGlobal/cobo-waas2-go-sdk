@@ -307,6 +307,7 @@ docs/FeeStationSponsorTransactionDescription.md
 docs/FeeStationTransactionType.md
 docs/FeeStationTransfer.md
 docs/FeeType.md
+docs/FiatTransactionEventData.md
 docs/FixedFeeRate.md
 docs/ForcedSweep.md
 docs/ForcedSweepRequest.md
@@ -449,6 +450,7 @@ docs/OrderLinkBusinessInfoCustomExchangeRatesInner.md
 docs/OrderLinkBusinessInfoPayableAmountsInner.md
 docs/OrderStatus.md
 docs/OrgInfo.md
+docs/OrganizationEventData.md
 docs/OrganizationsAPI.md
 docs/OriginalMainGroupHandling.md
 docs/OtcFee.md
@@ -457,6 +459,10 @@ docs/PayerAccount.md
 docs/PaymentAPI.md
 docs/PaymentAddressUpdateEventData.md
 docs/PaymentAllocationAmount.md
+docs/PaymentBalanceChange.md
+docs/PaymentBalanceChangeResponse.md
+docs/PaymentBalanceChangeSourceType.md
+docs/PaymentBalanceFlowDirection.md
 docs/PaymentBridgeStatus.md
 docs/PaymentBulkSend.md
 docs/PaymentBulkSendEvent.md
@@ -1154,6 +1160,7 @@ model_fee_station_sponsor_transaction_description.go
 model_fee_station_transaction_type.go
 model_fee_station_transfer.go
 model_fee_type.go
+model_fiat_transaction_event_data.go
 model_fil_base.go
 model_fil_price.go
 model_fixed_fee_rate.go
@@ -1296,12 +1303,17 @@ model_order_link_business_info_custom_exchange_rates_inner.go
 model_order_link_business_info_payable_amounts_inner.go
 model_order_status.go
 model_org_info.go
+model_organization_event_data.go
 model_original_main_group_handling.go
 model_otc_fee.go
 model_pagination.go
 model_payer_account.go
 model_payment_address_update_event_data.go
 model_payment_allocation_amount.go
+model_payment_balance_change.go
+model_payment_balance_change_response.go
+model_payment_balance_change_source_type.go
+model_payment_balance_flow_direction.go
 model_payment_bridge_status.go
 model_payment_bulk_send.go
 model_payment_bulk_send_event.go

@@ -28,9 +28,13 @@ const (
 	WEBHOOKEVENTTYPE_WALLETS_MPC_TSS_REQUEST_SUCCEEDED WebhookEventType = "wallets.mpc.tss_request.succeeded"
 	WEBHOOKEVENTTYPE_WALLETS_ADDRESSES_CREATED WebhookEventType = "wallets.addresses.created"
 	WEBHOOKEVENTTYPE_WALLETS_CREATED WebhookEventType = "wallets.created"
+	WEBHOOKEVENTTYPE_WALLETS_UPDATED WebhookEventType = "wallets.updated"
 	WEBHOOKEVENTTYPE_WALLETS_TOKEN_LISTING_FAILED WebhookEventType = "wallets.token_listing.failed"
 	WEBHOOKEVENTTYPE_WALLETS_TOKEN_LISTING_SUCCEEDED WebhookEventType = "wallets.token_listing.succeeded"
 	WEBHOOKEVENTTYPE_MPC_VAULTS_CREATED WebhookEventType = "mpc_vaults.created"
+	WEBHOOKEVENTTYPE_MPC_VAULTS_UPDATED WebhookEventType = "mpc_vaults.updated"
+	WEBHOOKEVENTTYPE_MPC_VAULTS_DELETED WebhookEventType = "mpc_vaults.deleted"
+	WEBHOOKEVENTTYPE_ORGANIZATIONS_UPDATED WebhookEventType = "organizations.updated"
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_CREATED WebhookEventType = "fee_station.transaction.created"
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_UPDATED WebhookEventType = "fee_station.transaction.updated"
 	WEBHOOKEVENTTYPE_FEE_STATION_TRANSACTION_FAILED WebhookEventType = "fee_station.transaction.failed"
@@ -79,9 +83,13 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"wallets.mpc.tss_request.succeeded",
 	"wallets.addresses.created",
 	"wallets.created",
+	"wallets.updated",
 	"wallets.token_listing.failed",
 	"wallets.token_listing.succeeded",
 	"mpc_vaults.created",
+	"mpc_vaults.updated",
+	"mpc_vaults.deleted",
+	"organizations.updated",
 	"fee_station.transaction.created",
 	"fee_station.transaction.updated",
 	"fee_station.transaction.failed",

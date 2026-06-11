@@ -29,6 +29,8 @@ type PaymentBulkSendItem struct {
 	Amount string `json:"amount"`
 	// A note or comment about the bulk send item.
 	Description *string `json:"description,omitempty"`
+	// The transaction hash of the bulk send item.
+	TxHash *string `json:"tx_hash,omitempty"`
 	Status PaymentBulkSendItemStatus `json:"status"`
 	ValidationStatus PaymentBulkSendItemValidationStatus `json:"validation_status"`
 }
@@ -186,6 +188,38 @@ func (o *PaymentBulkSendItem) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetTxHash returns the TxHash field value if set, zero value otherwise.
+func (o *PaymentBulkSendItem) GetTxHash() string {
+	if o == nil || IsNil(o.TxHash) {
+		var ret string
+		return ret
+	}
+	return *o.TxHash
+}
+
+// GetTxHashOk returns a tuple with the TxHash field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentBulkSendItem) GetTxHashOk() (*string, bool) {
+	if o == nil || IsNil(o.TxHash) {
+		return nil, false
+	}
+	return o.TxHash, true
+}
+
+// HasTxHash returns a boolean if a field has been set.
+func (o *PaymentBulkSendItem) HasTxHash() bool {
+	if o != nil && !IsNil(o.TxHash) {
+		return true
+	}
+
+	return false
+}
+
+// SetTxHash gets a reference to the given string and assigns it to the TxHash field.
+func (o *PaymentBulkSendItem) SetTxHash(v string) {
+	o.TxHash = &v
+}
+
 // GetStatus returns the Status field value
 func (o *PaymentBulkSendItem) GetStatus() PaymentBulkSendItemStatus {
 	if o == nil {
@@ -250,6 +284,9 @@ func (o PaymentBulkSendItem) ToMap() (map[string]interface{}, error) {
 	toSerialize["amount"] = o.Amount
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.TxHash) {
+		toSerialize["tx_hash"] = o.TxHash
 	}
 	toSerialize["status"] = o.Status
 	toSerialize["validation_status"] = o.ValidationStatus

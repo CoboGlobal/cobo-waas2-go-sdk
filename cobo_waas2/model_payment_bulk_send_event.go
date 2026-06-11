@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentBulkSendEvent{}
 
 // PaymentBulkSendEvent struct for PaymentBulkSendEvent
 type PaymentBulkSendEvent struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `PaymentBulkSend`: The payment bulk send event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `PaymentBulkSend`: The payment bulk send event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data. - `Organization`: The organization event data. - `FiatTransaction`: The fiat transaction event data.
 	DataType string `json:"data_type"`
 	// The bulk send ID.
 	BulkSendId string `json:"bulk_send_id"`
@@ -35,6 +35,8 @@ type PaymentBulkSendEvent struct {
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The updated time of the bulk send, represented as a UNIX timestamp in seconds.
 	UpdatedTimestamp int32 `json:"updated_timestamp"`
+	// The commission fee. Not returned when no fee has been incurred, the actual charged amount once incurred, or `0` if refunded.
+	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
 }
 
 type _PaymentBulkSendEvent PaymentBulkSendEvent
@@ -295,6 +297,38 @@ func (o *PaymentBulkSendEvent) SetUpdatedTimestamp(v int32) {
 	o.UpdatedTimestamp = v
 }
 
+// GetCommissionFee returns the CommissionFee field value if set, zero value otherwise.
+func (o *PaymentBulkSendEvent) GetCommissionFee() CommissionFee {
+	if o == nil || IsNil(o.CommissionFee) {
+		var ret CommissionFee
+		return ret
+	}
+	return *o.CommissionFee
+}
+
+// GetCommissionFeeOk returns a tuple with the CommissionFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentBulkSendEvent) GetCommissionFeeOk() (*CommissionFee, bool) {
+	if o == nil || IsNil(o.CommissionFee) {
+		return nil, false
+	}
+	return o.CommissionFee, true
+}
+
+// HasCommissionFee returns a boolean if a field has been set.
+func (o *PaymentBulkSendEvent) HasCommissionFee() bool {
+	if o != nil && !IsNil(o.CommissionFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommissionFee gets a reference to the given CommissionFee and assigns it to the CommissionFee field.
+func (o *PaymentBulkSendEvent) SetCommissionFee(v CommissionFee) {
+	o.CommissionFee = &v
+}
+
 func (o PaymentBulkSendEvent) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -318,6 +352,9 @@ func (o PaymentBulkSendEvent) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
+	if !IsNil(o.CommissionFee) {
+		toSerialize["commission_fee"] = o.CommissionFee
+	}
 	return toSerialize, nil
 }
 

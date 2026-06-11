@@ -19,7 +19,7 @@ var _ MappedNullable = &PaymentRefundEventData{}
 
 // PaymentRefundEventData struct for PaymentRefundEventData
 type PaymentRefundEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `PaymentBulkSend`: The payment bulk send event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `PaymentBulkSend`: The payment bulk send event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data. - `Organization`: The organization event data. - `FiatTransaction`: The fiat transaction event data.
 	DataType string `json:"data_type"`
 	// The request ID provided by you when creating the refund request.
 	RequestId *string `json:"request_id,omitempty"`
@@ -53,6 +53,7 @@ type PaymentRefundEventData struct {
 	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
 	// The ID of the cryptocurrency used for the developer fee. This is only applicable if `charge_merchant_fee` is set to true.
 	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
+	// The commission fee. Not returned when no fee has been incurred, the actual charged amount once incurred, or `0` if refunded.
 	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
 }
 

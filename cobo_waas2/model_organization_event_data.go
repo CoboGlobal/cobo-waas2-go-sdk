@@ -14,42 +14,41 @@ import (
 	"fmt"
 )
 
-// checks if the SuspendedTokenEventData type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &SuspendedTokenEventData{}
+// checks if the OrganizationEventData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OrganizationEventData{}
 
-// SuspendedTokenEventData struct for SuspendedTokenEventData
-type SuspendedTokenEventData struct {
+// OrganizationEventData struct for OrganizationEventData
+type OrganizationEventData struct {
 	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `PaymentBulkSend`: The payment bulk send event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data. - `Organization`: The organization event data. - `FiatTransaction`: The fiat transaction event data.
 	DataType string `json:"data_type"`
-	// A list of token IDs, separated by comma.
-	TokenIds string `json:"token_ids"`
-	OperationType SuspendedTokenOperationType `json:"operation_type"`
+	// The organization ID.
+	OrgId *string `json:"org_id,omitempty"`
+	// The organization name.
+	Name *string `json:"name,omitempty"`
 }
 
-type _SuspendedTokenEventData SuspendedTokenEventData
+type _OrganizationEventData OrganizationEventData
 
-// NewSuspendedTokenEventData instantiates a new SuspendedTokenEventData object
+// NewOrganizationEventData instantiates a new OrganizationEventData object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSuspendedTokenEventData(dataType string, tokenIds string, operationType SuspendedTokenOperationType) *SuspendedTokenEventData {
-	this := SuspendedTokenEventData{}
+func NewOrganizationEventData(dataType string) *OrganizationEventData {
+	this := OrganizationEventData{}
 	this.DataType = dataType
-	this.TokenIds = tokenIds
-	this.OperationType = operationType
 	return &this
 }
 
-// NewSuspendedTokenEventDataWithDefaults instantiates a new SuspendedTokenEventData object
+// NewOrganizationEventDataWithDefaults instantiates a new OrganizationEventData object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSuspendedTokenEventDataWithDefaults() *SuspendedTokenEventData {
-	this := SuspendedTokenEventData{}
+func NewOrganizationEventDataWithDefaults() *OrganizationEventData {
+	this := OrganizationEventData{}
 	return &this
 }
 
 // GetDataType returns the DataType field value
-func (o *SuspendedTokenEventData) GetDataType() string {
+func (o *OrganizationEventData) GetDataType() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -60,7 +59,7 @@ func (o *SuspendedTokenEventData) GetDataType() string {
 
 // GetDataTypeOk returns a tuple with the DataType field value
 // and a boolean to check if the value has been set.
-func (o *SuspendedTokenEventData) GetDataTypeOk() (*string, bool) {
+func (o *OrganizationEventData) GetDataTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,59 +67,75 @@ func (o *SuspendedTokenEventData) GetDataTypeOk() (*string, bool) {
 }
 
 // SetDataType sets field value
-func (o *SuspendedTokenEventData) SetDataType(v string) {
+func (o *OrganizationEventData) SetDataType(v string) {
 	o.DataType = v
 }
 
-// GetTokenIds returns the TokenIds field value
-func (o *SuspendedTokenEventData) GetTokenIds() string {
-	if o == nil {
+// GetOrgId returns the OrgId field value if set, zero value otherwise.
+func (o *OrganizationEventData) GetOrgId() string {
+	if o == nil || IsNil(o.OrgId) {
 		var ret string
 		return ret
 	}
-
-	return o.TokenIds
+	return *o.OrgId
 }
 
-// GetTokenIdsOk returns a tuple with the TokenIds field value
+// GetOrgIdOk returns a tuple with the OrgId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuspendedTokenEventData) GetTokenIdsOk() (*string, bool) {
-	if o == nil {
+func (o *OrganizationEventData) GetOrgIdOk() (*string, bool) {
+	if o == nil || IsNil(o.OrgId) {
 		return nil, false
 	}
-	return &o.TokenIds, true
+	return o.OrgId, true
 }
 
-// SetTokenIds sets field value
-func (o *SuspendedTokenEventData) SetTokenIds(v string) {
-	o.TokenIds = v
+// HasOrgId returns a boolean if a field has been set.
+func (o *OrganizationEventData) HasOrgId() bool {
+	if o != nil && !IsNil(o.OrgId) {
+		return true
+	}
+
+	return false
 }
 
-// GetOperationType returns the OperationType field value
-func (o *SuspendedTokenEventData) GetOperationType() SuspendedTokenOperationType {
-	if o == nil {
-		var ret SuspendedTokenOperationType
+// SetOrgId gets a reference to the given string and assigns it to the OrgId field.
+func (o *OrganizationEventData) SetOrgId(v string) {
+	o.OrgId = &v
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *OrganizationEventData) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
 		return ret
 	}
-
-	return o.OperationType
+	return *o.Name
 }
 
-// GetOperationTypeOk returns a tuple with the OperationType field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuspendedTokenEventData) GetOperationTypeOk() (*SuspendedTokenOperationType, bool) {
-	if o == nil {
+func (o *OrganizationEventData) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.OperationType, true
+	return o.Name, true
 }
 
-// SetOperationType sets field value
-func (o *SuspendedTokenEventData) SetOperationType(v SuspendedTokenOperationType) {
-	o.OperationType = v
+// HasName returns a boolean if a field has been set.
+func (o *OrganizationEventData) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
 }
 
-func (o SuspendedTokenEventData) MarshalJSON() ([]byte, error) {
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *OrganizationEventData) SetName(v string) {
+	o.Name = &v
+}
+
+func (o OrganizationEventData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -128,22 +143,24 @@ func (o SuspendedTokenEventData) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o SuspendedTokenEventData) ToMap() (map[string]interface{}, error) {
+func (o OrganizationEventData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["data_type"] = o.DataType
-	toSerialize["token_ids"] = o.TokenIds
-	toSerialize["operation_type"] = o.OperationType
+	if !IsNil(o.OrgId) {
+		toSerialize["org_id"] = o.OrgId
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
 	return toSerialize, nil
 }
 
-func (o *SuspendedTokenEventData) UnmarshalJSON(data []byte) (err error) {
+func (o *OrganizationEventData) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"data_type",
-		"token_ids",
-		"operation_type",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -160,53 +177,53 @@ func (o *SuspendedTokenEventData) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varSuspendedTokenEventData := _SuspendedTokenEventData{}
+	varOrganizationEventData := _OrganizationEventData{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	//decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSuspendedTokenEventData)
+	err = decoder.Decode(&varOrganizationEventData)
 
 	if err != nil {
 		return err
 	}
 
-	*o = SuspendedTokenEventData(varSuspendedTokenEventData)
+	*o = OrganizationEventData(varOrganizationEventData)
 
 	return err
 }
 
-type NullableSuspendedTokenEventData struct {
-	value *SuspendedTokenEventData
+type NullableOrganizationEventData struct {
+	value *OrganizationEventData
 	isSet bool
 }
 
-func (v NullableSuspendedTokenEventData) Get() *SuspendedTokenEventData {
+func (v NullableOrganizationEventData) Get() *OrganizationEventData {
 	return v.value
 }
 
-func (v *NullableSuspendedTokenEventData) Set(val *SuspendedTokenEventData) {
+func (v *NullableOrganizationEventData) Set(val *OrganizationEventData) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSuspendedTokenEventData) IsSet() bool {
+func (v NullableOrganizationEventData) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSuspendedTokenEventData) Unset() {
+func (v *NullableOrganizationEventData) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSuspendedTokenEventData(val *SuspendedTokenEventData) *NullableSuspendedTokenEventData {
-	return &NullableSuspendedTokenEventData{value: val, isSet: true}
+func NewNullableOrganizationEventData(val *OrganizationEventData) *NullableOrganizationEventData {
+	return &NullableOrganizationEventData{value: val, isSet: true}
 }
 
-func (v NullableSuspendedTokenEventData) MarshalJSON() ([]byte, error) {
+func (v NullableOrganizationEventData) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSuspendedTokenEventData) UnmarshalJSON(src []byte) error {
+func (v *NullableOrganizationEventData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

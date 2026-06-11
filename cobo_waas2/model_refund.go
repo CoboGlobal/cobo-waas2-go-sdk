@@ -51,6 +51,7 @@ type Refund struct {
 	MerchantFeeAmount *string `json:"merchant_fee_amount,omitempty"`
 	// The ID of the cryptocurrency used for the developer fee. This is only applicable if `charge_merchant_fee` is set to true.
 	MerchantFeeTokenId *string `json:"merchant_fee_token_id,omitempty"`
+	// The commission fee. Not returned when no fee has been incurred, the actual charged amount once incurred, or `0` if refunded.
 	CommissionFee *CommissionFee `json:"commission_fee,omitempty"`
 }
 
