@@ -21,7 +21,7 @@ var _ MappedNullable = &TransactionSOLFee{}
 type TransactionSOLFee struct {
 	// A fixed fee charged per signature. The default is 5,000 lamports per signature.
 	BaseFee *string `json:"base_fee,omitempty"`
-	// The rent fee charged by the network to store non–rent-exempt accounts on-chain. It is deducted periodically until the account maintains the minimum balance required for rent exemption.
+	// The one-time rent required to create and initialize a Solana token Associated Token Account (ATA) — a token sub-address that must be activated before the token can be received or used. This rent is paid by the main (source) address. It is populated only when an ATA must be activated for the transaction; otherwise it is null. 
 	RentAmount *string `json:"rent_amount,omitempty"`
 	// The price paid per compute unit. This value determines the priority fee for the transaction, allowing you to increase inclusion probability in congested conditions.
 	ComputeUnitPrice *string `json:"compute_unit_price,omitempty"`
@@ -30,7 +30,7 @@ type TransactionSOLFee struct {
 	FeeType FeeType `json:"fee_type"`
 	// The token used to pay the transaction fee.
 	TokenId *string `json:"token_id,omitempty"`
-	// The actually charged transaction fee.
+	// The actual on-chain network transaction fee charged for this Solana transaction. For Solana, this value covers the network fee only and does NOT include `rent_amount`. The total cost deducted from the transaction's source (withdrawal) address is `fee_used` + `rent_amount`, both paid by the same source address. 
 	FeeUsed *string `json:"fee_used,omitempty"`
 	// The estimated transaction fee.
 	EstimatedFeeUsed *string `json:"estimated_fee_used,omitempty"`

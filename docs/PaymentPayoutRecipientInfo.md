@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Address** | Pointer to **string** | The recipient&#39;s wallet address where the payout will be sent. | [optional] 
 **TokenId** | Pointer to **string** | The token ID for the cryptocurrency to be sent to the recipient.  If &#x60;recipient_info.token_id&#x60; is on a different chain than &#x60;payout_param.token_id&#x60;, the token will be automatically bridged to the chain specified in &#x60;recipient_info.token_id&#x60;.  | [optional] 
 **Currency** | Pointer to **string** | The fiat currency of the bank account to which the payout will be sent. | [optional] 
-**BankAccountId** | Pointer to **string** | The ID of the bank account to which the payout will be sent. You can retrieve the bank account ID by calling [List destination entries](https://www.cobo.com/payments/en/api-references/payment/list-destination-entries). | [optional] 
+**BankAccountId** | Pointer to **string** | The ID of the bank account to which the payout will be sent. This field is required only when the payout channel is &#x60;OffRamp&#x60;. You can retrieve the bank account ID by calling [List destination entries](https://www.cobo.com/payments/en/api-references/payment/list-destination-entries). | [optional] 
 **TransferViaVa** | Pointer to **bool** | For OffRamp payout, whether the payout is transferred to a registered bank account via a virtual account (VA) or directly. - &#x60;true&#x60;: The payout is transferred to a registered bank account via a VA (virtual account). - &#x60;false&#x60;: The payout is transferred directly to a registered bank account.  | [optional] 
 
 ## Methods

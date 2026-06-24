@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **MessageVersion** | Pointer to **string** | Version of the message format used for the transaction approval. | [optional] 
 **Message** | Pointer to **string** | Message associated with the transaction approval. | [optional] 
 **ExtraMessage** | Pointer to **string** | Any additional message or information related to the transaction approval. | [optional] 
+**ResultToken** | Pointer to **NullableString** | The result token appended to the signing content when verifying signatures. The full signing content is constructed as &#x60;{message}||{result_token}&#x60;.  | [optional] 
 
 ## Methods
 
@@ -466,6 +467,41 @@ SetExtraMessage sets ExtraMessage field to given value.
 
 HasExtraMessage returns a boolean if a field has been set.
 
+### GetResultToken
+
+`func (o *ApprovalUserDetail) GetResultToken() string`
+
+GetResultToken returns the ResultToken field if non-nil, zero value otherwise.
+
+### GetResultTokenOk
+
+`func (o *ApprovalUserDetail) GetResultTokenOk() (*string, bool)`
+
+GetResultTokenOk returns a tuple with the ResultToken field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResultToken
+
+`func (o *ApprovalUserDetail) SetResultToken(v string)`
+
+SetResultToken sets ResultToken field to given value.
+
+### HasResultToken
+
+`func (o *ApprovalUserDetail) HasResultToken() bool`
+
+HasResultToken returns a boolean if a field has been set.
+
+### SetResultTokenNil
+
+`func (o *ApprovalUserDetail) SetResultTokenNil(b bool)`
+
+ SetResultTokenNil sets the value for ResultToken to be an explicit nil
+
+### UnsetResultToken
+`func (o *ApprovalUserDetail) UnsetResultToken()`
+
+UnsetResultToken ensures that no value is present for ResultToken, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

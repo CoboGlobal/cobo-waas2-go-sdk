@@ -19,12 +19,14 @@ var _ MappedNullable = &PaymentAddressUpdateEventData{}
 
 // PaymentAddressUpdateEventData struct for PaymentAddressUpdateEventData
 type PaymentAddressUpdateEventData struct {
-	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `PaymentBulkSend`: The payment bulk send event data. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data. - `Organization`: The organization event data. - `FiatTransaction`: The fiat transaction event data.
+	//  The data type of the event. - `Transaction`: The transaction event data. - `TSSRequest`: The TSS request event data. - `Addresses`: The addresses event data. - `WalletInfo`: The wallet information event data. - `MPCVault`: The MPC vault event data. - `Chains`: The enabled chain event data. - `Tokens`: The enabled token event data. - `TokenListing`: The token listing event data.        - `PaymentOrder`: The payment order event data. - `PaymentRefund`: The payment refund event data. - `PaymentSettlement`: The payment settlement event data. - `PaymentTransaction`: The payment transaction event data. - `PaymentAddressUpdate`: The top-up address update event data. - `PaymentPayout`: The payment payout event data. - `PaymentBulkSend`: The payment bulk send event data. - `PaymentAccountBalanceUpdate`: The Payments account balance updated event data, including account information and balance change details. - `BalanceUpdateInfo`: The balance update event data. - `SuspendedToken`: The token suspension event data. - `ComplianceDisposition`: The compliance disposition event data. - `ComplianceKytScreenings`: The compliance KYT screenings event data. - `ComplianceKyaScreenings`: The compliance KYA screenings event data. - `Organization`: The organization event data. - `FiatTransaction`: The fiat transaction event data.
 	DataType string `json:"data_type"`
 	// A unique identifier assigned by the developer to track and identify individual payers in their system.
 	CustomPayerId string `json:"custom_payer_id"`
 	// A unique identifier assigned by Cobo to track and identify individual payers.
 	PayerId string `json:"payer_id"`
+	// The merchant ID.
+	MerchantId *string `json:"merchant_id,omitempty"`
 	// The chain ID.
 	Chain string `json:"chain"`
 	// The previous top-up address that was assigned to the payer.
@@ -130,6 +132,38 @@ func (o *PaymentAddressUpdateEventData) SetPayerId(v string) {
 	o.PayerId = v
 }
 
+// GetMerchantId returns the MerchantId field value if set, zero value otherwise.
+func (o *PaymentAddressUpdateEventData) GetMerchantId() string {
+	if o == nil || IsNil(o.MerchantId) {
+		var ret string
+		return ret
+	}
+	return *o.MerchantId
+}
+
+// GetMerchantIdOk returns a tuple with the MerchantId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentAddressUpdateEventData) GetMerchantIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MerchantId) {
+		return nil, false
+	}
+	return o.MerchantId, true
+}
+
+// HasMerchantId returns a boolean if a field has been set.
+func (o *PaymentAddressUpdateEventData) HasMerchantId() bool {
+	if o != nil && !IsNil(o.MerchantId) {
+		return true
+	}
+
+	return false
+}
+
+// SetMerchantId gets a reference to the given string and assigns it to the MerchantId field.
+func (o *PaymentAddressUpdateEventData) SetMerchantId(v string) {
+	o.MerchantId = &v
+}
+
 // GetChain returns the Chain field value
 func (o *PaymentAddressUpdateEventData) GetChain() string {
 	if o == nil {
@@ -215,6 +249,9 @@ func (o PaymentAddressUpdateEventData) ToMap() (map[string]interface{}, error) {
 	toSerialize["data_type"] = o.DataType
 	toSerialize["custom_payer_id"] = o.CustomPayerId
 	toSerialize["payer_id"] = o.PayerId
+	if !IsNil(o.MerchantId) {
+		toSerialize["merchant_id"] = o.MerchantId
+	}
 	toSerialize["chain"] = o.Chain
 	toSerialize["previous_address"] = o.PreviousAddress
 	toSerialize["updated_address"] = o.UpdatedAddress

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;PaymentPayout&#x60;: The payment payout event data. - &#x60;PaymentBulkSend&#x60;: The payment bulk send event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. - &#x60;ComplianceKyaScreenings&#x60;: The compliance KYA screenings event data. - &#x60;Organization&#x60;: The organization event data. - &#x60;FiatTransaction&#x60;: The fiat transaction event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;PaymentPayout&#x60;: The payment payout event data. - &#x60;PaymentBulkSend&#x60;: The payment bulk send event data. - &#x60;PaymentAccountBalanceUpdate&#x60;: The Payments account balance updated event data, including account information and balance change details. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. - &#x60;ComplianceKyaScreenings&#x60;: The compliance KYA screenings event data. - &#x60;Organization&#x60;: The organization event data. - &#x60;FiatTransaction&#x60;: The fiat transaction event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | **string** | The request ID. | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
 **FailedReason** | Pointer to **string** | (This property is applicable to approval failures and signature failures only) The reason why the transaction failed. | [optional] 
 **ChainId** | **string** | The chain identifier. | 
-**TokenId** | **string** | The token ID, which is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
+**TokenId** | **string** | The token ID of the balance change. | 
 **AssetId** | Pointer to **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | [optional] 
 **Source** | [**TransactionSource**](TransactionSource.md) |  | 
 **Destination** | [**TransactionDestination**](TransactionDestination.md) |  | 
@@ -93,11 +93,13 @@ Name | Type | Description | Notes
 **BankAccount** | Pointer to [**BankAccount**](BankAccount.md) |  | [optional] 
 **PayerId** | **string** | A unique identifier assigned by Cobo to track and identify individual payers. | 
 **CustomPayerId** | **string** | A unique identifier assigned by the developer to track and identify individual payers in their system. | 
+**SubscriptionId** | Pointer to **string** | A unique identifier assigned by Cobo to track and identify subscription. | [optional] 
+**ActionId** | Pointer to **string** | A unique identifier assigned by Cobo to track and identify subscription action. | [optional] 
 **Chain** | **string** | The chain ID. | 
 **PreviousAddress** | **string** | The previous top-up address that was assigned to the payer. | 
 **UpdatedAddress** | **string** | The new top-up address that has been assigned to the payer. | 
 **PayoutId** | **string** | The payout ID generated by Cobo. | 
-**SourceAccount** | **string** | The source account from which the bulk send will be made. - If the source account is a merchant account, provide the merchant&#39;s ID (e.g., \&quot;M1001\&quot;). - If the source account is the developer account, use the string &#x60;\&quot;developer\&quot;&#x60;.  | 
+**SourceAccount** | **string** | The source account of the balance change. This field uses the same semantics as &#x60;source_account&#x60; in [List balance changes](https://www.cobo.com/developers/v2/api-references/payment/list-balance-changes). - When the account is a merchant account, this is the merchant ID (merchant code), which you can retrieve by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants). - When the account is the developer account, use &#x60;developer&#x60;.  | 
 **PayoutItems** | Pointer to [**[]PaymentPayoutItem**](PaymentPayoutItem.md) | required | [optional] 
 **RecipientInfo** | Pointer to [**PaymentPayoutRecipientInfo**](PaymentPayoutRecipientInfo.md) |  | [optional] 
 **ActualPayoutAmount** | Pointer to **string** | - For &#x60;Crypto&#x60; payouts: The amount of cryptocurrency sent to the recipient&#39;s address, denominated in the token specified in &#x60;recipient_info.token_id&#x60;. - For &#x60;OffRamp&#x60; payouts: The amount of fiat currency sent to the recipient&#39;s bank account, denominated in the currency specified in &#x60;recipient_info.currency&#x60;. (Note: The actual amount received may be lower due to additional bank transfer fees.)  | [optional] 
@@ -105,6 +107,15 @@ Name | Type | Description | Notes
 **Remark** | Pointer to **string** | A note or comment about the payout. | [optional] 
 **BulkSendId** | **string** | The bulk send ID. | 
 **ExecutionMode** | [**PaymentBulkSendExecutionMode**](PaymentBulkSendExecutionMode.md) |  | 
+**SourceId** | **string** | The source ID of the balance change. | 
+**SourceType** | [**PaymentBalanceChangeSourceType**](PaymentBalanceChangeSourceType.md) |  | 
+**AmountRaw** | **string** | The balance change amount in the token&#39;s decimal precision, represented as a numeric string. | 
+**BalanceBefore** | **string** | The account balance before the balance change, truncated to two decimal places and represented as a numeric string. | 
+**BalanceBeforeRaw** | **string** | The account balance before the balance change in the token&#39;s decimal precision, represented as a numeric string. | 
+**BalanceAfter** | **string** | The account balance after the balance change, truncated to two decimal places and represented as a numeric string. | 
+**BalanceAfterRaw** | **string** | The account balance after the balance change in the token&#39;s decimal precision, represented as a numeric string. | 
+**FlowDirection** | [**PaymentBalanceFlowDirection**](PaymentBalanceFlowDirection.md) |  | 
+**UpdateTime** | **int64** | The time when the balance was updated, represented as a UNIX timestamp in seconds. | 
 **DispositionType** | [**DispositionType**](DispositionType.md) |  | 
 **DispositionStatus** | [**DispositionStatus**](DispositionStatus.md) |  | 
 **DestinationAddress** | Pointer to **string** | The blockchain address to receive the refunded/isolated funds. | [optional] 
@@ -122,7 +133,7 @@ Name | Type | Description | Notes
 
 ### NewWebhookEventData
 
-`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status string, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, pspOrderCode string, feeAmount string, payableAmount string, exchangeRate string, receiveAddress string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payoutChannel PayoutChannel, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, payoutId string, sourceAccount string, bulkSendId string, executionMode PaymentBulkSendExecutionMode, dispositionType DispositionType, dispositionStatus DispositionStatus, transactionType FeeStationFiatTransactionType, reviewStatus ReviewStatusType, fundsStatus FundsStatusType, screeningId string, fiatCurrency string, ) *WebhookEventData`
+`func NewWebhookEventData(dataType string, transactionId string, requestId string, walletId string, status string, chainId string, tokenId string, source TransactionSource, destination TransactionDestination, initiatorType TransactionInitiatorType, createdTimestamp int64, updatedTimestamp int64, chains []ChainInfo, walletType WalletType, tokens []TokenInfo, contractAddress string, walletSubtype WalletSubtype, address string, walletUuid string, balance Balance, tokenIds string, operationType SuspendedTokenOperationType, orderId string, pspOrderCode string, feeAmount string, payableAmount string, exchangeRate string, receiveAddress string, receivedTokenAmount string, refundId string, amount string, toAddress string, settlementRequestId string, settlements []SettlementDetail, acquiringType AcquiringType, payoutChannel PayoutChannel, payerId string, customPayerId string, chain string, previousAddress string, updatedAddress string, payoutId string, sourceAccount string, bulkSendId string, executionMode PaymentBulkSendExecutionMode, sourceId string, sourceType PaymentBalanceChangeSourceType, amountRaw string, balanceBefore string, balanceBeforeRaw string, balanceAfter string, balanceAfterRaw string, flowDirection PaymentBalanceFlowDirection, updateTime int64, dispositionType DispositionType, dispositionStatus DispositionStatus, transactionType FeeStationFiatTransactionType, reviewStatus ReviewStatusType, fundsStatus FundsStatusType, screeningId string, fiatCurrency string, ) *WebhookEventData`
 
 NewWebhookEventData instantiates a new WebhookEventData object
 This constructor will assign default values to properties that have it defined,
@@ -2172,6 +2183,56 @@ and a boolean to check if the value has been set.
 SetCustomPayerId sets CustomPayerId field to given value.
 
 
+### GetSubscriptionId
+
+`func (o *WebhookEventData) GetSubscriptionId() string`
+
+GetSubscriptionId returns the SubscriptionId field if non-nil, zero value otherwise.
+
+### GetSubscriptionIdOk
+
+`func (o *WebhookEventData) GetSubscriptionIdOk() (*string, bool)`
+
+GetSubscriptionIdOk returns a tuple with the SubscriptionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscriptionId
+
+`func (o *WebhookEventData) SetSubscriptionId(v string)`
+
+SetSubscriptionId sets SubscriptionId field to given value.
+
+### HasSubscriptionId
+
+`func (o *WebhookEventData) HasSubscriptionId() bool`
+
+HasSubscriptionId returns a boolean if a field has been set.
+
+### GetActionId
+
+`func (o *WebhookEventData) GetActionId() string`
+
+GetActionId returns the ActionId field if non-nil, zero value otherwise.
+
+### GetActionIdOk
+
+`func (o *WebhookEventData) GetActionIdOk() (*string, bool)`
+
+GetActionIdOk returns a tuple with the ActionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetActionId
+
+`func (o *WebhookEventData) SetActionId(v string)`
+
+SetActionId sets ActionId field to given value.
+
+### HasActionId
+
+`func (o *WebhookEventData) HasActionId() bool`
+
+HasActionId returns a boolean if a field has been set.
+
 ### GetChain
 
 `func (o *WebhookEventData) GetChain() string`
@@ -2435,6 +2496,186 @@ and a boolean to check if the value has been set.
 `func (o *WebhookEventData) SetExecutionMode(v PaymentBulkSendExecutionMode)`
 
 SetExecutionMode sets ExecutionMode field to given value.
+
+
+### GetSourceId
+
+`func (o *WebhookEventData) GetSourceId() string`
+
+GetSourceId returns the SourceId field if non-nil, zero value otherwise.
+
+### GetSourceIdOk
+
+`func (o *WebhookEventData) GetSourceIdOk() (*string, bool)`
+
+GetSourceIdOk returns a tuple with the SourceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceId
+
+`func (o *WebhookEventData) SetSourceId(v string)`
+
+SetSourceId sets SourceId field to given value.
+
+
+### GetSourceType
+
+`func (o *WebhookEventData) GetSourceType() PaymentBalanceChangeSourceType`
+
+GetSourceType returns the SourceType field if non-nil, zero value otherwise.
+
+### GetSourceTypeOk
+
+`func (o *WebhookEventData) GetSourceTypeOk() (*PaymentBalanceChangeSourceType, bool)`
+
+GetSourceTypeOk returns a tuple with the SourceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceType
+
+`func (o *WebhookEventData) SetSourceType(v PaymentBalanceChangeSourceType)`
+
+SetSourceType sets SourceType field to given value.
+
+
+### GetAmountRaw
+
+`func (o *WebhookEventData) GetAmountRaw() string`
+
+GetAmountRaw returns the AmountRaw field if non-nil, zero value otherwise.
+
+### GetAmountRawOk
+
+`func (o *WebhookEventData) GetAmountRawOk() (*string, bool)`
+
+GetAmountRawOk returns a tuple with the AmountRaw field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAmountRaw
+
+`func (o *WebhookEventData) SetAmountRaw(v string)`
+
+SetAmountRaw sets AmountRaw field to given value.
+
+
+### GetBalanceBefore
+
+`func (o *WebhookEventData) GetBalanceBefore() string`
+
+GetBalanceBefore returns the BalanceBefore field if non-nil, zero value otherwise.
+
+### GetBalanceBeforeOk
+
+`func (o *WebhookEventData) GetBalanceBeforeOk() (*string, bool)`
+
+GetBalanceBeforeOk returns a tuple with the BalanceBefore field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalanceBefore
+
+`func (o *WebhookEventData) SetBalanceBefore(v string)`
+
+SetBalanceBefore sets BalanceBefore field to given value.
+
+
+### GetBalanceBeforeRaw
+
+`func (o *WebhookEventData) GetBalanceBeforeRaw() string`
+
+GetBalanceBeforeRaw returns the BalanceBeforeRaw field if non-nil, zero value otherwise.
+
+### GetBalanceBeforeRawOk
+
+`func (o *WebhookEventData) GetBalanceBeforeRawOk() (*string, bool)`
+
+GetBalanceBeforeRawOk returns a tuple with the BalanceBeforeRaw field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalanceBeforeRaw
+
+`func (o *WebhookEventData) SetBalanceBeforeRaw(v string)`
+
+SetBalanceBeforeRaw sets BalanceBeforeRaw field to given value.
+
+
+### GetBalanceAfter
+
+`func (o *WebhookEventData) GetBalanceAfter() string`
+
+GetBalanceAfter returns the BalanceAfter field if non-nil, zero value otherwise.
+
+### GetBalanceAfterOk
+
+`func (o *WebhookEventData) GetBalanceAfterOk() (*string, bool)`
+
+GetBalanceAfterOk returns a tuple with the BalanceAfter field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalanceAfter
+
+`func (o *WebhookEventData) SetBalanceAfter(v string)`
+
+SetBalanceAfter sets BalanceAfter field to given value.
+
+
+### GetBalanceAfterRaw
+
+`func (o *WebhookEventData) GetBalanceAfterRaw() string`
+
+GetBalanceAfterRaw returns the BalanceAfterRaw field if non-nil, zero value otherwise.
+
+### GetBalanceAfterRawOk
+
+`func (o *WebhookEventData) GetBalanceAfterRawOk() (*string, bool)`
+
+GetBalanceAfterRawOk returns a tuple with the BalanceAfterRaw field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalanceAfterRaw
+
+`func (o *WebhookEventData) SetBalanceAfterRaw(v string)`
+
+SetBalanceAfterRaw sets BalanceAfterRaw field to given value.
+
+
+### GetFlowDirection
+
+`func (o *WebhookEventData) GetFlowDirection() PaymentBalanceFlowDirection`
+
+GetFlowDirection returns the FlowDirection field if non-nil, zero value otherwise.
+
+### GetFlowDirectionOk
+
+`func (o *WebhookEventData) GetFlowDirectionOk() (*PaymentBalanceFlowDirection, bool)`
+
+GetFlowDirectionOk returns a tuple with the FlowDirection field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFlowDirection
+
+`func (o *WebhookEventData) SetFlowDirection(v PaymentBalanceFlowDirection)`
+
+SetFlowDirection sets FlowDirection field to given value.
+
+
+### GetUpdateTime
+
+`func (o *WebhookEventData) GetUpdateTime() int64`
+
+GetUpdateTime returns the UpdateTime field if non-nil, zero value otherwise.
+
+### GetUpdateTimeOk
+
+`func (o *WebhookEventData) GetUpdateTimeOk() (*int64, bool)`
+
+GetUpdateTimeOk returns a tuple with the UpdateTime field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdateTime
+
+`func (o *WebhookEventData) SetUpdateTime(v int64)`
+
+SetUpdateTime sets UpdateTime field to given value.
 
 
 ### GetDispositionType

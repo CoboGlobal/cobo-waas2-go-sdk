@@ -457,6 +457,7 @@ docs/OtcFee.md
 docs/Pagination.md
 docs/PayerAccount.md
 docs/PaymentAPI.md
+docs/PaymentAccountBalanceUpdateEventData.md
 docs/PaymentAddressUpdateEventData.md
 docs/PaymentAllocationAmount.md
 docs/PaymentBalanceChange.md
@@ -1308,6 +1309,7 @@ model_original_main_group_handling.go
 model_otc_fee.go
 model_pagination.go
 model_payer_account.go
+model_payment_account_balance_update_event_data.go
 model_payment_address_update_event_data.go
 model_payment_allocation_amount.go
 model_payment_balance_change.go
