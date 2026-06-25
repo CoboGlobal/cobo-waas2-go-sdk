@@ -23,7 +23,7 @@ type PaymentPayoutRecipientInfo struct {
 	TokenId *string `json:"token_id,omitempty"`
 	// The fiat currency of the bank account to which the payout will be sent.
 	Currency *string `json:"currency,omitempty"`
-	// The ID of the bank account to which the payout will be sent. You can retrieve the bank account ID by calling [List destination entries](https://www.cobo.com/payments/en/api-references/payment/list-destination-entries).
+	// The ID of the bank account to which the payout will be sent. This field is required only when the payout channel is `OffRamp`. You can retrieve the bank account ID by calling [List destination entries](https://www.cobo.com/payments/en/api-references/payment/list-destination-entries).
 	BankAccountId *string `json:"bank_account_id,omitempty"`
 	// For OffRamp payout, whether the payout is transferred to a registered bank account via a virtual account (VA) or directly. - `true`: The payout is transferred to a registered bank account via a VA (virtual account). - `false`: The payout is transferred directly to a registered bank account. 
 	TransferViaVa *bool `json:"transfer_via_va,omitempty"`

@@ -25,7 +25,7 @@ type CreateBulkSendRequestPayoutParamsInner struct {
 	ReceivingAddress string `json:"receiving_address"`
 	// The amount of the cryptocurrency to be sent to the recipient.
 	Amount string `json:"amount"`
-	// A note or comment about the bulk send item.
+	// A note or comment about the bulk send item. Maximum length: 255 characters.
 	Description *string `json:"description,omitempty"`
 }
 

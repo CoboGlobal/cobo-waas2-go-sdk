@@ -50,6 +50,8 @@ type ApprovalUserDetail struct {
 	Message *string `json:"message,omitempty"`
 	// Any additional message or information related to the transaction approval.
 	ExtraMessage *string `json:"extra_message,omitempty"`
+	// The result token appended to the signing content when verifying signatures. The full signing content is constructed as `{message}||{result_token}`. 
+	ResultToken NullableString `json:"result_token,omitempty"`
 }
 
 // NewApprovalUserDetail instantiates a new ApprovalUserDetail object
@@ -613,6 +615,48 @@ func (o *ApprovalUserDetail) SetExtraMessage(v string) {
 	o.ExtraMessage = &v
 }
 
+// GetResultToken returns the ResultToken field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApprovalUserDetail) GetResultToken() string {
+	if o == nil || IsNil(o.ResultToken.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ResultToken.Get()
+}
+
+// GetResultTokenOk returns a tuple with the ResultToken field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApprovalUserDetail) GetResultTokenOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ResultToken.Get(), o.ResultToken.IsSet()
+}
+
+// HasResultToken returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasResultToken() bool {
+	if o != nil && o.ResultToken.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetResultToken gets a reference to the given NullableString and assigns it to the ResultToken field.
+func (o *ApprovalUserDetail) SetResultToken(v string) {
+	o.ResultToken.Set(&v)
+}
+// SetResultTokenNil sets the value for ResultToken to be an explicit nil
+func (o *ApprovalUserDetail) SetResultTokenNil() {
+	o.ResultToken.Set(nil)
+}
+
+// UnsetResultToken ensures that no value is present for ResultToken, not even an explicit nil
+func (o *ApprovalUserDetail) UnsetResultToken() {
+	o.ResultToken.Unset()
+}
+
 func (o ApprovalUserDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -673,6 +717,9 @@ func (o ApprovalUserDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ExtraMessage) {
 		toSerialize["extra_message"] = o.ExtraMessage
+	}
+	if o.ResultToken.IsSet() {
+		toSerialize["result_token"] = o.ResultToken.Get()
 	}
 	return toSerialize, nil
 }

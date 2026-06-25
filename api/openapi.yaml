@@ -22716,10 +22716,9 @@ components:
           example: "0.000005"
           type: string
         rent_amount:
-          description: The rent fee charged by the network to store non–rent-exempt
-            accounts on-chain. It is deducted periodically until the account maintains
-            the minimum balance required for rent exemption.
-          example: '0.00001 '
+          description: |
+            The one-time rent required to create and initialize a Solana token Associated Token Account (ATA) — a token sub-address that must be activated before the token can be received or used. This rent is paid by the main (source) address. It is populated only when an ATA must be activated for the transaction; otherwise it is null.
+          example: "0.00001"
           type: string
       type: object
     SOLComputeUnit:
@@ -24979,7 +24978,8 @@ components:
             example: SOL
             type: string
           fee_used:
-            description: The actually charged transaction fee.
+            description: |
+              The actual on-chain network transaction fee charged for this Solana transaction. For Solana, this value covers the network fee only and does NOT include `rent_amount`. The total cost deducted from the transaction's source (withdrawal) address is `fee_used` + `rent_amount`, both paid by the same source address.
             example: "0.1"
             type: string
           estimated_fee_used:
@@ -25775,6 +25775,7 @@ components:
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            result_token: abc123token
             expired_time: 1610444165
             language: en
             message: Please approve the transaction.
@@ -25793,6 +25794,7 @@ components:
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            result_token: abc123token
             expired_time: 1610444165
             language: en
             message: Please approve the transaction.
@@ -25818,6 +25820,7 @@ components:
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            result_token: abc123token
             expired_time: 1610444165
             language: en
             message: Please approve the transaction.
@@ -25836,6 +25839,7 @@ components:
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            result_token: abc123token
             expired_time: 1610444165
             language: en
             message: Please approve the transaction.
@@ -25861,6 +25865,7 @@ components:
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            result_token: abc123token
             expired_time: 1610444165
             language: en
             message: Please approve the transaction.
@@ -25879,6 +25884,7 @@ components:
             template_version: 1.0.0
             header_title: Transaction Approval
             signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            result_token: abc123token
             expired_time: 1610444165
             language: en
             message: Please approve the transaction.
@@ -25929,6 +25935,7 @@ components:
           template_version: 1.0.0
           header_title: Transaction Approval
           signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          result_token: abc123token
           expired_time: 1610444165
           language: en
           message: Please approve the transaction.
@@ -25947,6 +25954,7 @@ components:
           template_version: 1.0.0
           header_title: Transaction Approval
           signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          result_token: abc123token
           expired_time: 1610444165
           language: en
           message: Please approve the transaction.
@@ -26044,6 +26052,7 @@ components:
         template_version: 1.0.0
         header_title: Transaction Approval
         signature: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+        result_token: abc123token
         expired_time: 1610444165
         language: en
         message: Please approve the transaction.
@@ -26130,6 +26139,13 @@ components:
           description: Any additional message or information related to the transaction
             approval.
           example: Please review the transaction details carefully.
+          type: string
+        result_token:
+          description: |
+            The result token appended to the signing content when verifying signatures.
+            The full signing content is constructed as `{message}||{result_token}`.
+          example: abc123token
+          nullable: true
           type: string
       type: object
     CustodialTransferSource:
@@ -27569,13 +27585,14 @@ components:
             - `PaymentSettlement`: The payment settlement event data.\n- `PaymentTransaction`:\
             \ The payment transaction event data.\n- `PaymentAddressUpdate`: The top-up\
             \ address update event data.\n- `PaymentPayout`: The payment payout event\
-            \ data.\n- `PaymentBulkSend`: The payment bulk send event data.\n- `BalanceUpdateInfo`:\
-            \ The balance update event data.\n- `SuspendedToken`: The token suspension\
-            \ event data.\n- `ComplianceDisposition`: The compliance disposition event\
-            \ data.\n- `ComplianceKytScreenings`: The compliance KYT screenings event\
-            \ data.\n- `ComplianceKyaScreenings`: The compliance KYA screenings event\
-            \ data.\n- `Organization`: The organization event data.\n- `FiatTransaction`:\
-            \ The fiat transaction event data."
+            \ data.\n- `PaymentBulkSend`: The payment bulk send event data.\n- `PaymentAccountBalanceUpdate`:\
+            \ The Payments account balance updated event data, including account information\
+            \ and balance change details.\n- `BalanceUpdateInfo`: The balance update\
+            \ event data.\n- `SuspendedToken`: The token suspension event data.\n\
+            - `ComplianceDisposition`: The compliance disposition event data.\n- `ComplianceKytScreenings`:\
+            \ The compliance KYT screenings event data.\n- `ComplianceKyaScreenings`:\
+            \ The compliance KYA screenings event data.\n- `Organization`: The organization\
+            \ event data.\n- `FiatTransaction`: The fiat transaction event data."
           enum:
           - Transaction
           - TSSRequest
@@ -27592,6 +27609,7 @@ components:
           - PaymentAddressUpdate
           - PaymentPayout
           - PaymentBulkSend
+          - PaymentAccountBalanceUpdate
           - BalanceUpdateInfo
           - SuspendedToken
           - ComplianceDisposition
@@ -27624,6 +27642,7 @@ components:
           PaymentAddressUpdate: '#/components/schemas/PaymentAddressUpdateEventData'
           PaymentPayout: '#/components/schemas/PaymentPayoutEvent'
           PaymentBulkSend: '#/components/schemas/PaymentBulkSendEvent'
+          PaymentAccountBalanceUpdate: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
           ComplianceDisposition: '#/components/schemas/ComplianceDispositionUpdateEventData'
           ComplianceKytScreenings: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
           ComplianceKyaScreenings: '#/components/schemas/ComplianceKyaScreeningsUpdateEventData'
@@ -27648,6 +27667,7 @@ components:
       - $ref: '#/components/schemas/PaymentAddressUpdateEventData'
       - $ref: '#/components/schemas/PaymentPayoutEvent'
       - $ref: '#/components/schemas/PaymentBulkSendEvent'
+      - $ref: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
       - $ref: '#/components/schemas/ComplianceDispositionUpdateEventData'
       - $ref: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
       - $ref: '#/components/schemas/ComplianceKyaScreeningsUpdateEventData'
@@ -27987,6 +28007,20 @@ components:
               identify individual payers in their system.
             example: user_abc_10001
             type: string
+          merchant_id:
+            description: The merchant ID.
+            example: "1001"
+            type: string
+          subscription_id:
+            description: A unique identifier assigned by Cobo to track and identify
+              subscription.
+            example: 123e457-e89b-12d3-a456-426614174004
+            type: string
+          action_id:
+            description: A unique identifier assigned by Cobo to track and identify
+              subscription action.
+            example: 123e457-e89b-12d3-a456-426614174004
+            type: string
         required:
         - acquiring_type
         type: object
@@ -28004,6 +28038,10 @@ components:
             description: A unique identifier assigned by Cobo to track and identify
               individual payers.
             example: P20250619T0310056d7aa
+            type: string
+          merchant_id:
+            description: The merchant ID.
+            example: "1001"
             type: string
           chain:
             description: The chain ID.
@@ -28035,6 +28073,78 @@ components:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - $ref: '#/components/schemas/PaymentBulkSend'
       title: Payment Bulk Send Event Data
+    PaymentAccountBalanceUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          source_account:
+            $ref: '#/components/schemas/SourceAccount'
+          source_id:
+            description: The source ID of the balance change.
+            example: O202503041234567890
+            type: string
+          source_type:
+            $ref: '#/components/schemas/PaymentBalanceChangeSourceType'
+          token_id:
+            description: The token ID of the balance change.
+            example: Tron_USDT
+            type: string
+          amount:
+            description: "The balance change amount, truncated to two decimal places\
+              \ and represented as a numeric string."
+            example: "20.00"
+            type: string
+          amount_raw:
+            description: "The balance change amount in the token's decimal precision,\
+              \ represented as a numeric string."
+            example: "20"
+            type: string
+          balance_before:
+            description: "The account balance before the balance change, truncated\
+              \ to two decimal places and represented as a numeric string."
+            example: "100.00"
+            type: string
+          balance_before_raw:
+            description: "The account balance before the balance change in the token's\
+              \ decimal precision, represented as a numeric string."
+            example: "100"
+            type: string
+          balance_after:
+            description: "The account balance after the balance change, truncated\
+              \ to two decimal places and represented as a numeric string."
+            example: "120.00"
+            type: string
+          balance_after_raw:
+            description: "The account balance after the balance change in the token's\
+              \ decimal precision, represented as a numeric string."
+            example: "120"
+            type: string
+          flow_direction:
+            $ref: '#/components/schemas/PaymentBalanceFlowDirection'
+          update_time:
+            description: "The time when the balance was updated, represented as a\
+              \ UNIX timestamp in seconds."
+            example: 1701396866
+            format: int64
+            type: integer
+        required:
+        - amount
+        - amount_raw
+        - balance_after
+        - balance_after_raw
+        - balance_before
+        - balance_before_raw
+        - flow_direction
+        - source_account
+        - source_id
+        - source_type
+        - token_id
+        - update_time
+        type: object
+      description: |-
+        This event occurs when the available balance of a Payments account changes for a specific token.
+        The balance change fields are aligned with the `PaymentBalanceChange` object returned by
+      title: Payment account balance updated Event Data
     ComplianceDispositionUpdateEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -28110,6 +28220,7 @@ components:
       - payment.transaction.completed
       - payment.transaction.held
       - payment.transaction.failed
+      - payment.account.balance.updated
       - payment.status.updated
       - payment.order.status.updated
       - payment.refund.status.updated
@@ -35847,7 +35958,8 @@ components:
           type: string
         bank_account_id:
           description: "The ID of the bank account to which the payout will be sent.\
-            \ You can retrieve the bank account ID by calling [List destination entries](https://www.cobo.com/payments/en/api-references/payment/list-destination-entries)."
+            \ This field is required only when the payout channel is `OffRamp`. You\
+            \ can retrieve the bank account ID by calling [List destination entries](https://www.cobo.com/payments/en/api-references/payment/list-destination-entries)."
           example: 123e4567-e89b-12d3-a456-426614174003
           format: uuid
           type: string
@@ -36078,8 +36190,8 @@ components:
         - `Pending`: The bulk send item has been created and is waiting to be processed.
         - `Processing`: The bulk send item is currently being processed and the transfer is in progress.
         - `Completed`: The bulk send item has been successfully processed and the funds have been transferred.
-        - `Failed`: The bulk send item processing has failed and the funds were not transferred.
-        - `NotExecuted`: The bulk send item was not executed, typically due to the bulk send being cancelled or an earlier validation failure.
+        - `Failed`: The bulk send item was submitted for on-chain transfer, but the transfer attempt failed (for example, the batch payout could not be created, or the payout transaction failed, was rejected, or timed out). A transfer was attempted but the funds were not delivered; the locked amount is released and the commission fee is refunded. This is a terminal state. Resubmit the item to retry.
+        - `NotExecuted`: The bulk send item was never submitted for on-chain transfer; it was skipped before any attempt. This happens when the item fails pre-execution (address or compliance) validation; or, in `Strict` execution mode, when any other item in the batch fails validation (in `Strict` mode all items become `NotExecuted` if one fails); or when an upstream step (fund sweep or commission fee charge) fails. No funds were moved and the locked amount is released. This is a terminal state. Fix the issue and resubmit the item to retry.
       enum:
       - Pending
       - Processing
@@ -36109,6 +36221,13 @@ components:
       - Completed
       - Failed
       example: Completed
+      type: string
+    SourceAccount:
+      description: |
+        The source account of the balance change. This field uses the same semantics as `source_account` in [List balance changes](https://www.cobo.com/developers/v2/api-references/payment/list-balance-changes).
+        - When the account is a merchant account, this is the merchant ID (merchant code), which you can retrieve by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
+        - When the account is the developer account, use `developer`.
+      example: M1001
       type: string
     PaymentBalanceFlowDirection:
       description: |
@@ -46281,7 +46400,8 @@ components:
           example: "500.00"
           type: string
         description:
-          description: A note or comment about the bulk send item.
+          description: "A note or comment about the bulk send item. Maximum length:\
+            \ 255 characters."
           example: "Invoice #INV-2024-001"
           type: string
       required:
@@ -46306,7 +46426,8 @@ components:
         execution_mode:
           $ref: '#/components/schemas/PaymentBulkSendExecutionMode'
         description:
-          description: The description for the entire bulk send batch.
+          description: "The description for the entire bulk send batch. Maximum length:\
+            \ 255 characters."
           example: Monthly vendor payments - January 2024
           type: string
         payout_params:

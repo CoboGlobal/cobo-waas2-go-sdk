@@ -73,6 +73,8 @@
 
 * `PAYMENT_TRANSACTION_FAILED` (value: `"payment.transaction.failed"`)
 
+* `PAYMENT_ACCOUNT_BALANCE_UPDATED` (value: `"payment.account.balance.updated"`)
+
 * `PAYMENT_STATUS_UPDATED` (value: `"payment.status.updated"`)
 
 * `PAYMENT_ORDER_STATUS_UPDATED` (value: `"payment.order.status.updated"`)

@@ -24,7 +24,7 @@ type CreateBulkSendRequest struct {
 	// The source account from which the bulk send will be made. - If the source account is a merchant account, provide the merchant's ID (e.g., \"M1001\"). - If the source account is the developer account, use the string `\"developer\"`. 
 	SourceAccount string `json:"source_account"`
 	ExecutionMode PaymentBulkSendExecutionMode `json:"execution_mode"`
-	// The description for the entire bulk send batch.
+	// The description for the entire bulk send batch. Maximum length: 255 characters.
 	Description *string `json:"description,omitempty"`
 	// The bulk send items.
 	PayoutParams []CreateBulkSendRequestPayoutParamsInner `json:"payout_params"`

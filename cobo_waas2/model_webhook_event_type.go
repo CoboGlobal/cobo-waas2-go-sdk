@@ -53,6 +53,7 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_COMPLETED WebhookEventType = "payment.transaction.completed"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_HELD WebhookEventType = "payment.transaction.held"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_FAILED WebhookEventType = "payment.transaction.failed"
+	WEBHOOKEVENTTYPE_PAYMENT_ACCOUNT_BALANCE_UPDATED WebhookEventType = "payment.account.balance.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_STATUS_UPDATED WebhookEventType = "payment.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_ORDER_STATUS_UPDATED WebhookEventType = "payment.order.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_REFUND_STATUS_UPDATED WebhookEventType = "payment.refund.status.updated"
@@ -108,6 +109,7 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.transaction.completed",
 	"payment.transaction.held",
 	"payment.transaction.failed",
+	"payment.account.balance.updated",
 	"payment.status.updated",
 	"payment.order.status.updated",
 	"payment.refund.status.updated",

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;PaymentPayout&#x60;: The payment payout event data. - &#x60;PaymentBulkSend&#x60;: The payment bulk send event data. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. - &#x60;ComplianceKyaScreenings&#x60;: The compliance KYA screenings event data. - &#x60;Organization&#x60;: The organization event data. - &#x60;FiatTransaction&#x60;: The fiat transaction event data. | 
+**DataType** | **string** |  The data type of the event. - &#x60;Transaction&#x60;: The transaction event data. - &#x60;TSSRequest&#x60;: The TSS request event data. - &#x60;Addresses&#x60;: The addresses event data. - &#x60;WalletInfo&#x60;: The wallet information event data. - &#x60;MPCVault&#x60;: The MPC vault event data. - &#x60;Chains&#x60;: The enabled chain event data. - &#x60;Tokens&#x60;: The enabled token event data. - &#x60;TokenListing&#x60;: The token listing event data.        - &#x60;PaymentOrder&#x60;: The payment order event data. - &#x60;PaymentRefund&#x60;: The payment refund event data. - &#x60;PaymentSettlement&#x60;: The payment settlement event data. - &#x60;PaymentTransaction&#x60;: The payment transaction event data. - &#x60;PaymentAddressUpdate&#x60;: The top-up address update event data. - &#x60;PaymentPayout&#x60;: The payment payout event data. - &#x60;PaymentBulkSend&#x60;: The payment bulk send event data. - &#x60;PaymentAccountBalanceUpdate&#x60;: The Payments account balance updated event data, including account information and balance change details. - &#x60;BalanceUpdateInfo&#x60;: The balance update event data. - &#x60;SuspendedToken&#x60;: The token suspension event data. - &#x60;ComplianceDisposition&#x60;: The compliance disposition event data. - &#x60;ComplianceKytScreenings&#x60;: The compliance KYT screenings event data. - &#x60;ComplianceKyaScreenings&#x60;: The compliance KYA screenings event data. - &#x60;Organization&#x60;: The organization event data. - &#x60;FiatTransaction&#x60;: The fiat transaction event data. | 
 **TransactionId** | **string** | The transaction ID. | 
 **CoboId** | Pointer to **string** | The Cobo ID, which can be used to track a transaction. | [optional] 
 **RequestId** | Pointer to **string** | The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization. | [optional] 
@@ -41,6 +41,9 @@ Name | Type | Description | Notes
 **PspOrderCode** | Pointer to **string** | A unique reference code assigned by the developer to identify this order in their system. | [optional] 
 **PayerId** | Pointer to **string** | A unique identifier assigned by Cobo to track and identify individual payers. | [optional] 
 **CustomPayerId** | Pointer to **string** | A unique identifier assigned by the developer to track and identify individual payers in their system. | [optional] 
+**MerchantId** | Pointer to **string** | The merchant ID. | [optional] 
+**SubscriptionId** | Pointer to **string** | A unique identifier assigned by Cobo to track and identify subscription. | [optional] 
+**ActionId** | Pointer to **string** | A unique identifier assigned by Cobo to track and identify subscription action. | [optional] 
 
 ## Methods
 
@@ -935,6 +938,81 @@ SetCustomPayerId sets CustomPayerId field to given value.
 `func (o *PaymentTransactionEventData) HasCustomPayerId() bool`
 
 HasCustomPayerId returns a boolean if a field has been set.
+
+### GetMerchantId
+
+`func (o *PaymentTransactionEventData) GetMerchantId() string`
+
+GetMerchantId returns the MerchantId field if non-nil, zero value otherwise.
+
+### GetMerchantIdOk
+
+`func (o *PaymentTransactionEventData) GetMerchantIdOk() (*string, bool)`
+
+GetMerchantIdOk returns a tuple with the MerchantId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMerchantId
+
+`func (o *PaymentTransactionEventData) SetMerchantId(v string)`
+
+SetMerchantId sets MerchantId field to given value.
+
+### HasMerchantId
+
+`func (o *PaymentTransactionEventData) HasMerchantId() bool`
+
+HasMerchantId returns a boolean if a field has been set.
+
+### GetSubscriptionId
+
+`func (o *PaymentTransactionEventData) GetSubscriptionId() string`
+
+GetSubscriptionId returns the SubscriptionId field if non-nil, zero value otherwise.
+
+### GetSubscriptionIdOk
+
+`func (o *PaymentTransactionEventData) GetSubscriptionIdOk() (*string, bool)`
+
+GetSubscriptionIdOk returns a tuple with the SubscriptionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscriptionId
+
+`func (o *PaymentTransactionEventData) SetSubscriptionId(v string)`
+
+SetSubscriptionId sets SubscriptionId field to given value.
+
+### HasSubscriptionId
+
+`func (o *PaymentTransactionEventData) HasSubscriptionId() bool`
+
+HasSubscriptionId returns a boolean if a field has been set.
+
+### GetActionId
+
+`func (o *PaymentTransactionEventData) GetActionId() string`
+
+GetActionId returns the ActionId field if non-nil, zero value otherwise.
+
+### GetActionIdOk
+
+`func (o *PaymentTransactionEventData) GetActionIdOk() (*string, bool)`
+
+GetActionIdOk returns a tuple with the ActionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetActionId
+
+`func (o *PaymentTransactionEventData) SetActionId(v string)`
+
+SetActionId sets ActionId field to given value.
+
+### HasActionId
+
+`func (o *PaymentTransactionEventData) HasActionId() bool`
+
+HasActionId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

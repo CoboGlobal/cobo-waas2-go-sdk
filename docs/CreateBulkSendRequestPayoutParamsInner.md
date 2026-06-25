@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **TokenId** | **string** | The token ID of the cryptocurrency to be sent to the recipient. | 
 **ReceivingAddress** | **string** | The receiving address. | 
 **Amount** | **string** | The amount of the cryptocurrency to be sent to the recipient. | 
-**Description** | Pointer to **string** | A note or comment about the bulk send item. | [optional] 
+**Description** | Pointer to **string** | A note or comment about the bulk send item. Maximum length: 255 characters. | [optional] 
 
 ## Methods
 
