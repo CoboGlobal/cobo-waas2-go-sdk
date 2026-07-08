@@ -176,6 +176,10 @@ CreateAutoSweepTask Create auto-sweep task
 
 This operation creates an auto-sweep task for the specified wallet and token. The task triggers transactions to sweep the full balance of the specified token to the configured sweep-to address.
 
+<Note>A sweep requires native chain coin to pay for gas. The gas must be available either in the source (deposit) address, or supplied by a configured Fee Station or Auto-Fuel. Reaching the deposit threshold alone does not trigger a sweep. If no gas is available, the sweep is blocked (for example, with an insufficient-balance error) or the Fee Station quota check fails. When a sweep is blocked, the reason is reported in the `failed_reasons` array of the auto-sweep task.</Note>
+
+<Info>This operation is asynchronous. When the task is created, it is returned with `status` set to `Submitted` and an empty `transaction_ids` array; this is expected and does not indicate a failure. The `transaction_ids` array is populated only after `status` becomes `TransactionCreated`. To retrieve the transaction IDs, poll [Get auto-sweep task details](https://www.cobo.com/developers/v2/api-references/autosweep/get-auto-sweep-task-details) using the returned `task_id` until the status changes.</Info>
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAutoSweepTaskRequest

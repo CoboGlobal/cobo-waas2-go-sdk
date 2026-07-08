@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionStatus The transaction status. For more details including sub-statuses, please refer to [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status). 
+// TransactionStatus The transaction status. For more details including sub-statuses, please refer to [Transaction statuses and sub-statuses](https://www.cobo.com/developers/v2/guides/transactions/status).  <Info>The `PendingAuthorization` status covers both manual approval steps and internal automated risk-control, KYT, and compliance screening checks. A transaction in this status does not necessarily require a human to take action.</Info> 
 type TransactionStatus string
 
 // List of TransactionStatus

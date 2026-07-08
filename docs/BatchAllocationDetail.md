@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **RequestId** | **string** | The request ID provided by you when creating the batch allocation. | 
 **AllocationItems** | Pointer to [**[]AllocationItem**](AllocationItem.md) |  | [optional] 
 **Initiator** | Pointer to **string** | The initiator of this batch allocation, usually the user&#39;s API key. | [optional] 
+**Status** | Pointer to [**BatchAllocationStatus**](BatchAllocationStatus.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the batch allocation, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the batch allocation, represented as a UNIX timestamp in seconds. | [optional] 
 
@@ -119,6 +120,31 @@ SetInitiator sets Initiator field to given value.
 `func (o *BatchAllocationDetail) HasInitiator() bool`
 
 HasInitiator returns a boolean if a field has been set.
+
+### GetStatus
+
+`func (o *BatchAllocationDetail) GetStatus() BatchAllocationStatus`
+
+GetStatus returns the Status field if non-nil, zero value otherwise.
+
+### GetStatusOk
+
+`func (o *BatchAllocationDetail) GetStatusOk() (*BatchAllocationStatus, bool)`
+
+GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatus
+
+`func (o *BatchAllocationDetail) SetStatus(v BatchAllocationStatus)`
+
+SetStatus sets Status field to given value.
+
+### HasStatus
+
+`func (o *BatchAllocationDetail) HasStatus() bool`
+
+HasStatus returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

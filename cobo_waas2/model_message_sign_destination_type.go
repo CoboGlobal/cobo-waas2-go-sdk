@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// MessageSignDestinationType The type of the signature format. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Each signature format type requires a different set of properties. Switch between the above tabs for details. 
+// MessageSignDestinationType The type of the signature format. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.  Each signature format type requires a different set of properties. Switch between the above tabs for details.  Due to security concerns, `Raw_Message_Signature` is deprecated and not recommended for use. It may be removed in a future version. 
 type MessageSignDestinationType string
 
 // List of MessageSignDestinationType

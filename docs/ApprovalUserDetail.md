@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **Message** | Pointer to **string** | Message associated with the transaction approval. | [optional] 
 **ExtraMessage** | Pointer to **string** | Any additional message or information related to the transaction approval. | [optional] 
 **ResultToken** | Pointer to **NullableString** | The result token appended to the signing content when verifying signatures. The full signing content is constructed as &#x60;{message}||{result_token}&#x60;.  | [optional] 
+**Action** | Pointer to [**NullableApprovalAction**](ApprovalAction.md) |  | [optional] 
 
 ## Methods
 
@@ -502,6 +503,41 @@ HasResultToken returns a boolean if a field has been set.
 `func (o *ApprovalUserDetail) UnsetResultToken()`
 
 UnsetResultToken ensures that no value is present for ResultToken, not even an explicit nil
+### GetAction
+
+`func (o *ApprovalUserDetail) GetAction() ApprovalAction`
+
+GetAction returns the Action field if non-nil, zero value otherwise.
+
+### GetActionOk
+
+`func (o *ApprovalUserDetail) GetActionOk() (*ApprovalAction, bool)`
+
+GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAction
+
+`func (o *ApprovalUserDetail) SetAction(v ApprovalAction)`
+
+SetAction sets Action field to given value.
+
+### HasAction
+
+`func (o *ApprovalUserDetail) HasAction() bool`
+
+HasAction returns a boolean if a field has been set.
+
+### SetActionNil
+
+`func (o *ApprovalUserDetail) SetActionNil(b bool)`
+
+ SetActionNil sets the value for Action to be an explicit nil
+
+### UnsetAction
+`func (o *ApprovalUserDetail) UnsetAction()`
+
+UnsetAction ensures that no value is present for Action, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

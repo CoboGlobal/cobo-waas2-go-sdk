@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionExtraType The transaction extra information type. Possible values include:   - `BabylonBusinessInfo`: The extra information of Babylon business.   - `BabylonTxParameters`: The extra information of Babylon transaction parameters.   - `CoreStakeInfo`: The extra information of core stake.   - `WalletConnectInfo`: The extra information of transaction initiated by walletconnect. 
+// TransactionExtraType The transaction extra information type. Possible values include:   - `BabylonBusinessInfo`: The extra information of Babylon business.   - `BabylonTxParameters`: The extra information of Babylon transaction parameters.   - `CoreStakeInfo`: The extra information of core stake.   - `WalletConnectInfo`: The extra information of transaction initiated by walletconnect.   - `FeePayer`: The extra information of fee payer. 
 type TransactionExtraType string
 
 // List of TransactionExtraType
@@ -22,6 +22,7 @@ const (
 	TRANSACTIONEXTRATYPE_BABYLON_TX_PARAMETERS TransactionExtraType = "BabylonTxParameters"
 	TRANSACTIONEXTRATYPE_CORE_STAKE_INFO TransactionExtraType = "CoreStakeInfo"
 	TRANSACTIONEXTRATYPE_WALLET_CONNECT_INFO TransactionExtraType = "WalletConnectInfo"
+	TRANSACTIONEXTRATYPE_FEE_PAYER TransactionExtraType = "FeePayer"
 )
 
 // All allowed values of TransactionExtraType enum
@@ -30,6 +31,7 @@ var AllowedTransactionExtraTypeEnumValues = []TransactionExtraType{
 	"BabylonTxParameters",
 	"CoreStakeInfo",
 	"WalletConnectInfo",
+	"FeePayer",
 }
 
 func (v *TransactionExtraType) UnmarshalJSON(src []byte) error {

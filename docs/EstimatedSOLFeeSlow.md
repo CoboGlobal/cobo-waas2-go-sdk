@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ComputeUnitPrice** | **string** | The price paid per compute unit. This value determines the priority fee for the transaction, allowing you to increase inclusion probability in congested conditions. | 
 **ComputeUnitLimit** | **string** | The maximum number of compute units your transaction is allowed to consume. It sets an upper bound on computational resource usage to prevent overload. | 
 **BaseFee** | **string** | A fixed fee charged per signature. The default is 5,000 lamports per signature. | 
-**RentAmount** | Pointer to **string** | The one-time rent required to create and initialize a Solana token Associated Token Account (ATA) — a token sub-address that must be activated before the token can be received or used. This rent is paid by the main (source) address. It is populated only when an ATA must be activated for the transaction; otherwise it is null.  | [optional] 
+**RentAmount** | Pointer to **string** | The one-time rent required to activate a Solana token Associated Token Account (ATA) before the token can be received or used. **This field is reserved for future use and is currently not populated.** | [optional] 
 
 ## Methods
 

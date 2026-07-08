@@ -52,6 +52,7 @@ type ApprovalUserDetail struct {
 	ExtraMessage *string `json:"extra_message,omitempty"`
 	// The result token appended to the signing content when verifying signatures. The full signing content is constructed as `{message}||{result_token}`. 
 	ResultToken NullableString `json:"result_token,omitempty"`
+	Action NullableApprovalAction `json:"action,omitempty"`
 }
 
 // NewApprovalUserDetail instantiates a new ApprovalUserDetail object
@@ -657,6 +658,48 @@ func (o *ApprovalUserDetail) UnsetResultToken() {
 	o.ResultToken.Unset()
 }
 
+// GetAction returns the Action field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApprovalUserDetail) GetAction() ApprovalAction {
+	if o == nil || IsNil(o.Action.Get()) {
+		var ret ApprovalAction
+		return ret
+	}
+	return *o.Action.Get()
+}
+
+// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApprovalUserDetail) GetActionOk() (*ApprovalAction, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Action.Get(), o.Action.IsSet()
+}
+
+// HasAction returns a boolean if a field has been set.
+func (o *ApprovalUserDetail) HasAction() bool {
+	if o != nil && o.Action.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAction gets a reference to the given NullableApprovalAction and assigns it to the Action field.
+func (o *ApprovalUserDetail) SetAction(v ApprovalAction) {
+	o.Action.Set(&v)
+}
+// SetActionNil sets the value for Action to be an explicit nil
+func (o *ApprovalUserDetail) SetActionNil() {
+	o.Action.Set(nil)
+}
+
+// UnsetAction ensures that no value is present for Action, not even an explicit nil
+func (o *ApprovalUserDetail) UnsetAction() {
+	o.Action.Unset()
+}
+
 func (o ApprovalUserDetail) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -720,6 +763,9 @@ func (o ApprovalUserDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ResultToken.IsSet() {
 		toSerialize["result_token"] = o.ResultToken.Get()
+	}
+	if o.Action.IsSet() {
+		toSerialize["action"] = o.Action.Get()
 	}
 	return toSerialize, nil
 }

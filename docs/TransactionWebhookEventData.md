@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **InitiatorType** | [**TransactionInitiatorType**](TransactionInitiatorType.md) |  | 
 **ConfirmedNum** | Pointer to **int32** | The number of confirmations this transaction has received. | [optional] 
 **ConfirmingThreshold** | Pointer to **int32** | The minimum number of confirmations required to deem a transaction secure. The common threshold is 6 for a Bitcoin transaction. | [optional] 
-**TransactionHash** | Pointer to **string** | The transaction hash. | [optional] 
+**TransactionHash** | Pointer to **string** | The transaction hash (on-chain transaction identifier, also referred to as &#x60;txid&#x60;).  This property is populated only after the transaction is broadcast on-chain, so it may be &#x60;null&#x60; or absent before broadcast. In contrast, &#x60;transaction_id&#x60; (the Cobo internal transaction ID) is assigned at creation and is always present.  | [optional] 
 **BlockInfo** | Pointer to [**TransactionBlockInfo**](TransactionBlockInfo.md) |  | [optional] 
 **RawTxInfo** | Pointer to [**TransactionRawTxInfo**](TransactionRawTxInfo.md) |  | [optional] 
 **Replacement** | Pointer to [**TransactionReplacement**](TransactionReplacement.md) |  | [optional] 

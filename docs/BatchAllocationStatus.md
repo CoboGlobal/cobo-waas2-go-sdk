@@ -1,15 +1,17 @@
-# PaymentBulkSendItemValidationStatus
+# BatchAllocationStatus
 
 ## Enum
 
 
 * `PENDING` (value: `"Pending"`)
 
-* `VALIDATED` (value: `"Validated"`)
+* `PROCESSING` (value: `"Processing"`)
 
-* `VALIDATION_FAILED` (value: `"ValidationFailed"`)
+* `COMPLETED` (value: `"Completed"`)
 
-* `NOT_EXECUTED` (value: `"NotExecuted"`)
+* `PARTIALLY_COMPLETED` (value: `"PartiallyCompleted"`)
+
+* `FAILED` (value: `"Failed"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

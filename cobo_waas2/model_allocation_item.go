@@ -33,6 +33,7 @@ type AllocationItem struct {
 	DestinationAccount *string `json:"destination_account,omitempty"`
 	// The description of the allocation item.
 	Description string `json:"description"`
+	Status *AllocationItemStatus `json:"status,omitempty"`
 }
 
 type _AllocationItem AllocationItem
@@ -243,6 +244,38 @@ func (o *AllocationItem) SetDescription(v string) {
 	o.Description = v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *AllocationItem) GetStatus() AllocationItemStatus {
+	if o == nil || IsNil(o.Status) {
+		var ret AllocationItemStatus
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AllocationItem) GetStatusOk() (*AllocationItemStatus, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *AllocationItem) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given AllocationItemStatus and assigns it to the Status field.
+func (o *AllocationItem) SetStatus(v AllocationItemStatus) {
+	o.Status = &v
+}
+
 func (o AllocationItem) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -264,6 +297,9 @@ func (o AllocationItem) ToMap() (map[string]interface{}, error) {
 		toSerialize["destination_account"] = o.DestinationAccount
 	}
 	toSerialize["description"] = o.Description
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
 	return toSerialize, nil
 }
 

@@ -59,6 +59,7 @@ docs/AddressVerificationStatus.md
 docs/AddressesEventData.md
 docs/AddressesEventDataAllOfAddresses.md
 docs/AllocationItem.md
+docs/AllocationItemStatus.md
 docs/AllocationParam.md
 docs/AmountDetailsInner.md
 docs/AmountStatus.md
@@ -68,6 +69,7 @@ docs/AppWorkflow.md
 docs/AppWorkflowField.md
 docs/AppWorkflowPolicy.md
 docs/AppWorkflowsAPI.md
+docs/ApprovalAction.md
 docs/ApprovalDetail.md
 docs/ApprovalEntry.md
 docs/ApprovalRequest.md
@@ -110,6 +112,7 @@ docs/BaseStakeExtra.md
 docs/BaseStakeSource.md
 docs/BatchAllocation.md
 docs/BatchAllocationDetail.md
+docs/BatchAllocationStatus.md
 docs/BatchCheckUtxo201Response.md
 docs/BatchCheckUtxoRequest.md
 docs/BatchUTXOParam.md
@@ -507,6 +510,7 @@ docs/PspBalance.md
 docs/QueryApprovalStatement200Response.md
 docs/QueryGuardPubkey200Response.md
 docs/QueryGuardPubkey200ResponseAddressesInner.md
+docs/RawMessageSignDestination.md
 docs/RefreshAddressBalancesByToken200Response.md
 docs/RefreshAddressBalancesByTokenRequest.md
 docs/RefreshPermissionTokenRequest.md
@@ -768,6 +772,7 @@ docs/TransactionExtra.md
 docs/TransactionExtraType.md
 docs/TransactionFILFee.md
 docs/TransactionFee.md
+docs/TransactionFeePayer.md
 docs/TransactionFeeStationWalletSource.md
 docs/TransactionFixedFee.md
 docs/TransactionFuelingInfo.md
@@ -921,6 +926,7 @@ model_address_verification_status.go
 model_addresses_event_data.go
 model_addresses_event_data_all_of_addresses.go
 model_allocation_item.go
+model_allocation_item_status.go
 model_allocation_param.go
 model_amount_details_inner.go
 model_amount_status.go
@@ -929,6 +935,7 @@ model_api_log_summary.go
 model_app_workflow.go
 model_app_workflow_field.go
 model_app_workflow_policy.go
+model_approval_action.go
 model_approval_detail.go
 model_approval_entry.go
 model_approval_request.go
@@ -968,6 +975,7 @@ model_base_stake_extra.go
 model_base_stake_source.go
 model_batch_allocation.go
 model_batch_allocation_detail.go
+model_batch_allocation_status.go
 model_batch_check_utxo_201_response.go
 model_batch_check_utxo_request.go
 model_batch_utxo_param.go
@@ -1358,6 +1366,7 @@ model_psp_balance.go
 model_query_approval_statement_200_response.go
 model_query_guard_pubkey_200_response.go
 model_query_guard_pubkey_200_response_addresses_inner.go
+model_raw_message_sign_destination.go
 model_refresh_address_balances_by_token_200_response.go
 model_refresh_address_balances_by_token_request.go
 model_refresh_permission_token_request.go
@@ -1575,6 +1584,7 @@ model_transaction_exchange_wallet_source.go
 model_transaction_extra.go
 model_transaction_extra_type.go
 model_transaction_fee.go
+model_transaction_fee_payer.go
 model_transaction_fee_station_wallet_source.go
 model_transaction_fil_fee.go
 model_transaction_fixed_fee.go

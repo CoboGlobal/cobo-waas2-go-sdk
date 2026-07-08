@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// PaymentBulkSendItemValidationStatus The current validation status of the bulk send item. Possible values include: - `Pending`: The bulk send item has not yet been validated. - `Validated`: The bulk send item has passed validation and is ready to be processed. - `ValidationFailed`: The bulk send item has failed validation and cannot be processed. 
+// PaymentBulkSendItemValidationStatus The current validation status of the bulk send item. Possible values include: - `Pending`: The bulk send item has not yet been validated. - `Validated`: The bulk send item has passed validation and is ready to be processed. - `ValidationFailed`: The bulk send item has failed validation and cannot be processed. - `NotExecuted`: The bulk send item validation was not executed. 
 type PaymentBulkSendItemValidationStatus string
 
 // List of PaymentBulkSendItemValidationStatus
@@ -21,6 +21,7 @@ const (
 	PAYMENTBULKSENDITEMVALIDATIONSTATUS_PENDING PaymentBulkSendItemValidationStatus = "Pending"
 	PAYMENTBULKSENDITEMVALIDATIONSTATUS_VALIDATED PaymentBulkSendItemValidationStatus = "Validated"
 	PAYMENTBULKSENDITEMVALIDATIONSTATUS_VALIDATION_FAILED PaymentBulkSendItemValidationStatus = "ValidationFailed"
+	PAYMENTBULKSENDITEMVALIDATIONSTATUS_NOT_EXECUTED PaymentBulkSendItemValidationStatus = "NotExecuted"
 )
 
 // All allowed values of PaymentBulkSendItemValidationStatus enum
@@ -28,6 +29,7 @@ var AllowedPaymentBulkSendItemValidationStatusEnumValues = []PaymentBulkSendItem
 	"Pending",
 	"Validated",
 	"ValidationFailed",
+	"NotExecuted",
 }
 
 func (v *PaymentBulkSendItemValidationStatus) UnmarshalJSON(src []byte) error {

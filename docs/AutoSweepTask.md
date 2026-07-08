@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **WalletId** | **string** | Wallet ID. | 
 **TokenId** | **string** | Token ID of the swept token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
 **Status** | [**AutoSweepTaskStatus**](AutoSweepTaskStatus.md) |  | 
-**TransactionIds** | Pointer to **[]string** | IDs of the transactions triggered by the task. | [optional] 
+**TransactionIds** | Pointer to **[]string** | IDs of the transactions triggered by the task. This array is empty while the task &#x60;status&#x60; is &#x60;Submitted&#x60;, and is populated only after the status becomes &#x60;TransactionCreated&#x60;. Poll [Get auto-sweep task details](https://www.cobo.com/developers/v2/api-references/autosweep/get-auto-sweep-task-details) until the transaction IDs are available.  | [optional] 
 **FailedReasons** | Pointer to **[]string** | Reasons why the task creation failed. | [optional] 
 **CreatedTimestamp** | **int64** | The time when the task was created, in Unix timestamp format, measured in milliseconds. | 
 **UpdatedTimestamp** | Pointer to **int64** | The time when the task was updated, in Unix timestamp format, measured in milliseconds. | [optional] 

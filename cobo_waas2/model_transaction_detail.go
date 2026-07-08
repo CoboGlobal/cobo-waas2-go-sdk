@@ -49,7 +49,7 @@ type TransactionDetail struct {
 	ConfirmedNum *int32 `json:"confirmed_num,omitempty"`
 	// The minimum number of confirmations required to deem a transaction secure. The common threshold is 6 for a Bitcoin transaction.
 	ConfirmingThreshold *int32 `json:"confirming_threshold,omitempty"`
-	// The transaction hash.
+	// The transaction hash (on-chain transaction identifier, also referred to as `txid`).  This property is populated only after the transaction is broadcast on-chain, so it may be `null` or absent before broadcast. In contrast, `transaction_id` (the Cobo internal transaction ID) is assigned at creation and is always present. 
 	TransactionHash *string `json:"transaction_hash,omitempty"`
 	BlockInfo *TransactionBlockInfo `json:"block_info,omitempty"`
 	RawTxInfo *TransactionRawTxInfo `json:"raw_tx_info,omitempty"`

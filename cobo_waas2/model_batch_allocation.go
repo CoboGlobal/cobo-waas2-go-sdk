@@ -26,6 +26,7 @@ type BatchAllocation struct {
 	AllocationParams []AllocationParam `json:"allocation_params,omitempty"`
 	// The initiator of this batch allocation, usually the API key you used to create the batch allocation.
 	Initiator *string `json:"initiator,omitempty"`
+	Status *BatchAllocationStatus `json:"status,omitempty"`
 	// The created time of the batch allocation, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The updated time of the batch allocation, represented as a UNIX timestamp in seconds.
@@ -167,6 +168,38 @@ func (o *BatchAllocation) SetInitiator(v string) {
 	o.Initiator = &v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *BatchAllocation) GetStatus() BatchAllocationStatus {
+	if o == nil || IsNil(o.Status) {
+		var ret BatchAllocationStatus
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BatchAllocation) GetStatusOk() (*BatchAllocationStatus, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *BatchAllocation) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given BatchAllocationStatus and assigns it to the Status field.
+func (o *BatchAllocation) SetStatus(v BatchAllocationStatus) {
+	o.Status = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value
 func (o *BatchAllocation) GetCreatedTimestamp() int32 {
 	if o == nil {
@@ -232,6 +265,9 @@ func (o BatchAllocation) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
 	}
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
