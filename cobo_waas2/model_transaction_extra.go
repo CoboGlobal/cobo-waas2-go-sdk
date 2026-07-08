@@ -18,6 +18,7 @@ type TransactionExtra struct {
 	TransactionBabylonBusinessInfo *TransactionBabylonBusinessInfo
 	TransactionBabylonTxParameters *TransactionBabylonTxParameters
 	TransactionCoreStakeInfo *TransactionCoreStakeInfo
+	TransactionFeePayer *TransactionFeePayer
 	TransactionWalletConnectInfo *TransactionWalletConnectInfo
 }
 
@@ -39,6 +40,13 @@ func TransactionBabylonTxParametersAsTransactionExtra(v *TransactionBabylonTxPar
 func TransactionCoreStakeInfoAsTransactionExtra(v *TransactionCoreStakeInfo) TransactionExtra {
 	return TransactionExtra{
 		TransactionCoreStakeInfo: v,
+	}
+}
+
+// TransactionFeePayerAsTransactionExtra is a convenience function that returns TransactionFeePayer wrapped in TransactionExtra
+func TransactionFeePayerAsTransactionExtra(v *TransactionFeePayer) TransactionExtra {
+	return TransactionExtra{
+		TransactionFeePayer: v,
 	}
 }
 
@@ -96,6 +104,18 @@ func (dst *TransactionExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'FeePayer'
+	if jsonDict["extra_type"] == "FeePayer" {
+		// try to unmarshal JSON data into TransactionFeePayer
+		err = json.Unmarshal(data, &dst.TransactionFeePayer)
+		if err == nil {
+			return nil // data stored in dst.TransactionFeePayer, return on the first match
+		} else {
+			dst.TransactionFeePayer = nil
+			return fmt.Errorf("failed to unmarshal TransactionExtra as TransactionFeePayer: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'WalletConnectInfo'
 	if jsonDict["extra_type"] == "WalletConnectInfo" {
 		// try to unmarshal JSON data into TransactionWalletConnectInfo
@@ -144,6 +164,18 @@ func (dst *TransactionExtra) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'TransactionFeePayer'
+	if jsonDict["extra_type"] == "TransactionFeePayer" {
+		// try to unmarshal JSON data into TransactionFeePayer
+		err = json.Unmarshal(data, &dst.TransactionFeePayer)
+		if err == nil {
+			return nil // data stored in dst.TransactionFeePayer, return on the first match
+		} else {
+			dst.TransactionFeePayer = nil
+			return fmt.Errorf("failed to unmarshal TransactionExtra as TransactionFeePayer: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TransactionWalletConnectInfo'
 	if jsonDict["extra_type"] == "TransactionWalletConnectInfo" {
 		// try to unmarshal JSON data into TransactionWalletConnectInfo
@@ -173,6 +205,10 @@ func (src TransactionExtra) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionCoreStakeInfo)
 	}
 
+	if src.TransactionFeePayer != nil {
+		return json.Marshal(&src.TransactionFeePayer)
+	}
+
 	if src.TransactionWalletConnectInfo != nil {
 		return json.Marshal(&src.TransactionWalletConnectInfo)
 	}
@@ -195,6 +231,10 @@ func (obj *TransactionExtra) GetActualInstance() (interface{}) {
 
 	if obj.TransactionCoreStakeInfo != nil {
 		return obj.TransactionCoreStakeInfo
+	}
+
+	if obj.TransactionFeePayer != nil {
+		return obj.TransactionFeePayer
 	}
 
 	if obj.TransactionWalletConnectInfo != nil {

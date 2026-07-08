@@ -1081,6 +1081,8 @@ You need to specify the transaction information, including the request ID, reque
 
 The response can contain different properties based on the transaction fee model used by the chain. For the legacy, EIP-1559, and UTXO fee models, Cobo also supports three different transaction speed levels: slow, recommended, and fast. For more information about estimating transaction fees, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
 
+<Note>Fee estimates are point-in-time and short-lived. Because on-chain gas prices change continuously, re-estimate the fee immediately before submitting a withdrawal. Submitting a transaction based on a stale estimate may cause the transaction to be rejected because the fee is insufficient.</Note>
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiEstimateFeeRequest
@@ -1769,6 +1771,7 @@ type ApiListTransactionTemplatesRequest struct {
 	ApiService *TransactionsAPIService
 	templateKey *string
 	templateVersion *string
+	action *ApprovalAction
 }
 
 // Key of the transaction template used to create an approval message. 
@@ -1780,6 +1783,12 @@ func (r ApiListTransactionTemplatesRequest) TemplateKey(templateKey string) ApiL
 // Version of the template.
 func (r ApiListTransactionTemplatesRequest) TemplateVersion(templateVersion string) ApiListTransactionTemplatesRequest {
 	r.templateVersion = &templateVersion
+	return r
+}
+
+// The approval action type. If omitted, &#x60;Transfer&#x60; is used by default. Possible values include:   - &#x60;Transfer&#x60;: To approve a transaction transfer.   - &#x60;Drop&#x60;: To approve dropping a transaction.   - &#x60;SpeedUp&#x60;: To approve speeding up a transaction. 
+func (r ApiListTransactionTemplatesRequest) Action(action ApprovalAction) ApiListTransactionTemplatesRequest {
+	r.action = &action
 	return r
 }
 
@@ -1832,6 +1841,12 @@ func (a *TransactionsAPIService) ListTransactionTemplatesExecute(r ApiListTransa
 	parameterAddToHeaderOrQuery(localVarQueryParams, "template_key", r.templateKey, "")
 	if r.templateVersion != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "template_version", r.templateVersion, "")
+	}
+	if r.action != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "action", r.action, "")
+	} else {
+		var defaultValue ApprovalAction = "Transfer"
+		r.action = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

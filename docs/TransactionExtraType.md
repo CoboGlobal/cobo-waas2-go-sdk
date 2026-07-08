@@ -11,6 +11,8 @@
 
 * `WALLET_CONNECT_INFO` (value: `"WalletConnectInfo"`)
 
+* `FEE_PAYER` (value: `"FeePayer"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

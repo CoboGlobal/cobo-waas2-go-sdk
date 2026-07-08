@@ -19,7 +19,7 @@ var _ MappedNullable = &CreateMpcWalletParams{}
 
 // CreateMpcWalletParams struct for CreateMpcWalletParams
 type CreateMpcWalletParams struct {
-	// The wallet name.
+	// The wallet name. This field is required and cannot be empty. Letters, numbers, and spaces are supported (for example, `My WaaS 2.0 Wallet`).  <Note>Some special characters are not accepted. For example, the at sign (`@`) is rejected. If the name is empty or contains unsupported characters, the request fails with a `400 Bad Request` error.</Note> 
 	Name string `json:"name"`
 	WalletType WalletType `json:"wallet_type"`
 	WalletSubtype WalletSubtype `json:"wallet_subtype"`

@@ -1,15 +1,15 @@
-# PaymentBulkSendItemValidationStatus
+# AllocationItemStatus
 
 ## Enum
 
 
 * `PENDING` (value: `"Pending"`)
 
-* `VALIDATED` (value: `"Validated"`)
+* `TRANSFERRING` (value: `"Transferring"`)
 
-* `VALIDATION_FAILED` (value: `"ValidationFailed"`)
+* `COMPLETED` (value: `"Completed"`)
 
-* `NOT_EXECUTED` (value: `"NotExecuted"`)
+* `FAILED` (value: `"Failed"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

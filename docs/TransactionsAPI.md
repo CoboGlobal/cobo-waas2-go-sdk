@@ -966,7 +966,7 @@ Name | Type | Description  | Notes
 
 ## ListTransactionTemplates
 
-> []ApprovalTemplate ListTransactionTemplates(ctx).TemplateKey(templateKey).TemplateVersion(templateVersion).Execute()
+> []ApprovalTemplate ListTransactionTemplates(ctx).TemplateKey(templateKey).TemplateVersion(templateVersion).Action(action).Execute()
 
 List transaction templates
 
@@ -988,6 +988,7 @@ import (
 func main() {
 	templateKey := "withdrawal"
 	templateVersion := "1.0.0"
+	action := coboWaas2.ApprovalAction("Transfer")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -1000,7 +1001,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.TransactionsAPI.ListTransactionTemplates(ctx).TemplateKey(templateKey).TemplateVersion(templateVersion).Execute()
+	resp, r, err := apiClient.TransactionsAPI.ListTransactionTemplates(ctx).TemplateKey(templateKey).TemplateVersion(templateVersion).Action(action).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TransactionsAPI.ListTransactionTemplates``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1023,6 +1024,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **templateKey** | **string** | Key of the transaction template used to create an approval message.  | 
  **templateVersion** | **string** | Version of the template. | 
+ **action** | [**ApprovalAction**](ApprovalAction.md) | The approval action type. If omitted, &#x60;Transfer&#x60; is used by default. Possible values include:   - &#x60;Transfer&#x60;: To approve a transaction transfer.   - &#x60;Drop&#x60;: To approve dropping a transaction.   - &#x60;SpeedUp&#x60;: To approve speeding up a transaction.  | [default to &quot;Transfer&quot;]
 
 ### Return type
 

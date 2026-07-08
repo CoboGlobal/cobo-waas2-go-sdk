@@ -2576,6 +2576,7 @@ type ApiListEnabledTokensRequest struct {
 	walletSubtype *WalletSubtype
 	chainIds *string
 	tokenIds *string
+	tokenAddresses *string
 	limit *int32
 	before *string
 	after *string
@@ -2602,6 +2603,12 @@ func (r ApiListEnabledTokensRequest) ChainIds(chainIds string) ApiListEnabledTok
 // A list of token IDs(Supports up to 500), separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 func (r ApiListEnabledTokensRequest) TokenIds(tokenIds string) ApiListEnabledTokensRequest {
 	r.tokenIds = &tokenIds
+	return r
+}
+
+// A list of token contract addresses (Supports up to 500), separated by comma. Matching is case-insensitive, so you can pass either lowercase or checksum addresses. Because the same contract address may be deployed on multiple chains, this filter can return tokens across different chain IDs; combine it with &#x60;chain_ids&#x60; to narrow the result to a specific chain. Native tokens have no contract address and are excluded from the result.
+func (r ApiListEnabledTokensRequest) TokenAddresses(tokenAddresses string) ApiListEnabledTokensRequest {
+	r.tokenAddresses = &tokenAddresses
 	return r
 }
 
@@ -2677,6 +2684,9 @@ func (a *WalletsAPIService) ListEnabledTokensExecute(r ApiListEnabledTokensReque
 	}
 	if r.tokenIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "token_ids", r.tokenIds, "")
+	}
+	if r.tokenAddresses != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "token_addresses", r.tokenAddresses, "")
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

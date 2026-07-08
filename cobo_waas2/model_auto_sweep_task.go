@@ -26,7 +26,7 @@ type AutoSweepTask struct {
 	// Token ID of the swept token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
 	Status AutoSweepTaskStatus `json:"status"`
-	// IDs of the transactions triggered by the task.
+	// IDs of the transactions triggered by the task. This array is empty while the task `status` is `Submitted`, and is populated only after the status becomes `TransactionCreated`. Poll [Get auto-sweep task details](https://www.cobo.com/developers/v2/api-references/autosweep/get-auto-sweep-task-details) until the transaction IDs are available. 
 	TransactionIds []string `json:"transaction_ids,omitempty"`
 	// Reasons why the task creation failed.
 	FailedReasons []string `json:"failed_reasons,omitempty"`

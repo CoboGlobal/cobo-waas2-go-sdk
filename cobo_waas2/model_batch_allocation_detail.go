@@ -26,6 +26,7 @@ type BatchAllocationDetail struct {
 	AllocationItems []AllocationItem `json:"allocation_items,omitempty"`
 	// The initiator of this batch allocation, usually the user's API key.
 	Initiator *string `json:"initiator,omitempty"`
+	Status *BatchAllocationStatus `json:"status,omitempty"`
 	// The created time of the batch allocation, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
 	// The updated time of the batch allocation, represented as a UNIX timestamp in seconds.
@@ -165,6 +166,38 @@ func (o *BatchAllocationDetail) SetInitiator(v string) {
 	o.Initiator = &v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *BatchAllocationDetail) GetStatus() BatchAllocationStatus {
+	if o == nil || IsNil(o.Status) {
+		var ret BatchAllocationStatus
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BatchAllocationDetail) GetStatusOk() (*BatchAllocationStatus, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *BatchAllocationDetail) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given BatchAllocationStatus and assigns it to the Status field.
+func (o *BatchAllocationDetail) SetStatus(v BatchAllocationStatus) {
+	o.Status = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value if set, zero value otherwise.
 func (o *BatchAllocationDetail) GetCreatedTimestamp() int32 {
 	if o == nil || IsNil(o.CreatedTimestamp) {
@@ -246,6 +279,9 @@ func (o BatchAllocationDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
 	}
 	if !IsNil(o.CreatedTimestamp) {
 		toSerialize["created_timestamp"] = o.CreatedTimestamp

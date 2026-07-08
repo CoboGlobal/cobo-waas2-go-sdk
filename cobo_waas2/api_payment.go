@@ -2238,8 +2238,8 @@ func (r ApiCreateReportRequest) Execute() (*Report, *http.Response, error) {
 /*
 CreateReport Generate reports
 
-
 This operation generates reports for a variety of payment activities, including pay-ins, payouts, and commission fees.
+<Note>For `report_types`, report scope, exported field differences, and report-specific usage notes, see [Reports](/payments/en/guides/reports).</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -5417,6 +5417,7 @@ func (r ApiGetReportsRequest) Execute() (*GetReports200Response, *http.Response,
 GetReports List all reports
 
 This operation retrieves the information of all reports.
+<Note>For `report_types`, report scope, exported field differences, and report-specific usage notes, see [Reports](/payments/en/guides/reports).</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **DappName** | Pointer to **string** | The dapp name that initiated this transaction. | [optional] 
 **DappDomain** | Pointer to **string** | The dapp domain that initiated this transaction | [optional] 
 **SessionId** | Pointer to **string** | The session id that initiated this transaction | [optional] 
+**FeePayer** | Pointer to **string** | The address of the designated Solana fee payer account that covers the transaction fees, separating the fee payment from the main signer or source account. | [optional] 
 
 ## Methods
 
@@ -434,6 +435,31 @@ SetSessionId sets SessionId field to given value.
 `func (o *TransactionExtra) HasSessionId() bool`
 
 HasSessionId returns a boolean if a field has been set.
+
+### GetFeePayer
+
+`func (o *TransactionExtra) GetFeePayer() string`
+
+GetFeePayer returns the FeePayer field if non-nil, zero value otherwise.
+
+### GetFeePayerOk
+
+`func (o *TransactionExtra) GetFeePayerOk() (*string, bool)`
+
+GetFeePayerOk returns a tuple with the FeePayer field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeePayer
+
+`func (o *TransactionExtra) SetFeePayer(v string)`
+
+SetFeePayer sets FeePayer field to given value.
+
+### HasFeePayer
+
+`func (o *TransactionExtra) HasFeePayer() bool`
+
+HasFeePayer returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
