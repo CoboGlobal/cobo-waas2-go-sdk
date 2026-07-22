@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**RequestId** | Pointer to **string** | The request ID that is used to track an order link request. The request ID is provided by you and must be unique. | [optional] 
 **BusinessInfo** | [**OrderLinkBusinessInfo**](OrderLinkBusinessInfo.md) |  | 
 **DisplayInfo** | Pointer to [**LinkDisplayInfo**](LinkDisplayInfo.md) |  | [optional] 
 
@@ -25,6 +26,31 @@ will change when the set of required properties is changed
 NewCreateOrderLinkRequestWithDefaults instantiates a new CreateOrderLinkRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetRequestId
+
+`func (o *CreateOrderLinkRequest) GetRequestId() string`
+
+GetRequestId returns the RequestId field if non-nil, zero value otherwise.
+
+### GetRequestIdOk
+
+`func (o *CreateOrderLinkRequest) GetRequestIdOk() (*string, bool)`
+
+GetRequestIdOk returns a tuple with the RequestId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequestId
+
+`func (o *CreateOrderLinkRequest) SetRequestId(v string)`
+
+SetRequestId sets RequestId field to given value.
+
+### HasRequestId
+
+`func (o *CreateOrderLinkRequest) HasRequestId() bool`
+
+HasRequestId returns a boolean if a field has been set.
 
 ### GetBusinessInfo
 

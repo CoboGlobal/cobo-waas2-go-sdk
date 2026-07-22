@@ -32,6 +32,9 @@ type PaymentTransaction struct {
 	// The amount of cryptocurrency transferred, as a decimal string.
 	Amount string `json:"amount"`
 	Status TransactionStatus `json:"status"`
+	SubStatus *TransactionSubStatus `json:"sub_status,omitempty"`
+	// (This property is applicable to approval failures and signature failures only) The reason why the transaction failed.
+	FailedReason *string `json:"failed_reason,omitempty"`
 	Counterparty *Counterparty `json:"counterparty,omitempty"`
 	Destination *Destination `json:"destination,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
@@ -250,6 +253,70 @@ func (o *PaymentTransaction) SetStatus(v TransactionStatus) {
 	o.Status = v
 }
 
+// GetSubStatus returns the SubStatus field value if set, zero value otherwise.
+func (o *PaymentTransaction) GetSubStatus() TransactionSubStatus {
+	if o == nil || IsNil(o.SubStatus) {
+		var ret TransactionSubStatus
+		return ret
+	}
+	return *o.SubStatus
+}
+
+// GetSubStatusOk returns a tuple with the SubStatus field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentTransaction) GetSubStatusOk() (*TransactionSubStatus, bool) {
+	if o == nil || IsNil(o.SubStatus) {
+		return nil, false
+	}
+	return o.SubStatus, true
+}
+
+// HasSubStatus returns a boolean if a field has been set.
+func (o *PaymentTransaction) HasSubStatus() bool {
+	if o != nil && !IsNil(o.SubStatus) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubStatus gets a reference to the given TransactionSubStatus and assigns it to the SubStatus field.
+func (o *PaymentTransaction) SetSubStatus(v TransactionSubStatus) {
+	o.SubStatus = &v
+}
+
+// GetFailedReason returns the FailedReason field value if set, zero value otherwise.
+func (o *PaymentTransaction) GetFailedReason() string {
+	if o == nil || IsNil(o.FailedReason) {
+		var ret string
+		return ret
+	}
+	return *o.FailedReason
+}
+
+// GetFailedReasonOk returns a tuple with the FailedReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentTransaction) GetFailedReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.FailedReason) {
+		return nil, false
+	}
+	return o.FailedReason, true
+}
+
+// HasFailedReason returns a boolean if a field has been set.
+func (o *PaymentTransaction) HasFailedReason() bool {
+	if o != nil && !IsNil(o.FailedReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetFailedReason gets a reference to the given string and assigns it to the FailedReason field.
+func (o *PaymentTransaction) SetFailedReason(v string) {
+	o.FailedReason = &v
+}
+
 // GetCounterparty returns the Counterparty field value if set, zero value otherwise.
 func (o *PaymentTransaction) GetCounterparty() Counterparty {
 	if o == nil || IsNil(o.Counterparty) {
@@ -383,6 +450,12 @@ func (o PaymentTransaction) ToMap() (map[string]interface{}, error) {
 	toSerialize["to_address"] = o.ToAddress
 	toSerialize["amount"] = o.Amount
 	toSerialize["status"] = o.Status
+	if !IsNil(o.SubStatus) {
+		toSerialize["sub_status"] = o.SubStatus
+	}
+	if !IsNil(o.FailedReason) {
+		toSerialize["failed_reason"] = o.FailedReason
+	}
 	if !IsNil(o.Counterparty) {
 		toSerialize["counterparty"] = o.Counterparty
 	}

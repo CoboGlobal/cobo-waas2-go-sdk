@@ -37,6 +37,7 @@ Method | HTTP request | Description
 [**GetDestination**](PaymentAPI.md#GetDestination) | **Get** /payments/destination/{destination_id} | Get destination information
 [**GetDestinationEntry**](PaymentAPI.md#GetDestinationEntry) | **Get** /payments/destination_entry/{destination_entry_id} | Get destination entry information
 [**GetExchangeRate**](PaymentAPI.md#GetExchangeRate) | **Get** /payments/exchange_rates/{token_id}/{currency} | Get exchange rate
+[**GetMerchantKyc**](PaymentAPI.md#GetMerchantKyc) | **Get** /payments/merchants/{merchant_id}/kyc | Get merchant KYC
 [**GetPaymentOrderDetailById**](PaymentAPI.md#GetPaymentOrderDetailById) | **Get** /payments/orders/{order_id} | Get pay-in order information
 [**GetPayoutById**](PaymentAPI.md#GetPayoutById) | **Get** /payments/payouts/{payout_id} | Get payout information
 [**GetPspBalance**](PaymentAPI.md#GetPspBalance) | **Get** /payments/balance/psp | Get developer balance
@@ -66,9 +67,9 @@ Method | HTTP request | Description
 [**ListPayouts**](PaymentAPI.md#ListPayouts) | **Get** /payments/payouts | List all payouts
 [**ListSettlementDetails**](PaymentAPI.md#ListSettlementDetails) | **Get** /payments/settlement_details | List all settlement details
 [**ListSettlementRequests**](PaymentAPI.md#ListSettlementRequests) | **Get** /payments/settlement_requests | List all settlement requests
-[**ListTopUpPayerAccounts**](PaymentAPI.md#ListTopUpPayerAccounts) | **Get** /payments/topup/payer_accounts | List top-up payer accounts
 [**ListTopUpPayers**](PaymentAPI.md#ListTopUpPayers) | **Get** /payments/topup/payers | List payers
 [**PaymentEstimateFee**](PaymentAPI.md#PaymentEstimateFee) | **Post** /payments/estimate_fee | Estimate fees
+[**SubmitMerchantKyc**](PaymentAPI.md#SubmitMerchantKyc) | **Post** /payments/merchants/{merchant_id}/kyc | Submit merchant KYC
 [**TriggerTestPaymentsWebhookEvent**](PaymentAPI.md#TriggerTestPaymentsWebhookEvent) | **Post** /payments/webhooks/trigger | Trigger test webhook event
 [**UpdateCounterparty**](PaymentAPI.md#UpdateCounterparty) | **Put** /payments/counterparty/{counterparty_id} | Update counterparty
 [**UpdateDestination**](PaymentAPI.md#UpdateDestination) | **Put** /payments/destination/{destination_id} | Update destination
@@ -77,6 +78,7 @@ Method | HTTP request | Description
 [**UpdatePaymentOrder**](PaymentAPI.md#UpdatePaymentOrder) | **Put** /payments/orders/{order_id} | Update pay-in order
 [**UpdateRefundById**](PaymentAPI.md#UpdateRefundById) | **Put** /payments/refunds/{refund_id} | Update refund order
 [**UpdateTopUpAddress**](PaymentAPI.md#UpdateTopUpAddress) | **Put** /payments/topup/address | Update top-up address
+[**UploadPaymentFile**](PaymentAPI.md#UploadPaymentFile) | **Post** /payments/files | Upload file
 
 
 
@@ -2656,6 +2658,86 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetMerchantKyc
+
+> MerchantKycSubmission GetMerchantKyc(ctx, merchantId).Execute()
+
+Get merchant KYC
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	merchantId := "M1001"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetMerchantKyc(ctx, merchantId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetMerchantKyc``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMerchantKyc`: MerchantKycSubmission
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetMerchantKyc`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**merchantId** | **string** | The merchant ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMerchantKycRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**MerchantKycSubmission**](MerchantKycSubmission.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetPaymentOrderDetailById
 
 > Order GetPaymentOrderDetailById(ctx, orderId).Execute()
@@ -5065,90 +5147,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListTopUpPayerAccounts
-
-> ListTopUpPayerAccounts200Response ListTopUpPayerAccounts(ctx).Limit(limit).Before(before).After(after).MerchantId(merchantId).PayerId(payerId).Execute()
-
-List top-up payer accounts
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
-    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
-)
-
-func main() {
-	limit := int32(10)
-	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
-	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
-	merchantId := "M1001"
-	payerId := "P20250619T0310056d7aa"
-
-	configuration := coboWaas2.NewConfiguration()
-	// Initialize the API client
-	apiClient := coboWaas2.NewAPIClient(configuration)
-	ctx := context.Background()
-
-    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
-	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
-    // Replace `<YOUR_PRIVATE_KEY>` with your private key
-	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
-		Secret: "<YOUR_PRIVATE_KEY>",
-	})
-	resp, r, err := apiClient.PaymentAPI.ListTopUpPayerAccounts(ctx).Limit(limit).Before(before).After(after).MerchantId(merchantId).PayerId(payerId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListTopUpPayerAccounts``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ListTopUpPayerAccounts`: ListTopUpPayerAccounts200Response
-	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListTopUpPayerAccounts`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiListTopUpPayerAccountsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
- **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
- **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
- **merchantId** | **string** | The merchant ID. | 
- **payerId** | **string** | A unique identifier assigned by Cobo to track and identify individual payers. | 
-
-### Return type
-
-[**ListTopUpPayerAccounts200Response**](ListTopUpPayerAccounts200Response.md)
-
-### Authorization
-
-[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ListTopUpPayers
 
 > ListTopUpPayers200Response ListTopUpPayers(ctx).Limit(limit).Before(before).After(after).MerchantId(merchantId).PayerId(payerId).Execute()
@@ -5294,6 +5292,88 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PaymentEstimateFee201Response**](PaymentEstimateFee201Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SubmitMerchantKyc
+
+> MerchantKycInfo SubmitMerchantKyc(ctx, merchantId).SubmitMerchantKyc(submitMerchantKyc).Execute()
+
+Submit merchant KYC
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	merchantId := "M1001"
+	submitMerchantKyc := *coboWaas2.NewSubmitMerchantKyc("merchant@example.com", "+85212345678", coboWaas2.MerchantKycMerchantType("B2B"), "HKG", []string{"Industry_example"}, *coboWaas2.NewMerchantKycCompanyInfo(coboWaas2.MerchantKycCompanyType("Corporation"), false, []coboWaas2.MerchantKycCompanyAttachment{*coboWaas2.NewMerchantKycCompanyAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf", coboWaas2.MerchantKycCompanyAttachmentFileType("BI"))}, *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street"), "12345678", "示例有限公司", "Example Limited", "2020-01-01", "2020-01-01", "2020-01-01", *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street"), *coboWaas2.NewMerchantKycPersonInfo("张三", "Zhang San", "110101199001011234", "19900101", "20180101", "20280101", []coboWaas2.MerchantKycPersonAttachment{*coboWaas2.NewMerchantKycPersonAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg", coboWaas2.MerchantKycPersonAttachmentFileType("PRC_ID_Emblem"))}, *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street")), []coboWaas2.MerchantKycPersonInfo{*coboWaas2.NewMerchantKycPersonInfo("张三", "Zhang San", "110101199001011234", "19900101", "20180101", "20280101", []coboWaas2.MerchantKycPersonAttachment{*coboWaas2.NewMerchantKycPersonAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg", coboWaas2.MerchantKycPersonAttachmentFileType("PRC_ID_Emblem"))}, )}))
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.SubmitMerchantKyc(ctx, merchantId).SubmitMerchantKyc(submitMerchantKyc).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.SubmitMerchantKyc``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SubmitMerchantKyc`: MerchantKycInfo
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.SubmitMerchantKyc`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**merchantId** | **string** | The merchant ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSubmitMerchantKycRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **submitMerchantKyc** | [**SubmitMerchantKyc**](SubmitMerchantKyc.md) | The request body to submit merchant KYC information. | 
+
+### Return type
+
+[**MerchantKycInfo**](MerchantKycInfo.md)
 
 ### Authorization
 
@@ -5946,6 +6026,82 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UploadPaymentFile
+
+> PaymentUploadedFile UploadPaymentFile(ctx).File(file).Execute()
+
+Upload file
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	file := os.NewFile(1234, "some_file")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.UploadPaymentFile(ctx).File(file).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.UploadPaymentFile``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UploadPaymentFile`: PaymentUploadedFile
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.UploadPaymentFile`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUploadPaymentFileRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **file** | ***os.File** | The file to upload. | 
+
+### Return type
+
+[**PaymentUploadedFile**](PaymentUploadedFile.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

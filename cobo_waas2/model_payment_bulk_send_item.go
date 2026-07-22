@@ -33,6 +33,8 @@ type PaymentBulkSendItem struct {
 	TxHash *string `json:"tx_hash,omitempty"`
 	Status PaymentBulkSendItemStatus `json:"status"`
 	ValidationStatus PaymentBulkSendItemValidationStatus `json:"validation_status"`
+	// The reason why the bulk send item failed.
+	FailedReason *string `json:"failed_reason,omitempty"`
 }
 
 type _PaymentBulkSendItem PaymentBulkSendItem
@@ -268,6 +270,38 @@ func (o *PaymentBulkSendItem) SetValidationStatus(v PaymentBulkSendItemValidatio
 	o.ValidationStatus = v
 }
 
+// GetFailedReason returns the FailedReason field value if set, zero value otherwise.
+func (o *PaymentBulkSendItem) GetFailedReason() string {
+	if o == nil || IsNil(o.FailedReason) {
+		var ret string
+		return ret
+	}
+	return *o.FailedReason
+}
+
+// GetFailedReasonOk returns a tuple with the FailedReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentBulkSendItem) GetFailedReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.FailedReason) {
+		return nil, false
+	}
+	return o.FailedReason, true
+}
+
+// HasFailedReason returns a boolean if a field has been set.
+func (o *PaymentBulkSendItem) HasFailedReason() bool {
+	if o != nil && !IsNil(o.FailedReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetFailedReason gets a reference to the given string and assigns it to the FailedReason field.
+func (o *PaymentBulkSendItem) SetFailedReason(v string) {
+	o.FailedReason = &v
+}
+
 func (o PaymentBulkSendItem) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -290,6 +324,9 @@ func (o PaymentBulkSendItem) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["status"] = o.Status
 	toSerialize["validation_status"] = o.ValidationStatus
+	if !IsNil(o.FailedReason) {
+		toSerialize["failed_reason"] = o.FailedReason
+	}
 	return toSerialize, nil
 }
 

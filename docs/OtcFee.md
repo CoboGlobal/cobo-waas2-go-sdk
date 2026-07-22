@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeeRate** | **string** | The exchange rate used to convert cryptos to fiat currencies during off-ramp. The final fiat amount is calculated using the following formula:  Final Fiat Amount &#x3D; (Token Amount - Bridging Fee) × Exchange Rate  Note: The actual fiat amount received may be lower due to additional bank transfer fees.  | 
-**TokenId** | Pointer to **string** | The ID of the token you want to off-ramp. | [optional] 
+**FeeRate** | **string** | The OTC fee rate applied to calculate the variable portion of the OTC fee.  This rate-based fee is charged cumulatively on top of &#x60;otc_fixed_fee&#x60;.  | 
+**TokenId** | Pointer to **string** | The token id in otc. | [optional] 
 
 ## Methods
 

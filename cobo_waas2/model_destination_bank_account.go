@@ -51,6 +51,22 @@ type DestinationBankAccount struct {
 	Country *string `json:"country,omitempty"`
 	// Beneficiary's city.
 	City *string `json:"city,omitempty"`
+	PaymentMethod *BankAccountPaymentMethod `json:"payment_method,omitempty"`
+	HolderType *BankAccountHolderType `json:"holder_type,omitempty"`
+	// The province or state of the beneficiary. Required when `payment_method` is `Swift`. Cannot be a pure number or contain Chinese characters. 
+	BeneficiaryProvince *string `json:"beneficiary_province,omitempty"`
+	// The postal code of the beneficiary. Required when `payment_method` is `Swift`. 
+	BeneficiaryPostCode *string `json:"beneficiary_post_code,omitempty"`
+	// The bank account name. Cannot contain Chinese characters. 
+	BankAccountName *string `json:"bank_account_name,omitempty"`
+	// The branch code. Required when `payment_method` is `Local` (HK only). 
+	BankBranchCode *string `json:"bank_branch_code,omitempty"`
+	// The country, in ISO 3166-1 alpha-3 format.
+	BankCountry *string `json:"bank_country,omitempty"`
+	// The province or state of the bank. Cannot be a pure number or contain Chinese characters. 
+	BankProvince *string `json:"bank_province,omitempty"`
+	// The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file). 
+	ContractFileId *string `json:"contract_file_id,omitempty"`
 }
 
 type _DestinationBankAccount DestinationBankAccount
@@ -546,6 +562,294 @@ func (o *DestinationBankAccount) SetCity(v string) {
 	o.City = &v
 }
 
+// GetPaymentMethod returns the PaymentMethod field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetPaymentMethod() BankAccountPaymentMethod {
+	if o == nil || IsNil(o.PaymentMethod) {
+		var ret BankAccountPaymentMethod
+		return ret
+	}
+	return *o.PaymentMethod
+}
+
+// GetPaymentMethodOk returns a tuple with the PaymentMethod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetPaymentMethodOk() (*BankAccountPaymentMethod, bool) {
+	if o == nil || IsNil(o.PaymentMethod) {
+		return nil, false
+	}
+	return o.PaymentMethod, true
+}
+
+// HasPaymentMethod returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasPaymentMethod() bool {
+	if o != nil && !IsNil(o.PaymentMethod) {
+		return true
+	}
+
+	return false
+}
+
+// SetPaymentMethod gets a reference to the given BankAccountPaymentMethod and assigns it to the PaymentMethod field.
+func (o *DestinationBankAccount) SetPaymentMethod(v BankAccountPaymentMethod) {
+	o.PaymentMethod = &v
+}
+
+// GetHolderType returns the HolderType field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetHolderType() BankAccountHolderType {
+	if o == nil || IsNil(o.HolderType) {
+		var ret BankAccountHolderType
+		return ret
+	}
+	return *o.HolderType
+}
+
+// GetHolderTypeOk returns a tuple with the HolderType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetHolderTypeOk() (*BankAccountHolderType, bool) {
+	if o == nil || IsNil(o.HolderType) {
+		return nil, false
+	}
+	return o.HolderType, true
+}
+
+// HasHolderType returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasHolderType() bool {
+	if o != nil && !IsNil(o.HolderType) {
+		return true
+	}
+
+	return false
+}
+
+// SetHolderType gets a reference to the given BankAccountHolderType and assigns it to the HolderType field.
+func (o *DestinationBankAccount) SetHolderType(v BankAccountHolderType) {
+	o.HolderType = &v
+}
+
+// GetBeneficiaryProvince returns the BeneficiaryProvince field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetBeneficiaryProvince() string {
+	if o == nil || IsNil(o.BeneficiaryProvince) {
+		var ret string
+		return ret
+	}
+	return *o.BeneficiaryProvince
+}
+
+// GetBeneficiaryProvinceOk returns a tuple with the BeneficiaryProvince field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetBeneficiaryProvinceOk() (*string, bool) {
+	if o == nil || IsNil(o.BeneficiaryProvince) {
+		return nil, false
+	}
+	return o.BeneficiaryProvince, true
+}
+
+// HasBeneficiaryProvince returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasBeneficiaryProvince() bool {
+	if o != nil && !IsNil(o.BeneficiaryProvince) {
+		return true
+	}
+
+	return false
+}
+
+// SetBeneficiaryProvince gets a reference to the given string and assigns it to the BeneficiaryProvince field.
+func (o *DestinationBankAccount) SetBeneficiaryProvince(v string) {
+	o.BeneficiaryProvince = &v
+}
+
+// GetBeneficiaryPostCode returns the BeneficiaryPostCode field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetBeneficiaryPostCode() string {
+	if o == nil || IsNil(o.BeneficiaryPostCode) {
+		var ret string
+		return ret
+	}
+	return *o.BeneficiaryPostCode
+}
+
+// GetBeneficiaryPostCodeOk returns a tuple with the BeneficiaryPostCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetBeneficiaryPostCodeOk() (*string, bool) {
+	if o == nil || IsNil(o.BeneficiaryPostCode) {
+		return nil, false
+	}
+	return o.BeneficiaryPostCode, true
+}
+
+// HasBeneficiaryPostCode returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasBeneficiaryPostCode() bool {
+	if o != nil && !IsNil(o.BeneficiaryPostCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetBeneficiaryPostCode gets a reference to the given string and assigns it to the BeneficiaryPostCode field.
+func (o *DestinationBankAccount) SetBeneficiaryPostCode(v string) {
+	o.BeneficiaryPostCode = &v
+}
+
+// GetBankAccountName returns the BankAccountName field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetBankAccountName() string {
+	if o == nil || IsNil(o.BankAccountName) {
+		var ret string
+		return ret
+	}
+	return *o.BankAccountName
+}
+
+// GetBankAccountNameOk returns a tuple with the BankAccountName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetBankAccountNameOk() (*string, bool) {
+	if o == nil || IsNil(o.BankAccountName) {
+		return nil, false
+	}
+	return o.BankAccountName, true
+}
+
+// HasBankAccountName returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasBankAccountName() bool {
+	if o != nil && !IsNil(o.BankAccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAccountName gets a reference to the given string and assigns it to the BankAccountName field.
+func (o *DestinationBankAccount) SetBankAccountName(v string) {
+	o.BankAccountName = &v
+}
+
+// GetBankBranchCode returns the BankBranchCode field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetBankBranchCode() string {
+	if o == nil || IsNil(o.BankBranchCode) {
+		var ret string
+		return ret
+	}
+	return *o.BankBranchCode
+}
+
+// GetBankBranchCodeOk returns a tuple with the BankBranchCode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetBankBranchCodeOk() (*string, bool) {
+	if o == nil || IsNil(o.BankBranchCode) {
+		return nil, false
+	}
+	return o.BankBranchCode, true
+}
+
+// HasBankBranchCode returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasBankBranchCode() bool {
+	if o != nil && !IsNil(o.BankBranchCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankBranchCode gets a reference to the given string and assigns it to the BankBranchCode field.
+func (o *DestinationBankAccount) SetBankBranchCode(v string) {
+	o.BankBranchCode = &v
+}
+
+// GetBankCountry returns the BankCountry field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetBankCountry() string {
+	if o == nil || IsNil(o.BankCountry) {
+		var ret string
+		return ret
+	}
+	return *o.BankCountry
+}
+
+// GetBankCountryOk returns a tuple with the BankCountry field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetBankCountryOk() (*string, bool) {
+	if o == nil || IsNil(o.BankCountry) {
+		return nil, false
+	}
+	return o.BankCountry, true
+}
+
+// HasBankCountry returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasBankCountry() bool {
+	if o != nil && !IsNil(o.BankCountry) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankCountry gets a reference to the given string and assigns it to the BankCountry field.
+func (o *DestinationBankAccount) SetBankCountry(v string) {
+	o.BankCountry = &v
+}
+
+// GetBankProvince returns the BankProvince field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetBankProvince() string {
+	if o == nil || IsNil(o.BankProvince) {
+		var ret string
+		return ret
+	}
+	return *o.BankProvince
+}
+
+// GetBankProvinceOk returns a tuple with the BankProvince field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetBankProvinceOk() (*string, bool) {
+	if o == nil || IsNil(o.BankProvince) {
+		return nil, false
+	}
+	return o.BankProvince, true
+}
+
+// HasBankProvince returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasBankProvince() bool {
+	if o != nil && !IsNil(o.BankProvince) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankProvince gets a reference to the given string and assigns it to the BankProvince field.
+func (o *DestinationBankAccount) SetBankProvince(v string) {
+	o.BankProvince = &v
+}
+
+// GetContractFileId returns the ContractFileId field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetContractFileId() string {
+	if o == nil || IsNil(o.ContractFileId) {
+		var ret string
+		return ret
+	}
+	return *o.ContractFileId
+}
+
+// GetContractFileIdOk returns a tuple with the ContractFileId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetContractFileIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ContractFileId) {
+		return nil, false
+	}
+	return o.ContractFileId, true
+}
+
+// HasContractFileId returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasContractFileId() bool {
+	if o != nil && !IsNil(o.ContractFileId) {
+		return true
+	}
+
+	return false
+}
+
+// SetContractFileId gets a reference to the given string and assigns it to the ContractFileId field.
+func (o *DestinationBankAccount) SetContractFileId(v string) {
+	o.ContractFileId = &v
+}
+
 func (o DestinationBankAccount) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -586,6 +890,33 @@ func (o DestinationBankAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.City) {
 		toSerialize["city"] = o.City
+	}
+	if !IsNil(o.PaymentMethod) {
+		toSerialize["payment_method"] = o.PaymentMethod
+	}
+	if !IsNil(o.HolderType) {
+		toSerialize["holder_type"] = o.HolderType
+	}
+	if !IsNil(o.BeneficiaryProvince) {
+		toSerialize["beneficiary_province"] = o.BeneficiaryProvince
+	}
+	if !IsNil(o.BeneficiaryPostCode) {
+		toSerialize["beneficiary_post_code"] = o.BeneficiaryPostCode
+	}
+	if !IsNil(o.BankAccountName) {
+		toSerialize["bank_account_name"] = o.BankAccountName
+	}
+	if !IsNil(o.BankBranchCode) {
+		toSerialize["bank_branch_code"] = o.BankBranchCode
+	}
+	if !IsNil(o.BankCountry) {
+		toSerialize["bank_country"] = o.BankCountry
+	}
+	if !IsNil(o.BankProvince) {
+		toSerialize["bank_province"] = o.BankProvince
+	}
+	if !IsNil(o.ContractFileId) {
+		toSerialize["contract_file_id"] = o.ContractFileId
 	}
 	return toSerialize, nil
 }

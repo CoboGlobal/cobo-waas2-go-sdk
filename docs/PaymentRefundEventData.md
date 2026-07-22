@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Amount** | **string** | The amount in cryptocurrency to be returned for this refund order. | 
 **ToAddress** | **string** | The recipient&#39;s wallet address where the refund will be sent. | 
 **Status** | [**RefundStatus**](RefundStatus.md) |  | 
+**FailedReason** | Pointer to **string** | The reason why the refund failed. | [optional] 
 **RefundType** | Pointer to [**RefundType**](RefundType.md) |  | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The creation time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The last update time of the refund order, represented as a UNIX timestamp in seconds. | [optional] 
@@ -257,6 +258,31 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetFailedReason
+
+`func (o *PaymentRefundEventData) GetFailedReason() string`
+
+GetFailedReason returns the FailedReason field if non-nil, zero value otherwise.
+
+### GetFailedReasonOk
+
+`func (o *PaymentRefundEventData) GetFailedReasonOk() (*string, bool)`
+
+GetFailedReasonOk returns a tuple with the FailedReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFailedReason
+
+`func (o *PaymentRefundEventData) SetFailedReason(v string)`
+
+SetFailedReason sets FailedReason field to given value.
+
+### HasFailedReason
+
+`func (o *PaymentRefundEventData) HasFailedReason() bool`
+
+HasFailedReason returns a boolean if a field has been set.
 
 ### GetRefundType
 

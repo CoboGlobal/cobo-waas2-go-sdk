@@ -36,6 +36,8 @@ type Refund struct {
 	// The recipient's wallet address where the refund will be sent.
 	ToAddress string `json:"to_address"`
 	Status RefundStatus `json:"status"`
+	// The reason why the refund failed.
+	FailedReason *string `json:"failed_reason,omitempty"`
 	RefundType *RefundType `json:"refund_type,omitempty"`
 	// The creation time of the refund order, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`
@@ -318,6 +320,38 @@ func (o *Refund) GetStatusOk() (*RefundStatus, bool) {
 // SetStatus sets field value
 func (o *Refund) SetStatus(v RefundStatus) {
 	o.Status = v
+}
+
+// GetFailedReason returns the FailedReason field value if set, zero value otherwise.
+func (o *Refund) GetFailedReason() string {
+	if o == nil || IsNil(o.FailedReason) {
+		var ret string
+		return ret
+	}
+	return *o.FailedReason
+}
+
+// GetFailedReasonOk returns a tuple with the FailedReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Refund) GetFailedReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.FailedReason) {
+		return nil, false
+	}
+	return o.FailedReason, true
+}
+
+// HasFailedReason returns a boolean if a field has been set.
+func (o *Refund) HasFailedReason() bool {
+	if o != nil && !IsNil(o.FailedReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetFailedReason gets a reference to the given string and assigns it to the FailedReason field.
+func (o *Refund) SetFailedReason(v string) {
+	o.FailedReason = &v
 }
 
 // GetRefundType returns the RefundType field value if set, zero value otherwise.
@@ -633,6 +667,9 @@ func (o Refund) ToMap() (map[string]interface{}, error) {
 	toSerialize["amount"] = o.Amount
 	toSerialize["to_address"] = o.ToAddress
 	toSerialize["status"] = o.Status
+	if !IsNil(o.FailedReason) {
+		toSerialize["failed_reason"] = o.FailedReason
+	}
 	if !IsNil(o.RefundType) {
 		toSerialize["refund_type"] = o.RefundType
 	}

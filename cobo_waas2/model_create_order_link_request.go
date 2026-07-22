@@ -19,6 +19,8 @@ var _ MappedNullable = &CreateOrderLinkRequest{}
 
 // CreateOrderLinkRequest struct for CreateOrderLinkRequest
 type CreateOrderLinkRequest struct {
+	// The request ID that is used to track an order link request. The request ID is provided by you and must be unique.
+	RequestId *string `json:"request_id,omitempty"`
 	BusinessInfo OrderLinkBusinessInfo `json:"business_info"`
 	DisplayInfo *LinkDisplayInfo `json:"display_info,omitempty"`
 }
@@ -41,6 +43,38 @@ func NewCreateOrderLinkRequest(businessInfo OrderLinkBusinessInfo) *CreateOrderL
 func NewCreateOrderLinkRequestWithDefaults() *CreateOrderLinkRequest {
 	this := CreateOrderLinkRequest{}
 	return &this
+}
+
+// GetRequestId returns the RequestId field value if set, zero value otherwise.
+func (o *CreateOrderLinkRequest) GetRequestId() string {
+	if o == nil || IsNil(o.RequestId) {
+		var ret string
+		return ret
+	}
+	return *o.RequestId
+}
+
+// GetRequestIdOk returns a tuple with the RequestId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateOrderLinkRequest) GetRequestIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RequestId) {
+		return nil, false
+	}
+	return o.RequestId, true
+}
+
+// HasRequestId returns a boolean if a field has been set.
+func (o *CreateOrderLinkRequest) HasRequestId() bool {
+	if o != nil && !IsNil(o.RequestId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequestId gets a reference to the given string and assigns it to the RequestId field.
+func (o *CreateOrderLinkRequest) SetRequestId(v string) {
+	o.RequestId = &v
 }
 
 // GetBusinessInfo returns the BusinessInfo field value
@@ -109,6 +143,9 @@ func (o CreateOrderLinkRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateOrderLinkRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.RequestId) {
+		toSerialize["request_id"] = o.RequestId
+	}
 	toSerialize["business_info"] = o.BusinessInfo
 	if !IsNil(o.DisplayInfo) {
 		toSerialize["display_info"] = o.DisplayInfo

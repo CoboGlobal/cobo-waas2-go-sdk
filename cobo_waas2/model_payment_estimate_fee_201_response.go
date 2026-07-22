@@ -19,6 +19,8 @@ var _ MappedNullable = &PaymentEstimateFee201Response{}
 type PaymentEstimateFee201Response struct {
 	// A list of estimated fees for the requested operations.
 	Data []PaymentEstimatedFee `json:"data,omitempty"`
+	// The fixed OTC fee amount for the payout.  This fee is charged in addition to the percentage-based OTC fee calculated using `otc_fee.fee_rate`. 
+	OtcFixedFee *string `json:"otc_fixed_fee,omitempty"`
 }
 
 // NewPaymentEstimateFee201Response instantiates a new PaymentEstimateFee201Response object
@@ -70,6 +72,38 @@ func (o *PaymentEstimateFee201Response) SetData(v []PaymentEstimatedFee) {
 	o.Data = v
 }
 
+// GetOtcFixedFee returns the OtcFixedFee field value if set, zero value otherwise.
+func (o *PaymentEstimateFee201Response) GetOtcFixedFee() string {
+	if o == nil || IsNil(o.OtcFixedFee) {
+		var ret string
+		return ret
+	}
+	return *o.OtcFixedFee
+}
+
+// GetOtcFixedFeeOk returns a tuple with the OtcFixedFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentEstimateFee201Response) GetOtcFixedFeeOk() (*string, bool) {
+	if o == nil || IsNil(o.OtcFixedFee) {
+		return nil, false
+	}
+	return o.OtcFixedFee, true
+}
+
+// HasOtcFixedFee returns a boolean if a field has been set.
+func (o *PaymentEstimateFee201Response) HasOtcFixedFee() bool {
+	if o != nil && !IsNil(o.OtcFixedFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetOtcFixedFee gets a reference to the given string and assigns it to the OtcFixedFee field.
+func (o *PaymentEstimateFee201Response) SetOtcFixedFee(v string) {
+	o.OtcFixedFee = &v
+}
+
 func (o PaymentEstimateFee201Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -82,6 +116,9 @@ func (o PaymentEstimateFee201Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
+	}
+	if !IsNil(o.OtcFixedFee) {
+		toSerialize["otc_fixed_fee"] = o.OtcFixedFee
 	}
 	return toSerialize, nil
 }

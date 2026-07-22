@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **ToAddress** | **string** | The destination address of the transaction. | 
 **Amount** | **string** | The amount of cryptocurrency transferred, as a decimal string. | 
 **Status** | [**TransactionStatus**](TransactionStatus.md) |  | 
+**SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
+**FailedReason** | Pointer to **string** | (This property is applicable to approval failures and signature failures only) The reason why the transaction failed. | [optional] 
 **Counterparty** | Pointer to [**Counterparty**](Counterparty.md) |  | [optional] 
 **Destination** | Pointer to [**Destination**](Destination.md) |  | [optional] 
 **CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
@@ -184,6 +186,56 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetSubStatus
+
+`func (o *PaymentTransaction) GetSubStatus() TransactionSubStatus`
+
+GetSubStatus returns the SubStatus field if non-nil, zero value otherwise.
+
+### GetSubStatusOk
+
+`func (o *PaymentTransaction) GetSubStatusOk() (*TransactionSubStatus, bool)`
+
+GetSubStatusOk returns a tuple with the SubStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubStatus
+
+`func (o *PaymentTransaction) SetSubStatus(v TransactionSubStatus)`
+
+SetSubStatus sets SubStatus field to given value.
+
+### HasSubStatus
+
+`func (o *PaymentTransaction) HasSubStatus() bool`
+
+HasSubStatus returns a boolean if a field has been set.
+
+### GetFailedReason
+
+`func (o *PaymentTransaction) GetFailedReason() string`
+
+GetFailedReason returns the FailedReason field if non-nil, zero value otherwise.
+
+### GetFailedReasonOk
+
+`func (o *PaymentTransaction) GetFailedReasonOk() (*string, bool)`
+
+GetFailedReasonOk returns a tuple with the FailedReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFailedReason
+
+`func (o *PaymentTransaction) SetFailedReason(v string)`
+
+SetFailedReason sets FailedReason field to given value.
+
+### HasFailedReason
+
+`func (o *PaymentTransaction) HasFailedReason() bool`
+
+HasFailedReason returns a boolean if a field has been set.
 
 ### GetCounterparty
 

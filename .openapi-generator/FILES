@@ -32,7 +32,6 @@ crypto/helper.go
 crypto/secp256k1.go
 crypto/signer.go
 demo/server_demo.go
-docs/Account.md
 docs/AcquiringType.md
 docs/Activity.md
 docs/ActivityAction.md
@@ -105,6 +104,8 @@ docs/Balance.md
 docs/BalanceUpdateInfo.md
 docs/BalanceUpdateInfoEventData.md
 docs/BankAccount.md
+docs/BankAccountHolderType.md
+docs/BankAccountPaymentMethod.md
 docs/BankAccountStatus.md
 docs/BaseContractCallSource.md
 docs/BaseEstimateStakingFee.md
@@ -410,7 +411,6 @@ docs/ListTokenBalancesForFeeStation200Response.md
 docs/ListTokenBalancesForFeeStation200ResponseDataInner.md
 docs/ListTokenListingRequests200Response.md
 docs/ListTokenizationBlocklistAddresses200Response.md
-docs/ListTopUpPayerAccounts200Response.md
 docs/ListTopUpPayers200Response.md
 docs/ListTopUpPayers200ResponseDataInner.md
 docs/ListTransactionApprovalDetails200Response.md
@@ -436,6 +436,18 @@ docs/MaxFeeAmount.md
 docs/MaxTransferableValue.md
 docs/Merchant.md
 docs/MerchantBalance.md
+docs/MerchantKycAddress.md
+docs/MerchantKycCompanyAttachment.md
+docs/MerchantKycCompanyAttachmentFileType.md
+docs/MerchantKycCompanyInfo.md
+docs/MerchantKycCompanyType.md
+docs/MerchantKycInfo.md
+docs/MerchantKycMerchantType.md
+docs/MerchantKycPersonAttachment.md
+docs/MerchantKycPersonAttachmentFileType.md
+docs/MerchantKycPersonInfo.md
+docs/MerchantKycStatus.md
+docs/MerchantKycSubmission.md
 docs/MessageSignDestination.md
 docs/MessageSignDestinationType.md
 docs/MessageSignParams.md
@@ -458,7 +470,6 @@ docs/OrganizationsAPI.md
 docs/OriginalMainGroupHandling.md
 docs/OtcFee.md
 docs/Pagination.md
-docs/PayerAccount.md
 docs/PaymentAPI.md
 docs/PaymentAccountBalanceUpdateEventData.md
 docs/PaymentAddressUpdateEventData.md
@@ -493,6 +504,7 @@ docs/PaymentSettlementEvent.md
 docs/PaymentSourceType.md
 docs/PaymentTransaction.md
 docs/PaymentTransactionEventData.md
+docs/PaymentUploadedFile.md
 docs/PaymentWalletBalance.md
 docs/PayoutChannel.md
 docs/PolicyAction.md
@@ -589,6 +601,7 @@ docs/SubmitDepositTravelRuleInfo201Response.md
 docs/SubmitKytResponse.md
 docs/SubmitKytScreeningsDecisionsBody.md
 docs/SubmitKytScreeningsReviewBody.md
+docs/SubmitMerchantKyc.md
 docs/SupportedToken.md
 docs/SuspendedTokenEventData.md
 docs/SuspendedTokenOperationType.md
@@ -876,6 +889,7 @@ docs/UpdateSmartContractWalletParams.md
 docs/UpdateTopUpAddress.md
 docs/UpdateWalletParams.md
 docs/UpdateWebhookEndpointByIdRequest.md
+docs/UploadPaymentFileRequest.md
 docs/UtxoFeeBasePrice.md
 docs/UtxoFeeRate.md
 docs/Vasp.md
@@ -900,7 +914,6 @@ docs/WebhookEventType.md
 git_push.sh
 go.mod
 go.sum
-model_account.go
 model_acquiring_type.go
 model_activity.go
 model_activity_action.go
@@ -968,6 +981,8 @@ model_balance.go
 model_balance_update_info.go
 model_balance_update_info_event_data.go
 model_bank_account.go
+model_bank_account_holder_type.go
+model_bank_account_payment_method.go
 model_bank_account_status.go
 model_base_contract_call_source.go
 model_base_estimate_staking_fee.go
@@ -1270,7 +1285,6 @@ model_list_token_balances_for_fee_station_200_response.go
 model_list_token_balances_for_fee_station_200_response_data_inner.go
 model_list_token_listing_requests_200_response.go
 model_list_tokenization_blocklist_addresses_200_response.go
-model_list_top_up_payer_accounts_200_response.go
 model_list_top_up_payers_200_response.go
 model_list_top_up_payers_200_response_data_inner.go
 model_list_transaction_approval_details_200_response.go
@@ -1290,6 +1304,18 @@ model_max_fee_amount.go
 model_max_transferable_value.go
 model_merchant.go
 model_merchant_balance.go
+model_merchant_kyc_address.go
+model_merchant_kyc_company_attachment.go
+model_merchant_kyc_company_attachment_file_type.go
+model_merchant_kyc_company_info.go
+model_merchant_kyc_company_type.go
+model_merchant_kyc_info.go
+model_merchant_kyc_merchant_type.go
+model_merchant_kyc_person_attachment.go
+model_merchant_kyc_person_attachment_file_type.go
+model_merchant_kyc_person_info.go
+model_merchant_kyc_status.go
+model_merchant_kyc_submission.go
 model_message_sign_destination.go
 model_message_sign_destination_type.go
 model_message_sign_params.go
@@ -1316,7 +1342,6 @@ model_organization_event_data.go
 model_original_main_group_handling.go
 model_otc_fee.go
 model_pagination.go
-model_payer_account.go
 model_payment_account_balance_update_event_data.go
 model_payment_address_update_event_data.go
 model_payment_allocation_amount.go
@@ -1350,6 +1375,7 @@ model_payment_settlement_event.go
 model_payment_source_type.go
 model_payment_transaction.go
 model_payment_transaction_event_data.go
+model_payment_uploaded_file.go
 model_payment_wallet_balance.go
 model_payout_channel.go
 model_policy_action.go
@@ -1444,6 +1470,7 @@ model_submit_deposit_travel_rule_info_201_response.go
 model_submit_kyt_response.go
 model_submit_kyt_screenings_decisions_body.go
 model_submit_kyt_screenings_review_body.go
+model_submit_merchant_kyc.go
 model_supported_token.go
 model_suspended_token_event_data.go
 model_suspended_token_operation_type.go
@@ -1726,6 +1753,7 @@ model_update_smart_contract_wallet_params.go
 model_update_top_up_address.go
 model_update_wallet_params.go
 model_update_webhook_endpoint_by_id_request.go
+model_upload_payment_file_request.go
 model_utxo.go
 model_utxo_fee_base_price.go
 model_utxo_fee_rate.go

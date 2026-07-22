@@ -29,7 +29,7 @@ type CreatePaymentOrderRequest struct {
 	PricingCurrency *string `json:"pricing_currency,omitempty"`
 	// The base amount of the order, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places.
 	PricingAmount *string `json:"pricing_amount,omitempty"`
-	// The developer fee for the order. It is added to the base amount (`pricing_amount`) to determine the final charge. For example, if `pricing_amount` is \"100.00\" and `fee_amount` is \"2.00\", the payer will be charged \"102.00\" in total, with \"100.00\" being settled to the merchant account and \"2.00\" settled to the developer account. Values must be greater than 0 and contain two decimal places.
+	// The developer fee for the order. It is added to the base amount (`pricing_amount`) to determine the final charge. For example, if `pricing_amount` is \"100.00\" and `fee_amount` is \"2.00\", the payer will be charged \"102.00\" in total, with \"100.00\" being settled to the merchant account and \"2.00\" settled to the developer account. Values must be greater than or equal to 0 and contain two decimal places.
 	FeeAmount string `json:"fee_amount"`
 	// The ID of the cryptocurrency used for payment. Supported values:   - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	PayableCurrency string `json:"payable_currency"`

@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **Type** | Pointer to [**TransactionType**](TransactionType.md) |  | [optional] 
 **Status** | **string** | The status of the fiat transaction. Possible values include:   - &#x60;Created&#x60;: The transaction has been created.   - &#x60;Succeeded&#x60;: The transaction has been completed successfully.  | 
 **SubStatus** | Pointer to [**TransactionSubStatus**](TransactionSubStatus.md) |  | [optional] 
-**FailedReason** | Pointer to **string** | (This property is applicable to approval failures and signature failures only) The reason why the transaction failed. | [optional] 
+**FailedReason** | Pointer to **string** | The reason why the bulk send failed. | [optional] 
 **ChainId** | **string** | The chain identifier. | 
 **TokenId** | **string** | The token ID of the balance change. | 
 **AssetId** | Pointer to **string** | (This concept applies to Exchange Wallets only) The asset ID. An asset ID is the unique identifier of the asset held within your linked exchange account. | [optional] 

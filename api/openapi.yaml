@@ -9574,6 +9574,135 @@ paths:
       summary: Update merchant
       tags:
       - Payment
+  /payments/merchants/{merchant_id}/kyc:
+    get:
+      description: |
+        This operation retrieves the KYC submission for a specified merchant.
+
+        The merchant ID can be retrieved by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
+      operationId: get_merchant_kyc
+      parameters:
+      - description: The merchant ID.
+        example: M1001
+        explode: false
+        in: path
+        name: merchant_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantKycSubmission'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.read
+      summary: Get merchant KYC
+      tags:
+      - Payment
+    post:
+      description: |
+        This operation submits KYC information for a specified merchant.
+
+        You need to provide the merchant contact information, merchant type, country, industry, and company information.
+
+        The merchant ID can be retrieved by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
+      operationId: submit_merchant_kyc
+      parameters:
+      - description: The merchant ID.
+        example: M1001
+        explode: false
+        in: path
+        name: merchant_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/submitMerchantKycBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantKycInfo'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.create
+      summary: Submit merchant KYC
+      tags:
+      - Payment
+  /payments/files:
+    post:
+      description: |
+        This operation uploads a file for payment-related use cases, such as merchant KYC attachments.
+
+        You need to specify the file to upload. After a successful upload, use the returned AWS file link in `file_id` when calling
+        [Submit merchant KYC](https://www.cobo.com/developers/v2/api-references/payment/submit-merchant-kyc).
+        The returned file link expires at the time specified by `expired_timestamp`.
+      operationId: upload_payment_file
+      requestBody:
+        $ref: '#/components/requestBodies/uploadPaymentFileBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentUploadedFile'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.create
+      summary: Upload file
+      tags:
+      - Payment
   /payments/refunds:
     get:
       description: |
@@ -10810,90 +10939,6 @@ paths:
       - OAuth2:
         - payment_orders_payin.read
       summary: List payers
-      tags:
-      - Payment
-  /payments/topup/payer_accounts:
-    get:
-      description: |
-        This operation retrieves the accounts of all payers. You can filter the result by merchant ID and payer_id.
-      operationId: list_top_up_payer_accounts
-      parameters:
-      - description: "The maximum number of objects to return. For most operations,\
-          \ the value range is [1, 50]."
-        example: 10
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 10
-          format: int32
-          type: integer
-        style: form
-      - description: |
-          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-        explode: true
-        in: query
-        name: before
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: |
-          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
-        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        explode: true
-        in: query
-        name: after
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: The merchant ID.
-        example: M1001
-        explode: true
-        in: query
-        name: merchant_id
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: A unique identifier assigned by Cobo to track and identify individual
-          payers.
-        example: P20250619T0310056d7aa
-        explode: true
-        in: query
-        name: payer_id
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_top_up_payer_accounts_200_response'
-          description: The request was successful.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - payment_orders_payin.read
-      summary: List top-up payer accounts
       tags:
       - Payment
   /payments/topup/payers/transactions:
@@ -18732,6 +18777,18 @@ components:
           schema:
             $ref: '#/components/schemas/update_merchant_by_id_request'
       description: The request body to update a merchant.
+    submitMerchantKycBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SubmitMerchantKyc'
+      description: The request body to submit merchant KYC information.
+    uploadPaymentFileBody:
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/upload_payment_file_request'
+      description: The request body to upload a file.
     createPaymentOrderBody:
       content:
         application/json:
@@ -18914,70 +18971,6 @@ components:
             - destination_id
             type: object
       description: The request body to create a destination wallet address.
-    createDestinationBankAccountBody:
-      content:
-        application/json:
-          schema:
-            properties:
-              destination_id:
-                description: The destination ID.
-                example: 123e4567-e89b-12d3-a456-426614174003
-                format: uuid
-                type: string
-              account_alias:
-                description: The alias of the bank account.
-                example: Main Payout Account
-                type: string
-              account_number:
-                description: The bank account number.
-                example: "4111111111111111"
-                type: string
-              swift_code:
-                description: The SWIFT or BIC code of the bank.
-                example: BOFAUS33
-                type: string
-              currency:
-                description: The currency of the bank account.
-                example: USD
-                type: string
-              beneficiary_name:
-                description: The name of the account holder.
-                example: John Doe
-                type: string
-              beneficiary_address:
-                description: The address of the account holder.
-                example: "123 Main St, Anytown, USA"
-                type: string
-              bank_name:
-                description: The name of the bank.
-                example: ABC Bank
-                type: string
-              bank_address:
-                description: The address of the bank.
-                example: "456 Bank Ave, Cityville, USA"
-                type: string
-              iban_code:
-                description: The IBAN code of the bank account.
-                example: "12345678901234567890"
-                type: string
-              further_credit:
-                description: The further credit of the bank account.
-                example: further credit sample
-                type: string
-              intermediary_bank_info:
-                $ref: '#/components/schemas/IntermediaryBankInfo'
-            required:
-            - account_alias
-            - account_number
-            - bank_address
-            - bank_name
-            - beneficiary_address
-            - beneficiary_name
-            - currency
-            - destination_id
-            - swift_code
-            type: object
-      description: The request body to create a destination bank account.
     updateDestinationBankAccountBody:
       content:
         application/json:
@@ -20024,6 +20017,24 @@ components:
           schema:
             $ref: '#/components/schemas/list_merchants_200_response'
       description: The request was successful.
+    submitMerchantKycResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MerchantKycInfo'
+      description: The request was successful.
+    getMerchantKycResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MerchantKycSubmission'
+      description: The request was successful.
+    uploadPaymentFileResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentUploadedFile'
+      description: The request was successful.
     createPaymentOrderResponse:
       $ref: '#/components/responses/getPaymentOrderResponse'
     listPaymentOrdersResponse:
@@ -20146,12 +20157,6 @@ components:
           schema:
             $ref: '#/components/schemas/create_top_up_addresses_201_response'
       description: The information about created top-up addresses.
-    listPayerAccountsResponse:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/list_top_up_payer_accounts_200_response'
-      description: The request was successful.
     listPayerTransactionsResponse:
       content:
         application/json:
@@ -32838,8 +32843,7 @@ components:
         expired_at: 1711324800
         transactions:
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -32850,6 +32854,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -32859,15 +32869,11 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -32878,6 +32884,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -32887,11 +32899,8 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         amount_tolerance: "0.5"
         fee_amount: "2.00"
@@ -33064,8 +33073,7 @@ components:
         merchant_id: M1001
         transactions:
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -33076,6 +33084,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -33085,15 +33099,11 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -33104,6 +33114,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -33113,11 +33129,8 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         refund_id: R20250304-M1001-1001
         token_id: ETH_USDT
@@ -33126,6 +33139,8 @@ components:
         request_id: 123e4567-e89b-12d3-a456-426614174004
         order_id: O20250304-M1001-1001
         commission_fee: ""
+        failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+          \ Please add funds to Fee Station and try again."
         status: Pending
         charge_merchant_fee: false
       properties:
@@ -33165,6 +33180,11 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/RefundStatus'
+        failed_reason:
+          description: The reason why the refund failed.
+          example: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
+          type: string
         refund_type:
           $ref: '#/components/schemas/RefundType'
         created_timestamp:
@@ -33315,8 +33335,7 @@ components:
           crypto_address: 0xabc123456789def0000000000000000000000000
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -33327,6 +33346,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -33336,15 +33361,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -33355,6 +33376,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -33364,11 +33391,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           settled_amount: "500.00"
           crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -33408,8 +33432,7 @@ components:
           crypto_address: 0xabc123456789def0000000000000000000000000
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -33420,6 +33443,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -33429,15 +33458,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -33448,6 +33473,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -33457,11 +33488,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           settled_amount: "500.00"
           crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -33582,8 +33610,7 @@ components:
         crypto_address: 0xabc123456789def0000000000000000000000000
         transactions:
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -33594,6 +33621,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -33603,15 +33636,11 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -33622,6 +33651,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -33631,11 +33666,8 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         settled_amount: "500.00"
         crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -33824,8 +33856,7 @@ components:
     PaymentTransaction:
       example:
         amount: "0.15"
-        token_id: ETH_USDT
-        updated_timestamp: 1610445878970
+        sub_status: PendingDoubleCheck
         destination:
           country: USA
           destination_type: Individual
@@ -33836,6 +33867,12 @@ components:
           merchant_id: M1001
           contact_address: "123 Main St, Anytown, USA"
           email: destination@example.com
+        tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+        to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+        created_timestamp: 1610445878970
+        tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+        token_id: ETH_USDT
+        updated_timestamp: 1610445878970
         counterparty:
           country: USA
           counterparty_name: Counterparty A
@@ -33845,11 +33882,8 @@ components:
           created_timestamp: 1744689600
           contact_address: "123 Main St, Anytown, USA"
           email: counterparty@example.com
-        tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-        to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-        created_timestamp: 1610445878970
-        tx_id: tx_123e4567-e89b-12d3-a456-426614174003
         from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+        failed_reason: Rejected by signer Cobo TSS
         status: Submitted
       properties:
         tx_id:
@@ -33878,6 +33912,13 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/TransactionStatus'
+        sub_status:
+          $ref: '#/components/schemas/TransactionSubStatus'
+        failed_reason:
+          description: (This property is applicable to approval failures and signature
+            failures only) The reason why the transaction failed.
+          example: Rejected by signer Cobo TSS
+          type: string
         counterparty:
           $ref: '#/components/schemas/Counterparty'
         destination:
@@ -34037,107 +34078,6 @@ components:
       - symbol
       - token_address
       - token_id
-      type: object
-    Account:
-      description: "Details of a payment account used for top-up operations, including\
-        \ address and balance metadata."
-      example:
-        merchant_balance: "0.15"
-        address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-        token_id: ETH_USDT
-        updated_timestamp: 1610445878970
-        created_timestamp: 1610445878970
-        psp_balance: "0.15"
-      properties:
-        token_id:
-          description: The ID of the cryptocurrency that this account is configured
-            to handle.
-          example: ETH_USDT
-          type: string
-        address:
-          description: The top-up address corresponding to the account.
-          example: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-          type: string
-        merchant_balance:
-          description: The amount of merchant funds under this account.
-          example: "0.15"
-          type: string
-        psp_balance:
-          description: The amount of developer funds under this account.
-          example: "0.15"
-          type: string
-        created_timestamp:
-          description: "The creation time of the account, in Unix timestamp format,\
-            \ measured in milliseconds."
-          example: 1610445878970
-          format: int64
-          type: integer
-        updated_timestamp:
-          description: "The last update time of the account, in Unix timestamp format,\
-            \ measured in milliseconds."
-          example: 1610445878970
-          format: int64
-          type: integer
-      required:
-      - address
-      - merchant_balance
-      - psp_balance
-      - token_id
-      type: object
-    PayerAccount:
-      example:
-        updated_timestamp: 1744693200
-        payer_id: P20250619T0310056d7aa
-        created_timestamp: 1744689600
-        merchant_id: M1001
-        accounts:
-        - merchant_balance: "0.15"
-          address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
-          created_timestamp: 1610445878970
-          psp_balance: "0.15"
-        - merchant_balance: "0.15"
-          address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
-          created_timestamp: 1610445878970
-          psp_balance: "0.15"
-        developer_fee_rate: "0.01"
-      properties:
-        merchant_id:
-          description: The merchant ID.
-          example: M1001
-          type: string
-        payer_id:
-          description: A unique identifier assigned by Cobo to track and identify
-            individual payers.
-          example: P20250619T0310056d7aa
-          type: string
-        developer_fee_rate:
-          description: The developer fee rate applied to the top-up transactions made
-            by the payer. Expressed as a decimal string where "0.1" represents 10%.
-          example: "0.01"
-          type: string
-        created_timestamp:
-          description: "The creation time of the payer, represented as a UNIX timestamp\
-            \ in seconds."
-          example: 1744689600
-          type: integer
-        updated_timestamp:
-          description: "The last update time of the payer, represented as a UNIX timestamp\
-            \ in seconds."
-          example: 1744693200
-          type: integer
-        accounts:
-          description: An array of accounts associated with this payer.
-          items:
-            $ref: '#/components/schemas/Account'
-          type: array
-      required:
-      - developer_fee_rate
-      - merchant_id
-      - payer_id
       type: object
     ForcedSweepRequest:
       example:
@@ -34436,14 +34376,12 @@ components:
       properties:
         fee_rate:
           description: |
-            The exchange rate used to convert cryptos to fiat currencies during off-ramp. The final fiat amount is calculated using the following formula:
+            The OTC fee rate applied to calculate the variable portion of the OTC fee.
 
-            Final Fiat Amount = (Token Amount - Bridging Fee) × Exchange Rate
-
-            Note: The actual fiat amount received may be lower due to additional bank transfer fees.
+            This rate-based fee is charged cumulatively on top of `otc_fixed_fee`.
           type: string
         token_id:
-          description: The ID of the token you want to off-ramp.
+          description: The token id in otc.
           type: string
       required:
       - fee_rate
@@ -34483,15 +34421,690 @@ components:
     PaymentEstimateFee:
       properties:
         token_id:
-          description: The token ID for which fees will be calculated.
+          description: The ID of the cryptocurrency you want to refund.
           type: string
         amount:
-          description: The transaction amount for which fees will be calculated.
+          description: |
+            The OffRamp settlement amount.
           example: "500.00"
           type: string
       required:
       - amount
       - token_id
+      type: object
+    SubmitMerchantKyc:
+      example:
+        country: HKG
+        phone: "+85212345678"
+        company_info:
+          identify_no: "12345678"
+          company_type: Corporation
+          online_store_url: https://example.com/store
+          attachments:
+          - file_type: BR
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          - file_type: BR
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          valid_period: 2020-01-01
+          commencement_date: 2020-01-01
+          ubo_infos:
+          - residential_address:
+              country: HK
+              city: Hong Kong
+              postcode: "999077"
+              state: Hong Kong
+              line1: 1 Example Street
+            id_number: "110101199001011234"
+            attachments:
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            issue_date: "20180101"
+            date_of_birth: "19900101"
+            name: 张三
+            expiration_date: "20280101"
+            name_en: Zhang San
+          - residential_address:
+              country: HK
+              city: Hong Kong
+              postcode: "999077"
+              state: Hong Kong
+              line1: 1 Example Street
+            id_number: "110101199001011234"
+            attachments:
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            issue_date: "20180101"
+            date_of_birth: "19900101"
+            name: 张三
+            expiration_date: "20280101"
+            name_en: Zhang San
+          register_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          listed: false
+          company_name: 示例有限公司
+          operation_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          company_name_en: Example Limited
+          establish_date: 2020-01-01
+          legal_info:
+            residential_address:
+              country: HK
+              city: Hong Kong
+              postcode: "999077"
+              state: Hong Kong
+              line1: 1 Example Street
+            id_number: "110101199001011234"
+            attachments:
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            issue_date: "20180101"
+            date_of_birth: "19900101"
+            name: 张三
+            expiration_date: "20280101"
+            name_en: Zhang San
+        industry:
+        - E-commerce
+        email: merchant@example.com
+        merchant_type: B2B
+      properties:
+        email:
+          description: The merchant email address.
+          example: merchant@example.com
+          type: string
+        phone:
+          description: The merchant phone number.
+          example: "+85212345678"
+          type: string
+        merchant_type:
+          $ref: '#/components/schemas/MerchantKycMerchantType'
+        country:
+          description: "The country/region of the merchant, in ISO 3166-1 alpha-3\
+            \ format."
+          example: HKG
+          type: string
+        industry:
+          description: The industry categories of the merchant.
+          example:
+          - E-commerce
+          items:
+            type: string
+          type: array
+        company_info:
+          $ref: '#/components/schemas/MerchantKycCompanyInfo'
+      required:
+      - company_info
+      - country
+      - email
+      - industry
+      - merchant_type
+      - phone
+      type: object
+    MerchantKycInfo:
+      example:
+        merchant_id: M1001
+        kyc_submission_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        status: PendingReview
+      properties:
+        kyc_submission_id:
+          description: The KYC submission ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        merchant_id:
+          description: The merchant ID.
+          example: M1001
+          type: string
+        status:
+          $ref: '#/components/schemas/MerchantKycStatus'
+      required:
+      - kyc_submission_id
+      - merchant_id
+      - status
+      type: object
+    MerchantKycSubmission:
+      example:
+        country: HKG
+        phone: "+85212345678"
+        updated_timestamp: 1744689600
+        company_info:
+          identify_no: "12345678"
+          company_type: Corporation
+          online_store_url: https://example.com/store
+          attachments:
+          - file_type: BR
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          - file_type: BR
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          valid_period: 2020-01-01
+          commencement_date: 2020-01-01
+          ubo_infos:
+          - residential_address:
+              country: HK
+              city: Hong Kong
+              postcode: "999077"
+              state: Hong Kong
+              line1: 1 Example Street
+            id_number: "110101199001011234"
+            attachments:
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            issue_date: "20180101"
+            date_of_birth: "19900101"
+            name: 张三
+            expiration_date: "20280101"
+            name_en: Zhang San
+          - residential_address:
+              country: HK
+              city: Hong Kong
+              postcode: "999077"
+              state: Hong Kong
+              line1: 1 Example Street
+            id_number: "110101199001011234"
+            attachments:
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            issue_date: "20180101"
+            date_of_birth: "19900101"
+            name: 张三
+            expiration_date: "20280101"
+            name_en: Zhang San
+          register_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          listed: false
+          company_name: 示例有限公司
+          operation_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          company_name_en: Example Limited
+          establish_date: 2020-01-01
+          legal_info:
+            residential_address:
+              country: HK
+              city: Hong Kong
+              postcode: "999077"
+              state: Hong Kong
+              line1: 1 Example Street
+            id_number: "110101199001011234"
+            attachments:
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            - file_type: PRC_ID_Emblem
+              file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+            issue_date: "20180101"
+            date_of_birth: "19900101"
+            name: 张三
+            expiration_date: "20280101"
+            name_en: Zhang San
+        industry:
+        - E-commerce
+        created_timestamp: 1744689600
+        merchant_id: M1001
+        kyc_submission_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        email: merchant@example.com
+        status: PendingReview
+        merchant_type: B2B
+      properties:
+        kyc_submission_id:
+          description: The KYC submission ID.
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        merchant_id:
+          description: The merchant ID.
+          example: M1001
+          type: string
+        status:
+          $ref: '#/components/schemas/MerchantKycStatus'
+        email:
+          description: The merchant email address.
+          example: merchant@example.com
+          type: string
+        phone:
+          description: The merchant phone number.
+          example: "+85212345678"
+          type: string
+        merchant_type:
+          $ref: '#/components/schemas/MerchantKycMerchantType'
+        country:
+          description: "The country/region of the merchant, in ISO 3166-1 alpha-3\
+            \ format."
+          example: HKG
+          type: string
+        industry:
+          description: The industry categories of the merchant.
+          example:
+          - E-commerce
+          items:
+            type: string
+          type: array
+        company_info:
+          $ref: '#/components/schemas/MerchantKycCompanyInfo'
+        created_timestamp:
+          description: The creation timestamp in Unix seconds.
+          example: 1744689600
+          format: int64
+          type: integer
+        updated_timestamp:
+          description: The last update timestamp in Unix seconds.
+          example: 1744689600
+          format: int64
+          type: integer
+      required:
+      - company_info
+      - country
+      - created_timestamp
+      - email
+      - industry
+      - kyc_submission_id
+      - merchant_id
+      - merchant_type
+      - phone
+      - status
+      type: object
+    MerchantKycStatus:
+      description: |
+        The KYC submission status. Possible values include:
+        - `PendingReview`: The KYC submission is pending review.
+        - `Completed`: The KYC submission has been completed.
+        - `Failed`: The KYC submission has failed.
+      enum:
+      - PendingReview
+      - Completed
+      - Failed
+      example: PendingReview
+      type: string
+    MerchantKycMerchantType:
+      description: |
+        The merchant type. Possible values include:
+        - `B2B`: Business-to-business merchant.
+        - `B2C`: Business-to-consumer merchant.
+      enum:
+      - B2B
+      - B2C
+      example: B2B
+      type: string
+    MerchantKycCountry:
+      description: "The country/region of the merchant, in ISO 3166-1 alpha-3 format."
+      example: HKG
+      type: string
+    MerchantKycCompanyType:
+      description: The company type.
+      enum:
+      - Corporation
+      - Partnership
+      - IICH
+      - Limited Company
+      - Others
+      example: Corporation
+      type: string
+    MerchantKycCompanyAttachmentFileType:
+      description: The company attachment file type.
+      enum:
+      - BI
+      - BR
+      - CI
+      - NNC1
+      - NAR
+      - SSC
+      - AOA
+      - Other
+      - BAP
+      - ANNUAL_RETURN
+      - PLATFORM_SCREENSHOT
+      - BUSINESS_DOCUMENT
+      example: BR
+      type: string
+    MerchantKycPersonAttachmentFileType:
+      description: The person attachment file type.
+      enum:
+      - PRC_ID_Emblem
+      - PRC_ID_Portrait
+      - OIC
+      - PP
+      - FIC
+      - HK_RP
+      - HK_MTP
+      - HK_PP
+      - HK_PID
+      - HKM_RP
+      - HK/Mac_MTP
+      - BACK
+      example: PRC_ID_Emblem
+      type: string
+    MerchantKycCompanyAttachment:
+      example:
+        file_type: BR
+        file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+      properties:
+        file_id:
+          description: |
+            The AWS file link of the uploaded file, which you can retrieve by calling
+            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+          example: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          type: string
+        file_type:
+          $ref: '#/components/schemas/MerchantKycCompanyAttachmentFileType'
+      required:
+      - file_id
+      - file_type
+      type: object
+    MerchantKycPersonAttachment:
+      example:
+        file_type: PRC_ID_Emblem
+        file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+      properties:
+        file_id:
+          description: |
+            The AWS file link of the uploaded file, which you can retrieve by calling
+            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+          example: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          type: string
+        file_type:
+          $ref: '#/components/schemas/MerchantKycPersonAttachmentFileType'
+      required:
+      - file_id
+      - file_type
+      type: object
+    MerchantKycAddress:
+      example:
+        country: HK
+        city: Hong Kong
+        postcode: "999077"
+        state: Hong Kong
+        line1: 1 Example Street
+      properties:
+        country:
+          description: The country.
+          example: HK
+          type: string
+        state:
+          description: The state or province.
+          example: Hong Kong
+          type: string
+        city:
+          description: The city.
+          example: Hong Kong
+          type: string
+        postcode:
+          description: The postal code.
+          example: "999077"
+          type: string
+        line1:
+          description: The address line.
+          example: 1 Example Street
+          type: string
+      required:
+      - city
+      - country
+      - line1
+      - postcode
+      - state
+      type: object
+    MerchantKycPersonInfo:
+      example:
+        residential_address:
+          country: HK
+          city: Hong Kong
+          postcode: "999077"
+          state: Hong Kong
+          line1: 1 Example Street
+        id_number: "110101199001011234"
+        attachments:
+        - file_type: PRC_ID_Emblem
+          file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+        - file_type: PRC_ID_Emblem
+          file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+        issue_date: "20180101"
+        date_of_birth: "19900101"
+        name: 张三
+        expiration_date: "20280101"
+        name_en: Zhang San
+      properties:
+        name:
+          description: The name or title of an identification document.
+          example: 张三
+          maxLength: 64
+          type: string
+        name_en:
+          description: The English-language equivalent of the identification document's
+            name.
+          example: Zhang San
+          maxLength: 64
+          type: string
+        id_number:
+          description: The unique identification number associated with the identification
+            document.
+          example: "110101199001011234"
+          maxLength: 64
+          type: string
+        date_of_birth:
+          description: |
+            The date of birth of the individual, usually in the format YYYYMMDD.
+          example: "19900101"
+          maxLength: 64
+          type: string
+        issue_date:
+          description: |
+            The issue date refers to the date when a document, such as an identification card or passport,
+            was officially issued or granted, usually in the format YYYYMMDD.
+          example: "20180101"
+          maxLength: 64
+          type: string
+        expiration_date:
+          description: |
+            The expiration date refers to the date when a document, such as an identification card or passport,
+            is no longer valid or legally usable, usually in the format YYYYMMDD.
+          example: "20280101"
+          maxLength: 64
+          type: string
+        attachments:
+          description: |
+            Additional files or documents associated with a message or record to provide extra information or context.
+          items:
+            $ref: '#/components/schemas/MerchantKycPersonAttachment'
+          type: array
+        residential_address:
+          $ref: '#/components/schemas/MerchantKycAddress'
+      required:
+      - attachments
+      - date_of_birth
+      - expiration_date
+      - id_number
+      - issue_date
+      - name
+      - name_en
+      - residential_address
+      type: object
+    MerchantKycCompanyInfo:
+      example:
+        identify_no: "12345678"
+        company_type: Corporation
+        online_store_url: https://example.com/store
+        attachments:
+        - file_type: BR
+          file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+        - file_type: BR
+          file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+        valid_period: 2020-01-01
+        commencement_date: 2020-01-01
+        ubo_infos:
+        - residential_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          id_number: "110101199001011234"
+          attachments:
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          issue_date: "20180101"
+          date_of_birth: "19900101"
+          name: 张三
+          expiration_date: "20280101"
+          name_en: Zhang San
+        - residential_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          id_number: "110101199001011234"
+          attachments:
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          issue_date: "20180101"
+          date_of_birth: "19900101"
+          name: 张三
+          expiration_date: "20280101"
+          name_en: Zhang San
+        register_address:
+          country: HK
+          city: Hong Kong
+          postcode: "999077"
+          state: Hong Kong
+          line1: 1 Example Street
+        listed: false
+        company_name: 示例有限公司
+        operation_address:
+          country: HK
+          city: Hong Kong
+          postcode: "999077"
+          state: Hong Kong
+          line1: 1 Example Street
+        company_name_en: Example Limited
+        establish_date: 2020-01-01
+        legal_info:
+          residential_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          id_number: "110101199001011234"
+          attachments:
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          issue_date: "20180101"
+          date_of_birth: "19900101"
+          name: 张三
+          expiration_date: "20280101"
+          name_en: Zhang San
+      properties:
+        company_type:
+          $ref: '#/components/schemas/MerchantKycCompanyType'
+        listed:
+          description: Whether the company is listed.
+          example: false
+          type: boolean
+        attachments:
+          description: The attachments of the company.
+          items:
+            $ref: '#/components/schemas/MerchantKycCompanyAttachment'
+          type: array
+        operation_address:
+          $ref: '#/components/schemas/MerchantKycAddress'
+        identify_no:
+          description: The company identification number.
+          example: "12345678"
+          type: string
+        company_name:
+          description: The company name in local language.
+          example: 示例有限公司
+          type: string
+        company_name_en:
+          description: The company name in English.
+          example: Example Limited
+          type: string
+        establish_date:
+          description: The establishment date of the company.
+          example: 2020-01-01
+          type: string
+        commencement_date:
+          description: The commencement date of the company.
+          example: 2020-01-01
+          type: string
+        valid_period:
+          description: The valid period of the company registration.
+          example: 2020-01-01
+          type: string
+        register_address:
+          $ref: '#/components/schemas/MerchantKycAddress'
+        legal_info:
+          $ref: '#/components/schemas/MerchantKycPersonInfo'
+        ubo_infos:
+          description: The ultimate beneficial owner information.
+          items:
+            $ref: '#/components/schemas/MerchantKycPersonInfo'
+          type: array
+        online_store_url:
+          description: The online store URL. Required when merchant type is B2B.
+          example: https://example.com/store
+          type: string
+      required:
+      - attachments
+      - commencement_date
+      - company_name
+      - company_name_en
+      - company_type
+      - establish_date
+      - identify_no
+      - legal_info
+      - listed
+      - operation_address
+      - register_address
+      - ubo_infos
+      - valid_period
+      type: object
+    PaymentUploadedFile:
+      example:
+        expired_timestamp: 1701483266000
+        file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+      properties:
+        file_id:
+          description: The AWS file link of the uploaded file.
+          example: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          type: string
+        expired_timestamp:
+          description: "The time when the uploaded file link expires, in Unix timestamp\
+            \ format, measured in milliseconds."
+          example: 1701483266000
+          format: int64
+          type: integer
+      required:
+      - expired_timestamp
+      - file_id
       type: object
     PaymentFeeType:
       description: |
@@ -34728,9 +35341,8 @@ components:
         country: USA
         beneficiary_address: "123 Main St, Anytown, USA"
         city: New York
-        swift_code: BOFAUS33
         bank_address: "456 Bank Ave, Cityville, USA"
-        created_timestamp: 1744689600
+        holder_type: Company
         beneficiary_name: John Doe
         intermediary_bank_info:
           bank_name: Intermediary Bank
@@ -34743,6 +35355,16 @@ components:
         currency: USD
         further_credit: further credit sample
         account_alias: Main Payout Account
+        payment_method: Swift
+        swift_code: BOFAUS33
+        beneficiary_post_code: "999077"
+        created_timestamp: 1744689600
+        bank_country: HKG
+        bank_province: Hong Kong
+        contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        beneficiary_province: Hong Kong
+        bank_account_name: Example Company Limited
+        bank_branch_code: "123"
       properties:
         bank_account_id:
           description: The destination bank account ID.
@@ -34810,6 +35432,48 @@ components:
         city:
           description: Beneficiary's city.
           example: New York
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/BankAccountPaymentMethod'
+        holder_type:
+          $ref: '#/components/schemas/BankAccountHolderType'
+        beneficiary_province:
+          description: |
+            The province or state of the beneficiary. Required when `payment_method` is `Swift`.
+            Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        beneficiary_post_code:
+          description: |
+            The postal code of the beneficiary. Required when `payment_method` is `Swift`.
+          example: "999077"
+          type: string
+        bank_account_name:
+          description: |
+            The bank account name. Cannot contain Chinese characters.
+          example: Example Company Limited
+          type: string
+        bank_branch_code:
+          description: |
+            The branch code. Required when `payment_method` is `Local` (HK only).
+          example: "123"
+          type: string
+        bank_country:
+          description: "The country, in ISO 3166-1 alpha-3 format."
+          example: HKG
+          type: string
+        bank_province:
+          description: |
+            The province or state of the bank. Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        contract_file_id:
+          description: |
+            The file ID of the contract document (e.g., cooperation agreement) that proves
+            the business relationship between you and the beneficiary, which you can retrieve by calling
+            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
           type: string
       required:
       - account_alias
@@ -34989,6 +35653,12 @@ components:
       example: Individual
       type: string
     CreateDestinationBankAccount:
+      description: |
+        The bank account details for creating a destination bank account.
+
+        For USD company bank accounts, optional prefixed fields may be required depending on `payment_method`:
+        - When `payment_method` is `Swift`, `beneficiary_province` and `beneficiary_post_code` are required.
+        - When `payment_method` is `Local` (HK only), `bank_branch_code` is required.
       properties:
         account_alias:
           description: The alias of the bank account.
@@ -35033,12 +35703,54 @@ components:
         intermediary_bank_info:
           $ref: '#/components/schemas/IntermediaryBankInfo'
         country:
-          description: "Beneficiary's country, in ISO 3166-1 alpha-3 format."
-          example: USA
+          description: "The country, in ISO 3166-1 alpha-3 format."
+          example: HKG
           type: string
         city:
           description: Beneficiary's city.
           example: New York
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/BankAccountPaymentMethod'
+        holder_type:
+          $ref: '#/components/schemas/BankAccountHolderType'
+        beneficiary_province:
+          description: |
+            The province or state of the beneficiary. Required when `payment_method` is `Swift`.
+            Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        beneficiary_post_code:
+          description: |
+            The postal code of the beneficiary. Required when `payment_method` is `Swift`.
+          example: "999077"
+          type: string
+        bank_account_name:
+          description: |
+            The bank account name. Cannot contain Chinese characters.
+          example: Example Company Limited
+          type: string
+        bank_branch_code:
+          description: |
+            The branch code. Required when `payment_method` is `Local` (HK only).
+          example: "123"
+          type: string
+        bank_country:
+          description: "The country, in ISO 3166-1 alpha-3 format."
+          example: HKG
+          type: string
+        bank_province:
+          description: |
+            The province or state of the bank. Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        contract_file_id:
+          description: |
+            The file ID of the contract document (e.g., cooperation agreement) that proves
+            the business relationship between you and the beneficiary, which you can retrieve by calling
+            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
           type: string
       required:
       - account_alias
@@ -35050,6 +35762,18 @@ components:
       - currency
       - swift_code
       type: object
+    PaymentCountry:
+      description: "The country, in ISO 3166-1 alpha-3 format."
+      example: HKG
+      type: string
+    ContractFileId:
+      description: |
+        The file ID of the contract document (e.g., cooperation agreement) that proves
+        the business relationship between you and the beneficiary, which you can retrieve by calling
+        [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+      format: uuid
+      type: string
     CreateWalletAddress:
       properties:
         address:
@@ -35093,6 +35817,12 @@ components:
       - bank_swift_code
       type: object
     UpdateDestinationBankAccount:
+      description: |
+        The bank account details for updating a destination bank account.
+
+        For USD company bank accounts, optional prefixed fields may be required depending on `payment_method`:
+        - When `payment_method` is `Swift`, `beneficiary_province` and `beneficiary_post_code` are required.
+        - When `payment_method` is `Local` (HK only), `bank_branch_code` is required.
       properties:
         account_alias:
           description: The alias of the bank account.
@@ -35137,12 +35867,54 @@ components:
         intermediary_bank_info:
           $ref: '#/components/schemas/IntermediaryBankInfo'
         country:
-          description: "Beneficiary's country, in ISO 3166-1 alpha-3 format."
-          example: USA
+          description: "The country, in ISO 3166-1 alpha-3 format."
+          example: HKG
           type: string
         city:
           description: Beneficiary's city.
           example: New York
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/BankAccountPaymentMethod'
+        holder_type:
+          $ref: '#/components/schemas/BankAccountHolderType'
+        beneficiary_province:
+          description: |
+            The province or state of the beneficiary. Required when `payment_method` is `Swift`.
+            Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        beneficiary_post_code:
+          description: |
+            The postal code of the beneficiary. Required when `payment_method` is `Swift`.
+          example: "999077"
+          type: string
+        bank_account_name:
+          description: |
+            The bank account name. Cannot contain Chinese characters.
+          example: Example Company Limited
+          type: string
+        bank_branch_code:
+          description: |
+            The branch code. Required when `payment_method` is `Local` (HK only).
+          example: "123"
+          type: string
+        bank_country:
+          description: "The country, in ISO 3166-1 alpha-3 format."
+          example: HKG
+          type: string
+        bank_province:
+          description: |
+            The province or state of the bank. Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        contract_file_id:
+          description: |
+            The file ID of the contract document (e.g., cooperation agreement) that proves
+            the business relationship between you and the beneficiary, which you can retrieve by calling
+            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
           type: string
       required:
       - account_alias
@@ -35237,9 +36009,8 @@ components:
           country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           bank_address: "456 Bank Ave, Cityville, USA"
-          created_timestamp: 1744689600
+          holder_type: Company
           beneficiary_name: John Doe
           intermediary_bank_info:
             bank_name: Intermediary Bank
@@ -35252,14 +36023,23 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          created_timestamp: 1744689600
+          bank_country: HKG
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
         - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
           account_number: "4111111111111111"
           country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           bank_address: "456 Bank Ave, Cityville, USA"
-          created_timestamp: 1744689600
+          holder_type: Company
           beneficiary_name: John Doe
           intermediary_bank_info:
             bank_name: Intermediary Bank
@@ -35272,6 +36052,16 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          created_timestamp: 1744689600
+          bank_country: HKG
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
         merchant_id: M1001
         contact_address: "123 Main St, Anytown, USA"
         wallet_addresses:
@@ -35354,6 +36144,19 @@ components:
       - Approved
       - Rejected
       example: Pending
+      type: string
+    BankAccountPaymentMethod:
+      description: The payment method of the bank account.
+      enum:
+      - Local
+      - Swift
+      example: Swift
+      type: string
+    BankAccountHolderType:
+      description: The holder type of the bank account.
+      enum:
+      - Company
+      example: Company
       type: string
     CounterpartyWalletAddressDetail:
       example:
@@ -35464,11 +36267,10 @@ components:
         destination_country: USA
         beneficiary_address: "123 Main St, Anytown, USA"
         city: New York
-        swift_code: BOFAUS33
         destination_id: 123e4567-e89b-12d3-a456-426614174003
         bank_address: "456 Bank Ave, Cityville, USA"
+        holder_type: Company
         destination_name: Destination A
-        created_timestamp: 1744689600
         destination_merchant_id: M1001
         beneficiary_name: John Doe
         destination_type: Individual
@@ -35485,6 +36287,16 @@ components:
         currency: USD
         further_credit: further credit sample
         account_alias: Main Payout Account
+        payment_method: Swift
+        swift_code: BOFAUS33
+        beneficiary_post_code: "999077"
+        bank_country: HKG
+        created_timestamp: 1744689600
+        bank_province: Hong Kong
+        contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        beneficiary_province: Hong Kong
+        bank_account_name: Example Company Limited
+        bank_branch_code: "123"
       properties:
         destination_id:
           description: The destination ID.
@@ -35569,6 +36381,48 @@ components:
         city:
           description: Beneficiary's city.
           example: New York
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/BankAccountPaymentMethod'
+        holder_type:
+          $ref: '#/components/schemas/BankAccountHolderType'
+        beneficiary_province:
+          description: |
+            The province or state of the beneficiary. Required when `payment_method` is `Swift`.
+            Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        beneficiary_post_code:
+          description: |
+            The postal code of the beneficiary. Required when `payment_method` is `Swift`.
+          example: "999077"
+          type: string
+        bank_account_name:
+          description: |
+            The bank account name. Cannot contain Chinese characters.
+          example: Example Company Limited
+          type: string
+        bank_branch_code:
+          description: |
+            The branch code. Required when `payment_method` is `Local` (HK only).
+          example: "123"
+          type: string
+        bank_country:
+          description: "The country, in ISO 3166-1 alpha-3 format."
+          example: HKG
+          type: string
+        bank_province:
+          description: |
+            The province or state of the bank. Cannot be a pure number or contain Chinese characters.
+          example: Hong Kong
+          type: string
+        contract_file_id:
+          description: |
+            The file ID of the contract document (e.g., cooperation agreement) that proves
+            the business relationship between you and the beneficiary, which you can retrieve by calling
+            [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
           type: string
         created_timestamp:
           description: "The created time of the bank account, represented as a UNIX\
@@ -35901,6 +36755,8 @@ components:
             bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
+        failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+          \ Please add funds to Fee Station and try again."
         recipient_info:
           transfer_via_va: false
           bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -35954,6 +36810,11 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/PaymentPayoutStatus'
+        failed_reason:
+          description: The reason why the payout failed.
+          example: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
+          type: string
         created_timestamp:
           description: "The created time of the payout, represented as a UNIX timestamp\
             \ in seconds."
@@ -35993,8 +36854,7 @@ components:
         created_timestamp: 1744689600
         transactions:
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -36005,6 +36865,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -36014,15 +36880,11 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -36033,6 +36895,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -36042,11 +36910,8 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         payout_id: 123e457-e89b-12d3-a456-426614174004
         updated_timestamp: 1744689600
@@ -36067,6 +36932,8 @@ components:
             bridge_status: Completed
             received_amount: received_amount
             received_token_id: received_token_id
+        failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+          \ Please add funds to Fee Station and try again."
         recipient_info:
           transfer_via_va: false
           bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -36228,6 +37095,8 @@ components:
         created_timestamp: 1744689600
         request_id: 123e457-e89b-12d3-a456-426614174004
         commission_fee: ""
+        failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+          \ Please add funds to Fee Station and try again."
         status: Pending
       properties:
         bulk_send_id:
@@ -36253,6 +37122,11 @@ components:
           $ref: '#/components/schemas/PaymentBulkSendExecutionMode'
         status:
           $ref: '#/components/schemas/PaymentBulkSendStatus'
+        failed_reason:
+          description: The reason why the bulk send failed.
+          example: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
+          type: string
         created_timestamp:
           description: "The created time of the bulk send, represented as a UNIX timestamp\
             \ in seconds."
@@ -36285,6 +37159,8 @@ components:
         description: "Invoice #INV-2024-001"
         tx_hash: 0xabc123456789def0000000000000000000000000
         validation_status: Pending
+        failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+          \ Please add funds to Fee Station and try again."
         status: Pending
       properties:
         bulk_send_item_id:
@@ -36315,6 +37191,11 @@ components:
           $ref: '#/components/schemas/PaymentBulkSendItemStatus'
         validation_status:
           $ref: '#/components/schemas/PaymentBulkSendItemValidationStatus'
+        failed_reason:
+          description: The reason why the bulk send item failed.
+          example: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
+          type: string
       required:
       - amount
       - bulk_send_item_id
@@ -43783,6 +44664,15 @@ components:
           example: "0.1"
           type: string
       type: object
+    upload_payment_file_request:
+      properties:
+        file:
+          description: The file to upload.
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
     get_refunds_200_response:
       example:
         pagination:
@@ -43800,8 +44690,7 @@ components:
           merchant_id: M1001
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -43812,6 +44701,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -43821,15 +44716,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -43840,6 +44731,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -43849,11 +44746,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           refund_id: R20250304-M1001-1001
           token_id: ETH_USDT
@@ -43862,6 +44756,8 @@ components:
           request_id: 123e4567-e89b-12d3-a456-426614174004
           order_id: O20250304-M1001-1001
           commission_fee: ""
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           status: Pending
           charge_merchant_fee: false
         - amount: "0.0025"
@@ -43874,8 +44770,7 @@ components:
           merchant_id: M1001
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -43886,6 +44781,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -43895,15 +44796,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -43914,6 +44811,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -43923,11 +44826,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           refund_id: R20250304-M1001-1001
           token_id: ETH_USDT
@@ -43936,6 +44836,8 @@ components:
           request_id: 123e4567-e89b-12d3-a456-426614174004
           order_id: O20250304-M1001-1001
           commission_fee: ""
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           status: Pending
           charge_merchant_fee: false
       properties:
@@ -44037,8 +44939,7 @@ components:
           expired_at: 1711324800
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -44049,6 +44950,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -44058,15 +44965,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -44077,6 +44980,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -44086,11 +44995,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           amount_tolerance: "0.5"
           fee_amount: "2.00"
@@ -44116,8 +45022,7 @@ components:
           expired_at: 1711324800
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -44128,6 +45033,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -44137,15 +45048,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -44156,6 +45063,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -44165,11 +45078,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           amount_tolerance: "0.5"
           fee_amount: "2.00"
@@ -44228,7 +45138,7 @@ components:
             \ is \"100.00\" and `fee_amount` is \"2.00\", the payer will be charged\
             \ \"102.00\" in total, with \"100.00\" being settled to the merchant account\
             \ and \"2.00\" settled to the developer account. Values must be greater\
-            \ than 0 and contain two decimal places."
+            \ than or equal to 0 and contain two decimal places."
           example: "2.00"
           type: string
         payable_currency:
@@ -44418,8 +45328,7 @@ components:
             crypto_address: 0xabc123456789def0000000000000000000000000
             transactions:
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44430,6 +45339,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44439,15 +45354,11 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44458,6 +45369,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44467,11 +45384,8 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             settled_amount: "500.00"
             crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -44511,8 +45425,7 @@ components:
             crypto_address: 0xabc123456789def0000000000000000000000000
             transactions:
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44523,6 +45436,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44532,15 +45451,11 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44551,6 +45466,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44560,11 +45481,8 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             settled_amount: "500.00"
             crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -44628,8 +45546,7 @@ components:
             crypto_address: 0xabc123456789def0000000000000000000000000
             transactions:
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44640,6 +45557,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44649,15 +45572,11 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44668,6 +45587,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44677,11 +45602,8 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             settled_amount: "500.00"
             crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -44721,8 +45643,7 @@ components:
             crypto_address: 0xabc123456789def0000000000000000000000000
             transactions:
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44733,6 +45654,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44742,15 +45669,11 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             - amount: "0.15"
-              token_id: ETH_USDT
-              updated_timestamp: 1610445878970
+              sub_status: PendingDoubleCheck
               destination:
                 country: USA
                 destination_type: Individual
@@ -44761,6 +45684,12 @@ components:
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
+              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+              created_timestamp: 1610445878970
+              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+              token_id: ETH_USDT
+              updated_timestamp: 1610445878970
               counterparty:
                 country: USA
                 counterparty_name: Counterparty A
@@ -44770,11 +45699,8 @@ components:
                 created_timestamp: 1744689600
                 contact_address: "123 Main St, Anytown, USA"
                 email: counterparty@example.com
-              tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-              to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-              created_timestamp: 1610445878970
-              tx_id: tx_123e4567-e89b-12d3-a456-426614174003
               from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+              failed_reason: Rejected by signer Cobo TSS
               status: Submitted
             settled_amount: "500.00"
             crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -44888,6 +45814,13 @@ components:
             - `false`: The payout is transferred directly to a registered bank account.
           example: false
           type: boolean
+        bank_account_id:
+          description: |
+            The bank account ID, which you can retrieve by calling
+            [List counterparty entries](https://www.cobo.com/developers/v2/api-references/payment/list-counterparty-entries).
+          example: 123e4567-e89b-12d3-a456-426614174003
+          format: uuid
+          type: string
       required:
       - estimate_fees
       type: object
@@ -44918,12 +45851,20 @@ components:
             received_token_id: received_token_id
           commission_fee:
             fee_amount: fee_amount
+        otc_fixed_fee: "10.00"
       properties:
         data:
           description: A list of estimated fees for the requested operations.
           items:
             $ref: '#/components/schemas/PaymentEstimatedFee'
           type: array
+        otc_fixed_fee:
+          description: |
+            The fixed OTC fee amount for the payout.
+
+            This fee is charged in addition to the percentage-based OTC fee calculated using `otc_fee.fee_rate`.
+          example: "10.00"
+          type: string
       type: object
     create_crypto_address_request:
       properties:
@@ -45000,8 +45941,7 @@ components:
         developer_fee_rate: "0.01"
         transactions:
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -45012,6 +45952,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -45021,15 +45967,11 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -45040,6 +45982,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -45049,11 +45997,8 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
       properties:
         merchant_id:
@@ -45113,8 +46058,7 @@ components:
           developer_fee_rate: "0.01"
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45125,6 +46069,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45134,15 +46084,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45153,6 +46099,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45162,11 +46114,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
         - updated_timestamp: 1744693200
           custom_payer_id: user_abc_10001
@@ -45176,8 +46125,7 @@ components:
           developer_fee_rate: "0.01"
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45188,6 +46136,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45197,15 +46151,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45216,6 +46166,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45225,67 +46181,13 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
       properties:
         data:
           items:
             $ref: '#/components/schemas/list_top_up_payers_200_response_data_inner'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-      type: object
-    list_top_up_payer_accounts_200_response:
-      example:
-        pagination:
-          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
-          total_count: 10000
-          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
-        data:
-        - updated_timestamp: 1744693200
-          payer_id: P20250619T0310056d7aa
-          created_timestamp: 1744689600
-          merchant_id: M1001
-          accounts:
-          - merchant_balance: "0.15"
-            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            created_timestamp: 1610445878970
-            psp_balance: "0.15"
-          - merchant_balance: "0.15"
-            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            created_timestamp: 1610445878970
-            psp_balance: "0.15"
-          developer_fee_rate: "0.01"
-        - updated_timestamp: 1744693200
-          payer_id: P20250619T0310056d7aa
-          created_timestamp: 1744689600
-          merchant_id: M1001
-          accounts:
-          - merchant_balance: "0.15"
-            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            created_timestamp: 1610445878970
-            psp_balance: "0.15"
-          - merchant_balance: "0.15"
-            address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
-            created_timestamp: 1610445878970
-            psp_balance: "0.15"
-          developer_fee_rate: "0.01"
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/PayerAccount'
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
@@ -45298,8 +46200,7 @@ components:
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -45310,6 +46211,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -45319,15 +46226,11 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
         - amount: "0.15"
-          token_id: ETH_USDT
-          updated_timestamp: 1610445878970
+          sub_status: PendingDoubleCheck
           destination:
             country: USA
             destination_type: Individual
@@ -45338,6 +46241,12 @@ components:
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
+          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+          created_timestamp: 1610445878970
+          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+          token_id: ETH_USDT
+          updated_timestamp: 1610445878970
           counterparty:
             country: USA
             counterparty_name: Counterparty A
@@ -45347,11 +46256,8 @@ components:
             created_timestamp: 1744689600
             contact_address: "123 Main St, Anytown, USA"
             email: counterparty@example.com
-          tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-          to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-          created_timestamp: 1610445878970
-          tx_id: tx_123e4567-e89b-12d3-a456-426614174003
           from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+          failed_reason: Rejected by signer Cobo TSS
           status: Submitted
       properties:
         data:
@@ -45465,8 +46371,7 @@ components:
           crypto_address: 0xabc123456789def0000000000000000000000000
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45477,6 +46382,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45486,15 +46397,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45505,6 +46412,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45514,11 +46427,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           settled_amount: "500.00"
           crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -45558,8 +46468,7 @@ components:
           crypto_address: 0xabc123456789def0000000000000000000000000
           transactions:
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45570,6 +46479,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45579,15 +46494,11 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           - amount: "0.15"
-            token_id: ETH_USDT
-            updated_timestamp: 1610445878970
+            sub_status: PendingDoubleCheck
             destination:
               country: USA
               destination_type: Individual
@@ -45598,6 +46509,12 @@ components:
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
+            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
+            created_timestamp: 1610445878970
+            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
+            token_id: ETH_USDT
+            updated_timestamp: 1610445878970
             counterparty:
               country: USA
               counterparty_name: Counterparty A
@@ -45607,11 +46524,8 @@ components:
               created_timestamp: 1744689600
               contact_address: "123 Main St, Anytown, USA"
               email: counterparty@example.com
-            tx_hash: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
-            to_address: 0x15B95A2D8af95D9F48148667B6b8B3CdF89e4F15
-            created_timestamp: 1610445878970
-            tx_id: tx_123e4567-e89b-12d3-a456-426614174003
             from_address: 0xF8e4bfc10A2821DF52D3322cB5170E5E9276b537
+            failed_reason: Rejected by signer Cobo TSS
             status: Submitted
           settled_amount: "500.00"
           crypto_address_id: addr_ethusdt_20250429T134512_a8c31f
@@ -45645,6 +46559,12 @@ components:
       type: object
     create_order_link_request:
       properties:
+        request_id:
+          description: The request ID that is used to track an order link request.
+            The request ID is provided by you and must be unique.
+          example: 123e4567-e89b-12d3-a456-426614174004
+          maxLength: 128
+          type: string
         business_info:
           $ref: '#/components/schemas/OrderLinkBusinessInfo'
         display_info:
@@ -45654,6 +46574,12 @@ components:
       type: object
     create_refund_link_request:
       properties:
+        request_id:
+          description: The request ID that is used to track a refund link request.
+            The request ID is provided by you and must be unique.
+          example: 123e4567-e89b-12d3-a456-426614174004
+          maxLength: 128
+          type: string
         business_info:
           $ref: '#/components/schemas/RefundLinkBusinessInfo'
         display_info:
@@ -45980,11 +46906,10 @@ components:
           destination_country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           destination_id: 123e4567-e89b-12d3-a456-426614174003
           bank_address: "456 Bank Ave, Cityville, USA"
+          holder_type: Company
           destination_name: Destination A
-          created_timestamp: 1744689600
           destination_merchant_id: M1001
           beneficiary_name: John Doe
           destination_type: Individual
@@ -46001,17 +46926,26 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          bank_country: HKG
+          created_timestamp: 1744689600
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
         - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
           account_number: "4111111111111111"
           country: USA
           destination_country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           destination_id: 123e4567-e89b-12d3-a456-426614174003
           bank_address: "456 Bank Ave, Cityville, USA"
+          holder_type: Company
           destination_name: Destination A
-          created_timestamp: 1744689600
           destination_merchant_id: M1001
           beneficiary_name: John Doe
           destination_type: Individual
@@ -46028,6 +46962,16 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          bank_country: HKG
+          created_timestamp: 1744689600
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
         wallet_addresses:
         - destination_type: Individual
           address: 0x1234567890abcdef...
@@ -46086,9 +47030,8 @@ components:
           country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           bank_address: "456 Bank Ave, Cityville, USA"
-          created_timestamp: 1744689600
+          holder_type: Company
           beneficiary_name: John Doe
           intermediary_bank_info:
             bank_name: Intermediary Bank
@@ -46101,14 +47044,23 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          created_timestamp: 1744689600
+          bank_country: HKG
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
         - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
           account_number: "4111111111111111"
           country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           bank_address: "456 Bank Ave, Cityville, USA"
-          created_timestamp: 1744689600
+          holder_type: Company
           beneficiary_name: John Doe
           intermediary_bank_info:
             bank_name: Intermediary Bank
@@ -46121,6 +47073,16 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          created_timestamp: 1744689600
+          bank_country: HKG
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
         wallet_addresses:
         - risk_level: Low
           address: 0x1234567890abcdef...
@@ -46168,11 +47130,10 @@ components:
           destination_country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           destination_id: 123e4567-e89b-12d3-a456-426614174003
           bank_address: "456 Bank Ave, Cityville, USA"
+          holder_type: Company
           destination_name: Destination A
-          created_timestamp: 1744689600
           destination_merchant_id: M1001
           beneficiary_name: John Doe
           destination_type: Individual
@@ -46189,6 +47150,16 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          bank_country: HKG
+          created_timestamp: 1744689600
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
       properties:
         wallet_address:
           $ref: '#/components/schemas/WalletAddress'
@@ -46217,9 +47188,8 @@ components:
           country: USA
           beneficiary_address: "123 Main St, Anytown, USA"
           city: New York
-          swift_code: BOFAUS33
           bank_address: "456 Bank Ave, Cityville, USA"
-          created_timestamp: 1744689600
+          holder_type: Company
           beneficiary_name: John Doe
           intermediary_bank_info:
             bank_name: Intermediary Bank
@@ -46232,6 +47202,16 @@ components:
           currency: USD
           further_credit: further credit sample
           account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          created_timestamp: 1744689600
+          bank_country: HKG
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
       properties:
         bank_account:
           $ref: '#/components/schemas/DestinationBankAccount'
@@ -46444,6 +47424,8 @@ components:
               bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           recipient_info:
             transfer_via_va: false
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -46478,6 +47460,8 @@ components:
               bridge_status: Completed
               received_amount: received_amount
               received_token_id: received_token_id
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           recipient_info:
             transfer_via_va: false
             bank_account_id: 123e4567-e89b-12d3-a456-426614174003
@@ -46541,6 +47525,8 @@ components:
           created_timestamp: 1744689600
           request_id: 123e457-e89b-12d3-a456-426614174004
           commission_fee: ""
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           status: Pending
         - execution_mode: Strict
           updated_timestamp: 1744689600
@@ -46550,6 +47536,8 @@ components:
           created_timestamp: 1744689600
           request_id: 123e457-e89b-12d3-a456-426614174004
           commission_fee: ""
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           status: Pending
       properties:
         data:
@@ -46628,6 +47616,8 @@ components:
           description: "Invoice #INV-2024-001"
           tx_hash: 0xabc123456789def0000000000000000000000000
           validation_status: Pending
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           status: Pending
         - receiving_address: 0xabc123456789def0000000000000000000000000
           amount: "500.00"
@@ -46636,6 +47626,8 @@ components:
           description: "Invoice #INV-2024-001"
           tx_hash: 0xabc123456789def0000000000000000000000000
           validation_status: Pending
+          failed_reason: "Cannot charge payout fee: Fee Station balance is insufficient.\
+            \ Please add funds to Fee Station and try again."
           status: Pending
       properties:
         data:
