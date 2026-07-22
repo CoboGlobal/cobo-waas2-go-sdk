@@ -19,9 +19,9 @@ var _ MappedNullable = &PaymentEstimateFee{}
 
 // PaymentEstimateFee struct for PaymentEstimateFee
 type PaymentEstimateFee struct {
-	// The token ID for which fees will be calculated.
+	// The ID of the cryptocurrency you want to refund.
 	TokenId string `json:"token_id"`
-	// The transaction amount for which fees will be calculated.
+	// The OffRamp settlement amount. 
 	Amount string `json:"amount"`
 }
 

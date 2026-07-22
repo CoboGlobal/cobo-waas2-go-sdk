@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** | The description for the entire bulk send batch. | [optional] 
 **ExecutionMode** | [**PaymentBulkSendExecutionMode**](PaymentBulkSendExecutionMode.md) |  | 
 **Status** | [**PaymentBulkSendStatus**](PaymentBulkSendStatus.md) |  | 
+**FailedReason** | Pointer to **string** | The reason why the bulk send failed. | [optional] 
 **CreatedTimestamp** | **int32** | The created time of the bulk send, represented as a UNIX timestamp in seconds. | 
 **UpdatedTimestamp** | **int32** | The updated time of the bulk send, represented as a UNIX timestamp in seconds. | 
 **CommissionFee** | Pointer to [**CommissionFee**](CommissionFee.md) | The commission fee. Not returned when no fee has been incurred, the actual charged amount once incurred, or &#x60;0&#x60; if refunded. | [optional] 
@@ -162,6 +163,31 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetFailedReason
+
+`func (o *PaymentBulkSend) GetFailedReason() string`
+
+GetFailedReason returns the FailedReason field if non-nil, zero value otherwise.
+
+### GetFailedReasonOk
+
+`func (o *PaymentBulkSend) GetFailedReasonOk() (*string, bool)`
+
+GetFailedReasonOk returns a tuple with the FailedReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFailedReason
+
+`func (o *PaymentBulkSend) SetFailedReason(v string)`
+
+SetFailedReason sets FailedReason field to given value.
+
+### HasFailedReason
+
+`func (o *PaymentBulkSend) HasFailedReason() bool`
+
+HasFailedReason returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

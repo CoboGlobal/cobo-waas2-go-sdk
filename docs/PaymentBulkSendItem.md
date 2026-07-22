@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **TxHash** | Pointer to **string** | The transaction hash of the bulk send item. | [optional] 
 **Status** | [**PaymentBulkSendItemStatus**](PaymentBulkSendItemStatus.md) |  | 
 **ValidationStatus** | [**PaymentBulkSendItemValidationStatus**](PaymentBulkSendItemValidationStatus.md) |  | 
+**FailedReason** | Pointer to **string** | The reason why the bulk send item failed. | [optional] 
 
 ## Methods
 
@@ -201,6 +202,31 @@ and a boolean to check if the value has been set.
 
 SetValidationStatus sets ValidationStatus field to given value.
 
+
+### GetFailedReason
+
+`func (o *PaymentBulkSendItem) GetFailedReason() string`
+
+GetFailedReason returns the FailedReason field if non-nil, zero value otherwise.
+
+### GetFailedReasonOk
+
+`func (o *PaymentBulkSendItem) GetFailedReasonOk() (*string, bool)`
+
+GetFailedReasonOk returns a tuple with the FailedReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFailedReason
+
+`func (o *PaymentBulkSendItem) SetFailedReason(v string)`
+
+SetFailedReason sets FailedReason field to given value.
+
+### HasFailedReason
+
+`func (o *PaymentBulkSendItem) HasFailedReason() bool`
+
+HasFailedReason returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

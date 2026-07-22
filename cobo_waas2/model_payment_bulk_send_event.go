@@ -31,6 +31,8 @@ type PaymentBulkSendEvent struct {
 	Description *string `json:"description,omitempty"`
 	ExecutionMode PaymentBulkSendExecutionMode `json:"execution_mode"`
 	Status PaymentBulkSendStatus `json:"status"`
+	// The reason why the bulk send failed.
+	FailedReason *string `json:"failed_reason,omitempty"`
 	// The created time of the bulk send, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The updated time of the bulk send, represented as a UNIX timestamp in seconds.
@@ -249,6 +251,38 @@ func (o *PaymentBulkSendEvent) SetStatus(v PaymentBulkSendStatus) {
 	o.Status = v
 }
 
+// GetFailedReason returns the FailedReason field value if set, zero value otherwise.
+func (o *PaymentBulkSendEvent) GetFailedReason() string {
+	if o == nil || IsNil(o.FailedReason) {
+		var ret string
+		return ret
+	}
+	return *o.FailedReason
+}
+
+// GetFailedReasonOk returns a tuple with the FailedReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentBulkSendEvent) GetFailedReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.FailedReason) {
+		return nil, false
+	}
+	return o.FailedReason, true
+}
+
+// HasFailedReason returns a boolean if a field has been set.
+func (o *PaymentBulkSendEvent) HasFailedReason() bool {
+	if o != nil && !IsNil(o.FailedReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetFailedReason gets a reference to the given string and assigns it to the FailedReason field.
+func (o *PaymentBulkSendEvent) SetFailedReason(v string) {
+	o.FailedReason = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value
 func (o *PaymentBulkSendEvent) GetCreatedTimestamp() int32 {
 	if o == nil {
@@ -350,6 +384,9 @@ func (o PaymentBulkSendEvent) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["execution_mode"] = o.ExecutionMode
 	toSerialize["status"] = o.Status
+	if !IsNil(o.FailedReason) {
+		toSerialize["failed_reason"] = o.FailedReason
+	}
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	if !IsNil(o.CommissionFee) {

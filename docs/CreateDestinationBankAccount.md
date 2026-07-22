@@ -15,8 +15,17 @@ Name | Type | Description | Notes
 **IbanCode** | Pointer to **string** | The IBAN code of the bank account. | [optional] 
 **FurtherCredit** | Pointer to **string** | The further credit of the bank account. | [optional] 
 **IntermediaryBankInfo** | Pointer to [**IntermediaryBankInfo**](IntermediaryBankInfo.md) |  | [optional] 
-**Country** | Pointer to **string** | Beneficiary&#39;s country, in ISO 3166-1 alpha-3 format. | [optional] 
+**Country** | Pointer to **string** | The country, in ISO 3166-1 alpha-3 format. | [optional] 
 **City** | Pointer to **string** | Beneficiary&#39;s city. | [optional] 
+**PaymentMethod** | Pointer to [**BankAccountPaymentMethod**](BankAccountPaymentMethod.md) |  | [optional] 
+**HolderType** | Pointer to [**BankAccountHolderType**](BankAccountHolderType.md) |  | [optional] 
+**BeneficiaryProvince** | Pointer to **string** | The province or state of the beneficiary. Required when &#x60;payment_method&#x60; is &#x60;Swift&#x60;. Cannot be a pure number or contain Chinese characters.  | [optional] 
+**BeneficiaryPostCode** | Pointer to **string** | The postal code of the beneficiary. Required when &#x60;payment_method&#x60; is &#x60;Swift&#x60;.  | [optional] 
+**BankAccountName** | Pointer to **string** | The bank account name. Cannot contain Chinese characters.  | [optional] 
+**BankBranchCode** | Pointer to **string** | The branch code. Required when &#x60;payment_method&#x60; is &#x60;Local&#x60; (HK only).  | [optional] 
+**BankCountry** | Pointer to **string** | The country, in ISO 3166-1 alpha-3 format. | [optional] 
+**BankProvince** | Pointer to **string** | The province or state of the bank. Cannot be a pure number or contain Chinese characters.  | [optional] 
+**ContractFileId** | Pointer to **string** | The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).  | [optional] 
 
 ## Methods
 
@@ -321,6 +330,231 @@ SetCity sets City field to given value.
 `func (o *CreateDestinationBankAccount) HasCity() bool`
 
 HasCity returns a boolean if a field has been set.
+
+### GetPaymentMethod
+
+`func (o *CreateDestinationBankAccount) GetPaymentMethod() BankAccountPaymentMethod`
+
+GetPaymentMethod returns the PaymentMethod field if non-nil, zero value otherwise.
+
+### GetPaymentMethodOk
+
+`func (o *CreateDestinationBankAccount) GetPaymentMethodOk() (*BankAccountPaymentMethod, bool)`
+
+GetPaymentMethodOk returns a tuple with the PaymentMethod field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPaymentMethod
+
+`func (o *CreateDestinationBankAccount) SetPaymentMethod(v BankAccountPaymentMethod)`
+
+SetPaymentMethod sets PaymentMethod field to given value.
+
+### HasPaymentMethod
+
+`func (o *CreateDestinationBankAccount) HasPaymentMethod() bool`
+
+HasPaymentMethod returns a boolean if a field has been set.
+
+### GetHolderType
+
+`func (o *CreateDestinationBankAccount) GetHolderType() BankAccountHolderType`
+
+GetHolderType returns the HolderType field if non-nil, zero value otherwise.
+
+### GetHolderTypeOk
+
+`func (o *CreateDestinationBankAccount) GetHolderTypeOk() (*BankAccountHolderType, bool)`
+
+GetHolderTypeOk returns a tuple with the HolderType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHolderType
+
+`func (o *CreateDestinationBankAccount) SetHolderType(v BankAccountHolderType)`
+
+SetHolderType sets HolderType field to given value.
+
+### HasHolderType
+
+`func (o *CreateDestinationBankAccount) HasHolderType() bool`
+
+HasHolderType returns a boolean if a field has been set.
+
+### GetBeneficiaryProvince
+
+`func (o *CreateDestinationBankAccount) GetBeneficiaryProvince() string`
+
+GetBeneficiaryProvince returns the BeneficiaryProvince field if non-nil, zero value otherwise.
+
+### GetBeneficiaryProvinceOk
+
+`func (o *CreateDestinationBankAccount) GetBeneficiaryProvinceOk() (*string, bool)`
+
+GetBeneficiaryProvinceOk returns a tuple with the BeneficiaryProvince field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBeneficiaryProvince
+
+`func (o *CreateDestinationBankAccount) SetBeneficiaryProvince(v string)`
+
+SetBeneficiaryProvince sets BeneficiaryProvince field to given value.
+
+### HasBeneficiaryProvince
+
+`func (o *CreateDestinationBankAccount) HasBeneficiaryProvince() bool`
+
+HasBeneficiaryProvince returns a boolean if a field has been set.
+
+### GetBeneficiaryPostCode
+
+`func (o *CreateDestinationBankAccount) GetBeneficiaryPostCode() string`
+
+GetBeneficiaryPostCode returns the BeneficiaryPostCode field if non-nil, zero value otherwise.
+
+### GetBeneficiaryPostCodeOk
+
+`func (o *CreateDestinationBankAccount) GetBeneficiaryPostCodeOk() (*string, bool)`
+
+GetBeneficiaryPostCodeOk returns a tuple with the BeneficiaryPostCode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBeneficiaryPostCode
+
+`func (o *CreateDestinationBankAccount) SetBeneficiaryPostCode(v string)`
+
+SetBeneficiaryPostCode sets BeneficiaryPostCode field to given value.
+
+### HasBeneficiaryPostCode
+
+`func (o *CreateDestinationBankAccount) HasBeneficiaryPostCode() bool`
+
+HasBeneficiaryPostCode returns a boolean if a field has been set.
+
+### GetBankAccountName
+
+`func (o *CreateDestinationBankAccount) GetBankAccountName() string`
+
+GetBankAccountName returns the BankAccountName field if non-nil, zero value otherwise.
+
+### GetBankAccountNameOk
+
+`func (o *CreateDestinationBankAccount) GetBankAccountNameOk() (*string, bool)`
+
+GetBankAccountNameOk returns a tuple with the BankAccountName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankAccountName
+
+`func (o *CreateDestinationBankAccount) SetBankAccountName(v string)`
+
+SetBankAccountName sets BankAccountName field to given value.
+
+### HasBankAccountName
+
+`func (o *CreateDestinationBankAccount) HasBankAccountName() bool`
+
+HasBankAccountName returns a boolean if a field has been set.
+
+### GetBankBranchCode
+
+`func (o *CreateDestinationBankAccount) GetBankBranchCode() string`
+
+GetBankBranchCode returns the BankBranchCode field if non-nil, zero value otherwise.
+
+### GetBankBranchCodeOk
+
+`func (o *CreateDestinationBankAccount) GetBankBranchCodeOk() (*string, bool)`
+
+GetBankBranchCodeOk returns a tuple with the BankBranchCode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankBranchCode
+
+`func (o *CreateDestinationBankAccount) SetBankBranchCode(v string)`
+
+SetBankBranchCode sets BankBranchCode field to given value.
+
+### HasBankBranchCode
+
+`func (o *CreateDestinationBankAccount) HasBankBranchCode() bool`
+
+HasBankBranchCode returns a boolean if a field has been set.
+
+### GetBankCountry
+
+`func (o *CreateDestinationBankAccount) GetBankCountry() string`
+
+GetBankCountry returns the BankCountry field if non-nil, zero value otherwise.
+
+### GetBankCountryOk
+
+`func (o *CreateDestinationBankAccount) GetBankCountryOk() (*string, bool)`
+
+GetBankCountryOk returns a tuple with the BankCountry field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankCountry
+
+`func (o *CreateDestinationBankAccount) SetBankCountry(v string)`
+
+SetBankCountry sets BankCountry field to given value.
+
+### HasBankCountry
+
+`func (o *CreateDestinationBankAccount) HasBankCountry() bool`
+
+HasBankCountry returns a boolean if a field has been set.
+
+### GetBankProvince
+
+`func (o *CreateDestinationBankAccount) GetBankProvince() string`
+
+GetBankProvince returns the BankProvince field if non-nil, zero value otherwise.
+
+### GetBankProvinceOk
+
+`func (o *CreateDestinationBankAccount) GetBankProvinceOk() (*string, bool)`
+
+GetBankProvinceOk returns a tuple with the BankProvince field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankProvince
+
+`func (o *CreateDestinationBankAccount) SetBankProvince(v string)`
+
+SetBankProvince sets BankProvince field to given value.
+
+### HasBankProvince
+
+`func (o *CreateDestinationBankAccount) HasBankProvince() bool`
+
+HasBankProvince returns a boolean if a field has been set.
+
+### GetContractFileId
+
+`func (o *CreateDestinationBankAccount) GetContractFileId() string`
+
+GetContractFileId returns the ContractFileId field if non-nil, zero value otherwise.
+
+### GetContractFileIdOk
+
+`func (o *CreateDestinationBankAccount) GetContractFileIdOk() (*string, bool)`
+
+GetContractFileIdOk returns a tuple with the ContractFileId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContractFileId
+
+`func (o *CreateDestinationBankAccount) SetContractFileId(v string)`
+
+SetContractFileId sets ContractFileId field to given value.
+
+### HasContractFileId
+
+`func (o *CreateDestinationBankAccount) HasContractFileId() bool`
+
+HasContractFileId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

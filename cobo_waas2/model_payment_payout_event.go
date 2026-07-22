@@ -40,6 +40,8 @@ type PaymentPayoutEvent struct {
 	// A note or comment about the payout.
 	Remark *string `json:"remark,omitempty"`
 	Status PaymentPayoutStatus `json:"status"`
+	// The reason why the payout failed.
+	FailedReason *string `json:"failed_reason,omitempty"`
 	// The created time of the payout, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The updated time of the payout, represented as a UNIX timestamp in seconds.
@@ -418,6 +420,38 @@ func (o *PaymentPayoutEvent) SetStatus(v PaymentPayoutStatus) {
 	o.Status = v
 }
 
+// GetFailedReason returns the FailedReason field value if set, zero value otherwise.
+func (o *PaymentPayoutEvent) GetFailedReason() string {
+	if o == nil || IsNil(o.FailedReason) {
+		var ret string
+		return ret
+	}
+	return *o.FailedReason
+}
+
+// GetFailedReasonOk returns a tuple with the FailedReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentPayoutEvent) GetFailedReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.FailedReason) {
+		return nil, false
+	}
+	return o.FailedReason, true
+}
+
+// HasFailedReason returns a boolean if a field has been set.
+func (o *PaymentPayoutEvent) HasFailedReason() bool {
+	if o != nil && !IsNil(o.FailedReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetFailedReason gets a reference to the given string and assigns it to the FailedReason field.
+func (o *PaymentPayoutEvent) SetFailedReason(v string) {
+	o.FailedReason = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value
 func (o *PaymentPayoutEvent) GetCreatedTimestamp() int32 {
 	if o == nil {
@@ -534,6 +568,9 @@ func (o PaymentPayoutEvent) ToMap() (map[string]interface{}, error) {
 		toSerialize["remark"] = o.Remark
 	}
 	toSerialize["status"] = o.Status
+	if !IsNil(o.FailedReason) {
+		toSerialize["failed_reason"] = o.FailedReason
+	}
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp
 	if !IsNil(o.Transactions) {

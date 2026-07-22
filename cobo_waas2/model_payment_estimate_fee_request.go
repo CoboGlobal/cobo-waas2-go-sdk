@@ -26,6 +26,8 @@ type PaymentEstimateFeeRequest struct {
 	RecipientTokenId *string `json:"recipient_token_id,omitempty"`
 	// For OffRamp payout, whether the payout is transferred to a registered bank account via a virtual account (VA) or directly. - `true`: The payout is transferred to a registered bank account via a VA (virtual account). - `false`: The payout is transferred directly to a registered bank account. 
 	TransferViaVa *bool `json:"transfer_via_va,omitempty"`
+	// The bank account ID, which you can retrieve by calling [List counterparty entries](https://www.cobo.com/developers/v2/api-references/payment/list-counterparty-entries). 
+	BankAccountId *string `json:"bank_account_id,omitempty"`
 }
 
 type _PaymentEstimateFeeRequest PaymentEstimateFeeRequest
@@ -168,6 +170,38 @@ func (o *PaymentEstimateFeeRequest) SetTransferViaVa(v bool) {
 	o.TransferViaVa = &v
 }
 
+// GetBankAccountId returns the BankAccountId field value if set, zero value otherwise.
+func (o *PaymentEstimateFeeRequest) GetBankAccountId() string {
+	if o == nil || IsNil(o.BankAccountId) {
+		var ret string
+		return ret
+	}
+	return *o.BankAccountId
+}
+
+// GetBankAccountIdOk returns a tuple with the BankAccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PaymentEstimateFeeRequest) GetBankAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.BankAccountId) {
+		return nil, false
+	}
+	return o.BankAccountId, true
+}
+
+// HasBankAccountId returns a boolean if a field has been set.
+func (o *PaymentEstimateFeeRequest) HasBankAccountId() bool {
+	if o != nil && !IsNil(o.BankAccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankAccountId gets a reference to the given string and assigns it to the BankAccountId field.
+func (o *PaymentEstimateFeeRequest) SetBankAccountId(v string) {
+	o.BankAccountId = &v
+}
+
 func (o PaymentEstimateFeeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -187,6 +221,9 @@ func (o PaymentEstimateFeeRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TransferViaVa) {
 		toSerialize["transfer_via_va"] = o.TransferViaVa
+	}
+	if !IsNil(o.BankAccountId) {
+		toSerialize["bank_account_id"] = o.BankAccountId
 	}
 	return toSerialize, nil
 }
