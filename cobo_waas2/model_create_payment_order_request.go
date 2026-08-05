@@ -21,15 +21,15 @@ var _ MappedNullable = &CreatePaymentOrderRequest{}
 type CreatePaymentOrderRequest struct {
 	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
-	// A unique reference code assigned by the merchant to identify this order in their system.
+	// An optional reference for the order maintained by a downstream merchant you serve — for example, when you are a payment service provider (PSP) processing pay-in orders on behalf of merchants. Set this field only when such a downstream merchant supplies its own order reference that is distinct from your internal `psp_order_code`. Omit this field if you are collecting payment directly as the merchant, with no separate downstream merchant reference to track.
 	MerchantOrderCode *string `json:"merchant_order_code,omitempty"`
-	// A unique reference code assigned by the developer to identify this order in their system.
+	// The order identifier for your own internal business order. Set this to the order reference you use internally to identify this pay-in — for example, an order or transaction ID from your own order-management system. This value must be unique within your Cobo organization: Cobo enforces uniqueness on `psp_order_code`, so reusing a code already associated with an existing order in your organization is rejected. If a downstream merchant you serve supplies its own separate order reference, record that in `merchant_order_code` instead — `psp_order_code` always identifies your own order, not the merchant's.
 	PspOrderCode string `json:"psp_order_code"`
 	// The pricing currency that denominates `pricing_amount` and `fee_amount`. If left empty, both values will be denominated in `payable_currency`.  Currently, For a complete list of supported currencies, see [Supported chains and tokens](https://www.cobo.com//payments/en/guides/supported-chains-and-tokens#pricing-currency). 
 	PricingCurrency *string `json:"pricing_currency,omitempty"`
 	// The base amount of the order, excluding the developer fee (specified in `fee_amount`). Values must be greater than `0` and contain two decimal places.
 	PricingAmount *string `json:"pricing_amount,omitempty"`
-	// The developer fee for the order. It is added to the base amount (`pricing_amount`) to determine the final charge. For example, if `pricing_amount` is \"100.00\" and `fee_amount` is \"2.00\", the payer will be charged \"102.00\" in total, with \"100.00\" being settled to the merchant account and \"2.00\" settled to the developer account. Values must be greater than or equal to 0 and contain two decimal places.
+	// The order-level developer charge deducted from the payment collected for this order and credited to your developer balance. Both `0` and positive values are valid. A value of `0` means that no developer fee is taken and the merchant receives the full collected amount.  When the collected payment exactly matches the payable amount, the merchant balance is credited with the payable amount minus `fee_amount`, and your developer balance is credited with `fee_amount`. For example, for a payable amount of `104.08` and a `fee_amount` of `2`, the merchant receives `102.08` and you receive `2`.  For related fee settings and settlement details, see [Merchant management](https://www.cobo.com/payments/en/guides/merchants) and [Accounts and fund allocation](https://www.cobo.com/payments/en/guides/amounts-and-balances). 
 	FeeAmount string `json:"fee_amount"`
 	// The ID of the cryptocurrency used for payment. Supported values:   - USDC: `ETH_USDC`, `ARBITRUM_USDC`, `SOL_USDC`, `BASE_USDC`, `MATIC_USDC`, `BSC_USDC`   - USDT: `TRON_USDT`, `ETH_USDT`, `ARBITRUM_USDT`, `SOL_USDT`, `BASE_USDT`, `MATIC_USDT`, `BSC_USDT` 
 	PayableCurrency string `json:"payable_currency"`

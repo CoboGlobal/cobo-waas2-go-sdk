@@ -483,6 +483,7 @@ docs/PaymentBulkSend.md
 docs/PaymentBulkSendEvent.md
 docs/PaymentBulkSendExecutionMode.md
 docs/PaymentBulkSendItem.md
+docs/PaymentBulkSendItemEvent.md
 docs/PaymentBulkSendItemStatus.md
 docs/PaymentBulkSendItemValidationStatus.md
 docs/PaymentBulkSendStatus.md
@@ -1354,6 +1355,7 @@ model_payment_bulk_send.go
 model_payment_bulk_send_event.go
 model_payment_bulk_send_execution_mode.go
 model_payment_bulk_send_item.go
+model_payment_bulk_send_item_event.go
 model_payment_bulk_send_item_status.go
 model_payment_bulk_send_item_validation_status.go
 model_payment_bulk_send_status.go

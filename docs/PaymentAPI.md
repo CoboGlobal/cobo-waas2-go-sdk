@@ -1022,7 +1022,7 @@ import (
 )
 
 func main() {
-	createPaymentOrderRequest := *coboWaas2.NewCreatePaymentOrderRequest("1001", "P20240201001", "2.00", "ETH_USDT")
+	createPaymentOrderRequest := *coboWaas2.NewCreatePaymentOrderRequest("1001", "psp-order-20240601-00789", "2", "ETH_USDT")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

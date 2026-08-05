@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// ReportExportFormat The format of the report. - `CSV`: The report will be exported as a CSV file. - `XLSX`: The report will be exported as an XLSX file. - `ZIP`: The report will be exported as a ZIP file which contains multiple files. 
+// ReportExportFormat The format of the report. - `CSV`: The report will be exported as a CSV file. - `XLSX`: The report will be exported as an XLSX file. - `ZIP`: The report will be exported as a ZIP file which contains multiple files. - `PDF`: The report will be exported as a PDF file, only supported for balance snapshot report. 
 type ReportExportFormat string
 
 // List of ReportExportFormat
@@ -21,6 +21,7 @@ const (
 	REPORTEXPORTFORMAT_CSV ReportExportFormat = "CSV"
 	REPORTEXPORTFORMAT_XLSX ReportExportFormat = "XLSX"
 	REPORTEXPORTFORMAT_ZIP ReportExportFormat = "ZIP"
+	REPORTEXPORTFORMAT_PDF ReportExportFormat = "PDF"
 )
 
 // All allowed values of ReportExportFormat enum
@@ -28,6 +29,7 @@ var AllowedReportExportFormatEnumValues = []ReportExportFormat{
 	"CSV",
 	"XLSX",
 	"ZIP",
+	"PDF",
 }
 
 func (v *ReportExportFormat) UnmarshalJSON(src []byte) error {
