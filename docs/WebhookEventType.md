@@ -93,6 +93,8 @@
 
 * `PAYMENT_BULK_SEND_STATUS_UPDATED` (value: `"payment.bulk_send.status.updated"`)
 
+* `PAYMENT_BULK_SEND_ITEM_STATUS_UPDATED` (value: `"payment.bulk_send.item.status.updated"`)
+
 * `PAYMENT_TRANSACTION_EXTERNAL_CREATED` (value: `"payment.transaction.external.created"`)
 
 * `PAYMENT_TRANSACTION_EXTERNAL_COMPLETED` (value: `"payment.transaction.external.completed"`)

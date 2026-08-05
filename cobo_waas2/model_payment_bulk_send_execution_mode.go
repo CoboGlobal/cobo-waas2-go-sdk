@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// PaymentBulkSendExecutionMode The execution mode of the bulk send. - `Strict`: The bulk send is executed in strict mode. All-or-nothing is enforced at the validation stage: if any item fails validation, the entire batch is rejected and no items are sent. Note that this all-or-nothing guarantee applies at validation only, not at execution. After validation passes, individual items may still be rejected by risk control or fail during on-chain execution, which can result in a `PartiallyCompleted` bulk send status. - `Partial`: The bulk send is executed in partial mode, which means some bulk send items can be successfully executed and some can be failed. 
+// PaymentBulkSendExecutionMode Specifies how the batch handles item-level validation failures. The required `execution_mode` field is a string enum and must be set to either `Strict` or `Partial`; no default is applied if you omit it. It is not a `strict_mode` boolean flag.  - `Strict`: If any item in the batch fails validation, no items are executed.   Every item is marked `NotExecuted`, and the batch fails. The batch also   fails in `Strict` mode if the fund sweep needed to fund it only partially   completes. - `Partial`: Item validation failures are isolated to the affected items.   Failed items are marked `NotExecuted`, while all other validated items in   the batch continue to be processed normally.  Use `Partial` when one item's validation failure should not block the rest of the batch. Because outcomes can differ by item, check each item's result and `validation_status` individually instead of assuming that a batch-level outcome applies to every item. 
 type PaymentBulkSendExecutionMode string
 
 // List of PaymentBulkSendExecutionMode
