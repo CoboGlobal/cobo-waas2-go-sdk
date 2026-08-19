@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// WalletSubtype The wallet sub-type. Possible values include: - `Asset`: Custodial Wallets (Asset Wallets). - `Web3`: Custodial Wallets (Web3 Wallets). - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets). - `User-Controlled`: MPC Wallets (User-Controlled Wallets). - `Safe{Wallet}`: Smart Contract Wallets (Safe). - `Main`: Exchange Wallets (Main Account). - `Sub`: Exchange Wallets (Sub Account).  Each wallet sub-type requires a different set of properties. Switch between the above tabs for details. 
+// WalletSubtype The wallet sub-type. Possible values include: - `Asset`: Custodial Wallets (Asset Wallets). - `Web3`: Custodial Wallets (Web3 Wallets). - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets). - `User-Controlled`: MPC Wallets (User-Controlled Wallets). - `Main`: Exchange Wallets (Main Account). - `Sub`: Exchange Wallets (Sub Account).  Each wallet sub-type requires a different set of properties. Switch between the above tabs for details. 
 type WalletSubtype string
 
 // List of WalletSubtype
@@ -22,7 +22,6 @@ const (
 	WALLETSUBTYPE_WEB3 WalletSubtype = "Web3"
 	WALLETSUBTYPE_ORG_CONTROLLED WalletSubtype = "Org-Controlled"
 	WALLETSUBTYPE_USER_CONTROLLED WalletSubtype = "User-Controlled"
-	WALLETSUBTYPE_SAFEWALLET WalletSubtype = "Safe{Wallet}"
 	WALLETSUBTYPE_MAIN WalletSubtype = "Main"
 	WALLETSUBTYPE_SUB WalletSubtype = "Sub"
 )
@@ -33,7 +32,6 @@ var AllowedWalletSubtypeEnumValues = []WalletSubtype{
 	"Web3",
 	"Org-Controlled",
 	"User-Controlled",
-	"Safe{Wallet}",
 	"Main",
 	"Sub",
 }

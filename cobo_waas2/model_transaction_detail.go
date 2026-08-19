@@ -60,10 +60,11 @@ type TransactionDetail struct {
 	Description *string `json:"description,omitempty"`
 	// Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - `true`: The transaction was executed as a Cobo Loop transfer. - `false`: The transaction was not executed as a Cobo Loop transfer. 
 	IsLoop *bool `json:"is_loop,omitempty"`
-	// The transaction category defined by Cobo. For more details, refer to [Cobo-defined categories](/v2/guides/transactions/manage-transactions#cobo-defined-categories). 
+	// The transaction category defined by Cobo. Possible values include:  - `AutoSweep`: An auto-sweep transaction. - `AutoFueling`: A transaction where Fee Station pays transaction fees to an address within your wallet. - `AutoFuelingRefund`: A refund for an auto-fueling transaction. - `BillPayment`: A transaction to pay Cobo bills through Fee Station. - `BillRefund`: A refund for a previously made bill payment. - `CommissionFeeCharge`: A transaction to charge commission fees via Fee Station. - `CommissionFeeRefund`: A refund of previously charged commission fees. 
 	CoboCategory []string `json:"cobo_category,omitempty"`
-	// A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the `extra_type` field in the JSON object (for example, \"BabylonBusinessInfo\", \"BtcAddressInfo\"). 
+	// The transaction extra information.
 	Extra []string `json:"extra,omitempty"`
+	TransactionProcessType *TransactionProcessType `json:"transaction_process_type,omitempty"`
 	FuelingInfo *TransactionFuelingInfo `json:"fueling_info,omitempty"`
 	// The time when the transaction was created, in Unix timestamp format, measured in milliseconds.
 	CreatedTimestamp int64 `json:"created_timestamp"`
@@ -947,6 +948,38 @@ func (o *TransactionDetail) SetExtra(v []string) {
 	o.Extra = v
 }
 
+// GetTransactionProcessType returns the TransactionProcessType field value if set, zero value otherwise.
+func (o *TransactionDetail) GetTransactionProcessType() TransactionProcessType {
+	if o == nil || IsNil(o.TransactionProcessType) {
+		var ret TransactionProcessType
+		return ret
+	}
+	return *o.TransactionProcessType
+}
+
+// GetTransactionProcessTypeOk returns a tuple with the TransactionProcessType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransactionDetail) GetTransactionProcessTypeOk() (*TransactionProcessType, bool) {
+	if o == nil || IsNil(o.TransactionProcessType) {
+		return nil, false
+	}
+	return o.TransactionProcessType, true
+}
+
+// HasTransactionProcessType returns a boolean if a field has been set.
+func (o *TransactionDetail) HasTransactionProcessType() bool {
+	if o != nil && !IsNil(o.TransactionProcessType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransactionProcessType gets a reference to the given TransactionProcessType and assigns it to the TransactionProcessType field.
+func (o *TransactionDetail) SetTransactionProcessType(v TransactionProcessType) {
+	o.TransactionProcessType = &v
+}
+
 // GetFuelingInfo returns the FuelingInfo field value if set, zero value otherwise.
 func (o *TransactionDetail) GetFuelingInfo() TransactionFuelingInfo {
 	if o == nil || IsNil(o.FuelingInfo) {
@@ -1140,6 +1173,9 @@ func (o TransactionDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Extra) {
 		toSerialize["extra"] = o.Extra
+	}
+	if !IsNil(o.TransactionProcessType) {
+		toSerialize["transaction_process_type"] = o.TransactionProcessType
 	}
 	if !IsNil(o.FuelingInfo) {
 		toSerialize["fueling_info"] = o.FuelingInfo

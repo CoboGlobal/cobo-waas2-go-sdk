@@ -448,7 +448,7 @@ import (
 )
 
 func main() {
-	tokenizationIssuedTokenRequest := *coboWaas2.NewTokenizationIssuedTokenRequest("ETH", coboWaas2.TokenizationTokenOperationSource{TokenizationMpcOperationSource: coboWaas2.NewTokenizationMpcOperationSource(coboWaas2.TokenizationOperationSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.TokenizationIssueTokenParams_token_params{TokenizationERC20TokenParams: coboWaas2.NewTokenizationERC20TokenParams(coboWaas2.TokenizationTokenStandard("ERC20"), "My Awesome Token", "MAT", int32(18))}, coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")})
+	tokenizationIssuedTokenRequest := *coboWaas2.NewTokenizationIssuedTokenRequest("ETH", coboWaas2.TokenizationTokenOperationSource{TokenizationMpcOperationSource: coboWaas2.NewTokenizationMpcOperationSource(coboWaas2.TokenizationOperationSourceType("Org-Controlled"), "f47ac10b-58cc-4372-a567-0e02b2c3d479", "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045")}, coboWaas2.TokenizationIssueTokenParams_token_params{TokenizationERC20FundTokenParams: coboWaas2.NewTokenizationERC20FundTokenParams(coboWaas2.TokenizationTokenStandard("ERC20"), "Global Equity Fund", "GEF", "0x4922a015c4407F87432B179bb209e125432E4a2A")}, coboWaas2.TransactionRequestFee{TransactionRequestEvmEip1559Fee: coboWaas2.NewTransactionRequestEvmEip1559Fee("9000000000000", "1000000000000", coboWaas2.FeeType("Fixed"), "ETH")})
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

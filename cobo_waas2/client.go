@@ -74,6 +74,8 @@ type APIClient struct {
 
 	PrimeBrokerAPI *PrimeBrokerAPIService
 
+	ReconciliationAPI *ReconciliationAPIService
+
 	StakingsAPI *StakingsAPIService
 
 	SwapsAPI *SwapsAPIService
@@ -89,8 +91,6 @@ type APIClient struct {
 	WalletsExchangeWalletAPI *WalletsExchangeWalletAPIService
 
 	WalletsMPCWalletsAPI *WalletsMPCWalletsAPIService
-
-	WalletsSmartContractWalletsAPI *WalletsSmartContractWalletsAPIService
 }
 
 type service struct {
@@ -121,6 +121,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.OrganizationsAPI = (*OrganizationsAPIService)(&c.common)
 	c.PaymentAPI = (*PaymentAPIService)(&c.common)
 	c.PrimeBrokerAPI = (*PrimeBrokerAPIService)(&c.common)
+	c.ReconciliationAPI = (*ReconciliationAPIService)(&c.common)
 	c.StakingsAPI = (*StakingsAPIService)(&c.common)
 	c.SwapsAPI = (*SwapsAPIService)(&c.common)
 	c.TokenizationAPI = (*TokenizationAPIService)(&c.common)
@@ -129,7 +130,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.WalletsAPI = (*WalletsAPIService)(&c.common)
 	c.WalletsExchangeWalletAPI = (*WalletsExchangeWalletAPIService)(&c.common)
 	c.WalletsMPCWalletsAPI = (*WalletsMPCWalletsAPIService)(&c.common)
-	c.WalletsSmartContractWalletsAPI = (*WalletsSmartContractWalletsAPIService)(&c.common)
 
 	return c
 }

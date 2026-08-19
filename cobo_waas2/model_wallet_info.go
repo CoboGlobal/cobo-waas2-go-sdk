@@ -18,7 +18,6 @@ type WalletInfo struct {
 	CustodialWalletInfo *CustodialWalletInfo
 	ExchangeWalletInfo *ExchangeWalletInfo
 	MPCWalletInfo *MPCWalletInfo
-	SmartContractWalletInfo *SmartContractWalletInfo
 }
 
 // CustodialWalletInfoAsWalletInfo is a convenience function that returns CustodialWalletInfo wrapped in WalletInfo
@@ -39,13 +38,6 @@ func ExchangeWalletInfoAsWalletInfo(v *ExchangeWalletInfo) WalletInfo {
 func MPCWalletInfoAsWalletInfo(v *MPCWalletInfo) WalletInfo {
 	return WalletInfo{
 		MPCWalletInfo: v,
-	}
-}
-
-// SmartContractWalletInfoAsWalletInfo is a convenience function that returns SmartContractWalletInfo wrapped in WalletInfo
-func SmartContractWalletInfoAsWalletInfo(v *SmartContractWalletInfo) WalletInfo {
-	return WalletInfo{
-		SmartContractWalletInfo: v,
 	}
 }
 
@@ -96,18 +88,6 @@ func (dst *WalletInfo) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'SmartContract'
-	if jsonDict["wallet_type"] == "SmartContract" {
-		// try to unmarshal JSON data into SmartContractWalletInfo
-		err = json.Unmarshal(data, &dst.SmartContractWalletInfo)
-		if err == nil {
-			return nil // data stored in dst.SmartContractWalletInfo, return on the first match
-		} else {
-			dst.SmartContractWalletInfo = nil
-			return fmt.Errorf("failed to unmarshal WalletInfo as SmartContractWalletInfo: %s", err.Error())
-		}
-	}
-
 	// check if the discriminator value is 'CustodialWalletInfo'
 	if jsonDict["wallet_type"] == "CustodialWalletInfo" {
 		// try to unmarshal JSON data into CustodialWalletInfo
@@ -144,18 +124,6 @@ func (dst *WalletInfo) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'SmartContractWalletInfo'
-	if jsonDict["wallet_type"] == "SmartContractWalletInfo" {
-		// try to unmarshal JSON data into SmartContractWalletInfo
-		err = json.Unmarshal(data, &dst.SmartContractWalletInfo)
-		if err == nil {
-			return nil // data stored in dst.SmartContractWalletInfo, return on the first match
-		} else {
-			dst.SmartContractWalletInfo = nil
-			return fmt.Errorf("failed to unmarshal WalletInfo as SmartContractWalletInfo: %s", err.Error())
-		}
-	}
-
 	return nil
 }
 
@@ -171,10 +139,6 @@ func (src WalletInfo) MarshalJSON() ([]byte, error) {
 
 	if src.MPCWalletInfo != nil {
 		return json.Marshal(&src.MPCWalletInfo)
-	}
-
-	if src.SmartContractWalletInfo != nil {
-		return json.Marshal(&src.SmartContractWalletInfo)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -195,10 +159,6 @@ func (obj *WalletInfo) GetActualInstance() (interface{}) {
 
 	if obj.MPCWalletInfo != nil {
 		return obj.MPCWalletInfo
-	}
-
-	if obj.SmartContractWalletInfo != nil {
-		return obj.SmartContractWalletInfo
 	}
 
 	// all schemas are nil

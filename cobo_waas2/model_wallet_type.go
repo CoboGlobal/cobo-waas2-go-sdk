@@ -13,14 +13,13 @@ import (
 	"fmt"
 )
 
-// WalletType The wallet type. Possible values include:  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
+// WalletType The wallet type. Possible values include:  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 type WalletType string
 
 // List of WalletType
 const (
 	WALLETTYPE_CUSTODIAL WalletType = "Custodial"
 	WALLETTYPE_MPC WalletType = "MPC"
-	WALLETTYPE_SMART_CONTRACT WalletType = "SmartContract"
 	WALLETTYPE_EXCHANGE WalletType = "Exchange"
 )
 
@@ -28,7 +27,6 @@ const (
 var AllowedWalletTypeEnumValues = []WalletType{
 	"Custodial",
 	"MPC",
-	"SmartContract",
 	"Exchange",
 }
 

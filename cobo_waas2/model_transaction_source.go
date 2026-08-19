@@ -22,7 +22,6 @@ type TransactionSource struct {
 	TransactionDepositFromWalletSource *TransactionDepositFromWalletSource
 	TransactionExchangeWalletSource *TransactionExchangeWalletSource
 	TransactionMPCWalletSource *TransactionMPCWalletSource
-	TransactionSmartContractSafeWalletSource *TransactionSmartContractSafeWalletSource
 }
 
 // TransactionCustodialAssetWalletSourceAsTransactionSource is a convenience function that returns TransactionCustodialAssetWalletSource wrapped in TransactionSource
@@ -71,13 +70,6 @@ func TransactionExchangeWalletSourceAsTransactionSource(v *TransactionExchangeWa
 func TransactionMPCWalletSourceAsTransactionSource(v *TransactionMPCWalletSource) TransactionSource {
 	return TransactionSource{
 		TransactionMPCWalletSource: v,
-	}
-}
-
-// TransactionSmartContractSafeWalletSourceAsTransactionSource is a convenience function that returns TransactionSmartContractSafeWalletSource wrapped in TransactionSource
-func TransactionSmartContractSafeWalletSourceAsTransactionSource(v *TransactionSmartContractSafeWalletSource) TransactionSource {
-	return TransactionSource{
-		TransactionSmartContractSafeWalletSource: v,
 	}
 }
 
@@ -161,18 +153,6 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.TransactionMPCWalletSource = nil
 			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionMPCWalletSource: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'Safe{Wallet}'
-	if jsonDict["source_type"] == "Safe{Wallet}" {
-		// try to unmarshal JSON data into TransactionSmartContractSafeWalletSource
-		err = json.Unmarshal(data, &dst.TransactionSmartContractSafeWalletSource)
-		if err == nil {
-			return nil // data stored in dst.TransactionSmartContractSafeWalletSource, return on the first match
-		} else {
-			dst.TransactionSmartContractSafeWalletSource = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionSmartContractSafeWalletSource: %s", err.Error())
 		}
 	}
 
@@ -296,18 +276,6 @@ func (dst *TransactionSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'TransactionSmartContractSafeWalletSource'
-	if jsonDict["source_type"] == "TransactionSmartContractSafeWalletSource" {
-		// try to unmarshal JSON data into TransactionSmartContractSafeWalletSource
-		err = json.Unmarshal(data, &dst.TransactionSmartContractSafeWalletSource)
-		if err == nil {
-			return nil // data stored in dst.TransactionSmartContractSafeWalletSource, return on the first match
-		} else {
-			dst.TransactionSmartContractSafeWalletSource = nil
-			return fmt.Errorf("failed to unmarshal TransactionSource as TransactionSmartContractSafeWalletSource: %s", err.Error())
-		}
-	}
-
 	return nil
 }
 
@@ -339,10 +307,6 @@ func (src TransactionSource) MarshalJSON() ([]byte, error) {
 
 	if src.TransactionMPCWalletSource != nil {
 		return json.Marshal(&src.TransactionMPCWalletSource)
-	}
-
-	if src.TransactionSmartContractSafeWalletSource != nil {
-		return json.Marshal(&src.TransactionSmartContractSafeWalletSource)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -379,10 +343,6 @@ func (obj *TransactionSource) GetActualInstance() (interface{}) {
 
 	if obj.TransactionMPCWalletSource != nil {
 		return obj.TransactionMPCWalletSource
-	}
-
-	if obj.TransactionSmartContractSafeWalletSource != nil {
-		return obj.TransactionSmartContractSafeWalletSource
 	}
 
 	// all schemas are nil

@@ -7,11 +7,10 @@ info:
   description: |
     The Cobo Wallet-as-a-Service (WaaS) 2.0 API is the latest version of Cobo's WaaS API offering. It enables you to access Cobo's full suite of crypto wallet technologies with powerful and flexible access controls. By encapsulating complex security protocols and streamlining blockchain interactions, this API allows you to concentrate on your core business activities without worrying about the safety of your assets. The WaaS 2.0 API presents the following key features:
 
-    - A unified API for Cobo's [all four wallet types](https://manuals.cobo.com/en/portal/introduction#an-all-in-one-wallet-platform)
+    - A unified API for Cobo's [all wallet types](https://manuals.cobo.com/en/portal/introduction#an-all-in-one-wallet-platform)
     - Support for 80+ chains and 3000+ tokens
     - A comprehensive selection of webhook events
     - Flexible usage models for MPC Wallets, including [Organization-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ocw/introduction) and [User-Controlled Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/ucw/introduction)
-    - Programmatic control of smart contract wallets such as Safe{Wallet} with fine-grained access controls
     - Seamlessly transfer funds across multiple exchanges, including Binance, OKX, Bybit, Deribit, and more
 
     For more information about the WaaS 2.0 API, see [Introduction to WaaS 2.0](https://www.cobo.com/developers/v2/guides/overview/introduction).
@@ -37,8 +36,6 @@ tags:
   name: Wallets - MPC Wallets
 - description: Operations related to exchange wallet.
   name: Wallets - Exchange Wallet
-- description: Operations related to smart contract wallet.
-  name: Wallets - Smart Contract Wallets
 - description: Operations related to all transactions.
   name: Transactions
 - description: Operations related to webhooks.
@@ -71,7 +68,181 @@ tags:
   name: AutoSweep
 - description: Operations related to compliance.
   name: Compliance
+- description: Operations related to reconciliation.
+  name: Reconciliation
+- description: Internal operations related to fee engine .
+  name: Internal - FeeEngine
+- description: Internal operations related to tokens.
+  name: Internal - Tokens
+- description: Internal operations related to package management.
+  name: Internal - Package
 paths:
+  /recon/ledger:
+    get:
+      description: |
+        This operation retrieves the post-transaction balance (running balance) for the specified transactions, used for stablecoin deposit and withdrawal reconciliation.
+
+        You need to provide the transaction IDs in `transaction_ids`. Each returned entry includes the signed amount and the resulting balance of the address after the transaction, expressed in the token's main unit.
+
+        <Note>This operation is available to selected customers only. To request access, please contact Cobo.</Note>
+
+        <Note>This operation is applicable to MPC Wallets and Custodial Web3 Wallets only, and covers stablecoins only. To ensure accurate reconciliation results, do not use the contract call and message signing features. Currently, only stablecoins on the Ethereum and TRON chains are supported.</Note>
+      operationId: get_reconciliation_ledger
+      parameters:
+      - description: "A list of transaction IDs, separated by comma. You can specify\
+          \ 1 to 100 transaction IDs."
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+        explode: true
+        in: query
+        name: transaction_ids
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_reconciliation_ledger_200_response'
+          description: The reconciliation ledger entries (post-transaction balances).
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: Get reconciliation ledger
+      tags:
+      - Reconciliation
+  /recon/statements:
+    get:
+      description: |
+        This operation retrieves daily reconciliation statements within a date range. Each statement contains the opening balance, total deposits, total withdrawals, and closing balance for a business date, wallet, and token.
+
+        You need to specify the date range with `start_date` and `end_date`. You can filter the results by wallets and tokens, and paginate the query results. All amounts are expressed in the token's main unit.
+
+        <Note>This operation is available to selected customers only. To request access, please contact Cobo.</Note>
+
+        <Note>This operation is applicable to MPC Wallets and Custodial Web3 Wallets only, and covers stablecoins only. To ensure accurate reconciliation results, do not use the contract call and message signing features. Currently, only stablecoins on the Ethereum and TRON chains are supported.</Note>
+      operationId: list_reconciliation_statements
+      parameters:
+      - description: "The start date of the reconciliation period (inclusive), in\
+          \ YYYY-MM-DD format (UTC). The range between `start_date` and `end_date`\
+          \ must not exceed 366 days."
+        example: 2026-07-01
+        explode: true
+        in: query
+        name: start_date
+        required: true
+        schema:
+          format: date
+          type: string
+        style: form
+      - description: "The end date of the reconciliation period (inclusive), in YYYY-MM-DD\
+          \ format (UTC). The range between `start_date` and `end_date` must not exceed\
+          \ 366 days."
+        example: 2026-07-28
+        explode: true
+        in: query
+        name: end_date
+        required: true
+        schema:
+          format: date
+          type: string
+        style: form
+      - description: "A list of wallet IDs, separated by comma."
+        example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,1ddca562-8434-41c9-8809-d437bad9c868"
+        explode: true
+        in: query
+        name: wallet_ids
+        required: false
+        schema:
+          description: "A list of wallet IDs, separated by comma."
+          type: string
+        style: form
+      - description: "A list of token IDs, separated by comma. The token ID is the\
+          \ unique identifier of a token. You can retrieve the IDs of all the tokens\
+          \ you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens)."
+        example: "ETH_USDT,ETH_USDC"
+        explode: true
+        in: query
+        name: token_ids
+        required: false
+        schema:
+          description: "A list of token IDs, separated by comma."
+          type: string
+        style: form
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_reconciliation_statements_200_response'
+          description: The daily reconciliation statements.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: List reconciliation daily statements
+      tags:
+      - Reconciliation
   /organizations/info:
     get:
       description: |
@@ -121,8 +292,6 @@ paths:
 
           - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
 
-          - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
-
           - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
         explode: true
         in: query
@@ -145,8 +314,6 @@ paths:
           - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
           - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -259,6 +426,85 @@ paths:
       summary: Get chain information
       tags:
       - Wallets
+  /wallets/{wallet_id}/chains/{chain_id}/account/balances:
+    get:
+      description: |
+        This operation retrieves the on-chain token balances of multiple addresses on a specified account-based chain in a single request. All balances in the response are retrieved from the same block state, together with the block number of that block.
+
+        You need to specify the wallet ID to scope the balance queries to a specific wallet. The wallet ID can be retrieved by calling [List all wallets](https://www.cobo.com/developers/v2/api-references/wallets/list-all-wallets).
+
+        <Note>The returned block number refers to the node's latest block, which may still be reversible. Whether to wait for a certain number of confirmations before using the result is up to you.</Note>
+
+        <Note>This operation is rate-limited to one request per second for each organization. Requests exceeding this limit will be rejected.</Note>
+      operationId: list_account_balances
+      parameters:
+      - description: The wallet ID.
+        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        explode: false
+        in: path
+        name: wallet_id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: |
+          The chain ID, which is the unique identifier of a blockchain. Currently, only the following account-based chains are supported:
+          - `ETH`: Ethereum
+          - `TRON`: TRON
+          - `SOL`: Solana
+          - `SETH`: Ethereum Sepolia Testnet
+          - `TTRON`: TRON Testnet
+          - `SOLDEV_SOL`: Solana Devnet
+        example: ETH
+        explode: false
+        in: path
+        name: chain_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: |
+          A comma-separated list of balance queries. Each query is a token ID and a wallet address separated by a colon (:), in the format `{token_id}:{address}`. A maximum of 50 queries can be specified per request to ensure the URL length stays within standard web server limits (typically 8 KB).
+
+          You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
+
+          Example: `ETH_USDT:0x1c53e3f2f8b59e5d6b6b6b6b6b6b6b6b6b6b6b6b,ETH:0x9bff46afe2b45ffdfd8a99d4990878d0a44a67b8`
+        example: "ETH_USDT:0x1c53e3f2f8b59e5d6b6b6b6b6b6b6b6b6b6b6b6b,ETH:0x9bff46afe2b45ffdfd8a99d4990878d0a44a67b8"
+        explode: false
+        in: query
+        name: queries
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_account_balances_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - wallet.read
+      summary: List account balances
+      tags:
+      - Wallets
   /wallets/tokens:
     get:
       description: "This operation retrieves all tokens supported by a specific wallet\
@@ -279,8 +525,6 @@ paths:
           - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)
 
           - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
-
-          - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
 
           - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
         explode: true
@@ -304,8 +548,6 @@ paths:
           - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
           - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -445,8 +687,6 @@ paths:
 
           - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
 
-          - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
-
           - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
         explode: true
         in: query
@@ -469,8 +709,6 @@ paths:
           - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
           - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -549,8 +787,6 @@ paths:
 
           - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
 
-          - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
-
           - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
         explode: true
         in: query
@@ -573,8 +809,6 @@ paths:
           - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
           - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -839,8 +1073,6 @@ paths:
 
           - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
 
-          - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
-
           - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
         explode: true
         in: query
@@ -863,8 +1095,6 @@ paths:
           - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
           - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -955,8 +1185,6 @@ paths:
     post:
       description: |
         This operation creates a wallet with the provided information.
-
-        <Note>This operation is not applicable to Smart Contract Wallets.</Note>
       operationId: create_wallet
       requestBody:
         $ref: '#/components/requestBodies/createWalletBody'
@@ -1795,8 +2023,8 @@ paths:
   /wallets/{wallet_id}/addresses/{address}/tokens:
     get:
       description: "The operation retrieves a list of token balances for a specified\
-        \ address within a wallet. \n\n<Note>This operation is applicable to MPC Wallets,\
-        \ Custodial Wallets (Web3 Wallets), and Smart Contract Wallets only.</Note>\n"
+        \ address within a wallet. \n\n<Note>This operation is applicable to MPC Wallets\
+        \ only.</Note>\n"
       operationId: list_token_balances_for_address
       parameters:
       - description: The wallet ID.
@@ -3668,53 +3896,6 @@ paths:
       summary: List asset balances
       tags:
       - Wallets - Exchange Wallet
-  /wallets/{wallet_id}/smart_contracts/delegates:
-    post:
-      description: |
-        This operation retrieves all available Delegates of a Safe\{Wallet\} for a given transfer or contract call request.
-      operationId: list_safe_wallet_delegates
-      parameters:
-      - description: The wallet ID.
-        example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        explode: false
-        in: path
-        name: wallet_id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: simple
-      requestBody:
-        $ref: '#/components/requestBodies/safeWalletDelegatesRequestBody'
-      responses:
-        "201":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/CoboSafeDelegate'
-                type: array
-          description: Delegates successfully retrieved.
-        "4XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Bad request. Your request contains malformed syntax or invalid
-            parameters.
-        "5XX":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: Internal server error.
-      security:
-      - CoboAuth: []
-      - OAuth2:
-        - wallet.read
-      summary: List Delegates
-      tags:
-      - Wallets - Smart Contract Wallets
   /transactions/check_loop_transfers:
     get:
       description: "This operation verifies if the transactions from a given source\
@@ -3826,15 +4007,13 @@ paths:
       description: |
         The operation transfers your assets from a wallet created on Cobo Portal to another address.
 
-        You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
+        You need to specify details such as the sender address and recipient address, token ID, and the amount to transfer. You can specify the fee-related properties to limit the transaction fee, or specify the `fee_level` property to let Cobo calculate the transaction fee based on the selected fee level. A transaction request for tracking is returned upon successful operation.
 
         <Note>This operation uses `request_id` to prevent duplicate transfer requests. The `request_id` must be unique within the same organization. Duplicate requests with the same `request_id` will be rejected with an error and will not be executed again.</Note>
 
         <Note>If you make transfers from Custodial Wallets (Asset Wallets) and Exchange Wallets, do not set the fee-related properties, as they will not take effects.</Note>
 
         <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. To do this, you should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
-
-        <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
       operationId: create_transfer_transaction
       requestBody:
         $ref: '#/components/requestBodies/createTransferBody'
@@ -3870,24 +4049,9 @@ paths:
       description: |
         This operation creates a transaction to interact with a smart contract on the blockchain.
 
-        You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee. A transaction request for tracking is returned upon successful operation.
+        You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee, or specify the `fee_level` property to let Cobo calculate the transaction fee based on the selected fee level. A transaction request for tracking is returned upon successful operation.
 
-        For smart contract call examples, you can refer to [Batch transfers using smart contracts](/v2/guides/transactions/batch-transfer) and [Swap tokens on Solana using Jupiter](/v2/guides/transactions/sol-jupiter-swap).
-
-        <Note>This operation uses `request_id` to prevent duplicate contract call requests. The `request_id` must be unique within the same organization. Duplicate requests with the same `request_id` will be rejected with an error and will not be executed again.</Note>
-
-        <Info>
-        Supported actions vary by blockchain:
-        - EVM chains — Support deploying contracts and calling contract functions.
-        - Solana — Supports calling contract functions only.
-        - TRON — Supports calling contract functions only.
-        - Stellar — Supports XLM trustline creation only.
-        - Cosmos — Supports initiating Cosmos native message-based transactions, such as transfers and staking operations.
-        </Info>
-
-        <Note>Currently, this operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets, or Smart Contract Wallets. Refer to the `destination` property for supported contract types.</Note>
-
-        <Info>If you initiate a transaction from a Smart Contract Wallet, a relevant transaction will be triggered from the Delegate to the Cobo Safe's address of the Smart Contract Wallet, with a transfer amount of <code>0</code>.</Info>
+        <Note>Currently, this operation only applies to the transactions from MPC Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
       operationId: create_contract_call_transaction
       requestBody:
         $ref: '#/components/requestBodies/createSmartContractCallBody'
@@ -4011,10 +4175,8 @@ paths:
           \ include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`: A\
           \ withdrawal transaction.\n  - `ContractCall`: A transaction that interacts\
           \ with a smart contract.\n  - `MessageSign`: A transaction that signs a\
-          \ message. \n  - `ExternalSafeTx`: A transaction to a Smart Contract Wallet\
-          \ (Safe{Wallet}) that requires one or multiple signatures to be executed.\n\
-          \  - `Stake`: A transaction that creates a staking request.\n  - `Unstake`:\
-          \ A transaction that creates a unstaking request.\n"
+          \ message.\n  - `Stake`: A transaction that creates a staking request.\n\
+          \  - `Unstake`: A transaction that creates a unstaking request.\n"
         example: "Deposit,Withdrawal"
         explode: true
         in: query
@@ -4104,8 +4266,6 @@ paths:
 
           - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
 
-          - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
-
           - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
         explode: true
         in: query
@@ -4128,8 +4288,6 @@ paths:
           - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
           - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
         explode: true
         in: query
         name: wallet_subtype
@@ -4296,6 +4454,77 @@ paths:
       summary: Get transaction information
       tags:
       - Transactions
+  /transactions/chains/{chain_id}/tx_hash/{tx_hash}/receipt:
+    get:
+      description: |
+        This operation retrieves the receipt of a specified transaction on a specified EVM-compatible chain, which records the execution result of the transaction, including its status, block information, gas consumption, and the event logs emitted during execution.
+
+        You need to specify the chain ID and the transaction hash. The chain ID can be retrieved by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains), and the transaction hash can be retrieved by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information).
+
+        The receipt is read from a blockchain node in real time and is returned as it is recorded on the chain. The event logs are returned in their raw form and are not filtered, so you need to decode them with the contract ABI yourself.
+
+        <Note>This operation is applicable to EVM-compatible chains only. It currently supports `ETH` (Ethereum mainnet) and `SETH` (Ethereum Sepolia testnet) only. Requests for any other chain are rejected.</Note>
+
+        <Note>You can only retrieve the receipts of the transactions under your organization.</Note>
+
+        <Note>A receipt is available only after the transaction has been included in a block. If the transaction is still pending or does not exist on the specified chain, no receipt is returned.</Note>
+
+        <Note>This operation is rate-limited to one request per second for each organization. Requests exceeding this limit will be rejected.</Note>
+      operationId: get_transaction_receipt
+      parameters:
+      - description: |
+          The chain ID, which is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains).
+
+          This operation currently supports the following chains only:
+          - `ETH`: Ethereum mainnet.
+          - `SETH`: Ethereum Sepolia testnet.
+        example: ETH
+        explode: false
+        in: path
+        name: chain_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: |
+          The transaction hash, which is the unique identifier of a transaction on the blockchain. You can retrieve the transaction hash of a transaction by calling [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information).
+
+          You need to specify the hash with the `0x` prefix.
+        example: 0x239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        explode: false
+        in: path
+        name: tx_hash
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionReceipt'
+          description: The information about a transaction receipt.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - transaction.read
+      summary: Get transaction receipt
+      tags:
+      - Transactions
   /transactions/{transaction_id}/resend:
     post:
       description: |
@@ -4352,7 +4581,7 @@ paths:
       description: |
         This operation cancels a specified transaction. Canceling a transaction stops it while it is still pending. For more information, see [Cancel a transaction](https://www.cobo.com/developers/v2/guides/transactions/manage-transactions#cancel-a-transaction).
 
-        <Note>This operation only applies to transactions from MPC Wallets and Smart Contract Wallets.</Note>
+        <Note>This operation only applies to transactions from MPC Wallets.</Note>
 
         A transaction can be cancelled if its status is either of the following:
         - `Submitted`
@@ -4400,13 +4629,16 @@ paths:
       - Transactions
   /transactions/broadcast:
     post:
-      description: "<Note>This operation is only applicable to the staking scenarios.</Note>\n\
-        This operation broadcasts a list of signed transactions. \n\nIf you set `auto_broadcast`\
-        \ to `false` when [creating a staking activity](https://www.cobo.com/developers/v2/api-references/stakings/create-stake-activity),\
-        \ the transaction will not be submitted to the blockchain automatically after\
-        \ being signed. In such cases, you can call this operation to broadcast the\
-        \ transaction to the blockchain.\n\nA transaction can only be broadcast if\
-        \ its status is `Broadcasting`.\n"
+      description: |
+        This operation broadcasts a list of signed transactions to the blockchain.
+
+        You can call this operation for transactions that were signed but not broadcast automatically:
+        - Transactions created with `transaction_process_type` set to `SignOnly` by calling the [Transfer token](https://www.cobo.com/developers/v2/api-references/transactions/transfer-token) or [Call smart contract](https://www.cobo.com/developers/v2/api-references/transactions/call-smart-contract) operation.
+        - Staking transactions created with `auto_broadcast` set to `false` when [creating a staking activity](https://www.cobo.com/developers/v2/api-references/staking/create-stake-activity).
+
+        A transaction can only be broadcast if its status is `Broadcasting`.
+
+        <Note>Broadcasting a transaction created with `transaction_process_type` set to `SignOnly` is only applicable to MPC Wallets and Custodial Wallets (Web3 Wallets).</Note>
       operationId: broadcast_signed_transactions
       requestBody:
         $ref: '#/components/requestBodies/broadcastTransactionsBody'
@@ -4446,7 +4678,7 @@ paths:
 
         A transaction can be dropped only if its status is `Broadcasting`.
 
-        <Note>This operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
+        <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
         You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
       operationId: drop_transaction_by_id
@@ -4499,9 +4731,7 @@ paths:
 
         A transaction can be sped up only if its status is `Broadcasting`.
 
-        <Note>This operation only applies to transactions from Custodial Wallets (Web3 Wallets), MPC Wallets and Smart Contract Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
-
-        <Info>If you speed up a transaction from a Smart Contract Wallet, two RBF transactions will be triggered, one for the transaction from the Smart Contract Wallet, and the other for the transaction from the Delegate.</Info>
+        <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
       operationId: speedup_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -8533,17 +8763,14 @@ paths:
       - FeeStation
   /fee_station/transactions/estimate_fee:
     post:
-      description: "<Note>This operation is **deprecated**. Please use the enhanced\
-        \ version [Check Fee Station usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage)\
-        \ instead.</Note> \n\nThis operation estimates the transaction fee of a token\
-        \ transfer based on the fee model that the chain uses, considering factors\
-        \ such as network congestion and transaction complexity.\n\nYou need to specify\
-        \ the transaction information, including destination address, token ID.\n\n\
-        The response can contain different properties based on the transaction fee\
-        \ model used by the chain. For the legacy, EIP-1559, and UTXO fee models,\
-        \ Cobo also supports three different transaction speed levels: slow, recommended,\
-        \ and fast. For more information about estimating transaction fees, refer\
-        \ to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).\n"
+      description: |
+        <Note>This operation is **deprecated** and retained only for backward compatibility. Use [Check Fee Station usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) for all new integrations.</Note>
+
+        This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
+
+        You need to specify the transaction information, including destination address, token ID.
+
+        The response can contain different properties based on the transaction fee model used by the chain. For the legacy, EIP-1559, and UTXO fee models, Cobo also supports three different transaction speed levels: slow, recommended, and fast. For more information about estimating transaction fees, refer to [Estimate transaction fee](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees).
       operationId: estimate_fee_station_fee
       requestBody:
         $ref: '#/components/requestBodies/estimateFeeStationFeeBody'
@@ -11358,6 +11585,50 @@ paths:
       summary: Get developer balance
       tags:
       - Payment
+  /payments/balance/bank_accounts/{bank_account_id}:
+    get:
+      description: |
+        This operation retrieves the balance of a destination bank account, only available for bank accounts with tag `VA`.
+      operationId: get_payment_bank_account_balance
+      parameters:
+      - description: The destination bank account ID.
+        example: 123e4567-e89b-12d3-a456-426614174003
+        explode: false
+        in: path
+        name: bank_account_id
+        required: true
+        schema:
+          description: The destination bank account ID.
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentBankAccountBalance'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_balance.read
+      summary: Get bank account balance
+      tags:
+      - Payment
   /payments/balance_changes:
     get:
       description: |
@@ -12619,6 +12890,16 @@ paths:
         schema:
           $ref: '#/components/schemas/BankAccountStatus'
         style: form
+      - description: |
+          Filter destination bank accounts by tag.
+        example: VA
+        explode: true
+        in: query
+        name: bank_account_tag
+        required: false
+        schema:
+          $ref: '#/components/schemas/DestinationBankAccountTag'
+        style: form
       responses:
         "200":
           content:
@@ -13470,6 +13751,164 @@ paths:
       - OAuth2:
         - payment_settlement.read
       summary: Get payout information
+      tags:
+      - Payment
+  /payments/bank_withdrawals:
+    get:
+      description: |
+        This operation retrieves the list of bank withdrawals.
+      operationId: list_bank_withdrawals
+      parameters:
+      - description: "The maximum number of objects to return. For most operations,\
+          \ the value range is [1, 50]."
+        example: 10
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          format: int32
+          type: integer
+        style: form
+      - description: |
+          A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+        explode: true
+        in: query
+        name: before
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: |
+          A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.
+        example: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        explode: true
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The request ID.
+        example: random_request_id
+        explode: true
+        in: query
+        name: request_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter by bank withdrawal status.
+        example: Pending
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/PaymentBankWithdrawalStatus'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_bank_withdrawals_200_response'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: List bank withdrawals
+      tags:
+      - Payment
+    post:
+      description: |
+        This operation creates a bank withdrawal from a virtual account to a target bank account.
+      operationId: create_bank_withdrawal
+      requestBody:
+        $ref: '#/components/requestBodies/createPaymentBankWithdrawalBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentBankWithdrawal'
+          description: The bank withdrawal was successfully created.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.create
+      summary: Create bank withdrawal
+      tags:
+      - Payment
+  /payments/bank_withdrawals/{bank_withdrawal_id}:
+    get:
+      description: |
+        This operation retrieves the information of a specific bank withdrawal.
+      operationId: get_bank_withdrawal_by_id
+      parameters:
+      - description: The bank withdrawal ID.
+        example: 123e4567-e89b-12d3-a456-426614174000
+        explode: false
+        in: path
+        name: bank_withdrawal_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentBankWithdrawalDetail'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_settlement.read
+      summary: Get bank withdrawal information
       tags:
       - Payment
   /payments/bulk_sends:
@@ -15880,6 +16319,43 @@ paths:
       - Compliance
 components:
   parameters:
+    reconTransactionIdsParam:
+      description: "A list of transaction IDs, separated by comma. You can specify\
+        \ 1 to 100 transaction IDs."
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479,557918d2-632a-4fe1-932f-315711f05fe3"
+      explode: true
+      in: query
+      name: transaction_ids
+      required: true
+      schema:
+        type: string
+      style: form
+    reconStartDateParam:
+      description: "The start date of the reconciliation period (inclusive), in YYYY-MM-DD\
+        \ format (UTC). The range between `start_date` and `end_date` must not exceed\
+        \ 366 days."
+      example: 2026-07-01
+      explode: true
+      in: query
+      name: start_date
+      required: true
+      schema:
+        format: date
+        type: string
+      style: form
+    reconEndDateParam:
+      description: "The end date of the reconciliation period (inclusive), in YYYY-MM-DD\
+        \ format (UTC). The range between `start_date` and `end_date` must not exceed\
+        \ 366 days."
+      example: 2026-07-28
+      explode: true
+      in: query
+      name: end_date
+      required: true
+      schema:
+        format: date
+        type: string
+      style: form
     sortByParam:
       description: The field used for sorting.
       example: timestamp
@@ -16167,8 +16643,6 @@ components:
         - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
         - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-        - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
       explode: true
       in: query
       name: wallet_subtype
@@ -16183,8 +16657,6 @@ components:
         - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)
 
         - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
-
-        - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
 
         - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
       explode: true
@@ -16209,8 +16681,6 @@ components:
         - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets)
 
         - `User-Controlled`: MPC Wallets (User-Controlled Wallets)
-
-        - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet})
       explode: true
       in: query
       name: wallet_subtype
@@ -16689,10 +17159,8 @@ components:
       description: "A list of transaction types, separated by comma. Possible values\
         \ include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`: A withdrawal\
         \ transaction.\n  - `ContractCall`: A transaction that interacts with a smart\
-        \ contract.\n  - `MessageSign`: A transaction that signs a message. \n  -\
-        \ `ExternalSafeTx`: A transaction to a Smart Contract Wallet (Safe{Wallet})\
-        \ that requires one or multiple signatures to be executed.\n  - `Stake`: A\
-        \ transaction that creates a staking request.\n  - `Unstake`: A transaction\
+        \ contract.\n  - `MessageSign`: A transaction that signs a message.\n  - `Stake`:\
+        \ A transaction that creates a staking request.\n  - `Unstake`: A transaction\
         \ that creates a unstaking request.\n"
       example: "Deposit,Withdrawal"
       explode: true
@@ -16767,7 +17235,6 @@ components:
           - `Asset`: Custodial Wallets (Asset Wallets).
           - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
           - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
-          - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}).
           - `Main`: Exchange Wallets (Main Account).
           - `Sub`: Exchange Wallets (Sub Account).
           - `DepositFromAddress`: An address which can include both Cobo's wallet addresses and external addresses.
@@ -16806,8 +17273,8 @@ components:
         \ values include:\n  - `Address`: An external address. \n  - `ContractCall`:\
         \ A transaction that interacts with a smart contract.\n  - `MessageSign`:\
         \ A transaction that signs a message. \n  - `CustodialWallet`: A Custodial\
-        \ Wallet.\n  - `MPCWallet`: An MPC Wallet.\n  - `SafeWallet`: A Smart Contract\
-        \ Wallets (Safe{Wallet}).\n  - `ExchangeWallet`: An Exchange Wallet.\n"
+        \ Wallet.\n  - `MPCWallet`: An MPC Wallet.\n  - `ExchangeWallet`: An Exchange\
+        \ Wallet.\n"
       example: "ContractCall,MessageSign"
       explode: true
       in: query
@@ -18099,6 +18566,17 @@ components:
       schema:
         $ref: '#/components/schemas/BankAccountStatus'
       style: form
+    BankAccountTagOptionalParam:
+      description: |
+        Filter destination bank accounts by tag.
+      example: VA
+      explode: true
+      in: query
+      name: bank_account_tag
+      required: false
+      schema:
+        $ref: '#/components/schemas/DestinationBankAccountTag'
+      style: form
     ChainIdsOptionalParam:
       description: "The chain ID, which is the unique identifier of a blockchain."
       example: ETH
@@ -18172,6 +18650,38 @@ components:
       schema:
         type: string
       style: simple
+    PaymentBankAccountIdPathParam:
+      description: The destination bank account ID.
+      example: 123e4567-e89b-12d3-a456-426614174003
+      explode: false
+      in: path
+      name: bank_account_id
+      required: true
+      schema:
+        description: The destination bank account ID.
+        format: uuid
+        type: string
+      style: simple
+    PaymentBankWithdrawalIdPathParam:
+      description: The bank withdrawal ID.
+      example: 123e4567-e89b-12d3-a456-426614174000
+      explode: false
+      in: path
+      name: bank_withdrawal_id
+      required: true
+      schema:
+        type: string
+      style: simple
+    PaymentBankWithdrawalStatusOptionalParam:
+      description: Filter by bank withdrawal status.
+      example: Pending
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        $ref: '#/components/schemas/PaymentBankWithdrawalStatus'
+      style: form
     PaymentFromMerchantIdOptionalParam:
       description: The merchant ID.
       example: M1001
@@ -18528,12 +19038,6 @@ components:
           schema:
             $ref: '#/components/schemas/lock_utxos_request'
       description: The request body of the Lock/Unlock UTXOs operation.
-    safeWalletDelegatesRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SafeWalletDelegates'
-      description: "The request body to query the Delegates of a Safe{Wallet}."
     refreshAddressBalancesBody:
       content:
         application/json:
@@ -19013,6 +19517,12 @@ components:
           schema:
             $ref: '#/components/schemas/create_payout_request'
       description: The request body to create a payout.
+    createPaymentBankWithdrawalBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/create_bank_withdrawal_request'
+      description: The request body to create a bank withdrawal.
     createCounterpartyEntryBody:
       content:
         application/json:
@@ -19194,6 +19704,18 @@ components:
             $ref: '#/components/schemas/CreateKyaScreeningsBody'
       description: The request body to create KYA address screening requests.
   responses:
+    getReconLedgerResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/get_reconciliation_ledger_200_response'
+      description: The reconciliation ledger entries (post-transaction balances).
+    getReconStatementsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_reconciliation_statements_200_response'
+      description: The daily reconciliation statements.
     badRequestError:
       content:
         application/json:
@@ -19339,6 +19861,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/batch_check_utxo_201_response'
+      description: The request was successful.
+    listAccountBalancesResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_account_balances_200_response'
       description: The request was successful.
     maxTransferableValueResponse:
       content:
@@ -19532,14 +20060,6 @@ components:
               $ref: '#/components/schemas/ChainInfo'
             type: array
       description: The request was successful.
-    getSafeWalletDelegatesResponse:
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/CoboSafeDelegate'
-            type: array
-      description: Delegates successfully retrieved.
     getChainFeeResponse:
       content:
         application/json:
@@ -20442,6 +20962,24 @@ components:
           schema:
             $ref: '#/components/schemas/PaymentPayoutDetail'
       description: The request was successful.
+    createPaymentBankWithdrawalResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentBankWithdrawal'
+      description: The bank withdrawal was successfully created.
+    listPaymentBankWithdrawalsResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_bank_withdrawals_200_response'
+      description: The request was successful.
+    paymentBankWithdrawalDetailResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentBankWithdrawalDetail'
+      description: The request was successful.
     getAllocationAmountResponse:
       content:
         application/json:
@@ -20847,6 +21385,168 @@ components:
             $ref: '#/components/schemas/AutoSweepTask'
       description: Successfully cancelled the auto sweep task.
   schemas:
+    ReconLedgerEntry:
+      description: "The reconciliation ledger entry, representing an address's running\
+        \ balance after a transaction."
+      example:
+        transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        block_time: 1706866800000
+        wallet_id: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+        amount: "100.5"
+        address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+        token_id: ETH_USDC
+        chain_id: ETH
+        balance_after: "1000.5"
+        block_number: 21000000
+        transaction_hash: 0x11af4b844ff94b3fbef6e36b518da3ad4c5856fa686464524a876b463d129760
+      properties:
+        transaction_id:
+          description: The transaction ID (the Cobo transaction ID you provided in
+            `transaction_ids`).
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
+          type: string
+        block_time:
+          description: "The time when the block containing the transaction was created,\
+            \ in Unix timestamp format, measured in milliseconds."
+          example: 1706866800000
+          format: int64
+          type: integer
+        wallet_id:
+          description: The wallet ID.
+          example: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+          format: uuid
+          type: string
+        address:
+          description: The wallet address involved in this entry.
+          example: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          type: string
+        token_id:
+          description: "The token ID, which is the unique identifier of a token."
+          example: ETH_USDC
+          type: string
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain."
+          example: ETH
+          type: string
+        amount:
+          description: "The transaction amount for this entry, expressed in the token's\
+            \ main unit (already divided by the token's decimals). The value is signed\
+            \ - positive for deposits and negative for withdrawals."
+          example: "100.5"
+          type: string
+        balance_after:
+          description: "The running balance of the address for this token after this\
+            \ transaction, expressed in the token's main unit."
+          example: "1000.5"
+          type: string
+        transaction_hash:
+          description: The transaction hash on the blockchain.
+          example: 0x11af4b844ff94b3fbef6e36b518da3ad4c5856fa686464524a876b463d129760
+          type: string
+        block_number:
+          description: The number of the block containing the transaction.
+          example: 21000000
+          format: int64
+          type: integer
+      required:
+      - address
+      - amount
+      - balance_after
+      - chain_id
+      - token_id
+      - transaction_id
+      - wallet_id
+      type: object
+    ReconDailyStatement:
+      description: The daily reconciliation statement for a wallet and token on a
+        business date.
+      example:
+        biz_date: 2026-07-28
+        wallet_id: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+        total_deposit: "500"
+        token_id: ETH_USDC
+        chain_id: ETH
+        deposit_count: 3
+        closing_balance: "1300.5"
+        withdrawal_count: 1
+        opening_balance: "1000.5"
+        total_withdrawal: "200"
+        status: Confirmed
+      properties:
+        biz_date:
+          description: "The business date (UTC), in YYYY-MM-DD format."
+          example: 2026-07-28
+          format: date
+          type: string
+        token_id:
+          description: "The token ID, which is the unique identifier of a token."
+          example: ETH_USDC
+          type: string
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain."
+          example: ETH
+          type: string
+        wallet_id:
+          description: The wallet ID.
+          example: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+          format: uuid
+          type: string
+        opening_balance:
+          description: "The opening balance at the start of the business date, expressed\
+            \ in the token's main unit."
+          example: "1000.5"
+          type: string
+        total_deposit:
+          description: "The total deposit amount during the business date, expressed\
+            \ in the token's main unit."
+          example: "500"
+          type: string
+        deposit_count:
+          description: The number of deposits during the business date.
+          example: 3
+          type: integer
+        total_withdrawal:
+          description: "The total withdrawal amount during the business date, expressed\
+            \ in the token's main unit."
+          example: "200"
+          type: string
+        withdrawal_count:
+          description: The number of withdrawals during the business date.
+          example: 1
+          type: integer
+        closing_balance:
+          description: "The closing balance at the end of the business date, expressed\
+            \ in the token's main unit."
+          example: "1300.5"
+          type: string
+        status:
+          $ref: '#/components/schemas/ReconStatementStatus'
+      required:
+      - biz_date
+      - chain_id
+      - closing_balance
+      - deposit_count
+      - opening_balance
+      - status
+      - token_id
+      - total_deposit
+      - total_withdrawal
+      - wallet_id
+      - withdrawal_count
+      type: object
+    ReconStatementStatus:
+      description: |
+        The reconciliation status of this daily statement row, captured **at the moment the day was closed**. Possible values include:
+          - `Confirmed`: All addresses of this wallet and token were reconciled against on-chain balances, so the figures in this row are trustworthy.
+          - `Halted`: At least one address failed the on-chain balance check, so reconciliation stopped there and the figures in this row may be incomplete or inaccurate.
+
+        Note this is a snapshot, not a live status: once a halted address is fixed, the row keeps reporting `Halted` until the day is reprocessed.
+      enum:
+      - Confirmed
+      - Halted
+      example: Confirmed
+      type: string
     Pagination:
       description: The pagination information of the returned data.
       example:
@@ -21149,13 +21849,10 @@ components:
 
         - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
 
-        - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
-
         - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
       enum:
       - Custodial
       - MPC
-      - SmartContract
       - Exchange
       example: Custodial
       type: string
@@ -21166,7 +21863,6 @@ components:
         - `Web3`: Custodial Wallets (Web3 Wallets).
         - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
         - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
-        - `Safe{Wallet}`: Smart Contract Wallets (Safe).
         - `Main`: Exchange Wallets (Main Account).
         - `Sub`: Exchange Wallets (Sub Account).
 
@@ -21176,42 +21872,10 @@ components:
       - Web3
       - Org-Controlled
       - User-Controlled
-      - "Safe{Wallet}"
       - Main
       - Sub
       example: Asset
       type: string
-    SmartContractWalletType:
-      default: "Safe{Wallet}"
-      description: The Smart Contract Wallet type.
-      enum:
-      - "Safe{Wallet}"
-      example: "Safe{Wallet}"
-      type: string
-    SmartContractWalletOperationType:
-      default: CoboSafe
-      description: The way you interact with the Smart Contract Wallet.
-      enum:
-      - CoboSafe
-      example: CoboSafe
-      type: string
-    SmartContractInitiator:
-      description: The information about the initiator.
-      properties:
-        wallet_id:
-          description: The initiator's wallet ID.
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          type: string
-        address:
-          description: 'The initiator''s wallet address. '
-          example: 0x1234567890123456789012345678901234567890
-          type: string
-      required:
-      - address
-      - wallet_id
-      title: Initiator Wallets
-      type: object
     ExchangeId:
       description: |
         The ID of the exchange. Possible values include:
@@ -21403,51 +22067,6 @@ components:
       - updated_timestamp
       - wallet_uuid
       type: object
-    SafeWallet:
-      allOf:
-      - allOf:
-        - $ref: '#/components/schemas/CustodialWalletInfo'
-        - properties:
-            chain_id:
-              description: The ID of the chain on which the wallet operates.
-              example: ETH
-              type: string
-          type: object
-      - properties:
-          smart_contract_wallet_type:
-            $ref: '#/components/schemas/SmartContractWalletType'
-          safe_address:
-            description: The Smart Contract Wallet address.
-            example: 0x1234567890123456789012345678901234567890
-            format: address
-            pattern: "^0x[a-fA-F0-9]{40}$"
-            type: string
-          signers:
-            description: The signers of the Smart Contract Wallet.
-            items:
-              example: 0x1234567890123456789012345678901234567890
-              format: address
-              pattern: "^0x[a-fA-F0-9]{40}$"
-              type: string
-            type: array
-          threshold:
-            description: 'The minimum number of confirmations required for the Smart
-              Contract Wallet. '
-            example: 2
-            minimum: 1
-            type: integer
-          cobo_safe_address:
-            description: The address of Cobo Safe.
-            example: 0x1234567890123456789012345678901234567890
-            format: address
-            pattern: "^0x[a-fA-F0-9]{40}$"
-            type: string
-          initiator:
-            $ref: '#/components/schemas/SmartContractInitiator'
-        required:
-        - smart_contract_wallet_type
-        title: Safe Wallets
-        type: object
     CustodialWalletInfo:
       description: The basic information of a wallet.
       example:
@@ -21509,14 +22128,6 @@ components:
         - vault_id
         type: object
       title: MPC Wallets
-    SmartContractWalletInfo:
-      discriminator:
-        mapping:
-          Safe{Wallet}: '#/components/schemas/SafeWallet'
-        propertyName: smart_contract_wallet_type
-      oneOf:
-      - $ref: '#/components/schemas/SafeWallet'
-      title: Smart Contract Wallets
     ExchangeWalletInfo:
       allOf:
       - $ref: '#/components/schemas/CustodialWalletInfo'
@@ -21544,13 +22155,11 @@ components:
         mapping:
           Custodial: '#/components/schemas/CustodialWalletInfo'
           MPC: '#/components/schemas/MPCWalletInfo'
-          SmartContract: '#/components/schemas/SmartContractWalletInfo'
           Exchange: '#/components/schemas/ExchangeWalletInfo'
         propertyName: wallet_type
       oneOf:
       - $ref: '#/components/schemas/CustodialWalletInfo'
       - $ref: '#/components/schemas/MPCWalletInfo'
-      - $ref: '#/components/schemas/SmartContractWalletInfo'
       - $ref: '#/components/schemas/ExchangeWalletInfo'
     UTXO:
       description: The UTXO information.
@@ -21637,6 +22246,32 @@ components:
           type: array
       required:
       - tx_hash
+      type: object
+    BalanceAtBlock:
+      description: The balance of an address at a specific block.
+      example:
+        address: 0x1c53e3f2f8b59e5d6b6b6b6b6b6b6b6b6b6b6b6b
+        token_id: ETH_USDT
+        balance: "1000.5"
+        block_number: 20000000
+      properties:
+        address:
+          description: The wallet address.
+          example: 0x1c53e3f2f8b59e5d6b6b6b6b6b6b6b6b6b6b6b6b
+          type: string
+        token_id:
+          description: "The token ID, which is the unique identifier of a token."
+          example: ETH_USDT
+          type: string
+        balance:
+          description: The token balance of the address.
+          example: "1000.5"
+          type: string
+        block_number:
+          description: The block number (block height) at which the balance was retrieved.
+          example: 20000000
+          format: int64
+          type: integer
       type: object
     MaxTransferableValue:
       description: "The maximum transferable value from the wallet or the specified\
@@ -21792,65 +22427,6 @@ components:
         - vault_id
         type: object
       title: MPC Wallets
-    CreateSmartContractWalletParams:
-      discriminator:
-        mapping:
-          Safe{Wallet}: '#/components/schemas/CreateSafeWalletParams'
-        propertyName: smart_contract_wallet_type
-      oneOf:
-      - $ref: '#/components/schemas/CreateSafeWalletParams'
-      title: Smart Contract Wallets
-    CreateSafeWalletParams:
-      allOf:
-      - allOf:
-        - $ref: '#/components/schemas/CreateCustodialWalletParams'
-        - properties:
-            chain_id:
-              description: The ID of the chain that the wallet operates on.
-              example: ETH
-              type: string
-          required:
-          - chain_id
-          type: object
-      - properties:
-          smart_contract_wallet_type:
-            $ref: '#/components/schemas/SmartContractWalletType'
-          safe_address:
-            description: "The address of the Smart Contract Wallet. If this is not\
-              \ provided, Cobo will create a new Safe{Wallet} and set up Cobo Safe\
-              \ for you. In that case, the `threshold` and `signers` properties are\
-              \ required."
-            example: 0x1234567890123456789012345678901234567890
-            format: address
-            pattern: "^0x[a-fA-F0-9]{40}$"
-            type: string
-          signers:
-            description: "The signers of the Smart Contract Wallet. This property\
-              \ is required when creating a new Safe{Wallet}."
-            items:
-              example: 0x1234567890123456789012345678901234567890
-              format: address
-              pattern: "^0x[a-fA-F0-9]{40}$"
-              type: string
-            type: array
-          threshold:
-            description: "The minimum number of confirmations required for the Smart\
-              \ Contract Wallet. This property is required when creating a new Safe{Wallet}."
-            example: 2
-            minimum: 1
-            type: integer
-          cobo_safe_address:
-            description: "The address of Cobo Safe. If you are importing an existing\
-              \ Safe{Wallet}, Cobo Safe must have been created and enabled."
-            example: 0x1234567890123456789012345678901234567890
-            format: address
-            pattern: "^0x[a-fA-F0-9]{40}$"
-            type: string
-          initiator:
-            $ref: '#/components/schemas/SmartContractInitiator'
-        required:
-        - smart_contract_wallet_type
-        type: object
     CreateExchangeWalletParams:
       allOf:
       - $ref: '#/components/schemas/CreateCustodialWalletParams'
@@ -21953,20 +22529,6 @@ components:
       - wallet_type
       title: MPC Wallets
       type: object
-    UpdateSmartContractWalletParams:
-      description: The information of Smart Contract Wallets.
-      properties:
-        wallet_type:
-          $ref: '#/components/schemas/WalletType'
-        name:
-          description: The wallet name.
-          example: My WaaS 2.0 Wallet
-          type: string
-      required:
-      - name
-      - wallet_type
-      title: Smart Contract Wallets
-      type: object
     UpdateExchangeWalletParams:
       description: The information of Exchange Wallets.
       properties:
@@ -21986,72 +22548,12 @@ components:
         mapping:
           Custodial: '#/components/schemas/UpdateCustodialWalletParams'
           MPC: '#/components/schemas/UpdateMpcWalletParams'
-          SmartContract: '#/components/schemas/UpdateSmartContractWalletParams'
           Exchange: '#/components/schemas/UpdateExchangeWalletParams'
         propertyName: wallet_type
       oneOf:
       - $ref: '#/components/schemas/UpdateCustodialWalletParams'
       - $ref: '#/components/schemas/UpdateMpcWalletParams'
-      - $ref: '#/components/schemas/UpdateSmartContractWalletParams'
       - $ref: '#/components/schemas/UpdateExchangeWalletParams'
-    SafeWalletDelegatesContractCall:
-      example:
-        address: 0x0406db8351aa6839169bb363f63c2c808fee8f99
-        request_type: Transfer
-        calldata: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
-        value: "1.5"
-      properties:
-        request_type:
-          $ref: '#/components/schemas/EstimateFeeRequestType'
-        address:
-          description: The destination address.
-          example: 0x0406db8351aa6839169bb363f63c2c808fee8f99
-          type: string
-        value:
-          description: |
-            The transfer amount. For example, if you trade 1.5 ETH, then the value is `1.5`.
-          example: "1.5"
-          type: string
-        calldata:
-          description: |
-            The data used to invoke a specific function or method within the specified contract at the destination address, with a maximum length of 65,000 characters.
-          example: 0xa22cb4650000000000000000000000001e0049783f008a0085193e00003d00cd54003c71000000000000000000000000000000000000000000000000000000000000DEMO
-          type: string
-      required:
-      - request_type
-      title: Contract Call by Delegates
-      type: object
-    SafeWalletDelegatesTransfer:
-      properties:
-        request_type:
-          $ref: '#/components/schemas/EstimateFeeRequestType'
-        token_id:
-          description: The token ID.
-          example: ETH
-          type: string
-        amount:
-          description: "The transfer amount. For example, if you trade 1.5 ETH, then\
-            \ the value is `1.5`."
-          example: "0.1"
-          type: string
-        address:
-          description: The address of the recipient.
-          example: 0x1234567890123456789012345678901234567890
-          type: string
-      required:
-      - request_type
-      - token_id
-      title: Transfer by Delegates
-      type: object
-    SafeWalletDelegates:
-      discriminator:
-        mapping:
-          ContractCall: '#/components/schemas/SafeWalletDelegatesContractCall'
-          Transfer: '#/components/schemas/SafeWalletDelegatesTransfer'
-        propertyName: request_type
-      oneOf:
-      - $ref: '#/components/schemas/SafeWalletDelegatesContractCall'
-      - $ref: '#/components/schemas/SafeWalletDelegatesTransfer'
     OrgInfo:
       description: |
         The information of an organization. To learn more about organizations, see [Introduction to Organization](https://manuals.cobo.com/en/portal/organization/introduction).
@@ -22812,24 +23314,26 @@ components:
     FILBase:
       properties:
         gas_base:
-          description: "The minimum fee required for a transaction to be included\
-            \ in a block. The base fee is dynamically adjusted based on network congestion\
-            \ to maintain target block utilization. It is burned rather than paid\
-            \ to miners, reducing the total Filecoin supply over time."
-          example: "0.0002"
+          description: "This is the minimum fee required to include a transaction\
+            \ in a block. It is determined by the network's congestion level, which\
+            \ adjusts to maintain a target block utilization rate. The base fee is\
+            \ burned, reducing the total supply of Filecoin over time."
+          example: "100"
           type: string
       type: object
     FILPrice:
       properties:
         gas_premium:
-          description: An optional tip you can include to prioritize your transaction.
-            The gas premium incentivizes miners to include your transaction sooner
-            than those offering only the base fee.
-          example: "0.0001"
+          description: An optional additional fee that users can include to prioritize
+            their transactions over others. It acts like a tip to incentivize miners
+            to select and include your transaction over transactions with only the
+            base fee.
+          example: "522508"
           type: string
         gas_fee_cap:
-          description: The maximum gas price you are willing to pay per unit of gas.
-          example: "0.00035"
+          description: The gas_fee_cap is a user-defined limit on how much they are
+            willing to pay per unit of gas.
+          example: "522768"
           type: string
         gas_limit:
           description: The maximum amount of gas your transaction is allowed to consume.
@@ -23196,10 +23700,32 @@ components:
       - $ref: '#/components/schemas/TransactionRequestUtxoFee'
       - $ref: '#/components/schemas/TransactionRequestSOLFee'
       - $ref: '#/components/schemas/TransactionRequestFILFee'
+    FeeLevel:
+      description: |
+        The transaction fee level. Specify this property if you want Cobo to calculate the transaction fee for you based on the selected level, instead of providing the fee-related properties yourself. Possible values are:
+        - `Slow`: A lower transaction fee, which may lead to a longer confirmation time.
+        - `Recommended`: The recommended transaction fee, which balances the fee cost and the confirmation time.
+        - `Fast`: A higher transaction fee for a shorter confirmation time.
+
+        You can call [Estimate transaction fee](https://www.cobo.com/developers/v2/api-references/transactions/estimate-transaction-fee) to view the estimated transaction fee of each fee level.
+
+        <Note>You cannot specify both `fee_level` and `fee` in the same request. If you specify both, the request fails.</Note>
+
+        <Note>This property does not take effect in the following cases, and the transaction fee is determined by Cobo:
+        - The transaction uses the fixed fee model. For more information about the fee models, refer to [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).
+        - The transaction is initiated from Custodial Wallets (Asset Wallets) or Exchange Wallets.
+        </Note>
+      enum:
+      - Slow
+      - Recommended
+      - Fast
+      example: Recommended
+      type: string
     Transaction:
       description: The information about a transaction.
       example:
         is_loop: false
+        transaction_process_type: AutoProcess
         chain_id: ETH
         confirmed_num: 12
         fee:
@@ -23412,20 +23938,28 @@ components:
           example: false
           type: boolean
         cobo_category:
-          description: |
-            The transaction category defined by Cobo. For more details, refer to [Cobo-defined categories](/v2/guides/transactions/manage-transactions#cobo-defined-categories).
+          description: "The transaction category defined by Cobo. Possible values\
+            \ include: \n- `AutoSweep`: An auto-sweep transaction.\n- `AutoFueling`:\
+            \ A transaction where Fee Station pays transaction fees to an address\
+            \ within your wallet.\n- `AutoFuelingRefund`: A refund for an auto-fueling\
+            \ transaction.\n- `BillPayment`: A transaction to pay Cobo bills through\
+            \ Fee Station.\n- `BillRefund`: A refund for a previously made bill payment.\n\
+            - `CommissionFeeCharge`: A transaction to charge commission fees via Fee\
+            \ Station.\n- `CommissionFeeRefund`: A refund of previously charged commission\
+            \ fees.\n"
           items:
             example: AutoFueling
             type: string
           type: array
         extra:
-          description: |
-            A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the `extra_type` field in the JSON object (for example, "BabylonBusinessInfo", "BtcAddressInfo").
+          description: The transaction extra information.
           items:
             example: |
               {"extra_type":"BabylonBusinessInfo","btc_address_info":{"address":"tb1p8k9f36798z5wkfd3mlq00cjm82c7sp5hudlqaxkdvfw4xaywvw4qzzv2xz","chain_id":"SIGNET_BTC","memo":"","path":"44/1/5/0/4","encoding":"ENCODING_P2TR","pubkey":"xpub6FkyaGRDyh4hayxmbY4YX7q9fuuxt14dNoYv5TphsKLnChVXSaTxY7DPwdeN8Yys5FLhfuajG8pshdXWk9cTzBFUy5rVA4Lx9kwmFUqhZcC","x_only_pubkey":"","root_pubkey":"xpub661MyMwAqRbcGFdLxNuuQvnPTLFs1xHpFQz5iumoDnw4NPofkE8SSrtwUmoy3E52HtcxCH9wXCfhztuuiuusvB3kAb4nt9rT4bkXxujubKm","taproot_script_tree_hash":"","taproot_internal_address":""}}
             type: string
           type: array
+        transaction_process_type:
+          $ref: '#/components/schemas/TransactionProcessType'
         fueling_info:
           $ref: '#/components/schemas/TransactionFuelingInfo'
         created_timestamp:
@@ -23462,6 +23996,7 @@ components:
         type: object
       example:
         is_loop: false
+        transaction_process_type: AutoProcess
         chain_id: ETH
         confirmed_num: 12
         fee:
@@ -23823,24 +24358,243 @@ components:
             type: string
         type: object
     TransactionType:
-      description: "The transaction type. Possible values include: \n  - `Deposit`:\
-        \ A deposit transaction.\n  - `Withdrawal`: A withdrawal transaction.\n  -\
-        \ `ContractCall`: A transaction that interacts with a smart contract.\n  -\
-        \ `MessageSign`: A transaction that signs a message. \n  - `ExternalSafeTx`:\
-        \ A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one\
-        \ or multiple signatures to be executed.\n  - `Stake`: A transaction that\
-        \ creates a staking request.\n  - `Unstake`: A transaction that creates a\
-        \ unstaking request.\n"
+      description: |
+        The transaction type. Possible values include:
+          - `Deposit`: A deposit transaction.
+          - `Withdrawal`: A withdrawal transaction.
+          - `ContractCall`: A transaction that interacts with a smart contract.
+          - `MessageSign`: A transaction that signs a message.
+          - `Stake`: A transaction that creates a staking request.
+          - `Unstake`: A transaction that creates a unstaking request.
       enum:
       - Deposit
       - Withdrawal
       - ContractCall
       - MessageSign
-      - ExternalSafeTx
       - Stake
       - Unstake
       example: Deposit
       type: string
+    TransactionReceipt:
+      description: |
+        The information about a transaction receipt, which records the execution result of a transaction that has been included in a block.
+
+        All the numeric properties are returned as decimal values instead of the hexadecimal values used by the JSON-RPC interfaces of the chains. The properties that record on-chain amounts are returned as strings to avoid any precision loss.
+      example:
+        effective_gas_price: "25000000000"
+        logs_truncated: false
+        chain_id: ETH
+        gas_used: "21000"
+        block_number: 20123456
+        block_hash: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+        to_address: 0xdac17f958d2ee523a2206206994597c13d831ec7
+        transaction_index: 42
+        contract_address: 0xabcdef1234567890abcdef1234567890abcdef12
+        logs_bloom: 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+        from_address: 0x1234567890abcdef1234567890abcdef12345678
+        logs:
+        - address: 0xdac17f958d2ee523a2206206994597c13d831ec7
+          data: 0x00000000000000000000000000000000000000000000000000000000000f4240
+          removed: false
+          topics:
+          - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+          - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+          block_number: 20123456
+          block_hash: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+          transaction_index: 42
+          log_index: 5
+          transaction_hash: 0x239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        - address: 0xdac17f958d2ee523a2206206994597c13d831ec7
+          data: 0x00000000000000000000000000000000000000000000000000000000000f4240
+          removed: false
+          topics:
+          - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+          - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+          block_number: 20123456
+          block_hash: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+          transaction_index: 42
+          log_index: 5
+          transaction_hash: 0x239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        transaction_hash: 0x239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+        cumulative_gas_used: "8000000"
+        evm_transaction_type: 2
+        status: 1
+      properties:
+        chain_id:
+          description: "The chain ID, which is the unique identifier of a blockchain.\
+            \ You can retrieve the IDs of all the chains you can use by calling [List\
+            \ enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains)."
+          example: ETH
+          type: string
+        transaction_hash:
+          description: "The transaction hash, returned with the `0x` prefix."
+          example: 0x239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          type: string
+        status:
+          description: |
+            The execution result of the transaction.
+            - `1`: The transaction was executed successfully.
+            - `0`: The transaction failed, for example, because it was reverted by the contract or ran out of gas.
+          example: 1
+          format: int32
+          type: integer
+        block_number:
+          description: The number of the block that contains the transaction.
+          example: 20123456
+          format: int64
+          type: integer
+        block_hash:
+          description: The hash of the block that contains the transaction.
+          example: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+          type: string
+        transaction_index:
+          description: The index position of the transaction within the block.
+          example: 42
+          format: int64
+          type: integer
+        from_address:
+          description: The address that sent the transaction.
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          type: string
+        to_address:
+          description: The address that received the transaction. The value is `null`
+            if the transaction created a contract.
+          example: 0xdac17f958d2ee523a2206206994597c13d831ec7
+          nullable: true
+          type: string
+        contract_address:
+          description: The address of the contract created by the transaction. The
+            value is `null` if the transaction did not create a contract.
+          example: 0xabcdef1234567890abcdef1234567890abcdef12
+          nullable: true
+          type: string
+        gas_used:
+          description: The number of gas units consumed by the transaction.
+          example: "21000"
+          type: string
+        cumulative_gas_used:
+          description: The total number of gas units consumed by all the transactions
+            up to and including this transaction in the block.
+          example: "8000000"
+          type: string
+        effective_gas_price:
+          description: "The gas price actually paid for each gas unit consumed by\
+            \ the transaction, in the smallest unit of the chain's native token. For\
+            \ example, the value is in wei for Ethereum."
+          example: "25000000000"
+          type: string
+        evm_transaction_type:
+          description: |
+            The transaction envelope type defined by the chain. This property describes the on-chain transaction format, not the Cobo transaction type returned by [Get transaction information](https://www.cobo.com/developers/v2/api-references/transactions/get-transaction-information).
+            - `0`: A legacy transaction.
+            - `1`: An access list transaction, as defined in EIP-2930.
+            - `2`: A dynamic fee transaction, as defined in EIP-1559.
+          example: 2
+          format: int32
+          type: integer
+        logs_bloom:
+          description: "The bloom filter of the event logs emitted during the execution\
+            \ of the transaction, which can be used to quickly check whether the transaction\
+            \ emitted a specific log. The value is a 256-byte hexadecimal string."
+          example: 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+          type: string
+        logs:
+          description: "The event logs emitted during the execution of the transaction,\
+            \ in the order in which they were emitted. The array is empty if the transaction\
+            \ emitted no logs. A maximum of 1,000 logs are returned. If the transaction\
+            \ emitted more logs, only the first 1,000 are returned and `logs_truncated`\
+            \ is `true`."
+          items:
+            $ref: '#/components/schemas/TransactionReceiptLog'
+          type: array
+        logs_truncated:
+          description: |
+            Whether the event logs returned in `logs` were truncated.
+            - `true`: The transaction emitted more than 1,000 logs and only the first 1,000 are returned.
+            - `false`: All the logs emitted by the transaction are returned.
+          example: false
+          type: boolean
+      required:
+      - block_hash
+      - block_number
+      - chain_id
+      - from_address
+      - gas_used
+      - logs
+      - logs_truncated
+      - status
+      - transaction_hash
+      - transaction_index
+      type: object
+    TransactionReceiptLog:
+      description: The information about an event log emitted during the execution
+        of a transaction.
+      example:
+        address: 0xdac17f958d2ee523a2206206994597c13d831ec7
+        data: 0x00000000000000000000000000000000000000000000000000000000000f4240
+        removed: false
+        topics:
+        - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+        - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+        block_number: 20123456
+        block_hash: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+        transaction_index: 42
+        log_index: 5
+        transaction_hash: 0x239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+      properties:
+        log_index:
+          description: The index position of the log within the block.
+          example: 5
+          format: int64
+          type: integer
+        address:
+          description: The address of the contract that emitted the log.
+          example: 0xdac17f958d2ee523a2206206994597c13d831ec7
+          type: string
+        topics:
+          description: "The indexed log arguments. The first topic is the hash of\
+            \ the event signature, and the remaining topics are the indexed event\
+            \ parameters, with a maximum of three."
+          items:
+            example: 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+            type: string
+          type: array
+        data:
+          description: "The non-indexed log arguments, encoded as a hexadecimal string."
+          example: 0x00000000000000000000000000000000000000000000000000000000000f4240
+          type: string
+        block_number:
+          description: The number of the block that contains the log.
+          example: 20123456
+          format: int64
+          type: integer
+        block_hash:
+          description: The hash of the block that contains the log.
+          example: 0xc9ee947f8bb6027c161888bf0d004bec05e7c2beec7e6b187dc512174e438735
+          type: string
+        transaction_hash:
+          description: The hash of the transaction that emitted the log.
+          example: 0x239861be9a4afe080c359b7fe4a1d035945ec46256b1a0f44d1267c71de8ec28
+          type: string
+        transaction_index:
+          description: The index position within the block of the transaction that
+            emitted the log.
+          example: 42
+          format: int64
+          type: integer
+        removed:
+          description: |
+            Whether the log was removed due to a chain reorganization.
+            - `true`: The log was removed because the block that contains it was reorganized out of the canonical chain.
+            - `false`: The log is still valid.
+          example: false
+          type: boolean
+      required:
+      - address
+      - data
+      - log_index
+      - topics
+      type: object
     MpcSigningGroup:
       description: The information about the Signing Group of an MPC Wallet.
       example:
@@ -23871,7 +24625,6 @@ components:
       - Web3
       - Org-Controlled
       - User-Controlled
-      - "Safe{Wallet}"
       - Main
       - Sub
       - DepositFromAddress
@@ -23964,31 +24717,6 @@ components:
       - source_type
       - wallet_id
       title: Org-Controlled/User-Controlled
-      type: object
-    TransactionSmartContractSafeWalletSource:
-      description: |
-        Information about the transaction source type `Safe{Wallet}`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
-
-        Switch between the tabs to display the properties for different transaction sources.
-      properties:
-        source_type:
-          $ref: '#/components/schemas/TransactionSourceType'
-        wallet_id:
-          description: The wallet ID.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          format: uuid
-          type: string
-        address:
-          description: The wallet address.
-          example: 0x1234567890123456789012345678901234567890
-          type: string
-        delegate:
-          $ref: '#/components/schemas/CoboSafeDelegate'
-      required:
-      - address
-      - source_type
-      - wallet_id
-      title: "Safe{Wallet}"
       type: object
     TransactionExchangeWalletSource:
       description: |
@@ -24542,8 +25270,6 @@ components:
           example: |
             {"types": {"EIP712Domain": [{"name": "name", "type": "string"}, {"name": "version", "type": "string"}, {"name": "chainId", "type": "uint256"}, {"name": "verifyingContract", "type": "address"}], "Person": [{"name": "name", "type": "string"}, {"name": "wallet", "type": "address"}], "Mail": [{"name": "from", "type": "Person"}, {"name": "to", "type": "Person"}, {"name": "contents", "type": "string"}]}, "primaryType": "Mail", "domain": {"name": "Ether Mail", "version": "1", "chainId": 1, "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"}, "message": {"from": {"name": "Cow", "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"}, "to": {"name": "Bob", "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"}, "contents": "Hello, Bob!"}}
           type: object
-        safe_tx_extra_data:
-          $ref: '#/components/schemas/SafeTxExtraData'
       required:
       - destination_type
       - structured_data
@@ -25084,7 +25810,7 @@ components:
           fee_type:
             $ref: '#/components/schemas/FeeType'
           token_id:
-            description: The token used to pay the transaction fee.
+            description: The token ID of the transaction fee.
             example: FIL
             type: string
           fee_used:
@@ -25094,6 +25820,10 @@ components:
           estimated_fee_used:
             description: The estimated transaction fee.
             example: "0.1"
+            type: string
+          gas_used:
+            description: The gas units used in the transaction.
+            example: "10000000"
             type: string
         type: object
       - $ref: '#/components/schemas/FILBase'
@@ -25210,16 +25940,17 @@ components:
       type: string
     AutoFuelType:
       description: "The mode of transaction fee payment using Fee Station. Currently,\
-        \ Fee Station supports transactions made with MPC Wallets on EVM-compatible\
-        \ chains, TRON, and Solana.\nFor more details, refer to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).\n\
+        \ Fee Station supports eligible transactions made with MPC Wallets and Web3\
+        \ Wallets on EVM-compatible chains, TRON, and Solana.\nFor more details, refer\
+        \ to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).\n\
         \n- `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees. \
         \ \n- `PassiveAutoFuel`: Use Fee Station only when the source address balance\
         \ is insufficient to cover transaction fees.  \n- `UsePortalPreference`: Use\
         \ fueling strategy based on the Portal configuration.  \n- `DisableAutoFuel`:\
         \ Do not use Fee Station for transaction fee payment under any circumstances.\
         \  \n\nIf this parameter is **not specified**, it defaults to the behavior\
-        \ of `UsePortalPreference`.\n\n**Note**: TRON and Solana does not support\
-        \ `PassiveAutoFuel` due to its fee delegation mechanism.\n"
+        \ of `UsePortalPreference`.\n\n**Note**: TRON and Solana do not support `PassiveAutoFuel`\
+        \ due to their fee delegation mechanisms.\n"
       enum:
       - PassiveAutoFuel
       - ProActiveAutoFuel
@@ -25476,19 +26207,18 @@ components:
     TransactionCoboCategory:
       description: "The transaction category defined by Cobo. Possible values include:\
         \ \n  - `AutoSweep`: An auto-sweep transaction.\n  - `AutoFueling`: A transaction\
-        \ where Fee Station pays transaction fees to an address within your MPC Wallets.\n\
-        \  - `AutoFuelingRefund`: A refund for an auto-fueling transaction.\n  - `SafeTxMessage`:\
-        \ A message signing transaction initiated by an MPC wallet to authorize a\
-        \ Smart Contract Wallet (Safe\\{Wallet\\}) transaction.\n  - `BillPayment`:\
-        \ A transaction to pay Cobo bills through Fee Station.\n  - `BillRefund`:\
-        \ A refund for a previously made bill payment.\n  - `CommissionFeeCharge`:\
-        \ A transaction for commission-fee users that charges the commission fee incurred\
-        \ from various services.\n  - `CommissionFeeRefund`: A refund of previously\
-        \ charged commission fees.\n  - `StakingBabylonBtcDelegation`: A transaction\
-        \ for delegating BTC in Babylon staking.\n  - `StakingBabylonBtcSignBabylon`:\
-        \ A transaction for signing Babylon operations with BTC.\n  - `StakingBabylonClaim`:\
-        \ A transaction for claiming rewards from Babylon staking.\n  - `StakingBabylonSlashing`:\
-        \ A transaction related to slashing penalties in Babylon staking.\n  - `StakingBabylonStake`:\
+        \ where Fee Station automatically pays transaction fees for eligible MPC Wallet\
+        \ and Web3 Wallet transactions.\n  - `AutoFuelingRefund`: A refund for an\
+        \ auto-fueling transaction.\n  - `BillPayment`: A transaction to pay Cobo\
+        \ bills through Fee Station.\n  - `BillRefund`: A refund for a previously\
+        \ made bill payment.\n  - `CommissionFeeCharge`: A transaction for commission-fee\
+        \ users that charges the commission fee incurred from various services.\n\
+        \  - `CommissionFeeRefund`: A refund of previously charged commission fees.\n\
+        \  - `StakingBabylonBtcDelegation`: A transaction for delegating BTC in Babylon\
+        \ staking.\n  - `StakingBabylonBtcSignBabylon`: A transaction for signing\
+        \ Babylon operations with BTC.\n  - `StakingBabylonClaim`: A transaction for\
+        \ claiming rewards from Babylon staking.\n  - `StakingBabylonSlashing`: A\
+        \ transaction related to slashing penalties in Babylon staking.\n  - `StakingBabylonStake`:\
         \ A transaction for staking assets in the Babylon platform.\n  - `StakingBabylonUnstake`:\
         \ A transaction for unstaking assets from the Babylon platform.\n  - `StakingBabylonWithdraw`:\
         \ A transaction for withdrawing assets from Babylon staking.\n  - `StakingBithiveClaim`:\
@@ -25533,7 +26263,6 @@ components:
       - BillRefund
       - CommissionFeeCharge
       - CommissionFeeRefund
-      - SafeTxMessage
       - StakingBabylonBtcDelegation
       - StakingBabylonBtcSignBabylon
       - StakingBabylonClaim
@@ -25572,157 +26301,6 @@ components:
       - TrxRecharge
       example: AutoSweep
       type: string
-    SafeTxExtraData:
-      description: "The information used to construct and sign Safe{Wallet} transactions\
-        \ using the EIP-712 standard."
-      properties:
-        to:
-          description: The recipient address of the transaction.
-          example: 0x1234567890abcdef1234567890abcdef12345678
-          type: string
-        value:
-          description: "The human-readable transaction value, for example, `1 ETH`."
-          example: 1 ETH
-          type: string
-        data:
-          description: The transaction call data.
-          example: 0xabcdef...
-          type: string
-        domain_hash:
-          description: The EIP-712 domain separator hash.
-          example: 0xabcdef123456...
-          type: string
-        message_hash:
-          description: The hash of the structured message to be signed.
-          example: 0xabcdef123456...
-          type: string
-        safe_address:
-          description: The address of the Safe contract.
-          example: 0xabcdefabcdefabcdefabcdefabcdefabcdef
-          type: string
-        safe_tx_hash:
-          description: The hash of the transaction.
-          example: 0x123456abcdef...
-          type: string
-        safe_nonce:
-          description: The nonce of the transaction.
-          example: 42
-          type: integer
-        operation:
-          description: The operation type for the transaction.
-          example: Call
-          type: string
-        gas_token_addr:
-          description: The address of the token used to pay gas.
-          example: 0xabcdefabcdef...
-          type: string
-        safe_tx_gas:
-          description: The gas limit used for the transaction.
-          example: 21000
-          type: integer
-        base_gas:
-          description: The base gas for the transaction.
-          example: 5000
-          type: integer
-        gas_price:
-          description: The gas price used in the transaction.
-          example: "100"
-          type: string
-        refund_receiver:
-          description: The address used to receive the gas refund.
-          example: 0xabcdefabcdef...
-          type: string
-        to_contract_name:
-          description: The name of the recipient contract (if available).
-          example: UniswapV2Router
-          type: string
-        decoded_data:
-          $ref: '#/components/schemas/SafeTxDecodedData'
-        signature:
-          description: The signature of the transaction (if signed by Cobo Signer).
-          example: 0xabcdef123456...
-          type: string
-        wei:
-          description: The transaction amount in Wei.
-          example: "1000000000000000000"
-          nullable: true
-          type: string
-      required:
-      - data
-      - domain_hash
-      - message_hash
-      - operation
-      - safe_address
-      - safe_nonce
-      - safe_tx_hash
-      - to
-      - value
-      type: object
-    SafeTxDecodedData:
-      description: The information about the decoded data of the transaction.
-      properties:
-        method:
-          description: The name of the method decoded from the transaction data.
-          example: transfer
-          type: string
-        parameters:
-          description: The list of parameters decoded from the transaction data.
-          items:
-            $ref: '#/components/schemas/SafeTxDecodedDataParameters'
-          type: array
-      type: object
-    SafeTxDecodedDataParameters:
-      description: The information about the decoded parameters of the transaction.
-      properties:
-        name:
-          description: The name of the parameter.
-          example: recipient
-          type: string
-        type:
-          description: The data type of the parameter.
-          example: address
-          type: string
-        value:
-          description: The value of the parameter.
-          example: 0x1234567890abcdef1234567890abcdef12345678
-          type: string
-        value_decoded:
-          description: The decoded value of the parameter (if applicable).
-          items:
-            $ref: '#/components/schemas/SafeTxSubTransaction'
-          type: array
-      type: object
-    SafeTxSubTransaction:
-      description: The information about the sub-transaction.
-      properties:
-        operation:
-          description: The type of operation in the sub-transaction.
-          example: Call
-          type: string
-        to:
-          description: The destination address of the sub-transaction.
-          example: 0xabcdefabcdefabcdefabcdefabcdefabcdef
-          type: string
-        value:
-          description: "The human-readable transaction value, for example, `1 ETH`."
-          example: 1 ETH
-          type: string
-        wei:
-          description: The transaction amount in Wei
-          example: "1000000000000000000"
-          type: string
-        data:
-          description: Encoded transaction data
-          example: 0xabcdef...
-          type: string
-        data_decoded:
-          $ref: '#/components/schemas/SafeTxDecodedData'
-        to_contract_name:
-          description: The name of the recipient contract (if available).
-          example: UniswapV2Router
-          nullable: true
-          type: string
-      type: object
     TransactionExtra:
       discriminator:
         mapping:
@@ -26393,79 +26971,6 @@ components:
       - wallet_id
       title: Org-Controlled/User-Controlled
       type: object
-    SafeTransferSource:
-      description: |
-        The information about the transaction source type `Safe{Wallet}`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
-
-        Switch between the tabs to display the properties for different transaction sources.
-      properties:
-        source_type:
-          $ref: '#/components/schemas/WalletSubtype'
-        wallet_id:
-          description: The wallet ID.
-          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
-          format: uuid
-          type: string
-        address:
-          description: The wallet address.
-          example: 19AR6YWEGbSoY8UT9Ksy9WrmrZPD5sL4Ku
-          type: string
-        delegate:
-          $ref: '#/components/schemas/CoboSafeDelegate'
-      required:
-      - address
-      - delegate
-      - source_type
-      - wallet_id
-      title: "Safe{Wallet}"
-      type: object
-    CoboSafeDelegateType:
-      default: Org-Controlled
-      description: |
-        The wallet subtype of the Delegate. Possible values include:
-        - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
-        - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
-      enum:
-      - Org-Controlled
-      - User-Controlled
-      example: Org-Controlled
-      type: string
-    CoboSafeDelegate:
-      discriminator:
-        mapping:
-          Org-Controlled: '#/components/schemas/MPCDelegate'
-          User-Controlled: '#/components/schemas/MPCDelegate'
-        propertyName: delegate_type
-      oneOf:
-      - $ref: '#/components/schemas/MPCDelegate'
-    MPCDelegate:
-      description: "The information about the MPC Wallet as the Delegate. You can\
-        \ call the [List Delegates](https://www.cobo.com/developers/v2/api-references/wallets--smart-contract-wallets/list-delegates)\
-        \ operation to retrieve the applicable Delegates."
-      example:
-        wallet_id: 123e4567-e89b-12d3-a456-426614174000
-        address: 0x1234567890123456789012345678901234567890
-        delegate_type: Org-Controlled
-      properties:
-        delegate_type:
-          $ref: '#/components/schemas/CoboSafeDelegateType'
-        wallet_id:
-          description: "The wallet ID of the Delegate. This is required when initiating\
-            \ a transfer or contract call from Smart Contract Wallets (Safe{Wallet})."
-          example: 123e4567-e89b-12d3-a456-426614174000
-          format: uuid
-          type: string
-        address:
-          description: "The wallet address of the Delegate. This is required when\
-            \ initiating a transfer or contract call from Smart Contract Wallets (Safe{Wallet})."
-          example: 0x1234567890123456789012345678901234567890
-          type: string
-      required:
-      - address
-      - delegate_type
-      - wallet_id
-      title: MPC Wallet Delegate
-      type: object
     ExchangeTransferSource:
       description: |
         The information about the transaction source types `Main` and `Sub`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -26498,7 +27003,6 @@ components:
           Web3: '#/components/schemas/CustodialWeb3TransferSource'
           Org-Controlled: '#/components/schemas/MpcTransferSource'
           User-Controlled: '#/components/schemas/MpcTransferSource'
-          Safe{Wallet}: '#/components/schemas/SafeTransferSource'
           Main: '#/components/schemas/ExchangeTransferSource'
           Sub: '#/components/schemas/ExchangeTransferSource'
         propertyName: source_type
@@ -26506,7 +27010,6 @@ components:
       - $ref: '#/components/schemas/CustodialTransferSource'
       - $ref: '#/components/schemas/CustodialWeb3TransferSource'
       - $ref: '#/components/schemas/MpcTransferSource'
-      - $ref: '#/components/schemas/SafeTransferSource'
       - $ref: '#/components/schemas/ExchangeTransferSource'
     AddressTransferDestination:
       description: |
@@ -26670,6 +27173,7 @@ components:
           - OnchainFeeBalance
         transaction_process_type: AutoProcess
         token_id: ETH_USDT
+        fee_level: Recommended
         fee:
           max_fee_amount: "0.1"
           token_id: TRON
@@ -26727,6 +27231,8 @@ components:
           type: string
         fee:
           $ref: '#/components/schemas/TransactionRequestFee'
+        fee_level:
+          $ref: '#/components/schemas/FeeLevel'
         transaction_process_type:
           $ref: '#/components/schemas/TransactionProcessType'
         auto_fuel:
@@ -26890,20 +27396,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/BaseContractCallSource'
       title: Web3
-    SafeContractCallSource:
-      allOf:
-      - $ref: '#/components/schemas/BaseContractCallSource'
-      - properties:
-          delegate:
-            $ref: '#/components/schemas/CoboSafeDelegate'
-        required:
-        - delegate
-        type: object
-      description: |
-        The information about the transaction source type `Safe{Wallet}`. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
-
-        Switch between the tabs to display the properties for different transaction sources.
-      title: "Safe{Wallet}"
     ContractCallSourceType:
       description: |
         The type of the source. Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations) for a detailed introduction about the supported sources and destinations for each transaction type.
@@ -26913,7 +27405,6 @@ components:
       - Web3
       - Org-Controlled
       - User-Controlled
-      - "Safe{Wallet}"
       example: Org-Controlled
       type: string
     ContractCallSource:
@@ -26921,12 +27412,10 @@ components:
         mapping:
           Org-Controlled: '#/components/schemas/MpcContractCallSource'
           User-Controlled: '#/components/schemas/MpcContractCallSource'
-          Safe{Wallet}: '#/components/schemas/SafeContractCallSource'
           Web3: '#/components/schemas/CustodialWeb3ContractCallSource'
         propertyName: source_type
       oneOf:
       - $ref: '#/components/schemas/MpcContractCallSource'
-      - $ref: '#/components/schemas/SafeContractCallSource'
       - $ref: '#/components/schemas/CustodialWeb3ContractCallSource'
     ContractCallDestinationType:
       description: |
@@ -27207,6 +27696,7 @@ components:
           - OnchainFeeBalance
         transaction_process_type: AutoProcess
         chain_id: ETH
+        fee_level: Recommended
         fee:
           max_fee_amount: "0.1"
           token_id: TRON
@@ -27263,6 +27753,8 @@ components:
           type: array
         fee:
           $ref: '#/components/schemas/TransactionRequestFee'
+        fee_level:
+          $ref: '#/components/schemas/FeeLevel'
         transaction_process_type:
           $ref: '#/components/schemas/TransactionProcessType'
         auto_fuel:
@@ -27278,15 +27770,15 @@ components:
       title: Contract call
       type: object
     TransactionProcessType:
-      description: "Transaction processing type. Possible values are:\n- `AutoProcess`\
-        \ (default): After the transaction is constructed, it will be automatically\
-        \ signed and broadcast.  \n- `BuildOnly`: Set to this value if you want to\
-        \ build the transaction first without automatically signing and broadcasting\
-        \ it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction)\
-        \ operation to complete the signing and broadcasting process.\n"
+      description: |
+        Transaction processing type. This property applies to MPC Wallets and Custodial Wallets (Web3 Wallets) only. Possible values are:
+        - `AutoProcess` (default): After the transaction is constructed, it will be automatically signed and broadcast.
+        - `BuildOnly`: Set to this value if you want to build the transaction first without automatically signing and broadcasting it. You can manually call the [Sign and broadcast transaction](https://www.cobo.com/developers/v2/api-references/transactions/sign-and-broadcast-transaction) operation to complete the signing and broadcasting process.
+        - `SignOnly`: Set to this value if you want to build and sign the transaction first without automatically broadcasting it. You can manually call the [Broadcast signed transactions](https://www.cobo.com/developers/v2/api-references/transactions/broadcast-signed-transactions) operation to broadcast the transaction to the blockchain.
       enum:
       - AutoProcess
       - BuildOnly
+      - SignOnly
       example: AutoProcess
       type: string
     MpcMessageSignSource:
@@ -27558,6 +28050,7 @@ components:
         event_id: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
         data:
           is_loop: false
+          transaction_process_type: AutoProcess
           chain_id: ETH
           confirmed_num: 12
           fee:
@@ -27727,6 +28220,7 @@ components:
             - `PaymentSettlement`: The payment settlement event data.\n- `PaymentTransaction`:\
             \ The payment transaction event data.\n- `PaymentAddressUpdate`: The top-up\
             \ address update event data.\n- `PaymentPayout`: The payment payout event\
+            \ data.\n- `PaymentBankWithdrawal`: The payment bank withdrawal event\
             \ data.\n- `PaymentBulkSend`: The payment bulk send event data.\n- `PaymentBulkSendItem`:\
             \ The payment bulk send item event data.\n- `PaymentAccountBalanceUpdate`:\
             \ The Payments account balance updated event data, including account information\
@@ -27751,6 +28245,7 @@ components:
           - PaymentTransaction
           - PaymentAddressUpdate
           - PaymentPayout
+          - PaymentBankWithdrawal
           - PaymentBulkSend
           - PaymentBulkSendItem
           - PaymentAccountBalanceUpdate
@@ -27785,6 +28280,7 @@ components:
           PaymentTransaction: '#/components/schemas/PaymentTransactionEventData'
           PaymentAddressUpdate: '#/components/schemas/PaymentAddressUpdateEventData'
           PaymentPayout: '#/components/schemas/PaymentPayoutEvent'
+          PaymentBankWithdrawal: '#/components/schemas/PaymentBankWithdrawalEvent'
           PaymentBulkSend: '#/components/schemas/PaymentBulkSendEvent'
           PaymentBulkSendItem: '#/components/schemas/PaymentBulkSendItemEvent'
           PaymentAccountBalanceUpdate: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
@@ -27811,6 +28307,7 @@ components:
       - $ref: '#/components/schemas/PaymentTransactionEventData'
       - $ref: '#/components/schemas/PaymentAddressUpdateEventData'
       - $ref: '#/components/schemas/PaymentPayoutEvent'
+      - $ref: '#/components/schemas/PaymentBankWithdrawalEvent'
       - $ref: '#/components/schemas/PaymentBulkSendEvent'
       - $ref: '#/components/schemas/PaymentBulkSendItemEvent'
       - $ref: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
@@ -27825,6 +28322,7 @@ components:
       - $ref: '#/components/schemas/Transaction'
       example:
         is_loop: false
+        transaction_process_type: AutoProcess
         chain_id: ETH
         confirmed_num: 12
         fee:
@@ -28214,6 +28712,11 @@ components:
       - $ref: '#/components/schemas/WebhookEventDataType'
       - $ref: '#/components/schemas/PaymentPayoutDetail'
       title: Payment payout Event Data
+    PaymentBankWithdrawalEvent:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - $ref: '#/components/schemas/PaymentBankWithdrawalDetail'
+      title: Payment Bank Withdrawal Event Data
     PaymentBulkSendEvent:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -28406,6 +28909,7 @@ components:
       - payment.refund.status.updated
       - payment.settlement.status.updated
       - payment.payout.status.updated
+      - payment.bank_withdrawal.status.updated
       - payment.address.updated
       - payment.subscription.status.updated
       - payment.charge.status.updated
@@ -28441,6 +28945,7 @@ components:
           event_id: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
           data:
             is_loop: false
+            transaction_process_type: AutoProcess
             chain_id: ETH
             confirmed_num: 12
             fee:
@@ -29613,8 +30118,6 @@ components:
 
             - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
 
-            - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
-
             - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
           example:
           - MPC
@@ -29628,7 +30131,6 @@ components:
             - `Web3`: Custodial Wallets (Web3  Wallets).
             - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
             - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
-            - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}).
             - `Main`: Exchange Wallets (Main Account).
             - `Sub`: Exchange Wallets (Sub Account).
           example:
@@ -31149,7 +31651,6 @@ components:
             The list of wallet types that this API key can access. Possible values include:
               - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)
               - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)
-              - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)
               - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction)
           items:
             $ref: '#/components/schemas/WalletType'
@@ -31160,7 +31661,6 @@ components:
               - `Asset`: Custodial Wallets (Asset Wallets).
               - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).
               - `User-Controlled`: MPC Wallets (User-Controlled Wallets).
-              - `Safe{Wallet}`: Smart Contract Wallets (Safe).
               - `Main`: Exchange Wallets (Main Account).
               - `Sub`: Exchange Wallets (Sub Account).
           items:
@@ -31195,6 +31695,7 @@ components:
         wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         data:
           is_loop: false
+          transaction_process_type: AutoProcess
           chain_id: ETH
           confirmed_num: 12
           fee:
@@ -32910,6 +33411,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -32940,6 +33442,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -33152,6 +33655,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -33182,6 +33686,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -33414,6 +33919,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -33444,6 +33950,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -33511,6 +34018,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -33541,6 +34049,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -33689,6 +34198,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -33719,6 +34229,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -33935,6 +34446,7 @@ components:
           destination_id: 123e4567-e89b-12d3-a456-426614174003
           destination_name: Destination A
           created_timestamp: 1744689600
+          source: Client
           merchant_id: M1001
           contact_address: "123 Main St, Anytown, USA"
           email: destination@example.com
@@ -34407,6 +34919,42 @@ components:
       required:
       - token_id
       type: object
+    PaymentBankAccountBalance:
+      example:
+        total_balance: "100.00"
+        locked_balance: "20.00"
+        bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+        currency: USD
+        available_balance: "80.00"
+      properties:
+        bank_account_id:
+          description: The destination bank account ID.
+          example: 123e4567-e89b-12d3-a456-426614174003
+          format: uuid
+          type: string
+        currency:
+          description: The fiat currency of the bank account.
+          example: USD
+          type: string
+        total_balance:
+          description: The total balance of the bank account.
+          example: "100.00"
+          type: string
+        available_balance:
+          description: The available balance of the bank account.
+          example: "80.00"
+          type: string
+        locked_balance:
+          description: The locked balance of the bank account.
+          example: "20.00"
+          type: string
+      required:
+      - available_balance
+      - bank_account_id
+      - currency
+      - locked_balance
+      - total_balance
+      type: object
     BridgingFee:
       example:
         fee_amount: fee_amount
@@ -34513,11 +35061,11 @@ components:
           online_store_url: https://example.com/store
           attachments:
           - file_type: BR
-            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+            file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           - file_type: BR
-            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
-          valid_period: 2020-01-01
-          commencement_date: 2020-01-01
+            file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          valid_period: "20290322"
+          commencement_date: "20290322"
           ubo_infos:
           - residential_address:
               country: HK
@@ -34531,10 +35079,10 @@ components:
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
             - file_type: PRC_ID_Emblem
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-            issue_date: "20180101"
-            date_of_birth: "19900101"
+            issue_date: "20290322"
+            date_of_birth: "20290322"
             name: 张三
-            expiration_date: "20280101"
+            expiration_date: "20290322"
             name_en: Zhang San
           - residential_address:
               country: HK
@@ -34548,10 +35096,10 @@ components:
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
             - file_type: PRC_ID_Emblem
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-            issue_date: "20180101"
-            date_of_birth: "19900101"
+            issue_date: "20290322"
+            date_of_birth: "20290322"
             name: 张三
-            expiration_date: "20280101"
+            expiration_date: "20290322"
             name_en: Zhang San
           register_address:
             country: HK
@@ -34568,7 +35116,7 @@ components:
             state: Hong Kong
             line1: 1 Example Street
           company_name_en: Example Limited
-          establish_date: 2020-01-01
+          establish_date: "20290322"
           legal_info:
             residential_address:
               country: HK
@@ -34582,10 +35130,10 @@ components:
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
             - file_type: PRC_ID_Emblem
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-            issue_date: "20180101"
-            date_of_birth: "19900101"
+            issue_date: "20290322"
+            date_of_birth: "20290322"
             name: 张三
-            expiration_date: "20280101"
+            expiration_date: "20290322"
             name_en: Zhang San
         industry:
         - E-commerce
@@ -34657,11 +35205,11 @@ components:
           online_store_url: https://example.com/store
           attachments:
           - file_type: BR
-            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+            file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           - file_type: BR
-            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
-          valid_period: 2020-01-01
-          commencement_date: 2020-01-01
+            file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          valid_period: "20290322"
+          commencement_date: "20290322"
           ubo_infos:
           - residential_address:
               country: HK
@@ -34675,10 +35223,10 @@ components:
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
             - file_type: PRC_ID_Emblem
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-            issue_date: "20180101"
-            date_of_birth: "19900101"
+            issue_date: "20290322"
+            date_of_birth: "20290322"
             name: 张三
-            expiration_date: "20280101"
+            expiration_date: "20290322"
             name_en: Zhang San
           - residential_address:
               country: HK
@@ -34692,10 +35240,10 @@ components:
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
             - file_type: PRC_ID_Emblem
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-            issue_date: "20180101"
-            date_of_birth: "19900101"
+            issue_date: "20290322"
+            date_of_birth: "20290322"
             name: 张三
-            expiration_date: "20280101"
+            expiration_date: "20290322"
             name_en: Zhang San
           register_address:
             country: HK
@@ -34712,7 +35260,7 @@ components:
             state: Hong Kong
             line1: 1 Example Street
           company_name_en: Example Limited
-          establish_date: 2020-01-01
+          establish_date: "20290322"
           legal_info:
             residential_address:
               country: HK
@@ -34726,10 +35274,10 @@ components:
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
             - file_type: PRC_ID_Emblem
               file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-            issue_date: "20180101"
-            date_of_birth: "19900101"
+            issue_date: "20290322"
+            date_of_birth: "20290322"
             name: 张三
-            expiration_date: "20280101"
+            expiration_date: "20290322"
             name_en: Zhang San
         industry:
         - E-commerce
@@ -34870,13 +35418,14 @@ components:
     MerchantKycCompanyAttachment:
       example:
         file_type: BR
-        file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+        file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
       properties:
         file_id:
           description: |
-            The AWS file link of the uploaded file, which you can retrieve by calling
+            The file ID of the uploaded file, which you can retrieve by calling
             [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).
-          example: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          format: uuid
           type: string
         file_type:
           $ref: '#/components/schemas/MerchantKycCompanyAttachmentFileType'
@@ -34950,10 +35499,10 @@ components:
           file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
         - file_type: PRC_ID_Emblem
           file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-        issue_date: "20180101"
-        date_of_birth: "19900101"
+        issue_date: "20290322"
+        date_of_birth: "20290322"
         name: 张三
-        expiration_date: "20280101"
+        expiration_date: "20290322"
         name_en: Zhang San
       properties:
         name:
@@ -34976,21 +35525,21 @@ components:
         date_of_birth:
           description: |
             The date of birth of the individual, usually in the format YYYYMMDD.
-          example: "19900101"
+          example: "20290322"
           maxLength: 64
           type: string
         issue_date:
           description: |
             The issue date refers to the date when a document, such as an identification card or passport,
             was officially issued or granted, usually in the format YYYYMMDD.
-          example: "20180101"
+          example: "20290322"
           maxLength: 64
           type: string
         expiration_date:
           description: |
             The expiration date refers to the date when a document, such as an identification card or passport,
             is no longer valid or legally usable, usually in the format YYYYMMDD.
-          example: "20280101"
+          example: "20290322"
           maxLength: 64
           type: string
         attachments:
@@ -35018,11 +35567,11 @@ components:
         online_store_url: https://example.com/store
         attachments:
         - file_type: BR
-          file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
+          file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
         - file_type: BR
-          file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf
-        valid_period: 2020-01-01
-        commencement_date: 2020-01-01
+          file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+        valid_period: "20290322"
+        commencement_date: "20290322"
         ubo_infos:
         - residential_address:
             country: HK
@@ -35036,10 +35585,10 @@ components:
             file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
           - file_type: PRC_ID_Emblem
             file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-          issue_date: "20180101"
-          date_of_birth: "19900101"
+          issue_date: "20290322"
+          date_of_birth: "20290322"
           name: 张三
-          expiration_date: "20280101"
+          expiration_date: "20290322"
           name_en: Zhang San
         - residential_address:
             country: HK
@@ -35053,10 +35602,10 @@ components:
             file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
           - file_type: PRC_ID_Emblem
             file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-          issue_date: "20180101"
-          date_of_birth: "19900101"
+          issue_date: "20290322"
+          date_of_birth: "20290322"
           name: 张三
-          expiration_date: "20280101"
+          expiration_date: "20290322"
           name_en: Zhang San
         register_address:
           country: HK
@@ -35073,7 +35622,7 @@ components:
           state: Hong Kong
           line1: 1 Example Street
         company_name_en: Example Limited
-        establish_date: 2020-01-01
+        establish_date: "20290322"
         legal_info:
           residential_address:
             country: HK
@@ -35087,10 +35636,10 @@ components:
             file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
           - file_type: PRC_ID_Emblem
             file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
-          issue_date: "20180101"
-          date_of_birth: "19900101"
+          issue_date: "20290322"
+          date_of_birth: "20290322"
           name: 张三
-          expiration_date: "20280101"
+          expiration_date: "20290322"
           name_en: Zhang San
       properties:
         company_type:
@@ -35120,15 +35669,15 @@ components:
           type: string
         establish_date:
           description: The establishment date of the company.
-          example: 2020-01-01
+          example: "20290322"
           type: string
         commencement_date:
           description: The commencement date of the company.
-          example: 2020-01-01
+          example: "20290322"
           type: string
         valid_period:
           description: The valid period of the company registration.
-          example: 2020-01-01
+          example: "20290322"
           type: string
         register_address:
           $ref: '#/components/schemas/MerchantKycAddress'
@@ -35425,6 +35974,7 @@ components:
         iban_code: "12345678901234567890"
         currency: USD
         further_credit: further credit sample
+        tag: VA
         account_alias: Main Payout Account
         payment_method: Swift
         swift_code: BOFAUS33
@@ -35442,6 +35992,8 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174003
           format: uuid
           type: string
+        tag:
+          $ref: '#/components/schemas/DestinationBankAccountTag'
         account_alias:
           description: The alias of the bank account.
           example: Main Payout Account
@@ -35558,6 +36110,15 @@ components:
       - currency
       - swift_code
       type: object
+    DestinationBankAccountTag:
+      description: |
+        The tag of the destination bank account.
+        - `VA`: The bank account maps to a virtual account.
+      enum:
+      - VA
+      example: VA
+      nullable: true
+      type: string
     WalletAddress:
       example:
         risk_level: Low
@@ -35666,6 +36227,7 @@ components:
         destination_id: 123e4567-e89b-12d3-a456-426614174003
         destination_name: Destination A
         created_timestamp: 1744689600
+        source: Client
         merchant_id: M1001
         contact_address: "123 Main St, Anytown, USA"
         email: destination@example.com
@@ -35681,6 +36243,8 @@ components:
           description: The destination name.
           example: Destination A
           type: string
+        source:
+          $ref: '#/components/schemas/DestinationSource'
         country:
           description: "The country of the destination, in ISO 3166-1 alpha-3 format."
           example: USA
@@ -35713,6 +36277,16 @@ components:
       - destination_type
       - updated_timestamp
       type: object
+    DestinationSource:
+      description: |
+        The source of the destination:
+        - `Client`: The destination was created by the client.
+        - `System`: The destination was created by the system.
+      enum:
+      - Client
+      - System
+      example: Client
+      type: string
     DestinationType:
       description: |
         The type of the destination.
@@ -36074,6 +36648,7 @@ components:
         destination_id: 123e4567-e89b-12d3-a456-426614174003
         destination_name: Destination A
         created_timestamp: 1744689600
+        source: Client
         bank_accounts:
         - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
           account_number: "4111111111111111"
@@ -36093,6 +36668,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -36122,6 +36698,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -36161,6 +36738,8 @@ components:
           description: The destination name.
           example: Destination A
           type: string
+        source:
+          $ref: '#/components/schemas/DestinationSource'
         country:
           description: "The country of the destination, in ISO 3166-1 alpha-3 format."
           example: USA
@@ -36357,6 +36936,7 @@ components:
         iban_code: "12345678901234567890"
         currency: USD
         further_credit: further credit sample
+        tag: VA
         account_alias: Main Payout Account
         payment_method: Swift
         swift_code: BOFAUS33
@@ -36401,6 +36981,8 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174003
           format: uuid
           type: string
+        tag:
+          $ref: '#/components/schemas/DestinationBankAccountTag'
         account_alias:
           description: The alias of the bank account.
           example: Main Payout Account
@@ -36933,6 +37515,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -36963,6 +37546,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -37123,6 +37707,214 @@ components:
       - RejectedByBank
       example: Pending
       type: string
+    PaymentBankWithdrawal:
+      example:
+        source_bank_account_id: dst_ba_1234567890
+        amount: "100.00"
+        target_bank_account_id: dst_ba_0987654321
+        currency: USD
+        remark: Withdraw funds from VA to payout bank account
+        created_timestamp: 1744689600
+        bank_withdrawal_id: 123e4567-e89b-12d3-a456-426614174000
+        request_id: 123e457-e89b-12d3-a456-426614174004
+        failed_reason: The target bank account is invalid.
+        status: Pending
+      properties:
+        bank_withdrawal_id:
+          description: The bank withdrawal ID generated by Cobo.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        request_id:
+          description: The request ID provided by you when creating the bank withdrawal.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        source_bank_account_id:
+          description: |
+            The source bank account ID. The destination bank account must be tagged as `VA`.
+          example: dst_ba_1234567890
+          type: string
+        target_bank_account_id:
+          description: The target bank account ID that receives the bank withdrawal.
+          example: dst_ba_0987654321
+          type: string
+        currency:
+          description: The fiat currency of the bank withdrawal.
+          example: USD
+          type: string
+        amount:
+          description: The bank withdrawal amount.
+          example: "100.00"
+          type: string
+        remark:
+          description: The remark for the bank withdrawal.
+          example: Withdraw funds from VA to payout bank account
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentBankWithdrawalStatus'
+        created_timestamp:
+          description: "The creation time of the bank withdrawal, represented as a\
+            \ UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+        failed_reason:
+          description: The reason why the bank withdrawal failed.
+          example: The target bank account is invalid.
+          type: string
+      required:
+      - amount
+      - bank_withdrawal_id
+      - created_timestamp
+      - currency
+      - request_id
+      - source_bank_account_id
+      - status
+      - target_bank_account_id
+      type: object
+    PaymentBankWithdrawalDetail:
+      allOf:
+      - $ref: '#/components/schemas/PaymentBankWithdrawal'
+      - properties:
+          source_bank_account:
+            $ref: '#/components/schemas/DestinationBankAccountDetail'
+          target_bank_account:
+            $ref: '#/components/schemas/DestinationBankAccountDetail'
+          bank_tx_fee:
+            description: The bank transaction fee charged for the bank withdrawal.
+            example: "10.00"
+            type: string
+          timeline:
+            description: The status timeline of the bank withdrawal.
+            items:
+              $ref: '#/components/schemas/PaymentBankWithdrawalTimelineItem'
+            type: array
+        required:
+        - source_bank_account
+        - target_bank_account
+        - timeline
+        type: object
+      example:
+        bank_tx_fee: "10.00"
+        amount: "100.00"
+        target_bank_account_id: dst_ba_0987654321
+        remark: Withdraw funds from VA to payout bank account
+        created_timestamp: 1744689600
+        target_bank_account:
+          bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+          account_number: "4111111111111111"
+          country: USA
+          destination_country: USA
+          beneficiary_address: "123 Main St, Anytown, USA"
+          city: New York
+          destination_id: 123e4567-e89b-12d3-a456-426614174003
+          bank_address: "456 Bank Ave, Cityville, USA"
+          holder_type: Company
+          destination_name: Destination A
+          destination_merchant_id: M1001
+          beneficiary_name: John Doe
+          destination_type: Individual
+          destination_email: destination@example.com
+          intermediary_bank_info:
+            bank_name: Intermediary Bank
+            bank_address: "456 Bank Ave, Cityville, USA"
+            bank_swift_code: BOFAUS33
+          updated_timestamp: 1744689600
+          destination_contact_address: "123 Main St, Anytown, USA"
+          bank_account_status: Pending
+          bank_name: ABC Bank
+          iban_code: "12345678901234567890"
+          currency: USD
+          further_credit: further credit sample
+          tag: VA
+          account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          bank_country: HKG
+          created_timestamp: 1744689600
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
+        source_bank_account_id: dst_ba_1234567890
+        timeline:
+        - status: Pending
+          timestamp: 1744689600
+        - status: Pending
+          timestamp: 1744689600
+        currency: USD
+        bank_withdrawal_id: 123e4567-e89b-12d3-a456-426614174000
+        request_id: 123e457-e89b-12d3-a456-426614174004
+        failed_reason: The target bank account is invalid.
+        status: Pending
+        source_bank_account:
+          bank_account_id: 123e4567-e89b-12d3-a456-426614174003
+          account_number: "4111111111111111"
+          country: USA
+          destination_country: USA
+          beneficiary_address: "123 Main St, Anytown, USA"
+          city: New York
+          destination_id: 123e4567-e89b-12d3-a456-426614174003
+          bank_address: "456 Bank Ave, Cityville, USA"
+          holder_type: Company
+          destination_name: Destination A
+          destination_merchant_id: M1001
+          beneficiary_name: John Doe
+          destination_type: Individual
+          destination_email: destination@example.com
+          intermediary_bank_info:
+            bank_name: Intermediary Bank
+            bank_address: "456 Bank Ave, Cityville, USA"
+            bank_swift_code: BOFAUS33
+          updated_timestamp: 1744689600
+          destination_contact_address: "123 Main St, Anytown, USA"
+          bank_account_status: Pending
+          bank_name: ABC Bank
+          iban_code: "12345678901234567890"
+          currency: USD
+          further_credit: further credit sample
+          tag: VA
+          account_alias: Main Payout Account
+          payment_method: Swift
+          swift_code: BOFAUS33
+          beneficiary_post_code: "999077"
+          bank_country: HKG
+          created_timestamp: 1744689600
+          bank_province: Hong Kong
+          contract_file_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          beneficiary_province: Hong Kong
+          bank_account_name: Example Company Limited
+          bank_branch_code: "123"
+    PaymentBankWithdrawalStatus:
+      description: |
+        The status of the bank withdrawal:
+        - `Pending`: The bank withdrawal has been created and is awaiting processing.
+        - `Processing`: The bank withdrawal is being processed.
+        - `Completed`: The bank withdrawal has been completed.
+        - `Failed`: The bank withdrawal failed.
+      enum:
+      - Pending
+      - Processing
+      - Completed
+      - Failed
+      example: Pending
+      type: string
+    PaymentBankWithdrawalTimelineItem:
+      example:
+        status: Pending
+        timestamp: 1744689600
+      properties:
+        status:
+          $ref: '#/components/schemas/PaymentBankWithdrawalStatus'
+        timestamp:
+          description: "The time when the bank withdrawal entered this status, represented\
+            \ as a UNIX timestamp in seconds."
+          example: 1744689600
+          type: integer
+      required:
+      - status
+      - timestamp
+      type: object
     PaymentAllocationAmount:
       example:
         allocation_amount: "1.23"
@@ -39321,6 +40113,85 @@ components:
       - underlying_token
       title: ERC20 Wrapped Token
       type: object
+    TokenizationERC20FundTokenParams:
+      description: Parameters for creating an ERC-4626 compliant tokenized fund/vault.
+      properties:
+        standard:
+          $ref: '#/components/schemas/TokenizationTokenStandard'
+        name:
+          description: The name of the fund token.
+          example: Global Equity Fund
+          type: string
+        symbol:
+          description: The symbol of the fund token.
+          example: GEF
+          type: string
+        asset_token:
+          description: "The address of the underlying asset token (e.g., XAUT, USDC).\
+            \ The fund will hold this token as collateral."
+          example: 0x4922a015c4407F87432B179bb209e125432E4a2A
+          type: string
+        initial_nav:
+          default: "1.0"
+          description: "Initial net asset value (NAV) per share (optional). Default:\
+            \ '1.0' (standard for new funds)."
+          example: "1.0"
+          type: string
+        initial_annual_rate:
+          default: "0"
+          description: "Initial annual rate (optional). Can be updated later via NAV\
+            \ updater. Default: '0'."
+          example: "0.05"
+          type: string
+        min_deposit:
+          default: "0"
+          description: "Minimum deposit amount (optional). Default: '0' (no minimum,\
+            \ accepts any amount > 0). Admin can update this later."
+          example: "1000000"
+          type: string
+        min_redemption:
+          default: "0"
+          description: "Minimum redemption amount (optional). Default: '0' (no minimum,\
+            \ accepts any amount > 0). Admin can update this later."
+          example: "1000000000000000000"
+          type: string
+        max_annual_rate:
+          default: "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+          description: "Maximum allowed annual rate (optional). Default: type(uint256).max\
+            \ (no limit). Set lower for conservative funds (e.g., '0.2' for 20%)."
+          example: "0.2"
+          type: string
+        max_rate_change:
+          default: "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+          description: "Maximum rate change per NAV update (optional). Default: type(uint256).max\
+            \ (no limit). Set lower to prevent volatility (e.g., '0.05' for 5%)."
+          example: "0.05"
+          type: string
+        min_update_interval_seconds:
+          default: 0
+          description: "Minimum interval between NAV updates in seconds (optional).\
+            \ Default: 0 (no minimum). Set higher to prevent frequent updates (e.g.,\
+            \ 86400 for 1 day)."
+          example: 86400
+          format: int32
+          minimum: 0
+          type: integer
+        decimals:
+          description: The number of decimals for the token (0-18).
+          example: 18
+          format: int32
+          maximum: 18
+          minimum: 0
+          type: integer
+        permissions:
+          $ref: '#/components/schemas/TokenizationERC20FundTokenPermissionParams'
+      required:
+      - asset_token
+      - name
+      - standard
+      - symbol
+      title: TokenizationERC20FundTokenParams
+      type: object
     TokenizationSOLTokenParams:
       properties:
         standard:
@@ -40061,6 +40932,73 @@ components:
             type: string
           type: array
       type: object
+    TokenizationERC20FundTokenPermissionParams:
+      description: "Role-based permission settings for ERC-4626 fund token contract.\
+        \ If not provided, all permissions will be granted to the issuance wallet\
+        \ by default."
+      properties:
+        owner:
+          description: List of addresses for the owner/admin role. Have full administrative
+            control over the fund contract.
+          example:
+          - 0x1234567890abcdef1234567890abcdef12345678
+          items:
+            description: Wallet address
+            example: 0x1234567890abcdef1234567890abcdef12345678
+            type: string
+          type: array
+        manager:
+          description: List of addresses for the fund manager role. Can manage fund
+            configurations and operational parameters.
+          example:
+          - 0xabcdefabcdefabcdefabcdefabcdefabcdefabcd
+          items:
+            description: Wallet address
+            example: 0xabcdefabcdefabcdefabcdefabcdefabcdefabcd
+            type: string
+          type: array
+        nav_updater:
+          description: List of addresses for the NAV updater role. Can update the
+            net asset value (NAV) per share price.
+          example:
+          - 0x2345678901bcdef2345678901bcdef234567890
+          items:
+            description: Wallet address
+            example: 0x2345678901bcdef2345678901bcdef234567890
+            type: string
+          type: array
+        redemption_approver:
+          description: List of addresses for the redemption approver role. Can approve
+            or reject investor redemption requests.
+          example:
+          - 0x3456789012cdef3456789012cdef34567890123
+          items:
+            description: Wallet address
+            example: 0x3456789012cdef3456789012cdef34567890123
+            type: string
+          type: array
+        settlement_operator:
+          description: List of addresses for the settlement operator role. Can execute
+            investment and redemption settlement operations.
+          example:
+          - 0x4567890123def4567890123def456789012345
+          items:
+            description: Wallet address
+            example: 0x4567890123def4567890123def456789012345
+            type: string
+          type: array
+        emergency_guardian:
+          description: List of addresses for the emergency guardian role. Can trigger
+            emergency actions such as pausing the fund.
+          example:
+          - 0x567890124ef567890124ef5678901234567
+          items:
+            description: Wallet address
+            example: 0x567890124ef567890124ef5678901234567
+            type: string
+          type: array
+      title: TokenizationERC20FundTokenPermissionParams
+      type: object
     TokenizationSolTokenPermissionParams:
       description: "Role-based permission settings for the Solana Token-2022 Program.\
         \ If not provided, all permissions will be granted to the issuing wallet by\
@@ -40175,6 +41113,7 @@ components:
       - SPLToken2022
       - ERC20Wrapper
       - SOLWrapper
+      - ERC20Fund
       example: ERC20
       type: string
     TokenizationOperationType:
@@ -40964,6 +41903,81 @@ components:
       - token_id
       - wallet_id
       type: object
+    get_reconciliation_ledger_200_response:
+      example:
+        data:
+        - transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          block_time: 1706866800000
+          wallet_id: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+          amount: "100.5"
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          token_id: ETH_USDC
+          chain_id: ETH
+          balance_after: "1000.5"
+          block_number: 21000000
+          transaction_hash: 0x11af4b844ff94b3fbef6e36b518da3ad4c5856fa686464524a876b463d129760
+        - transaction_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+          block_time: 1706866800000
+          wallet_id: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+          amount: "100.5"
+          address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+          token_id: ETH_USDC
+          chain_id: ETH
+          balance_after: "1000.5"
+          block_number: 21000000
+          transaction_hash: 0x11af4b844ff94b3fbef6e36b518da3ad4c5856fa686464524a876b463d129760
+      properties:
+        data:
+          description: "The list of reconciliation ledger entries. A single transaction\
+            \ may produce multiple entries (for example, an internal transfer), which\
+            \ share the same `transaction_id`."
+          items:
+            $ref: '#/components/schemas/ReconLedgerEntry'
+          type: array
+      required:
+      - data
+      type: object
+    list_reconciliation_statements_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - biz_date: 2026-07-28
+          wallet_id: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+          total_deposit: "500"
+          token_id: ETH_USDC
+          chain_id: ETH
+          deposit_count: 3
+          closing_balance: "1300.5"
+          withdrawal_count: 1
+          opening_balance: "1000.5"
+          total_withdrawal: "200"
+          status: Confirmed
+        - biz_date: 2026-07-28
+          wallet_id: d0b9e2b4-2f1a-4a1e-9c2a-0e02b2c3d479
+          total_deposit: "500"
+          token_id: ETH_USDC
+          chain_id: ETH
+          deposit_count: 3
+          closing_balance: "1300.5"
+          withdrawal_count: 1
+          opening_balance: "1000.5"
+          total_withdrawal: "200"
+          status: Confirmed
+      properties:
+        data:
+          description: The list of daily reconciliation statements.
+          items:
+            $ref: '#/components/schemas/ReconDailyStatement'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - data
+      - pagination
+      type: object
     list_supported_chains_200_response:
       example:
         pagination:
@@ -40998,6 +42012,23 @@ components:
           type: array
         pagination:
           $ref: '#/components/schemas/Pagination'
+      type: object
+    list_account_balances_200_response:
+      example:
+        data:
+        - address: 0x1c53e3f2f8b59e5d6b6b6b6b6b6b6b6b6b6b6b6b
+          token_id: ETH_USDT
+          balance: "1000.5"
+          block_number: 20000000
+        - address: 0x1c53e3f2f8b59e5d6b6b6b6b6b6b6b6b6b6b6b6b
+          token_id: ETH_USDT
+          balance: "1000.5"
+          block_number: 20000000
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/BalanceAtBlock'
+          type: array
       type: object
     list_supported_tokens_200_response:
       example:
@@ -42024,6 +43055,7 @@ components:
           after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
         data:
         - is_loop: false
+          transaction_process_type: AutoProcess
           chain_id: ETH
           confirmed_num: 12
           fee:
@@ -42131,6 +43163,7 @@ components:
             main_transaction_id: b0530b27-104f-4338-87de-de01500326ea
             request_id: gas_760a1955-e212-4dfb-a8d0-e66312a1a051
         - is_loop: false
+          transaction_process_type: AutoProcess
           chain_id: ETH
           confirmed_num: 12
           fee:
@@ -42248,9 +43281,8 @@ components:
     broadcast_signed_transactions_request:
       properties:
         transaction_ids:
-          description: "The transaction IDs of the signed transactions to be broadcast.\
-            \ You can retrieve the transactions corresponding to a staking activity\
-            \ by calling [Get staking activity details](https://www.cobo.com/developers/v2/api-references/stakings/get-staking-activity-details)."
+          description: |
+            The transaction IDs of the signed transactions to be broadcast. You can retrieve the transaction IDs by calling [List all transactions](https://www.cobo.com/developers/v2/api-references/transactions/list-all-transactions), or, for the transactions corresponding to a staking activity, by calling [Get staking activity details](https://www.cobo.com/developers/v2/api-references/stakings/get-staking-activity-details).
           items:
             example: f47ac10b-58cc-4372-a567-0e02b2c3d479
             type: string
@@ -42703,6 +43735,7 @@ components:
           event_id: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
           data:
             is_loop: false
+            transaction_process_type: AutoProcess
             chain_id: ETH
             confirmed_num: 12
             fee:
@@ -42819,6 +43852,7 @@ components:
           event_id: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
           data:
             is_loop: false
+            transaction_process_type: AutoProcess
             chain_id: ETH
             confirmed_num: 12
             fee:
@@ -42951,6 +43985,7 @@ components:
             event_id: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
             data:
               is_loop: false
+              transaction_process_type: AutoProcess
               chain_id: ETH
               confirmed_num: 12
               fee:
@@ -43076,6 +44111,7 @@ components:
             event_id: 8f2e919a-6a7b-4a9b-8c1a-4c0b3f5b8b1f
             data:
               is_loop: false
+              transaction_process_type: AutoProcess
               chain_id: ETH
               confirmed_num: 12
               fee:
@@ -43850,6 +44886,7 @@ components:
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           data:
             is_loop: false
+            transaction_process_type: AutoProcess
             chain_id: ETH
             confirmed_num: 12
             fee:
@@ -43967,6 +45004,7 @@ components:
           wallet_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
           data:
             is_loop: false
+            transaction_process_type: AutoProcess
             chain_id: ETH
             confirmed_num: 12
             fee:
@@ -44792,6 +45830,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -44822,6 +45861,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -44872,6 +45912,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -44902,6 +45943,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -45041,6 +46083,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -45071,6 +46114,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -45124,6 +46168,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -45154,6 +46199,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -45442,6 +46488,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -45472,6 +46519,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -45539,6 +46587,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -45569,6 +46618,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -45660,6 +46710,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -45690,6 +46741,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -45757,6 +46809,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -45787,6 +46840,7 @@ components:
                 destination_id: 123e4567-e89b-12d3-a456-426614174003
                 destination_name: Destination A
                 created_timestamp: 1744689600
+                source: Client
                 merchant_id: M1001
                 contact_address: "123 Main St, Anytown, USA"
                 email: destination@example.com
@@ -46055,6 +47109,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -46085,6 +47140,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -46172,6 +47228,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46202,6 +47259,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46239,6 +47297,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46269,6 +47328,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46314,6 +47374,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -46344,6 +47405,7 @@ components:
             destination_id: 123e4567-e89b-12d3-a456-426614174003
             destination_name: Destination A
             created_timestamp: 1744689600
+            source: Client
             merchant_id: M1001
             contact_address: "123 Main St, Anytown, USA"
             email: destination@example.com
@@ -46485,6 +47547,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46515,6 +47578,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46582,6 +47646,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46612,6 +47677,7 @@ components:
               destination_id: 123e4567-e89b-12d3-a456-426614174003
               destination_name: Destination A
               created_timestamp: 1744689600
+              source: Client
               merchant_id: M1001
               contact_address: "123 Main St, Anytown, USA"
               email: destination@example.com
@@ -46901,6 +47967,7 @@ components:
           destination_id: 123e4567-e89b-12d3-a456-426614174003
           destination_name: Destination A
           created_timestamp: 1744689600
+          source: Client
           merchant_id: M1001
           contact_address: "123 Main St, Anytown, USA"
           email: destination@example.com
@@ -46910,6 +47977,7 @@ components:
           destination_id: 123e4567-e89b-12d3-a456-426614174003
           destination_name: Destination A
           created_timestamp: 1744689600
+          source: Client
           merchant_id: M1001
           contact_address: "123 Main St, Anytown, USA"
           email: destination@example.com
@@ -47031,6 +48099,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -47067,6 +48136,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -47149,6 +48219,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -47178,6 +48249,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -47255,6 +48327,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -47307,6 +48380,7 @@ components:
           iban_code: "12345678901234567890"
           currency: USD
           further_credit: further credit sample
+          tag: VA
           account_alias: Main Payout Account
           payment_method: Swift
           swift_code: BOFAUS33
@@ -47615,6 +48689,76 @@ components:
       - recipient_info
       - request_id
       - source_account
+      type: object
+    list_bank_withdrawals_200_response:
+      example:
+        pagination:
+          before: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1
+          total_count: 10000
+          after: RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk
+        data:
+        - source_bank_account_id: dst_ba_1234567890
+          amount: "100.00"
+          target_bank_account_id: dst_ba_0987654321
+          currency: USD
+          remark: Withdraw funds from VA to payout bank account
+          created_timestamp: 1744689600
+          bank_withdrawal_id: 123e4567-e89b-12d3-a456-426614174000
+          request_id: 123e457-e89b-12d3-a456-426614174004
+          failed_reason: The target bank account is invalid.
+          status: Pending
+        - source_bank_account_id: dst_ba_1234567890
+          amount: "100.00"
+          target_bank_account_id: dst_ba_0987654321
+          currency: USD
+          remark: Withdraw funds from VA to payout bank account
+          created_timestamp: 1744689600
+          bank_withdrawal_id: 123e4567-e89b-12d3-a456-426614174000
+          request_id: 123e457-e89b-12d3-a456-426614174004
+          failed_reason: The target bank account is invalid.
+          status: Pending
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PaymentBankWithdrawal'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    create_bank_withdrawal_request:
+      properties:
+        request_id:
+          description: The request ID that is used to track a bank withdrawal request.
+            The request ID is provided by you and must be unique.
+          example: 123e457-e89b-12d3-a456-426614174004
+          type: string
+        source_bank_account_id:
+          description: |
+            The source bank account ID. The destination bank account must be tagged as `VA`. Cobo uses the mapped VA account to initiate the withdrawal.
+          example: dst_ba_1234567890
+          type: string
+        target_bank_account_id:
+          description: The target bank account ID that receives the bank withdrawal.
+          example: dst_ba_0987654321
+          type: string
+        currency:
+          description: The fiat currency of the bank withdrawal.
+          example: USD
+          type: string
+        amount:
+          description: The bank withdrawal amount.
+          example: "100.00"
+          type: string
+        remark:
+          description: The remark for the bank withdrawal.
+          example: Withdraw funds from VA to payout bank account
+          type: string
+      required:
+      - amount
+      - currency
+      - request_id
+      - source_bank_account_id
+      - target_bank_account_id
       type: object
     list_bulk_sends_200_response:
       example:
@@ -47975,7 +49119,6 @@ components:
           Web3: '#/components/schemas/TransactionCustodialWeb3WalletSource'
           Org-Controlled: '#/components/schemas/TransactionMPCWalletSource'
           User-Controlled: '#/components/schemas/TransactionMPCWalletSource'
-          Safe{Wallet}: '#/components/schemas/TransactionSmartContractSafeWalletSource'
           Main: '#/components/schemas/TransactionExchangeWalletSource'
           Sub: '#/components/schemas/TransactionExchangeWalletSource'
           DepositFromAddress: '#/components/schemas/TransactionDepositFromAddressSource'
@@ -47986,7 +49129,6 @@ components:
       - $ref: '#/components/schemas/TransactionCustodialAssetWalletSource'
       - $ref: '#/components/schemas/TransactionCustodialWeb3WalletSource'
       - $ref: '#/components/schemas/TransactionMPCWalletSource'
-      - $ref: '#/components/schemas/TransactionSmartContractSafeWalletSource'
       - $ref: '#/components/schemas/TransactionExchangeWalletSource'
       - $ref: '#/components/schemas/TransactionDepositFromAddressSource'
       - $ref: '#/components/schemas/TransactionDepositFromWalletSource'
@@ -48483,12 +49625,14 @@ components:
           SPLToken2022: '#/components/schemas/TokenizationSOLTokenParams'
           ERC20Wrapper: '#/components/schemas/TokenizationERC20WrappedTokenParams'
           SOLWrapper: '#/components/schemas/TokenizationSOLWrappedTokenParams'
+          ERC20Fund: '#/components/schemas/TokenizationERC20FundTokenParams'
         propertyName: standard
       oneOf:
       - $ref: '#/components/schemas/TokenizationERC20TokenParams'
       - $ref: '#/components/schemas/TokenizationERC20WrappedTokenParams'
       - $ref: '#/components/schemas/TokenizationSOLTokenParams'
       - $ref: '#/components/schemas/TokenizationSOLWrappedTokenParams'
+      - $ref: '#/components/schemas/TokenizationERC20FundTokenParams'
     TokenizationEstimateFeeRequest_operation_params:
       discriminator:
         mapping:

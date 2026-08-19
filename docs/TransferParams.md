@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **CategoryNames** | Pointer to **[]string** | The custom category for you to identify your transactions. | [optional] 
 **Description** | Pointer to **string** | The description of the transfer. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+**FeeLevel** | Pointer to [**FeeLevel**](FeeLevel.md) |  | [optional] 
 **TransactionProcessType** | Pointer to [**TransactionProcessType**](TransactionProcessType.md) |  | [optional] 
 **AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 
 **PreCheck** | Pointer to [**PreCheck**](PreCheck.md) |  | [optional] 
@@ -188,6 +189,31 @@ SetFee sets Fee field to given value.
 `func (o *TransferParams) HasFee() bool`
 
 HasFee returns a boolean if a field has been set.
+
+### GetFeeLevel
+
+`func (o *TransferParams) GetFeeLevel() FeeLevel`
+
+GetFeeLevel returns the FeeLevel field if non-nil, zero value otherwise.
+
+### GetFeeLevelOk
+
+`func (o *TransferParams) GetFeeLevelOk() (*FeeLevel, bool)`
+
+GetFeeLevelOk returns a tuple with the FeeLevel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeeLevel
+
+`func (o *TransferParams) SetFeeLevel(v FeeLevel)`
+
+SetFeeLevel sets FeeLevel field to given value.
+
+### HasFeeLevel
+
+`func (o *TransferParams) HasFeeLevel() bool`
+
+HasFeeLevel returns a boolean if a field has been set.
 
 ### GetTransactionProcessType
 

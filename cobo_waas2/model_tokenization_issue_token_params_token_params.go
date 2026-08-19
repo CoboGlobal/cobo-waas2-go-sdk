@@ -15,10 +15,18 @@ import (
 
 // TokenizationIssueTokenParamsTokenParams - struct for TokenizationIssueTokenParamsTokenParams
 type TokenizationIssueTokenParamsTokenParams struct {
+	TokenizationERC20FundTokenParams *TokenizationERC20FundTokenParams
 	TokenizationERC20TokenParams *TokenizationERC20TokenParams
 	TokenizationERC20WrappedTokenParams *TokenizationERC20WrappedTokenParams
 	TokenizationSOLTokenParams *TokenizationSOLTokenParams
 	TokenizationSOLWrappedTokenParams *TokenizationSOLWrappedTokenParams
+}
+
+// TokenizationERC20FundTokenParamsAsTokenizationIssueTokenParamsTokenParams is a convenience function that returns TokenizationERC20FundTokenParams wrapped in TokenizationIssueTokenParamsTokenParams
+func TokenizationERC20FundTokenParamsAsTokenizationIssueTokenParamsTokenParams(v *TokenizationERC20FundTokenParams) TokenizationIssueTokenParamsTokenParams {
+	return TokenizationIssueTokenParamsTokenParams{
+		TokenizationERC20FundTokenParams: v,
+	}
 }
 
 // TokenizationERC20TokenParamsAsTokenizationIssueTokenParamsTokenParams is a convenience function that returns TokenizationERC20TokenParams wrapped in TokenizationIssueTokenParamsTokenParams
@@ -72,6 +80,18 @@ func (dst *TokenizationIssueTokenParamsTokenParams) UnmarshalJSON(data []byte) e
 		}
 	}
 
+	// check if the discriminator value is 'ERC20Fund'
+	if jsonDict["standard"] == "ERC20Fund" {
+		// try to unmarshal JSON data into TokenizationERC20FundTokenParams
+		err = json.Unmarshal(data, &dst.TokenizationERC20FundTokenParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationERC20FundTokenParams, return on the first match
+		} else {
+			dst.TokenizationERC20FundTokenParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationERC20FundTokenParams: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'ERC20Wrapper'
 	if jsonDict["standard"] == "ERC20Wrapper" {
 		// try to unmarshal JSON data into TokenizationERC20WrappedTokenParams
@@ -105,6 +125,18 @@ func (dst *TokenizationIssueTokenParamsTokenParams) UnmarshalJSON(data []byte) e
 		} else {
 			dst.TokenizationSOLTokenParams = nil
 			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationSOLTokenParams: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'TokenizationERC20FundTokenParams'
+	if jsonDict["standard"] == "TokenizationERC20FundTokenParams" {
+		// try to unmarshal JSON data into TokenizationERC20FundTokenParams
+		err = json.Unmarshal(data, &dst.TokenizationERC20FundTokenParams)
+		if err == nil {
+			return nil // data stored in dst.TokenizationERC20FundTokenParams, return on the first match
+		} else {
+			dst.TokenizationERC20FundTokenParams = nil
+			return fmt.Errorf("failed to unmarshal TokenizationIssueTokenParamsTokenParams as TokenizationERC20FundTokenParams: %s", err.Error())
 		}
 	}
 
@@ -161,6 +193,10 @@ func (dst *TokenizationIssueTokenParamsTokenParams) UnmarshalJSON(data []byte) e
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src TokenizationIssueTokenParamsTokenParams) MarshalJSON() ([]byte, error) {
+	if src.TokenizationERC20FundTokenParams != nil {
+		return json.Marshal(&src.TokenizationERC20FundTokenParams)
+	}
+
 	if src.TokenizationERC20TokenParams != nil {
 		return json.Marshal(&src.TokenizationERC20TokenParams)
 	}
@@ -185,6 +221,10 @@ func (obj *TokenizationIssueTokenParamsTokenParams) GetActualInstance() (interfa
 	if obj == nil {
 		return nil
 	}
+	if obj.TokenizationERC20FundTokenParams != nil {
+		return obj.TokenizationERC20FundTokenParams
+	}
+
 	if obj.TokenizationERC20TokenParams != nil {
 		return obj.TokenizationERC20TokenParams
 	}

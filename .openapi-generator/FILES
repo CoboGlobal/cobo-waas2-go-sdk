@@ -16,6 +16,7 @@ api_o_auth.go
 api_organizations.go
 api_payment.go
 api_prime_broker.go
+api_reconciliation.go
 api_stakings.go
 api_swaps.go
 api_tokenization.go
@@ -24,7 +25,6 @@ api_travel_rule.go
 api_wallets.go
 api_wallets_exchange_wallet.go
 api_wallets_mpc_wallets.go
-api_wallets_smart_contract_wallets.go
 client.go
 configuration.go
 crypto/ed25519.go
@@ -101,6 +101,7 @@ docs/BabylonStakingExtra.md
 docs/BabylonStakingRegistration.md
 docs/BabylonValidator.md
 docs/Balance.md
+docs/BalanceAtBlock.md
 docs/BalanceUpdateInfo.md
 docs/BalanceUpdateInfoEventData.md
 docs/BankAccount.md
@@ -129,8 +130,6 @@ docs/CheckAddressChainsValidity200ResponseInner.md
 docs/CheckAddressValidity200Response.md
 docs/CheckAddressesValidity200ResponseInner.md
 docs/CheckLoopTransfers200ResponseInner.md
-docs/CoboSafeDelegate.md
-docs/CoboSafeDelegateType.md
 docs/CommissionFee.md
 docs/ComplianceAPI.md
 docs/ComplianceDispositionUpdateEventData.md
@@ -161,6 +160,7 @@ docs/CreateBabylonAirdropRegistration201Response.md
 docs/CreateBabylonAirdropRegistrationRequest.md
 docs/CreateBabylonStakingRegistration201Response.md
 docs/CreateBabylonStakingRegistrationRequest.md
+docs/CreateBankWithdrawalRequest.md
 docs/CreateBatchAllocationRequest.md
 docs/CreateBulkSendRequest.md
 docs/CreateBulkSendRequestPayoutParamsInner.md
@@ -191,11 +191,9 @@ docs/CreatePrimeBrokerAddressRequest.md
 docs/CreateRefundLinkRequest.md
 docs/CreateRefundRequest.md
 docs/CreateReportRequest.md
-docs/CreateSafeWalletParams.md
 docs/CreateSatoshiTestChallengeRequest.md
 docs/CreateSettlement.md
 docs/CreateSettlementRequestRequest.md
-docs/CreateSmartContractWalletParams.md
 docs/CreateStakeActivity.md
 docs/CreateStakeActivity201Response.md
 docs/CreateStakeActivityExtra.md
@@ -237,7 +235,9 @@ docs/DeleteWalletById201Response.md
 docs/Destination.md
 docs/DestinationBankAccount.md
 docs/DestinationBankAccountDetail.md
+docs/DestinationBankAccountTag.md
 docs/DestinationDetail.md
+docs/DestinationSource.md
 docs/DestinationType.md
 docs/DestinationWalletAddressDetail.md
 docs/DestinationWalletType.md
@@ -298,6 +298,7 @@ docs/FILBase.md
 docs/FILPrice.md
 docs/FeeAmount.md
 docs/FeeGasLimit.md
+docs/FeeLevel.md
 docs/FeeRate.md
 docs/FeeReserved.md
 docs/FeeStationAPI.md
@@ -322,6 +323,7 @@ docs/GetCounterpartyEntry200Response.md
 docs/GetDestinationEntry200Response.md
 docs/GetExchangeRate200Response.md
 docs/GetMaxTransferableValueWithFeeModelRequest.md
+docs/GetReconciliationLedger200Response.md
 docs/GetRefunds200Response.md
 docs/GetReports200Response.md
 docs/GetSettlementInfoByIds200Response.md
@@ -360,6 +362,7 @@ docs/KytScreeningsTransaction.md
 docs/KytScreeningsTransactionType.md
 docs/Link.md
 docs/LinkDisplayInfo.md
+docs/ListAccountBalances200Response.md
 docs/ListAddressBalancesByToken200Response.md
 docs/ListAddressBooks200Response.md
 docs/ListAddressVerifications200Response.md
@@ -373,6 +376,7 @@ docs/ListBabylonEligibleAirdrops200Response.md
 docs/ListBabylonEligibleStakings200Response.md
 docs/ListBabylonEligibleStakings200ResponseDataInner.md
 docs/ListBabylonStakingRegistrations200Response.md
+docs/ListBankWithdrawals200Response.md
 docs/ListBatchAllocations200Response.md
 docs/ListBulkSendItems200Response.md
 docs/ListBulkSends200Response.md
@@ -395,6 +399,7 @@ docs/ListPayerTransactions200Response.md
 docs/ListPaymentOrders200Response.md
 docs/ListPaymentWalletBalances200Response.md
 docs/ListPayouts200Response.md
+docs/ListReconciliationStatements200Response.md
 docs/ListSettlementDetails200Response.md
 docs/ListSettlementRequests200Response.md
 docs/ListStakingActivities200Response.md
@@ -426,7 +431,6 @@ docs/ListWebhookEvents200Response.md
 docs/LockUtxos201Response.md
 docs/LockUtxosRequest.md
 docs/LockUtxosRequestUtxosInner.md
-docs/MPCDelegate.md
 docs/MPCProject.md
 docs/MPCVault.md
 docs/MPCVaultEventData.md
@@ -478,6 +482,12 @@ docs/PaymentBalanceChange.md
 docs/PaymentBalanceChangeResponse.md
 docs/PaymentBalanceChangeSourceType.md
 docs/PaymentBalanceFlowDirection.md
+docs/PaymentBankAccountBalance.md
+docs/PaymentBankWithdrawal.md
+docs/PaymentBankWithdrawalDetail.md
+docs/PaymentBankWithdrawalEvent.md
+docs/PaymentBankWithdrawalStatus.md
+docs/PaymentBankWithdrawalTimelineItem.md
 docs/PaymentBridgeStatus.md
 docs/PaymentBulkSend.md
 docs/PaymentBulkSendEvent.md
@@ -524,6 +534,10 @@ docs/QueryApprovalStatement200Response.md
 docs/QueryGuardPubkey200Response.md
 docs/QueryGuardPubkey200ResponseAddressesInner.md
 docs/RawMessageSignDestination.md
+docs/ReconDailyStatement.md
+docs/ReconLedgerEntry.md
+docs/ReconStatementStatus.md
+docs/ReconciliationAPI.md
 docs/RefreshAddressBalancesByToken200Response.md
 docs/RefreshAddressBalancesByTokenRequest.md
 docs/RefreshPermissionTokenRequest.md
@@ -550,16 +564,6 @@ docs/RoleScopes.md
 docs/RootPubkey.md
 docs/SOLBase.md
 docs/SOLComputeUnit.md
-docs/SafeContractCallSource.md
-docs/SafeTransferSource.md
-docs/SafeTxDecodedData.md
-docs/SafeTxDecodedDataParameters.md
-docs/SafeTxExtraData.md
-docs/SafeTxSubTransaction.md
-docs/SafeWallet.md
-docs/SafeWalletDelegates.md
-docs/SafeWalletDelegatesContractCall.md
-docs/SafeWalletDelegatesTransfer.md
 docs/SatoshiTestCancelResult.md
 docs/SatoshiTestChallenge.md
 docs/SatoshiTestChallengeAction.md
@@ -576,10 +580,6 @@ docs/SettlementType.md
 docs/SignatureChallenge.md
 docs/SignatureDetail.md
 docs/SkipCheckType.md
-docs/SmartContractInitiator.md
-docs/SmartContractWalletInfo.md
-docs/SmartContractWalletOperationType.md
-docs/SmartContractWalletType.md
 docs/SolContractCallAccount.md
 docs/SolContractCallAddressLookupTableAccount.md
 docs/SolContractCallDestination.md
@@ -688,6 +688,8 @@ docs/TokenizationContractCallParams.md
 docs/TokenizationContractCallParamsData.md
 docs/TokenizationContractCallRequest.md
 docs/TokenizationContractCallType.md
+docs/TokenizationERC20FundTokenParams.md
+docs/TokenizationERC20FundTokenPermissionParams.md
 docs/TokenizationERC20TokenParams.md
 docs/TokenizationERC20TokenPermissionParams.md
 docs/TokenizationERC20WrappedTokenParams.md
@@ -799,6 +801,8 @@ docs/TransactionRawMessageSignDestination.md
 docs/TransactionRawTxInfo.md
 docs/TransactionRbf.md
 docs/TransactionRbfSource.md
+docs/TransactionReceipt.md
+docs/TransactionReceiptLog.md
 docs/TransactionReplacement.md
 docs/TransactionRequestEvmEip1559Fee.md
 docs/TransactionRequestEvmLegacyFee.md
@@ -815,7 +819,6 @@ docs/TransactionSOLFee.md
 docs/TransactionSelectedUtxo.md
 docs/TransactionSignatureResult.md
 docs/TransactionSigner.md
-docs/TransactionSmartContractSafeWalletSource.md
 docs/TransactionSolContractAccount.md
 docs/TransactionSolContractAddressLookupTableAccount.md
 docs/TransactionSolContractDestination.md
@@ -886,7 +889,6 @@ docs/UpdateMpcVaultByIdRequest.md
 docs/UpdateMpcWalletParams.md
 docs/UpdatePaymentOrderRequest.md
 docs/UpdateRefundByIdRequest.md
-docs/UpdateSmartContractWalletParams.md
 docs/UpdateTopUpAddress.md
 docs/UpdateWalletParams.md
 docs/UpdateWebhookEndpointByIdRequest.md
@@ -903,7 +905,6 @@ docs/WalletType.md
 docs/WalletsAPI.md
 docs/WalletsExchangeWalletAPI.md
 docs/WalletsMPCWalletsAPI.md
-docs/WalletsSmartContractWalletsAPI.md
 docs/WebhookEndpoint.md
 docs/WebhookEndpointStatus.md
 docs/WebhookEvent.md
@@ -979,6 +980,7 @@ model_babylon_staking_extra.go
 model_babylon_staking_registration.go
 model_babylon_validator.go
 model_balance.go
+model_balance_at_block.go
 model_balance_update_info.go
 model_balance_update_info_event_data.go
 model_bank_account.go
@@ -1009,8 +1011,6 @@ model_check_address_chains_validity_200_response_inner.go
 model_check_address_validity_200_response.go
 model_check_addresses_validity_200_response_inner.go
 model_check_loop_transfers_200_response_inner.go
-model_cobo_safe_delegate.go
-model_cobo_safe_delegate_type.go
 model_commission_fee.go
 model_compliance_disposition_update_event_data.go
 model_compliance_kya_screenings_update_event_data.go
@@ -1040,6 +1040,7 @@ model_create_babylon_airdrop_registration_201_response.go
 model_create_babylon_airdrop_registration_request.go
 model_create_babylon_staking_registration_201_response.go
 model_create_babylon_staking_registration_request.go
+model_create_bank_withdrawal_request.go
 model_create_batch_allocation_request.go
 model_create_bulk_send_request.go
 model_create_bulk_send_request_payout_params_inner.go
@@ -1070,11 +1071,9 @@ model_create_prime_broker_address_request.go
 model_create_refund_link_request.go
 model_create_refund_request.go
 model_create_report_request.go
-model_create_safe_wallet_params.go
 model_create_satoshi_test_challenge_request.go
 model_create_settlement.go
 model_create_settlement_request_request.go
-model_create_smart_contract_wallet_params.go
 model_create_stake_activity.go
 model_create_stake_activity_201_response.go
 model_create_stake_activity_extra.go
@@ -1116,7 +1115,9 @@ model_delete_wallet_by_id_201_response.go
 model_destination.go
 model_destination_bank_account.go
 model_destination_bank_account_detail.go
+model_destination_bank_account_tag.go
 model_destination_detail.go
+model_destination_source.go
 model_destination_type.go
 model_destination_wallet_address_detail.go
 model_destination_wallet_type.go
@@ -1173,6 +1174,7 @@ model_exchange_wallet_info.go
 model_extended_token_info.go
 model_fee_amount.go
 model_fee_gas_limit.go
+model_fee_level.go
 model_fee_rate.go
 model_fee_reserved.go
 model_fee_station_check_fee_station_usage.go
@@ -1198,6 +1200,7 @@ model_get_counterparty_entry_200_response.go
 model_get_destination_entry_200_response.go
 model_get_exchange_rate_200_response.go
 model_get_max_transferable_value_with_fee_model_request.go
+model_get_reconciliation_ledger_200_response.go
 model_get_refunds_200_response.go
 model_get_reports_200_response.go
 model_get_settlement_info_by_ids_200_response.go
@@ -1235,6 +1238,7 @@ model_kyt_screenings_transaction.go
 model_kyt_screenings_transaction_type.go
 model_link.go
 model_link_display_info.go
+model_list_account_balances_200_response.go
 model_list_address_balances_by_token_200_response.go
 model_list_address_books_200_response.go
 model_list_address_verifications200_response.go
@@ -1248,6 +1252,7 @@ model_list_babylon_eligible_airdrops_200_response.go
 model_list_babylon_eligible_stakings_200_response.go
 model_list_babylon_eligible_stakings_200_response_data_inner.go
 model_list_babylon_staking_registrations_200_response.go
+model_list_bank_withdrawals_200_response.go
 model_list_batch_allocations_200_response.go
 model_list_bulk_send_items_200_response.go
 model_list_bulk_sends_200_response.go
@@ -1270,6 +1275,7 @@ model_list_payer_transactions_200_response.go
 model_list_payment_orders_200_response.go
 model_list_payment_wallet_balances_200_response.go
 model_list_payouts_200_response.go
+model_list_reconciliation_statements_200_response.go
 model_list_settlement_details_200_response.go
 model_list_settlement_requests_200_response.go
 model_list_staking_activities_200_response.go
@@ -1323,7 +1329,6 @@ model_message_sign_params.go
 model_message_sign_source.go
 model_message_sign_source_type.go
 model_mpc_contract_call_source.go
-model_mpc_delegate.go
 model_mpc_message_sign_source.go
 model_mpc_project.go
 model_mpc_signing_group.go
@@ -1350,6 +1355,12 @@ model_payment_balance_change.go
 model_payment_balance_change_response.go
 model_payment_balance_change_source_type.go
 model_payment_balance_flow_direction.go
+model_payment_bank_account_balance.go
+model_payment_bank_withdrawal.go
+model_payment_bank_withdrawal_detail.go
+model_payment_bank_withdrawal_event.go
+model_payment_bank_withdrawal_status.go
+model_payment_bank_withdrawal_timeline_item.go
 model_payment_bridge_status.go
 model_payment_bulk_send.go
 model_payment_bulk_send_event.go
@@ -1395,6 +1406,9 @@ model_query_approval_statement_200_response.go
 model_query_guard_pubkey_200_response.go
 model_query_guard_pubkey_200_response_addresses_inner.go
 model_raw_message_sign_destination.go
+model_recon_daily_statement.go
+model_recon_ledger_entry.go
+model_recon_statement_status.go
 model_refresh_address_balances_by_token_200_response.go
 model_refresh_address_balances_by_token_request.go
 model_refresh_permission_token_request.go
@@ -1419,16 +1433,6 @@ model_revoke_approval_request_request.go
 model_role_detail.go
 model_role_scopes.go
 model_root_pubkey.go
-model_safe_contract_call_source.go
-model_safe_transfer_source.go
-model_safe_tx_decoded_data.go
-model_safe_tx_decoded_data_parameters.go
-model_safe_tx_extra_data.go
-model_safe_tx_sub_transaction.go
-model_safe_wallet.go
-model_safe_wallet_delegates.go
-model_safe_wallet_delegates_contract_call.go
-model_safe_wallet_delegates_transfer.go
 model_satoshi_test_cancel_result.go
 model_satoshi_test_challenge.go
 model_satoshi_test_challenge_action.go
@@ -1445,10 +1449,6 @@ model_settlement_type.go
 model_signature_challenge.go
 model_signature_detail.go
 model_skip_check_type.go
-model_smart_contract_initiator.go
-model_smart_contract_wallet_info.go
-model_smart_contract_wallet_operation_type.go
-model_smart_contract_wallet_type.go
 model_sol_base.go
 model_sol_compute_unit.go
 model_sol_contract_call_account.go
@@ -1516,6 +1516,8 @@ model_tokenization_contract_call_params.go
 model_tokenization_contract_call_params_data.go
 model_tokenization_contract_call_request.go
 model_tokenization_contract_call_type.go
+model_tokenization_erc20_fund_token_params.go
+model_tokenization_erc20_fund_token_permission_params.go
 model_tokenization_erc20_token_params.go
 model_tokenization_erc20_token_permission_params.go
 model_tokenization_erc20_wrapped_token_params.go
@@ -1627,6 +1629,8 @@ model_transaction_raw_message_sign_destination.go
 model_transaction_raw_tx_info.go
 model_transaction_rbf.go
 model_transaction_rbf_source.go
+model_transaction_receipt.go
+model_transaction_receipt_log.go
 model_transaction_replacement.go
 model_transaction_request_evm_eip1559_fee.go
 model_transaction_request_evm_legacy_fee.go
@@ -1642,7 +1646,6 @@ model_transaction_role_approval_detail.go
 model_transaction_selected_utxo.go
 model_transaction_signature_result.go
 model_transaction_signer.go
-model_transaction_smart_contract_safe_wallet_source.go
 model_transaction_sol_contract_account.go
 model_transaction_sol_contract_address_lookup_table_account.go
 model_transaction_sol_contract_destination.go
@@ -1751,7 +1754,6 @@ model_update_mpc_vault_by_id_request.go
 model_update_mpc_wallet_params.go
 model_update_payment_order_request.go
 model_update_refund_by_id_request.go
-model_update_smart_contract_wallet_params.go
 model_update_top_up_address.go
 model_update_wallet_params.go
 model_update_webhook_endpoint_by_id_request.go
@@ -1787,6 +1789,7 @@ test/api_o_auth_test.go
 test/api_organizations_test.go
 test/api_payment_test.go
 test/api_prime_broker_test.go
+test/api_reconciliation_test.go
 test/api_stakings_test.go
 test/api_swaps_test.go
 test/api_tokenization_test.go
@@ -1794,6 +1797,5 @@ test/api_transactions_test.go
 test/api_travel_rule_test.go
 test/api_wallets_exchange_wallet_test.go
 test/api_wallets_mpc_wallets_test.go
-test/api_wallets_smart_contract_wallets_test.go
 test/api_wallets_test.go
 utils.go

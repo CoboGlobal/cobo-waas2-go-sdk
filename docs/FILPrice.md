@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**GasPremium** | Pointer to **string** | An optional tip you can include to prioritize your transaction. The gas premium incentivizes miners to include your transaction sooner than those offering only the base fee. | [optional] 
-**GasFeeCap** | Pointer to **string** | The maximum gas price you are willing to pay per unit of gas. | [optional] 
+**GasPremium** | Pointer to **string** | An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee. | [optional] 
+**GasFeeCap** | Pointer to **string** | The gas_fee_cap is a user-defined limit on how much they are willing to pay per unit of gas. | [optional] 
 **GasLimit** | Pointer to **string** | The maximum amount of gas your transaction is allowed to consume. | [optional] 
 
 ## Methods

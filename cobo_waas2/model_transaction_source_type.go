@@ -22,7 +22,6 @@ const (
 	TRANSACTIONSOURCETYPE_WEB3 TransactionSourceType = "Web3"
 	TRANSACTIONSOURCETYPE_ORG_CONTROLLED TransactionSourceType = "Org-Controlled"
 	TRANSACTIONSOURCETYPE_USER_CONTROLLED TransactionSourceType = "User-Controlled"
-	TRANSACTIONSOURCETYPE_SAFEWALLET TransactionSourceType = "Safe{Wallet}"
 	TRANSACTIONSOURCETYPE_MAIN TransactionSourceType = "Main"
 	TRANSACTIONSOURCETYPE_SUB TransactionSourceType = "Sub"
 	TRANSACTIONSOURCETYPE_DEPOSIT_FROM_ADDRESS TransactionSourceType = "DepositFromAddress"
@@ -36,7 +35,6 @@ var AllowedTransactionSourceTypeEnumValues = []TransactionSourceType{
 	"Web3",
 	"Org-Controlled",
 	"User-Controlled",
-	"Safe{Wallet}",
 	"Main",
 	"Sub",
 	"DepositFromAddress",

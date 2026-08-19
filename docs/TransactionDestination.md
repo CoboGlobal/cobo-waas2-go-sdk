@@ -24,7 +24,6 @@ Name | Type | Description | Notes
 **Message** | **string** | The raw data of the message to be signed, encoded in Base64 format. | 
 **RawStructuredData** | Pointer to **string** | The raw structured data to be signed, formatted as a JSON string. | [optional] 
 **StructuredData** | **map[string]interface{}** | The structured data to be signed, formatted as a JSON object according to the EIP-712 standard. | 
-**SafeTxExtraData** | Pointer to [**SafeTxExtraData**](SafeTxExtraData.md) |  | [optional] 
 **MsgHash** | Pointer to **string** | Message hash to be signed, in hexadecimal format. | [optional] 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
 **WalletSubtype** | [**WalletSubtype**](WalletSubtype.md) |  | 
@@ -513,31 +512,6 @@ and a boolean to check if the value has been set.
 
 SetStructuredData sets StructuredData field to given value.
 
-
-### GetSafeTxExtraData
-
-`func (o *TransactionDestination) GetSafeTxExtraData() SafeTxExtraData`
-
-GetSafeTxExtraData returns the SafeTxExtraData field if non-nil, zero value otherwise.
-
-### GetSafeTxExtraDataOk
-
-`func (o *TransactionDestination) GetSafeTxExtraDataOk() (*SafeTxExtraData, bool)`
-
-GetSafeTxExtraDataOk returns a tuple with the SafeTxExtraData field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSafeTxExtraData
-
-`func (o *TransactionDestination) SetSafeTxExtraData(v SafeTxExtraData)`
-
-SetSafeTxExtraData sets SafeTxExtraData field to given value.
-
-### HasSafeTxExtraData
-
-`func (o *TransactionDestination) HasSafeTxExtraData() bool`
-
-HasSafeTxExtraData returns a boolean if a field has been set.
 
 ### GetMsgHash
 

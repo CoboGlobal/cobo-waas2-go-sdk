@@ -11,8 +11,6 @@
 
 * `MESSAGE_SIGN` (value: `"MessageSign"`)
 
-* `EXTERNAL_SAFE_TX` (value: `"ExternalSafeTx"`)
-
 * `STAKE` (value: `"Stake"`)
 
 * `UNSTAKE` (value: `"Unstake"`)

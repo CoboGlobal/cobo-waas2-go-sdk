@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// TransactionType The transaction type. Possible values include:    - `Deposit`: A deposit transaction.   - `Withdrawal`: A withdrawal transaction.   - `ContractCall`: A transaction that interacts with a smart contract.   - `MessageSign`: A transaction that signs a message.    - `ExternalSafeTx`: A transaction to a Smart Contract Wallet (Safe{Wallet}) that requires one or multiple signatures to be executed.   - `Stake`: A transaction that creates a staking request.   - `Unstake`: A transaction that creates a unstaking request. 
+// TransactionType The transaction type. Possible values include:   - `Deposit`: A deposit transaction.   - `Withdrawal`: A withdrawal transaction.   - `ContractCall`: A transaction that interacts with a smart contract.   - `MessageSign`: A transaction that signs a message.   - `Stake`: A transaction that creates a staking request.   - `Unstake`: A transaction that creates a unstaking request. 
 type TransactionType string
 
 // List of TransactionType
@@ -22,7 +22,6 @@ const (
 	TRANSACTIONTYPE_WITHDRAWAL TransactionType = "Withdrawal"
 	TRANSACTIONTYPE_CONTRACT_CALL TransactionType = "ContractCall"
 	TRANSACTIONTYPE_MESSAGE_SIGN TransactionType = "MessageSign"
-	TRANSACTIONTYPE_EXTERNAL_SAFE_TX TransactionType = "ExternalSafeTx"
 	TRANSACTIONTYPE_STAKE TransactionType = "Stake"
 	TRANSACTIONTYPE_UNSTAKE TransactionType = "Unstake"
 )
@@ -33,7 +32,6 @@ var AllowedTransactionTypeEnumValues = []TransactionType{
 	"Withdrawal",
 	"ContractCall",
 	"MessageSign",
-	"ExternalSafeTx",
 	"Stake",
 	"Unstake",
 }

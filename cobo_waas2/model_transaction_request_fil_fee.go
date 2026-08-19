@@ -19,9 +19,9 @@ var _ MappedNullable = &TransactionRequestFILFee{}
 
 // TransactionRequestFILFee The preset properties to limit transaction fee.  For more information about the FIL fee model, see [Fee models](https://www.cobo.com/developers/v2/guides/transactions/estimate-fees#fee-models).  You can specify the gas fee cap, gas premium, and gas limit to control fee behavior and prioritization.  Switch between the tabs to display the properties for different transaction fee models. 
 type TransactionRequestFILFee struct {
-	// An optional tip you can include to prioritize your transaction. The gas premium incentivizes miners to include your transaction sooner than those offering only the base fee.
+	// An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee.
 	GasPremium string `json:"gas_premium"`
-	// The maximum gas price you are willing to pay per unit of gas.
+	// The gas_fee_cap is a user-defined limit on how much they are willing to pay per unit of gas.
 	GasFeeCap string `json:"gas_fee_cap"`
 	// The maximum amount of gas your transaction is allowed to consume.
 	GasLimit *string `json:"gas_limit,omitempty"`

@@ -54,6 +54,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService CreateBankWithdrawal", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.CreateBankWithdrawal(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService CreateBatchAllocation", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -352,6 +364,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService GetBankWithdrawalById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var bankWithdrawalId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetBankWithdrawalById(ctx, bankWithdrawalId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService GetBatchAllocationById", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -458,6 +484,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var merchantId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.GetMerchantKyc(ctx, merchantId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService GetPaymentBankAccountBalance", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var bankAccountId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetPaymentBankAccountBalance(ctx, bankAccountId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -598,6 +638,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.ListBalanceChanges(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService ListBankWithdrawals", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListBankWithdrawals(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

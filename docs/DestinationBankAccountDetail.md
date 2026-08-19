@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **DestinationContactAddress** | Pointer to **string** | The contact address of the destination. | [optional] 
 **DestinationMerchantId** | Pointer to **string** | The ID of the merchant linked to the destination. | [optional] 
 **BankAccountId** | **string** | The destination bank account ID. | 
+**Tag** | Pointer to [**NullableDestinationBankAccountTag**](DestinationBankAccountTag.md) |  | [optional] 
 **AccountAlias** | **string** | The alias of the bank account. | 
 **AccountNumber** | **string** | The bank account number. | 
 **SwiftCode** | **string** | The SWIFT or BIC code of the bank. | 
@@ -237,6 +238,41 @@ and a boolean to check if the value has been set.
 SetBankAccountId sets BankAccountId field to given value.
 
 
+### GetTag
+
+`func (o *DestinationBankAccountDetail) GetTag() DestinationBankAccountTag`
+
+GetTag returns the Tag field if non-nil, zero value otherwise.
+
+### GetTagOk
+
+`func (o *DestinationBankAccountDetail) GetTagOk() (*DestinationBankAccountTag, bool)`
+
+GetTagOk returns a tuple with the Tag field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTag
+
+`func (o *DestinationBankAccountDetail) SetTag(v DestinationBankAccountTag)`
+
+SetTag sets Tag field to given value.
+
+### HasTag
+
+`func (o *DestinationBankAccountDetail) HasTag() bool`
+
+HasTag returns a boolean if a field has been set.
+
+### SetTagNil
+
+`func (o *DestinationBankAccountDetail) SetTagNil(b bool)`
+
+ SetTagNil sets the value for Tag to be an explicit nil
+
+### UnsetTag
+`func (o *DestinationBankAccountDetail) UnsetTag()`
+
+UnsetTag ensures that no value is present for Tag, not even an explicit nil
 ### GetAccountAlias
 
 `func (o *DestinationBankAccountDetail) GetAccountAlias() string`

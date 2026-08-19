@@ -19,7 +19,6 @@ type TransferSource struct {
 	CustodialWeb3TransferSource *CustodialWeb3TransferSource
 	ExchangeTransferSource *ExchangeTransferSource
 	MpcTransferSource *MpcTransferSource
-	SafeTransferSource *SafeTransferSource
 }
 
 // CustodialTransferSourceAsTransferSource is a convenience function that returns CustodialTransferSource wrapped in TransferSource
@@ -47,13 +46,6 @@ func ExchangeTransferSourceAsTransferSource(v *ExchangeTransferSource) TransferS
 func MpcTransferSourceAsTransferSource(v *MpcTransferSource) TransferSource {
 	return TransferSource{
 		MpcTransferSource: v,
-	}
-}
-
-// SafeTransferSourceAsTransferSource is a convenience function that returns SafeTransferSource wrapped in TransferSource
-func SafeTransferSourceAsTransferSource(v *SafeTransferSource) TransferSource {
-	return TransferSource{
-		SafeTransferSource: v,
 	}
 }
 
@@ -101,18 +93,6 @@ func (dst *TransferSource) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.MpcTransferSource = nil
 			return fmt.Errorf("failed to unmarshal TransferSource as MpcTransferSource: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'Safe{Wallet}'
-	if jsonDict["source_type"] == "Safe{Wallet}" {
-		// try to unmarshal JSON data into SafeTransferSource
-		err = json.Unmarshal(data, &dst.SafeTransferSource)
-		if err == nil {
-			return nil // data stored in dst.SafeTransferSource, return on the first match
-		} else {
-			dst.SafeTransferSource = nil
-			return fmt.Errorf("failed to unmarshal TransferSource as SafeTransferSource: %s", err.Error())
 		}
 	}
 
@@ -200,18 +180,6 @@ func (dst *TransferSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'SafeTransferSource'
-	if jsonDict["source_type"] == "SafeTransferSource" {
-		// try to unmarshal JSON data into SafeTransferSource
-		err = json.Unmarshal(data, &dst.SafeTransferSource)
-		if err == nil {
-			return nil // data stored in dst.SafeTransferSource, return on the first match
-		} else {
-			dst.SafeTransferSource = nil
-			return fmt.Errorf("failed to unmarshal TransferSource as SafeTransferSource: %s", err.Error())
-		}
-	}
-
 	return nil
 }
 
@@ -231,10 +199,6 @@ func (src TransferSource) MarshalJSON() ([]byte, error) {
 
 	if src.MpcTransferSource != nil {
 		return json.Marshal(&src.MpcTransferSource)
-	}
-
-	if src.SafeTransferSource != nil {
-		return json.Marshal(&src.SafeTransferSource)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -259,10 +223,6 @@ func (obj *TransferSource) GetActualInstance() (interface{}) {
 
 	if obj.MpcTransferSource != nil {
 		return obj.MpcTransferSource
-	}
-
-	if obj.SafeTransferSource != nil {
-		return obj.SafeTransferSource
 	}
 
 	// all schemas are nil

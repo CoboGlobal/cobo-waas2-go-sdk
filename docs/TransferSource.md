@@ -6,18 +6,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**WalletSubtype**](WalletSubtype.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**Address** | **string** | The wallet address. | 
+**Address** | Pointer to **string** | Indicates the wallet address to be used as the source of funds. - For UTXO-based chains: both &#x60;address&#x60; and &#x60;included_utxos&#x60; are optional. If both &#x60;address&#x60; and &#x60;included_utxos&#x60; are provided, the UTXOs must belong to the specified address. If neither &#x60;address&#x60; nor &#x60;included_utxos&#x60; is provided, the system will select UTXOs from the wallet associated with &#x60;wallet_id&#x60;. - For account-based chains: You need to provide &#x60;address&#x60; otherwise the token transfer will fail. However, when estimating fees for a transfer, &#x60;address&#x60; is not required.  For detailed rules on &#x60;address&#x60; and &#x60;included_utxos&#x60; in both regular and RBF transactions, see [Address and included_utxos usage](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations#address-and-included-utxos-usage).  | [optional] 
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **MpcUsedKeyShareHolderGroup** | Pointer to [**MpcSigningGroup**](MpcSigningGroup.md) |  | [optional] 
-**Delegate** | [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | 
 **TradingAccountType** | **string** | The trading account type. | 
 
 ## Methods
 
 ### NewTransferSource
 
-`func NewTransferSource(sourceType WalletSubtype, walletId string, address string, delegate CoboSafeDelegate, tradingAccountType string, ) *TransferSource`
+`func NewTransferSource(sourceType WalletSubtype, walletId string, tradingAccountType string, ) *TransferSource`
 
 NewTransferSource instantiates a new TransferSource object
 This constructor will assign default values to properties that have it defined,
@@ -91,6 +90,11 @@ and a boolean to check if the value has been set.
 
 SetAddress sets Address field to given value.
 
+### HasAddress
+
+`func (o *TransferSource) HasAddress() bool`
+
+HasAddress returns a boolean if a field has been set.
 
 ### GetIncludedUtxos
 
@@ -166,26 +170,6 @@ SetMpcUsedKeyShareHolderGroup sets MpcUsedKeyShareHolderGroup field to given val
 `func (o *TransferSource) HasMpcUsedKeyShareHolderGroup() bool`
 
 HasMpcUsedKeyShareHolderGroup returns a boolean if a field has been set.
-
-### GetDelegate
-
-`func (o *TransferSource) GetDelegate() CoboSafeDelegate`
-
-GetDelegate returns the Delegate field if non-nil, zero value otherwise.
-
-### GetDelegateOk
-
-`func (o *TransferSource) GetDelegateOk() (*CoboSafeDelegate, bool)`
-
-GetDelegateOk returns a tuple with the Delegate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDelegate
-
-`func (o *TransferSource) SetDelegate(v CoboSafeDelegate)`
-
-SetDelegate sets Delegate field to given value.
-
 
 ### GetTradingAccountType
 

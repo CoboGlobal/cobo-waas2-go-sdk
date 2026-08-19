@@ -85,6 +85,8 @@
 
 * `PAYMENT_PAYOUT_STATUS_UPDATED` (value: `"payment.payout.status.updated"`)
 
+* `PAYMENT_BANK_WITHDRAWAL_STATUS_UPDATED` (value: `"payment.bank_withdrawal.status.updated"`)
+
 * `PAYMENT_ADDRESS_UPDATED` (value: `"payment.address.updated"`)
 
 * `PAYMENT_SUBSCRIPTION_STATUS_UPDATED` (value: `"payment.subscription.status.updated"`)

@@ -24,6 +24,7 @@ type DestinationDetail struct {
 	DestinationType DestinationType `json:"destination_type"`
 	// The destination name.
 	DestinationName string `json:"destination_name"`
+	Source *DestinationSource `json:"source,omitempty"`
 	// The country of the destination, in ISO 3166-1 alpha-3 format.
 	Country *string `json:"country,omitempty"`
 	// The email of the destination.
@@ -136,6 +137,38 @@ func (o *DestinationDetail) GetDestinationNameOk() (*string, bool) {
 // SetDestinationName sets field value
 func (o *DestinationDetail) SetDestinationName(v string) {
 	o.DestinationName = v
+}
+
+// GetSource returns the Source field value if set, zero value otherwise.
+func (o *DestinationDetail) GetSource() DestinationSource {
+	if o == nil || IsNil(o.Source) {
+		var ret DestinationSource
+		return ret
+	}
+	return *o.Source
+}
+
+// GetSourceOk returns a tuple with the Source field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationDetail) GetSourceOk() (*DestinationSource, bool) {
+	if o == nil || IsNil(o.Source) {
+		return nil, false
+	}
+	return o.Source, true
+}
+
+// HasSource returns a boolean if a field has been set.
+func (o *DestinationDetail) HasSource() bool {
+	if o != nil && !IsNil(o.Source) {
+		return true
+	}
+
+	return false
+}
+
+// SetSource gets a reference to the given DestinationSource and assigns it to the Source field.
+func (o *DestinationDetail) SetSource(v DestinationSource) {
+	o.Source = &v
 }
 
 // GetCountry returns the Country field value if set, zero value otherwise.
@@ -391,6 +424,9 @@ func (o DestinationDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize["destination_id"] = o.DestinationId
 	toSerialize["destination_type"] = o.DestinationType
 	toSerialize["destination_name"] = o.DestinationName
+	if !IsNil(o.Source) {
+		toSerialize["source"] = o.Source
+	}
 	if !IsNil(o.Country) {
 		toSerialize["country"] = o.Country
 	}

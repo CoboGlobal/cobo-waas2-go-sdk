@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FeeType** | [**FeeType**](FeeType.md) |  | [default to FEETYPE_EVM_EIP_1559]
-**TokenId** | Pointer to **string** | The token used to pay the transaction fee. | [optional] 
+**TokenId** | Pointer to **string** | The token ID of the transaction fee. | [optional] 
 **EffectiveGasPrice** | Pointer to **string** | The gas price (gas fee per gas unit) on the chain, in wei. The gas price represents the amount of ETH that must be paid to validators for processing transactions. | [optional] 
 **FeeUsed** | Pointer to **string** | The actually charged transaction fee. | [optional] 
 **EstimatedFeeUsed** | Pointer to **string** | The estimated transaction fee. | [optional] 
@@ -20,9 +20,9 @@ Name | Type | Description | Notes
 **RentAmount** | Pointer to **string** | The one-time rent required to activate a Solana token Associated Token Account (ATA) before the token can be received or used. **This field is reserved for future use and is currently not populated.** | [optional] 
 **ComputeUnitPrice** | Pointer to **string** | The price paid per compute unit. This value determines the priority fee for the transaction, allowing you to increase inclusion probability in congested conditions. | [optional] 
 **ComputeUnitLimit** | Pointer to **string** | The maximum number of compute units your transaction is allowed to consume. It sets an upper bound on computational resource usage to prevent overload. | [optional] 
-**GasBase** | Pointer to **string** | The minimum fee required for a transaction to be included in a block. The base fee is dynamically adjusted based on network congestion to maintain target block utilization. It is burned rather than paid to miners, reducing the total Filecoin supply over time. | [optional] 
-**GasPremium** | Pointer to **string** | An optional tip you can include to prioritize your transaction. The gas premium incentivizes miners to include your transaction sooner than those offering only the base fee. | [optional] 
-**GasFeeCap** | Pointer to **string** | The maximum gas price you are willing to pay per unit of gas. | [optional] 
+**GasBase** | Pointer to **string** | This is the minimum fee required to include a transaction in a block. It is determined by the network&#39;s congestion level, which adjusts to maintain a target block utilization rate. The base fee is burned, reducing the total supply of Filecoin over time. | [optional] 
+**GasPremium** | Pointer to **string** | An optional additional fee that users can include to prioritize their transactions over others. It acts like a tip to incentivize miners to select and include your transaction over transactions with only the base fee. | [optional] 
+**GasFeeCap** | Pointer to **string** | The gas_fee_cap is a user-defined limit on how much they are willing to pay per unit of gas. | [optional] 
 
 ## Methods
 

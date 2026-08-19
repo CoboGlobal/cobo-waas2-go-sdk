@@ -156,6 +156,21 @@ func Test_cobo_waas2_TransactionsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test TransactionsAPIService GetTransactionReceipt", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var chainId string
+		var txHash string
+
+		resp, httpRes, err := apiClient.TransactionsAPI.GetTransactionReceipt(ctx, chainId, txHash).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test TransactionsAPIService ListApprovalDetails", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

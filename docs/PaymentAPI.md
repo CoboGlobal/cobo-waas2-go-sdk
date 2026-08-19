@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**BatchGetExchangeRates**](PaymentAPI.md#BatchGetExchangeRates) | **Get** /payments/exchange_rates | Batch get exchange rates
 [**CancelRefundById**](PaymentAPI.md#CancelRefundById) | **Put** /payments/refunds/{refund_id}/cancel | Cancel refund order
+[**CreateBankWithdrawal**](PaymentAPI.md#CreateBankWithdrawal) | **Post** /payments/bank_withdrawals | Create bank withdrawal
 [**CreateBatchAllocation**](PaymentAPI.md#CreateBatchAllocation) | **Post** /payments/batch_allocations | Create batch allocation
 [**CreateBulkSend**](PaymentAPI.md#CreateBulkSend) | **Post** /payments/bulk_sends | Create bulk send
 [**CreateCounterparty**](PaymentAPI.md#CreateCounterparty) | **Post** /payments/counterparty | Create counterparty
@@ -30,6 +31,7 @@ Method | HTTP request | Description
 [**DeleteDestinationById**](PaymentAPI.md#DeleteDestinationById) | **Delete** /payments/destination/{destination_id} | Delete destination
 [**DeleteDestinationEntry**](PaymentAPI.md#DeleteDestinationEntry) | **Delete** /payments/destination_entry/{destination_entry_id} | Delete destination entry
 [**GetAvailableAllocationAmount**](PaymentAPI.md#GetAvailableAllocationAmount) | **Get** /payments/allocation_amount | Get available allocation amount
+[**GetBankWithdrawalById**](PaymentAPI.md#GetBankWithdrawalById) | **Get** /payments/bank_withdrawals/{bank_withdrawal_id} | Get bank withdrawal information
 [**GetBatchAllocationById**](PaymentAPI.md#GetBatchAllocationById) | **Get** /payments/batch_allocations/{batch_allocation_id} | Get batch allocation information
 [**GetBulkSendById**](PaymentAPI.md#GetBulkSendById) | **Get** /payments/bulk_sends/{bulk_send_id} | Get bulk send information
 [**GetCounterparty**](PaymentAPI.md#GetCounterparty) | **Get** /payments/counterparty/{counterparty_id} | Get counterparty information
@@ -38,6 +40,7 @@ Method | HTTP request | Description
 [**GetDestinationEntry**](PaymentAPI.md#GetDestinationEntry) | **Get** /payments/destination_entry/{destination_entry_id} | Get destination entry information
 [**GetExchangeRate**](PaymentAPI.md#GetExchangeRate) | **Get** /payments/exchange_rates/{token_id}/{currency} | Get exchange rate
 [**GetMerchantKyc**](PaymentAPI.md#GetMerchantKyc) | **Get** /payments/merchants/{merchant_id}/kyc | Get merchant KYC
+[**GetPaymentBankAccountBalance**](PaymentAPI.md#GetPaymentBankAccountBalance) | **Get** /payments/balance/bank_accounts/{bank_account_id} | Get bank account balance
 [**GetPaymentOrderDetailById**](PaymentAPI.md#GetPaymentOrderDetailById) | **Get** /payments/orders/{order_id} | Get pay-in order information
 [**GetPayoutById**](PaymentAPI.md#GetPayoutById) | **Get** /payments/payouts/{payout_id} | Get payout information
 [**GetPspBalance**](PaymentAPI.md#GetPspBalance) | **Get** /payments/balance/psp | Get developer balance
@@ -49,6 +52,7 @@ Method | HTTP request | Description
 [**GetTopUpAddress**](PaymentAPI.md#GetTopUpAddress) | **Get** /payments/topup/address | Create/Get top-up address
 [**ListAllocationItems**](PaymentAPI.md#ListAllocationItems) | **Get** /payments/allocation_items | List all allocation items
 [**ListBalanceChanges**](PaymentAPI.md#ListBalanceChanges) | **Get** /payments/balance_changes | List balance changes
+[**ListBankWithdrawals**](PaymentAPI.md#ListBankWithdrawals) | **Get** /payments/bank_withdrawals | List bank withdrawals
 [**ListBatchAllocations**](PaymentAPI.md#ListBatchAllocations) | **Get** /payments/batch_allocations | List all batch allocations
 [**ListBulkSendItems**](PaymentAPI.md#ListBulkSendItems) | **Get** /payments/bulk_sends/{bulk_send_id}/items | List bulk send items
 [**ListBulkSends**](PaymentAPI.md#ListBulkSends) | **Get** /payments/bulk_sends | List bulk sends
@@ -233,6 +237,82 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateBankWithdrawal
+
+> PaymentBankWithdrawal CreateBankWithdrawal(ctx).CreateBankWithdrawalRequest(createBankWithdrawalRequest).Execute()
+
+Create bank withdrawal
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createBankWithdrawalRequest := *coboWaas2.NewCreateBankWithdrawalRequest("123e457-e89b-12d3-a456-426614174004", "dst_ba_1234567890", "dst_ba_0987654321", "USD", "100.00")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateBankWithdrawal(ctx).CreateBankWithdrawalRequest(createBankWithdrawalRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateBankWithdrawal``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateBankWithdrawal`: PaymentBankWithdrawal
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateBankWithdrawal`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateBankWithdrawalRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createBankWithdrawalRequest** | [**CreateBankWithdrawalRequest**](CreateBankWithdrawalRequest.md) | The request body to create a bank withdrawal. | 
+
+### Return type
+
+[**PaymentBankWithdrawal**](PaymentBankWithdrawal.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -2091,6 +2171,86 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetBankWithdrawalById
+
+> PaymentBankWithdrawalDetail GetBankWithdrawalById(ctx, bankWithdrawalId).Execute()
+
+Get bank withdrawal information
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	bankWithdrawalId := "123e4567-e89b-12d3-a456-426614174000"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetBankWithdrawalById(ctx, bankWithdrawalId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetBankWithdrawalById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetBankWithdrawalById`: PaymentBankWithdrawalDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetBankWithdrawalById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**bankWithdrawalId** | **string** | The bank withdrawal ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetBankWithdrawalByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**PaymentBankWithdrawalDetail**](PaymentBankWithdrawalDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetBatchAllocationById
 
 > BatchAllocationDetail GetBatchAllocationById(ctx, batchAllocationId).Execute()
@@ -2723,6 +2883,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**MerchantKycSubmission**](MerchantKycSubmission.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetPaymentBankAccountBalance
+
+> PaymentBankAccountBalance GetPaymentBankAccountBalance(ctx, bankAccountId).Execute()
+
+Get bank account balance
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	bankAccountId := "123e4567-e89b-12d3-a456-426614174003"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetPaymentBankAccountBalance(ctx, bankAccountId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetPaymentBankAccountBalance``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetPaymentBankAccountBalance`: PaymentBankAccountBalance
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetPaymentBankAccountBalance`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**bankAccountId** | **string** | The destination bank account ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetPaymentBankAccountBalanceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**PaymentBankAccountBalance**](PaymentBankAccountBalance.md)
 
 ### Authorization
 
@@ -3646,6 +3886,90 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListBankWithdrawals
+
+> ListBankWithdrawals200Response ListBankWithdrawals(ctx).Limit(limit).Before(before).After(after).RequestId(requestId).Status(status).Execute()
+
+List bank withdrawals
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	requestId := "random_request_id"
+	status := coboWaas2.PaymentBankWithdrawalStatus("Pending")
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListBankWithdrawals(ctx).Limit(limit).Before(before).After(after).RequestId(requestId).Status(status).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListBankWithdrawals``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListBankWithdrawals`: ListBankWithdrawals200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListBankWithdrawals`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListBankWithdrawalsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
+ **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
+ **requestId** | **string** | The request ID. | 
+ **status** | [**PaymentBankWithdrawalStatus**](PaymentBankWithdrawalStatus.md) | Filter by bank withdrawal status. | 
+
+### Return type
+
+[**ListBankWithdrawals200Response**](ListBankWithdrawals200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListBatchAllocations
 
 > ListBatchAllocations200Response ListBatchAllocations(ctx).Limit(limit).Before(before).After(after).RequestId(requestId).Execute()
@@ -4148,7 +4472,7 @@ Name | Type | Description  | Notes
 
 ## ListDestinationEntries
 
-> ListDestinationEntries200Response ListDestinationEntries(ctx).EntryType(entryType).Limit(limit).Before(before).After(after).DestinationId(destinationId).ChainIds(chainIds).WalletAddress(walletAddress).Keyword(keyword).BankAccountStatus(bankAccountStatus).Execute()
+> ListDestinationEntries200Response ListDestinationEntries(ctx).EntryType(entryType).Limit(limit).Before(before).After(after).DestinationId(destinationId).ChainIds(chainIds).WalletAddress(walletAddress).Keyword(keyword).BankAccountStatus(bankAccountStatus).BankAccountTag(bankAccountTag).Execute()
 
 List destination entries
 
@@ -4177,6 +4501,7 @@ func main() {
 	walletAddress := "0x1234567890abcdef..."
 	keyword := "keyword"
 	bankAccountStatus := coboWaas2.BankAccountStatus("Pending")
+	bankAccountTag := coboWaas2.DestinationBankAccountTag("VA")
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -4189,7 +4514,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.PaymentAPI.ListDestinationEntries(ctx).EntryType(entryType).Limit(limit).Before(before).After(after).DestinationId(destinationId).ChainIds(chainIds).WalletAddress(walletAddress).Keyword(keyword).BankAccountStatus(bankAccountStatus).Execute()
+	resp, r, err := apiClient.PaymentAPI.ListDestinationEntries(ctx).EntryType(entryType).Limit(limit).Before(before).After(after).DestinationId(destinationId).ChainIds(chainIds).WalletAddress(walletAddress).Keyword(keyword).BankAccountStatus(bankAccountStatus).BankAccountTag(bankAccountTag).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListDestinationEntries``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -4219,6 +4544,7 @@ Name | Type | Description  | Notes
  **walletAddress** | **string** | The wallet address. | 
  **keyword** | **string** | A search term for performing fuzzy matches in the search query. | 
  **bankAccountStatus** | [**BankAccountStatus**](BankAccountStatus.md) | BankAccountStatus defines the status of the bank account: - &#x60;Pending&#x60;: The bank account is pending verification by Cobo. - &#x60;Approved&#x60;: The bank account has been approved by Cobo. - &#x60;Rejected&#x60;: The bank account has been rejected by Cobo.  | 
+ **bankAccountTag** | [**DestinationBankAccountTag**](DestinationBankAccountTag.md) | Filter destination bank accounts by tag.  | 
 
 ### Return type
 
@@ -5330,7 +5656,7 @@ import (
 
 func main() {
 	merchantId := "M1001"
-	submitMerchantKyc := *coboWaas2.NewSubmitMerchantKyc("merchant@example.com", "+85212345678", coboWaas2.MerchantKycMerchantType("B2B"), "HKG", []string{"Industry_example"}, *coboWaas2.NewMerchantKycCompanyInfo(coboWaas2.MerchantKycCompanyType("Corporation"), false, []coboWaas2.MerchantKycCompanyAttachment{*coboWaas2.NewMerchantKycCompanyAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/business_registration.pdf", coboWaas2.MerchantKycCompanyAttachmentFileType("BI"))}, *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street"), "12345678", "示例有限公司", "Example Limited", "2020-01-01", "2020-01-01", "2020-01-01", *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street"), *coboWaas2.NewMerchantKycPersonInfo("张三", "Zhang San", "110101199001011234", "19900101", "20180101", "20280101", []coboWaas2.MerchantKycPersonAttachment{*coboWaas2.NewMerchantKycPersonAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg", coboWaas2.MerchantKycPersonAttachmentFileType("PRC_ID_Emblem"))}, *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street")), []coboWaas2.MerchantKycPersonInfo{*coboWaas2.NewMerchantKycPersonInfo("张三", "Zhang San", "110101199001011234", "19900101", "20180101", "20280101", []coboWaas2.MerchantKycPersonAttachment{*coboWaas2.NewMerchantKycPersonAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg", coboWaas2.MerchantKycPersonAttachmentFileType("PRC_ID_Emblem"))}, )}))
+	submitMerchantKyc := *coboWaas2.NewSubmitMerchantKyc("merchant@example.com", "+85212345678", coboWaas2.MerchantKycMerchantType("B2B"), "HKG", []string{"Industry_example"}, *coboWaas2.NewMerchantKycCompanyInfo(coboWaas2.MerchantKycCompanyType("Corporation"), false, []coboWaas2.MerchantKycCompanyAttachment{*coboWaas2.NewMerchantKycCompanyAttachment("f47ac10b-58cc-4372-a567-0e02b2c3d479", coboWaas2.MerchantKycCompanyAttachmentFileType("BI"))}, *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street"), "12345678", "示例有限公司", "Example Limited", "20290322", "20290322", "20290322", *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street"), *coboWaas2.NewMerchantKycPersonInfo("张三", "Zhang San", "110101199001011234", "20290322", "20290322", "20290322", []coboWaas2.MerchantKycPersonAttachment{*coboWaas2.NewMerchantKycPersonAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg", coboWaas2.MerchantKycPersonAttachmentFileType("PRC_ID_Emblem"))}, *coboWaas2.NewMerchantKycAddress("HK", "Hong Kong", "Hong Kong", "999077", "1 Example Street")), []coboWaas2.MerchantKycPersonInfo{*coboWaas2.NewMerchantKycPersonInfo("张三", "Zhang San", "110101199001011234", "20290322", "20290322", "20290322", []coboWaas2.MerchantKycPersonAttachment{*coboWaas2.NewMerchantKycPersonAttachment("https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg", coboWaas2.MerchantKycPersonAttachmentFileType("PRC_ID_Emblem"))}, )}))
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client

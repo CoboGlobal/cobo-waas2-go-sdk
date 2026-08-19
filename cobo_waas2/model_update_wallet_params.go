@@ -18,7 +18,6 @@ type UpdateWalletParams struct {
 	UpdateCustodialWalletParams *UpdateCustodialWalletParams
 	UpdateExchangeWalletParams *UpdateExchangeWalletParams
 	UpdateMpcWalletParams *UpdateMpcWalletParams
-	UpdateSmartContractWalletParams *UpdateSmartContractWalletParams
 }
 
 // UpdateCustodialWalletParamsAsUpdateWalletParams is a convenience function that returns UpdateCustodialWalletParams wrapped in UpdateWalletParams
@@ -39,13 +38,6 @@ func UpdateExchangeWalletParamsAsUpdateWalletParams(v *UpdateExchangeWalletParam
 func UpdateMpcWalletParamsAsUpdateWalletParams(v *UpdateMpcWalletParams) UpdateWalletParams {
 	return UpdateWalletParams{
 		UpdateMpcWalletParams: v,
-	}
-}
-
-// UpdateSmartContractWalletParamsAsUpdateWalletParams is a convenience function that returns UpdateSmartContractWalletParams wrapped in UpdateWalletParams
-func UpdateSmartContractWalletParamsAsUpdateWalletParams(v *UpdateSmartContractWalletParams) UpdateWalletParams {
-	return UpdateWalletParams{
-		UpdateSmartContractWalletParams: v,
 	}
 }
 
@@ -96,18 +88,6 @@ func (dst *UpdateWalletParams) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'SmartContract'
-	if jsonDict["wallet_type"] == "SmartContract" {
-		// try to unmarshal JSON data into UpdateSmartContractWalletParams
-		err = json.Unmarshal(data, &dst.UpdateSmartContractWalletParams)
-		if err == nil {
-			return nil // data stored in dst.UpdateSmartContractWalletParams, return on the first match
-		} else {
-			dst.UpdateSmartContractWalletParams = nil
-			return fmt.Errorf("failed to unmarshal UpdateWalletParams as UpdateSmartContractWalletParams: %s", err.Error())
-		}
-	}
-
 	// check if the discriminator value is 'UpdateCustodialWalletParams'
 	if jsonDict["wallet_type"] == "UpdateCustodialWalletParams" {
 		// try to unmarshal JSON data into UpdateCustodialWalletParams
@@ -144,18 +124,6 @@ func (dst *UpdateWalletParams) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'UpdateSmartContractWalletParams'
-	if jsonDict["wallet_type"] == "UpdateSmartContractWalletParams" {
-		// try to unmarshal JSON data into UpdateSmartContractWalletParams
-		err = json.Unmarshal(data, &dst.UpdateSmartContractWalletParams)
-		if err == nil {
-			return nil // data stored in dst.UpdateSmartContractWalletParams, return on the first match
-		} else {
-			dst.UpdateSmartContractWalletParams = nil
-			return fmt.Errorf("failed to unmarshal UpdateWalletParams as UpdateSmartContractWalletParams: %s", err.Error())
-		}
-	}
-
 	return nil
 }
 
@@ -171,10 +139,6 @@ func (src UpdateWalletParams) MarshalJSON() ([]byte, error) {
 
 	if src.UpdateMpcWalletParams != nil {
 		return json.Marshal(&src.UpdateMpcWalletParams)
-	}
-
-	if src.UpdateSmartContractWalletParams != nil {
-		return json.Marshal(&src.UpdateSmartContractWalletParams)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -195,10 +159,6 @@ func (obj *UpdateWalletParams) GetActualInstance() (interface{}) {
 
 	if obj.UpdateMpcWalletParams != nil {
 		return obj.UpdateMpcWalletParams
-	}
-
-	if obj.UpdateSmartContractWalletParams != nil {
-		return obj.UpdateSmartContractWalletParams
 	}
 
 	// all schemas are nil
