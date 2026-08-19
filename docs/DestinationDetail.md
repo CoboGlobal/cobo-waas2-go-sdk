@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **DestinationId** | **string** | The destination ID. | 
 **DestinationType** | [**DestinationType**](DestinationType.md) |  | 
 **DestinationName** | **string** | The destination name. | 
+**Source** | Pointer to [**DestinationSource**](DestinationSource.md) |  | [optional] 
 **Country** | Pointer to **string** | The country of the destination, in ISO 3166-1 alpha-3 format. | [optional] 
 **Email** | Pointer to **string** | The email of the destination. | [optional] 
 **ContactAddress** | Pointer to **string** | The contact address of the destination. | [optional] 
@@ -94,6 +95,31 @@ and a boolean to check if the value has been set.
 
 SetDestinationName sets DestinationName field to given value.
 
+
+### GetSource
+
+`func (o *DestinationDetail) GetSource() DestinationSource`
+
+GetSource returns the Source field if non-nil, zero value otherwise.
+
+### GetSourceOk
+
+`func (o *DestinationDetail) GetSourceOk() (*DestinationSource, bool)`
+
+GetSourceOk returns a tuple with the Source field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSource
+
+`func (o *DestinationDetail) SetSource(v DestinationSource)`
+
+SetSource sets Source field to given value.
+
+### HasSource
+
+`func (o *DestinationDetail) HasSource() bool`
+
+HasSource returns a boolean if a field has been set.
 
 ### GetCountry
 

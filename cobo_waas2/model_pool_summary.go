@@ -27,9 +27,9 @@ type PoolSummary struct {
 	Protocol string `json:"protocol"`
 	// The URL of the protocol's icon.
 	ProtocolIconUrl string `json:"protocol_icon_url"`
-	// The wallet type. Possible values include:  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
+	// The wallet type. Possible values include:  - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)  - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)  - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 	SupportedWalletTypes []WalletType `json:"supported_wallet_types"`
-	// The wallet subtype. Possible values include: - `Asset`: Custodial Wallets (Asset Wallets). - `Web3`: Custodial Wallets (Web3  Wallets). - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets). - `User-Controlled`: MPC Wallets (User-Controlled Wallets). - `Safe{Wallet}`: Smart Contract Wallets (Safe{Wallet}). - `Main`: Exchange Wallets (Main Account). - `Sub`: Exchange Wallets (Sub Account). 
+	// The wallet subtype. Possible values include: - `Asset`: Custodial Wallets (Asset Wallets). - `Web3`: Custodial Wallets (Web3  Wallets). - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets). - `User-Controlled`: MPC Wallets (User-Controlled Wallets). - `Main`: Exchange Wallets (Main Account). - `Sub`: Exchange Wallets (Sub Account). 
 	SupportedWalletSubtypes []WalletSubtype `json:"supported_wallet_subtypes"`
 	// The token ID.
 	TokenId string `json:"token_id"`

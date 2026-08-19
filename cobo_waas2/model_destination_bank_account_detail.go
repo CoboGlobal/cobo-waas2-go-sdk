@@ -34,6 +34,7 @@ type DestinationBankAccountDetail struct {
 	DestinationMerchantId *string `json:"destination_merchant_id,omitempty"`
 	// The destination bank account ID.
 	BankAccountId string `json:"bank_account_id"`
+	Tag NullableDestinationBankAccountTag `json:"tag,omitempty"`
 	// The alias of the bank account.
 	AccountAlias string `json:"account_alias"`
 	// The bank account number.
@@ -336,6 +337,48 @@ func (o *DestinationBankAccountDetail) GetBankAccountIdOk() (*string, bool) {
 // SetBankAccountId sets field value
 func (o *DestinationBankAccountDetail) SetBankAccountId(v string) {
 	o.BankAccountId = v
+}
+
+// GetTag returns the Tag field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DestinationBankAccountDetail) GetTag() DestinationBankAccountTag {
+	if o == nil || IsNil(o.Tag.Get()) {
+		var ret DestinationBankAccountTag
+		return ret
+	}
+	return *o.Tag.Get()
+}
+
+// GetTagOk returns a tuple with the Tag field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DestinationBankAccountDetail) GetTagOk() (*DestinationBankAccountTag, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Tag.Get(), o.Tag.IsSet()
+}
+
+// HasTag returns a boolean if a field has been set.
+func (o *DestinationBankAccountDetail) HasTag() bool {
+	if o != nil && o.Tag.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTag gets a reference to the given NullableDestinationBankAccountTag and assigns it to the Tag field.
+func (o *DestinationBankAccountDetail) SetTag(v DestinationBankAccountTag) {
+	o.Tag.Set(&v)
+}
+// SetTagNil sets the value for Tag to be an explicit nil
+func (o *DestinationBankAccountDetail) SetTagNil() {
+	o.Tag.Set(nil)
+}
+
+// UnsetTag ensures that no value is present for Tag, not even an explicit nil
+func (o *DestinationBankAccountDetail) UnsetTag() {
+	o.Tag.Unset()
 }
 
 // GetAccountAlias returns the AccountAlias field value
@@ -1092,6 +1135,9 @@ func (o DestinationBankAccountDetail) ToMap() (map[string]interface{}, error) {
 		toSerialize["destination_merchant_id"] = o.DestinationMerchantId
 	}
 	toSerialize["bank_account_id"] = o.BankAccountId
+	if o.Tag.IsSet() {
+		toSerialize["tag"] = o.Tag.Get()
+	}
 	toSerialize["account_alias"] = o.AccountAlias
 	toSerialize["account_number"] = o.AccountNumber
 	toSerialize["swift_code"] = o.SwiftCode

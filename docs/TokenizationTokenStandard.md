@@ -11,6 +11,8 @@
 
 * `SOL_WRAPPER` (value: `"SOLWrapper"`)
 
+* `ERC20_FUND` (value: `"ERC20Fund"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -30,6 +30,7 @@ type TransferParams struct {
 	// The description of the transfer.
 	Description *string `json:"description,omitempty"`
 	Fee *TransactionRequestFee `json:"fee,omitempty"`
+	FeeLevel *FeeLevel `json:"fee_level,omitempty"`
 	TransactionProcessType *TransactionProcessType `json:"transaction_process_type,omitempty"`
 	AutoFuel *AutoFuelType `json:"auto_fuel,omitempty"`
 	PreCheck *PreCheck `json:"pre_check,omitempty"`
@@ -250,6 +251,38 @@ func (o *TransferParams) SetFee(v TransactionRequestFee) {
 	o.Fee = &v
 }
 
+// GetFeeLevel returns the FeeLevel field value if set, zero value otherwise.
+func (o *TransferParams) GetFeeLevel() FeeLevel {
+	if o == nil || IsNil(o.FeeLevel) {
+		var ret FeeLevel
+		return ret
+	}
+	return *o.FeeLevel
+}
+
+// GetFeeLevelOk returns a tuple with the FeeLevel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TransferParams) GetFeeLevelOk() (*FeeLevel, bool) {
+	if o == nil || IsNil(o.FeeLevel) {
+		return nil, false
+	}
+	return o.FeeLevel, true
+}
+
+// HasFeeLevel returns a boolean if a field has been set.
+func (o *TransferParams) HasFeeLevel() bool {
+	if o != nil && !IsNil(o.FeeLevel) {
+		return true
+	}
+
+	return false
+}
+
+// SetFeeLevel gets a reference to the given FeeLevel and assigns it to the FeeLevel field.
+func (o *TransferParams) SetFeeLevel(v FeeLevel) {
+	o.FeeLevel = &v
+}
+
 // GetTransactionProcessType returns the TransactionProcessType field value if set, zero value otherwise.
 func (o *TransferParams) GetTransactionProcessType() TransactionProcessType {
 	if o == nil || IsNil(o.TransactionProcessType) {
@@ -368,6 +401,9 @@ func (o TransferParams) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Fee) {
 		toSerialize["fee"] = o.Fee
+	}
+	if !IsNil(o.FeeLevel) {
+		toSerialize["fee_level"] = o.FeeLevel
 	}
 	if !IsNil(o.TransactionProcessType) {
 		toSerialize["transaction_process_type"] = o.TransactionProcessType

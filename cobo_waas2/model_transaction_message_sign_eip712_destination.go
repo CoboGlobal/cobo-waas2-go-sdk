@@ -24,7 +24,6 @@ type TransactionMessageSignEIP712Destination struct {
 	RawStructuredData *string `json:"raw_structured_data,omitempty"`
 	// The structured data to be signed, formatted as a JSON object according to the EIP-712 standard.
 	StructuredData map[string]interface{} `json:"structured_data"`
-	SafeTxExtraData *SafeTxExtraData `json:"safe_tx_extra_data,omitempty"`
 }
 
 type _TransactionMessageSignEIP712Destination TransactionMessageSignEIP712Destination
@@ -128,38 +127,6 @@ func (o *TransactionMessageSignEIP712Destination) SetStructuredData(v map[string
 	o.StructuredData = v
 }
 
-// GetSafeTxExtraData returns the SafeTxExtraData field value if set, zero value otherwise.
-func (o *TransactionMessageSignEIP712Destination) GetSafeTxExtraData() SafeTxExtraData {
-	if o == nil || IsNil(o.SafeTxExtraData) {
-		var ret SafeTxExtraData
-		return ret
-	}
-	return *o.SafeTxExtraData
-}
-
-// GetSafeTxExtraDataOk returns a tuple with the SafeTxExtraData field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TransactionMessageSignEIP712Destination) GetSafeTxExtraDataOk() (*SafeTxExtraData, bool) {
-	if o == nil || IsNil(o.SafeTxExtraData) {
-		return nil, false
-	}
-	return o.SafeTxExtraData, true
-}
-
-// HasSafeTxExtraData returns a boolean if a field has been set.
-func (o *TransactionMessageSignEIP712Destination) HasSafeTxExtraData() bool {
-	if o != nil && !IsNil(o.SafeTxExtraData) {
-		return true
-	}
-
-	return false
-}
-
-// SetSafeTxExtraData gets a reference to the given SafeTxExtraData and assigns it to the SafeTxExtraData field.
-func (o *TransactionMessageSignEIP712Destination) SetSafeTxExtraData(v SafeTxExtraData) {
-	o.SafeTxExtraData = &v
-}
-
 func (o TransactionMessageSignEIP712Destination) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -175,9 +142,6 @@ func (o TransactionMessageSignEIP712Destination) ToMap() (map[string]interface{}
 		toSerialize["raw_structured_data"] = o.RawStructuredData
 	}
 	toSerialize["structured_data"] = o.StructuredData
-	if !IsNil(o.SafeTxExtraData) {
-		toSerialize["safe_tx_extra_data"] = o.SafeTxExtraData
-	}
 	return toSerialize, nil
 }
 

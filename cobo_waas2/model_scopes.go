@@ -17,9 +17,9 @@ var _ MappedNullable = &Scopes{}
 
 // Scopes The wallet scopes associated with this API key.
 type Scopes struct {
-	// The list of wallet types that this API key can access. Possible values include:   - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)   - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)   - `SmartContract`: [Smart Contract Wallets](https://manuals.cobo.com/en/portal/smart-contract-wallets/introduction)   - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
+	// The list of wallet types that this API key can access. Possible values include:   - `Custodial`: [Custodial Wallets](https://manuals.cobo.com/en/portal/custodial-wallets/introduction)   - `MPC`: [MPC Wallets](https://manuals.cobo.com/en/portal/mpc-wallets/introduction)   - `Exchange`: [Exchange Wallets](https://manuals.cobo.com/en/portal/exchange-wallets/introduction) 
 	WalletTypes []WalletType `json:"wallet_types,omitempty"`
-	// The list of wallet sub-types that this API key can access. Possible values include:   - `Asset`: Custodial Wallets (Asset Wallets).   - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).   - `User-Controlled`: MPC Wallets (User-Controlled Wallets).   - `Safe{Wallet}`: Smart Contract Wallets (Safe).   - `Main`: Exchange Wallets (Main Account).   - `Sub`: Exchange Wallets (Sub Account). 
+	// The list of wallet sub-types that this API key can access. Possible values include:   - `Asset`: Custodial Wallets (Asset Wallets).   - `Org-Controlled`: MPC Wallets (Organization-Controlled Wallets).   - `User-Controlled`: MPC Wallets (User-Controlled Wallets).   - `Main`: Exchange Wallets (Main Account).   - `Sub`: Exchange Wallets (Sub Account). 
 	WalletSubtypes []WalletSubtype `json:"wallet_subtypes,omitempty"`
 	// The list of wallet IDs that this API key can access.
 	WalletIds []string `json:"wallet_ids,omitempty"`

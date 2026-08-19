@@ -6,11 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SourceType** | [**TransactionSourceType**](TransactionSourceType.md) |  | 
 **WalletId** | **string** | The wallet ID. | 
-**Address** | **string** | The wallet address. | 
+**Address** | Pointer to **string** | The wallet address. | [optional] 
 **IncludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **ExcludedUtxos** | Pointer to [**[]TransactionUtxo**](TransactionUtxo.md) |  | [optional] 
 **SignerKeyShareHolderGroupId** | Pointer to **string** | The ID of the key share holder group that is selected to sign the transaction. | [optional] 
-**Delegate** | Pointer to [**CoboSafeDelegate**](CoboSafeDelegate.md) |  | [optional] 
 **ExchangeId** | [**ExchangeId**](ExchangeId.md) |  | 
 **TradingAccountType** | Pointer to **string** | The exchange trading account or a sub-wallet ID. | [optional] 
 **WalletType** | [**WalletType**](WalletType.md) |  | 
@@ -21,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewTransactionSource
 
-`func NewTransactionSource(sourceType TransactionSourceType, walletId string, address string, exchangeId ExchangeId, walletType WalletType, walletSubtype WalletSubtype, addresses []string, ) *TransactionSource`
+`func NewTransactionSource(sourceType TransactionSourceType, walletId string, exchangeId ExchangeId, walletType WalletType, walletSubtype WalletSubtype, addresses []string, ) *TransactionSource`
 
 NewTransactionSource instantiates a new TransactionSource object
 This constructor will assign default values to properties that have it defined,
@@ -95,6 +94,11 @@ and a boolean to check if the value has been set.
 
 SetAddress sets Address field to given value.
 
+### HasAddress
+
+`func (o *TransactionSource) HasAddress() bool`
+
+HasAddress returns a boolean if a field has been set.
 
 ### GetIncludedUtxos
 
@@ -170,31 +174,6 @@ SetSignerKeyShareHolderGroupId sets SignerKeyShareHolderGroupId field to given v
 `func (o *TransactionSource) HasSignerKeyShareHolderGroupId() bool`
 
 HasSignerKeyShareHolderGroupId returns a boolean if a field has been set.
-
-### GetDelegate
-
-`func (o *TransactionSource) GetDelegate() CoboSafeDelegate`
-
-GetDelegate returns the Delegate field if non-nil, zero value otherwise.
-
-### GetDelegateOk
-
-`func (o *TransactionSource) GetDelegateOk() (*CoboSafeDelegate, bool)`
-
-GetDelegateOk returns a tuple with the Delegate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDelegate
-
-`func (o *TransactionSource) SetDelegate(v CoboSafeDelegate)`
-
-SetDelegate sets Delegate field to given value.
-
-### HasDelegate
-
-`func (o *TransactionSource) HasDelegate() bool`
-
-HasDelegate returns a boolean if a field has been set.
 
 ### GetExchangeId
 

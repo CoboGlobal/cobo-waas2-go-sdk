@@ -59,6 +59,7 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_REFUND_STATUS_UPDATED WebhookEventType = "payment.refund.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_SETTLEMENT_STATUS_UPDATED WebhookEventType = "payment.settlement.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_PAYOUT_STATUS_UPDATED WebhookEventType = "payment.payout.status.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_BANK_WITHDRAWAL_STATUS_UPDATED WebhookEventType = "payment.bank_withdrawal.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_ADDRESS_UPDATED WebhookEventType = "payment.address.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_SUBSCRIPTION_STATUS_UPDATED WebhookEventType = "payment.subscription.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_CHARGE_STATUS_UPDATED WebhookEventType = "payment.charge.status.updated"
@@ -116,6 +117,7 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.refund.status.updated",
 	"payment.settlement.status.updated",
 	"payment.payout.status.updated",
+	"payment.bank_withdrawal.status.updated",
 	"payment.address.updated",
 	"payment.subscription.status.updated",
 	"payment.charge.status.updated",

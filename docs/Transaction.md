@@ -30,8 +30,9 @@ Name | Type | Description | Notes
 **Category** | Pointer to **[]string** | A custom transaction category for you to identify your transfers more easily. | [optional] 
 **Description** | Pointer to **string** | The description for your transaction. | [optional] 
 **IsLoop** | Pointer to **bool** | Whether the transaction was executed as a [Cobo Loop](https://manuals.cobo.com/en/portal/custodial-wallets/cobo-loop) transfer. - &#x60;true&#x60;: The transaction was executed as a Cobo Loop transfer. - &#x60;false&#x60;: The transaction was not executed as a Cobo Loop transfer.  | [optional] 
-**CoboCategory** | Pointer to **[]string** | The transaction category defined by Cobo. For more details, refer to [Cobo-defined categories](/v2/guides/transactions/manage-transactions#cobo-defined-categories).  | [optional] 
-**Extra** | Pointer to **[]string** | A list of JSON-encoded strings containing structured, business-specific extra information for the transaction. Each item corresponds to a specific data type, indicated by the &#x60;extra_type&#x60; field in the JSON object (for example, \&quot;BabylonBusinessInfo\&quot;, \&quot;BtcAddressInfo\&quot;).  | [optional] 
+**CoboCategory** | Pointer to **[]string** | The transaction category defined by Cobo. Possible values include:  - &#x60;AutoSweep&#x60;: An auto-sweep transaction. - &#x60;AutoFueling&#x60;: A transaction where Fee Station pays transaction fees to an address within your wallet. - &#x60;AutoFuelingRefund&#x60;: A refund for an auto-fueling transaction. - &#x60;BillPayment&#x60;: A transaction to pay Cobo bills through Fee Station. - &#x60;BillRefund&#x60;: A refund for a previously made bill payment. - &#x60;CommissionFeeCharge&#x60;: A transaction to charge commission fees via Fee Station. - &#x60;CommissionFeeRefund&#x60;: A refund of previously charged commission fees.  | [optional] 
+**Extra** | Pointer to **[]string** | The transaction extra information. | [optional] 
+**TransactionProcessType** | Pointer to [**TransactionProcessType**](TransactionProcessType.md) |  | [optional] 
 **FuelingInfo** | Pointer to [**TransactionFuelingInfo**](TransactionFuelingInfo.md) |  | [optional] 
 **CreatedTimestamp** | **int64** | The time when the transaction was created, in Unix timestamp format, measured in milliseconds. | 
 **UpdatedTimestamp** | **int64** | The time when the transaction was updated, in Unix timestamp format, measured in milliseconds. | 
@@ -724,6 +725,31 @@ SetExtra sets Extra field to given value.
 `func (o *Transaction) HasExtra() bool`
 
 HasExtra returns a boolean if a field has been set.
+
+### GetTransactionProcessType
+
+`func (o *Transaction) GetTransactionProcessType() TransactionProcessType`
+
+GetTransactionProcessType returns the TransactionProcessType field if non-nil, zero value otherwise.
+
+### GetTransactionProcessTypeOk
+
+`func (o *Transaction) GetTransactionProcessTypeOk() (*TransactionProcessType, bool)`
+
+GetTransactionProcessTypeOk returns a tuple with the TransactionProcessType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransactionProcessType
+
+`func (o *Transaction) SetTransactionProcessType(v TransactionProcessType)`
+
+SetTransactionProcessType sets TransactionProcessType field to given value.
+
+### HasTransactionProcessType
+
+`func (o *Transaction) HasTransactionProcessType() bool`
+
+HasTransactionProcessType returns a boolean if a field has been set.
 
 ### GetFuelingInfo
 

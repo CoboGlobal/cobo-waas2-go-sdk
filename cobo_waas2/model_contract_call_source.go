@@ -17,7 +17,6 @@ import (
 type ContractCallSource struct {
 	CustodialWeb3ContractCallSource *CustodialWeb3ContractCallSource
 	MpcContractCallSource *MpcContractCallSource
-	SafeContractCallSource *SafeContractCallSource
 }
 
 // CustodialWeb3ContractCallSourceAsContractCallSource is a convenience function that returns CustodialWeb3ContractCallSource wrapped in ContractCallSource
@@ -31,13 +30,6 @@ func CustodialWeb3ContractCallSourceAsContractCallSource(v *CustodialWeb3Contrac
 func MpcContractCallSourceAsContractCallSource(v *MpcContractCallSource) ContractCallSource {
 	return ContractCallSource{
 		MpcContractCallSource: v,
-	}
-}
-
-// SafeContractCallSourceAsContractCallSource is a convenience function that returns SafeContractCallSource wrapped in ContractCallSource
-func SafeContractCallSourceAsContractCallSource(v *SafeContractCallSource) ContractCallSource {
-	return ContractCallSource{
-		SafeContractCallSource: v,
 	}
 }
 
@@ -61,18 +53,6 @@ func (dst *ContractCallSource) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.MpcContractCallSource = nil
 			return fmt.Errorf("failed to unmarshal ContractCallSource as MpcContractCallSource: %s", err.Error())
-		}
-	}
-
-	// check if the discriminator value is 'Safe{Wallet}'
-	if jsonDict["source_type"] == "Safe{Wallet}" {
-		// try to unmarshal JSON data into SafeContractCallSource
-		err = json.Unmarshal(data, &dst.SafeContractCallSource)
-		if err == nil {
-			return nil // data stored in dst.SafeContractCallSource, return on the first match
-		} else {
-			dst.SafeContractCallSource = nil
-			return fmt.Errorf("failed to unmarshal ContractCallSource as SafeContractCallSource: %s", err.Error())
 		}
 	}
 
@@ -124,18 +104,6 @@ func (dst *ContractCallSource) UnmarshalJSON(data []byte) error {
 		}
 	}
 
-	// check if the discriminator value is 'SafeContractCallSource'
-	if jsonDict["source_type"] == "SafeContractCallSource" {
-		// try to unmarshal JSON data into SafeContractCallSource
-		err = json.Unmarshal(data, &dst.SafeContractCallSource)
-		if err == nil {
-			return nil // data stored in dst.SafeContractCallSource, return on the first match
-		} else {
-			dst.SafeContractCallSource = nil
-			return fmt.Errorf("failed to unmarshal ContractCallSource as SafeContractCallSource: %s", err.Error())
-		}
-	}
-
 	return nil
 }
 
@@ -147,10 +115,6 @@ func (src ContractCallSource) MarshalJSON() ([]byte, error) {
 
 	if src.MpcContractCallSource != nil {
 		return json.Marshal(&src.MpcContractCallSource)
-	}
-
-	if src.SafeContractCallSource != nil {
-		return json.Marshal(&src.SafeContractCallSource)
 	}
 
 	return []byte(`{}`), nil // no data in oneOf schemas
@@ -167,10 +131,6 @@ func (obj *ContractCallSource) GetActualInstance() (interface{}) {
 
 	if obj.MpcContractCallSource != nil {
 		return obj.MpcContractCallSource
-	}
-
-	if obj.SafeContractCallSource != nil {
-		return obj.SafeContractCallSource
 	}
 
 	// all schemas are nil

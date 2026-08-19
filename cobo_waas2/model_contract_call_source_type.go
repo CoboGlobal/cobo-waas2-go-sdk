@@ -21,7 +21,6 @@ const (
 	CONTRACTCALLSOURCETYPE_WEB3 ContractCallSourceType = "Web3"
 	CONTRACTCALLSOURCETYPE_ORG_CONTROLLED ContractCallSourceType = "Org-Controlled"
 	CONTRACTCALLSOURCETYPE_USER_CONTROLLED ContractCallSourceType = "User-Controlled"
-	CONTRACTCALLSOURCETYPE_SAFEWALLET ContractCallSourceType = "Safe{Wallet}"
 )
 
 // All allowed values of ContractCallSourceType enum
@@ -29,7 +28,6 @@ var AllowedContractCallSourceTypeEnumValues = []ContractCallSourceType{
 	"Web3",
 	"Org-Controlled",
 	"User-Controlled",
-	"Safe{Wallet}",
 }
 
 func (v *ContractCallSourceType) UnmarshalJSON(src []byte) error {

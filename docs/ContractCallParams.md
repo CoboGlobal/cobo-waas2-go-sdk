@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** | The description of the contract call transaction. Maximum length is 2048 characters for MPC Wallets and Custodial Wallets (Web3 Wallets), and 1000 characters for Custodial Wallets (Asset Wallets). | [optional] 
 **CategoryNames** | Pointer to **[]string** | The custom category for you to identify your transactions. | [optional] 
 **Fee** | Pointer to [**TransactionRequestFee**](TransactionRequestFee.md) |  | [optional] 
+**FeeLevel** | Pointer to [**FeeLevel**](FeeLevel.md) |  | [optional] 
 **TransactionProcessType** | Pointer to [**TransactionProcessType**](TransactionProcessType.md) |  | [optional] 
 **AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 
 **PreCheck** | Pointer to [**PreCheck**](PreCheck.md) |  | [optional] 
@@ -188,6 +189,31 @@ SetFee sets Fee field to given value.
 `func (o *ContractCallParams) HasFee() bool`
 
 HasFee returns a boolean if a field has been set.
+
+### GetFeeLevel
+
+`func (o *ContractCallParams) GetFeeLevel() FeeLevel`
+
+GetFeeLevel returns the FeeLevel field if non-nil, zero value otherwise.
+
+### GetFeeLevelOk
+
+`func (o *ContractCallParams) GetFeeLevelOk() (*FeeLevel, bool)`
+
+GetFeeLevelOk returns a tuple with the FeeLevel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFeeLevel
+
+`func (o *ContractCallParams) SetFeeLevel(v FeeLevel)`
+
+SetFeeLevel sets FeeLevel field to given value.
+
+### HasFeeLevel
+
+`func (o *ContractCallParams) HasFeeLevel() bool`
+
+HasFeeLevel returns a boolean if a field has been set.
 
 ### GetTransactionProcessType
 

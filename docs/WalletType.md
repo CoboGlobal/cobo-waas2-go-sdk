@@ -7,8 +7,6 @@
 
 * `MPC` (value: `"MPC"`)
 
-* `SMART_CONTRACT` (value: `"SmartContract"`)
-
 * `EXCHANGE` (value: `"Exchange"`)
 
 
