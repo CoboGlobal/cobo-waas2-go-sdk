@@ -7,12 +7,11 @@ Name | Type | Description | Notes
 **KycSubmissionId** | **string** | The KYC submission ID. | 
 **MerchantId** | **string** | The merchant ID. | 
 **Status** | [**MerchantKycStatus**](MerchantKycStatus.md) |  | 
-**Email** | **string** | The merchant email address. | 
-**Phone** | **string** | The merchant phone number. | 
 **MerchantType** | [**MerchantKycMerchantType**](MerchantKycMerchantType.md) |  | 
 **Country** | **string** | The country/region of the merchant, in ISO 3166-1 alpha-3 format. | 
 **Industry** | **[]string** | The industry categories of the merchant. | 
-**CompanyInfo** | [**MerchantKycCompanyInfo**](MerchantKycCompanyInfo.md) |  | 
+**CompanyInfo** | Pointer to [**MerchantKycCompanyInfo**](MerchantKycCompanyInfo.md) |  | [optional] 
+**IndividualInfo** | Pointer to [**MerchantKycPersonInfo**](MerchantKycPersonInfo.md) |  | [optional] 
 **CreatedTimestamp** | **int64** | The creation timestamp in Unix seconds. | 
 **UpdatedTimestamp** | Pointer to **int64** | The last update timestamp in Unix seconds. | [optional] 
 
@@ -20,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewMerchantKycSubmission
 
-`func NewMerchantKycSubmission(kycSubmissionId string, merchantId string, status MerchantKycStatus, email string, phone string, merchantType MerchantKycMerchantType, country string, industry []string, companyInfo MerchantKycCompanyInfo, createdTimestamp int64, ) *MerchantKycSubmission`
+`func NewMerchantKycSubmission(kycSubmissionId string, merchantId string, status MerchantKycStatus, merchantType MerchantKycMerchantType, country string, industry []string, createdTimestamp int64, ) *MerchantKycSubmission`
 
 NewMerchantKycSubmission instantiates a new MerchantKycSubmission object
 This constructor will assign default values to properties that have it defined,
@@ -93,46 +92,6 @@ and a boolean to check if the value has been set.
 `func (o *MerchantKycSubmission) SetStatus(v MerchantKycStatus)`
 
 SetStatus sets Status field to given value.
-
-
-### GetEmail
-
-`func (o *MerchantKycSubmission) GetEmail() string`
-
-GetEmail returns the Email field if non-nil, zero value otherwise.
-
-### GetEmailOk
-
-`func (o *MerchantKycSubmission) GetEmailOk() (*string, bool)`
-
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEmail
-
-`func (o *MerchantKycSubmission) SetEmail(v string)`
-
-SetEmail sets Email field to given value.
-
-
-### GetPhone
-
-`func (o *MerchantKycSubmission) GetPhone() string`
-
-GetPhone returns the Phone field if non-nil, zero value otherwise.
-
-### GetPhoneOk
-
-`func (o *MerchantKycSubmission) GetPhoneOk() (*string, bool)`
-
-GetPhoneOk returns a tuple with the Phone field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPhone
-
-`func (o *MerchantKycSubmission) SetPhone(v string)`
-
-SetPhone sets Phone field to given value.
 
 
 ### GetMerchantType
@@ -214,6 +173,36 @@ and a boolean to check if the value has been set.
 
 SetCompanyInfo sets CompanyInfo field to given value.
 
+### HasCompanyInfo
+
+`func (o *MerchantKycSubmission) HasCompanyInfo() bool`
+
+HasCompanyInfo returns a boolean if a field has been set.
+
+### GetIndividualInfo
+
+`func (o *MerchantKycSubmission) GetIndividualInfo() MerchantKycPersonInfo`
+
+GetIndividualInfo returns the IndividualInfo field if non-nil, zero value otherwise.
+
+### GetIndividualInfoOk
+
+`func (o *MerchantKycSubmission) GetIndividualInfoOk() (*MerchantKycPersonInfo, bool)`
+
+GetIndividualInfoOk returns a tuple with the IndividualInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIndividualInfo
+
+`func (o *MerchantKycSubmission) SetIndividualInfo(v MerchantKycPersonInfo)`
+
+SetIndividualInfo sets IndividualInfo field to given value.
+
+### HasIndividualInfo
+
+`func (o *MerchantKycSubmission) HasIndividualInfo() bool`
+
+HasIndividualInfo returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

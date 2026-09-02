@@ -29,7 +29,7 @@ type Report struct {
 	EndTime int32 `json:"end_time"`
 	// The created time of the report. Unix timestamp measured in seconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
-	// The URL of the report.
+	// The url of the payment report. (This field will be deprecated, please use download report operation to get the temporary download URL.)
 	ReportUrl *string `json:"report_url,omitempty"`
 	ReportExportFormat ReportExportFormat `json:"report_export_format"`
 	ReportStatus ReportStatus `json:"report_status"`

@@ -13,17 +13,19 @@ import (
 	"fmt"
 )
 
-// ReportStatus The status of the report. - `Completed`: The report has been generated successfully. - `Failed`: The report could not be generated. 
+// ReportStatus The status of the report. - `Processing`: The report is being generated. - `Completed`: The report has been completed. - `Failed`: The report has failed. 
 type ReportStatus string
 
 // List of ReportStatus
 const (
+	REPORTSTATUS_PROCESSING ReportStatus = "Processing"
 	REPORTSTATUS_COMPLETED ReportStatus = "Completed"
 	REPORTSTATUS_FAILED ReportStatus = "Failed"
 )
 
 // All allowed values of ReportStatus enum
 var AllowedReportStatusEnumValues = []ReportStatus{
+	"Processing",
 	"Completed",
 	"Failed",
 }

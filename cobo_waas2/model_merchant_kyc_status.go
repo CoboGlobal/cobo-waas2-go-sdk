@@ -13,7 +13,7 @@ import (
 	"fmt"
 )
 
-// MerchantKycStatus The KYC submission status. Possible values include: - `PendingReview`: The KYC submission is pending review. - `Completed`: The KYC submission has been completed. - `Failed`: The KYC submission has failed. 
+// MerchantKycStatus The KYC submission status. Possible values include: - `PendingReview`: The KYC submission is pending review. - `Completed`: The KYC submission has been completed. - `Failed`: The KYC submission has failed. - `Disabled`: The KYC submission is disabled. Merchants in this status cannot resubmit KYC information. 
 type MerchantKycStatus string
 
 // List of MerchantKycStatus
@@ -21,6 +21,7 @@ const (
 	MERCHANTKYCSTATUS_PENDING_REVIEW MerchantKycStatus = "PendingReview"
 	MERCHANTKYCSTATUS_COMPLETED MerchantKycStatus = "Completed"
 	MERCHANTKYCSTATUS_FAILED MerchantKycStatus = "Failed"
+	MERCHANTKYCSTATUS_DISABLED MerchantKycStatus = "Disabled"
 )
 
 // All allowed values of MerchantKycStatus enum
@@ -28,6 +29,7 @@ var AllowedMerchantKycStatusEnumValues = []MerchantKycStatus{
 	"PendingReview",
 	"Completed",
 	"Failed",
+	"Disabled",
 }
 
 func (v *MerchantKycStatus) UnmarshalJSON(src []byte) error {

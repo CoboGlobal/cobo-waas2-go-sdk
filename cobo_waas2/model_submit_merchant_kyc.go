@@ -19,16 +19,13 @@ var _ MappedNullable = &SubmitMerchantKyc{}
 
 // SubmitMerchantKyc struct for SubmitMerchantKyc
 type SubmitMerchantKyc struct {
-	// The merchant email address.
-	Email string `json:"email"`
-	// The merchant phone number.
-	Phone string `json:"phone"`
 	MerchantType MerchantKycMerchantType `json:"merchant_type"`
 	// The country/region of the merchant, in ISO 3166-1 alpha-3 format.
 	Country string `json:"country"`
 	// The industry categories of the merchant.
 	Industry []string `json:"industry"`
-	CompanyInfo MerchantKycCompanyInfo `json:"company_info"`
+	CompanyInfo *MerchantKycCompanyInfo `json:"company_info,omitempty"`
+	IndividualInfo *MerchantKycPersonInfo `json:"individual_info,omitempty"`
 }
 
 type _SubmitMerchantKyc SubmitMerchantKyc
@@ -37,14 +34,11 @@ type _SubmitMerchantKyc SubmitMerchantKyc
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSubmitMerchantKyc(email string, phone string, merchantType MerchantKycMerchantType, country string, industry []string, companyInfo MerchantKycCompanyInfo) *SubmitMerchantKyc {
+func NewSubmitMerchantKyc(merchantType MerchantKycMerchantType, country string, industry []string) *SubmitMerchantKyc {
 	this := SubmitMerchantKyc{}
-	this.Email = email
-	this.Phone = phone
 	this.MerchantType = merchantType
 	this.Country = country
 	this.Industry = industry
-	this.CompanyInfo = companyInfo
 	return &this
 }
 
@@ -54,54 +48,6 @@ func NewSubmitMerchantKyc(email string, phone string, merchantType MerchantKycMe
 func NewSubmitMerchantKycWithDefaults() *SubmitMerchantKyc {
 	this := SubmitMerchantKyc{}
 	return &this
-}
-
-// GetEmail returns the Email field value
-func (o *SubmitMerchantKyc) GetEmail() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Email
-}
-
-// GetEmailOk returns a tuple with the Email field value
-// and a boolean to check if the value has been set.
-func (o *SubmitMerchantKyc) GetEmailOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Email, true
-}
-
-// SetEmail sets field value
-func (o *SubmitMerchantKyc) SetEmail(v string) {
-	o.Email = v
-}
-
-// GetPhone returns the Phone field value
-func (o *SubmitMerchantKyc) GetPhone() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Phone
-}
-
-// GetPhoneOk returns a tuple with the Phone field value
-// and a boolean to check if the value has been set.
-func (o *SubmitMerchantKyc) GetPhoneOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Phone, true
-}
-
-// SetPhone sets field value
-func (o *SubmitMerchantKyc) SetPhone(v string) {
-	o.Phone = v
 }
 
 // GetMerchantType returns the MerchantType field value
@@ -176,28 +122,68 @@ func (o *SubmitMerchantKyc) SetIndustry(v []string) {
 	o.Industry = v
 }
 
-// GetCompanyInfo returns the CompanyInfo field value
+// GetCompanyInfo returns the CompanyInfo field value if set, zero value otherwise.
 func (o *SubmitMerchantKyc) GetCompanyInfo() MerchantKycCompanyInfo {
-	if o == nil {
+	if o == nil || IsNil(o.CompanyInfo) {
 		var ret MerchantKycCompanyInfo
 		return ret
 	}
-
-	return o.CompanyInfo
+	return *o.CompanyInfo
 }
 
-// GetCompanyInfoOk returns a tuple with the CompanyInfo field value
+// GetCompanyInfoOk returns a tuple with the CompanyInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SubmitMerchantKyc) GetCompanyInfoOk() (*MerchantKycCompanyInfo, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CompanyInfo) {
 		return nil, false
 	}
-	return &o.CompanyInfo, true
+	return o.CompanyInfo, true
 }
 
-// SetCompanyInfo sets field value
+// HasCompanyInfo returns a boolean if a field has been set.
+func (o *SubmitMerchantKyc) HasCompanyInfo() bool {
+	if o != nil && !IsNil(o.CompanyInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyInfo gets a reference to the given MerchantKycCompanyInfo and assigns it to the CompanyInfo field.
 func (o *SubmitMerchantKyc) SetCompanyInfo(v MerchantKycCompanyInfo) {
-	o.CompanyInfo = v
+	o.CompanyInfo = &v
+}
+
+// GetIndividualInfo returns the IndividualInfo field value if set, zero value otherwise.
+func (o *SubmitMerchantKyc) GetIndividualInfo() MerchantKycPersonInfo {
+	if o == nil || IsNil(o.IndividualInfo) {
+		var ret MerchantKycPersonInfo
+		return ret
+	}
+	return *o.IndividualInfo
+}
+
+// GetIndividualInfoOk returns a tuple with the IndividualInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SubmitMerchantKyc) GetIndividualInfoOk() (*MerchantKycPersonInfo, bool) {
+	if o == nil || IsNil(o.IndividualInfo) {
+		return nil, false
+	}
+	return o.IndividualInfo, true
+}
+
+// HasIndividualInfo returns a boolean if a field has been set.
+func (o *SubmitMerchantKyc) HasIndividualInfo() bool {
+	if o != nil && !IsNil(o.IndividualInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetIndividualInfo gets a reference to the given MerchantKycPersonInfo and assigns it to the IndividualInfo field.
+func (o *SubmitMerchantKyc) SetIndividualInfo(v MerchantKycPersonInfo) {
+	o.IndividualInfo = &v
 }
 
 func (o SubmitMerchantKyc) MarshalJSON() ([]byte, error) {
@@ -210,12 +196,15 @@ func (o SubmitMerchantKyc) MarshalJSON() ([]byte, error) {
 
 func (o SubmitMerchantKyc) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["email"] = o.Email
-	toSerialize["phone"] = o.Phone
 	toSerialize["merchant_type"] = o.MerchantType
 	toSerialize["country"] = o.Country
 	toSerialize["industry"] = o.Industry
-	toSerialize["company_info"] = o.CompanyInfo
+	if !IsNil(o.CompanyInfo) {
+		toSerialize["company_info"] = o.CompanyInfo
+	}
+	if !IsNil(o.IndividualInfo) {
+		toSerialize["individual_info"] = o.IndividualInfo
+	}
 	return toSerialize, nil
 }
 
@@ -224,12 +213,9 @@ func (o *SubmitMerchantKyc) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"email",
-		"phone",
 		"merchant_type",
 		"country",
 		"industry",
-		"company_info",
 	}
 
 	allProperties := make(map[string]interface{})

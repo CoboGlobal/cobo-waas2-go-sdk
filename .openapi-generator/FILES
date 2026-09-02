@@ -248,6 +248,7 @@ docs/DispositionQueryResponse.md
 docs/DispositionResponse.md
 docs/DispositionStatus.md
 docs/DispositionType.md
+docs/DownloadReportRequest.md
 docs/EigenLayerLstStakeExtra.md
 docs/EigenLayerNativeStakeExtra.md
 docs/EigenlayerValidator.md
@@ -515,6 +516,7 @@ docs/PaymentSettlementEvent.md
 docs/PaymentSourceType.md
 docs/PaymentTransaction.md
 docs/PaymentTransactionEventData.md
+docs/PaymentUploadFileV2.md
 docs/PaymentUploadedFile.md
 docs/PaymentWalletBalance.md
 docs/PayoutChannel.md
@@ -550,6 +552,7 @@ docs/RefundStatus.md
 docs/RefundType.md
 docs/ReplaceType.md
 docs/Report.md
+docs/ReportDownloadResponse.md
 docs/ReportExportFormat.md
 docs/ReportStatus.md
 docs/ReportType.md
@@ -1126,6 +1129,7 @@ model_disposition_query_response.go
 model_disposition_response.go
 model_disposition_status.go
 model_disposition_type.go
+model_download_report_request.go
 model_eigen_layer_lst_stake_extra.go
 model_eigen_layer_native_stake_extra.go
 model_eigenlayer_validator.go
@@ -1388,6 +1392,7 @@ model_payment_settlement_event.go
 model_payment_source_type.go
 model_payment_transaction.go
 model_payment_transaction_event_data.go
+model_payment_upload_file_v2.go
 model_payment_uploaded_file.go
 model_payment_wallet_balance.go
 model_payout_channel.go
@@ -1421,6 +1426,7 @@ model_refund_status.go
 model_refund_type.go
 model_replace_type.go
 model_report.go
+model_report_download_response.go
 model_report_export_format.go
 model_report_status.go
 model_report_type.go

@@ -4,18 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Email** | **string** | The merchant email address. | 
-**Phone** | **string** | The merchant phone number. | 
 **MerchantType** | [**MerchantKycMerchantType**](MerchantKycMerchantType.md) |  | 
 **Country** | **string** | The country/region of the merchant, in ISO 3166-1 alpha-3 format. | 
 **Industry** | **[]string** | The industry categories of the merchant. | 
-**CompanyInfo** | [**MerchantKycCompanyInfo**](MerchantKycCompanyInfo.md) |  | 
+**CompanyInfo** | Pointer to [**MerchantKycCompanyInfo**](MerchantKycCompanyInfo.md) |  | [optional] 
+**IndividualInfo** | Pointer to [**MerchantKycPersonInfo**](MerchantKycPersonInfo.md) |  | [optional] 
 
 ## Methods
 
 ### NewSubmitMerchantKyc
 
-`func NewSubmitMerchantKyc(email string, phone string, merchantType MerchantKycMerchantType, country string, industry []string, companyInfo MerchantKycCompanyInfo, ) *SubmitMerchantKyc`
+`func NewSubmitMerchantKyc(merchantType MerchantKycMerchantType, country string, industry []string, ) *SubmitMerchantKyc`
 
 NewSubmitMerchantKyc instantiates a new SubmitMerchantKyc object
 This constructor will assign default values to properties that have it defined,
@@ -29,46 +28,6 @@ will change when the set of required properties is changed
 NewSubmitMerchantKycWithDefaults instantiates a new SubmitMerchantKyc object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetEmail
-
-`func (o *SubmitMerchantKyc) GetEmail() string`
-
-GetEmail returns the Email field if non-nil, zero value otherwise.
-
-### GetEmailOk
-
-`func (o *SubmitMerchantKyc) GetEmailOk() (*string, bool)`
-
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEmail
-
-`func (o *SubmitMerchantKyc) SetEmail(v string)`
-
-SetEmail sets Email field to given value.
-
-
-### GetPhone
-
-`func (o *SubmitMerchantKyc) GetPhone() string`
-
-GetPhone returns the Phone field if non-nil, zero value otherwise.
-
-### GetPhoneOk
-
-`func (o *SubmitMerchantKyc) GetPhoneOk() (*string, bool)`
-
-GetPhoneOk returns a tuple with the Phone field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPhone
-
-`func (o *SubmitMerchantKyc) SetPhone(v string)`
-
-SetPhone sets Phone field to given value.
-
 
 ### GetMerchantType
 
@@ -149,6 +108,36 @@ and a boolean to check if the value has been set.
 
 SetCompanyInfo sets CompanyInfo field to given value.
 
+### HasCompanyInfo
+
+`func (o *SubmitMerchantKyc) HasCompanyInfo() bool`
+
+HasCompanyInfo returns a boolean if a field has been set.
+
+### GetIndividualInfo
+
+`func (o *SubmitMerchantKyc) GetIndividualInfo() MerchantKycPersonInfo`
+
+GetIndividualInfo returns the IndividualInfo field if non-nil, zero value otherwise.
+
+### GetIndividualInfoOk
+
+`func (o *SubmitMerchantKyc) GetIndividualInfoOk() (*MerchantKycPersonInfo, bool)`
+
+GetIndividualInfoOk returns a tuple with the IndividualInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIndividualInfo
+
+`func (o *SubmitMerchantKyc) SetIndividualInfo(v MerchantKycPersonInfo)`
+
+SetIndividualInfo sets IndividualInfo field to given value.
+
+### HasIndividualInfo
+
+`func (o *SubmitMerchantKyc) HasIndividualInfo() bool`
+
+HasIndividualInfo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

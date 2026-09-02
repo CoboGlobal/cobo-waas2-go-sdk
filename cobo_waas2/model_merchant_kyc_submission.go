@@ -24,16 +24,13 @@ type MerchantKycSubmission struct {
 	// The merchant ID.
 	MerchantId string `json:"merchant_id"`
 	Status MerchantKycStatus `json:"status"`
-	// The merchant email address.
-	Email string `json:"email"`
-	// The merchant phone number.
-	Phone string `json:"phone"`
 	MerchantType MerchantKycMerchantType `json:"merchant_type"`
 	// The country/region of the merchant, in ISO 3166-1 alpha-3 format.
 	Country string `json:"country"`
 	// The industry categories of the merchant.
 	Industry []string `json:"industry"`
-	CompanyInfo MerchantKycCompanyInfo `json:"company_info"`
+	CompanyInfo *MerchantKycCompanyInfo `json:"company_info,omitempty"`
+	IndividualInfo *MerchantKycPersonInfo `json:"individual_info,omitempty"`
 	// The creation timestamp in Unix seconds.
 	CreatedTimestamp int64 `json:"created_timestamp"`
 	// The last update timestamp in Unix seconds.
@@ -46,17 +43,14 @@ type _MerchantKycSubmission MerchantKycSubmission
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMerchantKycSubmission(kycSubmissionId string, merchantId string, status MerchantKycStatus, email string, phone string, merchantType MerchantKycMerchantType, country string, industry []string, companyInfo MerchantKycCompanyInfo, createdTimestamp int64) *MerchantKycSubmission {
+func NewMerchantKycSubmission(kycSubmissionId string, merchantId string, status MerchantKycStatus, merchantType MerchantKycMerchantType, country string, industry []string, createdTimestamp int64) *MerchantKycSubmission {
 	this := MerchantKycSubmission{}
 	this.KycSubmissionId = kycSubmissionId
 	this.MerchantId = merchantId
 	this.Status = status
-	this.Email = email
-	this.Phone = phone
 	this.MerchantType = merchantType
 	this.Country = country
 	this.Industry = industry
-	this.CompanyInfo = companyInfo
 	this.CreatedTimestamp = createdTimestamp
 	return &this
 }
@@ -141,54 +135,6 @@ func (o *MerchantKycSubmission) SetStatus(v MerchantKycStatus) {
 	o.Status = v
 }
 
-// GetEmail returns the Email field value
-func (o *MerchantKycSubmission) GetEmail() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Email
-}
-
-// GetEmailOk returns a tuple with the Email field value
-// and a boolean to check if the value has been set.
-func (o *MerchantKycSubmission) GetEmailOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Email, true
-}
-
-// SetEmail sets field value
-func (o *MerchantKycSubmission) SetEmail(v string) {
-	o.Email = v
-}
-
-// GetPhone returns the Phone field value
-func (o *MerchantKycSubmission) GetPhone() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Phone
-}
-
-// GetPhoneOk returns a tuple with the Phone field value
-// and a boolean to check if the value has been set.
-func (o *MerchantKycSubmission) GetPhoneOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Phone, true
-}
-
-// SetPhone sets field value
-func (o *MerchantKycSubmission) SetPhone(v string) {
-	o.Phone = v
-}
-
 // GetMerchantType returns the MerchantType field value
 func (o *MerchantKycSubmission) GetMerchantType() MerchantKycMerchantType {
 	if o == nil {
@@ -261,28 +207,68 @@ func (o *MerchantKycSubmission) SetIndustry(v []string) {
 	o.Industry = v
 }
 
-// GetCompanyInfo returns the CompanyInfo field value
+// GetCompanyInfo returns the CompanyInfo field value if set, zero value otherwise.
 func (o *MerchantKycSubmission) GetCompanyInfo() MerchantKycCompanyInfo {
-	if o == nil {
+	if o == nil || IsNil(o.CompanyInfo) {
 		var ret MerchantKycCompanyInfo
 		return ret
 	}
-
-	return o.CompanyInfo
+	return *o.CompanyInfo
 }
 
-// GetCompanyInfoOk returns a tuple with the CompanyInfo field value
+// GetCompanyInfoOk returns a tuple with the CompanyInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MerchantKycSubmission) GetCompanyInfoOk() (*MerchantKycCompanyInfo, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CompanyInfo) {
 		return nil, false
 	}
-	return &o.CompanyInfo, true
+	return o.CompanyInfo, true
 }
 
-// SetCompanyInfo sets field value
+// HasCompanyInfo returns a boolean if a field has been set.
+func (o *MerchantKycSubmission) HasCompanyInfo() bool {
+	if o != nil && !IsNil(o.CompanyInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyInfo gets a reference to the given MerchantKycCompanyInfo and assigns it to the CompanyInfo field.
 func (o *MerchantKycSubmission) SetCompanyInfo(v MerchantKycCompanyInfo) {
-	o.CompanyInfo = v
+	o.CompanyInfo = &v
+}
+
+// GetIndividualInfo returns the IndividualInfo field value if set, zero value otherwise.
+func (o *MerchantKycSubmission) GetIndividualInfo() MerchantKycPersonInfo {
+	if o == nil || IsNil(o.IndividualInfo) {
+		var ret MerchantKycPersonInfo
+		return ret
+	}
+	return *o.IndividualInfo
+}
+
+// GetIndividualInfoOk returns a tuple with the IndividualInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MerchantKycSubmission) GetIndividualInfoOk() (*MerchantKycPersonInfo, bool) {
+	if o == nil || IsNil(o.IndividualInfo) {
+		return nil, false
+	}
+	return o.IndividualInfo, true
+}
+
+// HasIndividualInfo returns a boolean if a field has been set.
+func (o *MerchantKycSubmission) HasIndividualInfo() bool {
+	if o != nil && !IsNil(o.IndividualInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetIndividualInfo gets a reference to the given MerchantKycPersonInfo and assigns it to the IndividualInfo field.
+func (o *MerchantKycSubmission) SetIndividualInfo(v MerchantKycPersonInfo) {
+	o.IndividualInfo = &v
 }
 
 // GetCreatedTimestamp returns the CreatedTimestamp field value
@@ -354,12 +340,15 @@ func (o MerchantKycSubmission) ToMap() (map[string]interface{}, error) {
 	toSerialize["kyc_submission_id"] = o.KycSubmissionId
 	toSerialize["merchant_id"] = o.MerchantId
 	toSerialize["status"] = o.Status
-	toSerialize["email"] = o.Email
-	toSerialize["phone"] = o.Phone
 	toSerialize["merchant_type"] = o.MerchantType
 	toSerialize["country"] = o.Country
 	toSerialize["industry"] = o.Industry
-	toSerialize["company_info"] = o.CompanyInfo
+	if !IsNil(o.CompanyInfo) {
+		toSerialize["company_info"] = o.CompanyInfo
+	}
+	if !IsNil(o.IndividualInfo) {
+		toSerialize["individual_info"] = o.IndividualInfo
+	}
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	if !IsNil(o.UpdatedTimestamp) {
 		toSerialize["updated_timestamp"] = o.UpdatedTimestamp
@@ -375,12 +364,9 @@ func (o *MerchantKycSubmission) UnmarshalJSON(data []byte) (err error) {
 		"kyc_submission_id",
 		"merchant_id",
 		"status",
-		"email",
-		"phone",
 		"merchant_type",
 		"country",
 		"industry",
-		"company_info",
 		"created_timestamp",
 	}
 

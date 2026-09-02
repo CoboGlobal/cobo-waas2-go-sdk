@@ -39,6 +39,10 @@ type SupportedToken struct {
 	TokenIconUrl NullableString `json:"token_icon_url,omitempty"`
 	// Whether the token supports fiat off-ramp. - `true`: The token can be used for fiat off-ramp. - `false`: The token cannot be used for fiat off-ramp. 
 	CanOffRamp *bool `json:"can_off_ramp,omitempty"`
+	// The number of blockchain confirmations required for an on-chain transaction on the token's chain, such as 64 for Ethereum. 
+	ConfirmingThreshold *int32 `json:"confirming_threshold,omitempty"`
+	// The dust amount threshold for the token, deposits with an amount less than or equal to this threshold are treated as dust and excluded from the payment system. 
+	DepositThreshold *string `json:"deposit_threshold,omitempty"`
 }
 
 type _SupportedToken SupportedToken
@@ -355,6 +359,70 @@ func (o *SupportedToken) SetCanOffRamp(v bool) {
 	o.CanOffRamp = &v
 }
 
+// GetConfirmingThreshold returns the ConfirmingThreshold field value if set, zero value otherwise.
+func (o *SupportedToken) GetConfirmingThreshold() int32 {
+	if o == nil || IsNil(o.ConfirmingThreshold) {
+		var ret int32
+		return ret
+	}
+	return *o.ConfirmingThreshold
+}
+
+// GetConfirmingThresholdOk returns a tuple with the ConfirmingThreshold field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SupportedToken) GetConfirmingThresholdOk() (*int32, bool) {
+	if o == nil || IsNil(o.ConfirmingThreshold) {
+		return nil, false
+	}
+	return o.ConfirmingThreshold, true
+}
+
+// HasConfirmingThreshold returns a boolean if a field has been set.
+func (o *SupportedToken) HasConfirmingThreshold() bool {
+	if o != nil && !IsNil(o.ConfirmingThreshold) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfirmingThreshold gets a reference to the given int32 and assigns it to the ConfirmingThreshold field.
+func (o *SupportedToken) SetConfirmingThreshold(v int32) {
+	o.ConfirmingThreshold = &v
+}
+
+// GetDepositThreshold returns the DepositThreshold field value if set, zero value otherwise.
+func (o *SupportedToken) GetDepositThreshold() string {
+	if o == nil || IsNil(o.DepositThreshold) {
+		var ret string
+		return ret
+	}
+	return *o.DepositThreshold
+}
+
+// GetDepositThresholdOk returns a tuple with the DepositThreshold field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SupportedToken) GetDepositThresholdOk() (*string, bool) {
+	if o == nil || IsNil(o.DepositThreshold) {
+		return nil, false
+	}
+	return o.DepositThreshold, true
+}
+
+// HasDepositThreshold returns a boolean if a field has been set.
+func (o *SupportedToken) HasDepositThreshold() bool {
+	if o != nil && !IsNil(o.DepositThreshold) {
+		return true
+	}
+
+	return false
+}
+
+// SetDepositThreshold gets a reference to the given string and assigns it to the DepositThreshold field.
+func (o *SupportedToken) SetDepositThreshold(v string) {
+	o.DepositThreshold = &v
+}
+
 func (o SupportedToken) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -380,6 +448,12 @@ func (o SupportedToken) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CanOffRamp) {
 		toSerialize["can_off_ramp"] = o.CanOffRamp
+	}
+	if !IsNil(o.ConfirmingThreshold) {
+		toSerialize["confirming_threshold"] = o.ConfirmingThreshold
+	}
+	if !IsNil(o.DepositThreshold) {
+		toSerialize["deposit_threshold"] = o.DepositThreshold
 	}
 	return toSerialize, nil
 }
