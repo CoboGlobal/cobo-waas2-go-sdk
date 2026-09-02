@@ -2387,6 +2387,8 @@ func (r ApiCreateReportRequest) Execute() (*Report, *http.Response, error) {
 CreateReport Generate reports
 
 This operation generates reports for a variety of payment activities, including pay-ins, payouts, and commission fees.
+The response does not guarantee a download URL.
+To retrieve a temporary download URL for a completed report, call download report operation.
 <Note>For `report_types`, report scope, exported field differences, and report-specific usage notes, see [Reports](/payments/en/guides/reports).</Note>
 
 
@@ -3644,6 +3646,146 @@ func (a *PaymentAPIService) DeleteDestinationEntryExecute(r ApiDeleteDestination
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDownloadReportRequest struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	downloadReportRequest *DownloadReportRequest
+}
+
+// The request body to download a payment report.
+func (r ApiDownloadReportRequest) DownloadReportRequest(downloadReportRequest DownloadReportRequest) ApiDownloadReportRequest {
+	r.downloadReportRequest = &downloadReportRequest
+	return r
+}
+
+func (r ApiDownloadReportRequest) Execute() (*ReportDownloadResponse, *http.Response, error) {
+	return r.ApiService.DownloadReportExecute(r)
+}
+
+/*
+DownloadReport Download report
+
+This operation retrieves a temporary download URL for a completed payment report.
+Endpoint: `POST https://api.dev.cobo.com/v2/payments/reports/download`.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiDownloadReportRequest
+*/
+func (a *PaymentAPIService) DownloadReport(ctx context.Context) ApiDownloadReportRequest {
+	return ApiDownloadReportRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ReportDownloadResponse
+func (a *PaymentAPIService) DownloadReportExecute(r ApiDownloadReportRequest) (*ReportDownloadResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ReportDownloadResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.DownloadReport")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/reports/download"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.downloadReportRequest == nil {
+		return localVarReturnValue, nil, reportError("downloadReportRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.downloadReportRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -9586,8 +9728,9 @@ ListPaymentSupportedTokens List supported tokens
 
 This operation retrieves all tokens supported by Cobo Payments.
 
-Use this operation to get token details such as token ID, symbol, decimal precision, 
-contract address, and chain information before creating payment orders.
+Use this operation to get token details such as token ID, symbol, decimal precision,
+contract address, chain information, confirmation threshold, and deposit threshold
+before creating payment orders.
 
 For more information about Cobo Payments, see [Cobo Payments Overview](https://www.cobo.com/payments/en/guides/overview).
 
@@ -10708,7 +10851,7 @@ type ApiSubmitMerchantKycRequest struct {
 	submitMerchantKyc *SubmitMerchantKyc
 }
 
-// The request body to submit merchant KYC information.
+// The request body to submit merchant KYC information.  Provide either &#x60;company_info&#x60; or &#x60;individual_info&#x60;: - &#x60;company_info&#x60;: Required for company merchants. - &#x60;individual_info&#x60;: Required for individual merchants. 
 func (r ApiSubmitMerchantKycRequest) SubmitMerchantKyc(submitMerchantKyc SubmitMerchantKyc) ApiSubmitMerchantKycRequest {
 	r.submitMerchantKyc = &submitMerchantKyc
 	return r
@@ -10723,9 +10866,14 @@ SubmitMerchantKyc Submit merchant KYC
 
 This operation submits KYC information for a specified merchant.
 
-You need to provide the merchant contact information, merchant type, country, industry, and company information.
+You need to provide the merchant type, country, and industry.
+Provide either `company_info` or `individual_info`:
+- `company_info`: Required for company merchants.
+- `individual_info`: Required for individual merchants.
 
 The merchant ID can be retrieved by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
+
+<Note>If the merchant KYC status is `Disabled`, this operation cannot be used to resubmit KYC information.</Note>
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -11984,6 +12132,8 @@ func (r ApiUploadPaymentFileRequest) Execute() (*PaymentUploadedFile, *http.Resp
 /*
 UploadPaymentFile Upload file
 
+<Note>This operation has been deprecated. Please use [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2) instead.</Note>
+
 This operation uploads a file for payment-related use cases, such as merchant KYC attachments.
 
 You need to specify the file to upload. After a successful upload, use the returned AWS file link in `file_id` when calling
@@ -11993,6 +12143,8 @@ The returned file link expires at the time specified by `expired_timestamp`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiUploadPaymentFileRequest
+
+Deprecated
 */
 func (a *PaymentAPIService) UploadPaymentFile(ctx context.Context) ApiUploadPaymentFileRequest {
 	return ApiUploadPaymentFileRequest{
@@ -12003,6 +12155,7 @@ func (a *PaymentAPIService) UploadPaymentFile(ctx context.Context) ApiUploadPaym
 
 // Execute executes the request
 //  @return PaymentUploadedFile
+// Deprecated
 func (a *PaymentAPIService) UploadPaymentFileExecute(r ApiUploadPaymentFileRequest) (*PaymentUploadedFile, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
@@ -12057,6 +12210,146 @@ func (a *PaymentAPIService) UploadPaymentFileExecute(r ApiUploadPaymentFileReque
 		fileLocalVarFile.Close()
 		formFiles = append(formFiles, formFile{fileBytes: fileLocalVarFileBytes, fileName: fileLocalVarFileName, formFileName: fileLocalVarFormFileName})
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		// Proxy errors (e.g. nginx) may return non-JSON bodies.
+		// Return the error directly without attempting to decode.
+		switch localVarHTTPResponse.StatusCode {
+		case 414, 429, 502, 503:
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode >= 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUploadPaymentFileV2Request struct {
+	ctx context.Context
+	ApiService *PaymentAPIService
+	paymentUploadFileV2 *PaymentUploadFileV2
+}
+
+// The request body to upload a file.
+func (r ApiUploadPaymentFileV2Request) PaymentUploadFileV2(paymentUploadFileV2 PaymentUploadFileV2) ApiUploadPaymentFileV2Request {
+	r.paymentUploadFileV2 = &paymentUploadFileV2
+	return r
+}
+
+func (r ApiUploadPaymentFileV2Request) Execute() (*PaymentUploadedFile, *http.Response, error) {
+	return r.ApiService.UploadPaymentFileV2Execute(r)
+}
+
+/*
+UploadPaymentFileV2 Upload file v2
+
+This operation uploads a file for payment-related use cases, such as merchant KYC attachments.
+
+You need to encode the file content in Base64 and include it in the JSON request body together with the original file name. After a successful upload, use the returned AWS file link in `file_id` when calling
+[Submit merchant KYC](https://www.cobo.com/developers/v2/api-references/payment/submit-merchant-kyc).
+The returned file link expires at the time specified by `expired_timestamp`.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUploadPaymentFileV2Request
+*/
+func (a *PaymentAPIService) UploadPaymentFileV2(ctx context.Context) ApiUploadPaymentFileV2Request {
+	return ApiUploadPaymentFileV2Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return PaymentUploadedFile
+func (a *PaymentAPIService) UploadPaymentFileV2Execute(r ApiUploadPaymentFileV2Request) (*PaymentUploadedFile, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PaymentUploadedFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.UploadPaymentFileV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/payments/files_v2"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.paymentUploadFileV2
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

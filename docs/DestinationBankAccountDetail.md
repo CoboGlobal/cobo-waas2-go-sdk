@@ -35,6 +35,8 @@ Name | Type | Description | Notes
 **BankBranchCode** | Pointer to **string** | The branch code. Required when &#x60;payment_method&#x60; is &#x60;Local&#x60; (HK only).  | [optional] 
 **BankCountry** | Pointer to **string** | The country, in ISO 3166-1 alpha-3 format. | [optional] 
 **BankProvince** | Pointer to **string** | The province or state of the bank. Cannot be a pure number or contain Chinese characters.  | [optional] 
+**BankCity** | Pointer to **string** | The city of the bank. | [optional] 
+**RoutingValue** | Pointer to **string** | The routing value of the bank account. | [optional] 
 **ContractFileId** | Pointer to **string** | The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).  | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
@@ -777,6 +779,56 @@ SetBankProvince sets BankProvince field to given value.
 `func (o *DestinationBankAccountDetail) HasBankProvince() bool`
 
 HasBankProvince returns a boolean if a field has been set.
+
+### GetBankCity
+
+`func (o *DestinationBankAccountDetail) GetBankCity() string`
+
+GetBankCity returns the BankCity field if non-nil, zero value otherwise.
+
+### GetBankCityOk
+
+`func (o *DestinationBankAccountDetail) GetBankCityOk() (*string, bool)`
+
+GetBankCityOk returns a tuple with the BankCity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBankCity
+
+`func (o *DestinationBankAccountDetail) SetBankCity(v string)`
+
+SetBankCity sets BankCity field to given value.
+
+### HasBankCity
+
+`func (o *DestinationBankAccountDetail) HasBankCity() bool`
+
+HasBankCity returns a boolean if a field has been set.
+
+### GetRoutingValue
+
+`func (o *DestinationBankAccountDetail) GetRoutingValue() string`
+
+GetRoutingValue returns the RoutingValue field if non-nil, zero value otherwise.
+
+### GetRoutingValueOk
+
+`func (o *DestinationBankAccountDetail) GetRoutingValueOk() (*string, bool)`
+
+GetRoutingValueOk returns a tuple with the RoutingValue field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRoutingValue
+
+`func (o *DestinationBankAccountDetail) SetRoutingValue(v string)`
+
+SetRoutingValue sets RoutingValue field to given value.
+
+### HasRoutingValue
+
+`func (o *DestinationBankAccountDetail) HasRoutingValue() bool`
+
+HasRoutingValue returns a boolean if a field has been set.
 
 ### GetContractFileId
 

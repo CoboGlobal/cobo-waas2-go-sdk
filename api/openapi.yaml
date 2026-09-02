@@ -9849,9 +9849,14 @@ paths:
       description: |
         This operation submits KYC information for a specified merchant.
 
-        You need to provide the merchant contact information, merchant type, country, industry, and company information.
+        You need to provide the merchant type, country, and industry.
+        Provide either `company_info` or `individual_info`:
+        - `company_info`: Required for company merchants.
+        - `individual_info`: Required for individual merchants.
 
         The merchant ID can be retrieved by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
+
+        <Note>If the merchant KYC status is `Disabled`, this operation cannot be used to resubmit KYC information.</Note>
       operationId: submit_merchant_kyc
       parameters:
       - description: The merchant ID.
@@ -9894,7 +9899,10 @@ paths:
       - Payment
   /payments/files:
     post:
+      deprecated: true
       description: |
+        <Note>This operation has been deprecated. Please use [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2) instead.</Note>
+
         This operation uploads a file for payment-related use cases, such as merchant KYC attachments.
 
         You need to specify the file to upload. After a successful upload, use the returned AWS file link in `file_id` when calling
@@ -9928,6 +9936,44 @@ paths:
       - OAuth2:
         - payment_merchant.create
       summary: Upload file
+      tags:
+      - Payment
+  /payments/files_v2:
+    post:
+      description: |
+        This operation uploads a file for payment-related use cases, such as merchant KYC attachments.
+
+        You need to encode the file content in Base64 and include it in the JSON request body together with the original file name. After a successful upload, use the returned AWS file link in `file_id` when calling
+        [Submit merchant KYC](https://www.cobo.com/developers/v2/api-references/payment/submit-merchant-kyc).
+        The returned file link expires at the time specified by `expired_timestamp`.
+      operationId: upload_payment_file_v2
+      requestBody:
+        $ref: '#/components/requestBodies/uploadPaymentFileV2Body'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentUploadedFile'
+          description: The request was successful.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_merchant.create
+      summary: Upload file v2
       tags:
       - Payment
   /payments/refunds:
@@ -10915,11 +10961,14 @@ paths:
       - Payment
   /payments/supported_tokens:
     get:
-      description: "This operation retrieves all tokens supported by Cobo Payments.\n\
-        \nUse this operation to get token details such as token ID, symbol, decimal\
-        \ precision, \ncontract address, and chain information before creating payment\
-        \ orders.\n\nFor more information about Cobo Payments, see [Cobo Payments\
-        \ Overview](https://www.cobo.com/payments/en/guides/overview).\n"
+      description: |
+        This operation retrieves all tokens supported by Cobo Payments.
+
+        Use this operation to get token details such as token ID, symbol, decimal precision,
+        contract address, chain information, confirmation threshold, and deposit threshold
+        before creating payment orders.
+
+        For more information about Cobo Payments, see [Cobo Payments Overview](https://www.cobo.com/payments/en/guides/overview).
       operationId: list_payment_supported_tokens
       responses:
         "200":
@@ -13573,6 +13622,8 @@ paths:
     post:
       description: |
         This operation generates reports for a variety of payment activities, including pay-ins, payouts, and commission fees.
+        The response does not guarantee a download URL.
+        To retrieve a temporary download URL for a completed report, call download report operation.
         <Note>For `report_types`, report scope, exported field differences, and report-specific usage notes, see [Reports](/payments/en/guides/reports).</Note>
       operationId: create_report
       requestBody:
@@ -13602,6 +13653,41 @@ paths:
       - OAuth2:
         - payment_reports.create
       summary: Generate reports
+      tags:
+      - Payment
+  /payments/reports/download:
+    post:
+      description: |
+        This operation retrieves a temporary download URL for a completed payment report.
+        Endpoint: `POST https://api.dev.cobo.com/v2/payments/reports/download`.
+      operationId: download_report
+      requestBody:
+        $ref: '#/components/requestBodies/downloadReportBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportDownloadResponse'
+          description: Payment report download URL retrieved successfully.
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request. Your request contains malformed syntax or invalid
+            parameters.
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error.
+      security:
+      - CoboAuth: []
+      - OAuth2:
+        - payment_reports.read
+      summary: Download report
       tags:
       - Payment
   /payments/payouts:
@@ -19280,6 +19366,13 @@ components:
           schema:
             $ref: '#/components/schemas/create_report_request'
       description: The request body to create payment reports.
+    downloadReportBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DownloadReportRequest'
+      description: The request body to download a payment report.
+      required: true
     createMerchantBody:
       content:
         application/json:
@@ -19297,12 +19390,23 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SubmitMerchantKyc'
-      description: The request body to submit merchant KYC information.
+      description: |
+        The request body to submit merchant KYC information.
+
+        Provide either `company_info` or `individual_info`:
+        - `company_info`: Required for company merchants.
+        - `individual_info`: Required for individual merchants.
     uploadPaymentFileBody:
       content:
         multipart/form-data:
           schema:
             $ref: '#/components/schemas/upload_payment_file_request'
+      description: The request body to upload a file.
+    uploadPaymentFileV2Body:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentUploadFileV2'
       description: The request body to upload a file.
     createPaymentOrderBody:
       content:
@@ -20536,6 +20640,12 @@ components:
           schema:
             $ref: '#/components/schemas/get_reports_200_response'
       description: List of reports.
+    downloadReportResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReportDownloadResponse'
+      description: Payment report download URL retrieved successfully.
     createMerchantResponse:
       content:
         application/json:
@@ -33175,9 +33285,11 @@ components:
     ReportStatus:
       description: |
         The status of the report.
-        - `Completed`: The report has been generated successfully.
-        - `Failed`: The report could not be generated.
+        - `Processing`: The report is being generated.
+        - `Completed`: The report has been completed.
+        - `Failed`: The report has failed.
       enum:
+      - Processing
       - Completed
       - Failed
       example: Completed
@@ -33233,7 +33345,8 @@ components:
           example: 1744689600
           type: integer
         report_url:
-          description: The URL of the report.
+          description: "The url of the payment report. (This field will be deprecated,\
+            \ please use download report operation to get the temporary download URL.)"
           example: https://cobo.com/reports/123e4567-e89b-12d3-a456-426614174004
           type: string
         report_export_format:
@@ -33254,6 +33367,28 @@ components:
       - report_status
       - report_types
       - start_time
+      type: object
+    DownloadReportRequest:
+      example:
+        report_id: RPT-20260817082721-7b873644
+      properties:
+        report_id:
+          description: The report ID.
+          example: RPT-20260817082721-7b873644
+          type: string
+      required:
+      - report_id
+      type: object
+    ReportDownloadResponse:
+      example:
+        download_url: https://cobo.com/reports/123e4567-e89b-12d3-a456-426614174004
+      properties:
+        download_url:
+          description: The temporary URL used to download the payment report.
+          example: https://cobo.com/reports/123e4567-e89b-12d3-a456-426614174004
+          type: string
+      required:
+      - download_url
       type: object
     BankAccount:
       example:
@@ -34596,10 +34731,12 @@ components:
         symbol: USDT
         token_id: ETH_USDT
         chain_id: ETH
+        deposit_threshold: "0.05"
         name: Tether USD
         token_icon_url: https://d.cobo.com/public/logos/USDT.png
         token_address: 0xdac17f958d2ee523a2206206994597c13d831ec7
         can_off_ramp: true
+        confirming_threshold: 15
         decimal: 6
         chain_symbol: ETH
         chain_icon_url: https://d.cobo.com/public/logos/ETH.png
@@ -34653,6 +34790,19 @@ components:
             - `true`: The token can be used for fiat off-ramp.
             - `false`: The token cannot be used for fiat off-ramp.
           type: boolean
+        confirming_threshold:
+          description: |
+            The number of blockchain confirmations required for an on-chain transaction on the
+            token's chain, such as 64 for Ethereum.
+          example: 15
+          format: int32
+          type: integer
+        deposit_threshold:
+          description: |
+            The dust amount threshold for the token, deposits with an amount less than or equal to this threshold are treated as dust
+            and excluded from the payment system.
+          example: "0.05"
+          type: string
       required:
       - chain_id
       - chain_symbol
@@ -35054,7 +35204,6 @@ components:
     SubmitMerchantKyc:
       example:
         country: HKG
-        phone: "+85212345678"
         company_info:
           identify_no: "12345678"
           company_type: Corporation
@@ -35137,17 +35286,26 @@ components:
             name_en: Zhang San
         industry:
         - E-commerce
-        email: merchant@example.com
+        individual_info:
+          residential_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          id_number: "110101199001011234"
+          attachments:
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          issue_date: "20290322"
+          date_of_birth: "20290322"
+          name: 张三
+          expiration_date: "20290322"
+          name_en: Zhang San
         merchant_type: B2B
       properties:
-        email:
-          description: The merchant email address.
-          example: merchant@example.com
-          type: string
-        phone:
-          description: The merchant phone number.
-          example: "+85212345678"
-          type: string
         merchant_type:
           $ref: '#/components/schemas/MerchantKycMerchantType'
         country:
@@ -35164,13 +35322,12 @@ components:
           type: array
         company_info:
           $ref: '#/components/schemas/MerchantKycCompanyInfo'
+        individual_info:
+          $ref: '#/components/schemas/MerchantKycPersonInfo'
       required:
-      - company_info
       - country
-      - email
       - industry
       - merchant_type
-      - phone
       type: object
     MerchantKycInfo:
       example:
@@ -35197,7 +35354,6 @@ components:
     MerchantKycSubmission:
       example:
         country: HKG
-        phone: "+85212345678"
         updated_timestamp: 1744689600
         company_info:
           identify_no: "12345678"
@@ -35284,7 +35440,24 @@ components:
         created_timestamp: 1744689600
         merchant_id: M1001
         kyc_submission_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
-        email: merchant@example.com
+        individual_info:
+          residential_address:
+            country: HK
+            city: Hong Kong
+            postcode: "999077"
+            state: Hong Kong
+            line1: 1 Example Street
+          id_number: "110101199001011234"
+          attachments:
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          - file_type: PRC_ID_Emblem
+            file_id: https://example-bucket.s3.us-east-1.amazonaws.com/uploads/id_card_front.jpg
+          issue_date: "20290322"
+          date_of_birth: "20290322"
+          name: 张三
+          expiration_date: "20290322"
+          name_en: Zhang San
         status: PendingReview
         merchant_type: B2B
       properties:
@@ -35299,14 +35472,6 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/MerchantKycStatus'
-        email:
-          description: The merchant email address.
-          example: merchant@example.com
-          type: string
-        phone:
-          description: The merchant phone number.
-          example: "+85212345678"
-          type: string
         merchant_type:
           $ref: '#/components/schemas/MerchantKycMerchantType'
         country:
@@ -35323,6 +35488,8 @@ components:
           type: array
         company_info:
           $ref: '#/components/schemas/MerchantKycCompanyInfo'
+        individual_info:
+          $ref: '#/components/schemas/MerchantKycPersonInfo'
         created_timestamp:
           description: The creation timestamp in Unix seconds.
           example: 1744689600
@@ -35334,15 +35501,12 @@ components:
           format: int64
           type: integer
       required:
-      - company_info
       - country
       - created_timestamp
-      - email
       - industry
       - kyc_submission_id
       - merchant_id
       - merchant_type
-      - phone
       - status
       type: object
     MerchantKycStatus:
@@ -35351,10 +35515,12 @@ components:
         - `PendingReview`: The KYC submission is pending review.
         - `Completed`: The KYC submission has been completed.
         - `Failed`: The KYC submission has failed.
+        - `Disabled`: The KYC submission is disabled. Merchants in this status cannot resubmit KYC information.
       enum:
       - PendingReview
       - Completed
       - Failed
+      - Disabled
       example: PendingReview
       type: string
     MerchantKycMerchantType:
@@ -35413,6 +35579,8 @@ components:
       - HKM_RP
       - HK/Mac_MTP
       - BACK
+      - ID_Hand
+      - POA
       example: PRC_ID_Emblem
       type: string
     MerchantKycCompanyAttachment:
@@ -35707,6 +35875,23 @@ components:
       - ubo_infos
       - valid_period
       type: object
+    PaymentUploadFileV2:
+      example:
+        file_content: JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PgplbmRvYmoK
+        file_name: business_registration.pdf
+      properties:
+        file_name:
+          description: "The original file name, including the file extension."
+          example: business_registration.pdf
+          type: string
+        file_content:
+          description: "The file content, encoded in Base64."
+          example: JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PgplbmRvYmoK
+          type: string
+      required:
+      - file_content
+      - file_name
+      type: object
     PaymentUploadedFile:
       example:
         expired_timestamp: 1701483266000
@@ -35968,6 +36153,7 @@ components:
           bank_name: Intermediary Bank
           bank_address: "456 Bank Ave, Cityville, USA"
           bank_swift_code: BOFAUS33
+        routing_value: "021000021"
         updated_timestamp: 1744689600
         bank_account_status: Pending
         bank_name: ABC Bank
@@ -35986,6 +36172,7 @@ components:
         beneficiary_province: Hong Kong
         bank_account_name: Example Company Limited
         bank_branch_code: "123"
+        bank_city: Hong Kong
       properties:
         bank_account_id:
           description: The destination bank account ID.
@@ -36089,6 +36276,14 @@ components:
           description: |
             The province or state of the bank. Cannot be a pure number or contain Chinese characters.
           example: Hong Kong
+          type: string
+        bank_city:
+          description: The city of the bank.
+          example: Hong Kong
+          type: string
+        routing_value:
+          description: The routing value of the bank account.
+          example: "021000021"
           type: string
         contract_file_id:
           description: |
@@ -36389,6 +36584,14 @@ components:
             The province or state of the bank. Cannot be a pure number or contain Chinese characters.
           example: Hong Kong
           type: string
+        bank_city:
+          description: The city of the bank.
+          example: Hong Kong
+          type: string
+        routing_value:
+          description: The routing value of the bank account.
+          example: "021000021"
+          type: string
         contract_file_id:
           description: |
             The file ID of the contract document (e.g., cooperation agreement) that proves
@@ -36553,6 +36756,14 @@ components:
             The province or state of the bank. Cannot be a pure number or contain Chinese characters.
           example: Hong Kong
           type: string
+        bank_city:
+          description: The city of the bank.
+          example: Hong Kong
+          type: string
+        routing_value:
+          description: The routing value of the bank account.
+          example: "021000021"
+          type: string
         contract_file_id:
           description: |
             The file ID of the contract document (e.g., cooperation agreement) that proves
@@ -36662,6 +36873,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           bank_account_status: Pending
           bank_name: ABC Bank
@@ -36680,6 +36892,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
         - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
           account_number: "4111111111111111"
           country: USA
@@ -36692,6 +36905,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           bank_account_status: Pending
           bank_name: ABC Bank
@@ -36710,6 +36924,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
         merchant_id: M1001
         contact_address: "123 Main St, Anytown, USA"
         wallet_addresses:
@@ -36803,9 +37018,13 @@ components:
       example: Swift
       type: string
     BankAccountHolderType:
-      description: The holder type of the bank account.
+      description: |
+        BankAccountHolderType defines the holder type of the bank account:
+        - `Company`: The bank account holder is a company.
+        - `Personal`: The bank account holder is a personal individual.
       enum:
       - Company
+      - Personal
       example: Company
       type: string
     CounterpartyWalletAddressDetail:
@@ -36929,6 +37148,7 @@ components:
           bank_name: Intermediary Bank
           bank_address: "456 Bank Ave, Cityville, USA"
           bank_swift_code: BOFAUS33
+        routing_value: "021000021"
         updated_timestamp: 1744689600
         destination_contact_address: "123 Main St, Anytown, USA"
         bank_account_status: Pending
@@ -36948,6 +37168,7 @@ components:
         beneficiary_province: Hong Kong
         bank_account_name: Example Company Limited
         bank_branch_code: "123"
+        bank_city: Hong Kong
       properties:
         destination_id:
           description: The destination ID.
@@ -37068,6 +37289,14 @@ components:
           description: |
             The province or state of the bank. Cannot be a pure number or contain Chinese characters.
           example: Hong Kong
+          type: string
+        bank_city:
+          description: The city of the bank.
+          example: Hong Kong
+          type: string
+        routing_value:
+          description: The routing value of the bank account.
+          example: "021000021"
           type: string
         contract_file_id:
           description: |
@@ -37817,6 +38046,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           destination_contact_address: "123 Main St, Anytown, USA"
           bank_account_status: Pending
@@ -37836,6 +38066,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
         source_bank_account_id: dst_ba_1234567890
         timeline:
         - status: Pending
@@ -37866,6 +38097,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           destination_contact_address: "123 Main St, Anytown, USA"
           bank_account_status: Pending
@@ -37885,6 +38117,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
     PaymentBankWithdrawalStatus:
       description: |
         The status of the bank withdrawal:
@@ -48092,6 +48325,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           destination_contact_address: "123 Main St, Anytown, USA"
           bank_account_status: Pending
@@ -48111,6 +48345,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
         - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
           account_number: "4111111111111111"
           country: USA
@@ -48129,6 +48364,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           destination_contact_address: "123 Main St, Anytown, USA"
           bank_account_status: Pending
@@ -48148,6 +48384,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
         wallet_addresses:
         - destination_type: Individual
           address: 0x1234567890abcdef...
@@ -48213,6 +48450,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           bank_account_status: Pending
           bank_name: ABC Bank
@@ -48231,6 +48469,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
         - bank_account_id: 123e4567-e89b-12d3-a456-426614174003
           account_number: "4111111111111111"
           country: USA
@@ -48243,6 +48482,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           bank_account_status: Pending
           bank_name: ABC Bank
@@ -48261,6 +48501,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
         wallet_addresses:
         - risk_level: Low
           address: 0x1234567890abcdef...
@@ -48320,6 +48561,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           destination_contact_address: "123 Main St, Anytown, USA"
           bank_account_status: Pending
@@ -48339,6 +48581,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
       properties:
         wallet_address:
           $ref: '#/components/schemas/WalletAddress'
@@ -48374,6 +48617,7 @@ components:
             bank_name: Intermediary Bank
             bank_address: "456 Bank Ave, Cityville, USA"
             bank_swift_code: BOFAUS33
+          routing_value: "021000021"
           updated_timestamp: 1744689600
           bank_account_status: Pending
           bank_name: ABC Bank
@@ -48392,6 +48636,7 @@ components:
           beneficiary_province: Hong Kong
           bank_account_name: Example Company Limited
           bank_branch_code: "123"
+          bank_city: Hong Kong
       properties:
         bank_account:
           $ref: '#/components/schemas/DestinationBankAccount'

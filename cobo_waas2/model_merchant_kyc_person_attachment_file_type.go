@@ -30,6 +30,8 @@ const (
 	MERCHANTKYCPERSONATTACHMENTFILETYPE_HKM_RP MerchantKycPersonAttachmentFileType = "HKM_RP"
 	MERCHANTKYCPERSONATTACHMENTFILETYPE_HK_MAC_MTP MerchantKycPersonAttachmentFileType = "HK/Mac_MTP"
 	MERCHANTKYCPERSONATTACHMENTFILETYPE_BACK MerchantKycPersonAttachmentFileType = "BACK"
+	MERCHANTKYCPERSONATTACHMENTFILETYPE_ID_HAND MerchantKycPersonAttachmentFileType = "ID_Hand"
+	MERCHANTKYCPERSONATTACHMENTFILETYPE_POA MerchantKycPersonAttachmentFileType = "POA"
 )
 
 // All allowed values of MerchantKycPersonAttachmentFileType enum
@@ -46,6 +48,8 @@ var AllowedMerchantKycPersonAttachmentFileTypeEnumValues = []MerchantKycPersonAt
 	"HKM_RP",
 	"HK/Mac_MTP",
 	"BACK",
+	"ID_Hand",
+	"POA",
 }
 
 func (v *MerchantKycPersonAttachmentFileType) UnmarshalJSON(src []byte) error {

@@ -13,17 +13,19 @@ import (
 	"fmt"
 )
 
-// BankAccountHolderType The holder type of the bank account.
+// BankAccountHolderType BankAccountHolderType defines the holder type of the bank account: - `Company`: The bank account holder is a company. - `Personal`: The bank account holder is a personal individual. 
 type BankAccountHolderType string
 
 // List of BankAccountHolderType
 const (
 	BANKACCOUNTHOLDERTYPE_COMPANY BankAccountHolderType = "Company"
+	BANKACCOUNTHOLDERTYPE_PERSONAL BankAccountHolderType = "Personal"
 )
 
 // All allowed values of BankAccountHolderType enum
 var AllowedBankAccountHolderTypeEnumValues = []BankAccountHolderType{
 	"Company",
+	"Personal",
 }
 
 func (v *BankAccountHolderType) UnmarshalJSON(src []byte) error {

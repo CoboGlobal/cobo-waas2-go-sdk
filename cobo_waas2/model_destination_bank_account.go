@@ -66,6 +66,10 @@ type DestinationBankAccount struct {
 	BankCountry *string `json:"bank_country,omitempty"`
 	// The province or state of the bank. Cannot be a pure number or contain Chinese characters. 
 	BankProvince *string `json:"bank_province,omitempty"`
+	// The city of the bank.
+	BankCity *string `json:"bank_city,omitempty"`
+	// The routing value of the bank account.
+	RoutingValue *string `json:"routing_value,omitempty"`
 	// The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file). 
 	ContractFileId *string `json:"contract_file_id,omitempty"`
 }
@@ -861,6 +865,70 @@ func (o *DestinationBankAccount) SetBankProvince(v string) {
 	o.BankProvince = &v
 }
 
+// GetBankCity returns the BankCity field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetBankCity() string {
+	if o == nil || IsNil(o.BankCity) {
+		var ret string
+		return ret
+	}
+	return *o.BankCity
+}
+
+// GetBankCityOk returns a tuple with the BankCity field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetBankCityOk() (*string, bool) {
+	if o == nil || IsNil(o.BankCity) {
+		return nil, false
+	}
+	return o.BankCity, true
+}
+
+// HasBankCity returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasBankCity() bool {
+	if o != nil && !IsNil(o.BankCity) {
+		return true
+	}
+
+	return false
+}
+
+// SetBankCity gets a reference to the given string and assigns it to the BankCity field.
+func (o *DestinationBankAccount) SetBankCity(v string) {
+	o.BankCity = &v
+}
+
+// GetRoutingValue returns the RoutingValue field value if set, zero value otherwise.
+func (o *DestinationBankAccount) GetRoutingValue() string {
+	if o == nil || IsNil(o.RoutingValue) {
+		var ret string
+		return ret
+	}
+	return *o.RoutingValue
+}
+
+// GetRoutingValueOk returns a tuple with the RoutingValue field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DestinationBankAccount) GetRoutingValueOk() (*string, bool) {
+	if o == nil || IsNil(o.RoutingValue) {
+		return nil, false
+	}
+	return o.RoutingValue, true
+}
+
+// HasRoutingValue returns a boolean if a field has been set.
+func (o *DestinationBankAccount) HasRoutingValue() bool {
+	if o != nil && !IsNil(o.RoutingValue) {
+		return true
+	}
+
+	return false
+}
+
+// SetRoutingValue gets a reference to the given string and assigns it to the RoutingValue field.
+func (o *DestinationBankAccount) SetRoutingValue(v string) {
+	o.RoutingValue = &v
+}
+
 // GetContractFileId returns the ContractFileId field value if set, zero value otherwise.
 func (o *DestinationBankAccount) GetContractFileId() string {
 	if o == nil || IsNil(o.ContractFileId) {
@@ -960,6 +1028,12 @@ func (o DestinationBankAccount) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.BankProvince) {
 		toSerialize["bank_province"] = o.BankProvince
+	}
+	if !IsNil(o.BankCity) {
+		toSerialize["bank_city"] = o.BankCity
+	}
+	if !IsNil(o.RoutingValue) {
+		toSerialize["routing_value"] = o.RoutingValue
 	}
 	if !IsNil(o.ContractFileId) {
 		toSerialize["contract_file_id"] = o.ContractFileId

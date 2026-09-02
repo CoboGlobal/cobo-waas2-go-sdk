@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **ChainIconUrl** | Pointer to **NullableString** | The URL of the chain icon image. | [optional] 
 **TokenIconUrl** | Pointer to **NullableString** | The URL of the token icon image. | [optional] 
 **CanOffRamp** | Pointer to **bool** | Whether the token supports fiat off-ramp. - &#x60;true&#x60;: The token can be used for fiat off-ramp. - &#x60;false&#x60;: The token cannot be used for fiat off-ramp.  | [optional] 
+**ConfirmingThreshold** | Pointer to **int32** | The number of blockchain confirmations required for an on-chain transaction on the token&#39;s chain, such as 64 for Ethereum.  | [optional] 
+**DepositThreshold** | Pointer to **string** | The dust amount threshold for the token, deposits with an amount less than or equal to this threshold are treated as dust and excluded from the payment system.  | [optional] 
 
 ## Methods
 
@@ -288,6 +290,56 @@ SetCanOffRamp sets CanOffRamp field to given value.
 `func (o *SupportedToken) HasCanOffRamp() bool`
 
 HasCanOffRamp returns a boolean if a field has been set.
+
+### GetConfirmingThreshold
+
+`func (o *SupportedToken) GetConfirmingThreshold() int32`
+
+GetConfirmingThreshold returns the ConfirmingThreshold field if non-nil, zero value otherwise.
+
+### GetConfirmingThresholdOk
+
+`func (o *SupportedToken) GetConfirmingThresholdOk() (*int32, bool)`
+
+GetConfirmingThresholdOk returns a tuple with the ConfirmingThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConfirmingThreshold
+
+`func (o *SupportedToken) SetConfirmingThreshold(v int32)`
+
+SetConfirmingThreshold sets ConfirmingThreshold field to given value.
+
+### HasConfirmingThreshold
+
+`func (o *SupportedToken) HasConfirmingThreshold() bool`
+
+HasConfirmingThreshold returns a boolean if a field has been set.
+
+### GetDepositThreshold
+
+`func (o *SupportedToken) GetDepositThreshold() string`
+
+GetDepositThreshold returns the DepositThreshold field if non-nil, zero value otherwise.
+
+### GetDepositThresholdOk
+
+`func (o *SupportedToken) GetDepositThresholdOk() (*string, bool)`
+
+GetDepositThresholdOk returns a tuple with the DepositThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDepositThreshold
+
+`func (o *SupportedToken) SetDepositThreshold(v string)`
+
+SetDepositThreshold sets DepositThreshold field to given value.
+
+### HasDepositThreshold
+
+`func (o *SupportedToken) HasDepositThreshold() bool`
+
+HasDepositThreshold returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
