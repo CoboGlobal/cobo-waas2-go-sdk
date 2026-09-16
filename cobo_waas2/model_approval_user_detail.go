@@ -27,7 +27,7 @@ type ApprovalUserDetail struct {
 	Signature *string `json:"signature,omitempty"`
 	// UUID of the statement associated with this approval.
 	StatementUuid *string `json:"statement_uuid,omitempty"`
-	Result *ApprovalResult `json:"result,omitempty"`
+	Result *ApprovalTransactionResult `json:"result,omitempty"`
 	// Integer value representing the result of the approval.
 	ApprovalResultCode *int32 `json:"approval_result_code,omitempty"`
 	// Timestamp when the approval was created.
@@ -233,9 +233,9 @@ func (o *ApprovalUserDetail) SetStatementUuid(v string) {
 }
 
 // GetResult returns the Result field value if set, zero value otherwise.
-func (o *ApprovalUserDetail) GetResult() ApprovalResult {
+func (o *ApprovalUserDetail) GetResult() ApprovalTransactionResult {
 	if o == nil || IsNil(o.Result) {
-		var ret ApprovalResult
+		var ret ApprovalTransactionResult
 		return ret
 	}
 	return *o.Result
@@ -243,7 +243,7 @@ func (o *ApprovalUserDetail) GetResult() ApprovalResult {
 
 // GetResultOk returns a tuple with the Result field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ApprovalUserDetail) GetResultOk() (*ApprovalResult, bool) {
+func (o *ApprovalUserDetail) GetResultOk() (*ApprovalTransactionResult, bool) {
 	if o == nil || IsNil(o.Result) {
 		return nil, false
 	}
@@ -259,8 +259,8 @@ func (o *ApprovalUserDetail) HasResult() bool {
 	return false
 }
 
-// SetResult gets a reference to the given ApprovalResult and assigns it to the Result field.
-func (o *ApprovalUserDetail) SetResult(v ApprovalResult) {
+// SetResult gets a reference to the given ApprovalTransactionResult and assigns it to the Result field.
+func (o *ApprovalUserDetail) SetResult(v ApprovalTransactionResult) {
 	o.Result = &v
 }
 
