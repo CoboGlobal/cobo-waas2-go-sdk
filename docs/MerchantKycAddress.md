@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Country** | **string** | The country. | 
+**Country** | **string** | The country, in ISO 3166-1 alpha-3 format. | 
 **State** | **string** | The state or province. | 
 **City** | **string** | The city. | 
 **Postcode** | **string** | The postal code. | 
