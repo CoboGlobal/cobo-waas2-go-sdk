@@ -6910,7 +6910,7 @@ type ApiListBalanceChangesRequest struct {
 	sourceId *string
 }
 
-// The source account for which to retrieve balance changes. Currently, use &#x60;developer&#x60;.
+// The source account for which to retrieve balance changes. - If the source account is a merchant account, provide the merchant&#39;s ID (e.g., \&quot;M1001\&quot;). - If the source account is the developer account, use the string &#x60;\&quot;developer\&quot;&#x60;. 
 func (r ApiListBalanceChangesRequest) SourceAccount(sourceAccount string) ApiListBalanceChangesRequest {
 	r.sourceAccount = &sourceAccount
 	return r
@@ -6979,7 +6979,7 @@ ListBalanceChanges List balance changes
 
 This operation retrieves balance changes for the specified source account. Each balance change includes the source information, token ID, changed amount, account balances before and after the change, flow direction, and creation time.
 
-You need to specify `source_account`. Currently, use `developer` as the source account. You can use pagination parameters to control the response size, and filter balance changes by `token_id`, `flow_direction`, `min_created_timestamp`, `max_created_timestamp`, `source_type`, or `source_id`.
+You need to specify `source_account`. If the source account is a merchant account, provide the merchant's ID (e.g., "M1001"). If the source account is the developer account, use the string `"developer"`. You can use pagination parameters to control the response size, and filter balance changes by `token_id`, `flow_direction`, `min_created_timestamp`, `max_created_timestamp`, `source_type`, or `source_id`.
 
 <Note>When specifying `source_id`, you must also specify `source_type`.</Note>
 

@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Pubkey** | Pointer to **string** | Public key of the user. | [optional] 
 **Signature** | Pointer to **string** | Signature produced by the user for this approval. | [optional] 
 **StatementUuid** | Pointer to **string** | UUID of the statement associated with this approval. | [optional] 
-**Result** | Pointer to [**ApprovalResult**](ApprovalResult.md) |  | [optional] 
+**Result** | Pointer to [**ApprovalTransactionResult**](ApprovalTransactionResult.md) |  | [optional] 
 **ApprovalResultCode** | Pointer to **int32** | Integer value representing the result of the approval. | [optional] 
 **CreatedTime** | Pointer to **int32** | Timestamp when the approval was created. | [optional] 
 **ExpiredTime** | Pointer to **int32** | The timestamp when the approval was expired. | [optional] 
@@ -170,20 +170,20 @@ HasStatementUuid returns a boolean if a field has been set.
 
 ### GetResult
 
-`func (o *ApprovalUserDetail) GetResult() ApprovalResult`
+`func (o *ApprovalUserDetail) GetResult() ApprovalTransactionResult`
 
 GetResult returns the Result field if non-nil, zero value otherwise.
 
 ### GetResultOk
 
-`func (o *ApprovalUserDetail) GetResultOk() (*ApprovalResult, bool)`
+`func (o *ApprovalUserDetail) GetResultOk() (*ApprovalTransactionResult, bool)`
 
 GetResultOk returns a tuple with the Result field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetResult
 
-`func (o *ApprovalUserDetail) SetResult(v ApprovalResult)`
+`func (o *ApprovalUserDetail) SetResult(v ApprovalTransactionResult)`
 
 SetResult sets Result field to given value.
 

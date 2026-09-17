@@ -19,7 +19,7 @@ var _ MappedNullable = &MerchantKycAddress{}
 
 // MerchantKycAddress struct for MerchantKycAddress
 type MerchantKycAddress struct {
-	// The country.
+	// The country, in ISO 3166-1 alpha-3 format.
 	Country string `json:"country"`
 	// The state or province.
 	State string `json:"state"`
