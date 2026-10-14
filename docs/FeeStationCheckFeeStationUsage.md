@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Amount** | Pointer to **string** | Applicable to transfer requests only. The amount of tokens to be transferred in this request. | [optional] 
 **TokenId** | Pointer to **string** | Applicable to transfer requests only. The token ID of the asset to be transferred.   You can retrieve available token IDs by calling   [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).  | [optional] 
 **FeeTokenId** | Pointer to **string** | The token ID used to pay the gas fee for the main transaction. You can retrieve available token IDs by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | [optional] 
-**EstimatedFeeAmount** | **string** | The estimated transaction fee required for this transfer, before applying any Fee Station rules. | 
+**EstimatedFeeAmount** | **string** | The estimated transaction fee required for this transfer, before applying any Billing Center rules. | 
 **FromAddress** | **string** | The blockchain address that initiates the transfer. | 
 **FromWalletId** | **string** | The wallet ID. | 
 **AutoFuel** | Pointer to [**AutoFuelType**](AutoFuelType.md) |  | [optional] 

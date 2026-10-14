@@ -27,6 +27,7 @@ type TransactionDestination struct {
 	TransactionRawMessageSignDestination *TransactionRawMessageSignDestination
 	TransactionSolContractDestination *TransactionSolContractDestination
 	TransactionStellarDestination *TransactionStellarDestination
+	TransactionSuiDestination *TransactionSuiDestination
 	TransactionTransferToAddressDestination *TransactionTransferToAddressDestination
 	TransactionTransferToWalletDestination *TransactionTransferToWalletDestination
 	TransactionTronContractDestination *TransactionTronContractDestination
@@ -113,6 +114,13 @@ func TransactionSolContractDestinationAsTransactionDestination(v *TransactionSol
 func TransactionStellarDestinationAsTransactionDestination(v *TransactionStellarDestination) TransactionDestination {
 	return TransactionDestination{
 		TransactionStellarDestination: v,
+	}
+}
+
+// TransactionSuiDestinationAsTransactionDestination is a convenience function that returns TransactionSuiDestination wrapped in TransactionDestination
+func TransactionSuiDestinationAsTransactionDestination(v *TransactionSuiDestination) TransactionDestination {
+	return TransactionDestination{
+		TransactionSuiDestination: v,
 	}
 }
 
@@ -328,6 +336,18 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'SUI_Contract'
+	if jsonDict["destination_type"] == "SUI_Contract" {
+		// try to unmarshal JSON data into TransactionSuiDestination
+		err = json.Unmarshal(data, &dst.TransactionSuiDestination)
+		if err == nil {
+			return nil // data stored in dst.TransactionSuiDestination, return on the first match
+		} else {
+			dst.TransactionSuiDestination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionSuiDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TRON_Contract'
 	if jsonDict["destination_type"] == "TRON_Contract" {
 		// try to unmarshal JSON data into TransactionTronContractDestination
@@ -484,6 +504,18 @@ func (dst *TransactionDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'TransactionSuiDestination'
+	if jsonDict["destination_type"] == "TransactionSuiDestination" {
+		// try to unmarshal JSON data into TransactionSuiDestination
+		err = json.Unmarshal(data, &dst.TransactionSuiDestination)
+		if err == nil {
+			return nil // data stored in dst.TransactionSuiDestination, return on the first match
+		} else {
+			dst.TransactionSuiDestination = nil
+			return fmt.Errorf("failed to unmarshal TransactionDestination as TransactionSuiDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TransactionTransferToAddressDestination'
 	if jsonDict["destination_type"] == "TransactionTransferToAddressDestination" {
 		// try to unmarshal JSON data into TransactionTransferToAddressDestination
@@ -573,6 +605,10 @@ func (src TransactionDestination) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.TransactionStellarDestination)
 	}
 
+	if src.TransactionSuiDestination != nil {
+		return json.Marshal(&src.TransactionSuiDestination)
+	}
+
 	if src.TransactionTransferToAddressDestination != nil {
 		return json.Marshal(&src.TransactionTransferToAddressDestination)
 	}
@@ -639,6 +675,10 @@ func (obj *TransactionDestination) GetActualInstance() (interface{}) {
 
 	if obj.TransactionStellarDestination != nil {
 		return obj.TransactionStellarDestination
+	}
+
+	if obj.TransactionSuiDestination != nil {
+		return obj.TransactionSuiDestination
 	}
 
 	if obj.TransactionTransferToAddressDestination != nil {

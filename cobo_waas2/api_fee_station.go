@@ -27,7 +27,7 @@ type ApiCheckFeeStationUsageRequest struct {
 	feeStationCheckFeeStationUsage *FeeStationCheckFeeStationUsage
 }
 
-// The request body for evaluating Fee Station usage.
+// The request body for evaluating Billing Center usage.
 func (r ApiCheckFeeStationUsageRequest) FeeStationCheckFeeStationUsage(feeStationCheckFeeStationUsage FeeStationCheckFeeStationUsage) ApiCheckFeeStationUsageRequest {
 	r.feeStationCheckFeeStationUsage = &feeStationCheckFeeStationUsage
 	return r
@@ -38,11 +38,11 @@ func (r ApiCheckFeeStationUsageRequest) Execute() (*FeeStationCheckFeeStationUsa
 }
 
 /*
-CheckFeeStationUsage Check Fee Station usage
+CheckFeeStationUsage Check Billing Center usage
 
-This operation evaluates Fee Station usage for the current transaction. 
+This operation evaluates Billing Center usage for the current transaction. 
 
-It determines whether Fee station can be used, checks if the Fee Station balance is sufficient, and returns a breakdown of the amounts involved, including any portion that must be covered by the user or sponsored in USD stablecoin.
+It determines whether Billing Center can be used, checks if the Billing Center balance is sufficient, and returns a breakdown of the amounts involved, including any portion that must be covered by the user or sponsored in USD stablecoin.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -165,7 +165,7 @@ type ApiEstimateFeeStationFeeRequest struct {
 	feeStationTransfer *FeeStationTransfer
 }
 
-// The information about a Fee Station top-up transaction.
+// The information about a Billing Center top-up transaction.
 func (r ApiEstimateFeeStationFeeRequest) FeeStationTransfer(feeStationTransfer FeeStationTransfer) ApiEstimateFeeStationFeeRequest {
 	r.feeStationTransfer = &feeStationTransfer
 	return r
@@ -178,7 +178,7 @@ func (r ApiEstimateFeeStationFeeRequest) Execute() (*EstimatedFixedFee, *http.Re
 /*
 EstimateFeeStationFee Estimate transaction fee
 
-<Note>This operation is **deprecated** and retained only for backward compatibility. Use [Check Fee Station usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) for all new integrations.</Note>
+<Note>This operation is **deprecated** and retained only for backward compatibility. Use [Check Billing Center usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) for all new integrations.</Note>
 
 This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
 
@@ -312,9 +312,9 @@ func (r ApiGetFeeStationTransactionByIdRequest) Execute() (*TransactionDetail, *
 }
 
 /*
-GetFeeStationTransactionById Get Fee Station transaction information
+GetFeeStationTransactionById Get Billing Center transaction information
 
-This operation retrieves detailed information about a specified Fee Station transaction record, such as the transaction status, source address, destination address, and timestamp.
+This operation retrieves detailed information about a specified Billing Center transaction record, such as the transaction status, source address, destination address, and timestamp.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -477,9 +477,9 @@ func (r ApiListFeeStationAddressesRequest) Execute() (*ListAddresses200Response,
 }
 
 /*
-ListFeeStationAddresses List Fee Station addresses
+ListFeeStationAddresses List Billing Center addresses
 
-This operation retrieves a list of deposit addresses of your Fee Station, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
+This operation retrieves a list of deposit addresses of your Billing Center, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -671,9 +671,9 @@ func (r ApiListFeeStationFiatTransactionsRequest) Execute() (*ListFeeStationFiat
 }
 
 /*
-ListFeeStationFiatTransactions List Fee Station fiat transactions
+ListFeeStationFiatTransactions List Billing Center fiat transactions
 
-This operation retrieves all Fee Station fiat transactions under your organization.
+This operation retrieves all Billing Center fiat transactions under your organization.
 
 You can filter the results by request IDs, transaction IDs, transaction type, and created timestamp. You can also paginate your query results.
 
@@ -858,7 +858,7 @@ func (r ApiListFeeStationTransactionsRequest) TransactionHashes(transactionHashe
 	return r
 }
 
-// A list of transaction types for Fee Station, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction. 
+// A list of transaction types for Billing Center, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction. 
 func (r ApiListFeeStationTransactionsRequest) Types(types string) ApiListFeeStationTransactionsRequest {
 	r.types = &types
 	return r
@@ -929,9 +929,9 @@ func (r ApiListFeeStationTransactionsRequest) Execute() (*ListTransactions200Res
 }
 
 /*
-ListFeeStationTransactions List all Fee Station transactions
+ListFeeStationTransactions List all Billing Center transactions
 
-This operation retrieves all Fee Station transactions under your organization.
+This operation retrieves all Billing Center transactions under your organization.
 
 You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamp. You can also paginate and sort your query results.
 
@@ -1137,9 +1137,9 @@ func (r ApiListTokenBalancesForFeeStationRequest) Execute() (*ListTokenBalancesF
 }
 
 /*
-ListTokenBalancesForFeeStation List Fee Station token balances
+ListTokenBalancesForFeeStation List Billing Center token balances
 
-The operation retrieves a list of token balances within your Fee Station.
+The operation retrieves a list of token balances within your Billing Center.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

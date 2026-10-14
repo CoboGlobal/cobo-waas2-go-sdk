@@ -101,6 +101,8 @@
 
 * `PENDING_COBO_TRAVEL_RULE_CHECK` (value: `"PendingCoboTravelRuleCheck"`)
 
+* `ADDITIONAL_INFORMATION_REQUIRED` (value: `"AdditionalInformationRequired"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -29,10 +29,16 @@ type WebhookEventData struct {
 	PaymentBankWithdrawalEvent *PaymentBankWithdrawalEvent
 	PaymentBulkSendEvent *PaymentBulkSendEvent
 	PaymentBulkSendItemEvent *PaymentBulkSendItemEvent
+	PaymentBulkSendItemUpdateEventData *PaymentBulkSendItemUpdateEventData
+	PaymentBulkSendUpdateEventData *PaymentBulkSendUpdateEventData
 	PaymentOrderEventData *PaymentOrderEventData
+	PaymentOrderUpdateEventData *PaymentOrderUpdateEventData
 	PaymentPayoutEvent *PaymentPayoutEvent
+	PaymentPayoutUpdateEventData *PaymentPayoutUpdateEventData
 	PaymentRefundEventData *PaymentRefundEventData
+	PaymentRefundUpdateEventData *PaymentRefundUpdateEventData
 	PaymentSettlementEvent *PaymentSettlementEvent
+	PaymentTopUpUpdateEventData *PaymentTopUpUpdateEventData
 	PaymentTransactionEventData *PaymentTransactionEventData
 	SuspendedTokenEventData *SuspendedTokenEventData
 	TSSRequestWebhookEventData *TSSRequestWebhookEventData
@@ -140,10 +146,31 @@ func PaymentBulkSendItemEventAsWebhookEventData(v *PaymentBulkSendItemEvent) Web
 	}
 }
 
+// PaymentBulkSendItemUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentBulkSendItemUpdateEventData wrapped in WebhookEventData
+func PaymentBulkSendItemUpdateEventDataAsWebhookEventData(v *PaymentBulkSendItemUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentBulkSendItemUpdateEventData: v,
+	}
+}
+
+// PaymentBulkSendUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentBulkSendUpdateEventData wrapped in WebhookEventData
+func PaymentBulkSendUpdateEventDataAsWebhookEventData(v *PaymentBulkSendUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentBulkSendUpdateEventData: v,
+	}
+}
+
 // PaymentOrderEventDataAsWebhookEventData is a convenience function that returns PaymentOrderEventData wrapped in WebhookEventData
 func PaymentOrderEventDataAsWebhookEventData(v *PaymentOrderEventData) WebhookEventData {
 	return WebhookEventData{
 		PaymentOrderEventData: v,
+	}
+}
+
+// PaymentOrderUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentOrderUpdateEventData wrapped in WebhookEventData
+func PaymentOrderUpdateEventDataAsWebhookEventData(v *PaymentOrderUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentOrderUpdateEventData: v,
 	}
 }
 
@@ -154,6 +181,13 @@ func PaymentPayoutEventAsWebhookEventData(v *PaymentPayoutEvent) WebhookEventDat
 	}
 }
 
+// PaymentPayoutUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentPayoutUpdateEventData wrapped in WebhookEventData
+func PaymentPayoutUpdateEventDataAsWebhookEventData(v *PaymentPayoutUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentPayoutUpdateEventData: v,
+	}
+}
+
 // PaymentRefundEventDataAsWebhookEventData is a convenience function that returns PaymentRefundEventData wrapped in WebhookEventData
 func PaymentRefundEventDataAsWebhookEventData(v *PaymentRefundEventData) WebhookEventData {
 	return WebhookEventData{
@@ -161,10 +195,24 @@ func PaymentRefundEventDataAsWebhookEventData(v *PaymentRefundEventData) Webhook
 	}
 }
 
+// PaymentRefundUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentRefundUpdateEventData wrapped in WebhookEventData
+func PaymentRefundUpdateEventDataAsWebhookEventData(v *PaymentRefundUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentRefundUpdateEventData: v,
+	}
+}
+
 // PaymentSettlementEventAsWebhookEventData is a convenience function that returns PaymentSettlementEvent wrapped in WebhookEventData
 func PaymentSettlementEventAsWebhookEventData(v *PaymentSettlementEvent) WebhookEventData {
 	return WebhookEventData{
 		PaymentSettlementEvent: v,
+	}
+}
+
+// PaymentTopUpUpdateEventDataAsWebhookEventData is a convenience function that returns PaymentTopUpUpdateEventData wrapped in WebhookEventData
+func PaymentTopUpUpdateEventDataAsWebhookEventData(v *PaymentTopUpUpdateEventData) WebhookEventData {
+	return WebhookEventData{
+		PaymentTopUpUpdateEventData: v,
 	}
 }
 
@@ -396,6 +444,30 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentBulkSendItemUpdate'
+	if jsonDict["data_type"] == "PaymentBulkSendItemUpdate" {
+		// try to unmarshal JSON data into PaymentBulkSendItemUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentBulkSendItemUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentBulkSendItemUpdateEventData, return on the first match
+		} else {
+			dst.PaymentBulkSendItemUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentBulkSendItemUpdateEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentBulkSendUpdate'
+	if jsonDict["data_type"] == "PaymentBulkSendUpdate" {
+		// try to unmarshal JSON data into PaymentBulkSendUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentBulkSendUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentBulkSendUpdateEventData, return on the first match
+		} else {
+			dst.PaymentBulkSendUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentBulkSendUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentOrder'
 	if jsonDict["data_type"] == "PaymentOrder" {
 		// try to unmarshal JSON data into PaymentOrderEventData
@@ -405,6 +477,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentOrderEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentOrderEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentOrderUpdate'
+	if jsonDict["data_type"] == "PaymentOrderUpdate" {
+		// try to unmarshal JSON data into PaymentOrderUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentOrderUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentOrderUpdateEventData, return on the first match
+		} else {
+			dst.PaymentOrderUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentOrderUpdateEventData: %s", err.Error())
 		}
 	}
 
@@ -420,6 +504,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentPayoutUpdate'
+	if jsonDict["data_type"] == "PaymentPayoutUpdate" {
+		// try to unmarshal JSON data into PaymentPayoutUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentPayoutUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentPayoutUpdateEventData, return on the first match
+		} else {
+			dst.PaymentPayoutUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentPayoutUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentRefund'
 	if jsonDict["data_type"] == "PaymentRefund" {
 		// try to unmarshal JSON data into PaymentRefundEventData
@@ -432,6 +528,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentRefundUpdate'
+	if jsonDict["data_type"] == "PaymentRefundUpdate" {
+		// try to unmarshal JSON data into PaymentRefundUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentRefundUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentRefundUpdateEventData, return on the first match
+		} else {
+			dst.PaymentRefundUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentRefundUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentSettlement'
 	if jsonDict["data_type"] == "PaymentSettlement" {
 		// try to unmarshal JSON data into PaymentSettlementEvent
@@ -441,6 +549,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentSettlementEvent = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentSettlementEvent: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentTopUpUpdate'
+	if jsonDict["data_type"] == "PaymentTopUpUpdate" {
+		// try to unmarshal JSON data into PaymentTopUpUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentTopUpUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentTopUpUpdateEventData, return on the first match
+		} else {
+			dst.PaymentTopUpUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentTopUpUpdateEventData: %s", err.Error())
 		}
 	}
 
@@ -696,6 +816,30 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentBulkSendItemUpdateEventData'
+	if jsonDict["data_type"] == "PaymentBulkSendItemUpdateEventData" {
+		// try to unmarshal JSON data into PaymentBulkSendItemUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentBulkSendItemUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentBulkSendItemUpdateEventData, return on the first match
+		} else {
+			dst.PaymentBulkSendItemUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentBulkSendItemUpdateEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentBulkSendUpdateEventData'
+	if jsonDict["data_type"] == "PaymentBulkSendUpdateEventData" {
+		// try to unmarshal JSON data into PaymentBulkSendUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentBulkSendUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentBulkSendUpdateEventData, return on the first match
+		} else {
+			dst.PaymentBulkSendUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentBulkSendUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentOrderEventData'
 	if jsonDict["data_type"] == "PaymentOrderEventData" {
 		// try to unmarshal JSON data into PaymentOrderEventData
@@ -705,6 +849,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentOrderEventData = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentOrderEventData: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentOrderUpdateEventData'
+	if jsonDict["data_type"] == "PaymentOrderUpdateEventData" {
+		// try to unmarshal JSON data into PaymentOrderUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentOrderUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentOrderUpdateEventData, return on the first match
+		} else {
+			dst.PaymentOrderUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentOrderUpdateEventData: %s", err.Error())
 		}
 	}
 
@@ -720,6 +876,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentPayoutUpdateEventData'
+	if jsonDict["data_type"] == "PaymentPayoutUpdateEventData" {
+		// try to unmarshal JSON data into PaymentPayoutUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentPayoutUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentPayoutUpdateEventData, return on the first match
+		} else {
+			dst.PaymentPayoutUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentPayoutUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentRefundEventData'
 	if jsonDict["data_type"] == "PaymentRefundEventData" {
 		// try to unmarshal JSON data into PaymentRefundEventData
@@ -732,6 +900,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'PaymentRefundUpdateEventData'
+	if jsonDict["data_type"] == "PaymentRefundUpdateEventData" {
+		// try to unmarshal JSON data into PaymentRefundUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentRefundUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentRefundUpdateEventData, return on the first match
+		} else {
+			dst.PaymentRefundUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentRefundUpdateEventData: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'PaymentSettlementEvent'
 	if jsonDict["data_type"] == "PaymentSettlementEvent" {
 		// try to unmarshal JSON data into PaymentSettlementEvent
@@ -741,6 +921,18 @@ func (dst *WebhookEventData) UnmarshalJSON(data []byte) error {
 		} else {
 			dst.PaymentSettlementEvent = nil
 			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentSettlementEvent: %s", err.Error())
+		}
+	}
+
+	// check if the discriminator value is 'PaymentTopUpUpdateEventData'
+	if jsonDict["data_type"] == "PaymentTopUpUpdateEventData" {
+		// try to unmarshal JSON data into PaymentTopUpUpdateEventData
+		err = json.Unmarshal(data, &dst.PaymentTopUpUpdateEventData)
+		if err == nil {
+			return nil // data stored in dst.PaymentTopUpUpdateEventData, return on the first match
+		} else {
+			dst.PaymentTopUpUpdateEventData = nil
+			return fmt.Errorf("failed to unmarshal WebhookEventData as PaymentTopUpUpdateEventData: %s", err.Error())
 		}
 	}
 
@@ -889,20 +1081,44 @@ func (src WebhookEventData) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.PaymentBulkSendItemEvent)
 	}
 
+	if src.PaymentBulkSendItemUpdateEventData != nil {
+		return json.Marshal(&src.PaymentBulkSendItemUpdateEventData)
+	}
+
+	if src.PaymentBulkSendUpdateEventData != nil {
+		return json.Marshal(&src.PaymentBulkSendUpdateEventData)
+	}
+
 	if src.PaymentOrderEventData != nil {
 		return json.Marshal(&src.PaymentOrderEventData)
+	}
+
+	if src.PaymentOrderUpdateEventData != nil {
+		return json.Marshal(&src.PaymentOrderUpdateEventData)
 	}
 
 	if src.PaymentPayoutEvent != nil {
 		return json.Marshal(&src.PaymentPayoutEvent)
 	}
 
+	if src.PaymentPayoutUpdateEventData != nil {
+		return json.Marshal(&src.PaymentPayoutUpdateEventData)
+	}
+
 	if src.PaymentRefundEventData != nil {
 		return json.Marshal(&src.PaymentRefundEventData)
 	}
 
+	if src.PaymentRefundUpdateEventData != nil {
+		return json.Marshal(&src.PaymentRefundUpdateEventData)
+	}
+
 	if src.PaymentSettlementEvent != nil {
 		return json.Marshal(&src.PaymentSettlementEvent)
+	}
+
+	if src.PaymentTopUpUpdateEventData != nil {
+		return json.Marshal(&src.PaymentTopUpUpdateEventData)
 	}
 
 	if src.PaymentTransactionEventData != nil {
@@ -997,20 +1213,44 @@ func (obj *WebhookEventData) GetActualInstance() (interface{}) {
 		return obj.PaymentBulkSendItemEvent
 	}
 
+	if obj.PaymentBulkSendItemUpdateEventData != nil {
+		return obj.PaymentBulkSendItemUpdateEventData
+	}
+
+	if obj.PaymentBulkSendUpdateEventData != nil {
+		return obj.PaymentBulkSendUpdateEventData
+	}
+
 	if obj.PaymentOrderEventData != nil {
 		return obj.PaymentOrderEventData
+	}
+
+	if obj.PaymentOrderUpdateEventData != nil {
+		return obj.PaymentOrderUpdateEventData
 	}
 
 	if obj.PaymentPayoutEvent != nil {
 		return obj.PaymentPayoutEvent
 	}
 
+	if obj.PaymentPayoutUpdateEventData != nil {
+		return obj.PaymentPayoutUpdateEventData
+	}
+
 	if obj.PaymentRefundEventData != nil {
 		return obj.PaymentRefundEventData
 	}
 
+	if obj.PaymentRefundUpdateEventData != nil {
+		return obj.PaymentRefundUpdateEventData
+	}
+
 	if obj.PaymentSettlementEvent != nil {
 		return obj.PaymentSettlementEvent
+	}
+
+	if obj.PaymentTopUpUpdateEventData != nil {
+		return obj.PaymentTopUpUpdateEventData
 	}
 
 	if obj.PaymentTransactionEventData != nil {

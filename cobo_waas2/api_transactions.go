@@ -491,6 +491,8 @@ You need to provide details such as the source address, destination address, and
 
 <Note>Currently, this operation only applies to the transactions from MPC Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
 
+You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateContractCallTransactionRequest
@@ -781,6 +783,8 @@ You need to specify details such as the sender address and recipient address, to
 
 <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. To do this, you should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
 
+You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateTransferTransactionRequest
@@ -923,6 +927,8 @@ A transaction can be dropped only if its status is `Broadcasting`.
 <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
 You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
+
+You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -2425,6 +2431,8 @@ Resending a transaction is a high‑risk operation. Ensure that the original tra
 
 <Note>This operation only applies to transactions from MPC Wallets in the SOL token.</Note>
 
+You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param transactionId The transaction ID.
@@ -2705,6 +2713,8 @@ You can use the `address` or `included_utxos` properties in the request body to 
 A transaction can be sped up only if its status is `Broadcasting`.
 
 <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
+
+You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

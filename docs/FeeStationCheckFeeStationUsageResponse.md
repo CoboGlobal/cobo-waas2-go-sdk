@@ -5,12 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TokenId** | **string** | The token used to pay the gas fee for this specific transaction. You can retrieve the IDs of all supported tokens by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
-**Balance** | **string** | The current token balance available in Fee Station. | 
+**Balance** | **string** | The current token balance available in Billing Center. | 
 **GasStationType** | [**FeeStationGasStationType**](FeeStationGasStationType.md) |  | 
-**IsFeeStationApplicable** | **bool** | Indicates whether Fee Station is applied for this transfer request. | 
-**IsBalanceSufficient** | **bool** | If Fee Station is used, indicates whether its balance is sufficient to cover the required gas fee. | 
+**IsFeeStationApplicable** | **bool** | Indicates whether Billing Center is applied for this transfer request. | 
+**IsBalanceSufficient** | **bool** | If Billing Center is used, indicates whether its balance is sufficient to cover the required gas fee. | 
 **TotalFeeAmount** | **string** | The total gas amount required for this transfer request. | 
-**IsSponsorApplicable** | **bool** | Indicates whether USD stablecoin sponsorship is applied when the Fee Station balance is insufficient. | 
+**IsSponsorApplicable** | **bool** | Indicates whether USD stablecoin sponsorship is applied when the Billing Center balance is insufficient. | 
 **SponsoredFeeAmount** | **string** | The amount of gas fee sponsored by USD stablecoin when applicable. | 
 **SponsoredTokenId** | Pointer to **string** | The token ID used to sponsor the gas fee. | [optional] 
 

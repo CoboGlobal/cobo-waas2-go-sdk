@@ -10,14 +10,14 @@ Name | Type | Description | Notes
 **Calldata** | **string** | The data that is used to invoke a specific function or method within the specified contract at the destination address.  | 
 **Instructions** | [**[]SolContractCallInstruction**](SolContractCallInstruction.md) |  | 
 **AddressLookupTableAccounts** | Pointer to [**[]SolContractCallAddressLookupTableAccount**](SolContractCallAddressLookupTableAccount.md) |  | [optional] 
-**ContractParam** | [**StellarContractCallContractParam**](StellarContractCallContractParam.md) |  | 
+**ContractParam** | [**SuiContractCallContractParam**](SuiContractCallContractParam.md) |  | 
 **CosmosMessages** | [**[]CosmosContractCallMessage**](CosmosContractCallMessage.md) |  | 
 
 ## Methods
 
 ### NewContractCallDestination
 
-`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, contractParam StellarContractCallContractParam, cosmosMessages []CosmosContractCallMessage, ) *ContractCallDestination`
+`func NewContractCallDestination(destinationType ContractCallDestinationType, address string, calldata string, instructions []SolContractCallInstruction, contractParam SuiContractCallContractParam, cosmosMessages []CosmosContractCallMessage, ) *ContractCallDestination`
 
 NewContractCallDestination instantiates a new ContractCallDestination object
 This constructor will assign default values to properties that have it defined,
@@ -164,20 +164,20 @@ HasAddressLookupTableAccounts returns a boolean if a field has been set.
 
 ### GetContractParam
 
-`func (o *ContractCallDestination) GetContractParam() StellarContractCallContractParam`
+`func (o *ContractCallDestination) GetContractParam() SuiContractCallContractParam`
 
 GetContractParam returns the ContractParam field if non-nil, zero value otherwise.
 
 ### GetContractParamOk
 
-`func (o *ContractCallDestination) GetContractParamOk() (*StellarContractCallContractParam, bool)`
+`func (o *ContractCallDestination) GetContractParamOk() (*SuiContractCallContractParam, bool)`
 
 GetContractParamOk returns a tuple with the ContractParam field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContractParam
 
-`func (o *ContractCallDestination) SetContractParam(v StellarContractCallContractParam)`
+`func (o *ContractCallDestination) SetContractParam(v SuiContractCallContractParam)`
 
 SetContractParam sets ContractParam field to given value.
 

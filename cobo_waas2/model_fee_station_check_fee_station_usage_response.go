@@ -21,16 +21,16 @@ var _ MappedNullable = &FeeStationCheckFeeStationUsageResponse{}
 type FeeStationCheckFeeStationUsageResponse struct {
 	// The token used to pay the gas fee for this specific transaction. You can retrieve the IDs of all supported tokens by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	TokenId string `json:"token_id"`
-	// The current token balance available in Fee Station.
+	// The current token balance available in Billing Center.
 	Balance string `json:"balance"`
 	GasStationType FeeStationGasStationType `json:"gas_station_type"`
-	// Indicates whether Fee Station is applied for this transfer request.
+	// Indicates whether Billing Center is applied for this transfer request.
 	IsFeeStationApplicable bool `json:"is_fee_station_applicable"`
-	// If Fee Station is used, indicates whether its balance is sufficient to cover the required gas fee.
+	// If Billing Center is used, indicates whether its balance is sufficient to cover the required gas fee.
 	IsBalanceSufficient bool `json:"is_balance_sufficient"`
 	// The total gas amount required for this transfer request.
 	TotalFeeAmount string `json:"total_fee_amount"`
-	// Indicates whether USD stablecoin sponsorship is applied when the Fee Station balance is insufficient.
+	// Indicates whether USD stablecoin sponsorship is applied when the Billing Center balance is insufficient.
 	IsSponsorApplicable bool `json:"is_sponsor_applicable"`
 	// The amount of gas fee sponsored by USD stablecoin when applicable.
 	SponsoredFeeAmount string `json:"sponsored_fee_amount"`
