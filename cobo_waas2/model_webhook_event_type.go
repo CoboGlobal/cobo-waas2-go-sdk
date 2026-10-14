@@ -65,6 +65,12 @@ const (
 	WEBHOOKEVENTTYPE_PAYMENT_CHARGE_STATUS_UPDATED WebhookEventType = "payment.charge.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_BULK_SEND_STATUS_UPDATED WebhookEventType = "payment.bulk_send.status.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_BULK_SEND_ITEM_STATUS_UPDATED WebhookEventType = "payment.bulk_send.item.status.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_TOPUP_UPDATED WebhookEventType = "payment.topup.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_ORDER_UPDATED WebhookEventType = "payment.order.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_REFUND_UPDATED WebhookEventType = "payment.refund.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_PAYOUT_UPDATED WebhookEventType = "payment.payout.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_BULK_SEND_UPDATED WebhookEventType = "payment.bulk_send.updated"
+	WEBHOOKEVENTTYPE_PAYMENT_BULK_SEND_ITEM_UPDATED WebhookEventType = "payment.bulk_send.item.updated"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_EXTERNAL_CREATED WebhookEventType = "payment.transaction.external.created"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_EXTERNAL_COMPLETED WebhookEventType = "payment.transaction.external.completed"
 	WEBHOOKEVENTTYPE_PAYMENT_TRANSACTION_SETTLEMENT_NETWORK_CREATED WebhookEventType = "payment.transaction.settlement_network.created"
@@ -123,6 +129,12 @@ var AllowedWebhookEventTypeEnumValues = []WebhookEventType{
 	"payment.charge.status.updated",
 	"payment.bulk_send.status.updated",
 	"payment.bulk_send.item.status.updated",
+	"payment.topup.updated",
+	"payment.order.updated",
+	"payment.refund.updated",
+	"payment.payout.updated",
+	"payment.bulk_send.updated",
+	"payment.bulk_send.item.updated",
 	"payment.transaction.external.created",
 	"payment.transaction.external.completed",
 	"payment.transaction.settlement_network.created",

@@ -17,9 +17,9 @@ var _ MappedNullable = &SOLBase{}
 
 // SOLBase struct for SOLBase
 type SOLBase struct {
-	// A fixed fee charged per signature. The default is 5,000 lamports per signature.
+	// A fixed fee, in lamports, charged per signature. The default is 5,000 per signature.
 	BaseFee *string `json:"base_fee,omitempty"`
-	// The one-time rent required to activate a Solana token Associated Token Account (ATA) before the token can be received or used. **This field is reserved for future use and is currently not populated.**
+	// The one-time rent, in lamports, required to create the destination's Associated Token Account (ATA) for this token when it does not exist yet.  In fee estimate responses, this field returns the current on-chain rent if the destination address has no ATA for the token, and is empty otherwise. You can call [Estimate transaction fee](https://www.cobo.com/developers/v2/api-references/transactions/estimate-transaction-fee) before submitting a transaction to check whether it will incur ATA rent. The result reflects the destination at estimation time; if the ATA is closed before the transaction is built, the transaction still creates it and incurs the rent.  In transaction records, this field keeps the value estimated when the transaction was created and is not updated from on-chain data. `estimated_fee_used` includes this rent, while `fee_used` does not. 
 	RentAmount *string `json:"rent_amount,omitempty"`
 }
 

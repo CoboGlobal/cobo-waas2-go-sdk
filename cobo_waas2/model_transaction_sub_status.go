@@ -67,6 +67,7 @@ const (
 	TRANSACTIONSUBSTATUS_PENDING_COBO_KYT_CHECK TransactionSubStatus = "PendingCoboKYTCheck"
 	TRANSACTIONSUBSTATUS_REJECTED_BY_COBO_KYT TransactionSubStatus = "RejectedByCoboKYT"
 	TRANSACTIONSUBSTATUS_PENDING_COBO_TRAVEL_RULE_CHECK TransactionSubStatus = "PendingCoboTravelRuleCheck"
+	TRANSACTIONSUBSTATUS_ADDITIONAL_INFORMATION_REQUIRED TransactionSubStatus = "AdditionalInformationRequired"
 )
 
 // All allowed values of TransactionSubStatus enum
@@ -120,6 +121,7 @@ var AllowedTransactionSubStatusEnumValues = []TransactionSubStatus{
 	"PendingCoboKYTCheck",
 	"RejectedByCoboKYT",
 	"PendingCoboTravelRuleCheck",
+	"AdditionalInformationRequired",
 }
 
 func (v *TransactionSubStatus) UnmarshalJSON(src []byte) error {

@@ -13,6 +13,8 @@
 
 * `COSMOS_CONTRACT` (value: `"COSMOS_Contract"`)
 
+* `SUI_CONTRACT` (value: `"SUI_Contract"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

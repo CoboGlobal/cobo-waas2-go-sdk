@@ -19,6 +19,7 @@ type ContractCallDestination struct {
 	EvmContractCallDestination *EvmContractCallDestination
 	SolContractCallDestination *SolContractCallDestination
 	StellarContractCallDestination *StellarContractCallDestination
+	SuiContractCallDestination *SuiContractCallDestination
 	TronContractCallDestination *TronContractCallDestination
 }
 
@@ -47,6 +48,13 @@ func SolContractCallDestinationAsContractCallDestination(v *SolContractCallDesti
 func StellarContractCallDestinationAsContractCallDestination(v *StellarContractCallDestination) ContractCallDestination {
 	return ContractCallDestination{
 		StellarContractCallDestination: v,
+	}
+}
+
+// SuiContractCallDestinationAsContractCallDestination is a convenience function that returns SuiContractCallDestination wrapped in ContractCallDestination
+func SuiContractCallDestinationAsContractCallDestination(v *SuiContractCallDestination) ContractCallDestination {
+	return ContractCallDestination{
+		SuiContractCallDestination: v,
 	}
 }
 
@@ -116,6 +124,18 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'SUI_Contract'
+	if jsonDict["destination_type"] == "SUI_Contract" {
+		// try to unmarshal JSON data into SuiContractCallDestination
+		err = json.Unmarshal(data, &dst.SuiContractCallDestination)
+		if err == nil {
+			return nil // data stored in dst.SuiContractCallDestination, return on the first match
+		} else {
+			dst.SuiContractCallDestination = nil
+			return fmt.Errorf("failed to unmarshal ContractCallDestination as SuiContractCallDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TRON_Contract'
 	if jsonDict["destination_type"] == "TRON_Contract" {
 		// try to unmarshal JSON data into TronContractCallDestination
@@ -176,6 +196,18 @@ func (dst *ContractCallDestination) UnmarshalJSON(data []byte) error {
 		}
 	}
 
+	// check if the discriminator value is 'SuiContractCallDestination'
+	if jsonDict["destination_type"] == "SuiContractCallDestination" {
+		// try to unmarshal JSON data into SuiContractCallDestination
+		err = json.Unmarshal(data, &dst.SuiContractCallDestination)
+		if err == nil {
+			return nil // data stored in dst.SuiContractCallDestination, return on the first match
+		} else {
+			dst.SuiContractCallDestination = nil
+			return fmt.Errorf("failed to unmarshal ContractCallDestination as SuiContractCallDestination: %s", err.Error())
+		}
+	}
+
 	// check if the discriminator value is 'TronContractCallDestination'
 	if jsonDict["destination_type"] == "TronContractCallDestination" {
 		// try to unmarshal JSON data into TronContractCallDestination
@@ -209,6 +241,10 @@ func (src ContractCallDestination) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.StellarContractCallDestination)
 	}
 
+	if src.SuiContractCallDestination != nil {
+		return json.Marshal(&src.SuiContractCallDestination)
+	}
+
 	if src.TronContractCallDestination != nil {
 		return json.Marshal(&src.TronContractCallDestination)
 	}
@@ -235,6 +271,10 @@ func (obj *ContractCallDestination) GetActualInstance() (interface{}) {
 
 	if obj.StellarContractCallDestination != nil {
 		return obj.StellarContractCallDestination
+	}
+
+	if obj.SuiContractCallDestination != nil {
+		return obj.SuiContractCallDestination
 	}
 
 	if obj.TronContractCallDestination != nil {

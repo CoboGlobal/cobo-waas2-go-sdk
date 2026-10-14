@@ -25,6 +25,8 @@
 
 * `BULK_SEND` (value: `"BulkSend"`)
 
+* `ONRAMP_IN` (value: `"OnrampIn"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

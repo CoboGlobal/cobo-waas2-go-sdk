@@ -23,6 +23,7 @@ const (
 	CONTRACTCALLDESTINATIONTYPE_STELLAR_CONTRACT ContractCallDestinationType = "STELLAR_Contract"
 	CONTRACTCALLDESTINATIONTYPE_TRON_CONTRACT ContractCallDestinationType = "TRON_Contract"
 	CONTRACTCALLDESTINATIONTYPE_COSMOS_CONTRACT ContractCallDestinationType = "COSMOS_Contract"
+	CONTRACTCALLDESTINATIONTYPE_SUI_CONTRACT ContractCallDestinationType = "SUI_Contract"
 )
 
 // All allowed values of ContractCallDestinationType enum
@@ -32,6 +33,7 @@ var AllowedContractCallDestinationTypeEnumValues = []ContractCallDestinationType
 	"STELLAR_Contract",
 	"TRON_Contract",
 	"COSMOS_Contract",
+	"SUI_Contract",
 }
 
 func (v *ContractCallDestinationType) UnmarshalJSON(src []byte) error {

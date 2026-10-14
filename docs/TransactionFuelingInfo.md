@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RequestId** | Pointer to **string** | The request ID of the transaction. | [optional] 
 **TransactionId** | Pointer to **string** | The transaction ID. | [optional] 
-**MainTransactionId** | Pointer to **string** | The UUID of the parent (main) transaction that this record is associated with. Set only when the current record is a gas/fee transaction initiated by Fee Station; omit for main transactions. | [optional] 
+**MainTransactionId** | Pointer to **string** | The UUID of the parent (main) transaction that this record is associated with. Set only when the current record is a gas/fee transaction initiated by Billing Center; omit for main transactions. | [optional] 
 
 ## Methods
 

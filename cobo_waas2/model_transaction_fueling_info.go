@@ -21,7 +21,7 @@ type TransactionFuelingInfo struct {
 	RequestId *string `json:"request_id,omitempty"`
 	// The transaction ID.
 	TransactionId *string `json:"transaction_id,omitempty"`
-	// The UUID of the parent (main) transaction that this record is associated with. Set only when the current record is a gas/fee transaction initiated by Fee Station; omit for main transactions.
+	// The UUID of the parent (main) transaction that this record is associated with. Set only when the current record is a gas/fee transaction initiated by Billing Center; omit for main transactions.
 	MainTransactionId *string `json:"main_transaction_id,omitempty"`
 }
 

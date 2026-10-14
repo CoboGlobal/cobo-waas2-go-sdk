@@ -4,13 +4,13 @@ All URIs are relative to *https://api.dev.cobo.com/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CheckFeeStationUsage**](FeeStationAPI.md#CheckFeeStationUsage) | **Post** /fee_station/check_fee_station_usage | Check Fee Station usage
+[**CheckFeeStationUsage**](FeeStationAPI.md#CheckFeeStationUsage) | **Post** /fee_station/check_fee_station_usage | Check Billing Center usage
 [**EstimateFeeStationFee**](FeeStationAPI.md#EstimateFeeStationFee) | **Post** /fee_station/transactions/estimate_fee | Estimate transaction fee
-[**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get Fee Station transaction information
-[**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List Fee Station addresses
-[**ListFeeStationFiatTransactions**](FeeStationAPI.md#ListFeeStationFiatTransactions) | **Get** /fee_station/fiat_transactions | List Fee Station fiat transactions
-[**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all Fee Station transactions
-[**ListTokenBalancesForFeeStation**](FeeStationAPI.md#ListTokenBalancesForFeeStation) | **Get** /fee_station/tokens | List Fee Station token balances
+[**GetFeeStationTransactionById**](FeeStationAPI.md#GetFeeStationTransactionById) | **Get** /fee_station/transactions/{transaction_id} | Get Billing Center transaction information
+[**ListFeeStationAddresses**](FeeStationAPI.md#ListFeeStationAddresses) | **Get** /fee_station/addresses | List Billing Center addresses
+[**ListFeeStationFiatTransactions**](FeeStationAPI.md#ListFeeStationFiatTransactions) | **Get** /fee_station/fiat_transactions | List Billing Center fiat transactions
+[**ListFeeStationTransactions**](FeeStationAPI.md#ListFeeStationTransactions) | **Get** /fee_station/transactions | List all Billing Center transactions
+[**ListTokenBalancesForFeeStation**](FeeStationAPI.md#ListTokenBalancesForFeeStation) | **Get** /fee_station/tokens | List Billing Center token balances
 
 
 
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 > FeeStationCheckFeeStationUsageResponse CheckFeeStationUsage(ctx).FeeStationCheckFeeStationUsage(feeStationCheckFeeStationUsage).Execute()
 
-Check Fee Station usage
+Check Billing Center usage
 
 
 
@@ -70,7 +70,7 @@ Other parameters are passed through a pointer to a apiCheckFeeStationUsageReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **feeStationCheckFeeStationUsage** | [**FeeStationCheckFeeStationUsage**](FeeStationCheckFeeStationUsage.md) | The request body for evaluating Fee Station usage. | 
+ **feeStationCheckFeeStationUsage** | [**FeeStationCheckFeeStationUsage**](FeeStationCheckFeeStationUsage.md) | The request body for evaluating Billing Center usage. | 
 
 ### Return type
 
@@ -146,7 +146,7 @@ Other parameters are passed through a pointer to a apiEstimateFeeStationFeeReque
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **feeStationTransfer** | [**FeeStationTransfer**](FeeStationTransfer.md) | The information about a Fee Station top-up transaction. | 
+ **feeStationTransfer** | [**FeeStationTransfer**](FeeStationTransfer.md) | The information about a Billing Center top-up transaction. | 
 
 ### Return type
 
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 
 > TransactionDetail GetFeeStationTransactionById(ctx, transactionId).Execute()
 
-Get Fee Station transaction information
+Get Billing Center transaction information
 
 
 
@@ -250,7 +250,7 @@ Name | Type | Description  | Notes
 
 > ListAddresses200Response ListFeeStationAddresses(ctx).ChainIds(chainIds).Addresses(addresses).Limit(limit).Before(before).After(after).Execute()
 
-List Fee Station addresses
+List Billing Center addresses
 
 
 
@@ -334,7 +334,7 @@ Name | Type | Description  | Notes
 
 > ListFeeStationFiatTransactions200Response ListFeeStationFiatTransactions(ctx).TransactionIds(transactionIds).TransactionType(transactionType).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).Before(before).After(after).Limit(limit).Execute()
 
-List Fee Station fiat transactions
+List Billing Center fiat transactions
 
 
 
@@ -422,7 +422,7 @@ Name | Type | Description  | Notes
 
 > ListTransactions200Response ListFeeStationTransactions(ctx).RequestId(requestId).CoboIds(coboIds).TransactionIds(transactionIds).TransactionHashes(transactionHashes).Types(types).Statuses(statuses).ChainIds(chainIds).TokenIds(tokenIds).AssetIds(assetIds).MinCreatedTimestamp(minCreatedTimestamp).MaxCreatedTimestamp(maxCreatedTimestamp).Limit(limit).Before(before).After(after).Direction(direction).Execute()
 
-List all Fee Station transactions
+List all Billing Center transactions
 
 
 
@@ -492,7 +492,7 @@ Name | Type | Description  | Notes
  **coboIds** | **string** | A list of Cobo IDs, separated by comma. A Cobo ID can be used to track a transaction. | 
  **transactionIds** | **string** | A list of transaction IDs, separated by comma. | 
  **transactionHashes** | **string** | A list of transaction hashes, separated by comma. | 
- **types** | **string** | A list of transaction types for Fee Station, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.  | 
+ **types** | **string** | A list of transaction types for Billing Center, separated by comma. Possible values include:    - &#x60;Deposit&#x60;: A deposit transaction.   - &#x60;Withdrawal&#x60;: A withdrawal transaction.  | 
  **statuses** | **string** | A list of transaction statuses, separated by comma. Possible values include:    - &#x60;Submitted&#x60;: The transaction is submitted.   - &#x60;PendingScreening&#x60;: The transaction is pending screening by Risk Control.    - &#x60;PendingAuthorization&#x60;: The transaction is pending approvals.   - &#x60;PendingSignature&#x60;: The transaction is pending signature.    - &#x60;Broadcasting&#x60;: The transaction is being broadcast.   - &#x60;Confirming&#x60;: The transaction is waiting for the required number of confirmations.   - &#x60;Completed&#x60;: The transaction is completed.   - &#x60;Failed&#x60;: The transaction failed.   - &#x60;Rejected&#x60;: The transaction is rejected.   - &#x60;Pending&#x60;: The transaction is waiting to be included in the next block of the blockchain.  | 
  **chainIds** | **string** | A list of chain IDs, separated by comma. The chain ID is the unique identifier of a blockchain. You can retrieve the IDs of all the chains you can use by calling [List enabled chains](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-chains). | 
  **tokenIds** | **string** | A list of token IDs, separated by comma. The token ID is the unique identifier of a token. You can retrieve the IDs of all the tokens you can use by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens). | 
@@ -526,7 +526,7 @@ Name | Type | Description  | Notes
 
 > ListTokenBalancesForFeeStation200Response ListTokenBalancesForFeeStation(ctx).TokenIds(tokenIds).Limit(limit).Before(before).After(after).Execute()
 
-List Fee Station token balances
+List Billing Center token balances
 
 
 

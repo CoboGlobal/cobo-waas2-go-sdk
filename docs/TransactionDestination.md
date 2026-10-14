@@ -32,13 +32,13 @@ Name | Type | Description | Notes
 **MessageBip137** | **string** | Message to be signed, in hexadecimal format. | 
 **MessageBip322** | **string** | Message to be signed, in hexadecimal format. | 
 **MessageCosmosAdr36** | **string** | Message to be signed, in hexadecimal format. | 
-**ContractParam** | [**TransactionStellarContractParam**](TransactionStellarContractParam.md) |  | 
+**ContractParam** | [**SuiContractCallContractParam**](SuiContractCallContractParam.md) |  | 
 
 ## Methods
 
 ### NewTransactionDestination
 
-`func NewTransactionDestination(destinationType TransactionDestinationType, walletId string, amount string, address string, calldata string, cosmosMessages []TransactionCosmosMessage, message string, structuredData map[string]interface{}, walletType WalletType, walletSubtype WalletSubtype, messageBip137 string, messageBip322 string, messageCosmosAdr36 string, contractParam TransactionStellarContractParam, ) *TransactionDestination`
+`func NewTransactionDestination(destinationType TransactionDestinationType, walletId string, amount string, address string, calldata string, cosmosMessages []TransactionCosmosMessage, message string, structuredData map[string]interface{}, walletType WalletType, walletSubtype WalletSubtype, messageBip137 string, messageBip322 string, messageCosmosAdr36 string, contractParam SuiContractCallContractParam, ) *TransactionDestination`
 
 NewTransactionDestination instantiates a new TransactionDestination object
 This constructor will assign default values to properties that have it defined,
@@ -690,20 +690,20 @@ SetMessageCosmosAdr36 sets MessageCosmosAdr36 field to given value.
 
 ### GetContractParam
 
-`func (o *TransactionDestination) GetContractParam() TransactionStellarContractParam`
+`func (o *TransactionDestination) GetContractParam() SuiContractCallContractParam`
 
 GetContractParam returns the ContractParam field if non-nil, zero value otherwise.
 
 ### GetContractParamOk
 
-`func (o *TransactionDestination) GetContractParamOk() (*TransactionStellarContractParam, bool)`
+`func (o *TransactionDestination) GetContractParamOk() (*SuiContractCallContractParam, bool)`
 
 GetContractParamOk returns a tuple with the ContractParam field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContractParam
 
-`func (o *TransactionDestination) SetContractParam(v TransactionStellarContractParam)`
+`func (o *TransactionDestination) SetContractParam(v SuiContractCallContractParam)`
 
 SetContractParam sets ContractParam field to given value.
 

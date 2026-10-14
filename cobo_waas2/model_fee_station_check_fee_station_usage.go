@@ -17,7 +17,7 @@ import (
 // checks if the FeeStationCheckFeeStationUsage type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FeeStationCheckFeeStationUsage{}
 
-// FeeStationCheckFeeStationUsage The information for evaluating Fee Station usage.
+// FeeStationCheckFeeStationUsage The information for evaluating Billing Center usage.
 type FeeStationCheckFeeStationUsage struct {
 	// The request ID that is used to track a transaction request. The request ID is provided by you and must be unique within your organization.
 	RequestId string `json:"request_id"`
@@ -27,7 +27,7 @@ type FeeStationCheckFeeStationUsage struct {
 	TokenId *string `json:"token_id,omitempty"`
 	// The token ID used to pay the gas fee for the main transaction. You can retrieve available token IDs by calling [List enabled tokens](https://www.cobo.com/developers/v2/api-references/wallets/list-enabled-tokens).
 	FeeTokenId *string `json:"fee_token_id,omitempty"`
-	// The estimated transaction fee required for this transfer, before applying any Fee Station rules.
+	// The estimated transaction fee required for this transfer, before applying any Billing Center rules.
 	EstimatedFeeAmount string `json:"estimated_fee_amount"`
 	// The blockchain address that initiates the transfer.
 	FromAddress string `json:"from_address"`

@@ -4014,6 +4014,8 @@ paths:
         <Note>If you make transfers from Custodial Wallets (Asset Wallets) and Exchange Wallets, do not set the fee-related properties, as they will not take effects.</Note>
 
         <Note>You can transfer tokens to multiple addresses only if you use MPC Wallets as the transaction source. To do this, you should use the <code>utxo_outputs</code> property to specify the destination addresses.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       operationId: create_transfer_transaction
       requestBody:
         $ref: '#/components/requestBodies/createTransferBody'
@@ -4052,6 +4054,8 @@ paths:
         You need to provide details such as the source address, destination address, and the calldata. You can specify the fee-related properties to limit the transaction fee, or specify the `fee_level` property to let Cobo calculate the transaction fee based on the selected fee level. A transaction request for tracking is returned upon successful operation.
 
         <Note>Currently, this operation only applies to the transactions from MPC Wallets on the blockchains that have a similar architecture to Ethereum.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       operationId: create_contract_call_transaction
       requestBody:
         $ref: '#/components/requestBodies/createSmartContractCallBody'
@@ -4535,6 +4539,8 @@ paths:
         Resending a transaction is a high‑risk operation. Ensure that the original transaction has not been broadcast to the blockchain, has already expired, and will never be confirmed. Otherwise, the same transaction may be confirmed on‑chain twice.
 
         <Note>This operation only applies to transactions from MPC Wallets in the SOL token.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       operationId: resend_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -4681,6 +4687,8 @@ paths:
         <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
 
         You can use the `address` or `included_utxos` properties in the request body to specify the address or UTXOs that will cover the transaction fee. Generally, the transaction fee is paid by the original transaction's source. If that source's balance is insufficient, the specified address or UTXOs can be used to cover the fee.
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       operationId: drop_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -4732,6 +4740,8 @@ paths:
         A transaction can be sped up only if its status is `Broadcasting`.
 
         <Note>This operation only applies to transactions from MPC Wallets. It does not apply to transactions on the following chains: VET, TRON, TVET, SOL, and TON.</Note>
+
+        You can have [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction) pay the on-chain transaction fee, so that the source address does not need to hold the chain's gas token. Use the `auto_fuel` property to control this behavior.
       operationId: speedup_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -8340,7 +8350,7 @@ paths:
   /fee_station/addresses:
     get:
       description: |
-        This operation retrieves a list of deposit addresses of your Fee Station, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
+        This operation retrieves a list of deposit addresses of your Billing Center, including the chain ID, address, and additional information. You can filter the result by chain ID and address.
       operationId: list_fee_station_addresses
       parameters:
       - description: "A list of chain IDs, separated by comma. The chain ID is the\
@@ -8422,13 +8432,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: List Fee Station addresses
+      summary: List Billing Center addresses
       tags:
       - FeeStation
   /fee_station/tokens:
     get:
       description: |
-        The operation retrieves a list of token balances within your Fee Station.
+        The operation retrieves a list of token balances within your Billing Center.
       operationId: list_token_balances_for_fee_station
       parameters:
       - description: "A list of token IDs, separated by comma. The token ID is the\
@@ -8499,13 +8509,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - wallet.read
-      summary: List Fee Station token balances
+      summary: List Billing Center token balances
       tags:
       - FeeStation
   /fee_station/transactions:
     get:
       description: |
-        This operation retrieves all Fee Station transactions under your organization.
+        This operation retrieves all Billing Center transactions under your organization.
 
         You can filter the results by request ID, Cobo ID, transaction ID, transaction hash, type, status, and timestamp. You can also paginate and sort your query results.
       operationId: list_fee_station_transactions
@@ -8548,9 +8558,9 @@ paths:
         schema:
           type: string
         style: form
-      - description: "A list of transaction types for Fee Station, separated by comma.\
-          \ Possible values include: \n  - `Deposit`: A deposit transaction.\n  -\
-          \ `Withdrawal`: A withdrawal transaction.\n"
+      - description: "A list of transaction types for Billing Center, separated by\
+          \ comma. Possible values include: \n  - `Deposit`: A deposit transaction.\n\
+          \  - `Withdrawal`: A withdrawal transaction.\n"
         example: "Deposit,Withdrawal"
         explode: true
         in: query
@@ -8715,13 +8725,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.read
-      summary: List all Fee Station transactions
+      summary: List all Billing Center transactions
       tags:
       - FeeStation
   /fee_station/transactions/{transaction_id}:
     get:
       description: |
-        This operation retrieves detailed information about a specified Fee Station transaction record, such as the transaction status, source address, destination address, and timestamp.
+        This operation retrieves detailed information about a specified Billing Center transaction record, such as the transaction status, source address, destination address, and timestamp.
       operationId: get_fee_station_transaction_by_id
       parameters:
       - description: The transaction ID.
@@ -8758,13 +8768,13 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.read
-      summary: Get Fee Station transaction information
+      summary: Get Billing Center transaction information
       tags:
       - FeeStation
   /fee_station/transactions/estimate_fee:
     post:
       description: |
-        <Note>This operation is **deprecated** and retained only for backward compatibility. Use [Check Fee Station usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) for all new integrations.</Note>
+        <Note>This operation is **deprecated** and retained only for backward compatibility. Use [Check Billing Center usage](https://www.cobo.com/developers/v2/api-references/feestation/check-fee-station-usage) for all new integrations.</Note>
 
         This operation estimates the transaction fee of a token transfer based on the fee model that the chain uses, considering factors such as network congestion and transaction complexity.
 
@@ -8804,7 +8814,7 @@ paths:
   /fee_station/fiat_transactions:
     get:
       description: |
-        This operation retrieves all Fee Station fiat transactions under your organization.
+        This operation retrieves all Billing Center fiat transactions under your organization.
 
         You can filter the results by request IDs, transaction IDs, transaction type, and created timestamp. You can also paginate your query results.
       operationId: list_fee_station_fiat_transactions
@@ -8916,23 +8926,23 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.read
-      summary: List Fee Station fiat transactions
+      summary: List Billing Center fiat transactions
       tags:
       - FeeStation
   /fee_station/check_fee_station_usage:
     post:
-      description: "This operation evaluates Fee Station usage for the current transaction.\
-        \ \n\nIt determines whether Fee station can be used, checks if the Fee Station\
-        \ balance is sufficient, and returns a breakdown of the amounts involved,\
-        \ including any portion that must be covered by the user or sponsored in USD\
-        \ stablecoin.\n"
+      description: "This operation evaluates Billing Center usage for the current\
+        \ transaction. \n\nIt determines whether Billing Center can be used, checks\
+        \ if the Billing Center balance is sufficient, and returns a breakdown of\
+        \ the amounts involved, including any portion that must be covered by the\
+        \ user or sponsored in USD stablecoin.\n"
       operationId: check_fee_station_usage
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/FeeStationCheckFeeStationUsage'
-        description: The request body for evaluating Fee Station usage.
+        description: The request body for evaluating Billing Center usage.
       responses:
         "201":
           content:
@@ -8957,7 +8967,7 @@ paths:
       - CoboAuth: []
       - OAuth2:
         - transaction.estimate_fee
-      summary: Check Fee Station usage
+      summary: Check Billing Center usage
       tags:
       - FeeStation
   /swaps/activities:
@@ -15713,7 +15723,7 @@ paths:
       description: |
         This operation creates an auto-sweep task for the specified wallet and token. The task triggers transactions to sweep the full balance of the specified token to the configured sweep-to address.
 
-        <Note>A sweep requires native chain coin to pay for gas. The gas must be available either in the source (deposit) address, or supplied by a configured Fee Station or Auto-Fuel. Reaching the deposit threshold alone does not trigger a sweep. If no gas is available, the sweep is blocked (for example, with an insufficient-balance error) or the Fee Station quota check fails. When a sweep is blocked, the reason is reported in the `failed_reasons` array of the auto-sweep task.</Note>
+        <Note>A sweep requires native chain coin to pay for gas. The gas must be available either in the source (deposit) address, or supplied by a configured Billing Center or Auto-Fuel. Reaching the deposit threshold alone does not trigger a sweep. If no gas is available, the sweep is blocked (for example, with an insufficient-balance error) or the Billing Center quota check fails. When a sweep is blocked, the reason is reported in the `failed_reasons` array of the auto-sweep task.</Note>
 
         <Info>This operation is asynchronous. When the task is created, it is returned with `status` set to `Submitted` and an empty `transaction_ids` array; this is expected and does not indicate a failure. The `transaction_ids` array is populated only after `status` becomes `TransactionCreated`. To retrieve the transaction IDs, poll [Get auto-sweep task details](https://www.cobo.com/developers/v2/api-references/autosweep/get-auto-sweep-task-details) using the returned `task_id` until the status changes.</Info>
       operationId: create_auto_sweep_task
@@ -18190,7 +18200,7 @@ components:
         type: string
       style: simple
     optionalFeeStationTransactionTypeListParam:
-      description: "A list of transaction types for Fee Station, separated by comma.\
+      description: "A list of transaction types for Billing Center, separated by comma.\
         \ Possible values include: \n  - `Deposit`: A deposit transaction.\n  - `Withdrawal`:\
         \ A withdrawal transaction.\n"
       example: "Deposit,Withdrawal"
@@ -19681,7 +19691,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FeeStationTransfer'
-      description: The information about a Fee Station top-up transaction.
+      description: The information about a Billing Center top-up transaction.
     requestApprovalBody:
       content:
         application/json:
@@ -23399,15 +23409,18 @@ components:
     SOLBase:
       properties:
         base_fee:
-          description: "A fixed fee charged per signature. The default is 5,000 lamports\
-            \ per signature."
-          example: "0.000005"
+          description: "A fixed fee, in lamports, charged per signature. The default\
+            \ is 5,000 per signature."
+          example: "5000"
           type: string
         rent_amount:
-          description: The one-time rent required to activate a Solana token Associated
-            Token Account (ATA) before the token can be received or used. **This field
-            is reserved for future use and is currently not populated.**
-          example: "0.00001"
+          description: |
+            The one-time rent, in lamports, required to create the destination's Associated Token Account (ATA) for this token when it does not exist yet.
+
+            In fee estimate responses, this field returns the current on-chain rent if the destination address has no ATA for the token, and is empty otherwise. You can call [Estimate transaction fee](https://www.cobo.com/developers/v2/api-references/transactions/estimate-transaction-fee) before submitting a transaction to check whether it will incur ATA rent. The result reflects the destination at estimation time; if the ATA is closed before the transaction is built, the transaction still creates it and incurs the rent.
+
+            In transaction records, this field keeps the value estimated when the transaction was created and is not updated from on-chain data. `estimated_fee_used` includes this rent, while `fee_used` does not.
+          example: "1488440"
           type: string
       type: object
     SOLComputeUnit:
@@ -24054,13 +24067,13 @@ components:
         cobo_category:
           description: "The transaction category defined by Cobo. Possible values\
             \ include: \n- `AutoSweep`: An auto-sweep transaction.\n- `AutoFueling`:\
-            \ A transaction where Fee Station pays transaction fees to an address\
+            \ A transaction where Billing Center pays transaction fees to an address\
             \ within your wallet.\n- `AutoFuelingRefund`: A refund for an auto-fueling\
             \ transaction.\n- `BillPayment`: A transaction to pay Cobo bills through\
-            \ Fee Station.\n- `BillRefund`: A refund for a previously made bill payment.\n\
-            - `CommissionFeeCharge`: A transaction to charge commission fees via Fee\
-            \ Station.\n- `CommissionFeeRefund`: A refund of previously charged commission\
-            \ fees.\n"
+            \ Billing Center.\n- `BillRefund`: A refund for a previously made bill\
+            \ payment.\n- `CommissionFeeCharge`: A transaction to charge commission\
+            \ fees via Billing Center.\n- `CommissionFeeRefund`: A refund of previously\
+            \ charged commission fees.\n"
           items:
             example: AutoFueling
             type: string
@@ -24428,6 +24441,7 @@ components:
       - PendingCoboKYTCheck
       - RejectedByCoboKYT
       - PendingCoboTravelRuleCheck
+      - AdditionalInformationRequired
       example: PendingDoubleCheck
       type: string
     TransactionTimeline:
@@ -24938,7 +24952,7 @@ components:
       required:
       - source_type
       - wallet_id
-      title: Fee Station
+      title: Billing Center
       type: object
     TransactionDestinationType:
       description: |
@@ -24950,6 +24964,7 @@ components:
       - EVM_Contract
       - SOL_Contract
       - STELLAR_Contract
+      - SUI_Contract
       - COSMOS_Contract
       - TRON_Contract
       - EVM_EIP_191_Signature
@@ -25288,6 +25303,21 @@ components:
       - ChangeTrust
       example: ChangeTrust
       type: string
+    TransactionSuiDestination:
+      description: "The information about the transaction destination type `SUI_Contract`.\
+        \ Refer to [Transaction sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/TransactionDestinationType'
+        contract_param:
+          $ref: '#/components/schemas/SuiContractCallContractParam'
+      required:
+      - contract_param
+      - destination_type
+      title: SUI_Contract
+      type: object
     TransactionSolContractAccount:
       description: sol contract instruction account
       properties:
@@ -26053,18 +26083,27 @@ components:
       example: Resend
       type: string
     AutoFuelType:
-      description: "The mode of transaction fee payment using Fee Station. Currently,\
-        \ Fee Station supports eligible transactions made with MPC Wallets and Web3\
-        \ Wallets on EVM-compatible chains, TRON, and Solana.\nFor more details, refer\
-        \ to [Fee Station](https://manuals.cobo.com/en/portal/fee-station/introduction).\n\
-        \n- `ProActiveAutoFuel`: Always use Fee Station to pay transaction fees. \
-        \ \n- `PassiveAutoFuel`: Use Fee Station only when the source address balance\
-        \ is insufficient to cover transaction fees.  \n- `UsePortalPreference`: Use\
-        \ fueling strategy based on the Portal configuration.  \n- `DisableAutoFuel`:\
-        \ Do not use Fee Station for transaction fee payment under any circumstances.\
-        \  \n\nIf this parameter is **not specified**, it defaults to the behavior\
-        \ of `UsePortalPreference`.\n\n**Note**: TRON and Solana do not support `PassiveAutoFuel`\
-        \ due to their fee delegation mechanisms.\n"
+      description: |
+        Whether Billing Center pays the on-chain transaction fee for this transaction, and under what condition.
+
+        On-chain fees are charged in a chain's gas token, which is usually not the token you are sending. Without Billing Center, the source address must hold that gas token or the transaction fails. When Billing Center covers the fee, the source address does not need to hold any gas token.
+
+        For more details, refer to [Billing Center](https://manuals.cobo.com/en/portal/billing-center/introduction).
+
+        **Accepted values**
+
+        - `ProActiveAutoFuel`: Always have Billing Center pay the fee, without touching the gas token in the source address.
+        - `PassiveAutoFuel`: Use the gas token in the source address when it is sufficient; otherwise have Billing Center pay the fee.
+        - `UsePortalPreference`: Follow the per-chain sponsorship rules configured on Cobo Portal, under **Billing Center** > **Settings**.
+        - `DisableAutoFuel`: Never use Billing Center. The transaction pays its fee from the source address and fails if the balance is insufficient.
+
+        If this parameter is **not specified**, it defaults to `UsePortalPreference`.
+
+        **Support and limitations**
+
+        - Applies to transactions from MPC Wallets and Custodial Wallets (Web3 Wallets) on EVM-compatible chains, TRON, Solana, and Tempo. Other chains, such as BTC, are not supported, and the source address must hold the fee itself.
+        - TRON, Solana, and Tempo do not support `PassiveAutoFuel` due to their fee delegation mechanisms.
+        - The per-chain sponsorship rules on Cobo Portal apply only to API transactions that pass `UsePortalPreference`. They do not affect transfers initiated from the Cobo Portal interface.
       enum:
       - PassiveAutoFuel
       - ProActiveAutoFuel
@@ -26313,7 +26352,7 @@ components:
         main_transaction_id:
           description: The UUID of the parent (main) transaction that this record
             is associated with. Set only when the current record is a gas/fee transaction
-            initiated by Fee Station; omit for main transactions.
+            initiated by Billing Center; omit for main transactions.
           example: b0530b27-104f-4338-87de-de01500326ea
           format: uuid
           type: string
@@ -26321,10 +26360,10 @@ components:
     TransactionCoboCategory:
       description: "The transaction category defined by Cobo. Possible values include:\
         \ \n  - `AutoSweep`: An auto-sweep transaction.\n  - `AutoFueling`: A transaction\
-        \ where Fee Station automatically pays transaction fees for eligible MPC Wallet\
-        \ and Web3 Wallet transactions.\n  - `AutoFuelingRefund`: A refund for an\
-        \ auto-fueling transaction.\n  - `BillPayment`: A transaction to pay Cobo\
-        \ bills through Fee Station.\n  - `BillRefund`: A refund for a previously\
+        \ where Billing Center automatically pays transaction fees for eligible MPC\
+        \ Wallet and Web3 Wallet transactions.\n  - `AutoFuelingRefund`: A refund\
+        \ for an auto-fueling transaction.\n  - `BillPayment`: A transaction to pay\
+        \ Cobo bills through Billing Center.\n  - `BillRefund`: A refund for a previously\
         \ made bill payment.\n  - `CommissionFeeCharge`: A transaction for commission-fee\
         \ users that charges the commission fee incurred from various services.\n\
         \  - `CommissionFeeRefund`: A refund of previously charged commission fees.\n\
@@ -26358,10 +26397,10 @@ components:
         \ and replay-safe transaction execution on the Solana network.  \n  - `FeePayerSign`:\
         \ A transaction where a **designated Solana fee payer account** covers the\
         \ transaction fees, separating the fee payment from the main signer or source\
-        \ account.\n  - `GasFeeSponsor`: A transaction where Fee Station pays the\
+        \ account.\n  - `GasFeeSponsor`: A transaction where Billing Center pays the\
         \ on-chain gas fee in USD stablecoin.\n  - `GasFeeSponsorRefund`: A transaction\
-        \ that refunds gas fees previously sponsored and paid by Fee Station.\n  -\
-        \ `WalletConnect`: A transaction initiated by walletconnect.\n  - `JustLendReceiverPrecharge`:\
+        \ that refunds gas fees previously sponsored and paid by Billing Center.\n\
+        \  - `WalletConnect`: A transaction initiated by walletconnect.\n  - `JustLendReceiverPrecharge`:\
         \ A TRX transfer to the receiver address to activate it and compensate for\
         \ bandwidth fees before the main transaction executes.\n  - `JustLendEnergyRental`:\
         \ A contract call to JustLend's rentResource() to rent TRON energy for the\
@@ -27540,6 +27579,7 @@ components:
       - STELLAR_Contract
       - TRON_Contract
       - COSMOS_Contract
+      - SUI_Contract
       example: EVM_Contract
       type: string
     EvmContractCallDestination:
@@ -27785,6 +27825,67 @@ components:
       - ChangeTrust
       example: ChangeTrust
       type: string
+    SuiContractCallDestination:
+      description: "The information about the transaction destination. Refer to [Transaction\
+        \ sources and destinations](https://www.cobo.com/developers/v2/guides/transactions/sources-and-destinations)\
+        \ for a detailed introduction about the supported sources and destinations\
+        \ for each transaction type."
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/ContractCallDestinationType'
+        contract_param:
+          $ref: '#/components/schemas/SuiContractCallContractParam'
+      required:
+      - contract_param
+      - destination_type
+      title: SUI_Contract
+      type: object
+    SuiContractCallContractType:
+      description: |
+        The type of the SUI contract type.
+      enum:
+      - AddressBalance
+      example: AddressBalance
+      type: string
+    SuiContractCallContractParam:
+      discriminator:
+        mapping:
+          AddressBalance: '#/components/schemas/SuiContractCallAddressBalanceParam'
+        propertyName: contract_type
+      oneOf:
+      - $ref: '#/components/schemas/SuiContractCallAddressBalanceParam'
+    SuiContractCallAddressBalanceParam:
+      description: Parameters related to SUI address balance operations
+      properties:
+        contract_type:
+          $ref: '#/components/schemas/SuiContractCallContractType'
+        token_id:
+          description: "The token ID, which is the unique identifier of a token."
+          example: SUI
+          type: string
+        operation_type:
+          $ref: '#/components/schemas/SuiContractCallAddressBalanceOperationType'
+        txid:
+          description: |
+            The transaction hash of the deposit to return. Required when `operation_type` is `AddressBalanceRefund`, and must be omitted otherwise. The destination address is resolved from this deposit and cannot be specified.
+          example: 5YajS3ewacVwd1aE7Qkk7sXsstmwwMUiNCeQx22wkGXZ
+          type: string
+      required:
+      - contract_type
+      - operation_type
+      - token_id
+      title: Sui_AddressBalance_Param
+      type: object
+    SuiContractCallAddressBalanceOperationType:
+      description: |
+        Address balance operations.
+        - `AddressBalanceRedeem`: Move the address balance into a coin object held by the same address.
+        - `AddressBalanceRefund`: Return a specific deposit from the address balance to the address that sent it.
+      enum:
+      - AddressBalanceRedeem
+      - AddressBalanceRefund
+      example: AddressBalanceRedeem
+      type: string
     ContractCallDestination:
       discriminator:
         mapping:
@@ -27793,6 +27894,7 @@ components:
           STELLAR_Contract: '#/components/schemas/StellarContractCallDestination'
           TRON_Contract: '#/components/schemas/TronContractCallDestination'
           COSMOS_Contract: '#/components/schemas/CosmosContractCallDestination'
+          SUI_Contract: '#/components/schemas/SuiContractCallDestination'
         propertyName: destination_type
       oneOf:
       - $ref: '#/components/schemas/EvmContractCallDestination'
@@ -27800,6 +27902,7 @@ components:
       - $ref: '#/components/schemas/StellarContractCallDestination'
       - $ref: '#/components/schemas/TronContractCallDestination'
       - $ref: '#/components/schemas/CosmosContractCallDestination'
+      - $ref: '#/components/schemas/SuiContractCallDestination'
     ContractCallParams:
       description: The information about a transaction that interacts with a smart
         contract
@@ -28336,11 +28439,17 @@ components:
             \ address update event data.\n- `PaymentPayout`: The payment payout event\
             \ data.\n- `PaymentBankWithdrawal`: The payment bank withdrawal event\
             \ data.\n- `PaymentBulkSend`: The payment bulk send event data.\n- `PaymentBulkSendItem`:\
-            \ The payment bulk send item event data.\n- `PaymentAccountBalanceUpdate`:\
-            \ The Payments account balance updated event data, including account information\
-            \ and balance change details.\n- `BalanceUpdateInfo`: The balance update\
-            \ event data.\n- `SuspendedToken`: The token suspension event data.\n\
-            - `ComplianceDisposition`: The compliance disposition event data.\n- `ComplianceKytScreenings`:\
+            \ The payment bulk send item event data.\n- `PaymentTopUpUpdate`: The\
+            \ payment top-up update event data.\n- `PaymentOrderUpdate`: The payment\
+            \ order update event data.\n- `PaymentRefundUpdate`: The payment refund\
+            \ update event data.\n- `PaymentPayoutUpdate`: The payment payout update\
+            \ event data.\n- `PaymentBulkSendUpdate`: The payment bulk send update\
+            \ event data.\n- `PaymentBulkSendItemUpdate`: The payment bulk send item\
+            \ update event data.\n- `PaymentAccountBalanceUpdate`: The Payments account\
+            \ balance updated event data, including account information and balance\
+            \ change details.\n- `BalanceUpdateInfo`: The balance update event data.\n\
+            - `SuspendedToken`: The token suspension event data.\n- `ComplianceDisposition`:\
+            \ The compliance disposition event data.\n- `ComplianceKytScreenings`:\
             \ The compliance KYT screenings event data.\n- `ComplianceKyaScreenings`:\
             \ The compliance KYA screenings event data.\n- `Organization`: The organization\
             \ event data.\n- `FiatTransaction`: The fiat transaction event data."
@@ -28362,6 +28471,12 @@ components:
           - PaymentBankWithdrawal
           - PaymentBulkSend
           - PaymentBulkSendItem
+          - PaymentTopUpUpdate
+          - PaymentOrderUpdate
+          - PaymentRefundUpdate
+          - PaymentPayoutUpdate
+          - PaymentBulkSendUpdate
+          - PaymentBulkSendItemUpdate
           - PaymentAccountBalanceUpdate
           - BalanceUpdateInfo
           - SuspendedToken
@@ -28397,6 +28512,12 @@ components:
           PaymentBankWithdrawal: '#/components/schemas/PaymentBankWithdrawalEvent'
           PaymentBulkSend: '#/components/schemas/PaymentBulkSendEvent'
           PaymentBulkSendItem: '#/components/schemas/PaymentBulkSendItemEvent'
+          PaymentTopUpUpdate: '#/components/schemas/PaymentTopUpUpdateEventData'
+          PaymentOrderUpdate: '#/components/schemas/PaymentOrderUpdateEventData'
+          PaymentRefundUpdate: '#/components/schemas/PaymentRefundUpdateEventData'
+          PaymentPayoutUpdate: '#/components/schemas/PaymentPayoutUpdateEventData'
+          PaymentBulkSendUpdate: '#/components/schemas/PaymentBulkSendUpdateEventData'
+          PaymentBulkSendItemUpdate: '#/components/schemas/PaymentBulkSendItemUpdateEventData'
           PaymentAccountBalanceUpdate: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
           ComplianceDisposition: '#/components/schemas/ComplianceDispositionUpdateEventData'
           ComplianceKytScreenings: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
@@ -28424,6 +28545,12 @@ components:
       - $ref: '#/components/schemas/PaymentBankWithdrawalEvent'
       - $ref: '#/components/schemas/PaymentBulkSendEvent'
       - $ref: '#/components/schemas/PaymentBulkSendItemEvent'
+      - $ref: '#/components/schemas/PaymentTopUpUpdateEventData'
+      - $ref: '#/components/schemas/PaymentOrderUpdateEventData'
+      - $ref: '#/components/schemas/PaymentRefundUpdateEventData'
+      - $ref: '#/components/schemas/PaymentPayoutUpdateEventData'
+      - $ref: '#/components/schemas/PaymentBulkSendUpdateEventData'
+      - $ref: '#/components/schemas/PaymentBulkSendItemUpdateEventData'
       - $ref: '#/components/schemas/PaymentAccountBalanceUpdateEventData'
       - $ref: '#/components/schemas/ComplianceDispositionUpdateEventData'
       - $ref: '#/components/schemas/ComplianceKytScreeningsUpdateEventData'
@@ -28870,6 +28997,478 @@ components:
         - updated_timestamp
         type: object
       title: Payment Bulk Send Item Event Data
+    PaymentTopUpUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          transaction_id:
+            description: The incoming Payment transaction ID.
+            example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+            type: string
+          merchant_id:
+            description: The merchant ID associated with the top-up.
+            example: M1001
+            type: string
+          payer_id:
+            description: The payer ID generated by Cobo.
+            example: P20250415T0310056d7aa
+            type: string
+          custom_payer_id:
+            description: "Unique customer identifier on the merchant side, used to\
+              \ allocate a dedicated top-up address"
+            example: O20250304-P1001-1001
+            nullable: true
+            type: string
+          status:
+            $ref: '#/components/schemas/PaymentPayInStatus'
+          screening_mode:
+            $ref: '#/components/schemas/PaymentScreeningMode'
+          amount:
+            $ref: '#/components/schemas/PaymentAssetAmount'
+          tx_hash:
+            description: The blockchain transaction hash.
+            example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            nullable: true
+            type: string
+          topup_address:
+            description: The dedicated top-up address that received the funds.
+            example: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            type: string
+          source_address:
+            description: The source address of the incoming transaction.
+            example: 0x1234567890abcdef1234567890abcdef12345678
+            nullable: true
+            type: string
+          message:
+            description: The action prompt for an `ActionRequired` status.
+            example: Additional information is required before these funds can be
+              credited.
+            nullable: true
+            type: string
+          failed_reason:
+            $ref: '#/components/schemas/PaymentFailedReason'
+          created_timestamp:
+            description: "The created time of the top-up, represented as a UNIX timestamp\
+              \ in seconds."
+            example: 1744689000
+            format: int64
+            type: integer
+          updated_timestamp:
+            description: "The updated time of the top-up, represented as a UNIX timestamp\
+              \ in seconds."
+            example: 1744689100
+            format: int64
+            type: integer
+        required:
+        - amount
+        - created_timestamp
+        - custom_payer_id
+        - failed_reason
+        - merchant_id
+        - message
+        - payer_id
+        - screening_mode
+        - source_address
+        - status
+        - topup_address
+        - transaction_id
+        - tx_hash
+        - updated_timestamp
+        type: object
+      title: Payment Top-up Update Event Data
+    PaymentOrderUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          order_id:
+            $ref: '#/components/schemas/OrderId'
+          psp_order_code:
+            description: A unique reference code assigned by the developer to identify
+              this order in their system.
+            example: P20250415001
+            type: string
+          merchant_id:
+            description: The merchant ID associated with the order.
+            example: M1001
+            type: string
+          merchant_order_code:
+            description: A unique reference code assigned by the merchant to identify
+              this order in their system.
+            example: M20250415001
+            nullable: true
+            type: string
+          status:
+            $ref: '#/components/schemas/OrderStatus'
+          notice_type:
+            $ref: '#/components/schemas/PaymentOrderNoticeType'
+          receive_address:
+            description: The recipient wallet address for the payment transaction.
+            example: 0x1234567890abcdef1234567890abcdef12345678
+            type: string
+          expired_at:
+            description: "The expiration time of the pay-in order, represented as\
+              \ a UNIX timestamp in seconds."
+            example: 1744693600
+            format: int64
+            type: integer
+          requested_amount:
+            allOf:
+            - $ref: '#/components/schemas/PaymentAssetAmount'
+            description: The requested amount.
+          credited_amount:
+            allOf:
+            - $ref: '#/components/schemas/PaymentAssetAmount'
+            description: The credited amount.
+          outstanding_amount:
+            allOf:
+            - $ref: '#/components/schemas/PaymentAssetAmount'
+            description: The outstanding amount.
+          transactions:
+            description: The incoming transactions associated with the order.
+            items:
+              $ref: '#/components/schemas/PaymentOrderDeposit'
+            type: array
+          created_timestamp:
+            description: "The created time of the order, represented as a UNIX timestamp\
+              \ in seconds."
+            example: 1744690000
+            format: int64
+            type: integer
+          updated_timestamp:
+            description: "The updated time of the order, represented as a UNIX timestamp\
+              \ in seconds."
+            example: 1744690100
+            format: int64
+            type: integer
+        required:
+        - created_timestamp
+        - credited_amount
+        - expired_at
+        - merchant_id
+        - merchant_order_code
+        - notice_type
+        - order_id
+        - outstanding_amount
+        - psp_order_code
+        - receive_address
+        - requested_amount
+        - status
+        - transactions
+        - updated_timestamp
+        type: object
+      title: Payment Order Update Event Data
+    PaymentRefundUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          refund_id:
+            description: The refund order ID.
+            example: R20250415-M1001-1001
+            type: string
+          order_id:
+            description: Unique identifier of a single order
+            example: O20250304-M1001-1001
+            nullable: true
+            type: string
+          merchant_id:
+            description: The merchant ID associated with the refund.
+            example: M1001
+            nullable: true
+            type: string
+          request_id:
+            description: The request ID for the refund request.
+            example: 123e4567-e89b-12d3-a456-426614174004
+            nullable: true
+            type: string
+          to_address:
+            description: The recipient wallet address for the refund.
+            example: 0x9876543210abcdef1234567890abcdef12345678
+            nullable: true
+            type: string
+          status:
+            $ref: '#/components/schemas/RefundStatus'
+          requested_amount:
+            $ref: '#/components/schemas/PaymentAssetAmount'
+          tx_hash:
+            description: The blockchain transaction hash.
+            example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            nullable: true
+            type: string
+          refund_type:
+            $ref: '#/components/schemas/RefundType'
+          initiator:
+            description: The initiator of the refund order.
+            example: ak_test_*********************
+            nullable: true
+            type: string
+          commission_fee:
+            $ref: '#/components/schemas/PaymentCommissionFeeTotal'
+          failed_reason:
+            $ref: '#/components/schemas/PaymentFailedReason'
+          created_timestamp:
+            description: "The created time of the refund order, represented as a UNIX\
+              \ timestamp in seconds."
+            example: 1744690400
+            format: int64
+            type: integer
+          updated_timestamp:
+            description: "The updated time of the refund order, represented as a UNIX\
+              \ timestamp in seconds."
+            example: 1744690500
+            format: int64
+            type: integer
+        required:
+        - commission_fee
+        - created_timestamp
+        - failed_reason
+        - initiator
+        - merchant_id
+        - order_id
+        - refund_id
+        - refund_type
+        - request_id
+        - requested_amount
+        - status
+        - to_address
+        - tx_hash
+        - updated_timestamp
+        type: object
+      title: Payment Refund Update Event Data
+    PaymentPayoutUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          payout_id:
+            description: The payout ID generated by Cobo.
+            example: 123e4567-e89b-12d3-a456-426614174004
+            type: string
+          request_id:
+            description: The request ID for the payout.
+            example: 123e4567-e89b-12d3-a456-426614174005
+            type: string
+          source_account:
+            $ref: '#/components/schemas/PaymentSourceAccount'
+          status:
+            $ref: '#/components/schemas/PaymentPayoutStatus'
+          requested_amounts:
+            description: The amounts requested from the source account.
+            items:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            type: array
+          failed_amounts:
+            description: The failed amounts in the source assets.
+            items:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            type: array
+          requested_target:
+            $ref: '#/components/schemas/PaymentPayoutRequestedTarget'
+          transactions:
+            description: The transactions created for the payout.
+            items:
+              $ref: '#/components/schemas/PaymentPayoutTransaction'
+            type: array
+          actual_payout_amounts:
+            description: The amounts actually delivered to the recipient.
+            items:
+              $ref: '#/components/schemas/PaymentAssetOrFiatAmount'
+            type: array
+          initiator:
+            description: The initiator of the payout.
+            example: ak_test_*********************
+            nullable: true
+            type: string
+          commission_fee:
+            $ref: '#/components/schemas/PaymentCommissionFeeTotal'
+          remark:
+            description: The remark for the payout.
+            example: Create payouts for customer 123
+            nullable: true
+            type: string
+          failed_reason:
+            $ref: '#/components/schemas/PaymentFailedReason'
+          created_timestamp:
+            description: "The created time of the payout, represented as a UNIX timestamp\
+              \ in seconds."
+            example: 1744690700
+            format: int64
+            type: integer
+          updated_timestamp:
+            description: "The updated time of the payout, represented as a UNIX timestamp\
+              \ in seconds."
+            example: 1744690800
+            format: int64
+            type: integer
+        required:
+        - actual_payout_amounts
+        - commission_fee
+        - created_timestamp
+        - failed_amounts
+        - failed_reason
+        - initiator
+        - payout_id
+        - remark
+        - request_id
+        - requested_amounts
+        - requested_target
+        - source_account
+        - status
+        - transactions
+        - updated_timestamp
+        type: object
+      title: Payment Payout Update Event Data
+    PaymentBulkSendUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          bulk_send_id:
+            description: The bulk send ID.
+            example: 123e4567-e89b-12d3-a456-426614174003
+            type: string
+          request_id:
+            description: The request ID.
+            example: 123e4567-e89b-12d3-a456-426614174004
+            nullable: true
+            type: string
+          source_account:
+            $ref: '#/components/schemas/PaymentSourceAccount'
+          execution_mode:
+            $ref: '#/components/schemas/PaymentBulkSendExecutionMode'
+          status:
+            $ref: '#/components/schemas/PaymentBulkSendStatus'
+          item_count:
+            description: The total number of items in the bulk send.
+            example: 1000
+            type: integer
+          failed_item_count:
+            description: The number of failed items.
+            example: 60
+            type: integer
+          not_executed_item_count:
+            description: The number of items not executed.
+            example: 40
+            type: integer
+          requested_amounts:
+            description: The requested amounts aggregated by asset.
+            items:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            type: array
+          completed_amounts:
+            description: The amounts of completed items aggregated by asset.
+            items:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            type: array
+          failed_amounts:
+            description: The amounts of failed and not-executed items aggregated by
+              asset.
+            items:
+              $ref: '#/components/schemas/PaymentAssetAmount'
+            type: array
+          description:
+            description: The description for the entire bulk send batch.
+            example: Monthly vendor payments - January 2024
+            nullable: true
+            type: string
+          commission_fee:
+            $ref: '#/components/schemas/PaymentCommissionFeeTotal'
+          failed_reason:
+            $ref: '#/components/schemas/PaymentFailedReason'
+          created_timestamp:
+            description: "The created time of the bulk send, represented as a UNIX\
+              \ timestamp in seconds."
+            example: 1744691000
+            format: int64
+            type: integer
+          updated_timestamp:
+            description: "The updated time of the bulk send, represented as a UNIX\
+              \ timestamp in seconds."
+            example: 1744691100
+            format: int64
+            type: integer
+        required:
+        - bulk_send_id
+        - commission_fee
+        - completed_amounts
+        - created_timestamp
+        - description
+        - execution_mode
+        - failed_amounts
+        - failed_item_count
+        - failed_reason
+        - item_count
+        - not_executed_item_count
+        - request_id
+        - requested_amounts
+        - source_account
+        - status
+        - updated_timestamp
+        type: object
+      title: Payment Bulk Send Update Event Data
+    PaymentBulkSendItemUpdateEventData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEventDataType'
+      - properties:
+          bulk_send_item_id:
+            description: The bulk send item ID.
+            example: 123e4567-e89b-12d3-a456-426614174003
+            type: string
+          bulk_send_id:
+            description: The ID of the bulk send that contains this item.
+            example: 123e4567-e89b-12d3-a456-426614174004
+            type: string
+          request_id:
+            description: The request ID for the item.
+            example: 123e4567-e89b-12d3-a456-426614174005
+            nullable: true
+            type: string
+          status:
+            $ref: '#/components/schemas/PaymentBulkSendItemStatus'
+          requested_amount:
+            $ref: '#/components/schemas/PaymentAssetAmount'
+          receiving_address:
+            description: The receiving address of the payout item.
+            example: 0x1234567890abcdef1234567890abcdef12345678
+            type: string
+          tx_hash:
+            description: The blockchain transaction hash.
+            example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+            nullable: true
+            type: string
+          source_account:
+            $ref: '#/components/schemas/PaymentSourceAccount'
+          description:
+            description: The description of the payout item.
+            example: "Invoice #INV-2024-001"
+            nullable: true
+            type: string
+          failed_reason:
+            $ref: '#/components/schemas/PaymentFailedReason'
+          created_timestamp:
+            description: "The created time of the bulk send item, represented as a\
+              \ UNIX timestamp in seconds."
+            example: 1744691250
+            format: int64
+            type: integer
+          updated_timestamp:
+            description: "The updated time of the bulk send item, represented as a\
+              \ UNIX timestamp in seconds."
+            example: 1744691350
+            format: int64
+            type: integer
+        required:
+        - bulk_send_id
+        - bulk_send_item_id
+        - created_timestamp
+        - description
+        - failed_reason
+        - receiving_address
+        - request_id
+        - requested_amount
+        - source_account
+        - status
+        - tx_hash
+        - updated_timestamp
+        type: object
+      title: Payment Bulk Send Item Update Event Data
     PaymentAccountBalanceUpdateEventData:
       allOf:
       - $ref: '#/components/schemas/WebhookEventDataType'
@@ -29029,6 +29628,12 @@ components:
       - payment.charge.status.updated
       - payment.bulk_send.status.updated
       - payment.bulk_send.item.status.updated
+      - payment.topup.updated
+      - payment.order.updated
+      - payment.refund.updated
+      - payment.payout.updated
+      - payment.bulk_send.updated
+      - payment.bulk_send.item.updated
       - payment.transaction.external.created
       - payment.transaction.external.completed
       - payment.transaction.settlement_network.created
@@ -32983,7 +33588,7 @@ components:
       example: Deposit
       type: string
     FeeStationTransfer:
-      description: The information about a Fee Station top-up transaction.
+      description: The information about a Billing Center top-up transaction.
       example:
         token_id: ETH_USDT
         destination:
@@ -33027,16 +33632,16 @@ components:
       - amount
       type: object
     FeeStationGasStationType:
-      description: "The Fee Station mode used for automatic gas payment:\n- `FeeStation`:\
-        \ The user uses their own Fee Station balance to cover the gas fee. \n- `CoboOperationStation`:\
-        \ Cobo covers the gas fee on behalf of the user.\n"
+      description: "The Billing Center mode used for automatic gas payment:\n- `FeeStation`:\
+        \ The user uses their own Billing Center balance to cover the gas fee. \n\
+        - `CoboOperationStation`: Cobo covers the gas fee on behalf of the user.\n"
       enum:
       - FeeStation
       - CoboOperationStation
       example: CoboOperationStation
       type: string
     FeeStationCheckFeeStationUsage:
-      description: The information for evaluating Fee Station usage.
+      description: The information for evaluating Billing Center usage.
       example:
         amount: "100.5"
         token_id: ETH_USDT
@@ -33069,7 +33674,7 @@ components:
           type: string
         estimated_fee_amount:
           description: "The estimated transaction fee required for this transfer,\
-            \ before applying any Fee Station rules."
+            \ before applying any Billing Center rules."
           example: "0.0021"
           type: string
         from_address:
@@ -33109,19 +33714,19 @@ components:
           example: ETH
           type: string
         balance:
-          description: The current token balance available in Fee Station.
+          description: The current token balance available in Billing Center.
           example: "0.0021"
           type: string
         gas_station_type:
           $ref: '#/components/schemas/FeeStationGasStationType'
         is_fee_station_applicable:
-          description: Indicates whether Fee Station is applied for this transfer
+          description: Indicates whether Billing Center is applied for this transfer
             request.
           example: true
           type: boolean
         is_balance_sufficient:
-          description: "If Fee Station is used, indicates whether its balance is sufficient\
-            \ to cover the required gas fee."
+          description: "If Billing Center is used, indicates whether its balance is\
+            \ sufficient to cover the required gas fee."
           example: false
           type: boolean
         total_fee_amount:
@@ -33130,7 +33735,7 @@ components:
           type: string
         is_sponsor_applicable:
           description: Indicates whether USD stablecoin sponsorship is applied when
-            the Fee Station balance is insufficient.
+            the Billing Center balance is insufficient.
           example: true
           type: boolean
         sponsored_fee_amount:
@@ -35138,6 +35743,16 @@ components:
         fee_amount:
           description: "The amount of the commission fee charged by Cobo for operations\
             \ such as pay-ins and payouts, in USD."
+          type: string
+      required:
+      - fee_amount
+      type: object
+    PaymentCommissionFeeTotal:
+      nullable: true
+      properties:
+        fee_amount:
+          description: The commission fee amount.
+          example: "0.1"
           type: string
       required:
       - fee_amount
@@ -38402,6 +39017,265 @@ components:
         - When the account is the developer account, use `developer`.
       example: M1001
       type: string
+    PaymentSourceAccount:
+      description: "The Payments account from which the funds are debited: the merchant\
+        \ ID for a merchant account, or `developer` for the developer account."
+      example: M1001
+      type: string
+    PaymentCustomPayerId:
+      description: "Unique customer identifier on the merchant side, used to allocate\
+        \ a dedicated top-up address."
+      example: O20250304-P1001-1001
+      type: string
+    PaymentAssetAmount:
+      description: A cryptocurrency asset amount.
+      properties:
+        amount:
+          description: "The amount of the asset, represented as a decimal string."
+          example: "100.00"
+          type: string
+        token_id:
+          description: The token ID of the asset.
+          example: ETH_USDC
+          type: string
+        chain_id:
+          description: The chain ID of the asset.
+          example: ETH
+          type: string
+      required:
+      - amount
+      - chain_id
+      - token_id
+      type: object
+    PaymentAssetOrFiatAmount:
+      description: An amount represented either as a cryptocurrency asset or a fiat
+        currency.
+      properties:
+        amount_type:
+          description: The amount representation type.
+          enum:
+          - Crypto
+          - Fiat
+          example: Crypto
+          type: string
+        amount:
+          description: "The amount, represented as a decimal string."
+          example: "100.00"
+          type: string
+        token_id:
+          description: The token ID of the asset. This field is present when `amount_type`
+            is `Crypto`.
+          example: ETH_USDC
+          type: string
+        chain_id:
+          description: The chain ID of the asset. This field is present when `amount_type`
+            is `Crypto`.
+          example: ETH
+          type: string
+        currency:
+          description: The fiat currency code. This field is present when `amount_type`
+            is `Fiat`.
+          example: USD
+          type: string
+      required:
+      - amount
+      - amount_type
+      type: object
+    PaymentFailedReason:
+      description: The structured failure reason.
+      nullable: true
+      properties:
+        code:
+          description: |
+            The failure code.
+          example: transaction.rejected_by_policy
+          type: string
+        message:
+          description: The failure message.
+          example: The transaction was rejected by a transaction policy.
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    PaymentPayInStatus:
+      description: |
+        The business status of a pay-in transaction:
+        - `Detected`: The incoming transaction has been detected but the funds are not yet available.
+        - `PendingScreening`: The incoming transaction is awaiting a screening result.
+        - `ActionRequired`: Action from the customer is required before processing can continue.
+        - `Completed`: The funds are available for the corresponding Payments business object.
+        - `Failed`: The incoming transaction cannot be credited.
+      enum:
+      - Detected
+      - PendingScreening
+      - ActionRequired
+      - Completed
+      - Failed
+      example: Detected
+      type: string
+    PaymentScreeningMode:
+      description: The screening service that reviews the incoming transaction
+      enum:
+      - CoboKyt
+      - IntegratedVendor
+      - CustomVendor
+      example: CoboKyt
+      nullable: true
+      type: string
+    PaymentOrderNoticeType:
+      description: |
+        The reason an order update is sent when the order's primary status does not change:
+        - `PaymentUpdated`: A related incoming transaction requires customer action.
+        - `PaymentFailed`: A related incoming transaction failed and cannot be credited to the order.
+        - `LatePaymentReceived`: An incoming transaction was completed after the order had already reached a terminal status.
+      enum:
+      - PaymentUpdated
+      - PaymentFailed
+      - LatePaymentReceived
+      example: PaymentUpdated
+      nullable: true
+      type: string
+    PaymentOrderDeposit:
+      properties:
+        transaction_id:
+          description: The incoming Payment transaction ID.
+          example: aff0e1cb-15b2-4e1f-9b9d-a9133715986f
+          type: string
+        tx_hash:
+          description: The blockchain transaction hash.
+          example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          nullable: true
+          type: string
+        amount:
+          $ref: '#/components/schemas/PaymentAssetAmount'
+        source_address:
+          description: The source address of the incoming transaction.
+          example: 0x1234567890abcdef1234567890abcdef12345678
+          nullable: true
+          type: string
+        status:
+          $ref: '#/components/schemas/PaymentPayInStatus'
+        screening_mode:
+          $ref: '#/components/schemas/PaymentScreeningMode'
+        is_late:
+          description: Whether the incoming transaction completed after the order
+            reached a terminal status.
+          example: false
+          type: boolean
+        message:
+          description: The action prompt for an `ActionRequired` status.
+          example: Additional information is required before these funds can be credited.
+          nullable: true
+          type: string
+        failed_reason:
+          $ref: '#/components/schemas/PaymentFailedReason'
+      required:
+      - amount
+      - failed_reason
+      - is_late
+      - message
+      - screening_mode
+      - source_address
+      - status
+      - transaction_id
+      - tx_hash
+      type: object
+    PaymentPayoutTransactionResult:
+      description: |
+        The result of a payout transaction:
+        - `Completed`: The transaction completed successfully.
+        - `Failed`: The transaction did not complete successfully.
+      enum:
+      - Completed
+      - Failed
+      example: Completed
+      nullable: true
+      type: string
+    PaymentPayoutTransaction:
+      properties:
+        transaction_id:
+          description: The WaaS transaction ID.
+          example: 3f9c1d72-8b45-4e6a-9c13-7d2e5a8f4b60
+          type: string
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/PaymentAssetAmount'
+          description: The transaction amount.
+        tx_hash:
+          description: The blockchain transaction hash.
+          example: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+          nullable: true
+          type: string
+        result:
+          $ref: '#/components/schemas/PaymentPayoutTransactionResult'
+        failed_reason:
+          $ref: '#/components/schemas/PaymentFailedReason'
+      required:
+      - amount
+      - failed_reason
+      - result
+      - transaction_id
+      - tx_hash
+      type: object
+    PaymentPayoutAddressTarget:
+      properties:
+        target_type:
+          description: The type of the payout target.
+          enum:
+          - Address
+          example: Address
+          type: string
+        address:
+          description: The recipient address.
+          example: 0x9876543210abcdef1234567890abcdef12345678
+          type: string
+        chain_id:
+          description: The chain ID of the recipient address.
+          example: ETH
+          type: string
+      required:
+      - address
+      - chain_id
+      - target_type
+      type: object
+    PaymentPayoutBankAccountTarget:
+      properties:
+        target_type:
+          description: The type of the payout target.
+          enum:
+          - BankAccount
+          example: BankAccount
+          type: string
+        bank_account_id:
+          description: The recipient bank account ID.
+          example: 123e4567-e89b-12d3-a456-426614174003
+          type: string
+        account_alias:
+          description: The alias of the recipient bank account.
+          example: Main Payout Account
+          type: string
+        bank_name:
+          description: The recipient bank name.
+          example: ABC Bank
+          type: string
+        currency:
+          description: The currency of the recipient bank account.
+          example: USD
+          type: string
+      required:
+      - bank_account_id
+      - target_type
+      type: object
+    PaymentPayoutRequestedTarget:
+      discriminator:
+        mapping:
+          Address: '#/components/schemas/PaymentPayoutAddressTarget'
+          BankAccount: '#/components/schemas/PaymentPayoutBankAccountTarget'
+        propertyName: target_type
+      oneOf:
+      - $ref: '#/components/schemas/PaymentPayoutAddressTarget'
+      - $ref: '#/components/schemas/PaymentPayoutBankAccountTarget'
     PaymentBalanceFlowDirection:
       description: |
         The direction of the balance change relative to the source account. Possible values include:
@@ -38426,6 +39300,7 @@ components:
         - `Allocation`: Balance change from an allocation.
         - `SettlementNetwork`: Balance change from the settlement network.
         - `BulkSend`: Balance change from a bulk send.
+        - `OnrampIn`: Balance change from an onramp.
       enum:
       - Init
       - OrderIn
@@ -38438,6 +39313,7 @@ components:
       - Allocation
       - SettlementNetwork
       - BulkSend
+      - OnrampIn
       example: OrderIn
       type: string
     PaymentBalanceChange:
@@ -41976,10 +42852,7 @@ components:
           description: |
             A list of unique custom payer IDs required to create top-up addresses.
           items:
-            description: "Unique customer identifier on the merchant side, used to\
-              \ allocate a dedicated top-up address."
-            example: O20250304-P1001-1001
-            type: string
+            $ref: '#/components/schemas/PaymentCustomPayerId'
           maxItems: 50
           type: array
       required:
@@ -49400,6 +50273,7 @@ components:
           DepositToAddress: '#/components/schemas/TransactionDepositToAddressDestination'
           DepositToWallet: '#/components/schemas/TransactionDepositToWalletDestination'
           STELLAR_Contract: '#/components/schemas/TransactionStellarDestination'
+          SUI_Contract: '#/components/schemas/TransactionSuiDestination'
           TRON_Contract: '#/components/schemas/TransactionTronContractDestination'
         propertyName: destination_type
       oneOf:
@@ -49417,6 +50291,7 @@ components:
       - $ref: '#/components/schemas/TransactionBIP322Destination'
       - $ref: '#/components/schemas/TransactionCosmosAdr36Destination'
       - $ref: '#/components/schemas/TransactionStellarDestination'
+      - $ref: '#/components/schemas/TransactionSuiDestination'
       - $ref: '#/components/schemas/TransactionTronContractDestination'
     Transaction_replacement:
       example:
