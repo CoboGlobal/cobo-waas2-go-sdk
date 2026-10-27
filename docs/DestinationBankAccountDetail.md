@@ -37,7 +37,7 @@ Name | Type | Description | Notes
 **BankProvince** | Pointer to **string** | The province or state of the bank. Cannot be a pure number or contain Chinese characters.  | [optional] 
 **BankCity** | Pointer to **string** | The city of the bank. | [optional] 
 **RoutingValue** | Pointer to **string** | The routing value of the bank account. | [optional] 
-**ContractFileId** | Pointer to **string** | The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).  | [optional] 
+**ContractFileId** | Pointer to **string** | The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2).  | [optional] 
 **CreatedTimestamp** | Pointer to **int32** | The created time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
 **UpdatedTimestamp** | Pointer to **int32** | The updated time of the bank account, represented as a UNIX timestamp in seconds. | [optional] 
 

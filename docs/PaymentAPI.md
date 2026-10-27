@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**CreateCryptoAddress**](PaymentAPI.md#CreateCryptoAddress) | **Post** /payments/crypto_addresses | Create crypto address
 [**CreateDestination**](PaymentAPI.md#CreateDestination) | **Post** /payments/destination | Create destination
 [**CreateDestinationEntry**](PaymentAPI.md#CreateDestinationEntry) | **Post** /payments/destination_entry | Create destination entry
+[**CreateFiatEntryKyc**](PaymentAPI.md#CreateFiatEntryKyc) | **Post** /payments/fiat_entry_kyc | Create fiat entry KYC
 [**CreateForcedSweepRequest**](PaymentAPI.md#CreateForcedSweepRequest) | **Post** /payments/force_sweep_requests | Create forced sweep
 [**CreateMerchant**](PaymentAPI.md#CreateMerchant) | **Post** /payments/merchants | Create merchant
 [**CreateOrderLink**](PaymentAPI.md#CreateOrderLink) | **Post** /payments/links/orders | Create order link
@@ -40,6 +41,7 @@ Method | HTTP request | Description
 [**GetDestination**](PaymentAPI.md#GetDestination) | **Get** /payments/destination/{destination_id} | Get destination information
 [**GetDestinationEntry**](PaymentAPI.md#GetDestinationEntry) | **Get** /payments/destination_entry/{destination_entry_id} | Get destination entry information
 [**GetExchangeRate**](PaymentAPI.md#GetExchangeRate) | **Get** /payments/exchange_rates/{token_id}/{currency} | Get exchange rate
+[**GetFiatEntryKyc**](PaymentAPI.md#GetFiatEntryKyc) | **Get** /payments/fiat_entry_kyc/{fiat_entry_kyc_id} | Get fiat entry KYC
 [**GetMerchantKyc**](PaymentAPI.md#GetMerchantKyc) | **Get** /payments/merchants/{merchant_id}/kyc | Get merchant KYC
 [**GetPaymentBankAccountBalance**](PaymentAPI.md#GetPaymentBankAccountBalance) | **Get** /payments/balance/bank_accounts/{bank_account_id} | Get bank account balance
 [**GetPaymentOrderDetailById**](PaymentAPI.md#GetPaymentOrderDetailById) | **Get** /payments/orders/{order_id} | Get pay-in order information
@@ -62,6 +64,7 @@ Method | HTTP request | Description
 [**ListCryptoAddresses**](PaymentAPI.md#ListCryptoAddresses) | **Get** /payments/crypto_addresses | List crypto addresses
 [**ListDestinationEntries**](PaymentAPI.md#ListDestinationEntries) | **Get** /payments/destination_entry | List destination entries
 [**ListDestinations**](PaymentAPI.md#ListDestinations) | **Get** /payments/destination | List all destinations
+[**ListFiatEntryKyc**](PaymentAPI.md#ListFiatEntryKyc) | **Get** /payments/fiat_entry_kyc | List all fiat entry KYC
 [**ListForcedSweepRequests**](PaymentAPI.md#ListForcedSweepRequests) | **Get** /payments/force_sweep_requests | List forced sweeps
 [**ListMerchantBalances**](PaymentAPI.md#ListMerchantBalances) | **Get** /payments/balance/merchants | List merchant balances
 [**ListMerchants**](PaymentAPI.md#ListMerchants) | **Get** /payments/merchants | List all merchants
@@ -79,6 +82,7 @@ Method | HTTP request | Description
 [**UpdateCounterparty**](PaymentAPI.md#UpdateCounterparty) | **Put** /payments/counterparty/{counterparty_id} | Update counterparty
 [**UpdateDestination**](PaymentAPI.md#UpdateDestination) | **Put** /payments/destination/{destination_id} | Update destination
 [**UpdateDestinationEntry**](PaymentAPI.md#UpdateDestinationEntry) | **Put** /payments/destination_entry/{destination_entry_id} | Update destination entry
+[**UpdateFiatEntryKyc**](PaymentAPI.md#UpdateFiatEntryKyc) | **Put** /payments/fiat_entry_kyc/{fiat_entry_kyc_id} | Update fiat entry KYC
 [**UpdateMerchantById**](PaymentAPI.md#UpdateMerchantById) | **Put** /payments/merchants/{merchant_id} | Update merchant
 [**UpdatePaymentOrder**](PaymentAPI.md#UpdatePaymentOrder) | **Put** /payments/orders/{order_id} | Update pay-in order
 [**UpdateRefundById**](PaymentAPI.md#UpdateRefundById) | **Put** /payments/refunds/{refund_id} | Update refund order
@@ -839,6 +843,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CreateDestinationEntry201Response**](CreateDestinationEntry201Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateFiatEntryKyc
+
+> FiatEntryKyc CreateFiatEntryKyc(ctx).CreateFiatEntryKyc(createFiatEntryKyc).Execute()
+
+Create fiat entry KYC
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	createFiatEntryKyc := *coboWaas2.NewCreateFiatEntryKyc(coboWaas2.FiatEntryKycMerchantType("B2B"), "HKG", []string{"Industry_example"})
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.CreateFiatEntryKyc(ctx).CreateFiatEntryKyc(createFiatEntryKyc).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.CreateFiatEntryKyc``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateFiatEntryKyc`: FiatEntryKyc
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.CreateFiatEntryKyc`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateFiatEntryKycRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createFiatEntryKyc** | [**CreateFiatEntryKyc**](CreateFiatEntryKyc.md) | The request body to create fiat entry KYC information.  Provide either &#x60;company_info&#x60; or &#x60;individual_info&#x60;: - &#x60;company_info&#x60;: Required for company merchants. - &#x60;individual_info&#x60;: Required for individual merchants.  | 
+
+### Return type
+
+[**FiatEntryKyc**](FiatEntryKyc.md)
 
 ### Authorization
 
@@ -2896,6 +2976,86 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetFiatEntryKyc
+
+> FiatEntryKycDetail GetFiatEntryKyc(ctx, fiatEntryKycId).Execute()
+
+Get fiat entry KYC
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	fiatEntryKycId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.GetFiatEntryKyc(ctx, fiatEntryKycId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.GetFiatEntryKyc``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetFiatEntryKyc`: FiatEntryKycDetail
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.GetFiatEntryKyc`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**fiatEntryKycId** | **string** | The fiat entry KYC ID, which you can retrieve by calling [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetFiatEntryKycRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**FiatEntryKycDetail**](FiatEntryKycDetail.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetMerchantKyc
 
 > MerchantKycSubmission GetMerchantKyc(ctx, merchantId).Execute()
@@ -4644,7 +4804,7 @@ Name | Type | Description  | Notes
 
 ## ListDestinations
 
-> ListDestinations200Response ListDestinations(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationType(destinationType).Country(country).MerchantIds(merchantIds).Execute()
+> ListDestinations200Response ListDestinations(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationType(destinationType).Country(country).MerchantIds(merchantIds).FiatEntryKycIds(fiatEntryKycIds).Execute()
 
 List all destinations
 
@@ -4671,6 +4831,7 @@ func main() {
 	destinationType := coboWaas2.DestinationType("Individual")
 	country := "USA"
 	merchantIds := "M1001,M1002,M1003"
+	fiatEntryKycIds := "f47ac10b-58cc-4372-a567-0e02b2c3d479,c9bf9e57-1685-4c89-bafb-ff5af830be8a"
 
 	configuration := coboWaas2.NewConfiguration()
 	// Initialize the API client
@@ -4683,7 +4844,7 @@ func main() {
 	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
 		Secret: "<YOUR_PRIVATE_KEY>",
 	})
-	resp, r, err := apiClient.PaymentAPI.ListDestinations(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationType(destinationType).Country(country).MerchantIds(merchantIds).Execute()
+	resp, r, err := apiClient.PaymentAPI.ListDestinations(ctx).Limit(limit).Before(before).After(after).Keyword(keyword).DestinationType(destinationType).Country(country).MerchantIds(merchantIds).FiatEntryKycIds(fiatEntryKycIds).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListDestinations``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -4711,10 +4872,93 @@ Name | Type | Description  | Notes
  **destinationType** | [**DestinationType**](DestinationType.md) | DestinationType defines the type of the destination: - &#x60;Individual&#x60;: The destination is an individual. - &#x60;Organization&#x60;: The destination is an organization.  | 
  **country** | **string** | Country code, in ISO 3166-1 alpha-3 format. | 
  **merchantIds** | **string** | A list of merchant IDs to query. | 
+ **fiatEntryKycIds** | **string** | A list of fiat entry KYC IDs to query. | 
 
 ### Return type
 
 [**ListDestinations200Response**](ListDestinations200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListFiatEntryKyc
+
+> ListFiatEntryKyc200Response ListFiatEntryKyc(ctx).Limit(limit).Before(before).After(after).Statuses(statuses).Execute()
+
+List all fiat entry KYC
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	limit := int32(10)
+	before := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGmk1"
+	after := "RqeEoTkgKG5rpzqYzg2Hd3szmPoj2cE7w5jWwShz3C1vyGSAk"
+	statuses := "PendingReview,Completed"
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.ListFiatEntryKyc(ctx).Limit(limit).Before(before).After(after).Statuses(statuses).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.ListFiatEntryKyc``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListFiatEntryKyc`: ListFiatEntryKyc200Response
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.ListFiatEntryKyc`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListFiatEntryKycRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | The maximum number of objects to return. For most operations, the value range is [1, 50]. | [default to 10]
+ **before** | **string** | A cursor indicating the position before the current page. This value is generated by Cobo and returned in the response. If you are paginating forward from the beginning, you do not need to provide it on the first request. When paginating backward (to the previous page), you should pass the before value returned from the last response.  | 
+ **after** | **string** | A cursor indicating the position after the current page. This value is generated by Cobo and returned in the response. You do not need to provide it on the first request. When paginating forward (to the next page), you should pass the after value returned from the last response.  | 
+ **statuses** | **string** | A list of fiat entry KYC statuses, separated by comma. Possible values include: - &#x60;PendingReview&#x60;: The fiat entry KYC is pending review. - &#x60;Completed&#x60;: The fiat entry KYC has been completed. - &#x60;Failed&#x60;: The fiat entry KYC has failed. - &#x60;Disabled&#x60;: The fiat entry KYC is disabled and cannot be updated.  | 
+
+### Return type
+
+[**ListFiatEntryKyc200Response**](ListFiatEntryKyc200Response.md)
 
 ### Authorization
 
@@ -6100,6 +6344,88 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdateDestinationEntry200Response**](UpdateDestinationEntry200Response.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [CoboAuth](../README.md#CoboAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateFiatEntryKyc
+
+> FiatEntryKyc UpdateFiatEntryKyc(ctx, fiatEntryKycId).UpdateFiatEntryKyc(updateFiatEntryKyc).Execute()
+
+Update fiat entry KYC
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    coboWaas2 "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2"
+    "github.com/CoboGlobal/cobo-waas2-go-sdk/cobo_waas2/crypto"
+)
+
+func main() {
+	fiatEntryKycId := "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	updateFiatEntryKyc := *coboWaas2.NewUpdateFiatEntryKyc()
+
+	configuration := coboWaas2.NewConfiguration()
+	// Initialize the API client
+	apiClient := coboWaas2.NewAPIClient(configuration)
+	ctx := context.Background()
+
+    // Select the development environment. To use the production environment, replace coboWaas2.DevEnv with coboWaas2.ProdEnv
+	ctx = context.WithValue(ctx, coboWaas2.ContextEnv, coboWaas2.DevEnv)
+    // Replace `<YOUR_PRIVATE_KEY>` with your private key
+	ctx = context.WithValue(ctx, coboWaas2.ContextPortalSigner, crypto.Ed25519Signer{
+		Secret: "<YOUR_PRIVATE_KEY>",
+	})
+	resp, r, err := apiClient.PaymentAPI.UpdateFiatEntryKyc(ctx, fiatEntryKycId).UpdateFiatEntryKyc(updateFiatEntryKyc).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PaymentAPI.UpdateFiatEntryKyc``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateFiatEntryKyc`: FiatEntryKyc
+	fmt.Fprintf(os.Stdout, "Response from `PaymentAPI.UpdateFiatEntryKyc`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for ServerHost/Env, Signer, etc.
+**fiatEntryKycId** | **string** | The fiat entry KYC ID, which you can retrieve by calling [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateFiatEntryKycRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateFiatEntryKyc** | [**UpdateFiatEntryKyc**](UpdateFiatEntryKyc.md) | The request body to update fiat entry KYC information.  All fields are optional. Omitted fields keep their existing values. You can pass empty values to clear a field.  | 
+
+### Return type
+
+[**FiatEntryKyc**](FiatEntryKyc.md)
 
 ### Authorization
 

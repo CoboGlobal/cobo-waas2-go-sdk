@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **WalletAddresses** | Pointer to [**[]WalletAddress**](WalletAddress.md) | The wallet addresses of the destination. | [optional] 
 **BankAccounts** | Pointer to [**[]DestinationBankAccount**](DestinationBankAccount.md) | The bank accounts of the destination. | [optional] 
 **MerchantId** | Pointer to **string** | The ID of the merchant linked to the destination. | [optional] 
+**FiatEntryKycId** | Pointer to **string** | The fiat entry KYC ID linked to the destination. | [optional] 
 **CreatedTimestamp** | **int32** | The created time of the destination, represented as a UNIX timestamp in seconds. | 
 **UpdatedTimestamp** | **int32** | The updated time of the destination, represented as a UNIX timestamp in seconds. | 
 
@@ -270,6 +271,31 @@ SetMerchantId sets MerchantId field to given value.
 `func (o *DestinationDetail) HasMerchantId() bool`
 
 HasMerchantId returns a boolean if a field has been set.
+
+### GetFiatEntryKycId
+
+`func (o *DestinationDetail) GetFiatEntryKycId() string`
+
+GetFiatEntryKycId returns the FiatEntryKycId field if non-nil, zero value otherwise.
+
+### GetFiatEntryKycIdOk
+
+`func (o *DestinationDetail) GetFiatEntryKycIdOk() (*string, bool)`
+
+GetFiatEntryKycIdOk returns a tuple with the FiatEntryKycId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFiatEntryKycId
+
+`func (o *DestinationDetail) SetFiatEntryKycId(v string)`
+
+SetFiatEntryKycId sets FiatEntryKycId field to given value.
+
+### HasFiatEntryKycId
+
+`func (o *DestinationDetail) HasFiatEntryKycId() bool`
+
+HasFiatEntryKycId returns a boolean if a field has been set.
 
 ### GetCreatedTimestamp
 

@@ -33,6 +33,8 @@ type Destination struct {
 	ContactAddress *string `json:"contact_address,omitempty"`
 	// The ID of the merchant linked to the destination.
 	MerchantId *string `json:"merchant_id,omitempty"`
+	// The fiat entry KYC ID linked to the destination.
+	FiatEntryKycId *string `json:"fiat_entry_kyc_id,omitempty"`
 	// The created time of the destination, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp int32 `json:"created_timestamp"`
 	// The updated time of the destination, represented as a UNIX timestamp in seconds.
@@ -302,6 +304,38 @@ func (o *Destination) SetMerchantId(v string) {
 	o.MerchantId = &v
 }
 
+// GetFiatEntryKycId returns the FiatEntryKycId field value if set, zero value otherwise.
+func (o *Destination) GetFiatEntryKycId() string {
+	if o == nil || IsNil(o.FiatEntryKycId) {
+		var ret string
+		return ret
+	}
+	return *o.FiatEntryKycId
+}
+
+// GetFiatEntryKycIdOk returns a tuple with the FiatEntryKycId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Destination) GetFiatEntryKycIdOk() (*string, bool) {
+	if o == nil || IsNil(o.FiatEntryKycId) {
+		return nil, false
+	}
+	return o.FiatEntryKycId, true
+}
+
+// HasFiatEntryKycId returns a boolean if a field has been set.
+func (o *Destination) HasFiatEntryKycId() bool {
+	if o != nil && !IsNil(o.FiatEntryKycId) {
+		return true
+	}
+
+	return false
+}
+
+// SetFiatEntryKycId gets a reference to the given string and assigns it to the FiatEntryKycId field.
+func (o *Destination) SetFiatEntryKycId(v string) {
+	o.FiatEntryKycId = &v
+}
+
 // GetCreatedTimestamp returns the CreatedTimestamp field value
 func (o *Destination) GetCreatedTimestamp() int32 {
 	if o == nil {
@@ -379,6 +413,9 @@ func (o Destination) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MerchantId) {
 		toSerialize["merchant_id"] = o.MerchantId
+	}
+	if !IsNil(o.FiatEntryKycId) {
+		toSerialize["fiat_entry_kyc_id"] = o.FiatEntryKycId
 	}
 	toSerialize["created_timestamp"] = o.CreatedTimestamp
 	toSerialize["updated_timestamp"] = o.UpdatedTimestamp

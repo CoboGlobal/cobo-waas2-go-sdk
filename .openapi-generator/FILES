@@ -176,6 +176,7 @@ docs/CreateDestinationEntry201Response.md
 docs/CreateDestinationEntryRequest.md
 docs/CreateDestinationRequest.md
 docs/CreateExchangeWalletParams.md
+docs/CreateFiatEntryKyc.md
 docs/CreateKeyShareHolder.md
 docs/CreateKeyShareHolderGroupRequest.md
 docs/CreateKyaScreeningsBody.md
@@ -298,6 +299,7 @@ docs/ExtendedTokenInfo.md
 docs/FILBase.md
 docs/FILPrice.md
 docs/FeeAmount.md
+docs/FeeFallback.md
 docs/FeeGasLimit.md
 docs/FeeLevel.md
 docs/FeeRate.md
@@ -313,6 +315,18 @@ docs/FeeStationSponsorTransactionDescription.md
 docs/FeeStationTransactionType.md
 docs/FeeStationTransfer.md
 docs/FeeType.md
+docs/FiatEntryKyc.md
+docs/FiatEntryKycAddress.md
+docs/FiatEntryKycCompanyAttachment.md
+docs/FiatEntryKycCompanyAttachmentFileType.md
+docs/FiatEntryKycCompanyInfo.md
+docs/FiatEntryKycCompanyType.md
+docs/FiatEntryKycDetail.md
+docs/FiatEntryKycMerchantType.md
+docs/FiatEntryKycPersonAttachment.md
+docs/FiatEntryKycPersonAttachmentFileType.md
+docs/FiatEntryKycPersonInfo.md
+docs/FiatEntryKycStatus.md
 docs/FiatTransactionEventData.md
 docs/FixedFeeRate.md
 docs/ForcedSweep.md
@@ -388,6 +402,7 @@ docs/ListDestinationEntries200Response.md
 docs/ListDestinations200Response.md
 docs/ListExchanges200ResponseInner.md
 docs/ListFeeStationFiatTransactions200Response.md
+docs/ListFiatEntryKyc200Response.md
 docs/ListForcedSweepRequests200Response.md
 docs/ListKeyShareHolderGroups200Response.md
 docs/ListKeyShareHolders200Response.md
@@ -909,6 +924,7 @@ docs/UpdateDestinationEntry200Response.md
 docs/UpdateDestinationEntryRequest.md
 docs/UpdateDestinationRequest.md
 docs/UpdateExchangeWalletParams.md
+docs/UpdateFiatEntryKyc.md
 docs/UpdateGroupAction.md
 docs/UpdateKeyShareHolderGroupByIdRequest.md
 docs/UpdateMerchantByIdRequest.md
@@ -1084,6 +1100,7 @@ model_create_destination_entry_201_response.go
 model_create_destination_entry_request.go
 model_create_destination_request.go
 model_create_exchange_wallet_params.go
+model_create_fiat_entry_kyc.go
 model_create_key_share_holder.go
 model_create_key_share_holder_group_request.go
 model_create_kya_screenings_body.go
@@ -1202,6 +1219,7 @@ model_exchange_transfer_source.go
 model_exchange_wallet_info.go
 model_extended_token_info.go
 model_fee_amount.go
+model_fee_fallback.go
 model_fee_gas_limit.go
 model_fee_level.go
 model_fee_rate.go
@@ -1216,6 +1234,18 @@ model_fee_station_sponsor_transaction_description.go
 model_fee_station_transaction_type.go
 model_fee_station_transfer.go
 model_fee_type.go
+model_fiat_entry_kyc.go
+model_fiat_entry_kyc_address.go
+model_fiat_entry_kyc_company_attachment.go
+model_fiat_entry_kyc_company_attachment_file_type.go
+model_fiat_entry_kyc_company_info.go
+model_fiat_entry_kyc_company_type.go
+model_fiat_entry_kyc_detail.go
+model_fiat_entry_kyc_merchant_type.go
+model_fiat_entry_kyc_person_attachment.go
+model_fiat_entry_kyc_person_attachment_file_type.go
+model_fiat_entry_kyc_person_info.go
+model_fiat_entry_kyc_status.go
 model_fiat_transaction_event_data.go
 model_fil_base.go
 model_fil_price.go
@@ -1292,6 +1322,7 @@ model_list_destination_entries_200_response.go
 model_list_destinations_200_response.go
 model_list_exchanges_200_response_inner.go
 model_list_fee_station_fiat_transactions_200_response.go
+model_list_fiat_entry_kyc_200_response.go
 model_list_forced_sweep_requests_200_response.go
 model_list_key_share_holder_groups_200_response.go
 model_list_key_share_holders_200_response.go
@@ -1802,6 +1833,7 @@ model_update_destination_entry_200_response.go
 model_update_destination_entry_request.go
 model_update_destination_request.go
 model_update_exchange_wallet_params.go
+model_update_fiat_entry_kyc.go
 model_update_group_action.go
 model_update_key_share_holder_group_by_id_request.go
 model_update_merchant_by_id_request.go

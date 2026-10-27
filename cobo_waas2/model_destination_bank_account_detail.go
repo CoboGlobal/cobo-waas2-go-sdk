@@ -79,7 +79,7 @@ type DestinationBankAccountDetail struct {
 	BankCity *string `json:"bank_city,omitempty"`
 	// The routing value of the bank account.
 	RoutingValue *string `json:"routing_value,omitempty"`
-	// The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file). 
+	// The file ID of the contract document (e.g., cooperation agreement) that proves the business relationship between you and the beneficiary, which you can retrieve by calling [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2). 
 	ContractFileId *string `json:"contract_file_id,omitempty"`
 	// The created time of the bank account, represented as a UNIX timestamp in seconds.
 	CreatedTimestamp *int32 `json:"created_timestamp,omitempty"`

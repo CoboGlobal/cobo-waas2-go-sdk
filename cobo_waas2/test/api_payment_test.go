@@ -150,6 +150,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService CreateFiatEntryKyc", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.CreateFiatEntryKyc(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService CreateForcedSweepRequest", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -489,6 +501,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService GetFiatEntryKyc", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var fiatEntryKycId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.GetFiatEntryKyc(ctx, fiatEntryKycId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService GetMerchantKyc", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -767,6 +793,18 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PaymentAPIService ListFiatEntryKyc", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PaymentAPI.ListFiatEntryKyc(ctx).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PaymentAPIService ListForcedSweepRequests", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -972,6 +1010,20 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		var destinationEntryId string
 
 		resp, httpRes, err := apiClient.PaymentAPI.UpdateDestinationEntry(ctx, destinationEntryId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PaymentAPIService UpdateFiatEntryKyc", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var fiatEntryKycId string
+
+		resp, httpRes, err := apiClient.PaymentAPI.UpdateFiatEntryKyc(ctx, fiatEntryKycId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

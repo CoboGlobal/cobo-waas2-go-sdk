@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **WalletAddresses** | Pointer to [**[]CreateWalletAddress**](CreateWalletAddress.md) | The wallet addresses of the destination. | [optional] 
 **BankAccounts** | Pointer to [**[]CreateDestinationBankAccount**](CreateDestinationBankAccount.md) | The bank accounts of the destination. | [optional] 
 **MerchantId** | Pointer to **string** | The ID of the merchant linked to the destination. | [optional] 
+**FiatEntryKycId** | Pointer to **string** | The fiat entry KYC ID linked to the destination, which you can retrieve by calling [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc).  | [optional] 
 **Country** | Pointer to **string** | The country of the destination, in ISO 3166-1 alpha-3 format. | [optional] 
 **Email** | Pointer to **string** | The email of the destination. | [optional] 
 **ContactAddress** | Pointer to **string** | The contact address of the destination. | [optional] 
@@ -146,6 +147,31 @@ SetMerchantId sets MerchantId field to given value.
 `func (o *CreateDestinationRequest) HasMerchantId() bool`
 
 HasMerchantId returns a boolean if a field has been set.
+
+### GetFiatEntryKycId
+
+`func (o *CreateDestinationRequest) GetFiatEntryKycId() string`
+
+GetFiatEntryKycId returns the FiatEntryKycId field if non-nil, zero value otherwise.
+
+### GetFiatEntryKycIdOk
+
+`func (o *CreateDestinationRequest) GetFiatEntryKycIdOk() (*string, bool)`
+
+GetFiatEntryKycIdOk returns a tuple with the FiatEntryKycId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFiatEntryKycId
+
+`func (o *CreateDestinationRequest) SetFiatEntryKycId(v string)`
+
+SetFiatEntryKycId sets FiatEntryKycId field to given value.
+
+### HasFiatEntryKycId
+
+`func (o *CreateDestinationRequest) HasFiatEntryKycId() bool`
+
+HasFiatEntryKycId returns a boolean if a field has been set.
 
 ### GetCountry
 
