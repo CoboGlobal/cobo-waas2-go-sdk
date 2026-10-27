@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FileId** | **string** | The AWS file link of the uploaded file, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file).  | 
+**FileId** | **string** | The AWS file link of the uploaded file, which you can retrieve by calling [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2).  | 
 **FileType** | [**MerchantKycPersonAttachmentFileType**](MerchantKycPersonAttachmentFileType.md) |  | 
 
 ## Methods

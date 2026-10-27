@@ -19,7 +19,7 @@ var _ MappedNullable = &MerchantKycPersonAttachment{}
 
 // MerchantKycPersonAttachment struct for MerchantKycPersonAttachment
 type MerchantKycPersonAttachment struct {
-	// The AWS file link of the uploaded file, which you can retrieve by calling [Upload file](https://www.cobo.com/developers/v2/api-references/payment/upload-file). 
+	// The AWS file link of the uploaded file, which you can retrieve by calling [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2). 
 	FileId string `json:"file_id"`
 	FileType MerchantKycPersonAttachmentFileType `json:"file_type"`
 }

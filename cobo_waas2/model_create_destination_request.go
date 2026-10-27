@@ -28,6 +28,8 @@ type CreateDestinationRequest struct {
 	BankAccounts []CreateDestinationBankAccount `json:"bank_accounts,omitempty"`
 	// The ID of the merchant linked to the destination.
 	MerchantId *string `json:"merchant_id,omitempty"`
+	// The fiat entry KYC ID linked to the destination, which you can retrieve by calling [List all fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/list-all-fiat-entry-kyc). 
+	FiatEntryKycId *string `json:"fiat_entry_kyc_id,omitempty"`
 	// The country of the destination, in ISO 3166-1 alpha-3 format.
 	Country *string `json:"country,omitempty"`
 	// The email of the destination.
@@ -201,6 +203,38 @@ func (o *CreateDestinationRequest) SetMerchantId(v string) {
 	o.MerchantId = &v
 }
 
+// GetFiatEntryKycId returns the FiatEntryKycId field value if set, zero value otherwise.
+func (o *CreateDestinationRequest) GetFiatEntryKycId() string {
+	if o == nil || IsNil(o.FiatEntryKycId) {
+		var ret string
+		return ret
+	}
+	return *o.FiatEntryKycId
+}
+
+// GetFiatEntryKycIdOk returns a tuple with the FiatEntryKycId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateDestinationRequest) GetFiatEntryKycIdOk() (*string, bool) {
+	if o == nil || IsNil(o.FiatEntryKycId) {
+		return nil, false
+	}
+	return o.FiatEntryKycId, true
+}
+
+// HasFiatEntryKycId returns a boolean if a field has been set.
+func (o *CreateDestinationRequest) HasFiatEntryKycId() bool {
+	if o != nil && !IsNil(o.FiatEntryKycId) {
+		return true
+	}
+
+	return false
+}
+
+// SetFiatEntryKycId gets a reference to the given string and assigns it to the FiatEntryKycId field.
+func (o *CreateDestinationRequest) SetFiatEntryKycId(v string) {
+	o.FiatEntryKycId = &v
+}
+
 // GetCountry returns the Country field value if set, zero value otherwise.
 func (o *CreateDestinationRequest) GetCountry() string {
 	if o == nil || IsNil(o.Country) {
@@ -317,6 +351,9 @@ func (o CreateDestinationRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MerchantId) {
 		toSerialize["merchant_id"] = o.MerchantId
+	}
+	if !IsNil(o.FiatEntryKycId) {
+		toSerialize["fiat_entry_kyc_id"] = o.FiatEntryKycId
 	}
 	if !IsNil(o.Country) {
 		toSerialize["country"] = o.Country
