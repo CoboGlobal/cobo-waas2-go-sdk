@@ -21,8 +21,6 @@ var _ MappedNullable = &PaymentUploadedFile{}
 type PaymentUploadedFile struct {
 	// The AWS file link of the uploaded file.
 	FileId string `json:"file_id"`
-	// The time when the uploaded file link expires, in Unix timestamp format, measured in milliseconds.
-	ExpiredTimestamp int64 `json:"expired_timestamp"`
 }
 
 type _PaymentUploadedFile PaymentUploadedFile
@@ -31,10 +29,9 @@ type _PaymentUploadedFile PaymentUploadedFile
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPaymentUploadedFile(fileId string, expiredTimestamp int64) *PaymentUploadedFile {
+func NewPaymentUploadedFile(fileId string) *PaymentUploadedFile {
 	this := PaymentUploadedFile{}
 	this.FileId = fileId
-	this.ExpiredTimestamp = expiredTimestamp
 	return &this
 }
 
@@ -70,30 +67,6 @@ func (o *PaymentUploadedFile) SetFileId(v string) {
 	o.FileId = v
 }
 
-// GetExpiredTimestamp returns the ExpiredTimestamp field value
-func (o *PaymentUploadedFile) GetExpiredTimestamp() int64 {
-	if o == nil {
-		var ret int64
-		return ret
-	}
-
-	return o.ExpiredTimestamp
-}
-
-// GetExpiredTimestampOk returns a tuple with the ExpiredTimestamp field value
-// and a boolean to check if the value has been set.
-func (o *PaymentUploadedFile) GetExpiredTimestampOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ExpiredTimestamp, true
-}
-
-// SetExpiredTimestamp sets field value
-func (o *PaymentUploadedFile) SetExpiredTimestamp(v int64) {
-	o.ExpiredTimestamp = v
-}
-
 func (o PaymentUploadedFile) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -105,7 +78,6 @@ func (o PaymentUploadedFile) MarshalJSON() ([]byte, error) {
 func (o PaymentUploadedFile) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["file_id"] = o.FileId
-	toSerialize["expired_timestamp"] = o.ExpiredTimestamp
 	return toSerialize, nil
 }
 
@@ -115,7 +87,6 @@ func (o *PaymentUploadedFile) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"file_id",
-		"expired_timestamp",
 	}
 
 	allProperties := make(map[string]interface{})

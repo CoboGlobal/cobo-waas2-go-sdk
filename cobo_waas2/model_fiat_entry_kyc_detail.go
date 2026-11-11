@@ -27,10 +27,6 @@ type FiatEntryKycDetail struct {
 	Country string `json:"country"`
 	// The industry categories of the fiat entry KYC.
 	Industry []string `json:"industry"`
-	// The email address.
-	Email *string `json:"email,omitempty"`
-	// The phone number.
-	Phone *string `json:"phone,omitempty"`
 	CompanyInfo *FiatEntryKycCompanyInfo `json:"company_info,omitempty"`
 	IndividualInfo *FiatEntryKycPersonInfo `json:"individual_info,omitempty"`
 	// The creation timestamp in Unix seconds.
@@ -184,70 +180,6 @@ func (o *FiatEntryKycDetail) SetIndustry(v []string) {
 	o.Industry = v
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise.
-func (o *FiatEntryKycDetail) GetEmail() string {
-	if o == nil || IsNil(o.Email) {
-		var ret string
-		return ret
-	}
-	return *o.Email
-}
-
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FiatEntryKycDetail) GetEmailOk() (*string, bool) {
-	if o == nil || IsNil(o.Email) {
-		return nil, false
-	}
-	return o.Email, true
-}
-
-// HasEmail returns a boolean if a field has been set.
-func (o *FiatEntryKycDetail) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
-		return true
-	}
-
-	return false
-}
-
-// SetEmail gets a reference to the given string and assigns it to the Email field.
-func (o *FiatEntryKycDetail) SetEmail(v string) {
-	o.Email = &v
-}
-
-// GetPhone returns the Phone field value if set, zero value otherwise.
-func (o *FiatEntryKycDetail) GetPhone() string {
-	if o == nil || IsNil(o.Phone) {
-		var ret string
-		return ret
-	}
-	return *o.Phone
-}
-
-// GetPhoneOk returns a tuple with the Phone field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *FiatEntryKycDetail) GetPhoneOk() (*string, bool) {
-	if o == nil || IsNil(o.Phone) {
-		return nil, false
-	}
-	return o.Phone, true
-}
-
-// HasPhone returns a boolean if a field has been set.
-func (o *FiatEntryKycDetail) HasPhone() bool {
-	if o != nil && !IsNil(o.Phone) {
-		return true
-	}
-
-	return false
-}
-
-// SetPhone gets a reference to the given string and assigns it to the Phone field.
-func (o *FiatEntryKycDetail) SetPhone(v string) {
-	o.Phone = &v
-}
-
 // GetCompanyInfo returns the CompanyInfo field value if set, zero value otherwise.
 func (o *FiatEntryKycDetail) GetCompanyInfo() FiatEntryKycCompanyInfo {
 	if o == nil || IsNil(o.CompanyInfo) {
@@ -383,12 +315,6 @@ func (o FiatEntryKycDetail) ToMap() (map[string]interface{}, error) {
 	toSerialize["merchant_type"] = o.MerchantType
 	toSerialize["country"] = o.Country
 	toSerialize["industry"] = o.Industry
-	if !IsNil(o.Email) {
-		toSerialize["email"] = o.Email
-	}
-	if !IsNil(o.Phone) {
-		toSerialize["phone"] = o.Phone
-	}
 	if !IsNil(o.CompanyInfo) {
 		toSerialize["company_info"] = o.CompanyInfo
 	}
