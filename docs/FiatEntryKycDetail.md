@@ -9,8 +9,6 @@ Name | Type | Description | Notes
 **MerchantType** | [**FiatEntryKycMerchantType**](FiatEntryKycMerchantType.md) |  | 
 **Country** | **string** | The country/region of the fiat entry KYC, in ISO 3166-1 alpha-3 format. | 
 **Industry** | **[]string** | The industry categories of the fiat entry KYC. | 
-**Email** | Pointer to **string** | The email address. | [optional] 
-**Phone** | Pointer to **string** | The phone number. | [optional] 
 **CompanyInfo** | Pointer to [**FiatEntryKycCompanyInfo**](FiatEntryKycCompanyInfo.md) |  | [optional] 
 **IndividualInfo** | Pointer to [**FiatEntryKycPersonInfo**](FiatEntryKycPersonInfo.md) |  | [optional] 
 **CreatedTimestamp** | **int64** | The creation timestamp in Unix seconds. | 
@@ -134,56 +132,6 @@ and a boolean to check if the value has been set.
 
 SetIndustry sets Industry field to given value.
 
-
-### GetEmail
-
-`func (o *FiatEntryKycDetail) GetEmail() string`
-
-GetEmail returns the Email field if non-nil, zero value otherwise.
-
-### GetEmailOk
-
-`func (o *FiatEntryKycDetail) GetEmailOk() (*string, bool)`
-
-GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEmail
-
-`func (o *FiatEntryKycDetail) SetEmail(v string)`
-
-SetEmail sets Email field to given value.
-
-### HasEmail
-
-`func (o *FiatEntryKycDetail) HasEmail() bool`
-
-HasEmail returns a boolean if a field has been set.
-
-### GetPhone
-
-`func (o *FiatEntryKycDetail) GetPhone() string`
-
-GetPhone returns the Phone field if non-nil, zero value otherwise.
-
-### GetPhoneOk
-
-`func (o *FiatEntryKycDetail) GetPhoneOk() (*string, bool)`
-
-GetPhoneOk returns a tuple with the Phone field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPhone
-
-`func (o *FiatEntryKycDetail) SetPhone(v string)`
-
-SetPhone sets Phone field to given value.
-
-### HasPhone
-
-`func (o *FiatEntryKycDetail) HasPhone() bool`
-
-HasPhone returns a boolean if a field has been set.
 
 ### GetCompanyInfo
 

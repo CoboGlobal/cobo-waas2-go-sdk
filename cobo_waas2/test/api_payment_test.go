@@ -515,20 +515,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService GetMerchantKyc", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var merchantId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.GetMerchantKyc(ctx, merchantId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test PaymentAPIService GetPaymentBankAccountBalance", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -949,13 +935,11 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test PaymentAPIService SubmitMerchantKyc", func(t *testing.T) {
+	t.Run("Test PaymentAPIService RetryPaymentCallbacks", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var merchantId string
-
-		resp, httpRes, err := apiClient.PaymentAPI.SubmitMerchantKyc(ctx, merchantId).Execute()
+		resp, httpRes, err := apiClient.PaymentAPI.RetryPaymentCallbacks(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1078,18 +1062,6 @@ func Test_cobo_waas2_PaymentAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PaymentAPI.UpdateTopUpAddress(ctx).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test PaymentAPIService UploadPaymentFile", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.PaymentAPI.UploadPaymentFile(ctx).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"os"
 )
 
 
@@ -5265,144 +5264,6 @@ func (a *PaymentAPIService) GetFiatEntryKycExecute(r ApiGetFiatEntryKycRequest) 
 
 	localVarPath := localBasePath + "/payments/fiat_entry_kyc/{fiat_entry_kyc_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"fiat_entry_kyc_id"+"}", url.PathEscape(parameterValueToString(r.fiatEntryKycId, "fiatEntryKycId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		// Proxy errors (e.g. nginx) may return non-JSON bodies.
-		// Return the error directly without attempting to decode.
-		switch localVarHTTPResponse.StatusCode {
-		case 414, 429, 502, 503:
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 500 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetMerchantKycRequest struct {
-	ctx context.Context
-	ApiService *PaymentAPIService
-	merchantId string
-}
-
-func (r ApiGetMerchantKycRequest) Execute() (*MerchantKycSubmission, *http.Response, error) {
-	return r.ApiService.GetMerchantKycExecute(r)
-}
-
-/*
-GetMerchantKyc Get merchant KYC
-
-<Note>This operation has been deprecated. Please use [Get fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/get-fiat-entry-kyc) instead.</Note>
-
-This operation retrieves the KYC submission for a specified merchant.
-
-The merchant ID can be retrieved by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
-
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param merchantId The merchant ID.
- @return ApiGetMerchantKycRequest
-
-Deprecated
-*/
-func (a *PaymentAPIService) GetMerchantKyc(ctx context.Context, merchantId string) ApiGetMerchantKycRequest {
-	return ApiGetMerchantKycRequest{
-		ApiService: a,
-		ctx: ctx,
-		merchantId: merchantId,
-	}
-}
-
-// Execute executes the request
-//  @return MerchantKycSubmission
-// Deprecated
-func (a *PaymentAPIService) GetMerchantKycExecute(r ApiGetMerchantKycRequest) (*MerchantKycSubmission, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MerchantKycSubmission
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.GetMerchantKyc")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/payments/merchants/{merchant_id}/kyc"
-	localVarPath = strings.Replace(localVarPath, "{"+"merchant_id"+"}", url.PathEscape(parameterValueToString(r.merchantId, "merchantId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11315,76 +11176,69 @@ func (a *PaymentAPIService) PaymentEstimateFeeExecute(r ApiPaymentEstimateFeeReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSubmitMerchantKycRequest struct {
+type ApiRetryPaymentCallbacksRequest struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
-	merchantId string
-	submitMerchantKyc *SubmitMerchantKyc
+	retryPaymentCallbacksRequest *RetryPaymentCallbacksRequest
 }
 
-// The request body to submit merchant KYC information.  Provide either &#x60;company_info&#x60; or &#x60;individual_info&#x60;: - &#x60;company_info&#x60;: Required for company merchants. - &#x60;individual_info&#x60;: Required for individual merchants. 
-func (r ApiSubmitMerchantKycRequest) SubmitMerchantKyc(submitMerchantKyc SubmitMerchantKyc) ApiSubmitMerchantKycRequest {
-	r.submitMerchantKyc = &submitMerchantKyc
+// The request body to retry callback messages for a payment business record.
+func (r ApiRetryPaymentCallbacksRequest) RetryPaymentCallbacksRequest(retryPaymentCallbacksRequest RetryPaymentCallbacksRequest) ApiRetryPaymentCallbacksRequest {
+	r.retryPaymentCallbacksRequest = &retryPaymentCallbacksRequest
 	return r
 }
 
-func (r ApiSubmitMerchantKycRequest) Execute() (*MerchantKycInfo, *http.Response, error) {
-	return r.ApiService.SubmitMerchantKycExecute(r)
+func (r ApiRetryPaymentCallbacksRequest) Execute() (*RetryPaymentCallbacks201Response, *http.Response, error) {
+	return r.ApiService.RetryPaymentCallbacksExecute(r)
 }
 
 /*
-SubmitMerchantKyc Submit merchant KYC
+RetryPaymentCallbacks Retry payment callbacks
 
-<Note>This operation has been deprecated. Please use [Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc) to create KYC information and [Update fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/update-fiat-entry-kyc) to update KYC information instead.</Note>
+This operation retries eligible callback messages associated with a refund order, payout, or bulk send.
 
-This operation submits KYC information for a specified merchant.
+Specify the business record using `business_type` and `business_id`. The record must belong to your organization and be in `PendingDoubleCheck` status. This operation requires the `callback.resend` permission.
 
-You need to provide the merchant type, country, and industry.
-Provide either `company_info` or `individual_info`:
-- `company_info`: Required for company merchants.
-- `individual_info`: Required for individual merchants.
+For a business record with multiple callback endpoints, this operation attempts to resend each message that is still awaiting a valid response and has remaining attempts. Messages that have received `ok` or `deny`, or have exhausted their attempts, are skipped. All endpoints must return `ok` before the business record can continue processing; any `deny` terminates the business request.
 
-The merchant ID can be retrieved by calling [List all merchants](https://www.cobo.com/developers/v2/api-references/payment/list-all-merchants).
+Each message allows up to 30 delivery attempts in total, including the initial attempt and both automatic and manual retries. This operation does not reset the attempt count or resend exhausted messages.
 
-<Note>If the merchant KYC status is `Disabled`, this operation cannot be used to resubmit KYC information.</Note>
+A successful response means the retry request was processed. It does not guarantee that any message was resent or approved, or that the business record has continued processing.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param merchantId The merchant ID.
- @return ApiSubmitMerchantKycRequest
-
-Deprecated
+ @return ApiRetryPaymentCallbacksRequest
 */
-func (a *PaymentAPIService) SubmitMerchantKyc(ctx context.Context, merchantId string) ApiSubmitMerchantKycRequest {
-	return ApiSubmitMerchantKycRequest{
+func (a *PaymentAPIService) RetryPaymentCallbacks(ctx context.Context) ApiRetryPaymentCallbacksRequest {
+	return ApiRetryPaymentCallbacksRequest{
 		ApiService: a,
 		ctx: ctx,
-		merchantId: merchantId,
 	}
 }
 
 // Execute executes the request
-//  @return MerchantKycInfo
-// Deprecated
-func (a *PaymentAPIService) SubmitMerchantKycExecute(r ApiSubmitMerchantKycRequest) (*MerchantKycInfo, *http.Response, error) {
+//  @return RetryPaymentCallbacks201Response
+func (a *PaymentAPIService) RetryPaymentCallbacksExecute(r ApiRetryPaymentCallbacksRequest) (*RetryPaymentCallbacks201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *MerchantKycInfo
+		localVarReturnValue  *RetryPaymentCallbacks201Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.SubmitMerchantKyc")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.RetryPaymentCallbacks")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/payments/merchants/{merchant_id}/kyc"
-	localVarPath = strings.Replace(localVarPath, "{"+"merchant_id"+"}", url.PathEscape(parameterValueToString(r.merchantId, "merchantId")), -1)
+	localVarPath := localBasePath + "/payments/callbacks/retry"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.retryPaymentCallbacksRequest == nil {
+		return localVarReturnValue, nil, reportError("retryPaymentCallbacksRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -11404,7 +11258,7 @@ func (a *PaymentAPIService) SubmitMerchantKycExecute(r ApiSubmitMerchantKycReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.submitMerchantKyc
+	localVarPostBody = r.retryPaymentCallbacksRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -12738,168 +12592,6 @@ func (a *PaymentAPIService) UpdateTopUpAddressExecute(r ApiUpdateTopUpAddressReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUploadPaymentFileRequest struct {
-	ctx context.Context
-	ApiService *PaymentAPIService
-	file *os.File
-}
-
-// The file to upload.
-func (r ApiUploadPaymentFileRequest) File(file *os.File) ApiUploadPaymentFileRequest {
-	r.file = file
-	return r
-}
-
-func (r ApiUploadPaymentFileRequest) Execute() (*PaymentUploadedFile, *http.Response, error) {
-	return r.ApiService.UploadPaymentFileExecute(r)
-}
-
-/*
-UploadPaymentFile Upload file
-
-<Note>This operation has been deprecated. Please use [Upload file v2](https://www.cobo.com/developers/v2/api-references/payment/upload-file-v2) instead.</Note>
-
-This operation uploads a file for payment-related use cases, such as fiat entry KYC attachments.
-
-You need to specify the file to upload. After a successful upload, use the returned AWS file link in `file_id` when calling
-[Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc)
-or [Update fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/update-fiat-entry-kyc).
-The returned file link expires at the time specified by `expired_timestamp`.
-
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUploadPaymentFileRequest
-
-Deprecated
-*/
-func (a *PaymentAPIService) UploadPaymentFile(ctx context.Context) ApiUploadPaymentFileRequest {
-	return ApiUploadPaymentFileRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return PaymentUploadedFile
-// Deprecated
-func (a *PaymentAPIService) UploadPaymentFileExecute(r ApiUploadPaymentFileRequest) (*PaymentUploadedFile, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *PaymentUploadedFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PaymentAPIService.UploadPaymentFile")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/payments/files"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.file == nil {
-		return localVarReturnValue, nil, reportError("file is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"multipart/form-data"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	var fileLocalVarFormFileName string
-	var fileLocalVarFileName     string
-	var fileLocalVarFileBytes    []byte
-
-	fileLocalVarFormFileName = "file"
-	fileLocalVarFile := r.file
-
-	if fileLocalVarFile != nil {
-		fbs, _ := io.ReadAll(fileLocalVarFile)
-
-		fileLocalVarFileBytes = fbs
-		fileLocalVarFileName = fileLocalVarFile.Name()
-		fileLocalVarFile.Close()
-		formFiles = append(formFiles, formFile{fileBytes: fileLocalVarFileBytes, fileName: fileLocalVarFileName, formFileName: fileLocalVarFormFileName})
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		// Proxy errors (e.g. nginx) may return non-JSON bodies.
-		// Return the error directly without attempting to decode.
-		switch localVarHTTPResponse.StatusCode {
-		case 414, 429, 502, 503:
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 500 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUploadPaymentFileV2Request struct {
 	ctx context.Context
 	ApiService *PaymentAPIService
@@ -12924,7 +12616,6 @@ This operation uploads a file for payment-related use cases, such as fiat entry 
 You need to encode the file content in Base64 and include it in the JSON request body together with the original file name. After a successful upload, use the returned AWS file link in `file_id` when calling
 [Create fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/create-fiat-entry-kyc)
 or [Update fiat entry KYC](https://www.cobo.com/developers/v2/api-references/payment/update-fiat-entry-kyc).
-The returned file link expires at the time specified by `expired_timestamp`.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

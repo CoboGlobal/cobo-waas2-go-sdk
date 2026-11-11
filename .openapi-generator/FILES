@@ -456,18 +456,6 @@ docs/MaxFeeAmount.md
 docs/MaxTransferableValue.md
 docs/Merchant.md
 docs/MerchantBalance.md
-docs/MerchantKycAddress.md
-docs/MerchantKycCompanyAttachment.md
-docs/MerchantKycCompanyAttachmentFileType.md
-docs/MerchantKycCompanyInfo.md
-docs/MerchantKycCompanyType.md
-docs/MerchantKycInfo.md
-docs/MerchantKycMerchantType.md
-docs/MerchantKycPersonAttachment.md
-docs/MerchantKycPersonAttachmentFileType.md
-docs/MerchantKycPersonInfo.md
-docs/MerchantKycStatus.md
-docs/MerchantKycSubmission.md
 docs/MessageSignDestination.md
 docs/MessageSignDestinationType.md
 docs/MessageSignParams.md
@@ -517,6 +505,7 @@ docs/PaymentBulkSendItemUpdateEventData.md
 docs/PaymentBulkSendItemValidationStatus.md
 docs/PaymentBulkSendStatus.md
 docs/PaymentBulkSendUpdateEventData.md
+docs/PaymentCallbackBusinessType.md
 docs/PaymentCommissionFeeTotal.md
 docs/PaymentEstimateFee.md
 docs/PaymentEstimateFee201Response.md
@@ -592,6 +581,8 @@ docs/ReportStatus.md
 docs/ReportType.md
 docs/RequestApproval.md
 docs/RetryCallbackMessage201Response.md
+docs/RetryPaymentCallbacks201Response.md
+docs/RetryPaymentCallbacksRequest.md
 docs/RetryWebhookEventById201Response.md
 docs/ReviewStatusType.md
 docs/RevokeApprovalRequest201Response.md
@@ -639,7 +630,6 @@ docs/SubmitDepositTravelRuleInfo201Response.md
 docs/SubmitKytResponse.md
 docs/SubmitKytScreeningsDecisionsBody.md
 docs/SubmitKytScreeningsReviewBody.md
-docs/SubmitMerchantKyc.md
 docs/SuiContractCallAddressBalanceOperationType.md
 docs/SuiContractCallAddressBalanceParam.md
 docs/SuiContractCallContractParam.md
@@ -936,7 +926,6 @@ docs/UpdateRefundByIdRequest.md
 docs/UpdateTopUpAddress.md
 docs/UpdateWalletParams.md
 docs/UpdateWebhookEndpointByIdRequest.md
-docs/UploadPaymentFileRequest.md
 docs/UtxoFeeBasePrice.md
 docs/UtxoFeeRate.md
 docs/Vasp.md
@@ -1371,18 +1360,6 @@ model_max_fee_amount.go
 model_max_transferable_value.go
 model_merchant.go
 model_merchant_balance.go
-model_merchant_kyc_address.go
-model_merchant_kyc_company_attachment.go
-model_merchant_kyc_company_attachment_file_type.go
-model_merchant_kyc_company_info.go
-model_merchant_kyc_company_type.go
-model_merchant_kyc_info.go
-model_merchant_kyc_merchant_type.go
-model_merchant_kyc_person_attachment.go
-model_merchant_kyc_person_attachment_file_type.go
-model_merchant_kyc_person_info.go
-model_merchant_kyc_status.go
-model_merchant_kyc_submission.go
 model_message_sign_destination.go
 model_message_sign_destination_type.go
 model_message_sign_params.go
@@ -1434,6 +1411,7 @@ model_payment_bulk_send_item_update_event_data.go
 model_payment_bulk_send_item_validation_status.go
 model_payment_bulk_send_status.go
 model_payment_bulk_send_update_event_data.go
+model_payment_callback_business_type.go
 model_payment_commission_fee_total.go
 model_payment_estimate_fee.go
 model_payment_estimate_fee_201_response.go
@@ -1507,6 +1485,8 @@ model_report_status.go
 model_report_type.go
 model_request_approval.go
 model_retry_callback_message_201_response.go
+model_retry_payment_callbacks_201_response.go
+model_retry_payment_callbacks_request.go
 model_retry_webhook_event_by_id_201_response.go
 model_review_status_type.go
 model_revoke_approval_request_201_response.go
@@ -1553,7 +1533,6 @@ model_submit_deposit_travel_rule_info_201_response.go
 model_submit_kyt_response.go
 model_submit_kyt_screenings_decisions_body.go
 model_submit_kyt_screenings_review_body.go
-model_submit_merchant_kyc.go
 model_sui_contract_call_address_balance_operation_type.go
 model_sui_contract_call_address_balance_param.go
 model_sui_contract_call_contract_param.go
@@ -1845,7 +1824,6 @@ model_update_refund_by_id_request.go
 model_update_top_up_address.go
 model_update_wallet_params.go
 model_update_webhook_endpoint_by_id_request.go
-model_upload_payment_file_request.go
 model_utxo.go
 model_utxo_fee_base_price.go
 model_utxo_fee_rate.go
